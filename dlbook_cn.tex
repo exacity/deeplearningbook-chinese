@@ -1,0 +1,147 @@
+\documentclass[11pt,a4paper,oneside]{book}
+\usepackage{natbib}
+
+% CJK related
+\usepackage[slantfont,boldfont]{xeCJK} 
+\setCJKmainfont[AutoFakeBold=true]{Adobe Song Std}
+\setCJKsansfont{Adobe Heiti Std}
+\setCJKmonofont{Adobe Fangsong Std}
+
+% Needed for some foreign characters
+\usepackage[T1]{fontenc}
+
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{booktabs}
+% This allows us to cite chapters by name, which was useful for making the
+% acknowledgements page
+\usepackage{nameref}
+\usepackage{breakcites}
+
+\usepackage[tocindentauto]{tocstyle}
+\usetocstyle{standard}
+
+\usepackage{bm}
+\usepackage{float}
+\newcommand{\boldindex}[1]{\textbf{\hyperpage{#1}}}
+\usepackage{makeidx}\makeindex
+% Make bibliography and index appear in table of contents
+\usepackage[nottoc]{tocbibind}
+\usepackage[font=small]{caption}
+
+% Used to change header sizes
+\usepackage{fancyhdr}
+
+\usepackage[section]{placeins}
+\usepackage[chapter]{algorithm}
+\usepackage{algorithmic}
+% Include chapter number in algorithm number
+\renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
+
+\usepackage[pdffitwindow=false,
+pdfview=FitH,
+pdfstartview=FitH,
+pagebackref=true,
+breaklinks=true,
+colorlinks=false,
+bookmarks=false,
+%hidelinks=true,
+plainpages=false]{hyperref}
+
+\usepackage[nomain,acronym,xindy,toc,nopostdot]{glossaries}
+\makeglossaries
+\usepackage[xindy]{imakeidx}
+\makeindex
+
+\usepackage{zref-abspage}
+\setcounter{secnumdepth}{3}
+
+
+% my page
+\usepackage[vcentering,dvips]{geometry}
+\geometry{papersize={7in,9in},bottom=3pc,top=5pc,left=5pc,right=5pc,bmargin=4.5pc,footskip=18pt,headsep=25pt}
+\setlength\emergencystretch{1.5em}
+
+% my command
+\newcommand{\firstgls}[1]{\textbf{\gls{#1}}(\glsdesc{#1})}
+\newcommand{\firstacr}[1]{\textbf{\gls{#1}}~(\glssymbol{#1})}
+\newcommand{\firstall}[1]{\textbf{\gls{#1}}~(\glsdesc{#1}, \glssymbol{#1})}
+\newcommand{\ENNAME}[1]{\text{#1}}
+\newcommand{\NUMTEXT}[1]{\text{#1}}
+
+% Draft
+\usepackage{draftwatermark}
+\SetWatermarkText{DRAFT}
+\SetWatermarkLightness{0.9}
+\usepackage{background}
+\SetBgContents{仅供学习使用，不得用于商业目的。
+\url{https://github.com/exacity/deeplearningbook-chinese}}
+\SetBgScale{1}
+\SetBgAngle{0}
+\SetBgOpacity{1}
+\SetBgColor{red}
+\SetBgPosition{current page.north}
+\SetBgVshift{-0.5cm}
+
+\newif\ifOpenSource
+\OpenSourcetrue
+
+% symbol and 
+\include{math_symbol}
+\include{terminology}
+
+
+\begin{document}
+
+% From en book -B
+\setlength{\parskip}{0.25 \baselineskip}
+% Sean said to make figures 26 picas wide
+\newlength{\figwidth}
+\setlength{\figwidth}{26pc}
+% Spacing between notation sections
+\newlength{\notationgap}
+\setlength{\notationgap}{1pc}
+% From en book -E
+
+\tableofcontents
+
+\newpage
+\input{acknowledgments.tex}
+\input{notation.tex}
+\mainmatter
+
+\include{Chapter1/introduction}
+%\include{Chapter2/linear_algebra}
+%\include{Chapter3/probability_and_information_theory}
+\include{Chapter4/numerical_computation}
+%\include{Chapter5/machine_learning_basics}
+%\include{Chapter6/deep_feedforward_networks}
+\include{Chapter7/regularization}
+%\include{Chapter8/optimization_for_training_deep_models} 
+%\include{Chapter9/convolutional_networks}
+\include{Chapter10/sequence_modeling_rnn}
+%\include{Chapter11/practical_methodology}
+%\include{Chapter12/applications}
+%\include{Chapter13/linear_factor_models}
+\include{Chapter14/autoencoders}
+%\include{Chapter15/representation_learning}
+%\include{Chapter16/structured_probabilistic_modelling}
+%\include{Chapter17/monte_carlo_methods}
+%\include{Chapter18/confronting_the_partition_function}
+%\include{Chapter19/approximate_inference}
+%\include{Chapter20/deep_generative_models}
+
+\appendix
+
+\small{
+\bibliography{dlbook_cn}
+\bibliographystyle{natbib}
+\clearpage
+}
+
+\printglossary[title=术语]
+\end{document}

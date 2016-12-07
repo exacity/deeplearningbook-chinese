@@ -1,0 +1,17 @@
+% breakcites
+% Style file to allow citations to be broken across lines.
+% - Don Hosek   3/14/89 (LaTeX209-Version)
+% - Leo Broska 02/20/97 (LaTeX-2e-Version)
+%
+\def\@citex[#1]#2{%
+  \let\@citea\@empty
+  \@cite{\@for\@citeb:=#2\do
+    {\@citea\def\@citea{,\penalty\@m\ }%
+     \edef\@citeb{\expandafter\@firstofone\@citeb}%
+     \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi
+     \@ifundefined{b@\@citeb}{\mbox{\reset@font\bfseries ?}%
+       \G@refundefinedtrue
+       \@latex@warning
+         {Citation `\@citeb' on page \thepage \space undefined}}%
+       {\csname b@\@citeb\endcsname}}}{#1}}
+
