@@ -1,6 +1,6 @@
 % Translator: Yujun Li 
 \chapter{机器学习基础}
-\label{chap:5}
+\label{chap:machine_learning_basics}
 机器学习是深度学习的一个特定分支。
 要想学好深度学习，必须对机器学习的基本原理有深刻的理解。
 本章将探讨贯穿本书其余部分的一些机器学习重要原理。
@@ -21,6 +21,7 @@
 % -- 95 --
 
 \section{学习算法}
+\label{sec:learning_algorithms}
 机器学习算法是一种可以从数据中学习的算法。
 然而，我们所谓的“学习”是什么意思呢？
 \cite{Mitchell:1997:ML}提供了一个简洁的定义：“一个计算机程序被认为可以从\gls{experience}$E$中对于某类任务$T$和\gls{performance_measures}$P$学习是指，它的性能在任务$T$和性能测量$P$上通过\gls{experience}$E$有所提升。”
@@ -367,6 +368,7 @@
 在接下来的小节中，我们将会介绍一些设计学习算法的基本原则，并说明如何使用这些原则来构建更复杂的学习算法。
 
 \section{容量，过拟合和欠拟合}
+\label{sec:capacity_overfitting_and_underfitting}
 机器学习的主要挑战是我们模型必须能够在先前未观测的新输入上表现良好，而不是只在训练集上效果好。
 在先前未观测到的输入上表现良好的能力被称为\firstgls{generalization}。
 
@@ -642,6 +644,7 @@
 深度学习中普遍的，特别是本书的，理念是大量任务（例如所有人类能做的智能任务）也许都可以使用非常通用的\gls{regularizer}来有效解决。
 
 \section{超参数和验证集}
+\label{sec:hyperparameters_and_validation_sets}
 大多数机器学习算法具有超参数，我们可以用来控制算法行为的设置。
 超参数的值不是通过学习算法本身拟合出来的（尽管我们可以设计一个嵌套的学习过程，一个学习算法为另一个学习算法学出最优超参数）。
 
@@ -690,6 +693,7 @@
 一个问题是不存在平均误差方差的无偏估计\citep{Bengio-Grandvalet-JMLR-04}，但是我们通常会使用近似。
 
 \section{估计，偏差和方差}
+\label{sec:estimators_bias_and_variance}
 统计领域为我们提供了很多工具用于实现机器学习目标，不仅可以解决训练集上的任务，还可以泛化。
 基本的概念，例如参数估计，偏差和方差对于形式化刻画泛化，欠拟合和过拟合都非常有帮助。
 
@@ -938,6 +942,7 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 % -- 127 --
 
 \section{\gls{maximum_likelihood_estimation}}
+\label{sec:maximum_likelihood_estimation}
 之前，我们已经看过常用估计的定义，并分析了它们的性质。
 但是这些估计是从哪里来的呢？
 并非猜测某些函数可能是好的估计，然后分析其偏差和方差，我们希望有些准则可以让我们从不同模型中得到特定函数作为好的估计。
@@ -1063,6 +1068,7 @@ KL散度定义为
 % -- 131 --
 
 \section{贝叶斯统计}
+\label{sec:bayesian_statistics}
 至此我们已经讨论了\firstgls{frequentist_statistics}方法和基于估计单一值$\Vtheta$的方法，然后基于该估计作所有的预测。
 另一种方法是在做预测时会考虑所有可能$\Vtheta$。
 后者属于\firstgls{bayesian_statistics}的范畴。
@@ -1224,6 +1230,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 例如，更复杂的惩罚项可以通过混合高斯作为先验得到，而不是一个单独的高斯分布\citep{Nowlan-nips92}。
 
 \section{\gls{supervised_learning}算法}
+\label{sec:supervised_learning_algorithms}
 回顾第5.1.3节，\gls{supervised_learning}算法，粗略地说，是给定一组输入$\Vx$和输出$\Vy$的训练集，学习如何关联输入和输出。
 在许多情况下，输出$\Vy$很难自动收集，必须由人来提供“管理”，不过该术语仍然适用于训练集目标$\Vy$可以被自动收集的情况。
 
@@ -1392,6 +1399,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 参考\cite{MurphyBook2012,bishop-book2006,Hastie2001}或其他机器学习教科书了解更多的传统监督学习算法。
 
 \section{\gls{unsupervised_learning}算法}
+\label{sec:unsupervised_learning_algorithms}
 回顾第5.1.3节，无监督算法只处理“\gls{feature}”，不操作监督信号。
 监督和无监督算法之间的区别没有规范，严格的定义，因为没有客观的判断来区分监督者提供的值是\gls{feature}还是\gls{target}。
 通俗地说，\gls{unsupervised_learning}是指从不需要人为注释\gls{example:chap5}的分布中抽取信息的大多数尝试。
@@ -1541,6 +1549,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 但是多个属性减少了算法去猜我们关心哪一个属性的负担，允许我们通过比较很多属性而非测试一个单一属性来细粒度地衡量相似性。
 
 \section{\gls{SGD}}
+\label{sec:stochastic_gradient_descent}
 几乎所有的深度学习算法都用到了一个非常重要的算法：\firstall{SGD}。
 \gls{SGD}是第4.3节介绍的\gls{GD}算法的一个扩展。
 
@@ -1612,6 +1621,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 \gls{SGD}及其很多强化方法将会在第8章继续探讨。
 
 \section{构建机器学习算法}
+\label{sec:building_a_machine_learning_algorithm}
 几乎所有的深学习算法可以被描述为一个相当简单的配方：特定的\gls{dataset}，损失函数，优化过程和模型。
 
 例如，\gls{linear_regression}算法的组成成分有$\MX$和$\Vy$构成的\gls{dataset}，损失函数
@@ -1661,6 +1671,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 % -- 150 --
 
 \section{推动深度学习的挑战}
+\label{sec:challenges_motivating_deep_learning}
 本章描述的简单机器学习算法在很多不同的重要问题上都效果良好。
 但是他们不能成功解决人工智能中的核心问题，如语音识别或者实物识别。
 
