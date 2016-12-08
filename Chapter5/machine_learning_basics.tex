@@ -718,7 +718,7 @@
     \hat{\Vtheta}_m = g(\Vx^{(1)}, …, \Vx^{(m)}) 
 \end{equation}
 这个定义不要求$g$返回一个接近真实植$\Vtheta$的值，或是$g$的值域为$\Vtheta$的允许取值。
-点估计的定义非常宽泛，给了估计器的设计者极大的灵活性。
+点估计的定义非常宽泛，给了\gls{estimator:chap5}的设计者极大的灵活性。
 虽然几乎所有函数都可以称为\gls{estimator:chap5}，但是一个好的\gls{estimator:chap5}的输出会接近生成训练数据的真实参数$\Vtheta$。
 
 % -- 119 --
@@ -750,8 +750,8 @@
     \text{bias}(\hat{\Vtheta}_m) = \SetE(\hat{\Vtheta}_m) - \Vtheta
 \end{equation}
 其中期望作用在所有数据（看作是从随机变量采样得到的）上，$\Vtheta$是定义数据生成分布$\Vtheta$的真实值。
-如果$\text{bias}(\hat{\Vtheta}_m)=0$，那么估计器$\hat{\Vtheta}_m$被称为是\firstgls{unbiased}，这意味着$\SetE(\hat{\Vtheta}_m) = \Vtheta$。
-如果$\lim_{m\to\infty} \text{bias}(\hat{\Vtheta}_m)=0$，那么估计器$\hat{\Vtheta}_m$称为是\firstgls{asymptotically_unbiased}，这意味着$\lim_{m\to\infty} \SetE(\hat{\Vtheta}_m) = \Vtheta$。
+如果$\text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5}$\hat{\Vtheta}_m$被称为是\firstgls{unbiased}，这意味着$\SetE(\hat{\Vtheta}_m) = \Vtheta$。
+如果$\lim_{m\to\infty} \text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5}$\hat{\Vtheta}_m$称为是\firstgls{asymptotically_unbiased}，这意味着$\lim_{m\to\infty} \SetE(\hat{\Vtheta}_m) = \Vtheta$。
 
 % -- 121 --
 
@@ -776,7 +776,7 @@
 
 因为$\text{bias}(\hat{\theta}_m)=0$，我们称估计$\hat{\theta}$是无偏的。
 
-\textbf{实例：均值的高斯分布估计器}\quad 
+\textbf{实例：均值的高斯分布估计}\quad 
 现在，考虑一组独立同分布的\gls{example:chap5}$\{x^{(1)}, …, x^{(m)}\}$服从高斯分布$p(x^{(i)}) = \mathcal{N}(x^{(i)}; \mu, \sigma^2)$，其中$i\in\{1,..., m\}$。
 回顾高斯概率密度函数如下：
 \begin{equation}
@@ -799,7 +799,7 @@
 
 % -- 122 --
 
-\textbf{实例：高斯分布方差的估计器}\quad 
+\textbf{实例：高斯分布方差估计}\quad 
 本例中，我们比较高斯分布方差参数$\sigma^2$的两个不同估计。
 我们探讨是否有一个是有偏的。
 
@@ -840,18 +840,18 @@
 尽管无偏估计显然是可取的，但它并不总是“最好”的估计。
 我们将会看到经常会使用具有其他重要性质的有偏估计。
 
-\subsection{方差和标准差}
+\subsection{方差和\gls{standard_error}}
 \label{subsec:variance_and_standard_error}
-我们可能要考虑的估计器另一个性质是数据样本函数的变化程度。
-正如我们可以计算估计的期望去决定它的偏差，我们也可以计算它的方差。
-\gls{estimator:chap5}的\firstgls{variance}就是一个方差
+我们可能要考虑的\gls{estimator:chap5}另一个性质是数据样本函数的变化程度。
+正如我们可以计算\gls{estimator:chap5}的期望去决定它的偏差，我们也可以计算它的方差。
+\gls{estimator:chap5}的\firstgls{variance}就是一个\gls{variance}
 \begin{equation}
     \text{Var}(\hat{\theta})
 \end{equation}
 其中随机变量是训练集。
 另外，方差的平方根被称为\firstgls{standard_error}，记作$\text{SE}(\hat{\theta})$。
 
-估计器的方差或标准差提供给我们，当\gls{dataset}独立地从潜在的数据生成过程中重采样数据集时，如何期望估计的变化。
+\gls{standard_error}的方差或\gls{standard_error}提供给我们，当\gls{dataset}独立地从潜在的数据生成过程中重采样数据集时，如何期望估计的变化。
 正如我们希望估计的偏差比较小，我们也希望其方差较小。
 
 当我们使用有限的样本计算任何统计量时，真实参数的估计都是不确定的，在这个意义下，从相同的分布得到其他样本时，它们的统计量会不一样。
@@ -863,8 +863,8 @@
 \end{equation}
 其中$\sigma^2$是\gls{example:chap5}$x^i$的真实方差。
 \gls{standard_error}通常被记作$\sigma$。
-不幸的是，样本方差的平方根和方差无偏估计的平方根都不是标准差的无偏估计。
-这两种计算方法都倾向于低估真实的标准差，但仍用于实际中。
+不幸的是，样本方差的平方根和方差无偏估计的平方根都不是\gls{standard_deviation}的无偏估计。
+这两种计算方法都倾向于低估真实的\gls{standard_deviation}，但仍用于实际中。
 方差无偏估计的平方根是不太低估的。
 对于较大的$m$，这种近似非常合理。
 
@@ -873,7 +873,7 @@
 均值的\gls{standard_error}在机器学习实验中非常有用。
 我们通常计算\gls{test_set}误差的样本均值来估计泛化误差。
 \gls{test_set}中\gls{example:chap5}的数量决定了这个估计的精确度。
-中心极限定理告诉我们均值会接近一个高斯分布，我们可以用标准差计算出真实期望落在选定区间的概率。
+中心极限定理告诉我们均值会接近一个高斯分布，我们可以用\gls{standard_error}计算出真实期望落在选定区间的概率。
 例如，以均值$\hat{\mu}_m$为中心的$95\%$置信区间是
 \begin{equation}
     ( \hat{\mu}_m - 1.96\text{SE}(\hat{\mu}_m), \hat{\mu}_m + 1.96 \text{SE}(\hat{\mu}_m) )
@@ -1294,36 +1294,36 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 % -- 137 --
 
 \gls{SVM}的一个重要创新是\firstgls{kernel_trick}。
-核技巧观察到许多机器学习算法都可以写成\gls{example:chap5}间点积的形式。
+核技巧观察到许多机器学习算法都可以写成\gls{example:chap5}间\gls{dot_product}的形式。
 例如，\gls{SVM}中的线性函数可以重写为
 \begin{equation}
     \Vw^\Tsp \Vx + b = b + \sum_{i=1}^m \alpha_i \Vx^\Tsp \Vx^{(i)}
 \end{equation}
 其中，$\Vx^{(i)}$是训练\gls{example:chap5}，$\Valpha$是系数向量。
-学习算法重写为这种形式允许我们将$\Vx$替换为\gls{feature}函数$\phi(\Vx)$的输出，点积替换为被称为\firstgls{kernel}的函数$k(\Vx, \Vx^{(i)}) = \phi(\Vx)\cdot \phi(\Vx^{(i)})$。
-$\cdot$操作表示类似于$\phi(\Vx)^\Tsp \phi(\Vx^{(i)})$的点积。
-对于某些\gls{feature}空间，我们可能不会书面地使用向量内积。
-在某些无穷维空间中，我们需要使用其他类型的内积，如基于积分而非总和的内积。
-这种类型内积的完整介绍超出了本书的范围。
+学习算法重写为这种形式允许我们将$\Vx$替换为\gls{feature}函数$\phi(\Vx)$的输出，\gls{dot_product}替换为被称为\firstgls{kernel}的函数$k(\Vx, \Vx^{(i)}) = \phi(\Vx)\cdot \phi(\Vx^{(i)})$。
+$\cdot$操作表示类似于$\phi(\Vx)^\Tsp \phi(\Vx^{(i)})$的\gls{dot_product}。
+对于某些\gls{feature}空间，我们可能不会书面地使用向量\gls{inner_product}。
+在某些无穷维空间中，我们需要使用其他类型的\gls{inner_product}，如基于积分而非总和的\gls{inner_product}。
+这种类型\gls{inner_product}的完整介绍超出了本书的范围。
 
-核估计替换点积之后，我们可以使用如下函数进行预测
+核估计替换\gls{dot_product}之后，我们可以使用如下函数进行预测
 \begin{equation}
     f(\Vx) = b + \sum_i \alpha_i k(\Vx, \Vx^{(i)})
 \end{equation}
 这个函数关于$\Vx$是非线性的，关于$\phi(\Vx)$是线性的。
 $\Valpha$和$f(\Vx)$之间的关系也是线性的。
-核函数完全等价于用$phi(\Vx)$预处理所有的输入，然后在新的转换空间学习线性模型。
+核函数完全等价于用$\phi(\Vx)$预处理所有的输入，然后在新的转换空间学习线性模型。
 
 核技巧十分强大有两个原因。
 首先，它使我们能够使用保证有效收敛的凸优化技术来学习作为$\Vx$的函数的非线性模型。
 这是可能的，因为我们可以认为$\phi$是固定的，仅优化$\alpha$，即优化算法可以将决策函数视为不同空间中的线性函数。
-其二，核函数$k$的实现方法通常有比直接构建$\phi(\Vx)$再算点积高效很多。
+其二，核函数$k$的实现方法通常有比直接构建$\phi(\Vx)$再算\gls{dot_product}高效很多。
 
 在某些情况下，$\phi(Vx)$甚至可以使无限维的，对于普通的显式方法而言，这将是无限的计算代价。
 在很多情况下，即使$\phi(\Vx)$是难算的，$k(\Vx,\Vx')$却会是一个关于$\Vx$非线性的，易算的函数。
 举个无限维空间易解的核的例子，我们构建一个作用于非负整数$x$上的\gls{feature}映射$\phi(x)$。
 假设这个映射返回一个由开头$x$个$1$，随后时无限个$0$的向量。
-我们可以写一个核函数$k(x,x^{(i)}) = \min(x, x^{(i)})$，完全等价于对应的无限维点积。
+我们可以写一个核函数$k(x,x^{(i)}) = \min(x, x^{(i)})$，完全等价于对应的无限维\gls{dot_product}。
 
 % -- 138 --
 
@@ -1333,7 +1333,7 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 \end{equation}
 其中$\mathcal{N}(x; \Vmu, \VSigma)$是标准正态密度。
 这个核也被称为\firstall{RBF}核，因为其值沿$\Vv$中从$\Vu$向外辐射的方向减小。
-高斯核对应于无限维空间中的点积，但是该空间的推导没有整数上的$\min$核实例直观。
+高斯核对应于无限维空间中的\gls{dot_product}，但是该空间的推导没有整数上的$\min$核实例直观。
 
 我们可以认为高斯核在执行一种\textbf{模板匹配}。
 训练\gls{label}$y$相关的训练\gls{example:chap5}$\Vx$变成了类别$y$的模版。
