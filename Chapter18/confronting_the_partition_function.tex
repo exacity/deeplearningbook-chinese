@@ -4,7 +4,7 @@
 在第16.2.2节中，我们看到许多概率模型（通常被称为\gls{undirected_graphical_model}）由未归一化的\gls{PD}$\tilde{p}(\Vx, \theta)$所定义。
 我们必须通过除以\gls{partition_function}$Z(\Vtheta)$来归一化$\tilde{p}$，以获得有效的\gls{PD}：
 \begin{equation}
-	p(\Vx; \Vtheta) = \frac{1}{Z(\Vtheta)} \tilde{p}(\Vx; \Vtheta)。
+	p(\RVx; \Vtheta) = \frac{1}{Z(\Vtheta)} \tilde{p}(\RVx; \Vtheta).
 \end{equation}
 \gls{partition_function}是所有状态的未归一化概率的积分（对于连续变量）或求和（对于离散变量）：
 \begin{equation}
@@ -12,7 +12,7 @@
 \end{equation}
 或者
 \begin{equation}
-	\sum_{\Vx} \tilde{p} (\Vx)。
+	\sum_{\Vx} \tilde{p} (\Vx).
 \end{equation}
 
 
@@ -30,8 +30,8 @@
 通过最大似然学习无向模型特别困难的原因在于\gls{partition_function}取决于参数。
 对数似然相对于参数的梯度对应于\gls{partition_function}的梯度：
 \begin{equation}
-	\nabla_{\Vtheta} \log p(\Vx; \Vtheta) = \nabla_{\Vtheta} \log \tilde{p}(\Vx; \Vtheta) -
-\nabla_{\Vtheta} \log Z(\Vtheta)。
+	\nabla_{\Vtheta} \log p(\RVx; \Vtheta) = \nabla_{\Vtheta} \log \tilde{p}(\RVx; \Vtheta) -
+\nabla_{\Vtheta} \log Z(\Vtheta).
 \end{equation}
 
 
@@ -51,28 +51,28 @@
 	= \frac{ \nabla_{\Vtheta} Z }{Z}
 \end{equation}
 \begin{equation}
-	= \frac{ \nabla_{\Vtheta} \sum_{\Vx} \tilde{p}(\Vx) }{Z}
+	= \frac{ \nabla_{\Vtheta} \sum_{\RVx} \tilde{p}(\RVx) }{Z}
 \end{equation}
 \begin{equation}
-	= \frac{ \sum_{\Vx} \nabla_{\Vtheta} \tilde{p}(\Vx) }{Z}
+	= \frac{ \sum_{\RVx} \nabla_{\Vtheta} \tilde{p}(\RVx) }{Z}.
 \end{equation}
 
 
 对于保证所有的$\Vx$都有$p(\Vx) > 0$的模型，我们用$\exp(\log \tilde{p}(\Vx))$代替$\tilde{p}(\Vx)$：
 \begin{equation}
-	\frac{ \sum_{\Vx} \nabla_{\Vtheta} \exp (\log \tilde{p} (\Vx)) }{ Z }
+	\frac{ \sum_{\RVx} \nabla_{\Vtheta} \exp (\log \tilde{p} (\RVx)) }{ Z }
 \end{equation}
 \begin{equation}
-	= \frac{  \sum_{\Vx}  \exp (\log \tilde{p} (\Vx)) \nabla_{\Vtheta} \log \tilde{p}(\Vx)  }{Z}
+	= \frac{  \sum_{\RVx}  \exp (\log \tilde{p} (\RVx)) \nabla_{\Vtheta} \log \tilde{p}(\RVx)  }{Z}
 \end{equation}
 \begin{equation}
-	=\frac{  \sum_{\Vx} \tilde{p} (\Vx)  \nabla_{\Vtheta} \log \tilde{p}(\Vx)  }{ Z}
+	=\frac{  \sum_{\RVx} \tilde{p} (\RVx)  \nabla_{\Vtheta} \log \tilde{p}(\RVx)  }{ Z}
 \end{equation}
 \begin{equation}
-	=\sum_{\Vx} p(\Vx) \nabla_{\Vtheta} \log \tilde{p} ( \Vx )
+	=\sum_{\RVx} p(\RVx) \nabla_{\Vtheta} \log \tilde{p} ( \RVx )
  \end{equation}
 \begin{equation}
-	=\SetE_{\Vx \sim p(\Vx)} \nabla_{\Vtheta} \log \tilde{p} (\Vx)。
+	=\SetE_{\RVx \sim p(\RVx)} \nabla_{\Vtheta} \log \tilde{p} (\RVx).
 \end{equation}
 
 % -- 598 --
@@ -80,30 +80,30 @@
 这个推导对离散$\Vx$进行了求和，对连续$\Vx$进行积分也会出现类似结果。
 面对连续版本的推导过程中，我们使用在积分符号下微分的\gls{leibniz_rule}，得到等式
 \begin{equation}
-	\nabla_{\Vtheta} \int \tilde{p} (\Vx) \mathrm{d} \Vx  = \int \nabla_{\Vtheta} 
-\tilde{p} (\Vx) \mathrm{d} \Vx。
+	\nabla_{\Vtheta} \int \tilde{p} (\RVx) \mathrm{d} \Vx  = \int \nabla_{\Vtheta} 
+\tilde{p} (\RVx) \mathrm{d} \Vx.
 \end{equation}
-该等式只适用于$\tilde{p}$和$\nabla_{\Vtheta} \tilde{p} (\Vx)$上的一些特定正则条件。
+该等式只适用于$\tilde{p}$和$\nabla_{\Vtheta} \tilde{p} (\RVx)$上的一些特定正则条件。
 在测度理论术语中，这些条件是：
 （1）对每一个$\Vtheta$而言，未归一化分布$p$必须是$\Vx$的\gls{lebesgue_integrable}函数。
-（2）对于所有的$\Vtheta$和几乎所有的$\Vx$，导数$\nabla_{\Vtheta} \tilde{p}(\Vx)$必须存在。
-（3）对于所有的$\Vtheta$和几乎所有的$\Vx$，在$\max_i | \frac{\partial}{\partial \theta_i } \tilde{p} (\Vx) | \leq R(\Vx)$ 的情况下，必须存在能够限制住$\nabla_{\Vtheta} \tilde{p}(\Vx)$的可积函数$R(\Vx)$。
+（2）对于所有的$\Vtheta$和几乎所有的$\Vx$，导数$\nabla_{\Vtheta} \tilde{p}(\RVx)$必须存在。
+（3）对于所有的$\Vtheta$和几乎所有的$\Vx$，在$\max_i | \frac{\partial}{\partial \theta_i } \tilde{p} (\RVx) | \leq R(\Vx)$ 的情况下，必须存在能够限制住$\nabla_{\Vtheta} \tilde{p}(\RVx)$的可积函数$R(\Vx)$。
 幸运的是，大多数感兴趣的\gls{ML}模型都具有这些性质。
 
 
 这个等式
 \begin{equation}
-	\nabla_{\Vtheta} \log Z = \SetE_{\Vx \sim p(\Vx)} \nabla_{\Vtheta} \log \tilde{p}(\Vx)
+	\nabla_{\Vtheta} \log Z = \SetE_{\RVx \sim p(\RVx)} \nabla_{\Vtheta} \log \tilde{p}(\RVx)
 \end{equation}
 是使用各种\gls{monte_carlo}方法近似最大化具有不可解\gls{partition_function}模型的似然的基础。
 
 
 \gls{monte_carlo}方法为学习\gls{undirected_model}提供了直观的框架，我们能够在其中考虑\gls{positive_phase}和\gls{negative_phase}。
-在\gls{positive_phase}中，我们从数据中抽取$\Vx$来增加$\log \tilde{p}(\Vx)$。
-在\gls{negative_phase}中，我们通过减少从模型分布中采样的$\log \tilde{p}(\Vx)$来降低\gls{partition_function}。
+在\gls{positive_phase}中，我们从数据中抽取$\Vx$来增加$\log \tilde{p}(\RVx)$。
+在\gls{negative_phase}中，我们通过减少从模型分布中采样的$\log \tilde{p}(\RVx)$来降低\gls{partition_function}。
 
 
-在\gls{DL}文献中，通常会看到用\gls{energy_function}（等式\ref{eqn:167}）来参数化$\log \tilde{p}(\Vx)$。
+在\gls{DL}文献中，通常会看到用\gls{energy_function}（等式\ref{eqn:167}）来参数化$\log \tilde{p}(\RVx)$。
 在这种情况下，\gls{positive_phase}可以被解释为推动训练从模型抽取出的样本能量下降，\gls{negative_phase}可以被解释为推动从模型抽取出的样本能量上升，如图18.1所示。
 
 
@@ -274,31 +274,31 @@
 大多数这些方法基于以下观察：无向概率模型中概率的比率是很容易计算的。
 这是因为\gls{partition_function}同时出现在比率的分子和分母中，互相抵消：
 \begin{equation}
-	\frac{p(\Vx)}{ p(\Vy) } = \frac{ \frac{1}{Z} \tilde{p}(\Vx) }{ \frac{1}{Z} \tilde{p}(\Vy) } =
-\frac{ \tilde{p}(\Vx) }{ \tilde{p}(\Vy) }.
+	\frac{p(\RVx)}{ p(\RVy) } = \frac{ \frac{1}{Z} \tilde{p}(\RVx) }{ \frac{1}{Z} \tilde{p}(\RVy) } =
+\frac{ \tilde{p}(\RVx) }{ \tilde{p}(\RVy) }.
 \end{equation}
 
 
 \gls{pseudolikelihood}正是基于\gls{conditional_probability}可以采用这种基于比率的形式，因此可以在没有\gls{partition_function}的情况下进行计算。
 假设我们将$\Vx$分为$\Va$，$\Vb$和$\Vc$，其中$\Va$包含我们想要找到的条件分布的变量，$\Vb$包含我们想要条件化的变量，$\Vc$包含不涉及的一部分变量：
 \begin{equation}
-	p(\Va | \Vb) = \frac{ p(\Va, \Vb) }{ p(\Vb) } = \frac{p(\Va, \Vb)}{ \sum_{\Va, \Vc} p(\Va, \Vb, \Vc) } = \frac{ \tilde{p}(\Va, \Vb) }{ \sum_{\Va, \Vc} \tilde{p}(\Va, \Vb, \Vc) }
+	p(\RVa | \RVb) = \frac{ p(\RVa, \RVb) }{ p(\RVb) } = \frac{p(\RVa, \RVb)}{ \sum_{\RVa, \RVc} p(\RVa, \RVb, \RVc) } = \frac{ \tilde{p}(\RVa, \RVb) }{ \sum_{\RVa, \RVc} \tilde{p}(\RVa, \RVb, \RVc) }.
 \end{equation}
-这个量需要边缘化$\Va$，假设$\Va$和$\Vc$包含的变量并不多，那么这将是非常高效的操作。
-在极端情况下，$\Va$可以是单个变量，$\Vc$可以为空，使得该操作仅需要估计与单个\gls{RV}值一样多的$\tilde{p}$。
+这个量需要边缘化$\RVa$，假设$\RVa$和$\RVc$包含的变量并不多，那么这将是非常高效的操作。
+在极端情况下，$\RVa$可以是单个变量，$\RVc$可以为空，使得该操作仅需要估计与单个\gls{RV}值一样多的$\tilde{p}$。
 
 
 不幸的是，为了计算对数似然，我们需要边缘化很多变量。
 如果总共有$n$个变量，那么我们必须边缘化$n-1$个变量。
 根据概率的\gls{chain_rule}，
 \begin{equation}
-	\log p(\Vx) = \log p(x_1) + \log p(x_2 | x_1) + · · · + \log p(x_n | \Vx_{1:n−1})。
+	\log p(\RVx) = \log p(x_1) + \log p(x_2 | x_1) + · · · + \log p(x_n | \RVx_{1:n−1}).
 \end{equation}
-在这种情况下，我们已经使$\Va$尽可能小，但是$\Vc$可以大到$\Vx_{2:n}$。
-如果我们简单地将$\Vc$移到$\Vb$中以减少计算代价，会怎么样呢？
+在这种情况下，我们已经使$\RVa$尽可能小，但是$\RVc$可以大到$\RVx_{2:n}$。
+如果我们简单地将$\RVc$移到$\RVb$中以减少计算代价，会怎么样呢？
 这便产生了\firstgls{pseudolikelihood}\citep{Besag75pseudolikelihood}目标函数，基于给定所有其他特征$\Vx_{-i}$，预测特征$x_i$的值：
 \begin{equation}
-	\sum_{i=1}^n \log p(x_i | \Vx_{-i})。
+	\sum_{i=1}^n \log p(x_i | \Vx_{-i}).
 \end{equation}
 
 
@@ -316,18 +316,18 @@
 在$m = n$和$\SetS^{(i)} = \{i\}$的极端情况下，广义伪似然会变为伪随机。
 \gls{generalized_pseudolikelihood_estimator}目标函数如下所示
 \begin{equation}
-	\sum_{i=1}^m \log p(\Vx_{\SetS^{(i)}} | \Vx_{- \SetS^{(i)} })。
+	\sum_{i=1}^m \log p(\RVx_{\SetS^{(i)}} | \RVx_{- \SetS^{(i)} }).
 \end{equation}
 
 
 基于\gls{pseudolikelihood}的方法的性能在很大程度上取决于模型是如何使用的。
-\gls{pseudolikelihood}容易在需要完全联合分布$p(\Vx)$的良好模型的任务上效果不好，例如密度估计和采样。
+\gls{pseudolikelihood}容易在需要完全联合分布$p(\RVx)$的良好模型的任务上效果不好，例如密度估计和采样。
 对于在训练期间只需要使用条件分布的任务而言，它可以比最大似然性能更好，例如填充少量的缺失值。
 如果数据具有规则结构，使得$\SetS$索引集可以被设计为表现最重要的相关，同时略去相关性可忽略的变量组，那么广义伪似然技巧会是特别强大的。
 例如，在自然图像中，在空间中相隔很远的像素也具有弱相关性，因此广义伪似然可以应用于每个$\SetS$集是小的空间定位窗口的情况。
 
 
-伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\Vx)$上提供下界的其他近似一起使用，例如第\ref{chap:approximate_inference}章中讨论的变分推理。这是因为$\tilde{p}$出现在了分母中。
+伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如第\ref{chap:approximate_inference}章中讨论的变分推理。这是因为$\tilde{p}$出现在了分母中。
 分母的下限只提供了整个表达式的上界，然而我们并不关心最大化上界。
 这使得难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的深度模型，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
 尽管如此，\gls{pseudolikelihood}仍然对\gls{DL}有用，因为它可以用于单层模型或是使用不基于下限的近似推理方法的深度模型。
@@ -351,17 +351,17 @@
 对数密度相对于其参数的导数$\nabla_{\Vx} \log p(\Vx)$被称为其\firstgls{score}，名称\emph{\gls{score_matching}}正是来自这样的术语。
 \gls{score_matching}使用的策略是最小化模型的对数密度相对于输入的导数与数据对数密度相对于输入的导数之间的预期平方差：
 \begin{equation}
-	L(\Vx, \Vtheta) = \frac{1}{2} \norm{  \nabla_{\Vx} \log p_{\text{model}}(\Vx; \Vtheta) - \nabla_{\Vx} \log p_{\text{data}} (\Vx)  }_2^2
+	L(\Vx, \Vtheta) = \frac{1}{2} \norm{  \nabla_{\Vx} \log p_{\text{model}}(\Vx; \Vtheta) - \nabla_{\Vx} \log p_{\text{data}} (\Vx)  }_2^2,
 \end{equation}
 \begin{equation}
-	J(\Vtheta) = \frac{1}{2} \SetE_{p_{\text{data}}(\Vx)}  L(\Vx, \Vtheta)
+	J(\Vtheta) = \frac{1}{2} \SetE_{p_{\text{data}}(\Vx)}  L(\Vx, \Vtheta),
 \end{equation}
 \begin{equation}
-	\Vtheta^* = \min_{\Vtheta} J(\Vtheta)
+	\Vtheta^* = \min_{\Vtheta} J(\Vtheta) .
 \end{equation}
 
 
-该目标函数避免了微分\gls{partition_function}$Z$相关的困难，因为$Z$不是$x$的函数，因此$\nabla_{\Vx} Z = 0$。
+该目标函数避免了微分\gls{partition_function}$Z$相关的困难，因为$Z$不是$x$的函数，因此$\nabla_{\RVx} Z = 0$。
 最初，\gls{score_matching}似乎有一个新的困难：计算数据分布的\gls{score}需要知道生成训练数据的真实分布$p_{data}$。
 幸运的是，最小化$L(\Vx, \Vtheta)$的期望等效于最小化如下式子的期望值
 \begin{equation}
@@ -375,11 +375,11 @@
 
 % -- 609 --
 
-因为\gls{score_matching}需要获得关于$\Vx$的导数，所以它不适用于具有离散数据的模型，这些模型中的\gls{latent_variable}可能是离散的。
+因为\gls{score_matching}需要获得关于$\RVx$的导数，所以它不适用于具有离散数据的模型，这些模型中的\gls{latent_variable}可能是离散的。
 
 
 类似于\gls{pseudolikelihood}，\gls{score_matching}只有在我们能够直接估计$\log \tilde{p}(x)$及其导数的时候才有效。
-它不与在$\log \tilde{p}(\Vx)$上仅提供下界的方法相兼容，因为\gls{score_matching}需要$\log \tilde{p}(\Vx)$的导数和二阶导数，而下限不能传达关于其导数的任何信息。
+它不与在$\log \tilde{p}(\RVx)$上仅提供下界的方法相兼容，因为\gls{score_matching}需要$\log \tilde{p}(\RVx)$的导数和二阶导数，而下限不能传达关于其导数的任何信息。
 这意味着\gls{score_matching}不能应用于\gls{hidden_unit}之间具有复杂相互作用的模型估计，例如\gls{sparse_coding}模型或\gls{DBM}。
 虽然\gls{score_matching}可以用于\gls{pretraining}较大模型的第一个\gls{hidden_layer}，但是它没有被用于训练较大模型较深层的\gls{pretraining}。
 这可能是因为这些模型的\gls{hidden_layer}通常包含一些离散变量。
@@ -399,10 +399,10 @@
 \gls{ratio_matching}要最小化以下目标函数在样本上的均值：
 \begin{equation}
 	L^{(RM)} (\Vx, \Vtheta) = \sum_{j=1}^n \left( 
-	\frac{1}{ 1 + \frac{ p_{\text{model}}(\Vx; \Vtheta) }{ p_{\text{model}}(f(\Vx), j); \Vtheta) } }
-\right)^2，
+	\frac{1}{ 1 + \frac{ p_{\text{model}}(\Vx; \Vtheta) }{ p_{\text{model}}(f(\Vx), j); \Vtheta) } } 
+\right)^2.
 \end{equation}
-其中$f(\Vx, j)$返回$\Vx$在位置$j$处被翻转的位。
+其中$f(\Vx, j)$返回$\RVx$在位置$j$处被翻转的位。
 \gls{ratio_matching}避免\gls{partition_function}，使用了与\gls{pseudolikelihood}估计相同的技巧：在两个概率的比率中，\gls{partition_function}会抵消掉。
 \cite{Marlin10Inductive-small}发现，在使用\gls{ratio_matching}训练的模型给测试集图像去噪的能力方面，\gls{ratio_matching}要优于\glssymbol{SML}，\gls{pseudolikelihood}和\glssymbol{GSM}。
 
@@ -455,34 +455,34 @@
 \textbf{\gls{NCE}}（\textbf{noise-contrastive estimation}，\glssymbol{NCE}）\citep{Gutmann+Hyvarinen-2010}采取了一种不同的策略。
  在这种方法中，由模型估计的\gls{PD}被明确表示为
 \begin{equation}
-	\log p_{\text{model}} (\Vx) = \log \tilde{p}_{\text{model}} (\Vx; \Vtheta) + c，
+	\log p_{\text{model}} (\RVx) = \log \tilde{p}_{\text{model}} (\RVx; \Vtheta) + c,
 \end{equation}
 其中$c$被明确引入为$-\log Z(\Vtheta)$的近似。
 不是仅估计$\Vtheta$，\gls{NCE}过程将$c$视为另一参数，使用相同的算法同时估计$\Vtheta$和$c$。
-因此，所得到的$\log p_{\text{model}}(\Vx)$可能不完全对应于有效的\gls{PD}，但随着$c$估计的改进，它将变得越来越接近有效值\footnote{\glssymbol{NCE}}也适用于具有易于处理的，不需要引入额外参数$c$的\gls{partition_function}的问题。它已经是最令人感兴趣的估计具有复杂\gls{partition_function}模型的方法。
+因此，所得到的$\log p_{\text{model}}(\RVx)$可能不完全对应于有效的\gls{PD}，但随着$c$估计的改进，它将变得越来越接近有效值\footnote{\glssymbol{NCE}}也适用于具有易于处理的，不需要引入额外参数$c$的\gls{partition_function}的问题。它已经是最令人感兴趣的估计具有复杂\gls{partition_function}模型的方法。
 
 
 这种方法不可能使用最大似然作为估计的标准。
 最大似然标准可以设置$c$为任意大的值，而不是设置$c$以创建一个有效的\gls{PD}。
 
 
-\glssymbol{NCE}将估计$p(\Vx)$的\gls{unsupervised_learning}问题化为学习一个概率二元分类器，其中的类别之一对应着模型生成的数据。
+\glssymbol{NCE}将估计$p(\RVx)$的\gls{unsupervised_learning}问题化为学习一个概率二元分类器，其中的类别之一对应着模型生成的数据。
 该\gls{supervised_learning}问题以这种方式构建，\gls{MLE}定义了原始问题的渐近一致估计。
 
 
-具体来说，我们引入了第二个分布，\firstgls{noise_distribution}$p_{\text{noise}}(\Vx)$。
+具体来说，我们引入了第二个分布，\firstgls{noise_distribution}$p_{\text{noise}}(\RVx)$。
 \gls{noise_distribution}应该易于估计和从中取样。
-我们现在可以构造一个$x$和新二元变量$y$的模型。
+我们现在可以构造一个$\RVx$和新二元变量$y$的模型。
 在新的联合模型中，我们指定
 \begin{equation}
-	p_{\text{joint}} (y = 1) = \frac{1}{2}
+	p_{\text{joint}} (y = 1) = \frac{1}{2},
 \end{equation}
 \begin{equation}
-	p_{\text{joint}} (\Vx \,|\, y = 1) = p_{\text{model}} (\Vx)
+	p_{\text{joint}} (\RVx \,|\, y = 1) = p_{\text{model}} (\RVx),
 \end{equation}
 和
 \begin{equation}
-	p_{\text{joint}} (\Vx \,|\, y = 0) = p_{\text{noise}}(\Vx)
+	p_{\text{joint}} (\RVx \,|\, y = 0) = p_{\text{noise}}(\RVx).
 \end{equation}
 换言之，$y$是一个决定我们从模型还是从\gls{noise_distribution}中生成$\Vx$的开关变量。
 
@@ -490,32 +490,32 @@
 
 我们可以在训练数据上构造一个类似的联合模型。
 在这种情况下，开关变量决定是从\textbf{数据}还是从噪扰分布中抽取$\Vx$。
-形式地，$p_{\text{train}}(y = 1) = \frac{1}{2}$，$p_{\text{train}}( x | y = 1) = p_{\text{data}}( \Vx)$，和
-$p_{\text{train}}(\Vx | y = 0) = p_{\text{noise}}(\Vx)$。
+形式地，$p_{\text{train}}(y = 1) = \frac{1}{2}$，$p_{\text{train}}( \RVx | y = 1) = p_{\text{data}}( \RVx)$，和
+$p_{\text{train}}(\RVx | y = 0) = p_{\text{noise}}(\RVx)$。
 
 
 现在我们可以应用标准的最大似然学习拟合$p_{\text{joint}}$到$p_{\text{train}}$的\textbf{监督}学习问题：
 \begin{equation}
-	\Vtheta, c = \underset{ \Vtheta, c}{\arg\max} \SetE_{\Vx, y \sim p_{\text{train}}} \log 
-	p_{\text{joint}} (y | \Vx)
+	\Vtheta, c = \underset{ \Vtheta, c}{\arg\max} \SetE_{\RVx, y \sim p_{\text{train}}} \log 
+	p_{\text{joint}} (y | \RVx).
 \end{equation}
 
 
 分布$p_{\text{joint}}$本质上是将\gls{logistic_regression}模型应用于模型和\gls{noise_distribution}之间的对数概率差异：
 \begin{equation}
-	p_{\text{joint}} (y = 1 | \Vx) = \frac{ p_{\text{model}}(\Vx) }{ p_{\text{model}}(\Vx) + p_{\text{noise}}(\Vx) }
+	p_{\text{joint}} (y = 1 | \RVx) = \frac{ p_{\text{model}}(\RVx) }{ p_{\text{model}}(\RVx) + p_{\text{noise}}(\RVx) }
 \end{equation}
 \begin{equation}
- = \frac{1}{1 + \frac{ p_{\text{noise}}(\Vx) }{ p_{\text{model}}(\Vx) }}
+ = \frac{1}{1 + \frac{ p_{\text{noise}}(\RVx) }{ p_{\text{model}}(\RVx) }}
 \end{equation}
 \begin{equation}
-= \frac{1}{1 + \exp \left( \log \frac{ p_{\text{noise}}(\Vx) }{ p_{\text{model}}(\Vx) } \right)}
+= \frac{1}{1 + \exp \left( \log \frac{ p_{\text{noise}}(\RVx) }{ p_{\text{model}}(\RVx) } \right)}
 \end{equation}
 \begin{equation}
-	= \sigma \left( - \log \frac{ p_{\text{noise}} (\Vx) }{ p_{\text{model}} (\Vx) } \right)
+	= \sigma \left( - \log \frac{ p_{\text{noise}} (\RVx) }{ p_{\text{model}} (\RVx) } \right)
 \end{equation}
 \begin{equation}
-	= \sigma ( \log p_{\text{model}} (\Vx) - \log p_{\text{noise}} (\Vx)  )
+	= \sigma ( \log p_{\text{model}} (\RVx) - \log p_{\text{noise}} (\RVx)  ) .
 \end{equation}
 
 
@@ -541,8 +541,8 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 
 
 类似于\gls{score_matching}和\gls{pseudolikelihood}，如果只有$p$的下限可用，那么\glssymbol{NCE}不会有效。
-这样的下界能够用于构建$p_{\text{joint}}( y = 1 | \Vx)$的下界，但是它只能用于构建$p_{\text{joint}}(y = 0 | \Vx)$（出现在一般的\glssymbol{NCE}对象中）的上界。
-同样地，$p_{\text{noise}}$的下界也没有用，因为它只提供了$p_{\text{joint}}( y = 1 | \Vx)$的上界。
+这样的下界能够用于构建$p_{\text{joint}}( y = 1 | \RVx)$的下界，但是它只能用于构建$p_{\text{joint}}(y = 0 | \RVx)$（出现在一般的\glssymbol{NCE}对象中）的上界。
+同样地，$p_{\text{noise}}$的下界也没有用，因为它只提供了$p_{\text{joint}}( y = 1 | \RVx)$的上界。
 
 
 当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}定义了一个被称为\gls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望\citep{Goodfellow-ICLR2015}。
@@ -567,13 +567,13 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 在\emph{评估}模型，监控训练性能，和模型相互比较时，这通常是很重要的。
 
 
-例如，假设我们有两个模型：定义\gls{PD}$p_A(\Vx; \Vtheta_A)= \frac{1}{Z_A} \tilde{p}_A(\Vx; \Vtheta_A)$的模型$\CalM_A$和定义\gls{PD} $p_B(\Vx; \Vtheta_B)= \frac{1}{Z_B} \tilde{p}_B(\Vx; \Vtheta_B)$的模型$\CalM_B$。
+例如，假设我们有两个模型：定义\gls{PD}$p_A(\Vx; \Vtheta_A)= \frac{1}{Z_A} \tilde{p}_A(\RVx; \Vtheta_A)$的模型$\CalM_A$和定义\gls{PD} $p_B(\RVx; \Vtheta_B)= \frac{1}{Z_B} \tilde{p}_B(\RVx; \Vtheta_B)$的模型$\CalM_B$。
 比较模型的常用方法是评估和比较两个模型分配给\gls{iid_chap18}测试数据集的似然。
 假设测试集含$m$个样本$\{ \Vx^{(1)}, \dots, \Vx^{(m)} \}$。
 如果 $\prod_i p_A ( x^{(i)}; \Vtheta_A) > \prod_i p_B( x^{(i)}; \Vtheta_B)$，或等价地，如果
 \begin{equation}
 \label{eq:18.38}
-	\sum_i \log p_A (x^{(i)}; \Vtheta_A) - \sum_i \log p_B(x^{(i)}; \Vtheta_B) > 0，
+	\sum_i \log p_A (x^{(i)}; \Vtheta_A) - \sum_i \log p_B(x^{(i)}; \Vtheta_B) > 0,
 }
 \end{equation}
 那么我们说$\CalM_A$是一个比$\CalM_B$更好的模型（或者，至少可以说，它在测试集上是一个更好的模型），这是指它有一个更好的测试对数似然。
@@ -582,8 +582,8 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 我们可以通过将式\ref{eq:18.38}重新分布为另一种形式来简化情况，在该形式中我们只需要知道两个模型的\gls{partition_function}的\textbf{比率}：
 \begin{equation}
 \label{eq:18.39}
-	\sum_i \log p_A(\Vx^{(i)}; \Vtheta_A) - \sum_i \log p_B(\Vx^{(i)}; \Vtheta_B) =
-	\sum_i \left(  \log \frac{ \tilde{p}_A(\Vx^{(i)}; \Vtheta_A) }{ \tilde{p}_B(\Vx^{(i)}; \Vtheta_B) } \right)  - m\log \frac{Z(\Vtheta_A)}{ Z(\Vtheta_B) }.
+	\sum_i \log p_A(\RVx^{(i)}; \Vtheta_A) - \sum_i \log p_B(\RVx^{(i)}; \Vtheta_B) =
+	\sum_i \left(  \log \frac{ \tilde{p}_A(\RVx^{(i)}; \Vtheta_A) }{ \tilde{p}_B(\RVx^{(i)}; \Vtheta_B) } \right)  - m\log \frac{Z(\Vtheta_A)}{ Z(\Vtheta_B) }.
 \end{equation}
 因此，我们可以在不知道任一模型的\gls{partition_function}，而只知道它们比率的情况下，判断$\CalM_A$是否是比$\CalM_B$更好的模型。
 正如我们将很快看到的，在两个模型是相似的情况下，我们可以使用\gls{importance_sampling}来估计比率。
@@ -598,31 +598,31 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 
 一种估计\gls{partition_function}的简单方法是使用\gls{monte_carlo}方法，例如简单\gls{importance_sampling}。
 我们使用连续变量积分来表示该方法，也可以替换积分为求和，很容易地应用到离散变量的情况。
-我们使用提议分布$p_0(\Vx) = \frac{1}{Z_0} \tilde{p}_0( \Vx)$，其在\gls{partition_function}$Z_0$和未归一化分布$\tilde{p}_0(\Vx)$上易于处理采样且易于处理评估。
+我们使用提议分布$p_0(\RVx) = \frac{1}{Z_0} \tilde{p}_0( \RVx)$，其在\gls{partition_function}$Z_0$和未归一化分布$\tilde{p}_0(\RVx)$上易于处理采样且易于处理评估。
 
 % -- 615 --
 
 \begin{equation}
-	Z_1 = \int \tilde{p}_1 (\Vx) \mathrm{d} \Vx 
+	Z_1 = \int \tilde{p}_1 (\RVx) \mathrm{d} \RVx 
 \end{equation}
 \begin{equation}
-	= \int  \frac{ p_0(\Vx) }{ p_0(\Vx) }   \tilde{p}_1 (\Vx) \mathrm{d} \Vx 
+	= \int  \frac{ p_0(\RVx) }{ p_0(\RVx) }   \tilde{p}_1 (\RVx) \mathrm{d} \RVx 
 \end{equation}
 \begin{equation}
-	= Z_0 \int  p_0(\Vx)   \frac{ \tilde{p}_1 (\Vx) }{ \tilde{p}_0 (\Vx) } \mathrm{d} \Vx 
+	= Z_0 \int  p_0(\RVx)   \frac{ \tilde{p}_1 (\RVx) }{ \tilde{p}_0 (\RVx) } \mathrm{d} \RVx 
 \end{equation}
 \begin{equation}
 \label{eq:18.44}
-	\tilde{Z}_1 = \frac{Z_0}{K} \sum_{k=1}^K \frac{ \tilde{p}_1(\Vx^{(k)})  }{ \tilde{p}_0(\Vx^{(k)}) }  \quad\quad s.t.: \Vx^{(k)} \sim p_0
+	\tilde{Z}_1 = \frac{Z_0}{K} \sum_{k=1}^K \frac{ \tilde{p}_1(\RVx^{(k)})  }{ \tilde{p}_0(\RVx^{(k)}) }  \quad\quad s.t.: \RVx^{(k)} \sim p_0
 }
 \end{equation}
-在最后一行，我们使用\gls{monte_carlo}估计，使用从$p_0(\Vx)$中抽取的采样计算积分$\tilde{Z}_1$，然后用未归一化的$\tilde{p}_1$和提议分布$p_0$的比率对每个采样加权。
+在最后一行，我们使用\gls{monte_carlo}估计，使用从$p_0(\RVx)$中抽取的采样计算积分$\tilde{Z}_1$，然后用未归一化的$\tilde{p}_1$和提议分布$p_0$的比率对每个采样加权。
 
 
 这种方法使得我们可以估计\gls{partition_function}之间的比率：
 \begin{equation}
-	\frac{1}{K} \sum_{k=1}^K \frac{ \tilde{p}_1 (\Vx^{(k)}) }{ \tilde{p}_0 (\Vx^{(k)}) }
-	\quad\quad s.t.: \Vx^{(k)} \sim p_0.
+	\frac{1}{K} \sum_{k=1}^K \frac{ \tilde{p}_1 (\RVx^{(k)}) }{ \tilde{p}_0 (\RVx^{(k)}) }
+	\quad\quad s.t.: \RVx^{(k)} \sim p_0.
 \end{equation}
 然后该值可以用于直接比较式\ref{eq:18.39}中的两个模型。
 
@@ -637,9 +637,9 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 这可以通过估计我们的估计$\tilde{Z}_1$的方差来定量地理解：
 \begin{equation}
 	\hat{Var} \left( \hat{Z}_1 \right)  = \frac{Z_0 }{K^2} \sum_{k=1}^K
-\left(  \frac{ \tilde{p}_1(\Vx^{(k)}) }{  \tilde{p}_0(\Vx^{(k)}) } - \hat{Z}_1  \right)^2。
+\left(  \frac{ \tilde{p}_1(\RVx^{(k)}) }{  \tilde{p}_0(\RVx^{(k)}) } - \hat{Z}_1  \right)^2.
 \end{equation}
-当重要性权重$\frac{ \tilde{p}_1(\Vx^{(k)}) }{ \tilde{p}_0(\Vx^{(k)}) } $存在显著偏差时，上式的值是最大的。
+当重要性权重$\frac{ \tilde{p}_1(\RVx^{(k)}) }{ \tilde{p}_0(\RVx^{(k)}) } $存在显著偏差时，上式的值是最大的。
 
 % -- 616 --
 
@@ -663,7 +663,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 \begin{align}
 \frac{Z_1}{Z_0} &= \frac{Z_1}{Z_0} \frac{Z_{\eta_1}}{Z_{\eta_1}} \dots \frac{Z_{\eta_{n-1}}}{Z_{\eta_{n-1}}} \\
 &= \frac{Z_{\eta_1}}{Z_{0}}  \frac{Z_{\eta_2}}{Z_{\eta_1}}  \dots \frac{Z_{\eta_{n-1}}}{Z_{\eta_{n-2}}} \frac{Z_{1}}{Z_{\eta_{n-1}}} \\
-&= \prod_{j=0}^{n-1} \frac{ Z_{\eta_{j+1}} }{Z_{\eta_j}} \label{eq:18.49}
+&= \prod_{j=0}^{n-1} \frac{ Z_{\eta_{j+1}} }{Z_{\eta_j}}. \label{eq:18.49}
 \end{align}
 如果对于所有的$0 \leq j \leq n-1$，分布$p_{\eta_j}$和$p_{\eta_{j+1}}$足够接近，那么我们可以可靠地使用简单\gls{importance_sampling}来估计每个因子$\frac{Z_{\eta_{j+1}}}{ Z_{\eta_j}}$，然后使用这些得到$\frac{Z_1}{Z_0}$的估计。
 
@@ -674,7 +674,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 也就是说，它可以被特别设计为适应的问题领域。
 中间分布的一个通用目标和流行选择是使用目标分布$p_1$的加权几何平均，起始分布（其\gls{partition_function}是已知的）为$p_0$：
 \begin{equation}
-	p_{\eta_j} \propto p_1^{\eta_j} p_0^{1-\eta_j}。
+	p_{\eta_j} \propto p_1^{\eta_j} p_0^{1-\eta_j}.
 \end{equation}
 
 
@@ -690,15 +690,15 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 \begin{itemize}
 	\item 对于 $k=1 \dots K$ 
 		\newline
-		\quad\quad -- 采样 $ \Vx_{\eta_1}^{(k)} \sim p_0(\Vx) $
+		\quad\quad -- 采样 $ \Vx_{\eta_1}^{(k)} \sim p_0(\RVx) $
 		\newline
-		\quad\quad -- 采样 $ \Vx_{\eta_2}^{(k)} \sim T_{\eta_1}(\Vx_{\eta_2}^{(k)} | \Vx_{\eta_1}^{(k)} ) $
+		\quad\quad -- 采样 $ \Vx_{\eta_2}^{(k)} \sim T_{\eta_1}(\RVx_{\eta_2}^{(k)} | \Vx_{\eta_1}^{(k)} ) $
 		\newline
 		\quad\quad -- $\dots$
 		\newline
-		\quad\quad -- 采样 $ \Vx_{\eta_{n-1}}^{(k)} \sim T_{\eta_{n-2}}(\Vx_{\eta_{n-1}}^{(k)} | \Vx_{\eta_{n-2}}^{(k)} ) $
+		\quad\quad -- 采样 $ \Vx_{\eta_{n-1}}^{(k)} \sim T_{\eta_{n-2}}(\RVx_{\eta_{n-1}}^{(k)} | \Vx_{\eta_{n-2}}^{(k)} ) $
 		\newline
-		\quad\quad -- 采样 $ \Vx_{\eta_n}^{(k)} \sim T_{\eta_{n-1}}(\Vx_{\eta_n}^{(k)} | \Vx_{\eta_{n-1}}^{(k)} ) $
+		\quad\quad -- 采样 $ \Vx_{\eta_n}^{(k)} \sim T_{\eta_{n-1}}(\RVx_{\eta_n}^{(k)} | \Vx_{\eta_{n-1}}^{(k)} ) $
 	\item 结束
 \end{itemize}
 
@@ -710,7 +710,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 }
 \frac{ \tilde{p}_{\eta_2} ( \Vx_{\eta_2}^{(k)} )  }{  \tilde{p}_{\eta_1} ( \Vx_{\eta_1}^{(k)} )  }
 \dots
-\frac{ \tilde{p}_{1} ( \Vx_{1}^{(k)} )  }{  \tilde{p}_{\eta_{n-1}} ( \Vx_{\eta_n}^{(k)} )  } 。
+\frac{ \tilde{p}_{1} ( \Vx_{1}^{(k)} )  }{  \tilde{p}_{\eta_{n-1}} ( \Vx_{\eta_n}^{(k)} )  } .
 \end{equation}
 为了避免诸如\gls{overflow}的数值问题，可能最好的方法是通过加法或减法计算$\log w^{(k)}$，而不是通过概率乘法和除法来计算$w^{(k)}$。
 
@@ -728,12 +728,12 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 &\tilde{p} (\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1) \\
 = &\tilde{p}_1 (\Vx_1) \tilde{T}_{\eta_{n-1}} (\Vx_{\eta_{n-1}} | \Vx_1)
  	\tilde{T}_{\eta_{n-2}}  (\Vx_{\eta_{n-2}} | \Vx_{\eta_{n-1}}) \dots
- 	\tilde{T}_{\eta_1} (\Vx_{\eta_1} | \Vx_{\eta_2}) \label{eq:18.55}
+ 	\tilde{T}_{\eta_1} (\Vx_{\eta_1} | \Vx_{\eta_2}) \label{eq:18.55} ,
 \end{align}
 其中$\tilde{T}_a$是由$T_a$定义的转移算子的逆（通过\gls{bayes_rule}的应用）：
 \begin{equation}
 	\tilde{T}_a (\Vx' | \Vx) = \frac{p_a(\Vx')}{ p_a{\Vx} } T_a(\Vx | \Vx') = 
-\frac{  \tilde{p}_a(\Vx')}{ \tilde{p}_a{\Vx} } T_a(\Vx | \Vx')
+\frac{  \tilde{p}_a(\Vx')}{ \tilde{p}_a{\Vx} } T_a(\Vx | \Vx') .
 \end{equation}
 将以上插入到式\ref{eq:18.55}给出的扩展状态空间上的联合分布的表达式中，我们得到：
 \begin{equation}
@@ -751,7 +751,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 \end{equation}
 通过上面给定的采样方案，现在我们有了从扩展样本上的联合提议分布$q$上生成采样的方法，联合分布如下
 \begin{equation}
-	q(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}, \Vx_1})  = p_0(\Vx_{\eta_1}) T_{\eta_1}( \Vx_{\eta_2} | \Vx_{\eta_1} ) \dots T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}})
+	q(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}, \Vx_1})  = p_0(\Vx_{\eta_1}) T_{\eta_1}( \Vx_{\eta_2} | \Vx_{\eta_1} ) \dots T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}}) .
 \end{equation}
 我们具有等式\ref{eq:18.59}给出的在扩展空间上的联合分布。
 以$q（\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)$作为我们从中抽样的扩展状态空间上的提议分布，仍然需要确定重要性权重
@@ -759,7 +759,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 	w^{(k)} = \frac{ \tilde{p}(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1) }{ q( \Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1 ) } =
 \frac{ \tilde{p}_1(\Vx_1^{(k)}) }{ \tilde{p}_{\eta_{n-1}}^{(k)}(\Vx_{\eta_{n-1}}^{(k)}) } \dots
 \frac{ \tilde{p}_{\eta_{2}}^{(k)}(\Vx_{\eta_{2}}^{(k)}) }{ \tilde{p}_{\eta_1}^{(k)}(\Vx_{\eta_{1}}^{(k)}) } 
-\frac{ \tilde{p}_{\eta_{1}}^{(k)}(\Vx_{\eta_{1}}^{(k)}) }{ \tilde{p}_{0}^{(k)}(\Vx_{0}^{(k)}) }
+\frac{ \tilde{p}_{\eta_{1}}^{(k)}(\Vx_{\eta_{1}}^{(k)}) }{ \tilde{p}_{0}^{(k)}(\Vx_{0}^{(k)}) } .
 \end{equation}
 这些权重和\glssymbol{AIS}提出的权重相同。
 因此，我们可以将\glssymbol{AIS}解释为应用于扩展状态上的简单\gls{importance_sampling}，其有效性紧紧来源于\gls{importance_sampling}的有效性。
@@ -782,13 +782,13 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 
 \gls{bridge_sampling}估计比率$Z_1 / Z_0$为$\tilde{p}_0$和$\tilde{p}_*$之间重要性权重期望与$\tilde{p}_0$和$\tilde{p}_*$之间重要性权重的比率：
 \begin{equation}
-	\frac{Z_1}{ Z_0} \approx \sum_{k=1}^K \frac{ \tilde{p}_*(\Vx_0^{(k)}) }{ \tilde{p}_0(\Vx_0^{(k)}) } \bigg/ \sum_{k=1}^K \frac{ \tilde{p}_*(\Vx_1^{(k)}) }{ \tilde{p}_1(\Vx_1^{(k)}) }
+	\frac{Z_1}{ Z_0} \approx \sum_{k=1}^K \frac{ \tilde{p}_*(\Vx_0^{(k)}) }{ \tilde{p}_0(\Vx_0^{(k)}) } \bigg/ \sum_{k=1}^K \frac{ \tilde{p}_*(\Vx_1^{(k)}) }{ \tilde{p}_1(\Vx_1^{(k)}) } .
 \end{equation}
 如果仔细选择\gls{bridge_sampling}$p_*$，使其与$p_0$和$p_1$都有很大重合的话，那么\gls{bridge_sampling}会使得两个分布（或更正式地，$D_{KL}(p_0 \| p_1)$）之间的差距比标准\gls{importance_sampling}大得多。
 
 % -- 620 --
 
-可以表明，最优的\gls{bridge_sampling}是$p_*^{(opt)} (\Vx) \propto \frac{ \tilde{p}_0(\Vx) \tilde{p}_1(\Vx) }{ r\tilde{p}_0(\Vx) + \tilde{p}_1(\Vx) }$，其中$r = Z_1 / Z_0$。
+可以表明，最优的\gls{bridge_sampling}是$p_*^{(opt)} (\RVx) \propto \frac{ \tilde{p}_0(\Vx) \tilde{p}_1(\Vx) }{ r\tilde{p}_0(\Vx) + \tilde{p}_1(\Vx) }$，其中$r = Z_1 / Z_0$。
 首先，这似乎是一个不可行的解决方案，因为它似乎需要我们估计数值$Z_1 / Z_0$。
 然而，可以从粗糙的$r$开始估计，然后使用得到的\gls{bridge_sampling}逐步迭代以改进我们的估计\citep{Neal05estimatingratios}。
 也就是说，我们会迭代地重新估计比率，并使用每次迭代更新$r$的值。
