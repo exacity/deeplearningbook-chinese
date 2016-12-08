@@ -209,7 +209,7 @@
 该分解意味着我们通过将其拆分成$n$个\gls{unsupervised_learning}，来解决表面上的\gls{unsupervised_learning}$p(\Vx)$。
 另外，我们求解\gls{supervised_learning}问题$p(y|\Vx)$时，也可以使用传统的\gls{unsupervised_learning}技巧学习联合分布$p(\Vx|y)$，然后推测
 \begin{equation}
-    p(y|\Vx) = \frac{p(\Vx,y)}{\sum_{y'}p(\Vx,y')}
+    p(y|\Vx) = \frac{p(\Vx,y)}{\sum_{y'}p(\Vx,y')}.
 \end{equation}
 尽管\gls{unsupervised_learning}和\gls{supervised_learning}并非完全正式或不同的概念，它们确实有助于粗略分类我们研究\gls{ML}算法时遇到的问题。
 传统地，人们将回归，分类，或者结构化输出问题称为\gls{supervised_learning}。
@@ -296,14 +296,14 @@
 衡量模型性能的一种方法是计算模型在\gls{test_set}上的\firstgls{mean_squared_error}。
 如果$\hat{y}^{(\text{test})}$表示模型在\gls{test_set}上的预测值，那么\gls{mean_squared_error}表示为：
 \begin{equation}
-    \text{MSE}_{\text{test}} = \frac{1}{m} \sum_i ( \hat{\Vy}^{(\text{test})} - \Vy^{(\text{test})})_i^2
+    \text{MSE}_{\text{test}} = \frac{1}{m} \sum_i ( \hat{\Vy}^{(\text{test})} - \Vy^{(\text{test})})_i^2.
 \end{equation}
 直观上，当$\hat{\Vy}^{(\text{test})} = \Vy^{(\text{test})}$时，我们会发现误差降为$0$。
 我们也可以表示为
 \begin{equation}
-    \text{MSE}_{\text{test}} = \frac{1}{m} \norm{ \hat{\Vy}^{(\text{test})} - \Vy^{(\text{test})}}_2^2
+    \text{MSE}_{\text{test}} = \frac{1}{m} \norm{ \hat{\Vy}^{(\text{test})} - \Vy^{(\text{test})}}_2^2,
 \end{equation}
-当预测值和\gls{target}值之间的欧几里得距离增加时，误差也会增加。
+所以当预测值和\gls{target}值之间的欧几里得距离增加时，误差也会增加。
 
 为了得到一个\gls{ML}算法，我们需要设计一个算法，通过观察训练集$(\MX^{(\text{train})}$是算法获得\gls{experience}，以减少$\text{MSE}_{\text{test}}$的方式改进权重$\Vw$。
 这样做的一种直观的方式（我们将在后续的第5.5.1节说明其合法性）是最小化训练集上的\gls{mean_squared_error}，$\text{MSE}_{\text{train}}$。
@@ -357,7 +357,7 @@
 值得注意的是，术语{\gls{linear_regression}}通常用来指稍微复杂一些，附加额外参数（截距项$b$）的模型。
 在这个模型中，
 \begin{equation}
-    \hat{y} = \Vw^\Tsp \Vx + b
+    \hat{y} = \Vw^\Tsp \Vx + b,
 \end{equation}
 因此从参数到预测的映射仍是一个线性函数，而从\gls{feature}到预测的映射是一个仿射函数。
 如此扩展到仿射函数意味着模型预测的曲线仍然看起来像是一条直线，只是这条直线没必要经过原点。
@@ -390,7 +390,7 @@
 
 在我们的\gls{linear_regression}实例中，我们通过最小化\gls{training_error}来训练模型，
 \begin{equation}
-    \frac{1}{m^{(\text{train})}} \norm{\MX^{(\text{train})}\Vw - \Vy^{(\text{train})}}_2^2
+    \frac{1}{m^{(\text{train})}} \norm{\MX^{(\text{train})}\Vw - \Vy^{(\text{train})}}_2^2,
 \end{equation}
 但是我们真正关心的是\gls{test_error}，$\frac{1}{m^{(\text{test})}} \norm{\MX^{(\text{test})}\Vw - \Vy^{(\text{test})}}_2^2$。
 
@@ -441,17 +441,17 @@
 
 一次多项式提供了我们已经熟悉的\gls{linear_regression}模型，其预测如下：
 \begin{equation}
-    \hat{y} = b + wx
+    \hat{y} = b + wx.
 \end{equation}
 通过引入$x^2$作为\gls{linear_regression}模型的另一个\gls{feature}，我们能够学习关于$x$的二次函数模型：
 \begin{equation}
-    \hat{y} = b + w_1x + w_2x^2
+    \hat{y} = b + w_1x + w_2x^2.
 \end{equation}
 尽管该模型实现其\emph{输入}的二次函数，但输出仍是\emph{参数}的线性函数。
 因此我们仍然可以用标准方程来训练出模型的闭解。
 我们可以继续添加$x$的更多幂作为额外\gls{feature}，例如下面的$9$次多项式：
 \begin{equation}
-    \hat{y} = b + \sum_{i=1}^9 w_i x^i
+    \hat{y} = b + \sum_{i=1}^9 w_i x^i.
 \end{equation}
 
 当\gls{ML}算法的\gls{capacity}适合于所执行任务的复杂度和所提供数据的数量时，算法效果会最佳。
@@ -615,7 +615,7 @@
 带权重衰减的\gls{linear_regression}最小化包含训练集上的最小均方差和规则项的和$J(\Vw)$，偏好于平方$L^2$范数较小的权重。
 具体如下：
 \begin{equation}
-    J(\Vw) = \text{MSE}_{\text{train}} + \lambda \Vw^\Tsp \Vw
+    J(\Vw) = \text{MSE}_{\text{train}} + \lambda \Vw^\Tsp \Vw,
 \end{equation}
 其中$\lambda$是提前挑选的值，控制我们偏好小范数权重的程度。
 当$\lambda =0$，我们没有任何偏好。
@@ -718,7 +718,7 @@
 让$\{\Vx^{(1)},...,\Vx^{(m)}\}$是$m$个独立同分布（i.i.d.）的数据点。
 \firstgls{point_estimator}或\firstgls{statistics}是这些数据的任意函数：
 \begin{equation}
-    \hat{\Vtheta}_m = g(\Vx^{(1)}, …, \Vx^{(m)}) 
+    \hat{\Vtheta}_m = g(\Vx^{(1)}, \dots, \Vx^{(m)}) .
 \end{equation}
 这个定义不要求$g$返回一个接近真实植$\Vtheta$的值，或是$g$的值域为$\Vtheta$的允许取值。
 点估计的定义非常宽泛，给了\gls{estimator:chap5}的设计者极大的灵活性。
@@ -751,8 +751,7 @@
 估计的偏差被定义为：
 \begin{equation}
 \label{eq:5.20}
-    \text{bias}(\hat{\Vtheta}_m) = \SetE(\hat{\Vtheta}_m) - \Vtheta
-}
+    \text{bias}(\hat{\Vtheta}_m) = \SetE(\hat{\Vtheta}_m) - \Vtheta,
 \end{equation}
 其中期望作用在所有数据（看作是从随机变量采样得到的）上，$\Vtheta$是定义数据生成分布$\Vtheta$的真实值。
 如果$\text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5}$\hat{\Vtheta}_m$被称为是\firstgls{unbiased}，这意味着$\SetE(\hat{\Vtheta}_m) = \Vtheta$。
@@ -763,12 +762,12 @@
 \textbf{实例：伯努利分布}\quad 
 考虑一组服从均值为$\theta$的伯努利分布的独立同分布采样$\{x^{(1)}, …, x^{(m)}\}$：
 \begin{equation}
-    P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{(1 - x^{(i)})}
+    P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{(1 - x^{(i)})}.
 \end{equation}
 这个分布中参数$\theta$的常用估计是训练\gls{example:chap5}的均值：
 \begin{equation}
 \label{eq:5.22}
-    \hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}
+    \hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}.
 }
 \end{equation}
 判断这个\gls{estimator:chap5} 是否有偏，我们将式\ref{eq:5.22}代入式\ref{eq:5.20}：
@@ -787,7 +786,7 @@
 现在，考虑一组独立同分布的\gls{example:chap5}$\{x^{(1)}, …, x^{(m)}\}$服从高斯分布$p(x^{(i)}) = \mathcal{N}(x^{(i)}; \mu, \sigma^2)$，其中$i\in\{1,..., m\}$。
 回顾高斯概率密度函数如下：
 \begin{equation}
-    p(x^{(i)}; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{1}{2} \frac{(x^{(i)} - \mu)^2}{\sigma^2}  \right)
+    p(x^{(i)}; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{1}{2} \frac{(x^{(i)} - \mu)^2}{\sigma^2}  \right).
 \end{equation}
 
 高斯均值参数的常用\gls{estimator:chap5}被称\firstgls{sample_mean}：
@@ -812,14 +811,13 @@
 
 我们考虑的第一个方差估计称为\firstgls{sample_variance}：
 \begin{equation}
-    \hat{\sigma}_m^2 = \frac{1}{m} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2
+    \hat{\sigma}_m^2 = \frac{1}{m} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2,
 \end{equation}
 其中$\hat{\mu}_m$是\gls{sample_variance}。
 更形式地，我们感兴趣计算
 \begin{equation}
 \label{eq:5.37}
-    \text{bias} (\hat{\sigma}_m^2) = \SetE [ \hat{\sigma}_m^2 ]  - \sigma^2
-}
+    \text{bias} (\hat{\sigma}_m^2) = \SetE [ \hat{\sigma}_m^2 ]  - \sigma^2.
 \end{equation}
 我们首先估计项$\SetE [ \hat{\sigma}_m^2 ]$：
 \begin{align}
@@ -840,7 +838,7 @@
     \SetE{\tilde{\sigma}_m^2} &= \SetE \left[ \frac{1}{m-1} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2 \right] \\
         &= \frac{m}{m-1} \SetE[ \hat{\sigma}_m^2 ]  \\
         &= \frac{m}{m-1} \left( \frac{m-1}{m} \sigma^2 \right) \\
-        &= \sigma^2
+        &= \sigma^2.
 \end{align}
 
 % -- 123 --
@@ -869,7 +867,7 @@
 均值的\gls{standard_error}被记作
 \begin{equation}
 \label{eq:5.46}
-    \text{SE}(\hat{\mu}_m) = \sqrt{ \text{Var}[ \frac{1}{m} \sum_{i=1}^m x^{(i)} ] } = \frac{\sigma}{\sqrt{m}}
+    \text{SE}(\hat{\mu}_m) = \sqrt{ \text{Var}[ \frac{1}{m} \sum_{i=1}^m x^{(i)} ] } = \frac{\sigma}{\sqrt{m}},
 }
 \end{equation}
 其中$\sigma^2$是\gls{example:chap5}$x^i$的真实方差。
@@ -887,7 +885,7 @@
 中心极限定理告诉我们均值会接近一个高斯分布，我们可以用\gls{standard_error}计算出真实期望落在选定区间的概率。
 例如，以均值$\hat{\mu}_m$为中心的$95\%$置信区间是
 \begin{equation}
-    ( \hat{\mu}_m - 1.96\text{SE}(\hat{\mu}_m), \hat{\mu}_m + 1.96 \text{SE}(\hat{\mu}_m) )
+    ( \hat{\mu}_m - 1.96\text{SE}(\hat{\mu}_m), \hat{\mu}_m + 1.96 \text{SE}(\hat{\mu}_m) ),
 \end{equation}
 以上区间基于均值是$\hat{\mu}_m$和方差$\text{SE}(\hat{\mu}_m)^2$的高斯分布。
 在\gls{ML}实验中，我们通常说算法$A$比算法$B$好，是指算法$A$的误差的$95\%$置信区间的上界小于算法算法$B$的误差的$95\%$置信区间的下界。
@@ -982,32 +980,32 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 
  $\Vtheta$的最大后验估计被定义为：
 \begin{align}
-    \Vtheta_{\text{ML}} &= \underset{\theta}{\argmax} p_{\text{model}} (\SetX; \Vtheta) \\
-        &= \underset{\theta}{\argmax} \prod_{i=1}^m p_{\text{model}} (\Vx^{(i)}; \Vtheta) 
+    \Vtheta_{\text{ML}} &= \underset{\theta}{\argmax} p_{\text{model}} (\SetX; \Vtheta), \\
+        &= \underset{\theta}{\argmax} \prod_{i=1}^m p_{\text{model}} (\Vx^{(i)}; \Vtheta).
 \end{align}
 
 很多概率的乘积会因很多原因不方便。
 例如，很容易出现数值下溢。
 为了得到一个更方便但是等价的优化问题，我们观察到似然对数不会改变其$\argmax$但是便利地将乘积转化成了和：
 \begin{equation}
-    \Vtheta_{\text{ML}} = \underset{\theta}{\argmax} \sum_{i=1}^m \log p_{\text{model}} (\Vx^{(i)}; \Vtheta) 
+    \Vtheta_{\text{ML}} = \underset{\theta}{\argmax} \sum_{i=1}^m \log p_{\text{model}} (\Vx^{(i)}; \Vtheta) .
 \end{equation}
 因为当我们重新缩放损失函数时$\argmax$不会改变，我们可以除以$m$得到和训练数据经验分布$\hat{p}_{\text{data}}$相关的期望作为准则：
 \begin{equation}
 \label{eq:5.59}
-    \Vtheta_{\text{ML}} = \underset{\theta}{\argmax} \SetE_{\Vx \sim \hat{p}_{\text{data}}} \log p_{\text{model}} (\Vx^; \Vtheta) 
+    \Vtheta_{\text{ML}} = \underset{\theta}{\argmax} \SetE_{\Vx \sim \hat{p}_{\text{data}}} \log p_{\text{model}} (\Vx^; \Vtheta) .
 }
 \end{equation}
 
 解释\gls{maximum_likelihood_estimation}的一种观点是将它看作最小化训练集上的经验分布$\hat{p}_{\text{data}}$和模型分布之的间差异，两者之间的差异程度可以通过KL散度衡量。
 KL散度定义为
 \begin{equation}
-    D_{\text{KL}}(\hat{p}_{\text{data}} || p_{\text{model}}) = \SetE_{\Vx \sim \hat{p}_{\text{data}}} [ \log \hat{p}_{\text{data}}(\Vx) - \log p_{\text{model}}(\Vx) ] 
+    D_{\text{KL}}(\hat{p}_{\text{data}} || p_{\text{model}}) = \SetE_{\Vx \sim \hat{p}_{\text{data}}} [ \log \hat{p}_{\text{data}}(\Vx) - \log p_{\text{model}}(\Vx) ] .
 \end{equation}
 左边一项仅涉及到数据生成过程，和模型无关。
 这意味着当我们训练模型最小化KL散度时，我们只需要最小化
 \begin{equation}
-    -\SetE_{\Vx \sim \hat{p}_{\text{data}}} [ \log p_{\text{model}}(\Vx)  ] 
+    -\SetE_{\Vx \sim \hat{p}_{\text{data}}} [ \log p_{\text{model}}(\Vx)  ] ,
 \end{equation}
 当然，这和式\ref{eq:5.59}中最大化是相同的。
 
@@ -1033,13 +1031,12 @@ KL散度定义为
 实际上这是最常见的情况，因为这构成了大多数\gls{supervised_learning}的基础。
 如果$\MX$表示所有的输入，$\MY$表示我们观测到的\gls{target}，那么条件\gls{maximum_likelihood_estimation}是
 \begin{equation}
-    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} P(\MY | \MX; \Vtheta)
+    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} P(\MY | \MX; \Vtheta).
 \end{equation}
 如果假设\gls{example:chap5}是独立同分布的，那么这可以分解成
 \begin{equation}
 \label{eq:5.63}
-    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \sum_{i=1}^m \log P(\Vy^{(i)} | \Vx^{(i)}; \Vtheta)
-}
+    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \sum_{i=1}^m \log P(\Vy^{(i)} | \Vx^{(i)}; \Vtheta).
 \end{equation}
 
 % -- 129 --
@@ -1058,12 +1055,12 @@ KL散度定义为
 由于假设\gls{example:chap5}是独立同分布的，条件对数似然（式\ref{eq:5.63}）如下
 \begin{align}
      & \sum_{i=1}^m \log p(y^{(i)} | \Vx^{(i)}; \Vtheta) \\
-    =& -m \log\sigma - \frac{m}{2} \log(2\pi) - \sum_{i=1}^m \frac{ \norm{\hat{y}^{(i)} - y^{(i)} }^2 }{2\sigma^2}
+    =& -m \log\sigma - \frac{m}{2} \log(2\pi) - \sum_{i=1}^m \frac{ \norm{\hat{y}^{(i)} - y^{(i)} }^2 }{2\sigma^2},
 \end{align}
 其中$\hat{y}^{(i)}$是\gls{linear_regression}在第$i$个输入$\Vx^{(i)}$上的输出，$m$是训练\gls{example:chap5}的数目。
 对比于\gls{mean_squared_error}的对数似然，
 \begin{equation}
-    \text{MSE}_{\text{train}} = \frac{1}{m} \sum_{i=1}^m \norm{\hat{y}^P{(i)} - y^{(i)}}^2
+    \text{MSE}_{\text{train}} = \frac{1}{m} \sum_{i=1}^m \norm{\hat{y}^P{(i)} - y^{(i)}}^2,
 \end{equation}
 我们立刻可以看出最大化关于$\Vw$的对数似然和最小化\gls{mean_squared_error}会得到相同的参数估计$\Vw$。
 但是对于相同的最优$\Vw$，这两个准则有着不同的值。
@@ -1132,7 +1129,7 @@ KL散度定义为
 \begin{equation}
     p(x^{(m+1)} | x^{(1)},...,x^{(m)}) = 
     \int p(x^{(m+1)} | \Vtheta) p(\Vtheta | x^{(1)},...,x^{(m)}) 
-        \mathrm{d}\Vtheta
+        \mathrm{d}\Vtheta .
 \end{equation}
 这里，具有正概率密度的$\Vtheta$的每个值有助于下一个\gls{example:chap5}的预测，其中贡献由后验密度本身加权。
 在观测到\gls{dataset}$\{ x^{(1)},...,x^{(m)}\}$之后，如果我们仍然非常不确定$\Vtheta$的值，那么这个不确定性会直接包含在我们所做的任何预测中。
@@ -1154,12 +1151,12 @@ KL散度定义为
 在\gls{linear_regression}中，我们学习从输入向量$\Vx\in\SetR^n$预测标量$y\in\SetR$的映射。
 该预测参数化为向量$\Vw \in \SetR$：
 \begin{equation}
-    \hat{y} = \Vw^\Tsp \Vx
+    \hat{y} = \Vw^\Tsp \Vx .
 \end{equation}
 给定一组$m$个训练样本$(\MX^{(\text{train})}), \Vy^{(\text{train})}$，
 我们可以表示整个训练集对$y$的预测为：
 \begin{equation}
-    \hat{\Vy}^{(\text{train})} = \MX^{(\text{train})} \Vw
+    \hat{\Vy}^{(\text{train})} = \MX^{(\text{train})} \Vw .
 \end{equation}
 表示为$\Vy^{(\text{train})}$上的高斯条件分布，我们得到
 \begin{align}
@@ -1168,7 +1165,7 @@ KL散度定义为
     & \propto \exp\left( 
         -\frac{1}{2}( \Vy^{(\text{train})} - \MX^{(\text{train})}\Vw )^\Tsp
         ( \Vy^{(\text{train})} - \MX^{(\text{train})}\Vw )
-    \right)
+    \right),
 \end{align}
 其中，我们根据标准的MSE公式假设$y$上的高斯方差为$1$。
 在下文中，为减少符号负担，我们将$(\MX^{(\text{train})}), \Vy^{(\text{train})}$简单表示为$(\MX, \Vy)$。
@@ -1183,7 +1180,7 @@ KL散度定义为
     p(\Vw) = \mathcal{N}( \Vw; \Vmu_0, \VLambda_0 ) 
     \propto \exp\left( 
     -\frac{1}{2}( \Vw-\Vmu_0 )^\Tsp \VLambda_0^{-1} ( \Vw-\Vmu_0 )
-    \right)
+    \right),
 \end{equation}
 其中，$\Vmu_0$和$\VLambda_0$分别是先验分布的均值向量和协方差矩阵。
 \footnote{除非有理由使用协方差矩阵的特定结构，我们通常假设其为对角协方差矩阵
@@ -1206,7 +1203,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
     -2\Vy^\Tsp\MX\Vw + \Vw^\Tsp\MX^\Tsp\MX\Vw + \Vw^\Tsp\VLambda_0^{-1}\Vw - 
     2\Vmu_0^\Tsp \VLambda_0^{-1}\Vw
     \right)
-    \right)
+    \right).
 \end{align}
 现在我们定义$\VLambda_m = (\MX^\Tsp\MX + \VLambda_0^{-1})^{-1}$和$\Vmu_m = \VLambda_m ( \MX^\Tsp \Vy + \VLambda_0^{-1}\Vmu_0 )$。
 使用这些新的变量，我们发现后验可改写为高斯分布：
@@ -1217,7 +1214,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
     \right) \\
     &\propto \exp\left(
     -\frac{1}{2} (\Vw - \Vmu_m)^\Tsp \VLambda_m^{-1} (\Vw - \Vmu_m)
-    \right)
+    \right).
 \end{align}
 所有不包括的参数向量$\Vw$的项都已经被删去了；它们意味着分布的积分必须归一这个事实确定。
 式\ref{eq:3.23}显示了如何标准化多元高斯分布。
@@ -1240,7 +1237,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 \begin{equation}
 \label{eq:5.79}
     \Vtheta_{\text{MAP}} = \underset{\Vtheta}{\argmax} p(\Vtheta|\Vx)
-    \underset{\Vtheta}{\argmax} \log p(\Vx | \Vtheta) + \log p(\Vtheta)
+    \underset{\Vtheta}{\argmax} \log p(\Vx | \Vtheta) + \log p(\Vtheta) .
 \end{equation}
 我们可以认出上式右边的$\log p(\Vx | \Vtheta)$对应着标准的对数似然项，$\log p(\Vtheta)$对应着先验分布。
 
@@ -1277,7 +1274,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 我们已经看到，\gls{linear_regression}对应于分布族
 \begin{equation}
-    p(y | \Vx; \Vtheta) = \mathcal{N}( y; \Vtheta^\Tsp \Vx, I)
+    p(y | \Vx; \Vtheta) = \mathcal{N}( y; \Vtheta^\Tsp \Vx, I).
 \end{equation}
 通过定义一族不同的概率分布，我们可以将\gls{linear_regression}扩展到分类情况中。
 如果我们有两个类，类$0$和类$1$，那么我们只需要指定这两类之一的概率。
@@ -1289,7 +1286,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 解决这个问题的一种方法是使用逻辑S形函数（logistic sigmoid function）将线性函数的输出压缩进区间$(0,1)$。
 该值可以解释为概率：
 \begin{equation}
-    p(y = 1 | \Vx; \Vtheta) = \sigma(\Vtheta^\Tsp \Vx)
+    p(y = 1 | \Vx; \Vtheta) = \sigma(\Vtheta^\Tsp \Vx).
 \end{equation}
 这个方法被称为\firstgls{logistic_regression}，名字有点奇怪，因为该模型用于分类，而非回归）。
 
@@ -1315,7 +1312,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 核技巧观察到许多\gls{ML}算法都可以写成\gls{example:chap5}间\gls{dot_product}的形式。
 例如，\gls{SVM}中的线性函数可以重写为
 \begin{equation}
-    \Vw^\Tsp \Vx + b = b + \sum_{i=1}^m \alpha_i \Vx^\Tsp \Vx^{(i)}
+    \Vw^\Tsp \Vx + b = b + \sum_{i=1}^m \alpha_i \Vx^\Tsp \Vx^{(i)} ,
 \end{equation}
 其中，$\Vx^{(i)}$是训练\gls{example:chap5}，$\Valpha$是系数向量。
 学习算法重写为这种形式允许我们将$\Vx$替换为\gls{feature}函数$\phi(\Vx)$的输出，\gls{dot_product}替换为被称为\firstgls{kernel}的函数$k(\Vx, \Vx^{(i)}) = \phi(\Vx)\cdot \phi(\Vx^{(i)})$。
@@ -1326,7 +1323,7 @@ $\cdot$操作表示类似于$\phi(\Vx)^\Tsp \phi(\Vx^{(i)})$的\gls{dot_product}
 
 核估计替换\gls{dot_product}之后，我们可以使用如下函数进行预测
 \begin{equation}
-    f(\Vx) = b + \sum_i \alpha_i k(\Vx, \Vx^{(i)})
+    f(\Vx) = b + \sum_i \alpha_i k(\Vx, \Vx^{(i)}) .
 \end{equation}
 这个函数关于$\Vx$是非线性的，关于$\phi(\Vx)$是线性的。
 $\Valpha$和$f(\Vx)$之间的关系也是线性的。
@@ -1347,7 +1344,7 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 
 最常用的核函数是\firstgls{gaussian_kernel}，
 \begin{equation}
-    k(\Vu, \Vv) = \mathcal(\Vu - \Vv; \mathbf{0}, \sigma^2 I)
+    k(\Vu, \Vv) = \mathcal(\Vu - \Vv; \mathbf{0}, \sigma^2 I) ,
 \end{equation}
 其中$\mathcal{N}(x; \Vmu, \VSigma)$是标准正态密度。
 这个核也被称为\firstall{RBF}核，因为其值沿$\Vv$中从$\Vu$向外辐射的方向减小。
@@ -1496,14 +1493,14 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 
 $\MX$对应的无偏样本协方差矩阵给定如下
 \begin{equation}
-    \text{Var}[\Vx] = \frac{1}{m-1} \MX^\Tsp \MX
+    \text{Var}[\Vx] = \frac{1}{m-1} \MX^\Tsp \MX .
 \end{equation}
 \glssymbol{PCA}会找到一个$\text{Var}[\Vz]$是对角矩阵的表示（通过线性变换）$\Vz=\Vx^\Tsp\MW$。
 
 在第2.12节，我们看到\gls{design_matrix}$\MX$的主成分由$\MX^\Tsp\MX$的\gls{feature}向量给定。
 从这个角度，我们有
 \begin{equation}
-    \MX^\Tsp\MX = \MW \VLambda \MW^\Tsp
+    \MX^\Tsp\MX = \MW \VLambda \MW^\Tsp .
 \end{equation}
 本节中，我们会探索主成分分析的另一种推导。
 主成分也可以通过奇异值分解得到。
@@ -1512,7 +1509,7 @@ $\MX$对应的无偏样本协方差矩阵给定如下
 以$\MW$作为特征向量基，我们可以得到原来的特征向量方程：
 \begin{equation}
     \MX^\Tsp\MX = \left( \MU\VSigma \MW \right)^\Tsp \MU\VSigma \MW = 
-    \MW \VSigma^2 \MW^\Tsp
+    \MW \VSigma^2 \MW^\Tsp .
 \end{equation}
 
 % -- 144 --
@@ -1523,7 +1520,7 @@ $\MX$对应的无偏样本协方差矩阵给定如下
     \text{Var}[\Vx] &= \frac{1}{m-1} \MX^\Tsp\MX \\
     &= \frac{1}{m-1} \left( \MU\VSigma \MW \right)^\Tsp \MU\VSigma \MW \\
     &= \frac{1}{m-1} \MW \VSigma^\Tsp \MU^\Tsp \MU\VSigma \MW \\
-    &= \frac{1}{m-1} \MW \VSigma^2 \MW
+    &= \frac{1}{m-1} \MW \VSigma^2 \MW ,
 \end{align}
 其中，我们使用$\MU^\Tsp\MU = \MI$，因为根据奇异值的定义矩阵$\MU$是正交的。
 这表明，如果我们取$\MZ=\Vx\MW$，那么我们可以确保$\Vz$的协方差满足对角的要求：
@@ -1531,7 +1528,7 @@ $\MX$对应的无偏样本协方差矩阵给定如下
     \text{Var}[\Vz] &= \frac{1}{m-1} \MZ^\Tsp\MZ \\
     &= \frac{1}{m-1} \MW^\Tsp \MX^\Tsp \MX^\Tsp \MW \\
     &= \frac{1}{m-1} \MW^\Tsp\MW \VSigma^2 \MW^\Tsp\MW \\
-    &= \frac{1}{m-1} \VSigma^2
+    &= \frac{1}{m-1} \VSigma^2 ,
 \end{align}
 其中，再次使用\glssymbol{SVD}的定义有$\MW^\Tsp\MW = \MI$。
 
@@ -1601,7 +1598,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 \begin{equation}
     J(\Vtheta) = \SetE_{\Vx,y \sim \hat{p}_{\text{data}}}
     L(\Vx, y, \Vtheta) = 
-    \frac{1}{m} \sum_{i=1}^m  L(\Vx^{(i)}, y^{(i)}, \Vtheta)
+    \frac{1}{m} \sum_{i=1}^m  L(\Vx^{(i)}, y^{(i)}, \Vtheta) ,
 \end{equation}
 其中$L$是每个\gls{example:chap5}的损失函数$L(\Vx, y, \Vtheta) = -\log p(y|\Vx;\Vtheta)$。
 
@@ -1609,7 +1606,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 \begin{equation}
     \nabla_{\Vtheta} J(\Vtheta)
     = \frac{1}{m} \sum_{i=1}^m  
-    \nabla_{\Vtheta} L(\Vx^{(i)}, y^{(i)}, \Vtheta)
+    \nabla_{\Vtheta} L(\Vx^{(i)}, y^{(i)}, \Vtheta) .
 \end{equation}
 这个运算的计算代价是$O(m)$。
 随着训练集规模增长为数十亿的\gls{example:chap5}，计算一步梯度也会消耗相当长的时间。
@@ -1629,7 +1626,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 使用来自\gls{minibatch}$\SetB$的\gls{example:chap5}。
 然后，\gls{SGD}算法使用如下的\gls{GD}估计：
 \begin{equation}
-    \Vtheta \leftarrow \Vtheta - \epsilon \Vg
+    \Vtheta \leftarrow \Vtheta - \epsilon \Vg,
 \end{equation}
 其中，$\epsilon$是学习速率。
 
@@ -1666,7 +1663,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 例如，\gls{linear_regression}算法的组成成分有$\MX$和$\Vy$构成的\gls{dataset}，损失函数
 \begin{equation}
     J(\Vw, b) = -\SetE_{\Vx,y\sim\hat{p}_{\text{data}}}
-    \log p_{\text{model}} (y | \Vx)
+    \log p_{\text{model}} (y | \Vx) ,
 \end{equation}
 模型是$p_{\text{model}} (y | \Vx) \mathcal{N}(y; \Vx^\Tsp \Vw + b, 1)$，
 在大多数情况下，优化算法可以定义为求解损失函数梯度为零的标准方程。
@@ -1682,7 +1679,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 例如，我们可以将权重衰减加到\gls{linear_regression}的损失函数中
 \begin{equation}
     J(\Vw, b) = \lambda \norm{\Vw}_2^2 - \SetE_{\Vx,y\sim p_{\text{data}}}
-    \log p_{\text{model}} (y | \Vx)
+    \log p_{\text{model}} (y | \Vx) .
 \end{equation}
 该优化仍然有闭解。
 
