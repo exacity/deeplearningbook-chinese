@@ -1,11 +1,11 @@
-\documentclass[11pt,a4paper,oneside]{book}
+\documentclass[twoside,adobefonts,fancyhdr,openany,10.5pt,UTF8]{ctexbook}
 \usepackage{natbib}
 
 % CJK related
-\usepackage[slantfont,boldfont]{xeCJK} 
-\setCJKmainfont[AutoFakeBold=true]{Adobe Song Std}
-\setCJKsansfont{Adobe Heiti Std}
-\setCJKmonofont{Adobe Fangsong Std}
+\CTEXsetup[format={\raggedright}]{chapter}
+\CTEXsetup[format={\Large\bfseries}]{section}
+\CTEXsetup[format={\large\bfseries}]{subsection}
+\CTEXsetup[format={\normalsize\bfseries}]{subsubsection}
 
 % Needed for some foreign characters
 \usepackage[T1]{fontenc}
@@ -33,8 +33,6 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage[font=small]{caption}
 
-% Used to change header sizes
-\usepackage{fancyhdr}
 
 \usepackage[section]{placeins}
 \usepackage[chapter]{algorithm}
@@ -42,20 +40,16 @@
 % Include chapter number in algorithm number
 \renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
 
-\usepackage[pdffitwindow=false,
+\usepackage[pdfpagelabels=true,
+pdffitwindow=false,
 pdfview=FitH,
 pdfstartview=FitH,
 pagebackref=true,
 breaklinks=true,
 colorlinks=false,
-bookmarks=false,
+bookmarks=true,
 %hidelinks=true,
 plainpages=false]{hyperref}
-
-\usepackage[nomain,acronym,xindy,toc,nopostdot]{glossaries}
-\makeglossaries
-\usepackage[xindy]{imakeidx}
-\makeindex
 
 \usepackage{zref-abspage}
 \setcounter{secnumdepth}{3}
@@ -90,12 +84,29 @@ plainpages=false]{hyperref}
 \newif\ifOpenSource
 \OpenSourcetrue
 
+%\usepackage[nomain,acronym,xindy,toc,nopostdot]{glossaries}
+\usepackage[nomain,acronym,xindy,toc,nopostdot]{glossaries}
+\makeglossaries
+\usepackage[xindy]{imakeidx}
+\makeindex
+
+
 % symbol and 
 \include{math_symbol}
 \include{terminology}
 
 
+
+% title 
+\title{\Huge\textbf{深度学习}}
+\author{}
+\date{\today}
+
+
 \begin{document}
+
+\maketitle
+\cleardoublepage
 
 % From en book -B
 \setlength{\parskip}{0.25 \baselineskip}
@@ -106,6 +117,7 @@ plainpages=false]{hyperref}
 \newlength{\notationgap}
 \setlength{\notationgap}{1pc}
 % From en book -E
+
 
 \tableofcontents
 

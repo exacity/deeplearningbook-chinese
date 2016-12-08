@@ -19,22 +19,27 @@
   - 第13、16、17、19章及第12.1至12.3节由 @futianfan 负责
 
 
+
 面向的读者
 --------------------
-请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/raw/master/dlbook_cn_public.pdf)阅读(PDF 12月8日已更新)。
+
+请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.1.1-alpha/dlbook_cn_v0.1.1-alpha.pdf)阅读(PDF 12月8日已更新)。
 这一版读起来肯定费劲，我们建议英文好的或者研究者直接读原版。
 这一版面向的读者是英语不好，急于想入门深度学习的同学。或者希望帮忙校对的各路大哥也可以读读，只要不嫌弃。
 
 
+
 注意
 -----------
+
  - 各种问题或者建议可以提issue，建议使用中文。 
  - 由于版权问题，我们不能将图片和bib上传，请见谅。
  - Due to copyright issues, we would not upload figures and the bib file.
  - 可用于学习研究目的，不得用于任何商业行为。谢谢！
- - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/raw/master/dlbook_cn_public.pdf)文件每天更新。
+ - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.1.1-alpha/dlbook_cn_v0.1.1-alpha.pdf)文件每天更新。
  - 大家不要watch啊，邮箱可能会炸。
  - **先不要打印，这一版不值得打印，浪费钱，** 给我们一个月时间，我们给出我们自己满意的版本。打印之前发邮件联系一下我们，出于版权原因，我们不能去掉水印。
+
 
 
 TODO
@@ -47,6 +52,16 @@ TODO
 
 
 实在有问题，请发邮件至`echo c3dvcmQueW9ya0BnbWFpbC5jb20K | base64 -d`。
+
+
+
+致谢
+---------
+
+如果我们采用了大家的建议，我们会列在这。具体见[acknowledgments_github.md](https://github.com/exacity/deeplearningbook-chinese/blob/master/acknowledgments_github.md)。
+
+@tttwwy @tankeco @fairmiracle @GageGao @huangpingchun @MaHongP @acgtyrant @yanhuibin315 @Buttonwood @titicacafz @weijy026a @RuiZhang1993 @zymiboxpay @xingkongliang
+
 
 
 Updating.....
