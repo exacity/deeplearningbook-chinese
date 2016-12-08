@@ -261,7 +261,9 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 如果我们使用学习速率$\epsilon$，那么新的点$\Vx$将会是$\Vx^{(0)}-\epsilon \Vg$。
 代入上述的近似，可得
 \begin{align}
+\label{eq:4.9}
  f(\Vx^{(0)} - \epsilon \Vg ) \approx f(\Vx^{(0)})  - \epsilon \Vg^\Tsp \Vg + \frac{1}{2} \epsilon^2 \Vg^\Tsp \MH  \Vg.
+}
 \end{align}
 其中有3项：函数的原始值、函数斜率导致的预期改善、函数\gls{curvature}导致的校正。
 当这最后一项太大时，\gls{GD}实际上是可能向上移动的。

@@ -242,7 +242,7 @@
 这一点并非永远可能。
 例如，你有不同宽度和高度的照片的集合，那么不同的照片将会包含不同数量的像素。
 因此不是所有的照片都可以表示成相同长度的向量。
-第9.7节和第10章将会介绍如何处理这类异质问题的不同类型。
+第9.7节和第\ref{chap:sequence_modeling_recurrent_and_recursive_nets}章将会介绍如何处理这类异质问题的不同类型。
 在上述的这类情况下，我们不会将\gls{dataset}表示成$m$行的矩阵，而是表示成$m$个元素的结合：$\{\Vx^{(1)},\Vx^{(2)},...,\Vx^{(m)}\}$。
 这种表示方式并非意味着\gls{example:chap5}向量$\Vx^{(i)}$和$\Vy^{(j)}$有相同的大小。
 
@@ -331,14 +331,17 @@
     2\MX^{(\text{train})T} \Vy^{(\text{train})}  = 0
 \end{equation}
 \begin{equation}
+\label{eq:5.12}
     \Rightarrow \Vw =  \left(\MX^{(\text{train})T}\MX^{(\text{train})}
      \right)^{-1} \MX^{(\text{train})T} \Vy^{(\text{train})}
+}
+}
 \end{equation}
 
 % -- 105 --
 
-通过式5.12给出解的系统方程被称为\firstgls{normal_equations}。
-计算式5.12构成了一个简单的机器学习算法。
+通过式\ref{eq:5.12}给出解的系统方程被称为\firstgls{normal_equations}。
+计算式\ref{eq:5.12}构成了一个简单的机器学习算法。
 参考图\ref{fig:chap5_linreg}\gls{linear_regression}算法的动态示例。
 
 \begin{figure}[!htb]
@@ -633,7 +636,7 @@
 \end{figure}
 
 更一般地，\gls{regularization}一个学习函数$f(\Vx;\Vtheta$的模型，我们可以给损失函数添加称为\firstgls{regularizer}的惩罚。
-在权重衰减的例子中，\gls{regularizer}是$\Omega(\Vw) = \Vw^\Tsp \Vw$。在第$7$章，我们将看到很多其他可能的\gls{regularizer}。
+在权重衰减的例子中，\gls{regularizer}是$\Omega(\Vw) = \Vw^\Tsp \Vw$。在第\ref{chap:regularization_for_deep_learning}章，我们将看到很多其他可能的\gls{regularizer}。
 
 % -- 116 --
 
@@ -747,7 +750,9 @@
 \label{subsec:bias}
 估计的偏差被定义为：
 \begin{equation}
+\label{eq:5.20}
     \text{bias}(\hat{\Vtheta}_m) = \SetE(\hat{\Vtheta}_m) - \Vtheta
+}
 \end{equation}
 其中期望作用在所有数据（看作是从随机变量采样得到的）上，$\Vtheta$是定义数据生成分布$\Vtheta$的真实值。
 如果$\text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5}$\hat{\Vtheta}_m$被称为是\firstgls{unbiased}，这意味着$\SetE(\hat{\Vtheta}_m) = \Vtheta$。
@@ -762,9 +767,11 @@
 \end{equation}
 这个分布中参数$\theta$的常用估计是训练\gls{example:chap5}的均值：
 \begin{equation}
+\label{eq:5.22}
     \hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}
+}
 \end{equation}
-判断这个\gls{estimator:chap5} 是否有偏，我们将式5.22代入式5.20：
+判断这个\gls{estimator:chap5} 是否有偏，我们将式\ref{eq:5.22}代入式\ref{eq:5.20}：
 \begin{align}
     \text{bias}(\hat{\theta}_m)     &= \SetE(\hat{\theta}_m) - \theta  \\
             &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m x^{(i)} \right] - \theta \\
@@ -810,14 +817,16 @@
 其中$\hat{\mu}_m$是\gls{sample_variance}。
 更形式地，我们感兴趣计算
 \begin{equation}
-\text{bias} (\hat{\sigma}_m^2) = \SetE [ \hat{\sigma}_m^2 ]  - \sigma^2
+\label{eq:5.37}
+    \text{bias} (\hat{\sigma}_m^2) = \SetE [ \hat{\sigma}_m^2 ]  - \sigma^2
+}
 \end{equation}
 我们首先估计项$\SetE [ \hat{\sigma}_m^2 ]$：
 \begin{align}
     \SetE [ \hat{\sigma}_m^2 ]  &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m \left( x^{(i)} - \hat{mu}_m \right)^2  \right] \\
     &= \frac{m-1}{m} \sigma^2
 \end{align}
-回到式5.37，我们得到结论$\hat{\sigma}^2_m$的偏差是$-\frac{\sigma^2}{m}$。
+回到式\ref{eq:5.37}，我们得到结论$\hat{\sigma}^2_m$的偏差是$-\frac{\sigma^2}{m}$。
 因此\gls{sample_variance}是有偏估计。
 
  \firstgls{unbiased_sample_variance}估计
@@ -859,7 +868,9 @@
 
 均值的\gls{standard_error}被记作
 \begin{equation}
+\label{eq:5.46}
     \text{SE}(\hat{\mu}_m) = \sqrt{ \text{Var}[ \frac{1}{m} \sum_{i=1}^m x^{(i)} ] } = \frac{\sigma}{\sqrt{m}}
+}
 \end{equation}
 其中$\sigma^2$是\gls{example:chap5}$x^i$的真实方差。
 \gls{standard_error}通常被记作$\sigma$。
@@ -909,10 +920,10 @@
 另外，我们也可以比较这些估计的\firstall{mean_squared_error}：
 \begin{align}
     \text{MSE} &= \SetE[ ( \hat{\theta}_m - \theta  )^2 ] \\
-        &= \text{Bias}( \hat{\theta}_m )^2 + \text{Var}( \hat{\theta}_m )
+        &= \text{Bias}( \hat{\theta}_m )^2 + \text{Var}( \hat{\theta}_m ) \label{eq:5.54}
 \end{align}
 MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏离。
-如式5.54所示，MSE估计包含了偏差和方差。
+如式\ref{eq:5.54}所示，MSE估计包含了偏差和方差。
 理想的估计具有较小的MSE或是在检查中会稍微约束它们的偏差和方差。
 
 偏差和方差的关系和机器学习容量，欠拟合和过拟合的概念紧密相连。
@@ -938,10 +949,12 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 特别地，我们希望当\gls{dataset}中数据点的数量$m$增加时，点估计会收敛到对应参数的真实值。
 更形式地，我们想要
 \begin{equation}
+\label{eq:5.55}
     \plim_{m\to\infty} \hat{\theta}_m = \theta.
+}
 \end{equation}
 符号$\plim$表示依概率收敛，即对于任意的$\epsilon > 0$，当$m\to\infty$时，有$P(|\hat{\theta}_m - \theta| > \epsilon) \to 0$。
-式5.55表示的条件被称为\firstgls{consistency}。
+式\ref{eq:5.55}表示的条件被称为\firstgls{consistency}。
 它有时候是指弱一致性，强一致性是指\firstgls{almost_sure}从$\hat{\theta}$收敛到$\theta$。
 \firstgls{almost_sure_convergence}是指当$p(\lim_{m\to\infty} \Vx^{(m)} = \Vx) = 1 $时，随机变量序列$\Vx^{(1)}$，$\Vx^{(2)}$，$...$收敛到$\Vx$。
 
@@ -981,7 +994,9 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 \end{equation}
 因为当我们重新缩放损失函数时$\argmax$不会改变，我们可以除以$m$得到和训练数据经验分布$\hat{p}_{\text{data}}$相关的期望作为准则：
 \begin{equation}
+\label{eq:5.59}
     \Vtheta_{\text{ML}} = \underset{\theta}{\argmax} \SetE_{\Vx \sim \hat{p}_{\text{data}}} \log p_{\text{model}} (\Vx^; \Vtheta) 
+}
 \end{equation}
 
 解释\gls{maximum_likelihood_estimation}的一种观点是将它看作最小化训练集上的经验分布$\hat{p}_{\text{data}}$和模型分布之的间差异，两者之间的差异程度可以通过KL散度衡量。
@@ -994,7 +1009,7 @@ KL散度定义为
 \begin{equation}
     -\SetE_{\Vx \sim \hat{p}_{\text{data}}} [ \log p_{\text{model}}(\Vx)  ] 
 \end{equation}
-当然，这和式5.59中最大化是相同的。
+当然，这和式\ref{eq:5.59}中最大化是相同的。
 
 % -- 128 --
 
@@ -1022,7 +1037,9 @@ KL散度定义为
 \end{equation}
 如果假设\gls{example:chap5}是独立同分布的，那么这可以分解成
 \begin{equation}
+\label{eq:5.63}
     \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \sum_{i=1}^m \log P(\Vy^{(i)} | \Vx^{(i)}; \Vtheta)
+}
 \end{equation}
 
 % -- 129 --
@@ -1038,7 +1055,7 @@ KL散度定义为
 函数$\hat{h}(\Vx; \Vw)$预测高斯的均值。
 在这个例子中，我们假设方差是用户固定的某个常量$\sigma^2$。
 这种函数形式$p(y|\Vx)$会使得\gls{maximum_likelihood_estimation}得出之前得到的相同学习算法。
-由于假设\gls{example:chap5}是独立同分布的，条件对数似然（式5.63）如下
+由于假设\gls{example:chap5}是独立同分布的，条件对数似然（式\ref{eq:5.63}）如下
 \begin{align}
      & \sum_{i=1}^m \log p(y^{(i)} | \Vx^{(i)}; \Vtheta) \\
     =& -m \log\sigma - \frac{m}{2} \log(2\pi) - \sum_{i=1}^m \frac{ \norm{\hat{y}^{(i)} - y^{(i)} }^2 }{2\sigma^2}
@@ -1203,7 +1220,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
     \right)
 \end{align}
 所有不包括的参数向量$\Vw$的项都已经被删去了；它们意味着分布的积分必须归一这个事实确定。
-式3.23显示了如何标准化多元高斯分布。
+式\ref{eq:3.23}显示了如何标准化多元高斯分布。
 
 % -- 134 --
 
@@ -1221,6 +1238,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 一种能够做到这一点的合理方式是选择\firstall{MAP}点估计。
 \glssymbol{MAP}估计选择后验概率最大的点（或在$\Vtheta$是连续值的更常见情况下，概率密度最大的点）：
 \begin{equation}
+\label{eq:5.79}
     \Vtheta_{\text{MAP}} = \underset{\Vtheta}{\argmax} p(\Vtheta|\Vx)
     \underset{\Vtheta}{\argmax} \log p(\Vx | \Vtheta) + \log p(\Vtheta)
 \end{equation}
@@ -1229,7 +1247,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 % -- 135 --
 
 例如，考虑具有高斯先验权重$\Vw$的\gls{linear_regression}模型。
-如果先验是$\mathcal{N}(\Vw;\mathbf{0},\frac{1}{\lambda}I^2)$，那么式5.79的对数先验项正比于熟悉的权重衰减惩罚$\lambda \Vw^\Tsp\Vw$，加上一个不依赖于$\Vw$也不会影响学习过程的项。
+如果先验是$\mathcal{N}(\Vw;\mathbf{0},\frac{1}{\lambda}I^2)$，那么式\ref{eq:5.79}的对数先验项正比于熟悉的权重衰减惩罚$\lambda \Vw^\Tsp\Vw$，加上一个不依赖于$\Vw$也不会影响学习过程的项。
 因此，具有高斯先验权重的\gls{MAP}贝叶斯推理对应着权重衰减。
 
 正如全贝叶斯推理，\gls{MAP}贝叶斯推理具有训练数据没有的，先验带来的信息利用优势。
@@ -1639,7 +1657,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 在学术界，深度学习从2006年开始收到关注的原因是，在数以万计\gls{example:chap5}的中等规模\gls{dataset}上，深度学习在新\gls{example:chap5}上比当时很多热门算法泛化得更好。
 不久后，深度学习在工业界受到了更多的关注，因为其提供了一种可扩展的方式训练大\gls{dataset}上的非线性模型。
 
-\gls{SGD}及其很多强化方法将会在第8章继续探讨。
+\gls{SGD}及其很多强化方法将会在第\ref{chap:optimization_for_training_deep_models}章继续探讨。
 
 \section{构建机器学习算法}
 \label{sec:building_a_machine_learning_algorithm}
