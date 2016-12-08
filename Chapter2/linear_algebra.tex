@@ -210,23 +210,19 @@
 向量$\Vx$的每一个元素$\Sx_i$都是未知的。
 矩阵$\MA$的每一行和$\Vb$中对应的元素构成另一个约束。
 我们可以把式\ref{eq:2.11}重写为
-\begin{equation}\MA_{1,:}\Vx=b_1 \end{equation}
-\begin{equation}\MA_{2,:}\Vx=b_2 \end{equation}
-\begin{equation}\cdots \end{equation}
-\begin{equation}\MA_{m,:}\Vx=b_m \end{equation}
+\begin{gather}
+\MA_{1,:}\Vx=b_1\\
+\MA_{2,:}\Vx=b_2 \\
+\cdots \\
+\MA_{m,:}\Vx=b_m
+\end{gather}
 或者，更明确地，写作
-\begin{equation}
-    \MA_{1,1}x_1+\MA_{1,2}x_2+\cdots \MA_{1,n}x_n = b_1
-\end{equation}
-\begin{equation}
-    \MA_{2,1}x_1+\MA_{2,2}x_2+\cdots \MA_{2,n}x_n = b_2
-\end{equation}
-\begin{equation}
-    \cdots
-\end{equation}
-\begin{equation}
+\begin{gather}
+    \MA_{1,1}x_1+\MA_{1,2}x_2+\cdots \MA_{1,n}x_n = b_1\\
+    \MA_{2,1}x_1+\MA_{2,2}x_2+\cdots \MA_{2,n}x_n = b_2\\
+    \cdots\\
     \MA_{m,1}x_1+\MA_{m,2}x_2+\cdots \MA_{m,n}x_n = b_m.
-\end{equation}
+\end{gather}
 
 
 矩阵向量乘积符号为这种形式的等式提供了更紧凑的表示。
@@ -259,10 +255,12 @@
 矩阵$\MA$的\firstgls{matrix_inverse}被记作$\MA^{-1}$，被定义为如下的矩阵
 \begin{equation} \MA^{-1}\MA = \MI_{\Sn}. \end{equation}
 现在我们可以通过如果以下步骤求解式\ref{eq:2.11}：
-\begin{equation}\MA\Vx=\Vb \end{equation}
-\begin{equation} \MA^{-1}\MA\Vx = \MA^{-1}\Vb \end{equation}
-\begin{equation} \MI_{\Sn} \Vx=\MA^{-1}\Vb \end{equation}
-\begin{equation} \Vx=\MA^{-1}\Vb. \end{equation}
+\begin{gather}
+\MA\Vx=\Vb \\
+\MA^{-1}\MA\Vx = \MA^{-1}\Vb \\
+\MI_{\Sn} \Vx=\MA^{-1}\Vb \\
+\Vx=\MA^{-1}\Vb. 
+\end{gather}
 
 
 当然，这取决于能否找到一个逆矩阵$\MA^{-1}$。
@@ -368,7 +366,6 @@
 \begin{equation}
 \label{eq:2.30}
     \norm{\Vx}_p = \left( \sum_i |x_i|^p \right)^{\frac{1}{p}}
-}
 \end{equation}
 其中$p\in \SetR$，$p\geq 1$。
 
@@ -700,8 +697,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 例如，迹运算提供了另一种描述矩阵Frobenius范数的方式：
 \begin{equation}
 \label{eq:2.49}
-    \norm{A}_F = \sqrt{\text{Tr}(\MA\MA^\top)}.
-}
+    \norm{A}_F = \sqrt{\text{Tr}(\MA \MA^\top)}.
 \end{equation}
 
 
@@ -833,15 +829,11 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 
 我们可以通过线性代数微积分来求解这个最优化问题（如果你不清楚怎么做，请参考第4.3节）
-\begin{equation}
-    \nabla_{\Vc} (-2\Vx^\top \MD \Vc + \Vc^\top\Vc) = 0
-\end{equation}
-\begin{equation}
-    -2\MD^\top\Vx + 2\Vc = 0
-\end{equation}
-\begin{equation}
+\begin{gather}
+    \nabla_{\Vc} (-2\Vx^\top \MD \Vc + \Vc^\top\Vc) = 0\\
+    -2\MD^\top\Vx + 2\Vc = 0\\
     \Vc = \MD^\top \Vx.
-\end{equation}
+\end{gather}
 
 
 这使得算法很高效：最优编码$\Vx$只需要一个矩阵-向量乘法操作。
