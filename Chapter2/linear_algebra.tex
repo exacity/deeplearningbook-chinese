@@ -786,7 +786,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 在PCA算法中，我们使用$L^2$范数：
 \begin{equation}
 \label{eq:2.52}
-\Vc^* = \underset{\Vc}{\arg\!\min} \norm{x-g(\Vc)}_2.
+\Vc^* = \underset{\Vc}{\arg\min} \norm{x-g(\Vc)}_2.
 \end{equation}
 
 
@@ -814,21 +814,21 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 因为第一项$\Vx^\top\Vx$不依赖于$\Vc$，所以我们可以忽略它，得到如下的优化目标：
 \begin{equation}
-\Vc^* = \underset{\Vc}{\arg\!\min} - 2\Vx^\top g(\Vc) + g(\Vc)^\top g(\Vc).
+\Vc^* = \underset{\Vc}{\arg\min} - 2\Vx^\top g(\Vc) + g(\Vc)^\top g(\Vc).
 \end{equation}
 
 % -- 46 --
 
 更进一步，我们代入$g(\Vc)$的定义：
 \begin{equation}
-    \Vc^* = \underset{\Vc}{\arg\!\min} - 2\Vx^\top\MD\Vc + \Vc^\top\MD^\top\MD\Vc
+    \Vc^* = \underset{\Vc}{\arg\min} - 2\Vx^\top\MD\Vc + \Vc^\top\MD^\top\MD\Vc
 \end{equation}
 \begin{equation}
-    = \underset{\Vc}{\arg\!\min} -2\Vx^\top\MD\Vc + \Vc^\top\MI_l\Vc
+    = \underset{\Vc}{\arg\min} -2\Vx^\top\MD\Vc + \Vc^\top\MI_l\Vc
 \end{equation}
 (矩阵$\MD$有正交和单位范数约束)
 \begin{equation}
-    = \underset{\Vc}{\arg\!\min} -2\Vx^\top\MD\Vc + \Vc^\top\Vc
+    = \underset{\Vc}{\arg\min} -2\Vx^\top\MD\Vc + \Vc^\top\Vc
 \end{equation}
 
 
@@ -860,7 +860,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 因为我们用相同的矩阵$\MD$对所有点进行解码，我们不能再孤立地看待每个点。
 反之，我们必须最小化所有维数和所有点上的误差矩阵的Frobenius范数：
 \begin{equation}
-    \MD^* =  \underset{\MD}{\arg\!\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{限制在} \MD^\top\MD = \MI_l
+    \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{限制在} \MD^\top\MD = \MI_l
 \end{equation}
 
 为了推导用于寻求$\MD^*$的算法，我们首先考虑$l=1$的情况。
@@ -868,7 +868,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 将式\ref{eq:2.67}代入式\ref{eq:2.68}，简化$\MD$为$d$，问题简化为
 \begin{equation}
 \label{eq:2.67}
-    \Vd^* = \underset{\Vd}{\arg\!\min} \sum_i \norm{\Vx^{(i)} - \Vd\Vd^\top \Vx^{(i)}}_2^2
+    \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd\Vd^\top \Vx^{(i)}}_2^2
     \text{ 限制在 } \norm{\Vd}_2 = 1.
 \end{equation}
 
@@ -880,12 +880,12 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 于是我们通常写作如下：
 \begin{equation}
 \label{eq:2.68}
-    \Vd^* = \underset{\Vd}{\arg\!\min} \sum_i \norm{\Vx^{(i)} - \Vd^\top \Vx^{(i)}\Vd}_2^2
+    \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd^\top \Vx^{(i)}\Vd}_2^2
         \text{限制在} \norm{\Vd}_2 = 1,
 \end{equation}
 或者，考虑到标量的转置和自身相等，我们也可以写作：
 \begin{equation}
-    \Vd^* = \underset{\Vd}{\arg\!\min} \sum_i \norm{\Vx^{(i)} - \Vx^{(i)}\Vd\Vd^\top}_2^2
+    \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vx^{(i)}\Vd\Vd^\top}_2^2
         \text{限制在} \norm{\Vd}_2 = 1.
 \end{equation}
 读者应该慢慢对这些重排写法熟悉起来。
@@ -896,33 +896,33 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 让$\MX\in\SetR^{m\times n}$是将描述点的向量堆叠在一起的矩阵，例如$\MX_{i,:}=\Vx^{{(i)}^\top}$。
 原问题可以重新表述为：
 \begin{equation}
-    \Vd^* = \underset{\Vd}{\arg\!\min} \norm{\MX - \MX\Vd\Vd^\top}_F^2
+    \Vd^* = \underset{\Vd}{\arg\min} \norm{\MX - \MX\Vd\Vd^\top}_F^2
         \text{限制在} \Vd^\top \Vd = 1.
 \end{equation}
 暂时不考虑约束，我们可以将Frobenius范数部分简化成下面的形式：
 \begin{equation}
-     \underset{\Vd}{\arg\!\min} \norm{\MX - \MX \Vd\Vd^\top}_F^2
+     \underset{\Vd}{\arg\min} \norm{\MX - \MX \Vd\Vd^\top}_F^2
 \end{equation}
 \begin{equation}
-    = \underset{\Vd}{\arg\!\min} \! \Tr \left( \left( \MX - \MX \Vd\Vd^\top  \right)^\top \left( \MX - \MX \Vd\Vd^\top  \right) \right)
+    = \underset{\Vd}{\arg\min} \, \Tr \left( \left( \MX - \MX \Vd\Vd^\top  \right)^\top \left( \MX - \MX \Vd\Vd^\top  \right) \right)
 \end{equation}
 （式\ref{eq:2.49}）
 \begin{equation}
-    = \underset{\Vd}{\arg\!\min} \! \Tr \left( \MX^\top\MX - \MX^\top\MX \Vd\Vd^\top - \Vd\Vd^\top \MX^\top\MX + \Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top  \right)
+    = \underset{\Vd}{\arg\min} \, \Tr \left( \MX^\top\MX - \MX^\top\MX \Vd\Vd^\top - \Vd\Vd^\top \MX^\top\MX + \Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top  \right)
 \end{equation}
 \begin{equation}
-    = \underset{\Vd}{\arg\!\min} \! \Tr( \MX^\top\MX)  - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+    = \underset{\Vd}{\arg\min} \, \Tr( \MX^\top\MX)  - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
 \begin{equation}
-    = \underset{\Vd}{\arg\!\min} \! - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+    = \underset{\Vd}{\arg\min} \, - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
 （因为与$\Vd$无关的项不影响$\argmin$）
 \begin{equation}
-    = \underset{\Vd}{\arg\!\min} \! - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+    = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
 （因为循环改变迹运算中相乘矩阵的顺序不影响结果，如式\ref{eq:2.52}所示）
 \begin{equation}
-    = \underset{\Vd}{\arg\!\min} \! - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
+    = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
 \end{equation}
 （再次使用上述性质）
 
@@ -930,24 +930,24 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 此时，我们再来考虑约束条件:
 \begin{equation}
-    = \underset{\Vd}{\arg\!\min} \! - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
+    = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
     \text{限制在} \Vd^\top \Vd = 1
 \end{equation}
 \begin{equation}
-    = \underset{\Vd}{\arg\!\min} \! - 2\Tr(\MX^\top\MX \Vd \Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top )
+    = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd \Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top )
     \text{限制在} \Vd^\top \Vd = 1
 \end{equation}
  (因为约束条件)
  \begin{equation}
-     = \underset{\Vd}{\arg\!\min} \! - \Tr(\MX^\top\MX \Vd\Vd^\top)
+     = \underset{\Vd}{\arg\min} \, - \Tr(\MX^\top\MX \Vd\Vd^\top)
      \text{限制在} \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
-     = \underset{\Vd}{\arg\!\max} \! \Tr(\MX^\top\MX \Vd\Vd^\top)
+     = \underset{\Vd}{\arg\max} \, \Tr(\MX^\top\MX \Vd\Vd^\top)
      \text{限制在} \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
-     = \underset{\Vd}{\arg\!\max} \! \Tr(\Vd^\top\MX^\top\MX \Vd)
+     = \underset{\Vd}{\arg\max} \, \Tr(\Vd^\top\MX^\top\MX \Vd)
      \text{限制在} \Vd^\top \Vd = 1
  \end{equation}
 
