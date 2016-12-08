@@ -248,7 +248,7 @@
 我们将保持$\Sn$维向量不变的单位矩阵记作为$\MI_{\Sn}$。
 形式上，$\MI_{\Sn}\in \SetR^{\Sn\times \Sn}$，
 \begin{equation}
-    \forall \Vx \SetR^{\Sn} \in \MI_{\Sn}, \MI_{\Sn} \Vx = \Vx.
+    \forall \Vx \in \SetR^{\Sn}, \MI_{\Sn} \Vx = \Vx.
 \end{equation}
 
 
@@ -419,7 +419,7 @@ $L^1$范数可以简化如下：
 另外一个经常在机器学习中出现的范数是$L^\infty$范数，也被称为\firstgls{max_norm}。
 这个范数表示向量中具有最大幅度的元素的绝对值：
 \begin{equation}
-    \norm{\Vx}^\infty = \max_i |x_i|.
+    \norm{\Vx}_\infty = \max_i |x_i|.
 \end{equation}
 
 
@@ -719,7 +719,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \end{equation}
 或者更一般地，
 \begin{equation}
-\Tr(\prod_{i=1}^n \MF(i))= \Tr(\MF^n \prod_{i=1}^{n-1} \MF^i).
+\Tr(\prod_{i=1}^n \MF^{(i)})= \Tr(\MF^{(n)} \prod_{i=1}^{n-1} \MF^{(i)}.
 \end{equation}
 即使循环置换后矩阵乘积得到的矩阵形状变了，迹运算的结果依然不变。
 例如，假设矩阵$\MA\in \SetR^{m\times n}$，矩阵$\MB\in \SetR^{n\times m}$，我们可以得到
@@ -786,14 +786,14 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 在PCA算法中，我们使用$L^2$范数：
 \begin{equation}
 \label{eq:2.52}
-\Vc^* = \underset{\Vc}{\arg\!\min} \norm{x-g(c)}_2.
+\Vc^* = \underset{\Vc}{\arg\!\min} \norm{x-g(\Vc)}_2.
 \end{equation}
 
 
 我们可以用平方$L^2$范数替代$L^2$范数，因为在两者在相同的值$\Vc$上取得最小值。
 这是因为$L^2$范数是非负的，并且平方运算在非负值上是单调递增的。
 \begin{equation}
-\Vc^* = \argmin_c \norm{x - g(c)}_2^2.
+\Vc^* = \argmin_{\Vc} \norm{\Vx - g(\Vc)}_2^2.
 \end{equation}
 
 
@@ -897,32 +897,32 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 原问题可以重新表述为：
 \begin{equation}
     \Vd^* = \underset{\Vd}{\arg\min} \norm{\MX - \MX\Vd\Vd^\top}_F^2
-        \text{限制在} \norm{\Vd}_2 = 1.
+        \text{限制在} \Vd^\top \Vd = 1.
 \end{equation}
 暂时不考虑约束，我们可以将Frobenius范数部分简化成下面的形式：
 \begin{equation}
-     \underset{d}{\arg\min} \norm{\MX - \MX \Vd\Vd^\top}_F^2
+     \underset{\Vd}{\arg\min} \norm{\MX - \MX \Vd\Vd^\top}_F^2
 \end{equation}
 \begin{equation}
-    = \underset{d}{\arg\min} \Tr \left( \left( \MX - \MX \Vd\Vd^\top  \right)^\top \left( \MX - \MX \Vd\Vd^\top  \right) \right)
+    = \underset{\Vd}{\arg\min} \Tr \left( \left( \MX - \MX \Vd\Vd^\top  \right)^\top \left( \MX - \MX \Vd\Vd^\top  \right) \right)
 \end{equation}
 （式\ref{eq:2.49}）
 \begin{equation}
-    = \underset{d}{\arg\min} \Tr \left( \MX^\top\MX - \MX^\top\MX \Vd\Vd^\top - \Vd\Vd^\top \MX^\top\MX + \Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top  \right)
+    = \underset{\Vd}{\arg\min} \Tr \left( \MX^\top\MX - \MX^\top\MX \Vd\Vd^\top - \Vd\Vd^\top \MX^\top\MX + \Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top  \right)
 \end{equation}
 \begin{equation}
-    = \underset{d}{\arg\min} \Tr( \MX^\top\MX)  - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+    = \underset{\Vd}{\arg\min} \Tr( \MX^\top\MX)  - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
 \begin{equation}
-    = \underset{d}{\arg\min}  - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+    = \underset{\Vd}{\arg\min}  - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
 （因为与$\Vd$无关的项不影响$\argmin$）
 \begin{equation}
-    = \underset{d}{\arg\min}   - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+    = \underset{\Vd}{\arg\min}   - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
 （因为循环改变迹运算中相乘矩阵的顺序不影响结果，如式\ref{eq:2.52}所示）
 \begin{equation}
-    = \underset{d}{\arg\min}  - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
+    = \underset{\Vd}{\arg\min}  - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
 \end{equation}
 （再次使用上述性质）
 
@@ -930,24 +930,24 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 此时，我们再来考虑约束条件:
 \begin{equation}
-    = \underset{d}{\arg\min}  - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
+    = \underset{\Vd}{\arg\min}  - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
     \text{限制在} \Vd^\top \Vd = 1
 \end{equation}
 \begin{equation}
-    = \underset{d}{\arg\min}  - 2\Tr(\MX^\top\MX \Vd \Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top )
+    = \underset{\Vd}{\arg\min}  - 2\Tr(\MX^\top\MX \Vd \Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top )
     \text{限制在} \Vd^\top \Vd = 1
 \end{equation}
  (因为约束条件)
  \begin{equation}
-     = \underset{d}{\arg\min}   - \Tr(\MX^\top\MX \Vd\Vd^\top)
+     = \underset{\Vd}{\arg\min}   - \Tr(\MX^\top\MX \Vd\Vd^\top)
      \text{限制在} \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
-     = \underset{d}{\arg\max}  \Tr(\MX^\top\MX \Vd\Vd^\top)
+     = \underset{\Vd}{\arg\max}  \Tr(\MX^\top\MX \Vd\Vd^\top)
      \text{限制在} \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
-     = \underset{d}{\arg\max}  \Tr(\Vd^\top\MX^\top\MX \Vd)
+     = \underset{\Vd}{\arg\max}  \Tr(\Vd^\top\MX^\top\MX \Vd)
      \text{限制在} \Vd^\top \Vd = 1
  \end{equation}
 
