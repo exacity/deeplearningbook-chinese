@@ -177,6 +177,7 @@
 
 
 \begin{equation}
+\label{eq:2.8}
 \Vx^\top\Vy=\Vy^\top\Vx.
 \end{equation}
 
@@ -189,7 +190,7 @@
 \end{equation}
 
 
-利用向量乘积是标量，标量转置是自身的事实，我们可以证明式2.8：
+利用向量乘积是标量，标量转置是自身的事实，我们可以证明式\ref{eq:2.8}：
 \begin{equation}
     \Vx^\top \Vy = \left(\Vx^\top \Vy \right)^\top = \Vy^\top \Vx.
 \end{equation}
@@ -202,12 +203,13 @@
 
 
 \begin{equation}
+\label{eq:2.11}
 \MA\Vx=\Vb
 \end{equation}
 其中$\MA\in \SetR^{m\times n}$是一个已知矩阵，$\Vb$是一个已知向量，$\Vx$是一个我们要求解的未知向量。
 向量$\Vx$的每一个元素$\Sx_i$都是未知的。
 矩阵$\MA$的每一行和$\Vb$中对应的元素构成另一个约束。
-我们可以把式2.11重写为
+我们可以把式\ref{eq:2.11}重写为
 \begin{equation}\MA_{1,:}\Vx=b_1 \end{equation}
 \begin{equation}\MA_{2,:}\Vx=b_2 \end{equation}
 \begin{equation}\cdots \end{equation}
@@ -238,7 +240,7 @@
 \label{sec:identity_and_inverse_atrices}
 
 
-线性代数提供了被称为\firstgls{matrix_inverse}的强大工具，使我们能够解析地求解式2.11中的多值$\MA$。
+线性代数提供了被称为\firstgls{matrix_inverse}的强大工具，使我们能够解析地求解式\ref{eq:2.11}中的多值$\MA$。
 
 
 为了描述矩阵逆，我们首先需要定义\firstgls{identity_matrix}的概念。
@@ -246,7 +248,7 @@
 我们将保持$\Sn$维向量不变的单位矩阵记作为$\MI_{\Sn}$。
 形式上，$\MI_{\Sn}\in \SetR^{\Sn\times \Sn}$，
 \begin{equation}
-    \forall \Vx \SetR^{\Sn} \in \MI_{\Sn}, \MI_{\Sn} \Vx = \Vx.
+    \forall \Vx \in \SetR^{\Sn}, \MI_{\Sn} \Vx = \Vx.
 \end{equation}
 
 
@@ -256,7 +258,7 @@
 
 矩阵$\MA$的\firstgls{matrix_inverse}被记作$\MA^{-1}$，被定义为如下的矩阵
 \begin{equation} \MA^{-1}\MA = \MI_{\Sn}. \end{equation}
-现在我们可以通过如果以下步骤求解式2.11：
+现在我们可以通过如果以下步骤求解式\ref{eq:2.11}：
 \begin{equation}\MA\Vx=\Vb \end{equation}
 \begin{equation} \MA^{-1}\MA\Vx = \MA^{-1}\Vb \end{equation}
 \begin{equation} \MI_{\Sn} \Vx=\MA^{-1}\Vb \end{equation}
@@ -280,7 +282,7 @@
 \section{线性相关和生成子空间}
 \label{sec:linear_dependence_and_span}
 
-如果逆矩阵$\MA^{-1}$存在，那么式2.11肯定对于每一个向量$\Vb$恰好存在一个解。
+如果逆矩阵$\MA^{-1}$存在，那么式\ref{eq:2.11}肯定对于每一个向量$\Vb$恰好存在一个解。
 对系统方程而言，对于某些$\Vb$的值，有可能不存在解，或者存在无限多个解。
 然而，存在多于一个解但是少于无穷多个解的情况是不可能发生的；因为如果$\Vx$和$\Vy$都是某系统方程的解，则
 \begin{equation}
@@ -331,12 +333,12 @@
 如果一组向量中的任意一个向量都不能表示成其他向量的线性组合，那么这组向量被称之为线性无关(linearly independent)。
 如果某个向量是一组向量中某些向量的线性组合，那么我们将这个向量加入到这组向量后不会增加这组向量的生成空间。
 这意味着，如果一个矩阵的列空间涵盖整个$\SetR^m$，那么该矩阵必须包含至少一组$m$个线性无关的向量。
-这是式2.11对于每一个向量$\Vb$的取值都有解的充足条件。
+这是式\ref{eq:2.11}对于每一个向量$\Vb$的取值都有解的充足条件。
 值得注意的是，这个条件是说该向量集恰好有$m$个线性无关的列向量，而不是至少$m$个。
 不存在一个$m$维向量的集合具有多于$m$个彼此线性不相关的列向量，但是一个有多于$m$个列向量的矩阵却有可能拥有不止一个大小为$m$的线性无关向量集。
 
 
-要想使矩阵可逆，我们还需要保证式2.11对于每一个$\Vb$值至多有一个解。
+要想使矩阵可逆，我们还需要保证式\ref{eq:2.11}对于每一个$\Vb$值至多有一个解。
 为此，我们需要确保该矩阵至多有$m$个列向量。
 否则，该方程会有不止一个解。
 
@@ -364,7 +366,9 @@
 在机器学习中，我们经常使用被称为\firstgls{norm}的函数衡量矩阵大小。
 形式上，$L^p$范数如下
 \begin{equation}
+\label{eq:2.30}
     \norm{\Vx}_p = \left( \sum_i |x_i|^p \right)^{\frac{1}{p}}
+}
 \end{equation}
 其中$p\in \SetR$，$p\geq 1$。
 
@@ -415,7 +419,7 @@ $L^1$范数可以简化如下：
 另外一个经常在机器学习中出现的范数是$L^\infty$范数，也被称为\firstgls{max_norm}。
 这个范数表示向量中具有最大幅度的元素的绝对值：
 \begin{equation}
-    \norm{\Vx}^\infty = \max_i |x_i|.
+    \norm{\Vx}_\infty = \max_i |x_i|.
 \end{equation}
 
 
@@ -499,7 +503,7 @@ $L^1$范数可以简化如下：
 
 
 
-\section{特征分解}
+\section{\gls{eigendecomposition}}
 \label{sec:eigendecomposition}
 
 许多数学对象可以通过将它们分解成多个组成部分，或者找到它们的一些属性而被更好地理解，这些属性是通用的，而不是由我们选择表示它们的方式引起的。
@@ -596,7 +600,7 @@ $L^1$范数可以简化如下：
 \section{\gls{SVD}}
 \label{sec:singular_value_decomposition}
 
-在第2.7节，我们探讨了如何将矩阵分解成特征向量和特征值。
+在第\ref{sec:eigendecomposition}节，我们探讨了如何将矩阵分解成特征向量和特征值。
 还有另一种分解矩阵的方法，被称为\firstall{SVD}，将矩阵分解为\firstgls{Svector}和\firstgls{Svalue}。
 通过\gls{SVD}，我们会得到一些类似\gls{eigendecomposition}的信息。
 然而，\gls{SVD}有更广泛的应用。
@@ -695,7 +699,9 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 若不使用求和符号，有些矩阵运算很难描述，而通过矩阵乘法和迹运算符号，可以进行清楚地表示。
 例如，迹运算提供了另一种描述矩阵Frobenius范数的方式：
 \begin{equation}
+\label{eq:2.49}
     \norm{A}_F = \sqrt{\text{Tr}(\MA\MA^\top)}.
+}
 \end{equation}
 
 
@@ -713,7 +719,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \end{equation}
 或者更一般地，
 \begin{equation}
-\Tr(\prod_{i=1}^n \MF(i))= \Tr(\MF^n \prod_{i=1}^{n-1} \MF^i).
+\Tr(\prod_{i=1}^n \MF^{(i)})= \Tr(\MF^{(n)} \prod_{i=1}^{n-1} \MF^{(i)}.
 \end{equation}
 即使循环置换后矩阵乘积得到的矩阵形状变了，迹运算的结果依然不变。
 例如，假设矩阵$\MA\in \SetR^{m\times n}$，矩阵$\MB\in \SetR^{n\times m}$，我们可以得到
@@ -779,14 +785,15 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 我们使用范数来衡量它们之间的距离。
 在PCA算法中，我们使用$L^2$范数：
 \begin{equation}
-\Vc^* = \underset{\Vc}{\arg\!\min} \norm{x-g(c)}_2.
+\label{eq:2.52}
+\Vc^* = \underset{\Vc}{\arg\!\min} \norm{x-g(\Vc)}_2.
 \end{equation}
 
 
 我们可以用平方$L^2$范数替代$L^2$范数，因为在两者在相同的值$\Vc$上取得最小值。
 这是因为$L^2$范数是非负的，并且平方运算在非负值上是单调递增的。
 \begin{equation}
-\Vc^* = \argmin_c \norm{x - g(c)}_2^2.
+\Vc^* = \argmin_{\Vc} \norm{\Vx - g(\Vc)}_2^2.
 \end{equation}
 
 
@@ -794,7 +801,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \begin{equation}
 (\Vx-g(\Vc))^\top(\Vx-g(\Vc))
 \end{equation}
-（式2.30中$L^2$范数的定义）
+（式\ref{eq:2.30}中$L^2$范数的定义）
 \begin{equation}
     = \Vx^\top\Vx - \Vx^\top g(\Vc) - g(\Vc)^\top\Vx + g(\Vc)^\top g(\Vc)
 \end{equation}
@@ -807,21 +814,21 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 因为第一项$\Vx^\top\Vx$不依赖于$\Vc$，所以我们可以忽略它，得到如下的优化目标：
 \begin{equation}
-\Vc^* = \underset{\Vc}{\arg\min} - 2\Vx^\top g(\Vc) + g(\Vc)^\top g(\Vc).
+\Vc^* = \underset{\Vc}{\arg\!\min} - 2\Vx^\top g(\Vc) + g(\Vc)^\top g(\Vc).
 \end{equation}
 
 % -- 46 --
 
 更进一步，我们代入$g(\Vc)$的定义：
 \begin{equation}
-    \Vc^* = \underset{\Vc}{\arg\min} - 2\Vx^\top\MD\Vc + \Vc^\top\MD^\top\MD\Vc
+    \Vc^* = \underset{\Vc}{\arg\!\min} - 2\Vx^\top\MD\Vc + \Vc^\top\MD^\top\MD\Vc
 \end{equation}
 \begin{equation}
-    = \underset{\Vc}{\arg\min} -2\Vx^\top\MD\Vc + \Vc^\top\MI_l\Vc
+    = \underset{\Vc}{\arg\!\min} -2\Vx^\top\MD\Vc + \Vc^\top\MI_l\Vc
 \end{equation}
 (矩阵$\MD$有正交和单位范数约束)
 \begin{equation}
-    = \underset{\Vc}{\arg\min} -2\Vx^\top\MD\Vc + \Vc^\top\Vc
+    = \underset{\Vc}{\arg\!\min} -2\Vx^\top\MD\Vc + \Vc^\top\Vc
 \end{equation}
 
 
@@ -853,14 +860,15 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 因为我们用相同的矩阵$\MD$对所有点进行解码，我们不能再孤立地看待每个点。
 反之，我们必须最小化所有维数和所有点上的误差矩阵的Frobenius范数：
 \begin{equation}
-    \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{限制在} \MD^\top\MD = \MI_l
+    \MD^* =  \underset{\MD}{\arg\!\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{限制在} \MD^\top\MD = \MI_l
 \end{equation}
 
 为了推导用于寻求$\MD^*$的算法，我们首先考虑$l=1$的情况。
 在这种情况下，$\MD$是一个单一向量$d$。
-将式2.67代入式2.68，简化$\MD$为$d$，问题简化为
+将式\ref{eq:2.67}代入式\ref{eq:2.68}，简化$\MD$为$d$，问题简化为
 \begin{equation}
-    \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd\Vd^\top \Vx^{(i)}}_2^2
+\label{eq:2.67}
+    \Vd^* = \underset{\Vd}{\arg\!\min} \sum_i \norm{\Vx^{(i)} - \Vd\Vd^\top \Vx^{(i)}}_2^2
     \text{ 限制在 } \norm{\Vd}_2 = 1.
 \end{equation}
 
@@ -871,12 +879,13 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 将该标量放在左边的写法更为传统。
 于是我们通常写作如下：
 \begin{equation}
-    \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd^\top \Vx^{(i)}\Vd}_2^2
+\label{eq:2.68}
+    \Vd^* = \underset{\Vd}{\arg\!\min} \sum_i \norm{\Vx^{(i)} - \Vd^\top \Vx^{(i)}\Vd}_2^2
         \text{限制在} \norm{\Vd}_2 = 1,
 \end{equation}
 或者，考虑到标量的转置和自身相等，我们也可以写作：
 \begin{equation}
-    \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vx^{(i)}\Vd\Vd^\top}_2^2
+    \Vd^* = \underset{\Vd}{\arg\!\min} \sum_i \norm{\Vx^{(i)} - \Vx^{(i)}\Vd\Vd^\top}_2^2
         \text{限制在} \norm{\Vd}_2 = 1.
 \end{equation}
 读者应该慢慢对这些重排写法熟悉起来。
@@ -887,33 +896,33 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 让$\MX\in\SetR^{m\times n}$是将描述点的向量堆叠在一起的矩阵，例如$\MX_{i,:}=\Vx^{{(i)}^\top}$。
 原问题可以重新表述为：
 \begin{equation}
-    \Vd^* = \underset{\Vd}{\arg\min} \norm{\MX - \MX\Vd\Vd^\top}_F^2
-        \text{限制在} \norm{\Vd}_2 = 1.
+    \Vd^* = \underset{\Vd}{\arg\!\min} \norm{\MX - \MX\Vd\Vd^\top}_F^2
+        \text{限制在} \Vd^\top \Vd = 1.
 \end{equation}
 暂时不考虑约束，我们可以将Frobenius范数部分简化成下面的形式：
 \begin{equation}
-     \underset{d}{\arg\min} \norm{\MX - \MX \Vd\Vd^\top}_F^2
+     \underset{\Vd}{\arg\!\min} \norm{\MX - \MX \Vd\Vd^\top}_F^2
 \end{equation}
 \begin{equation}
-    = \underset{d}{\arg\min} \Tr \left( \left( \MX - \MX \Vd\Vd^\top  \right)^\top \left( \MX - \MX \Vd\Vd^\top  \right) \right)
+    = \underset{\Vd}{\arg\!\min} \! \Tr \left( \left( \MX - \MX \Vd\Vd^\top  \right)^\top \left( \MX - \MX \Vd\Vd^\top  \right) \right)
 \end{equation}
-（式子2.49）
+（式\ref{eq:2.49}）
 \begin{equation}
-    = \underset{d}{\arg\min} \Tr \left( \MX^\top\MX - \MX^\top\MX \Vd\Vd^\top - \Vd\Vd^\top \MX^\top\MX + \Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top  \right)
-\end{equation}
-\begin{equation}
-    = \underset{d}{\arg\min} \Tr( \MX^\top\MX)  - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+    = \underset{\Vd}{\arg\!\min} \! \Tr \left( \MX^\top\MX - \MX^\top\MX \Vd\Vd^\top - \Vd\Vd^\top \MX^\top\MX + \Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top  \right)
 \end{equation}
 \begin{equation}
-    = \underset{d}{\arg\min}  - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+    = \underset{\Vd}{\arg\!\min} \! \Tr( \MX^\top\MX)  - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+\end{equation}
+\begin{equation}
+    = \underset{\Vd}{\arg\!\min} \! - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
 （因为与$\Vd$无关的项不影响$\argmin$）
 \begin{equation}
-    = \underset{d}{\arg\min}   - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
+    = \underset{\Vd}{\arg\!\min} \! - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
-（因为循环改变迹运算中相乘矩阵的顺序不影响结果，如式2.52所示）
+（因为循环改变迹运算中相乘矩阵的顺序不影响结果，如式\ref{eq:2.52}所示）
 \begin{equation}
-    = \underset{d}{\arg\min}  - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
+    = \underset{\Vd}{\arg\!\min} \! - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
 \end{equation}
 （再次使用上述性质）
 
@@ -921,24 +930,24 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 此时，我们再来考虑约束条件:
 \begin{equation}
-    = \underset{d}{\arg\min}  - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
+    = \underset{\Vd}{\arg\!\min} \! - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
     \text{限制在} \Vd^\top \Vd = 1
 \end{equation}
 \begin{equation}
-    = \underset{d}{\arg\min}  - 2\Tr(\MX^\top\MX \Vd \Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top )
+    = \underset{\Vd}{\arg\!\min} \! - 2\Tr(\MX^\top\MX \Vd \Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top )
     \text{限制在} \Vd^\top \Vd = 1
 \end{equation}
  (因为约束条件)
  \begin{equation}
-     = \underset{d}{\arg\min}   - \Tr(\MX^\top\MX \Vd\Vd^\top)
+     = \underset{\Vd}{\arg\!\min} \! - \Tr(\MX^\top\MX \Vd\Vd^\top)
      \text{限制在} \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
-     = \underset{d}{\arg\min}  \Tr(\MX^\top\MX \Vd\Vd^\top)
+     = \underset{\Vd}{\arg\!\max} \! \Tr(\MX^\top\MX \Vd\Vd^\top)
      \text{限制在} \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
-     = \underset{d}{\arg\min}  \Tr(\Vd^\top\MX^\top\MX \Vd)
+     = \underset{\Vd}{\arg\!\max} \! \Tr(\Vd^\top\MX^\top\MX \Vd)
      \text{限制在} \Vd^\top \Vd = 1
  \end{equation}
 
