@@ -42,7 +42,7 @@
                             \Sx_2   \\ 
                             \vdots  \\ 
                             \Sx_n 
-                \end{bmatrix}
+                \end{bmatrix}.
     \end{equation}
     我们可以把向量看作空间中的点，每个元素是不同的坐标轴上的坐标。
     
@@ -66,7 +66,7 @@
         \begin{bmatrix}
             A_{1,1} & A_{1,2} \\
             A_{2,1} & A_{2,2} \\
-        \end{bmatrix}
+        \end{bmatrix}.
     \end{equation}
     有时我们需要矩阵值表达式的\gls{index}，而不是单个元素。
     在这种情况下，我们在表达式后面接下标，但不需要写作小写字母。
@@ -86,7 +86,7 @@
 图\ref{fig:chap2_transpose}显示了这个操作。
 我们将矩阵$\MA$的转置表示为$\MA^\top$，定义如下
 \begin{equation}
-(\MA^\top)_{i,j}＝ \SA_{j,i}
+(\MA^\top)_{i,j}＝ \SA_{j,i}.
 \end{equation}
 
 \begin{figure}[!htb]
@@ -134,13 +134,13 @@
 如果矩阵$\MA$的形状是$\Sm \times \Sn$，矩阵$\MB$的形状是$\Sn\times \Sp$，那么矩阵$\MC$的形状是$\Sm\times \Sp$。
 矩阵乘积可以作用于两个或多个并在一起的矩阵，即
 \begin{equation}
-    \MC=\MA\MB。
+    \MC=\MA\MB.
 \end{equation}
 
 
 具体地，该乘法操作定义为
 \begin{equation}
-    \SC_{i,j}=\sum_k \SA_{i,k} \SB_{k,j}
+    \SC_{i,j}=\sum_k \SA_{i,k} \SB_{k,j}.
 \end{equation}
 
 
@@ -157,7 +157,7 @@
 
 
 \begin{equation}
-    \MA(\MB+\MC)=\MA\MB +\MA\MC
+    \MA(\MB+\MC)=\MA\MB +\MA\MC.
 \end{equation}
 
 
@@ -165,7 +165,7 @@
 
 
 \begin{equation}
-\MA(\MB\MC)=(\MA\MB)\MC
+\MA(\MB\MC)=(\MA\MB)\MC.
 \end{equation}
 
 
@@ -177,7 +177,7 @@
 
 
 \begin{equation}
-\Vx^\top\Vy=\Vy^\top\Vx
+\Vx^\top\Vy=\Vy^\top\Vx.
 \end{equation}
 
 
@@ -185,13 +185,13 @@
 
 
 \begin{equation}
-(\MA\MB)^\top=\MB^\top\MA^\top
+(\MA\MB)^\top=\MB^\top\MA^\top.
 \end{equation}
 
 
 利用向量乘积是标量，标量转置是自身的事实，我们可以证明式2.8：
 \begin{equation}
-    \Vx^\top \Vy = \left(\Vx^\top \Vy \right)^\top = \Vy^\top \Vx
+    \Vx^\top \Vy = \left(\Vx^\top \Vy \right)^\top = \Vy^\top \Vx.
 \end{equation}
 
 
@@ -223,7 +223,7 @@
     \cdots
 \end{equation}
 \begin{equation}
-    \MA_{m,1}x_1+\MA_{m,2}x_2+\cdots \MA_{m,n}x_n = b_m
+    \MA_{m,1}x_1+\MA_{m,2}x_2+\cdots \MA_{m,n}x_n = b_m.
 \end{equation}
 
 
@@ -246,7 +246,7 @@
 我们将保持$\Sn$维向量不变的单位矩阵记作为$\MI_{\Sn}$。
 形式上，$\MI_{\Sn}\in \SetR^{\Sn\times \Sn}$，
 \begin{equation}
-    \forall \Vx \SetR^{\Sn} \in \MI_{\Sn}, \MI_{\Sn} \Vx = \Vx 
+    \forall \Vx \SetR^{\Sn} \in \MI_{\Sn}, \MI_{\Sn} \Vx = \Vx.
 \end{equation}
 
 
@@ -255,12 +255,12 @@
 
 
 矩阵$\MA$的\firstgls{matrix_inverse}被记作$\MA^{-1}$，被定义为如下的矩阵
-\begin{equation} \MA^{-1}\MA = \MI_{\Sn} \end{equation}
+\begin{equation} \MA^{-1}\MA = \MI_{\Sn}. \end{equation}
 现在我们可以通过如果以下步骤求解式2.11：
 \begin{equation}\MA\Vx=\Vb \end{equation}
 \begin{equation} \MA^{-1}\MA\Vx = \MA^{-1}\Vb \end{equation}
 \begin{equation} \MI_{\Sn} \Vx=\MA^{-1}\Vb \end{equation}
-\begin{equation} \Vx=\MA{-1}\Vb \end{equation}
+\begin{equation} \Vx=\MA{-1}\Vb. \end{equation}
 
 
 当然，这取决于能否找到一个逆矩阵$\MA^{-1}$。
@@ -292,12 +292,12 @@
 分析方程有多少个解，我们可以将$\MA$的列向量看作是从\firstgls{origin}（元素都是零的向量）出发的不同方向，确定有多少种方法可以到达向量$\Vb$。
 在这个观点中，向量$\Vx$中的每个元素表示我们应该沿着这些方向走多远，即$\Sx_{\Si}$表示我们需要沿着第$\Si$个向量的方向走多远：
 \begin{equation}
-\MA \Vx = \sum_i x_i \MA_{:,i}
+\MA \Vx = \sum_i x_i \MA_{:,i}.
 \end{equation}
 一般来说，这种操作被称为\firstgls{linear_combination}。
 形式上，某个集合中向量的线性组合，是指每个向量乘以对应系数之后的和，即：
 \begin{equation}
-    \sum_i \Sc_i \Vv^{(i)}
+    \sum_i \Sc_i \Vv^{(i)}.
 \end{equation}
 一组向量的\firstgls{span}是原始向量线性组合后所能抵达的点的集合。
 
@@ -350,7 +350,7 @@
 
 到目前为止，我们已经讨论了逆矩阵左乘。我们也可以定义逆矩阵右乘：
 \begin{equation}
-\MA\MA^{-1}=\MI
+\MA\MA^{-1}=\MI.
 \end{equation}
 对于方阵而言，它的左逆和右逆是相等的。
 
@@ -396,7 +396,7 @@ $L^2$范数十分频繁地出现在机器学习中，它经常被简化表示为
 在这些情况下，我们更倾向于使用在各个位置斜率相同，同时保持简单的数学形式的函数：$L^1$范数。
 $L^1$范数可以简化如下：
 \begin{equation}
-    \norm{\Vx}_1 = \sum_i  |x_i|
+    \norm{\Vx}_1 = \sum_i  |x_i|.
 \end{equation}
 当机器学习问题中零和非零元素之间的差异非常重要时，通常会使用$L^1$范数。
 每当$\Vx$中某个元素从$0$增加了$\epsilon$，对应的$L^1$范数增加$\epsilon$。
@@ -415,14 +415,14 @@ $L^1$范数可以简化如下：
 另外一个经常在机器学习中出现的范数是$L^\infty$范数，也被称为\firstgls{max_norm}。
 这个范数表示向量中具有最大幅度的元素的绝对值：
 \begin{equation}
-    \norm{\Vx}^\infty = \max_i |x_i|
+    \norm{\Vx}^\infty = \max_i |x_i|.
 \end{equation}
 
 
 有时候我们可能也需要衡量矩阵的大小。
 在深度学习中，最常见的做法是使用\firstgls{frobenius_norm}，
 \begin{equation}
-    \norm{A}_F = \sqrt{\sum_{i,j} A_{i,j}^2}
+    \norm{A}_F = \sqrt{\sum_{i,j} A_{i,j}^2},
 \end{equation}
 类似于向量的$L^2$范数。
 
@@ -465,15 +465,15 @@ $L^1$范数可以简化如下：
 
 \firstgls{symmetric}矩阵是任意转置和自己相等的矩阵：
 \begin{equation}
-    \MA=\MA^\top
+    \MA=\MA^\top.
 \end{equation}
 当某些不依赖参数顺序的双参数函数生成元素时，对称矩阵经常会出现。
 例如，如果$\MA$一个表示距离的矩阵，$\MA_{i,j}$表示点$i$到点$j$的距离，那么$\MA_{i,j}=\MA_{j,i}$，因为距离函数是对称的。
 
 
-\firstgls{unit_vector}指的是范数为$1$的向量：
+\firstgls{unit_vector}是具有\emph{单位范数}的向量：
 \begin{equation}
-\norm{\Vx}=1
+\norm{\Vx}_2=1.
 \end{equation}
 
 
@@ -485,11 +485,11 @@ $L^1$范数可以简化如下：
 
 \firstgls{orthogonal_matrix}是指行向量是标准正交的，列向量是标准正交的方阵：
 \begin{equation}
-    \MA^\top\MA=\MA\MA^\top=\MI
+    \MA^\top\MA=\MA\MA^\top=\MI.
 \end{equation}
 这意味着 
 \begin{equation}
-    \MA^{-1}=\MA^\top
+    \MA^{-1}=\MA^\top,
 \end{equation}
 所以正交矩阵受到关注是因为求逆计算代价小。
 需要注意正交矩阵的定义。
@@ -519,7 +519,7 @@ $L^1$范数可以简化如下：
 
 方阵$\MA$的\firstgls{eigenvector}是指与$\MA$相乘后相当于对该向量进行放缩的非零向量$\Vv$：
 \begin{equation}
-    \MA\Vv=\lambda \Vv
+    \MA\Vv=\lambda \Vv.
 \end{equation}
 标量$\lambda$被称之为这个特征向量对应的\firstgls{eigenvalue}。
 （类似地，我们也可以定义\firstgls{left_Svector}$\Vv^\top\MA=\lambda \Vv^\top$，但是通常我们更关注\firstgls{right_Svector}）。
@@ -535,7 +535,7 @@ $L^1$范数可以简化如下：
 类似地，我们也可以将特征值连接成一个向量$\Vlambda = [\lambda_1, \dots , \lambda_n]^\top$。
 因此$\MA$的\gls{eigendecomposition}可以记作
 \begin{equation}
-    \MA = \MV \text{diag}(\mathbf{\Vlambda}) \MV^{-1}
+    \MA = \MV \text{diag}(\mathbf{\Vlambda}) \MV^{-1}.
 \end{equation}
 
 
@@ -549,7 +549,7 @@ $L^1$范数可以简化如下：
 幸运的是，在本书中我们通常只需要探讨一类有简单分解的矩阵。
 具体地，每个实对称矩阵都可以分解成实特征向量和实特征值：
 \begin{equation}
-    \MA = \MQ \VLambda \MQ^\top
+    \MA = \MQ \VLambda \MQ^\top.
 \end{equation}
 其中$\MQ$是$\MA$的特征向量组成的正交矩阵，$\VLambda$是对角矩阵。
 特征值$\Lambda_{i,i}$对应的特征向量是矩阵$\MQ$的第$i$列，记作$\MQ_{:,i}$。
@@ -606,12 +606,12 @@ $L^1$范数可以简化如下：
 
 回想一下， 我们使用\gls{eigendecomposition}去分析矩阵$\MA$时， 得到特征向量构成的矩阵$\MV$和特征值构成的向量$\Vlambda$，我们可以重新将$\MA$写作
 \begin{equation}
-    \MA=\MV\text{diag}(\Vlambda)\MV^{-1}
+    \MA=\MV\text{diag}(\Vlambda)\MV^{-1}.
 \end{equation}
 
 \gls{SVD}是类似的，只不过这回我们将矩阵$\MA$分解成三个矩阵的乘积：
 \begin{equation}
-    \MA=\MU\MD\MV^\top
+    \MA=\MU\MD\MV^\top.
 \end{equation}
 
 
@@ -651,7 +651,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \end{equation}
 等式两边左乘左逆$\MB$后，我们得到
 \begin{equation}
-    \Vx=\MB\Vy
+    \Vx=\MB\Vy.
 \end{equation}
 是否存在一个唯一的映射，将$\MA$映射到$\MB$，取决于问题的形式。
 
@@ -663,11 +663,11 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \firstgls{Moore}使我们能够解决这种情况的问题。
 矩阵$\MA$的伪逆定义为：
 \begin{equation}
-    \MA^+ = \lim_{a \searrow 0} (\MA^\top\MA + \alpha \MI)^{-1} \MA^\top
+    \MA^+ = \lim_{a \searrow 0} (\MA^\top\MA + \alpha \MI)^{-1} \MA^\top.
 \end{equation}
 计算伪逆的实际算法没有基于这个式子，而是使用下面的公式：
 \begin{equation}
-    \MA^+ = \MV\MD^+\MU^\top
+    \MA^+ = \MV\MD^+\MU^\top.
 \end{equation}
 其中，矩阵$\MU$，$\MD$和$\MV$是矩阵$\MA$\gls{SVD}后得到的矩阵。
 对角矩阵$\MD$的伪逆$\MD^+$是其非零元素取倒之后再转置得到的。
@@ -679,7 +679,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 
 当矩阵$\MA$的行数多于列数时，可能没有解。
-在这种情况下，通过伪逆得到的$\Vx$是使得$\MA\Vx$和$\Vy$的欧几里得距离$\norm{\MA\Vx-\Vy}_2^2$最小的解。
+在这种情况下，通过伪逆得到的$\Vx$是使得$\MA\Vx$和$\Vy$的欧几里得距离$\norm{\MA\Vx-\Vy}_2$最小的解。
 
 
 
@@ -689,34 +689,34 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 迹运算返回的是矩阵对角元素的和：
 \begin{equation}
-    \Tr(\MA)= \sum_i \MA_{i,i}
+    \Tr(\MA)= \sum_i \MA_{i,i}.
 \end{equation}
 迹运算因为很多原因而受到关注。
 若不使用求和符号，有些矩阵运算很难描述，而通过矩阵乘法和迹运算符号，可以进行清楚地表示。
 例如，迹运算提供了另一种描述矩阵Frobenius范数的方式：
 \begin{equation}
-    \norm{A}_F = \sqrt{\text{Tr}(\MA\MA^\top)}
+    \norm{A}_F = \sqrt{\text{Tr}(\MA\MA^\top)}.
 \end{equation}
 
 
 用迹运算表示式，使我们可以使用很多有用的性质来操纵表达式。。
 例如，迹运算在转置运算下是不变的：
-$\Tr(\MA)=\Tr(\MA^\top)$
+$\Tr(\MA)=\Tr(\MA^\top)$.
 
 
 多个矩阵乘积的迹，和将这些矩阵中最后一个挪到最前面之后乘积的迹是相同的。
 当然，我们需要考虑挪动之后矩阵乘积依然定义良好：
-$\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$，
+$\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$
 或者更一般地，
 \begin{equation}
-\Tr()\prod_{i=1}^n \MF(i))= \Tr(\MF^n \prod_{i=1}^{n-1} \MF^i)
+\Tr(\prod_{i=1}^n \MF(i))= \Tr(\MF^n \prod_{i=1}^{n-1} \MF^i).
 \end{equation}
 即使循环置换后矩阵乘积得到的矩阵形状变了，迹运算的结果依然不变。
 例如，假设矩阵$\MA\in \SetR^{m\times n}$，矩阵$\MB\in \SetR^{n\times m}$，我们可以得到
 \begin{equation} 
     \Tr(\MA\MB)= \Tr(\MB\MA)
 \end{equation}
-即使$\MA\MB \in \SetR^{m\times m} \MB\MA \in \SetR^{n\times n}$
+即使$\MA\MB \in \SetR^{m\times m}$和$\MB\MA \in \SetR^{n\times n}$。
 
 
 % -- 44 --
@@ -775,14 +775,14 @@ $\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$，
 我们使用范数来衡量它们之间的距离。
 在PCA算法中，我们使用$L^2$范数：
 \begin{equation}
-\Vc^* = \underset{\Vc}{\arg\!\min} \norm{x-g(c)}_2
+\Vc^* = \underset{\Vc}{\arg\!\min} \norm{x-g(c)}_2.
 \end{equation}
 
 
 我们可以用平方$L^2$范数替代$L^2$范数，因为在两者在相同的值$\Vc$上取得最小值。
 这是因为$L^2$范数是非负的，并且平方运算在非负值上是单调递增的。
 \begin{equation}
-\Vc^* = \argmin_c \norm{x - g(c)}_2^2
+\Vc^* = \argmin_c \norm{x - g(c)}_2^2.
 \end{equation}
 
 
@@ -803,7 +803,7 @@ $\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$，
 
 因为第一项$\Vx^\top\Vx$不依赖于$\Vc$，所以我们可以忽略它，得到如下的优化目标：
 \begin{equation}
-\Vc^* = \underset{\Vc}{\arg\min} - 2\Vx^\top g(\Vc) + g(\Vc)^\top g(\Vc) 
+\Vc^* = \underset{\Vc}{\arg\min} - 2\Vx^\top g(\Vc) + g(\Vc)^\top g(\Vc).
 \end{equation}
 
 % -- 46 --
@@ -829,14 +829,14 @@ $\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$，
     -2\MD^\top\Vc + 2\Vc = 0
 \end{equation}
 \begin{equation}
-    \Vc = \MD^\top \Vx
+    \Vc = \MD^\top \Vx.
 \end{equation}
 
 
 这使得算法很高效：最优编码$\Vx$只需要一个矩阵-向量乘法操作。
 我们使用该编码函数去编码向量：
 \begin{equation}
-    f(\Vx)=\MD^\top\Vx
+    f(\Vx)=\MD^\top\Vx.
 \end{equation}
 进一步使用矩阵乘法，我们也可以定义PCA重构操作：
 \begin{equation}
@@ -857,7 +857,7 @@ $\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$，
 将式2.67代入式2.68，简化$\MD$为$d$，问题简化为
 \begin{equation}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd\Vd^\top \Vx^{(i)}}_2^2
-    \text{限制在} \norm{\Vd}_2 = 1
+    \text{ 限制在 } \norm{\Vd}_2 = 1.
 \end{equation}
 
 % -- 47 --
@@ -868,12 +868,12 @@ $\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$，
 于是我们通常写作如下：
 \begin{equation}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd^\top \Vx^{(i)}\Vd}_2^2
-        \text{限制在} \norm{\Vd}_2 = 1
+        \text{限制在} \norm{\Vd}_2 = 1,
 \end{equation}
 或者，考虑到标量的转置和自身相等，我们也可以写作：
 \begin{equation}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vx^{(i)}\Vd\Vd^\top}_2^2
-        \text{限制在} \norm{\Vd}_2 = 1
+        \text{限制在} \norm{\Vd}_2 = 1.
 \end{equation}
 读者应该慢慢对这些重排写法熟悉起来。
 
@@ -884,7 +884,7 @@ $\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$，
 原问题可以重新表述为：
 \begin{equation}
     \Vd^* = \underset{\Vd}{\arg\min} \norm{\MX - \MX\Vd\Vd^\top}_F^2
-        \text{限制在} \norm{\Vd}_2 = 1
+        \text{限制在} \norm{\Vd}_2 = 1.
 \end{equation}
 暂时不考虑约束，我们可以将Frobenius范数部分简化成下面的形式：
 \begin{equation}
