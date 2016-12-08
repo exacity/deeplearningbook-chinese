@@ -21,7 +21,7 @@
 
 面向的读者
 --------------------
-请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/raw/master/dlbook_cn_public.pdf)阅读**PDF已更新**。
+请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/raw/master/dlbook_cn_public.pdf)阅读(PDF 12月8日已更新)。
 这一版读起来肯定费劲，我们建议英文好的或者研究者直接读原版。
 这一版面向的读者是英语不好，急于想入门深度学习的同学。或者希望帮忙校对的各路大哥也可以读读，只要不嫌弃。
 
@@ -30,6 +30,7 @@
 -----------
  - 各种问题或者建议可以提issue，建议使用中文。 
  - 由于版权问题，我们不能将图片和bib上传，请见谅。
+ - Due to copyright issues, we would not upload figures and the bib file.
  - 可用于学习研究目的，不得用于任何商业行为。谢谢！
  - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/raw/master/dlbook_cn_public.pdf)文件每天更新。
  - 大家不要watch啊，邮箱可能会炸。
