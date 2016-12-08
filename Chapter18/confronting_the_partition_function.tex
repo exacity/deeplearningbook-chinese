@@ -644,6 +644,7 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 
 
 \subsection{\gls{AIS}}
+\label{subsec:annealed_importance_sampling}
 在$D_{KL}(p_0 \|\| p_1)$很大的情况下（即，$p_0$和$p_1$之间几乎没有重叠），一种称为\textbf{\gls{AIS}}（\textbf{annealed importance sampling}，AIS）的方法试图通过引入中间分布来桥接差距\citep{Jarzynski1997,Neal-2001}。
 考虑分布序列$p_{\eta_0}，\dots，p_{\eta_n}$，其中$0=\eta_0 < \eta_1 < \dots < \eta_{n-1} < \eta_n = 1$，使得序列中的第一个和最后一个分布分别是$p_0$和$p_1$。
 
@@ -771,6 +772,7 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 
 
 \subsection{\gls{bridge_sampling}}
+\label{subsec:bridge_sampling}
 类似于\glssymbol{AIS}，\gls{bridge_sampling}\citep{Bennet76}是另一种解决\gls{importance_sampling}缺点的方法。
 并非将一系列中间分布链接在一起，\gls{bridge_sampling}依赖于单个分布$p_*$（被称为桥），在已知\gls{partition_function}的$p_0$和我们试图估计\gls{partition_function}$Z_1$的分布$p_1$之间插值。
 
