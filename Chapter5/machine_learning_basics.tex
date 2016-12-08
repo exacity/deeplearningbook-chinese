@@ -29,6 +29,7 @@
 下面的章节将提供直观的解释和示例来介绍不同的任务，\gls{performance_measures}和\gls{experience}，这些将被用来构建机器学习算法。
 
 \subsection{任务，$T$}
+\label{subsec:the_task_t}
 机器学习可以让我们应对一些由人来写和设计固定程序很难解决的问题。
 从科学和哲学的角度来看，机器学习受到关注是因为发展我们对机器学习的认识需要发展我们对智能背后原理的理解。
 
@@ -137,6 +138,7 @@
 这里我们列举的任务类型只是用来介绍机器学习可以做哪些任务，并非对机器学习能够做的任务进行刚性分类。
 
 \subsection{\gls{performance_measures}，$P$}
+\label{subsec:the_performance_measure_p}
 为了评估机器学习算法的能力，我们必须设计其性能的定量衡量。
 通常\gls{performance_measures}$P$是对系统执行的任务$T$特定而言的。
 
@@ -169,6 +171,7 @@
 在这些情况下，我们必须设计一个仍然对应于设计对象的替代标准，或者设计一个理想标准的良好近似。
 
 \subsection{\gls{experience}，$E$}
+\label{subsec:the_experience_e}
 根据学习过程中的不同\gls{experience}，机器学习算法可以大致分类为\firstgls{unsupervised}和\firstgls{supervised}。
 
 本书中的大部分学习算法可以理解成在整个\firstgls{dataset}上获取\gls{experience}。
@@ -258,6 +261,7 @@
 这里介绍的结构涵盖了大多数情况，但始终有可能为新的应用设计出新的结构。
 
 \subsection{实例：\gls{linear_regression}}
+\label{subsec:example_linear_regression}
 我们将机器学习算法定义为通过某些任务上训练来提高计算机程序性能的算法，这种定义有点抽象。
 为了使这个定义更具体点，我们展示一个简单的机器学习实例：\firstgls{linear_regression}。
 当我们介绍更多有助于理解机器学习特性的概念时，我们会反复回顾这个实例。
@@ -368,6 +372,7 @@
 在接下来的小节中，我们将会介绍一些设计学习算法的基本原则，并说明如何使用这些原则来构建更复杂的学习算法。
 
 \section{容量，过拟合和欠拟合}
+\label{subsec:capacity_overfitting_and_underfitting}
 \label{sec:capacity_overfitting_and_underfitting}
 机器学习的主要挑战是我们模型必须能够在先前未观测的新输入上表现良好，而不是只在训练集上效果好。
 在先前未观测到的输入上表现良好的能力被称为\firstgls{generalization}。
@@ -558,6 +563,7 @@
 \end{figure}
 
 \subsection{\gls{no_free_lunch_theorem}}
+\label{subsec:the_no_free_lunch_theorem}
 学习理论表明机器学习算法能够从有限个训练集\gls{example:chap5}中很好地泛化。
 这似乎违背一些基本的逻辑原则。
 归纳推理，或是从一组有限的\gls{example:chap5}中推断一般的规则，在逻辑上不是很有效。
@@ -580,6 +586,7 @@
 反之，我们的\gls{target}是理解什么样的分布和人工智能体验的“真实世界”相关，什么样的学习算法在我们关心的数据生成分布上效果最好。
 
 \subsection{\gls{regularization}}
+\label{subsec:regularization}
 没有免费午餐定理暗示我们必须设计在特定任务上效果良好的机器学习算法。
 我们建立一组学习算法的偏好来达到这个要求。
 当这些偏好和我们希望算法解决的学习问题相吻合时，性能会更好。
@@ -679,6 +686,7 @@
 值得庆幸的是，学术界往往会移到新的（通常会更具大更具挑战性的）基准\gls{dataset}上。
 
 \subsection{交叉验证}
+\label{subsec:cross_validation}
 将\gls{dataset}分成固定的训练集和固定的\gls{test_set}后，若\gls{test_set}的误差很小，这将是有问题的。
 一个小规模的\gls{test_set}意味着平均测试误差估计的统计不确定性，使得很难判断算法$A$是否比算法$B$在给定的任务上做得更好。
 
@@ -698,6 +706,7 @@
 基本的概念，例如参数估计，偏差和方差对于形式化刻画泛化，欠拟合和过拟合都非常有帮助。
 
 \subsection{点估计}
+\label{subsec:point_estimation}
 点估计试图为一些感兴趣的量提供单个“最优”预测。
 一般地，感兴趣的量可以是单个参数，或是某些参数模型中一个向量参数，例如第5.1.4节\gls{linear_regression}中的权重，但是也有可能是整个函数。
 
@@ -735,6 +744,7 @@
 现在我们回顾点估计最常研究的性质，并探讨这些性质说明了估计的什么。
 
 \subsection{偏差}
+\label{subsec:bias}
 估计的偏差被定义为：
 \begin{equation}
     \text{bias}(\hat{\Vtheta}_m) = \SetE(\hat{\Vtheta}_m) - \Vtheta
@@ -831,6 +841,7 @@
 我们将会看到经常会使用具有其他重要性质的有偏估计。
 
 \subsection{方差和标准差}
+\label{subsec:variance_and_standard_error}
 我们可能要考虑的估计器另一个性质是数据样本函数的变化程度。
 正如我们可以计算估计的期望去决定它的偏差，我们也可以计算它的方差。
 \gls{estimator:chap5}的\firstgls{variance}就是一个方差
@@ -885,6 +896,7 @@
 % -- 125 --
 
 \subsection{权衡偏值和方差以最小化均方误差}
+\label{subsec:trading_off_bias_and_variance_to_minimize_mean_squared_error}
 偏差和方差衡量估计的两个不同误差来源。
 偏差衡量离真实函数或参数的误差期望。
 另一方面，方差衡量由任意特定的数据采样可能导致的估计期望的偏差。
@@ -920,6 +932,7 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 % -- 126 --
 
 \subsection{一致性}
+\label{subsec:consistency}
 目前我们已经探讨了固定大小训练集下不同估计的性质。
 通常，我们也会关注训练数据增多后估计的性能。
 特别地，我们希望当\gls{dataset}中数据点的数量$m$增加时，点估计会收敛到对应参数的真实值。
@@ -1000,6 +1013,7 @@ KL散度定义为
 当$\Vx$取实数时，负对数似然是负值。
 
 \subsection{条件对数似然和\gls{mean_squared_error}}
+\label{subsec:conditional_log_likelihood_and_mean_squared_error}
 \gls{maximum_likelihood_estimation}很容易扩展到估计条件概率$P(\Vy|\Vx;\Vtheta)$，给定$\Vx$预测$\Vy$。
 实际上这是最常见的情况，因为这构成了大多数\gls{supervised_learning}的基础。
 如果$\MX$表示所有的输入，$\MY$表示我们观测到的\gls{target}，那么条件\gls{maximum_likelihood_estimation}是
@@ -1042,6 +1056,7 @@ KL散度定义为
 % -- 130 --
 
 \subsection{最大似然的性质}
+\label{subsec:properties_of_maximum_likelihood}
 \gls{maximum_likelihood_estimation}最吸引人的地方在于，它被证明是当\gls{example:chap5}数目$m\to\infty$时，就收敛率而言最好的渐近估计。
 
 在合适的条件下，\gls{maximum_likelihood_estimation}具有一致性（参考第5.4.5节），意味着训练\gls{example:chap5}数目趋向于无穷时，参数的\gls{maximum_likelihood_estimation}收敛到参数的真实值。
@@ -1198,7 +1213,8 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 一个区别是若$\alpha$设为$0$则贝叶斯估计是未定义的----不能初始化贝叶斯学习过程为一个无限宽的$\Vw$先验。
 更重要的区别是贝叶斯估计会给出一个协方差矩阵，表示$\Vw$所有不同值的可能范围，而不仅是估计$\mu_m$。
 
-\subsection{\gls{MAP}估计}
+\subsection{\gls{MAP}（\glssymbol{MAP}）估计}
+\label{subsec:maximum_a_posteriori_estimation}
 虽然使用完整的贝叶斯后验分布进行参数$\Vtheta$预测是非常合理的，但仍常常希望能够进行单点估计。
 希望点估计的一个常见原因是，对于非常有趣的模型而言，大部分涉及到贝叶斯后验的操作是非常棘手的，点估计提供了一个可解的近似。
 并非简单地回归到\gls{MLE}，我们仍然可以通过先验影响点估计的选择而获取贝叶斯方法的优点。
@@ -1237,6 +1253,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 % -- 136 --
 
 \subsection{概率监督学习}
+\label{subsec:probabilistic_supervised_learning}
 本书的大部分\gls{unsupervised_learning}算法都是基于估计概率分布$p(y|\Vx)$。
 我们可以使用\gls{maximum_likelihood_estimation}找到对于有参分布族$p(y|\Vx;\Vtheta)$最好的参数向量$\Vtheta$。 
 
@@ -1267,6 +1284,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 通过确定正确的输入和输出变量上的有参条件概率分布族，相同的策略基本上可以用于任何\gls{supervised_learning}问题。
 
 \subsection{\gls{SVM}}
+\label{subsec:support_vector_machines}
 \firstall{SVM}是\gls{unsupervised_learning}中最有影响力的方法之一\citep{Boser92,Cortes95}。
 类似于逻辑回归，这个模型也是基于线性函数$\Vw^\Tsp \Vx + b$。
 不同于逻辑回归的是，支持向量机不输出概率，只输出类别。
@@ -1343,6 +1361,7 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 % -- 139 --
 
 \subsection{其他简单的\gls{supervised_learning}算法}
+\label{subsec:other_simple_supervised_learning_algorithms}
 我们已经简要介绍过另一个非概率\gls{supervised_learning}算法，近邻回归。
 更一般地，$k$-最近邻是一类可用于分类或回归的技术。
 作为一个非参数学习算法，$k$-最近邻并不局限于固定数目的参数。
@@ -1428,6 +1447,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 剩余的大部分章节会介绍其他表示学习算法以不同方式处理这三个标准或是介绍其他标准。
 
 \subsection{\glssymbol{PCA}}
+\label{subsec:principal_components_analysis}
 在第2.12节中，我们看到\glssymbol{PCA}算法提供了一种压缩数据的方式。
 我们也可以将\glssymbol{PCA}视为学习数据表示的\gls{unsupervised_learning}算法。
 这种表示基于上述简单表示的两个标准。
@@ -1510,6 +1530,7 @@ $\MX$对应的无偏样本协方差矩阵给定如下
 对此，我们需要比简单线性变换能做到更多的工具。
 
 \subsection{$k$-均值聚类}
+\label{subsec:k_means_clustering}
 另外一个简单的表示学习算法是$k$-均值聚类。
 $k$-均值聚类算法将训练集分成$k$个靠近彼此的不同\gls{example:chap5}聚类。
 因此我们可以认为该算法提供了$k$-维的独热码向量$\Vh$以表示输入$\Vx$。
@@ -1682,6 +1703,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 深度学习旨在克服这些，以及其他困难。
 
 \subsection{\gls{curse_of_dimensionality}}
+\label{subsec:the_curse_of_dimensionality}
 当数据的维数很高时，很多机器学习问题变得相当困难。
 这种现象被称为\firstgls{curse_of_dimensionality} 维数灾难（curse of dimensionality）。
 特别值得注意的是，一组变量的不同可能配置数量随着变量数目的增加而指数级增长。
@@ -1717,6 +1739,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 % -- 151 --
 
 \subsection{局部不变性和平滑\gls{regularization}}
+\label{subsec:local_constancy_and_smoothness_regularization}
 为了更好地泛化，机器学习算法需要由先验信念引导应该学习什么类型的函数。
 此前，我们已经看到过由模型参数上的概率分布形成的先验。
 更非正式地，我们也可以探讨先验信念如何直接影响\emph{函数}本身，间接影响参数，作为参数与函数之间关系的结果。 
@@ -1797,6 +1820,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},...,\Vmu^{(k)}\}$
 % -- 155 --
 
 \subsection{\gls{manifold}学习}
+\label{subsec:manifold_learning}
 在机器学习很多想法背后的一个重要概念是\gls{manifold}。
 
 \firstgls{manifold}指连接在一起的区域。
