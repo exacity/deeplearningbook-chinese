@@ -19,6 +19,8 @@
 *.ind
 */figures
 *.sh
+*.glo
+*.ist
 agreement.jpg
 dlbook_cn_public.tex
 dlbook_cn_public.bib
