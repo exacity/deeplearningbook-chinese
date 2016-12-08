@@ -350,12 +350,10 @@
 随机搜索过程如下。
 首先，我们定义每个超参数定义一个边缘分布，例如，伯努利分布或分类分布（对应着二元超参数或离散超参数），或者对数尺度上的均匀分布（对应着正实值超参数）。
 例如，
-\begin{equation}
-\begin{aligned}
+\begin{align}
 	\texttt{log\_learning\_rate} &\sim u(-1, -5), \\
 	\texttt{learning\_rate} &= 10^{\texttt{log\_learning\_rate}},
-\end{aligned}
-\end{equation}
+\end{align}
 其中，$u(a,b)$表示区间$(a,b)$上均匀采样的样本。
 类似地，$\texttt{log\_number\_of\_hidden\_units}$可能表示采样自$u(\log(50), \log(2000))$。
 
@@ -467,15 +465,15 @@
 验证这些求导正确的一种方法是比较实现的自动求导和\firstgls{finite_difference}计算的导数。
 因为
 \begin{equation}
-	f’(x) = \lim_{\epsilon \to 0} \frac{f(x+\epsilon) - f(x)}{\epsilon}，
+	f'(x) = \lim_{\epsilon \to 0} \frac{f(x+\epsilon) - f(x)}{\epsilon}，
 \end{equation}
 我们可以使用小的，有限的$\epsilon$近似导数：
 \begin{equation}
-	f’(x) \approx \frac{f(x+\epsilon) - f(x)}{\epsilon}。
+	f'(x) \approx \frac{f(x+\epsilon) - f(x)}{\epsilon}。
 \end{equation}
 我们可以使用\firstgls{centered_difference}提高近似的精度：
 \begin{equation}
-	f’(x) \approx \frac{ f(x+\frac{1}{2}\epsilon) - f(x-\frac{1}{2}\epsilon) }{\epsilon}。
+	f'(x) \approx \frac{ f(x+\frac{1}{2}\epsilon) - f(x-\frac{1}{2}\epsilon) }{\epsilon}。
 \end{equation}
 扰动大小$\epsilon$必须足够大，以确保该扰动不会由于数值计算的有限精度问题向下近似太多。
 
@@ -485,7 +483,7 @@
 令人遗憾的是，\gls{finite_difference}只允许我们每次计算一个导数。
 我们既可以运行\gls{finite_difference}$mn$次评估$g$的所有偏导数，又可以将该测试应用于一个输入输出都是$g$的随机投影的新函数。
 例如，我们可以应用导数实现的测试于函数$f(x) = \Vu^T g(\Vv x)$，其中$\Vu$和$\Vv$是随机向量。
-正确计算$f’(x)$要求能够正确地通过$g$反向传播，但是使用有限差分能够很有效地计算，因为$f$只有一个输入和一个输出。
+正确计算$f'(x)$要求能够正确地通过$g$反向传播，但是使用有限差分能够很有效地计算，因为$f$只有一个输入和一个输出。
 在多个$\Vu$值和$\Vv$值上重复这个测试通常是个好主意，可以减少测试忽略了垂直于随机投影的几率。
 
 
@@ -549,7 +547,7 @@
 
 我们推荐的方法是反复细化这些基准，并测试每个变化是否都有改进。
 街景\gls{transcription_system}的第一个变化受激励于\gls{coverage}指标的理论理解和数据的结构。
-具体地，当输出序列的概率低于某个值$t$，$p(\Vy|Vx) < t$时，网络拒绝为输入$\Vx$分类。
+具体地，当输出序列的概率低于某个值$t$，$p(\Vy|\Vx) < t$时，网络拒绝为输入$\Vx$分类。
 最初，$p(\Vy|\Vx)$的定义是临时的，简单地将所有\gls{softmax}输出乘在一起。
 这促使了能够真正计算出合理对数似然的特定输出层和损失函数的发展。
 这种方法使得样本拒绝机制发挥得更有效。
