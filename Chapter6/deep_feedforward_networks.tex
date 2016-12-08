@@ -216,7 +216,7 @@ f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = \bm{w}^\top \max\{ 0, \bm{W}^\top \bm{x} 
 我们现在考虑让模型处理一批输入。
 令$\bm{X}$表示一个设计好的输入矩阵，包含二进制 输入空间中的全部四个点，每个样例占一行，那么矩阵表示为：
 \begin{equation} 
-bm{X} = \begin{bmatrix}
+\bm{X} = \begin{bmatrix}
 0 & 0\\
 0 & 1\\ 
 1 & 0\\ 
@@ -322,7 +322,7 @@ XOR问题的其他的一些等价解也可以被梯度下降算法找到。
 
 % -- 172 --
 
-\subsubsection{用最大似然来学习条件分布}
+\subsubsection{用最大似然学习条件分布}
 \label{sec:learning_conditional_distributions_with_maximum_likelihood}
 
 大多数现代的神经网路使用最大似然来训练。
@@ -418,10 +418,10 @@ f^* = \underset{f}{\argmin} \ \SetE_{\RVx, \RVy \sim  p_\text{data}} ||\bm{y} - 
 
 % -- 175 --
 
-\subsubsection{Gaussian输出分布的线性单元}
+\subsubsection{用于Gaussian输出分布的线性单元}
 \label{sec:linear_units_for_gaussian_output_distributions}
 
-一种简单的输出单元是基于无非线性的仿射变换的输出单元。
+一种简单的输出单元是基于没有非线性存在的仿射变换的输出单元。
 它们往往被称为线性单元。
 
 给定特征$\bm{h}$，线性输出单元层产生一个向量$\hat{\bm{y}} = \bm{W}^\top \bm{h}+\bm{b}$。
@@ -437,9 +437,9 @@ p(\bm{y}|\bm{x}) = \CalN(\bm{y}; \hat{\bm{y}}, \bm{I} ).
 用线性输出层来满足这种限制是困难的，所以通常其他的输出单元被用来对协方差参数化。
 对协方差建模的方法在\ref{sec:other_output_types}节中简要介绍。
 
-因为线性模型不会饱和，它们对基于梯度的优化算法没有任何困难并且可以被用在相当广泛的优化算法中。
+因为线性模型不会饱和，所以它们对基于梯度的优化算法没有任何困难并且可以被用在相当广泛的优化算法中。
 
-\subsubsection{Bernoulli输出分布的sigmoid单元}
+\subsubsection{用于Bernoulli输出分布的sigmoid单元}
 \label{sec:sigmoid_units_for_bernoulli_output_distributions}
 
 许多任务需要预测二元变量$y$的值。
@@ -480,8 +480,8 @@ sigmoid可以通过构造一个非标准化（和不为1）的概率分布$\tild
 如果我们假定非标准化的对数概率对$y$ 和$z$是线性的，可以对它取指数来得到非标准化的概率。
 我们然后对它归一化，可以发现这服从Bernoulli分布，它受$z$的sigmoid形式的变换控制：
 \begin{align}
-\log \hat{P}(y) &= yz\\
-\hat{P}(y) &= \exp(yz)\\
+\log \tilde{P}(y) &= yz\\
+\tilde{P}(y) &= \exp(yz)\\
 P(y) &= \frac{\exp(yz)}{\sum_{y' = 0}^1 \exp(y' z)}\\
 P(y) &= \sigma((2y-1)z).
 \end{align}
@@ -517,7 +517,7 @@ sigmoid激活函数在$z$取非常小的负值时会饱和到0，当$z$取非常
 在软件实现时，为了避免数值问题，最好将负的对数似然写作$z$的函数，而不是$\hat{y}=\sigma(z)$的函数。
 如果sigmoid函数下溢到零，那么之后对$\hat{y}$取对数会得到负无穷。
 
-\subsubsection{Multinoulli输出分布的softmax单元}
+\subsubsection{用于multinoulli输出分布的softmax单元}
 \label{sec:softmax_units_for_multinoulli_output_distributions}
 
 任何时候当我们想要表示一个具有$n$个可能取值的离散型随机变量的分布时，我们都可以使用softmax函数。
@@ -546,7 +546,7 @@ softmax函数最常用作分类器的输出，来表示$n$个不同类上的概�
 softmax函数然后可以对$z$指数化和归一化来获得需要的$\hat{\bm{y}}$。
 最终，softmax函数的形式为
 \begin{equation}
-\text{softmax}(z)_i = \frac{\exp(z_i)}{\sum_i \exp(z_j)}.
+\text{softmax}(\bm{z})_i = \frac{\exp(z_i)}{\sum_i \exp(z_j)}.
 \end{equation}
 
 和logistic sigmoid一样，当使用最大化对数似然训练softmax来输出目标值$\RSy$时，使用指数函数工作地非常好。
@@ -767,10 +767,10 @@ Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理
 
 % -- 186 --
 
-除非另有说明，大多数的隐含单元都可以描述为接受输入向量$\bm{x}$，计算放射变换$\bm{z}=\bm{W}^\top \bm{x}+\bm{b}$，然后使用一个作用于每个元素的非线性函数$g(\bm{z})$。
+除非另有说明，大多数的隐含单元都可以描述为接受输入向量$\bm{x}$，计算仿射变换$\bm{z}=\bm{W}^\top \bm{x}+\bm{b}$，然后使用一个作用于每个元素的非线性函数$g(\bm{z})$。
 大多数隐含单元的区别仅仅在于激活函数$g(\bm{z})$的形式。
 
-\subsection{修正线性单元极其扩展}
+\subsection{修正线性单元及其扩展}
 \label{sec:rectified_linear_units_and_their_generalizations}
 
 修正线性单元使用激活函数$g(z)=\max\{0, z\}$。
@@ -784,7 +784,7 @@ Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理
 
 修正线性单元通常用于仿射变换之上：
 \begin{equation}
-\bm{h} = g(\bm{W}^\top \bm{x} + \bm{x})。
+\bm{h} = g(\bm{W}^\top \bm{x} + \bm{b})
 \end{equation}
 当初始化仿射变换的参数时，可以将$\bm{b}$的所有元素设置成一个小的正值，例如0.1。
 这使得修正线性单元很可能初始时就对训练集中的大多数输入呈现激活状态，并且允许导数通过。
@@ -903,7 +903,7 @@ softmax单元很自然地表示具有$k$个可能值的离散型随机变量的�
 
 其他一些常见的隐含单元类型包括：
 \begin{itemize}
-\item \firstall{RBF}：$h_i = \exp \left (-\frac{1}{\sigma_i^2}|| \bm{W}_{:,i}-\bm{x}||\right )$。
+\item \firstall{RBF}：$h_i = \exp \left (-\frac{1}{\sigma_i^2}|| \bm{W}_{:,i}-\bm{x}||^2 \right )$。
 这个函数在$\bm{x}$接近模板$\bm{W}_{:,i}$时更加活跃。
 因为它对大部分$\bm{x}$都饱和到0，因此很难优化。
 
@@ -913,7 +913,7 @@ softmax单元很自然地表示具有$k$个可能值的离散型随机变量的�
 通常不鼓励使用softplus函数。
 softplus表明隐含单元类型的性能可能是非常反直觉的——因为它处处可导或者因为它不完全饱和，人们可能希望它具有优于修正线性单元的点，但根据经验来看，它并没有。
 
-\item \firstgls{hard_tanh}：它的形状和$\text{tanh}$以及修正先行单元类似，但是不同于后者，它是有界的，$g(a)=\max(-1, min(1,a))$。
+\item \firstgls{hard_tanh}：它的形状和$\text{tanh}$以及修正先行单元类似，但是不同于后者，它是有界的，$g(a)=\max(-1, \min(1,a))$。
 它由\cite{Collobert04}引入。
 \end{itemize}
 
@@ -1173,12 +1173,12 @@ O \left ( k^{(l-1)+d} \right ).
 为了表示值$z$对张量$\TSX$的梯度，我们记为$\nabla_\TSX z$，就像$\TSX$是向量一样。
 $\TSX$的索引现在有多个坐标——例如，一个3维的张量由三个坐标索引。
 我们可以通过使用单个变量$i$来表示完整的索引元组，从而完全抽象出来。
-对所有可能的元组$i$，$(\nabla_\TSX z)_i$给出$\frac{\partial z}{\partial \TSX_i}$。
-这与向量中索引的方式完全一致，$(\nabla_{\bm{x}} z)_i$给出$\frac{\partial z}{\partial \bm{x}_i}$。
+对所有可能的元组$i$，$(\nabla_\TSX z)_i$给出$\frac{\partial z}{\partial \TEX_i}$。
+这与向量中索引的方式完全一致，$(\nabla_{\bm{x}} z)_i$给出$\frac{\partial z}{\partial x_i}$。
 使用这种记法，我们可以写出适用于张量的链式法则。
 如果$\TSY=g(\TSX)$并且$z=f(\TSY)$，那么
 \begin{equation}
-  \nabla_\TSX z = \sum_j (\nabla_\TSX \TSY_j)\frac{\partial z}{\partial \TSY_j}.
+  \nabla_\TSX z = \sum_j (\nabla_\TSX \TEY_j)\frac{\partial z}{\partial \TEY_j}.
   \label{eq:6.47}
 \end{equation}
 
@@ -1481,10 +1481,10 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
   
 % -- 214 --
   
-\subsection{深度学习社区以外的微分}
+\subsection{深度学习界以外的微分}
 \label{sec:differentiation_outside_the_deep_learning_community}
 
-深度学习社区在某种程度上已经与更广泛的计算机科学社区隔离开来，并且在很大程度上发展了自己关于如何进行微分的文化态度。
+深度学习界在某种程度上已经与更广泛的计算机科学界隔离开来，并且在很大程度上发展了自己关于如何进行微分的文化态度。
 更一般地，\firstgls{automatic_differentiation}领域关心如何以算法方式计算导数。 
 这里描述的反向传播算法只是自动微分的一种方法。 
 它是一种称为\firstgls{reverse_mode_accumulation}的更广泛类型的技术的特殊情况。 
@@ -1524,7 +1524,7 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 然而，如果$\bm{A}$的行数小于$D$的列数，则从左到右乘更为便宜，这对应着前向模式。
 
 在机器学习以外的许多社区中，更常见的是使用传统的编程语言来直接实现微分软件，例如用Python或者C来编程，并且自动生成使用这些语言编写的不同函数的程序。
-在深度学习社区中，计算图通常使用由专用库创建的明确的数据结构表示。
+在深度学习界中，计算图通常使用由专用库创建的明确的数据结构表示。
 专用方法的缺点是需要库开发人员为每个操作定义\verb|bprop|方法，并且限制了库的用户仅使用定义好的那些操作。
 然而，专用方法也允许定制每个操作的反向传播规则，允许开发者以非显而易见的方式提高速度或稳定性，对于这种方式自动的过程可能不能复制。
 
