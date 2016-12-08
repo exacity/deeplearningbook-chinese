@@ -65,8 +65,8 @@
 如此，我们将最小化\firstgls{empirical_risk}：
 \begin{equation}
 \label{eq:8.3}
-    \SetE_{(\Vx, y) \sim\hat{p}_\text{data}} L(f(\Vx; \Vtheta), y)
-    = \frac{1}{m} \sum_{i=1}^m L( f(\Vx^{(i)}; \Vtheta), y^{(i)}) )
+    \SetE_{\Vx, y \sim \hat{p}_\text{data}} [L(f(\Vx; \Vtheta), y)]
+    = \frac{1}{m} \sum_{i=1}^m L( f(\Vx^{(i)}; \Vtheta), y^{(i)}) ),
 \end{equation}
 其中$m$表示训练样本的数目。
 
@@ -119,7 +119,7 @@
 最大化这个总和等价于最大化训练集在经验分布上的期望：
 \begin{equation}
 \label{eq:8.5}
-    J(\Vtheta) = \SetE_{(\Vx, y) \sim\hat{p}_\text{data}} 
+    J(\Vtheta) = \SetE_{\Vx, y \sim\hat{p}_\text{data}} 
     \log p_{\text{model}} (\Vx; \Vtheta, y)
 \end{equation}
 
@@ -129,7 +129,7 @@
 例如，最常用的性质是导数：
 \begin{equation}
 \label{eq:8.6}
-    \nabla_{\Vtheta} J(\Vtheta) = \SetE_{(\Vx, y) \sim\hat{p}_{\text{data}}} 
+    \nabla_{\Vtheta} J(\Vtheta) = \SetE_{\Vx, y \sim\hat{p}_{\text{data}}} 
     \nabla_{\Vtheta} \log p_{\text{model}} (\Vx,y; \Vtheta)
 \end{equation}
 
@@ -232,7 +232,7 @@
 在这种情况下，\gls{generalization_error}（式\ref{eq:8.2}可以表示为
 \begin{equation}
 \label{eq:8.7}
-    J^*(\Vtheta) = \sum_x \sum_y p_{\text{data}} L(f(\Vx; \Vtheta),y)
+    J^*(\Vtheta) = \sum_{\Vx} \sum_y p_{\text{data}} L(f(\Vx; \Vtheta),y)
 \end{equation}
 上式的准确梯度为
 \begin{equation}
@@ -282,12 +282,12 @@
 
 回顾式\ref{eq:4.9}，损失函数的二阶系列展开预测梯度下降中的$-\epsilon\Vg$会增加
 \begin{equation}
-    \frac{1}{2} \epsilon^2 \Vg^T\MH\Vg - \epsilon\Vg^T\Vg
+    \frac{1}{2} \epsilon^2 \Vg^\top \MH\Vg - \epsilon\Vg^\top\Vg
 \end{equation}
 到损失中。
-当$\frac{1}{2} \epsilon^2 \Vg^T\MH\Vg$超过$\epsilon\Vg^T\Vg$时，梯度的病态会成为问题。
-判断病态是否不利于神经网络训练任务，我们可以检测梯度平方范数$\Vg^T\Vg$和$\Vg^T\MH\Vg$。
-在很多情况中，梯度范数不会在训练过程中显著缩小，但是$\Vg^T\MH\Vg$的增长会超过一个数量级。
+当$\frac{1}{2} \epsilon^2 \Vg^\top\MH\Vg$超过$\epsilon\Vg^\top\Vg$时，梯度的病态会成为问题。
+判断病态是否不利于神经网络训练任务，我们可以检测梯度平方范数$\Vg^\top\Vg$和$\Vg^\top \MH\Vg$。
+在很多情况中，梯度范数不会在训练过程中显著缩小，但是$\Vg^\top\MH\Vg$的增长会超过一个数量级。
 其结果是尽管梯度很强，学习会变得非常缓慢，因为学习率必须收缩以弥补更强的曲率。
 如图8.1所示，成功训练的神经网络中，梯度显著增加。
 
@@ -448,7 +448,7 @@
 之前描述的诱发梯度截断的悬崖结构便是膨胀梯度现象的一个例子。
 
 此处描述的每个时间点重复与$\MW$相乘非常类似于寻求矩阵$\MW$的最大特征值及对应的特征向量的\firstgls{power_method}。
-从这个观点来看，$\Vx^T\MW^t$最终会丢弃$\Vx$中所有与$\MW$的主特征向量垂直的成分。
+从这个观点来看，$\Vx^\top\MW^t$最终会丢弃$\Vx$中所有与$\MW$的主特征向量垂直的成分。
 
 循环网络在每个时间步上使用相同的矩阵$\MW$，而前馈网络并没有。
 因而即使是很深层的前馈网络也能很大程度上避免梯度收缩和膨胀问题\citep{Sussillo14}。
@@ -775,7 +775,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 一种初始化$m$个输入和$n$输出的全连接层的权重的启发式方法是从分布$U(-\frac{1}{\sqrt{m}})$中采样权重，
 而\cite{Glorot+al-AI-2011-small}建议使用\firstgls{normalized_initialization}
 \begin{equation}
-    W_{i,j} \sim U(-\frac{6}{\sqrt{m+n}}, \frac{6}{\sqrt{m+n}})
+    W_{i,j} \sim U(-\sqrt{\frac{6}{m+n}}, \sqrt{\frac{6}{m+n}})
 \end{equation}
 这后一种启发式方法初始化所有的层，折衷于使其具有相同激励方差和使其具有相同梯度方差之间。
 该式由不含非线性的链式矩阵乘法网络的假设推导得出。
@@ -851,7 +851,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 另一种常见类型的参数是方差或精确度参数。
 例如，我们用以下模型进行带条件方差估计的线性回归
 \begin{equation}
-    p(y|\Vx) = \mathcal{N} (y | \Vw^T \Vx + b, 1/\beta)
+    p(y|\Vx) = \mathcal{N} (y | \Vw^\top \Vx + b, 1/\beta)
 \end{equation}
 其中$\beta$是精确度参数。
 通常我们能安全地初始化方差或精确度参数为$1$。
@@ -961,14 +961,14 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 
 牛顿法是基于二阶泰勒级数展开在某点$\Vtheta_0$附近来近似$J(\Vtheta)$的优化方法，其忽略了高阶导数：
 \begin{equation}
-    J(\Vtheta) \approx J(\Vtheta_0) + (\Vtheta - \Vtheta_0)^T \nabla_{\Vtheta}   
-    J(\Vtheta_0) + \frac{1}{2} (\Vtheta - \Vtheta_0)^T \MH(\Vtheta - \Vtheta_0)
+    J(\Vtheta) \approx J(\Vtheta_0) + (\Vtheta - \Vtheta_0)^\top \nabla_{\Vtheta}   
+    J(\Vtheta_0) + \frac{1}{2} (\Vtheta - \Vtheta_0)^\top \MH(\Vtheta - \Vtheta_0),
 \end{equation}
 其中$\MH$是$J$相对于$\Vtheta$的\gls{hessian}矩阵在$\Vtheta_0$处的估计。
 如果我们再求解这个函数的临界点，我们将得到牛顿参数更新规则：
 \begin{equation}
 \label{eq:8.27}
-    \Vtheta^* = \Vtheta_0 - \MH^{-1}\nabla_{\Vtheta} J(\Vtheta_0)
+    \Vtheta^* = \Vtheta_0 - \MH^{-1}\nabla_{\Vtheta} J(\Vtheta_0).
 }
 \end{equation}
 因此，对于局部的二次函数（具有正定的$\MH$），用$H^{-1}$重新调整梯度，牛顿法会直接跳到极小值。
@@ -1031,7 +1031,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 
 % -- 305 --
 
-两个方向$\Vd_t$和$\Vd_{t-1}$被称为共轭的，如果$\Vd_t^T \MH \Vd_{t-1} = 0$，其中$\MH$是\gls{hessian}矩阵。
+两个方向$\Vd_t$和$\Vd_{t-1}$被称为共轭的，如果$\Vd_t^\top \MH \Vd_{t-1} = 0$，其中$\MH$是\gls{hessian}矩阵。
 
 适应共轭的直接方法会涉及到$\MH$特征向量的计算以选择$\beta_t$。
 这将无法满足我们发展对于大问题比牛顿法更加计算可行的方法的目标。
@@ -1042,14 +1042,14 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 \begin{enumerate}
 \item Fletcher-Reeves:
 \begin{equation}
-    \beta_t = \frac{ \nabla_{\Vtheta} J(\Vtheta_t)^T \nabla_{\Vtheta} J(\Vtheta_t) }
-{ \nabla_{\Vtheta} J(\Vtheta_{t-1})^T \nabla_{\Vtheta} J(\Vtheta_{t-1}) }
+    \beta_t = \frac{ \nabla_{\Vtheta} J(\Vtheta_t)^\top \nabla_{\Vtheta} J(\Vtheta_t) }
+{ \nabla_{\Vtheta} J(\Vtheta_{t-1})^\top \nabla_{\Vtheta} J(\Vtheta_{t-1}) }
 \end{equation}
 
 \item Polak-Ribiere:
 \begin{equation}
-    \beta_t = \frac{ (\nabla_{\Vtheta} J(\Vtheta_t) - \nabla_{\Vtheta} J(\Vtheta_{t-1}))^T \nabla_{\Vtheta} J(\Vtheta_t) }
-{ \nabla_{\Vtheta} J(\Vtheta_{t-1})^T \nabla_{\Vtheta} J(\Vtheta_{t-1}) }
+    \beta_t = \frac{ (\nabla_{\Vtheta} J(\Vtheta_t) - \nabla_{\Vtheta} J(\Vtheta_{t-1}))^\top \nabla_{\Vtheta} J(\Vtheta_t) }
+{ \nabla_{\Vtheta} J(\Vtheta_{t-1})^\top \nabla_{\Vtheta} J(\Vtheta_{t-1}) }
 \end{equation}
 \end{enumerate}
 对于二次曲面而言，共轭方向确保梯度沿着前一方向大小不变。
@@ -1126,12 +1126,12 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 假设我们的损失函数$\hat{y}$上的梯度为$1$，所以我们希望稍稍降低$\hat{y}$。
 然后反向传播算法可以计算梯度$\Vg = \nabla_{\Vw} \hat{y}$。
 想想我们在更新$\Vw \leftarrow \Vw - \epsilon \Vg$时会发生什么。
-近似$\hat{y}$的一阶泰勒级数会预测$\hat{y}$的值下降$\epsilon \Vg^T\Vg$。
-如果我们希望$\hat{y}$下降$0.1$，那么梯度中的一阶信息表明我们应设置学习率$\epsilon$为$\frac{0.1}{\Vg^T\Vg}$。
+近似$\hat{y}$的一阶泰勒级数会预测$\hat{y}$的值下降$\epsilon \Vg^\top \Vg$。
+如果我们希望$\hat{y}$下降$0.1$，那么梯度中的一阶信息表明我们应设置学习率$\epsilon$为$\frac{0.1}{\Vg^\top \Vg}$。
 然而，实际的更新将包括二阶，三阶，直到$l$阶的影响。
 $\hat{y}$的更新值为
 \begin{equation}
-    x(w_1-\epsilon g_1)(w_2-\epsilon g_2)...(w_l-\epsilon g_l)
+    x(w_1-\epsilon g_1)(w_2-\epsilon g_2)\dots(w_l-\epsilon g_l)
 \end{equation}
 这个更新中所产生的一个二阶项示例是$\epsilon^2 g_1 g_2 \prod_{i=3}^l w_i$ 。
 如果 $\prod_{i=3}^l w_i$很小，那么该项可以忽略不计。而如果层$3$到层$l$的权重都比$1$大时，该项可能会指数级大。
@@ -1149,12 +1149,12 @@ $\hat{y}$的更新值为
 设$\MH$是需要标准化的某层的\gls{minibatch}激励函数，布置为设计矩阵，每个样本的激励出现在矩阵的每一行中。
 标准化$\MH$，我们替代它为
 \begin{equation}
-\MH’ = \frac{\MH - \Vmu}{\Vsigma}
+\MH' = \frac{\MH - \Vmu}{\Vsigma}
 \end{equation}
 其中$\Vmu$是包含每个单元均值的向量，$\Vsigma$是包含每个单元标准差的向量。
 此处的算术是基于广播向量$\Vmu$和向量$\Vsigma$应用于矩阵$\MH$的每一行。
 在每一行内，运算是逐元素的，因此$H_{i,j}$标准化为减去$\mu_j$再除以$\sigma_j$。
-网络的其余部分操作$\MH’$的方式和原网络操作$\MH$的方式一样。
+网络的其余部分操作$\MH'$的方式和原网络操作$\MH$的方式一样。
 
 在训练阶段，
 \begin{equation}
@@ -1203,12 +1203,12 @@ $\hat{y}$的更新值为
 % -- 311 --
 
 标准化一个单元的均值和标准差会降低包含该单元的神经网络的表达能力。
-为了保持网络的表现力，通常会取代批量隐单元激励$\MH$为$\gamma \MH + \Vbeta$，而不是简单地使用标准化的$\MH’$。
+为了保持网络的表现力，通常会取代批量隐单元激励$\MH$为$\gamma \MH + \Vbeta$，而不是简单地使用标准化的$\MH'$。
 变量$\Vgamma$和$\Vbeta$是允许新变量有任意均值和\gls{standard_deviation}的学习参数。
 乍一看，这似乎是无用的----为什么我们将均值设为$0$，然后又引入参数允许它被重设为任意值$\Vbeta$？
 答案是，新的参数可以表示旧参数作为输入的同一族函数，但是新参数有不同的学习动态。
 在旧参数中，$\MH$的均值取决于$\MH$下层中参数的复杂关联。
-在新参数中，$\Vgamma \MH’ + \Vbeta$的均值仅由$\Vbeta$确定。
+在新参数中，$\Vgamma \MH' + \Vbeta$的均值仅由$\Vbeta$确定。
 新参数很容易通过梯度下降来学习。
 
 大多数神经网络层会采取形式$\phi(\MX\MW+ \Vb)$，其中$\phi$是某个固定的非线性激励函数，如\gls{rectified_linear}变换。
@@ -1234,7 +1234,7 @@ $\hat{y}$的更新值为
 当优化问题中的不同变量能够清楚地分成相对独立的组，或是当优化一组变量明显比优化所有变量效率更高时，坐标下降最有意义。
 例如，考虑损失函数
 \begin{equation}
-    J(\MH, \MW) = \sum_{i,j} |H_{i,j}| + \sum_{i,j} \left( \MX - \MW^T \MH \right)_{i,j}^2
+    J(\MH, \MW) = \sum_{i,j} |H_{i,j}| + \sum_{i,j} \left( \MX - \MW^\top \MH \right)_{i,j}^2
 \end{equation}
 该函数描述了一种被称为\gls{sparse_coding}的学习问题，其目标是寻求一个权重矩阵$\MW$，可以线性解码激励值矩阵$\MH$以重构训练集$\MX$。
 \gls{sparse_coding}的大多数应用还涉及到权重衰减或$\MW$列范数的约束，以免极小$\MH$和极大$\MW$的病态解。
@@ -1376,7 +1376,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 这些连续方法会通过“模糊”原来的损失函数来构建更容易的损失函数。
 这些模糊操作可以是用采样来近似
 \begin{equation}
-    J^{(i)}(\Vtheta) = \SetE_{\theta’ \sim \mathcal{N}(\Vtheta’; \Vtheta, \sigma^{(i)2}} J(\Vtheta’)
+    J^{(i)}(\Vtheta) = \SetE_{\theta' \sim \mathcal{N}(\Vtheta'; \Vtheta, \sigma^{(i)2}} J(\Vtheta')
 \end{equation}
 这个方法的直觉是有些非凸函数在模糊后会近似凸的。
 在许多情况下，这种模糊保留了关于全局极小值的足够信息，我们可以通过逐步求解更少模糊的问题来求解全局极小值。
@@ -1384,7 +1384,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 首先，它可能成功定义了一系列的损失函数，其中第一个是凸的，最优解会沿着一个接一个的函数到达全局极小值，但它可能需要非常多的逐步损失函数，整个过程的成本仍然很高。
 另外，即使\gls{continuation_method}可以适用，NP难的优化问题仍然是NP难的。
 其他两种\gls{continuation_method}失败的原因是不实用。
-其一，不管如何模糊，可能函数没法变成凸的，比如函数$J(\Vtheta) = -\Vtheta^T \Vtheta$。
+其一，不管如何模糊，可能函数没法变成凸的，比如函数$J(\Vtheta) = -\Vtheta^\top \Vtheta$。
 其二，函数可能在模糊后是凸的，但模糊函数的极小值可能会逐步到一个局部值，而非原始损失函数的全局极小值。
 尽管\gls{continuation_method}最初用来解决局部最小值的问题，局部最小值已不再是神经网络优化中的主要问题了。
 幸运的是，\gls{continuation_method}仍然有所帮助。
