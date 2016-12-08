@@ -86,7 +86,7 @@
 图\ref{fig:chap2_transpose}显示了这个操作。
 我们将矩阵$\MA$的转置表示为$\MA^\top$，定义如下
 \begin{equation}
-(\MA^\top)_{i,j}＝ \SA_{j,i}.
+(\MA^\top)_{i,j}= \SA_{j,i}.
 \end{equation}
 
 \begin{figure}[!htb]
@@ -383,7 +383,7 @@
 \end{itemize}
 
 
-当$p＝2$时，$L^2$被称为\firstgls{euclidean_norm}。
+当$p=2$时，$L^2$被称为\firstgls{euclidean_norm}。
 它表示从原点出发到向量$\Vx$确定的点的欧几里得距离。
 $L^2$范数十分频繁地出现在机器学习中，它经常被简化表示为$\norm{x}$，略去了下标$2$。
 平方$L^2$范数也经常被用来衡量向量的大小，可以简单地t通过\gls{dot_product}$\Vx^\top\Vx$计算。
@@ -444,7 +444,7 @@ $L^1$范数可以简化如下：
 
 
 \firstgls{diagonal_matrix}只在主对角线上含有非零元素，其它位置都是零。
-形式上，矩阵$\MD$是对角矩阵，当且仅当对于所有的$i\neq j$，$\SD_{i,j}＝0$。
+形式上，矩阵$\MD$是对角矩阵，当且仅当对于所有的$i\neq j$，$\SD_{i,j}=0$。
 我们已经看到过一个对角矩阵：单位矩阵，对角元素全部是$1$。
 我们用$\text{diag}(\Vv)$表示一个对角元素由向量$\Vv$中元素给定的对角方阵。
 对角矩阵受到关注，部分原因是对角矩阵的乘法计算很高效。
@@ -701,12 +701,16 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 用迹运算表示式，使我们可以使用很多有用的性质来操纵表达式。。
 例如，迹运算在转置运算下是不变的：
-$\Tr(\MA)=\Tr(\MA^\top)$.
+\begin{equation}
+    \Tr(\MA)=\Tr(\MA^\top).
+\end{equation}
 
 
 多个矩阵乘积的迹，和将这些矩阵中最后一个挪到最前面之后乘积的迹是相同的。
 当然，我们需要考虑挪动之后矩阵乘积依然定义良好：
-$\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$
+\begin{equation}
+\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA).
+\end{equation}
 或者更一般地，
 \begin{equation}
 \Tr(\prod_{i=1}^n \MF(i))= \Tr(\MF^n \prod_{i=1}^{n-1} \MF^i).
@@ -826,7 +830,7 @@ $\Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA)$
     \nabla_{\Vc} (-2\Vx^\top \MD \Vc + \Vc^\top\Vc) = 0
 \end{equation}
 \begin{equation}
-    -2\MD^\top\Vc + 2\Vc = 0
+    -2\MD^\top\Vx + 2\Vc = 0
 \end{equation}
 \begin{equation}
     \Vc = \MD^\top \Vx.

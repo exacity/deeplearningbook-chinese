@@ -350,12 +350,14 @@
 随机搜索过程如下。
 首先，我们定义每个超参数定义一个边缘分布，例如，伯努利分布或分类分布（对应着二元超参数或离散超参数），或者对数尺度上的均匀分布（对应着正实值超参数）。
 例如，
-%\begin{aligned}
-%	\text{log\_learning\_rate} \sim u(-1, -5)  \\
-%	\text{learning\_rate} = 10^{\text{log\_learning\_rate}} 
-%\end{aligned}
+\begin{equation}
+\begin{aligned}
+	\texttt{log\_learning\_rate} &\sim u(-1, -5), \\
+	\texttt{learning\_rate} &= 10^{\texttt{log\_learning\_rate}},
+\end{aligned}
+\end{equation}
 其中，$u(a,b)$表示区间$(a,b)$上均匀采样的样本。
-类似地，$\text{log\_number\_of\_hidden\_units}$可能表示采样自$u(\log(50), \log(2000))$。
+类似地，$\texttt{log\_number\_of\_hidden\_units}$可能表示采样自$u(\log(50), \log(2000))$。
 
 和格点搜索的情况不同，我们\emph{不应该离散化}超参数的值，从而我们可以去探索一个更大集合的值，而不产生额外的计算代价。
 实际上，如图11.2所示，当有几个超参数对\gls{performance_metrics}没有很强的影响时，随机搜索指数级高效于格点搜索。
