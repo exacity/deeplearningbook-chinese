@@ -19,7 +19,7 @@
 对于很多有趣的模型而言，这个计算是难处理的。
 
 
-正如我们将在第20章看到的，有些\gls{DL}模型设计成具有易于处理的归一化常数，或是设计成能够在不涉及计算$p(\Vx)$的情况下使用。
+正如我们将在第\ref{chap:deep_generative_models}章看到的，有些\gls{DL}模型设计成具有易于处理的归一化常数，或是设计成能够在不涉及计算$p(\Vx)$的情况下使用。
 然而，其他模型会直接面对难处理的\gls{partition_function}的挑战。
 在本章中，我们会介绍用于训练和估计具有难以处理\gls{partition_function}的模型的技术。
 
@@ -39,7 +39,7 @@
 对于大多数感兴趣的\gls{undirected_model}而言，\gls{negative_phase}是困难的。
 没有\gls{latent_variable}或是\gls{latent_variable}之间很少相互作用的模型通常会有一个可解的\gls{positive_phase}。
 具有简单\gls{positive_phase}和困难\gls{negative_phase}的典型模型是\glssymbol{RBM}，其具有在给定可见单位的情况下彼此条件独立的\gls{hidden_unit}。
-讨论\gls{latent_variable}之间具有复杂相互作用的困难\gls{positive_phase}主要在第19章中。
+讨论\gls{latent_variable}之间具有复杂相互作用的困难\gls{positive_phase}主要在第\ref{chap:approximate_inference}章中。
 本章主要探讨\gls{negative_phase}困难的情况。
 
 
@@ -103,7 +103,7 @@
 在\gls{negative_phase}中，我们通过减少从模型分布中采样的$\log \tilde{p}(\Vx)$来降低\gls{partition_function}。
 
 
-在\gls{DL}文献中，通常会看到用\gls{energy_function}（等式16.7）来参数化$\log \tilde{p}(\Vx)$。
+在\gls{DL}文献中，通常会看到用\gls{energy_function}（等式\ref{eqn:167}）来参数化$\log \tilde{p}(\Vx)$。
 在这种情况下，\gls{positive_phase}可以被解释为推动训练从模型抽取出的样本能量下降，\gls{negative_phase}可以被解释为推动从模型抽取出的样本能量上升，如图18.1所示。
 
 
@@ -245,7 +245,7 @@
 
 
 所有这些基于\glssymbol{mcmc}从模型中抽取样本的方法在原则上几乎可以与\glssymbol{mcmc}的任何变体一起使用。
-这意味着诸如\glssymbol{SML}这样的技术可以使用第17章中描述的任何增强\glssymbol{mcmc}的技术（例如并行回火）来加以改进\citep{desjardins2010tempered,Cho10IJCNN-small}。
+这意味着诸如\glssymbol{SML}这样的技术可以使用第\ref{chap:monte_carlo_methods}章中描述的任何增强\glssymbol{mcmc}的技术（例如并行回火）来加以改进\citep{desjardins2010tempered,Cho10IJCNN-small}。
 
 
 一种在学习期间加速混合的方法是，不改变\gls{monte_carlo}采样技术，而是改变模型的参数化和\gls{cost_function}。
@@ -327,7 +327,7 @@
 例如，在自然图像中，在空间中相隔很远的像素也具有弱相关性，因此广义伪似然可以应用于每个$\SetS$集是小的空间定位窗口的情况。
 
 
-伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\Vx)$上提供下界的其他近似一起使用，例如第19章中讨论的变分推理。这是因为$\tilde{p}$出现在了分母中。
+伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\Vx)$上提供下界的其他近似一起使用，例如第\ref{chap:approximate_inference}章中讨论的变分推理。这是因为$\tilde{p}$出现在了分母中。
 分母的下限只提供了整个表达式的上界，然而我们并不关心最大化上界。
 这使得难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的深度模型，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
 尽管如此，\gls{pseudolikelihood}仍然对\gls{DL}有用，因为它可以用于单层模型或是使用不基于下限的近似推理方法的深度模型。
@@ -572,13 +572,16 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 假设测试集含$m$个样本$\{ \Vx^{(1)}, \dots, \Vx^{(m)} \}$。
 如果 $\prod_i p_A ( x^{(i)}; \Vtheta_A) > \prod_i p_B( x^{(i)}; \Vtheta_B)$，或等价地，如果
 \begin{equation}
+\label{eq:18.38}
 	\sum_i \log p_A (x^{(i)}; \Vtheta_A) - \sum_i \log p_B(x^{(i)}; \Vtheta_B) > 0，
+}
 \end{equation}
 那么我们说$\CalM_A$是一个比$\CalM_B$更好的模型（或者，至少可以说，它在测试集上是一个更好的模型），这是指它有一个更好的测试对数似然。
 不幸的是，测试这个条件是否成立需要知道\gls{partition_function}。
-等式18.38看起来需要评估模型分配给每个点的对数概率，而这反过来需要评估\gls{partition_function}。
-我们可以通过将等式18.38重新分布为另一种形式来简化情况，在该形式中我们只需要知道两个模型的\gls{partition_function}的\textbf{比率}：
+等式\ref{eq:18.38}看起来需要评估模型分配给每个点的对数概率，而这反过来需要评估\gls{partition_function}。
+我们可以通过将式\ref{eq:18.38}重新分布为另一种形式来简化情况，在该形式中我们只需要知道两个模型的\gls{partition_function}的\textbf{比率}：
 \begin{equation}
+\label{eq:18.39}
 	\sum_i \log p_A(\Vx^{(i)}; \Vtheta_A) - \sum_i \log p_B(\Vx^{(i)}; \Vtheta_B) =
 	\sum_i \left(  \log \frac{ \tilde{p}_A(\Vx^{(i)}; \Vtheta_A) }{ \tilde{p}_B(\Vx^{(i)}; \Vtheta_B) } \right)  - m\log \frac{Z(\Vtheta_A)}{ Z(\Vtheta_B) }.
 \end{equation}
@@ -609,7 +612,9 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 	= Z_0 \int  p_0(\Vx)   \frac{ \tilde{p}_1 (\Vx) }{ \tilde{p}_0 (\Vx) } \mathrm{d} \Vx 
 \end{equation}
 \begin{equation}
+\label{eq:18.44}
 	\tilde{Z}_1 = \frac{Z_0}{K} \sum_{k=1}^K \frac{ \tilde{p}_1(\Vx^{(k)})  }{ \tilde{p}_0(\Vx^{(k)}) }  \quad\quad s.t. ： \Vx^{(k)} \sim p_0
+}
 \end{equation}
 在最后一行，我们使用\gls{monte_carlo}估计，使用从$p_0(\Vx)$中抽取的采样计算积分$\tilde{Z}_1$，然后用未归一化的$\tilde{p}_1$和提议分布$p_0$的比率对每个采样加权。
 
@@ -619,13 +624,13 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 	\frac{1}{K} \sum_{k=1}^K \frac{ \tilde{p}_1 (\Vx^{(k)}) }{ \tilde{p}_0 (\Vx^{(k)}) }
 	\quad\quad s.t.： \Vx^{(k)} \sim p_0。
 \end{equation}
-然后该值可以用于直接比较等式18.39中的两个模型。
+然后该值可以用于直接比较式\ref{eq:18.39}中的两个模型。
 
 
-如果分布$p_0$接近$p_1$，那么等式18.44会是估计\gls{partition_function}的有效方式\citep{Minka_2005}。
+如果分布$p_0$接近$p_1$，那么式\ref{eq:18.44}会是估计\gls{partition_function}的有效方式\citep{Minka_2005}。
 不幸的是，大多数时候$p_1$都是复杂的（通常是多峰的）并且定义在高维空间中。
 很难找到一个易于处理的$p_0$，在易于评估的同时，也足够接近$p_1$以保持高质量的近似。
-如果$p_0$和$p_1$不接近，那么来自$p_0$的大多数采样将比在$p_1$的概率低，从而在等式18.44中的求和中产生（相对的）可忽略的贡献。
+如果$p_0$和$p_1$不接近，那么来自$p_0$的大多数采样将比在$p_1$的概率低，从而在式\ref{eq:18.44}中的求和中产生（相对的）可忽略的贡献。
 
 
 在总和中只有少数几个具有显著权重的样本，将会由于高方差而导致估计质量较差。
@@ -662,7 +667,9 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 	= \frac{Z_{\eta_1}}{Z_{0}}  \frac{Z_{\eta_2}}{Z_{\eta_1}}  \dots \frac{Z_{\eta_{n-1}}}{Z_{\eta_{n-2}}} \frac{Z_{1}}{Z_{\eta_{n-1}}} 
 \end{equation}
 \begin{equation}
+\label{eq:18.49}
  	= \prod_{j=0}^{n-1} \frac{ Z_{\eta_{j+1}} }{Z_{\eta_j}}
+}
 \end{equation}
 如果对于所有的$0 \leq j \leq n-1$，分布$p_{\eta_j}$和$p_{\eta_{j+1}}$足够接近，那么我们可以可靠地使用简单\gls{importance_sampling}来估计每个因子$\frac{Z_{\eta_{j+1}}}{ Z_{\eta_j}}$，然后使用这些得到$\frac{Z_1}{Z_0}$的估计。
 
@@ -702,9 +709,11 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 \end{itemize}
 
 
-对于采样$k$，通过链接等式18.49中给出的中间分布之间的跳跃的重要性权重，我们可以导出目标重要性权重：
+对于采样$k$，通过链接式\ref{eq:18.49}中给出的中间分布之间的跳跃的重要性权重，我们可以导出目标重要性权重：
 \begin{equation}
+\label{eq:18.52}
 	w^{(k)} = \frac{ \tilde{p}_{\eta_1} ( \Vx_{\eta_1}^{(k)} )  }{  \tilde{p}_{0} ( \Vx_{\eta_1}^{(k)} )  }
+}
 \frac{ \tilde{p}_{\eta_2} ( \Vx_{\eta_2}^{(k)} )  }{  \tilde{p}_{\eta_1} ( \Vx_{\eta_1}^{(k)} )  }
 \dots
 \frac{ \tilde{p}_{1} ( \Vx_{1}^{(k)} )  }{  \tilde{p}_{\eta_{n-1}} ( \Vx_{\eta_n}^{(k)} )  } 。
@@ -713,7 +722,7 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 
 % -- 618 --
 
-利用由此定义的抽样过程和等式18.52中给出的重要性权重，\gls{partition_function}的比率估计如下所示：
+利用由此定义的抽样过程和式\ref{eq:18.52}中给出的重要性权重，\gls{partition_function}的比率估计如下所示：
 \begin{equation}
 	\frac{Z_1}{Z_0} \approx \frac{1}{K} \sum_{k=1}^K w^{(k)}
 \end{equation}
@@ -725,6 +734,7 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 	\tilde{p} (\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1) 
 \end{equation}
 \begin{equation}
+\label{eq:18.55}
 	= \tilde{p}_1 (\Vx_1) \tilde{T}_{\eta_{n-1}} (\Vx_{\eta_{n-1}} | \Vx_1)
  	\tilde{T}_{\eta_{n-2}}  (\Vx_{\eta_{n-2}} | \Vx_{\eta_{n-1}}) \dots
  	\tilde{T}_{\eta_1} (\Vx_{\eta_1} | \Vx_{\eta_2})
@@ -734,7 +744,7 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 	\tilde{T}_a (\Vx’ | \Vx) = \frac{p_a(\Vx’)}{ p_a{\Vx} } T_a(\Vx | \Vx’) = 
 \frac{  \tilde{p}_a(\Vx’)}{ \tilde{p}_a{\Vx} } T_a(\Vx | \Vx’)
 \end{equation}
-将上述插入到等式18.55给出的扩展状态空间上的联合分布的表达式中，我们得到：
+将上述插入到式\ref{eq:18.55}给出的扩展状态空间上的联合分布的表达式中，我们得到：
 \begin{equation}
 	\tilde{p} (\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)
 \end{equation}
@@ -743,14 +753,16 @@ $p_{noise}$必须是易于估计和采样的约束可能是过度的限制。
 \prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_i} }{ \Vx_{\eta_{i+1}}} T_{\eta_i} (\Vx_{\eta_{i+1}} | \Vx_{\eta_i})
 \end{equation}
 \begin{equation}
+\label{eq:18.59}
 	= \frac{ \tilde{p}_1(\Vx_1) }{ \tilde{p}_{\eta_{n-1}}(\Vx_1) } T_{\eta_{n-1}} (\Vx1 | \Vx_{\eta_{n-1}})
+}
 \tilde{p}_{\eta_1} \prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_{i+1}}(\Vx_{\eta_{i+1}}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}}) } 。
 \end{equation}
 通过上面给定的采样方案，现在我们有了从扩展样本上的联合提议分布$q$上生成采样的方法，联合分布如下
 \begin{equation}
 	q(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}, \Vx_1}  = p_0(\Vx_{\eta_1} T_{\eta_1}( \Vx_{\eta_2} | \Vx_{\eta_1} ) \dots T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}})
 \end{equation}
-我们具有等式18.59给出的在扩展空间上的联合分布。
+我们具有等式\ref{eq:18.59}给出的在扩展空间上的联合分布。
 以$q（\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)$作为我们从中抽样的扩展状态空间上的提议分布，仍然需要确定重要性权重
 \begin{equation}
 	w^{(k)} = \frac{ \tilde{p}(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1) }{ q( \Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1 ) } =
