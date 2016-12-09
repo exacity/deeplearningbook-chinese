@@ -971,7 +971,7 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 考虑一组含有$m$个\gls{example:chap5}的\gls{dataset}$\SetX=\{ \Vx^{(1)},\dots, \Vx^{(m)} \}$，独立地由真正但未知的数据生成分布$p_{\text{data}}(\RVx)$生成。
 
 让$p_{\text{model}}( \RVx; \Vtheta )$是一族由$\Vtheta$确定在相同空间上的概率分布。
-换言之，$p_{\text{model}}(\Vx;\Vtheta)$将任意输入$\Vx$映射到实数去估计真实概率$p_{\text{data}}(\Vx)$
+换言之，$p_{\text{model}}(\Vx;\Vtheta)$将任意输入$\Vx$映射到实数去估计真实概率$p_{\text{data}}(\Vx)$。
 
  $\Vtheta$的最大后验估计被定义为：
 \begin{align}
@@ -1021,7 +1021,7 @@ KL散度定义为
 
 \subsection{条件对数似然和\glsentrytext{mean_squared_error}}
 \label{sec:conditional_log_likelihood_and_mean_squared_error}
-\gls{maximum_likelihood_estimation}很容易扩展到估计条件概率$P(\Vy|\Vx;\Vtheta)$，给定$\Vx$预测$\Vy$。
+\gls{maximum_likelihood_estimation}很容易扩展到估计条件概率$P(\RVy|\RVx;\Vtheta)$，给定$\RVx$预测$\RVy$。
 实际上这是最常见的情况，因为这构成了大多数\gls{supervised_learning}的基础。
 如果$\MX$表示所有的输入，$\MY$表示我们观测到的\gls{target}，那么条件\gls{maximum_likelihood_estimation}是
 \begin{equation}
@@ -1043,7 +1043,7 @@ KL散度定义为
 想象下有一个无穷大的训练集，我们可能会观测到几个训练\gls{example:chap5}有相同的输入$\Vx$但是不同的$y$。
 现在学习算法的目标是拟合分布$p(y | \Vx)$到和$\Vx$相匹配的不同的$y$。
 为了得到我们之前推导出的相同的\gls{linear_regression}算法，我们定义$p(y | \Vx) = \mathcal{N}(y; \hat{y}(\Vx; \Vw), \sigma^2)$。
-函数$\hat{h}(\Vx; \Vw)$预测高斯的均值。
+函数$\hat{y}(\Vx; \Vw)$预测高斯的均值。
 在这个例子中，我们假设方差是用户固定的某个常量$\sigma^2$。
 这种函数形式$p(y|\Vx)$会使得\gls{maximum_likelihood_estimation}得出之前得到的相同学习算法。
 由于假设\gls{example:chap5}是独立同分布的，条件对数似然（式\ref{eq:5.63}）如下
@@ -1054,7 +1054,7 @@ KL散度定义为
 其中$\hat{y}^{(i)}$是\gls{linear_regression}在第$i$个输入$\Vx^{(i)}$上的输出，$m$是训练\gls{example:chap5}的数目。
 对比于\gls{mean_squared_error}的对数似然，
 \begin{equation}
-    \text{MSE}_{\text{train}} = \frac{1}{m} \sum_{i=1}^m \norm{\hat{y}^P{(i)} - y^{(i)}}^2,
+    \text{MSE}_{\text{train}} = \frac{1}{m} \sum_{i=1}^m \norm{\hat{y}^{(i)} - y^{(i)}}^2,
 \end{equation}
 我们立刻可以看出最大化关于$\Vw$的对数似然和最小化\gls{mean_squared_error}会得到相同的参数估计$\Vw$。
 但是对于相同的最优$\Vw$，这两个准则有着不同的值。
