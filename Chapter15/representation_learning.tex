@@ -1,6 +1,6 @@
 % !Mode:: "TeX:UTF-8"
 % Translator: Yujun Li 
-\chapter{\gls{representation_learning}}
+\chapter{\glsentrytext{representation_learning}}
 \label{chap:representation_learning}
 在本章中，首先我们会讨论学习表示是什么意思，以及表示的概念如何有助于深度框架的设计。
 我们探讨学习算法如何在不同任务中共享统计信息，包括使用无监督任务中的信息进行监督任务。
@@ -60,7 +60,7 @@
 
 % -- 518 --
 
-\section{贪心地逐层\gls{unsupervised_pretraining}}
+\section{贪心地逐层\glsentrytext{unsupervised_pretraining}}
 \label{sec:greedy_layer_wise_unsupervised_pretraining}
 \gls{unsupervised_learning}在\gls{DNN}的复兴上起到了关键的历史作用，使研究者首次可以训练没有像卷积或者循环这样特殊结构的深度监督网络。
 我们将这一过程称为\firstgls{unsupervised_pretraining}，或者更精确地，\firstgls{greedy_layer_wise_unsupervised_pretraining}。
@@ -105,8 +105,8 @@
 这建立在训练浅层模型比深层模型更容易的前提下，而该前提似乎在一些情况下已被证实\citep{Erhan+al-2010-small}。
 
 
-\subsection{何时以及为何\gls{unsupervised_pretraining}有效？}
-\label{subsec:when_and_why_does_unsupervised_pretraining_work}
+\subsection{何时以及为何\glsentrytext{unsupervised_pretraining}有效？}
+\label{sec:when_and_why_does_unsupervised_pretraining_work}
 在很多分类任务中，\gls{greedy_layer_wise_unsupervised_pretraining}能够在\gls{test_error}上获得重大提升。
 这一观察结果始于2006年对\gls{DNN}的重新关注\citep{Hinton06-small,Bengio-nips-2006,ranzato-07-small}。
 然而，在很多其他问题上，\gls{unsupervised_learning}不能带来改善，甚至还会带来明显的负面影响。
@@ -243,7 +243,7 @@
 
 % -- 526 --
 
-\section{\gls{transfer_learning}和\gls{domain_adaption}}
+\section{\glsentrytext{transfer_learning}和\glsentrytext{domain_adaption}}
 \label{sec:transfer_learning_and_domain_adaptation}
 \gls{transfer_learning}和\gls{domain_adaption}指的是利用一个设定（分布$P_1$）中已经学到的内容去改善另一个设定（比如分布$P_2$）中的泛化情况。
 这点概括了上一节中提出的想法，我们在\gls{unsupervised_learning}和\gls{supervised_learning}之间转移表示。
@@ -277,7 +277,7 @@
 发表在网上的评论会来自许多的类别。
 在书，视频和音乐等媒体内容上的训练的顾客评论情感预测器，被用于分析诸如电视机或智能电话的消费电子产品的评论时，\gls{domain_adaption}情景可能会出现。
 可以想象，存在一个潜在的函数可以判断任何语句是正面的，中性的还是负面的，但是词汇和风格可能会因领域而有差异，使得跨域的泛化训练变得更加困难。
-简单的\gls{unsupervised_pretraining}（\gls{denoising_autoencoder}）已经能够非常成功地用于\gls{domain_adaption}的情感分析\citep{Glorot+al-ICML-2011}。
+简单的\gls{unsupervised_pretraining}（\gls{DAE}）已经能够非常成功地用于\gls{domain_adaption}的情感分析\citep{Glorot+al-ICML-2011}。
 
 % -- 527 --
 
@@ -350,7 +350,7 @@
 
 % -- 530 --
 
-\section{\gls{semi_supervised}解释因果关系}
+\section{\glsentrytext{semi_supervised}解释因果关系}
 \label{sec:semi_supervised_disentangling_of_causal_factors}
 关于\gls{representation_learning}的一个重要问题是“什么使一个表示比另一个更好？”
 一种假设是，理想表示中的特征对应到观测数据的根本原因，特征空间中不同的特征或方向对应着不同的原因，从而表示能够将这些原因区分开。
@@ -483,7 +483,7 @@
 
 % -- 535 --
 
-\section{\gls{distributed_representation}}
+\section{\glsentrytext{distributed_representation}}
 \label{sec:distributed_representation}
 \gls{distributed_representation}的概念---由很多因素组合而成的表示，彼此可以分开设置---是\gls{representation_learning}最重要的工具之一。
 \gls{distributed_representation}非常强大，因为他们能用具有$k$个值的$n$个特征去描述$k^n$个不同的概念。
