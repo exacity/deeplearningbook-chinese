@@ -78,7 +78,7 @@ s(t) = (x*w)(t) = \sum_{a = -\infty}^{\infty} x(a)w(t-a).
 S(i,j) = (I*K)(i,j) = \sum_m \sum_n I(m,n) K(i-m, j-n).
 \end{equation}
 
-卷积是可交换的，我们可以等价地写作：
+卷积是可交换的(commutative)，我们可以等价地写作：
 \begin{equation}
 S(i, j) = (K*I)(i,j) = \sum_m \sum_n I(i-m, j-n) K(m, n).
 \end{equation}
@@ -178,11 +178,11 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
  
 \firstgls{parameter_sharing}是指在一个模型的多个函数中使用相同的参数。
 在传统的神经网络中，当计算一层的输出时，权值矩阵的每一个元素只使用一次，当它乘以输入的一个元素后就再也不会用到了。
-作为\gls{parameter_sharing}的同义词，我们可以说一个网络含有\firstgls{tied_weights}，因为一个用于输入的权值也被绑定在其他的权值上。
+作为\gls{parameter_sharing}的同义词，我们可以说一个网络含有\firstgls{tied_weights}，因为用于一个输入的权值也会被绑定在其他的权值上。
 在\gls{CNN}中，核的每一个元素都作用在输入的每一位置上（除了一些可能的边界像素，取决于对于边界的决策设计）。
 卷积运算中的\gls{parameter_sharing}保证了我们只需要学习一个参数集合，而不是对于每一位置都需要学习一个单独的参数集合。
 这虽然没有改变前向传播的时间（仍然是$O(k\times n)$），但它显著地把模型的存储需求降低至$k$个参数，并且$k$通常是远小于$m$的数量级。
-因为$m$ 和$n$通常很接近，$k$在实际中相对于$m\times n$是很小的。
+因为$m$ 和$n$通常规模很接近，$k$在实际中相对于$m\times n$是很小的。
 因此，卷积在存储需求和统计效率方面极大地优于稠密矩阵的乘法运算。
 图\ref{fig:chap9_parameter_sharing}演示了\gls{parameter_sharing}是如何实现的。
 % fig 9.5
@@ -199,7 +199,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
  
 % -- 327 --
  
-作为前两条原则的一个实际例子，图\ref{fig:chap9_efficiency_of_edge_detection}说明了\gls{sparse_connectivity}和\gls{parameter_sharing}是如何显著地提高图像中边缘检测的线性函数的效率的。
+作为前两条原则的一个实际例子，图\ref{fig:chap9_efficiency_of_edge_detection}说明了\gls{sparse_connectivity}和\gls{parameter_sharing}是如何显著地提高用于图像边缘检测的线性函数的效率的。
 % fig 9.6
 \begin{figure}
 \ifOpenSource
@@ -222,7 +222,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 对于卷积来说，如果令$g$是输入的任意平移函数，那么卷积函数对于$g$具有等变性。
 举个例子，令$I$表示图像的明亮度函数（取值为整数），$g$表示图像函数的变换函数（把一个图像函数映射到另一个图像函数的函数）使得$I' = g(I)$，其中$I'(x,y) = I(x-1, y)$。
 这个函数把$I$中的每个像素向右移动一格。
-如果我们先对$I$进行变换然后进行卷积操作所得到的结果，与先对$I$进行卷积然后再对输出使用平移函数$g$得到的结果是一样的\footnote{译者注：原文将此处误写成了$I'$。} 。%译者注
+如果我们先对$I$进行这种变换然后进行卷积操作所得到的结果，与先对$I$进行卷积然后再对输出使用平移函数$g$得到的结果是一样的\footnote{译者注：原文将此处误写成了$I'$。} 。%译者注
 当处理时间序列数据时，卷积产生一条用来表明输入中出现不同特征的某种时间轴。
 如果我们把输入中的一个事件向后延时，在输出中也会有完全相同的表示，只是时间延时了。
 图像与之类似，卷积产生了一个2维映射来表明某种属性在输入的什么位置出现了。
@@ -259,12 +259,12 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \end{figure}
 
 \gls{pooling}函数使用某一位置的相邻输出的总体统计特征来代替网络在该位置的输出。
-例如，\firstgls{max_pooling} 函数\citep{zhou1988computation}给出相邻矩形区域内的最大值。
+例如，\firstgls{max_pooling}函数\citep{zhou1988computation}给出相邻矩形区域内的最大值。
 其他常用的\gls{pooling}函数包括相邻矩形区域内的平均值、$L^2$范数以及依靠据中心像素距离的加权平均函数。
 
 % -- 330 --
  
-不管采用什么样的\gls{pooling}函数，当输入做出微小平移时，\gls{pooling}能帮助我们的表示近似\firstgls{invariant}。
+不管采用什么样的\gls{pooling}函数，当输入作出微量平移时，\gls{pooling}能帮助我们的表示近似\firstgls{invariant}。
 对于平移的不变性是说当我们把输入平移一微小的量，大多数通过\gls{pooling}函数的输出值并不会发生改变。
 图\ref{fig:chap9_max_pool_invariance}用了一个例子来说明这是如何实现的。
 \emph{局部平移不变性是一个很重要的性质，尤其是当我们关心某个特征是否出现而不关心它出现的具体位置时}。
@@ -284,7 +284,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 
 % -- 331 --
  
-使用\gls{pooling}可以看作是增加了一个无限强的先验：卷积层学得的函数必须具有对于少量平移的不变性。
+使用\gls{pooling}可以看作是增加了一个无限强的先验：卷积层学得的函数必须具有对微量平移的不变性。
 当这个假设成立时，\gls{pooling}可以极大地提高网络的统计效率。
 
 \gls{pooling}对于空间区域具有平移不变性，但当我们对于分离参数的卷积输出进行\gls{pooling}时，特征能够学得应该对于哪种变换具有不变性（如图\ref{fig:chap9_learned_rotation}所示）。
@@ -320,16 +320,16 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
  
 在很多任务中，\gls{pooling}对于处理不同大小的输入具有重要作用。
 例如我们想对不同大小的图像进行分类时，分类层的输入必须是固定的大小，而这通常通过调整\gls{pooling}区域的偏置大小来实现，这样分类层总是能接收到相同数量的统计特征而不管最初的输入大小了。
-例如，最终的\gls{pooling}层输出四个统计特征的集合，每个集合对应着图像的一个象限，而与图像的大小无关。
+例如，最终的\gls{pooling}层可能会输出四组综合统计特征，每组对应着图像的一个象限，而与图像的大小无关。
 
 一些理论工作对于在不同情况下应当使用哪种\gls{pooling}函数给出了一些指导\citep{boureau-icml-10}。
 动态地把特征\gls{pooling}在一起也是可行的，例如，通过针对特定属性的位置运行聚类算法\citep{boureau-iccv-11}。
 这种方法对于每幅图像产生一个不同的\gls{pooling}区域集合。
 另一种方法是先\emph{学习}一个单独的\gls{pooling}结构，再应用到全部的图像中\citep{jia2012beyond}。
 
-\gls{pooling}可能会使得一些利用自顶向下信息的神经网络结构变得复杂，例如Boltzmann机和自动编码器。
-这些问题将在第|||c|||部分中当我们遇到这些类型的网络时进一步讨论。
-卷积Boltzmann机中的\gls{pooling}出现在\ref{sec:convolutional_boltzmann_machines}节。
+\gls{pooling}可能会使得一些利用自顶向下信息的神经网络结构变得复杂，例如\gls{BM}和\gls{AE}。
+这些问题将在第\ref{part:deep_learning_research}部分中当我们遇到这些类型的网络时进一步讨论。
+\gls{CBM}中的\gls{pooling}出现在\ref{sec:convolutional_boltzmann_machines}节。
 一些可微网络中需要的在\gls{pooling}单元中进行的类逆运算将在\ref{sec:convolutional_generative_networks}节中讨论。
 
 图\ref{fig:chap9_cnn_classifier}给出了一些使用卷积和\gls{pooling}操作的用于分类的\gls{CNN}的完整结构的例子。
@@ -400,7 +400,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 这些多通道的运算只有当其中的每个运算的输出和输入具有相同的通道数时才是可交换的。
 
 假定我们有一个4维的核张量$\TSK$，它的每一个元素是$\TEK_{i,j,k,l}$，表示输出的在通道$i$中的一个单元和输入的在通道$j$中的一个单元的连接强度，并且在输出单元和输入单元之间有一个$k$ 行$l$ 列的偏置。
-假定我们的输入是观测数据$\TSV$，它的每一个元素是$\TEV_{i,j,k}$，表示在通道$i$中第$i$行第$j$列的值。
+假定我们的输入是观测数据$\TSV$，它的每一个元素是$\TEV_{i,j,k}$，表示在通道$i$中第$j$行第$k$列的值。
 假定我们的输出$\TSZ$和输入$\TSV$具有相同的形式。
 如果输出$\TSZ$是通过对$\TSK$和$\TSV$进行卷积而不涉及翻转$\TSK$得到的，那么
 \begin{equation}
