@@ -23,6 +23,6 @@
 ------------
  - @fairmiracle ==> Chapter4 公式，语句，详见[issus](https://github.com/exacity/deeplearningbook-chinese/issues/3#issuecomment-265854595).
  - @huangpingchun ==> Chapter1 邻域==>领域
- - @oisc ==>  Chapter2 公式2.83 2.84 是arg max
+ - @oisc ==>  Chapter2 公式2.83 2.84有误 是arg max
  - @tielei ==> Chapter9 equivariance
  - @yuduowu ==> contact issue
