@@ -27,5 +27,5 @@
  - @tielei ==> Chapter9 equivariance
  - @yuduowu ==> contact issue
  - @minoriwww ==> Chapter2 "排布"==>"排列"
- - @khty2000 ==> Chapter2 "X_{-S}"问题
- - @khty2000 ==> Chapter2 矩阵行列错误
+ - @khty2000 ==> Chapter2 "X_{-S}"问题，矩阵横列错误
+ - @Qingmu ==> 用WinEdit打开文件问题
