@@ -199,10 +199,10 @@ p(x) = \int p(x, y)dy.
 
 在很多情况下，我们感兴趣的是某个事件，在给定其他事件发生时，出现的概率。
 这种概率叫做\gls{conditional_probability}。
-我们将给定$\RSx = x$时$\RSy = y$发生的\gls{conditional_probability}记为$P(\RSy = y| \RSx =x)$。
+我们将给定$\RSx = x$时$\RSy = y$发生的\gls{conditional_probability}记为$P(\RSy = y\mid \RSx =x)$。
 这个\gls{conditional_probability}可以通过下面的公式计算：
 \begin{equation}
-P(\RSy = y| \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)}
+P(\RSy = y\mid \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)}
 \label{eq: 3.5}
 \end{equation}
 \gls{conditional_probability}只在$P(\RSx = x)>0$时有定义。
@@ -218,7 +218,7 @@ P(\RSy = y| \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)}
 
 任何多维\gls{RV}的\gls{joint_probability_distribution}，都可以分解成只有一个变量的\gls{conditional_probability}相乘的形式：
 \begin{equation}
-P(\RSx^{(1)}, \ldots, \RSx^{(n)}) = P(\RSx^{(1)}) \Pi_{i=2}^n P(\RSx^{(i)} | \RSx^{(1)}, \ldots, \RSx^{(i-1)})
+P(\RSx^{(1)}, \ldots, \RSx^{(n)}) = P(\RSx^{(1)}) \Pi_{i=2}^n P(\RSx^{(i)} \mid \RSx^{(1)}, \ldots, \RSx^{(i-1)})
 \end{equation}
 
 % -- 57 --
@@ -227,9 +227,9 @@ P(\RSx^{(1)}, \ldots, \RSx^{(n)}) = P(\RSx^{(1)}) \Pi_{i=2}^n P(\RSx^{(i)} | \RS
 它可以直接从公式\ref{eq: 3.5}\gls{conditional_probability}的定义中得到。
 例如，使用两次定义可以得到
 \begin{eqnarray*}
-P(\RSa, \RSb, \RSc) &=& P(\RSa | \RSb, \RSc) P(\RSb, \RSc)\\
-P(\RSb, \RSc) &=& P(\RSb | \RSc) P(\RSc)\\
-P(\RSa, \RSb, \RSc) &=& P(\RSa | \RSb, \RSc) P(\RSb | \RSc) P(\RSc).
+P(\RSa, \RSb, \RSc) &=& P(\RSa \mid \RSb, \RSc) P(\RSb, \RSc)\\
+P(\RSb, \RSc) &=& P(\RSb \mid \RSc) P(\RSc)\\
+P(\RSa, \RSb, \RSc) &=& P(\RSa \mid \RSb, \RSc) P(\RSb \mid \RSc) P(\RSc).
 \end{eqnarray*}
 
 \section{独立性和条件独立性}
@@ -242,11 +242,11 @@ P(\RSa, \RSb, \RSc) &=& P(\RSa | \RSb, \RSc) P(\RSb | \RSc) P(\RSc).
 
 两个\gls{RV}$\RSx$和$\RSy$在给定\gls{RV}$z$是\firstgls{conditionally_independent}，如果关于$\RSx$和$\RSy$的\gls{conditional_probability}分布对于$z$的每一个值都可以写成乘积的形式：
 \begin{equation}
-\forall x \in \RSx, y \in \RSy, z \in \RSz, p( \RSx=x, \RSy=y | \RSz=z) =
-p(\RSx = x | \RSz = z) p(\RSy = y | \RSz = z).
+\forall x \in \RSx, y \in \RSy, z \in \RSz, p( \RSx=x, \RSy=y \mid \RSz=z) =
+p(\RSx = x \mid \RSz = z) p(\RSy = y \mid \RSz = z).
 \end{equation}
 
-我们可以采用一种简化形式来表示独立性和条件独立性：$\RSx \bot \RSy$表示$\RSx$和$\RSy$相互独立，$\RSx \bot \RSy | \RSz$表示$\RSx$和$\RSy$在给定$\RSz$时条件独立。
+我们可以采用一种简化形式来表示独立性和条件独立性：$\RSx \bot \RSy$表示$\RSx$和$\RSy$相互独立，$\RSx \bot \RSy \mid \RSz$表示$\RSx$和$\RSy$在给定$\RSz$时条件独立。
 
 \section{\glsentrytext{expectation}，\glsentrytext{variance}和\glsentrytext{covariance}}
 \label{sec:expectation_variance_and_covariance}
@@ -429,7 +429,7 @@ p(x; \lambda) = \lambda \bm{1}_{x\ge 0} \exp(-\lambda x).
 
 一个非常相关的\gls{PD}是\firstgls{laplace_distribution}，它允许我们在任意一点$\mu$处设置\gls{PD}的峰值
 \begin{equation}
-\text{Laplace}(x; \mu, \gamma) = \frac{1}{2\gamma} \exp \left( -\frac{|x-\mu|}{\gamma}  \right)
+\text{Laplace}(x; \mu, \gamma) = \frac{1}{2\gamma} \exp \left( -\frac{|x-\mu|}{\gamma}  \right).
 \end{equation}
 
 \subsection{\glsentrytext{dirac_distribution}和\glsentrytext{empirical_distribution}}
@@ -467,7 +467,7 @@ p(x) = \delta(x-\mu).
 混合分布由一些组件(component)分布构成。
 每次实验，样本是由哪个组件分布产生的取决于从一个\gls{multinoulli_distribution}中采样的结果：
 \begin{equation}
-P(\RSx) = \sum_i P(\RSc = i) P(\RSx | \RSc = i)
+P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 \end{equation}
 这里$P(\RSc)$是对各组件的一个\gls{multinoulli_distribution}。
 
@@ -481,11 +481,11 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx | \RSc = i)
 混合模型使我们能够一瞥以后会用到的一个非常重要的概念——\firstgls{latent_variable}。
 \gls{latent_variable}是我们不能直接观测到的\gls{RV}。
 混合模型的组件变量$\RSc$就是其中一个例子。
-\gls{latent_variable}在联合分布中可能和$\RSx$有关，在这种情况下，$P(\RSx, \RSc) = P(\RSx | \RSc)P(\RSc)$。
-\gls{latent_variable}的分布$P(\RSc)$以及关联\gls{latent_variable}和观测变量的条件分布$P(\RSx |\RSc)$，共同决定了分布$P(\RSx)$的形状，尽管描述$P(\RSx)$时可能并不需要\gls{latent_variable}。
+\gls{latent_variable}在联合分布中可能和$\RSx$有关，在这种情况下，$P(\RSx, \RSc) = P(\RSx \mid \RSc)P(\RSc)$。
+\gls{latent_variable}的分布$P(\RSc)$以及关联\gls{latent_variable}和观测变量的条件分布$P(\RSx \mid\RSc)$，共同决定了分布$P(\RSx)$的形状，尽管描述$P(\RSx)$时可能并不需要\gls{latent_variable}。
 \gls{latent_variable}会在\ref{sec:learning_about_dependencies}一节中深入讨论。
 
-一个非常强大且常见的混合模型是\firstgls{GMM}，它的组件$p(\RSx | \RSc= i)$是\gls{gaussian_distribution}。
+一个非常强大且常见的混合模型是\firstgls{GMM}，它的组件$p(\RSx \mid \RSc= i)$是\gls{gaussian_distribution}。
 每个组件都有各自的参数，均值$\bm{\mu}^{(i)}$和\gls{covariance_matrix}$\bm{\Sigma}^{(i)}$。
 有一些混合可以有更多的限制。
 例如，\gls{covariance_matrix}可以通过$\bm{\Sigma}^{(i)} = \bm{\Sigma}, \forall i$的形式在组件之间共享参数。
@@ -493,7 +493,7 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx | \RSc = i)
 
 除了均值和\gls{covariance}以外，\gls{GMM}的参数指明了给每个组件$i$的\firstgls{prior_probability}$\alpha_i = P(\RSc = i)$。
 ``先验''一词表明了在观测到$\RSx$\emph{之前}传递给模型关于$\RSc$的信念。
-作为对比，$P(\RSc | \bm{x})$是\firstgls{posterior_probability}，因为它是在观测到$\RSx$\emph{之后}进行计算的。
+作为对比，$P(\RSc \mid \bm{x})$是\firstgls{posterior_probability}，因为它是在观测到$\RSx$\emph{之后}进行计算的。
 \gls{GMM}是概率密度的\firstgls{universal_approximator}，在这种意义上，任何平滑的概率密度都可以用具有足够多组件的\gls{GMM}以任意精度来逼近。
 
 图\ref{fig:chap3_mog_color}演示了某个\gls{GMM}生成的样例。
@@ -534,7 +534,7 @@ sigmoid函数在变量取绝对值非常大的正值或负值时会出现\firstg
 
 另外一个经常遇到的函数是\firstgls{softplus_function}\citep{secondorder:2001:nips}：
 \begin{equation}
-\zeta(x) = \log(1+\exp(x))
+\zeta(x) = \log(1+\exp(x)).
 \end{equation}
 \gls{softplus_function}可以用来产生\gls{normal_distribution}的$\beta$和$\sigma$参数，因为它的范围是$(0,\infty)$。
 当处理包含sigmoid函数的表达式时它也经常出现。
@@ -582,12 +582,12 @@ x^+ = \max(0, x).
 \section{\glsentrytext{bayes_rule}}
 \label{sec:bayes_rule}
 
-我们经常会需要在已知$P(\RSy | \RSx)$时计算$P(\RSx | \RSy)$。
+我们经常会需要在已知$P(\RSy \mid \RSx)$时计算$P(\RSx \mid \RSy)$。
 幸运的是，如果还知道$P(\RSx)$，我们可以用\firstgls{bayes_rule}来实现这一目的：
 \begin{equation}
-P(\RSx | \RSy) = \frac{P(\RSx) P(\RSy | \RSx)}{P(\RSy)}.
+P(\RSx \mid \RSy) = \frac{P(\RSx) P(\RSy \mid \RSx)}{P(\RSy)}.
 \end{equation}
-注意到$P(\RSy)$出现在上面的公式中，它通常使用$P(\RSy) = \sum_x P(\RSy | x) P(x)$来计算，所以我们并不需要事先知道$P(\RSy)$的信息。
+注意到$P(\RSy)$出现在上面的公式中，它通常使用$P(\RSy) = \sum_x P(\RSy \mid x) P(x)$来计算，所以我们并不需要事先知道$P(\RSy)$的信息。
 
 \gls{bayes_rule}可以从\gls{conditional_probability}的定义直接推导得出，但我们最好记住这个公式的名字，因为很多文献通过名字来引用这个公式。
 这个公式是以Reverend Thomas Bayes来命名的，他是第一个发现这个公式的特例的人。
@@ -691,7 +691,7 @@ p_x(\bm{x}) = p_y(g(\bm{x})) \left | \det \left ( \frac{\partial g(\bm{x})}{\par
 
 为了满足上述三个性质，我们定义一个事件$\RSx = x$的\firstgls{self_information}为
 \begin{equation}
-I(x) = -\log P(x)
+I(x) = -\log P(x).
 \end{equation}
 在本书中，我们总是用$\log$来表示自然对数，底数为$e$。
 因此我们定义的$I(x)$单位是\firstgls{nats}。
@@ -704,7 +704,7 @@ I(x) = -\log P(x)
 \gls{self_information}只处理单个的输出。
 我们可以用\firstgls{Shannon_entropy}来对整个\gls{PD}中的不确定性总量进行量化：
 \begin{equation}
-H(\RSx) = \SetE_{\RSx \sim P}[I(x)] = -\SetE_{\RSx \sim P}[\log P(x)].
+H(\RSx) = \SetE_{\RSx \sim P}[I(x)] = -\SetE_{\RSx \sim P}[\log P(x)],
 \end{equation}
 也记作$H(P)$。
 换言之，一个分布的\gls{Shannon_entropy}是指遵循这个分布的事件所产生的期望信息总量。
@@ -773,7 +773,7 @@ H(P, Q) = -\SetE_{\RSx\sim P} \log Q(x).
 例如，假设我们有三个\gls{RV}$\RSa, \RSb$和$\RSc$，并且$\RSa$影响$\RSb$的取值，$\RSb$影响$\RSc$的取值，但是$\RSa$和$\RSc$在给定$\RSb$时是条件独立的。
 我们可以把全部三个变量的\gls{PD}重新表示为两个变量的\gls{PD}的连乘形式：
 \begin{equation}
-p(\RSa, \RSb, \RSc) = p(\RSa)p(\RSb| \RSa)p(\RSc|\RSb).
+p(\RSa, \RSb, \RSc) = p(\RSa)p(\RSb\mid \RSa)p(\RSc\mid\RSb).
 \end{equation}
 
 这种因子分解可以极大地减少用来描述一个分布的参数的数量。
@@ -790,7 +790,7 @@ p(\RSa, \RSb, \RSc) = p(\RSa)p(\RSb| \RSa)p(\RSc|\RSb).
 \firstgls{directed}模型使用带有有向边的图，它们用\gls{conditional_probability}分布来表示因子分解，就像上面的例子。
 特别地，有向模型对于分布中的每一个\gls{RV}$\RSx_i$都包含着一个影响因子，这个组成$\RSx_i$\gls{conditional_probability}的影响因子被称为$\RSx_i$的双亲，记为$Pa_\CalG(\RSx_i)$：
 \begin{equation}
-p(\RVx) = \prod_i p(\RSx_i | Pa_\CalG(\RSx_i)).
+p(\RVx) = \prod_i p(\RSx_i \mid Pa_\CalG(\RSx_i)).
 \end{equation}
 图\ref{fig:chap3_directed}给出了一个有向图的例子以及它表示的\gls{PD}的因子分解。
 \begin{figure}[!htb]
@@ -837,9 +837,9 @@ p(\RVx) = \frac{1}{Z} \prod_i \phi^{(i)} \left (\CalC^{(i)} \right).
 它们不是互相排斥的\gls{PD}族。
 有向或者无向不是\gls{PD}的特性；它是\gls{PD}的一种特殊\firstgls{description}所具有的特性，但是任何的\gls{PD}都可以用两种方式进行描述。
 
-在本书第|||c|||部分和第|||c|||部分中， 我们使用\gls{structured_probabilistic_models}仅仅是作为一门语言，来描述不同的机器学习算法选择表示的直接的概率关系。
+在本书第\ref{part:applied_math_and_machine_learning_basics}部分和第\ref{part:deep_networks_modern_practices}部分中， 我们使用\gls{structured_probabilistic_models}仅仅是作为一门语言，来描述不同的机器学习算法选择表示的直接的概率关系。
 一直到研究课题的讨论之前，不会需要用到\gls{structured_probabilistic_models}的深入理解。
-在第|||c|||部分的研究课题中，我们会更为详尽地探讨\gls{structured_probabilistic_models}。
+在第\ref{part:deep_learning_research}部分的研究课题中，我们会更为详尽地探讨\gls{structured_probabilistic_models}。
 
 本章复习了概率论中与深度学习最为相关的一些基本概念。
 还剩下一些基本的数学工具需要讨论：数值方法。
