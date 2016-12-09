@@ -28,3 +28,4 @@
  - @yuduowu ==> contact issue
  - @minoriwww ==> Chapter2 "排布"==>"排列"
  - @khty2000 ==> Chapter2 "X_{-S}"问题
+ - @Qingmu ==> 用WinEdit打开文件问题
