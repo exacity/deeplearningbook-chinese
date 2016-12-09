@@ -17,6 +17,7 @@
  - @RuiZhang1993 ==> Chapter2 公式有误
  - @zymiboxpay ==> Chapter2 等号消失
  - @xingkongliang ==> Chapter2 公式有误
+ - @minoriwww ==> Chapter2 "排布"->"排列"
 
 
 2016年12月9日
