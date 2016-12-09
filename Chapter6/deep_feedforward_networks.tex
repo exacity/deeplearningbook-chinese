@@ -901,7 +901,7 @@ sigmoid激活函数在除了\gls{feedforward_network}以外的配置中更为常
 
 % -- 190 --
 
-softmax单元是另外一种经常用作输出的单元（如第\ref{sec:softmax_units for_multinoulli_output_distributions}节中所描述的），但有时也可以用作隐含单元。
+softmax单元是另外一种经常用作输出的单元（如第\ref{sec:softmax_units_for_multinoulli_output_distributions}节中所描述的），但有时也可以用作隐含单元。
 softmax单元很自然地表示具有$k$个可能值的离散型随机变量的概率分布，所以它们可以用作一种开关。
 这些类型的隐含单元通常仅用于明确地学习操作内存的高级结构中，将在\ref{sec:explicit_memory}节中描述。
 
@@ -1370,7 +1370,7 @@ TODO.}
 \begin{equation}
   \sum_i (\nabla_{\TSX} \verb|op.f(inputs|)_i) \textsf{G}_i,
 \end{equation}
-这只是如公式\ref{eq: 6.47}所表达的链式法则的实现。
+这只是如公式\ref{eq:6.47}所表达的链式法则的实现。
 这里，\verb|inputs|是提供给操作的一组输入，\verb|op.f|是操作实现的数学函数，$\TSX$是输入，我们想要计算关于它的梯度，$\TSG$是操作对于输出的梯度。
 
 \verb|op.bprop|方法应该总是假装它的所有输入彼此不同，即使它们不是。
@@ -1524,7 +1524,7 @@ TODO.}
   
 % -- 215 --
   
-当前向图$\CalG$具有单个输出节点，并且每个偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$都可以用恒定的计算量来计算时，反向传播保证梯度计算的计算数目和前向计算的计算数目是同一个量级：这可以在算法|||c|||中看出，因为每个局部偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$以及递归链式公式（公式\ref{eq: 6.49}）中相关的乘和加都只需计算一次。
+当前向图$\CalG$具有单个输出节点，并且每个偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$都可以用恒定的计算量来计算时，反向传播保证梯度计算的计算数目和前向计算的计算数目是同一个量级：这可以在算法|||c|||中看出，因为每个局部偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$以及递归链式公式（公式\ref{eq:6.49}）中相关的乘和加都只需计算一次。
 因此，总的计算量是$O(\#\text{edges})$。
 然而，可能通过对反向传播算法构建的计算图进行简化来减少这些计算量，并且这是NP完全问题。
 诸如Theano和TensorFlow的实现使用基于匹配已知简化模式的试探法，以便重复地尝试去简化图。

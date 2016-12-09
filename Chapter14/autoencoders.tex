@@ -17,7 +17,7 @@
 
 数十年间，\gls{AE}的想法一直是\gls{NN}历史景象的一部分~\citep{Lecun-these87,Bourlard88,hinton1994amd-small}。
 传统上，\gls{AE}被用于\gls{dimensionality_reduction}或特征学习。
-近年来，\gls{AE}与隐变量模型理论的联系将\gls{AE}带到了生成建模的前沿，我们将在\ref{chap:generative_models}章看到更多细节。
+近年来，\gls{AE}与隐变量模型理论的联系将\gls{AE}带到了生成建模的前沿，我们将在\ref{chap:deep_generative_models}章看到更多细节。
 \gls{AE}可以被看作是\gls{feedforward_network}的一种特殊情况，并且可以使用完全相同的技术进行训练，通常使用\gls{minibatch}\gls{GD}法（基于\gls{back_propagation}计算的梯度）。
 不像一般的\gls{feedforward_network}，\gls{AE}也可以使用\firstgls{recirculation}训练\citep{Hinton+McClelland-NIPS1987}，这是一种基于比较原始输入和\gls{reconstruction}输入激活的学习算法。
 相比\gls{back_propagation}算法，\gls{recirculation}算法从生物学上看似更有道理，但很少用于\gls{ML}。
