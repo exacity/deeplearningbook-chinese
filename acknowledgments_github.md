@@ -17,13 +17,14 @@
  - @RuiZhang1993 ==> Chapter2 公式有误
  - @zymiboxpay ==> Chapter2 等号消失
  - @xingkongliang ==> Chapter2 公式有误
- - @minoriwww ==> Chapter2 "排布"->"排列"
+ - @oisc ==>  Chapter2 公式2.83 2.84有误 是arg max
 
 
 2016年12月9日
 ------------
  - @fairmiracle ==> Chapter4 公式，语句，详见[issue](https://github.com/exacity/deeplearningbook-chinese/issues/3#issuecomment-265854595).
  - @huangpingchun ==> Chapter1 邻域==>领域
- - @oisc ==>  Chapter2 公式2.83 2.84有误 是arg max
  - @tielei ==> Chapter9 equivariance
  - @yuduowu ==> contact issue
+ - @minoriwww ==> Chapter2 "排布"==>"排列"
+ - @khty2000 ==> Chapter2 "X_{-S}"问题
