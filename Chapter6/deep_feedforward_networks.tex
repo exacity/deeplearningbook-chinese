@@ -132,6 +132,7 @@ f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 为什么会发生这种事？
 图\ref{fig:chap6_xor_space_gray}演示了线性模型为什么不能用来表示XOR函数。
 解决这个问题的其中一种方法是使用一个模型来学习一个不同的特征空间，在这个空间上线性模型能够表示这个解。
+% fig 6.1
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -150,6 +151,7 @@ f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 第二层就是这个网络的输出层。
 输出层仍然只是一个线性回归模型，只不过现在它作用于$\bm{h}$而不是$\bm{x}$。
 网络现在包含链接在一起的两个函数：$\bm{h}=f^{(1)}(\bm{x}; \bm{W}, \bm{c})$和$y = f^{(2)}(\bm{h}; \bm{w}, b)$，完整的模型是$f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = f^{(2)}(f^{(1)}(\bm{x}))$。
+% fig 6.2
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -175,6 +177,7 @@ $f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，�
 现在，因为我们描述的是向量$\bm{x}$到向量$\bm{h}$的仿射变换，所以我们需要一整个向量的偏置参数。
 激活函数$g$通常选择一个对每个元素分别智能作用的函数，有$h_i =g(\bm{x}^\top \bm{W}_{:, i} + c_i)$。
 在现代神经网络中，默认的推荐是使用由激活函数$g(z)=\max\{0, x\}$定义的\firstgls{ReLU}或者称为\glssymbol{ReLU}\citep{Jarrett-ICCV2009-small,Nair-2010-small,Glorot+al-AI-2011-small}，如图\ref{fig:chap6_relu_color}所示。
+% fig 6.3
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -309,7 +312,7 @@ XOR问题的其他的一些等价解也可以被梯度下降算法找到。
 深度神经网络设计中的一个重要方面是代价函数的选择。
 幸运的是，神经网络的代价函数或多或少是和其他参数模型例如线性模型的代价函数相同的。
 
-在大多数情况下， 我们的参数模型定义了一个分布$p(\bm{y}|\bm{x};\bm{\theta})$并且我们简单地使用最大似然原理。
+在大多数情况下， 我们的参数模型定义了一个分布$p(\bm{y}\mid\bm{x};\bm{\theta})$并且我们简单地使用最大似然原理。
 这意味着我们使用训练数据和模型预测间的交叉熵作为代价函数。
 
 有时，我们使用一个更简单的方法，不是预测$\bm{y}$的完整概率分布，而是仅仅预测在给定$\bm{x}$的条件下$\bm{y}$的某种统计量。
@@ -329,12 +332,12 @@ XOR问题的其他的一些等价解也可以被梯度下降算法找到。
 这意味着代价函数就是负的对数似然，它与训练数据和模型分布间的交叉熵等价。
 这个代价函数表示为
 \begin{equation}
-J(\bm{\theta}) = -\SetE_{\mathbf{x}, \mathbf{y} \sim \hat{p}_\text{data}} \log p_\text{model} (\bm{y} \vert \bm{x}).
+J(\bm{\theta}) = -\SetE_{\mathbf{x}, \mathbf{y} \sim \hat{p}_\text{data}} \log p_\text{model} (\bm{y} \mid \bm{x}).
 \end{equation}
 
 代价函数的具体形式随着模型而改变，取决于$\log p_\text{model}$的具体形式。
 上述方程的展开形式通常会有一些项不依赖于模型的参数，我们可以舍去。
-例如，正如我们在\ref{sec:the_task_t}节中看到的，如果$p_\text{model}(\bm{y}|\bm{x}) = \CalN(\bm{y};f(\bm{x};\bm{\theta}), \bm{I})$，那么我们恢复均方误差代价，
+例如，正如我们在\ref{sec:the_task_t}节中看到的，如果$p_\text{model}(\bm{y}\mid\bm{x}) = \CalN(\bm{y};f(\bm{x};\bm{\theta}), \bm{I})$，那么我们恢复均方误差代价，
 \begin{equation}
 J(\theta) = \frac{1}{2} \SetE_{\RVx, \RVy \sim  \hat{p}_\text{data}} || \bm{y} - f(\bm{x}; \bm{\theta}) ||^2 + \text{const},
 \end{equation}
@@ -343,7 +346,7 @@ J(\theta) = \frac{1}{2} \SetE_{\RVx, \RVy \sim  \hat{p}_\text{data}} || \bm{y} -
 先前，我们看到了对输出分布的最大似然估计和线性模型均方误差的最小化之间的等价性，但事实上，这种等价性并不要求$f(\bm{x}; \bm{\theta})$用于预测Gaussian分布的均值。
 
 使用最大似然来导出代价函数的方法的一个优势是，它减轻了为每个模型设计代价函数的负担。
-明确一个模型$p(\bm{y}|\bm{x})$则自动地确定了一个代价函数$\log p(\bm{y}|\bm{x})$。
+明确一个模型$p(\bm{y}\mid\bm{x})$则自动地确定了一个代价函数$\log p(\bm{y}\mid\bm{x})$。
 
 贯穿神经网络设计的一个反复出现的主题是代价函数的梯度必须足够的大和具有足够的预测性，来为学习算法提供一个好的指引。
 饱和（变得非常平）的函数破坏了这一目标，因为它们把梯度变得非常小。
@@ -364,7 +367,7 @@ logistic回归是其中一个例子。
 \subsubsection{学习条件统计量}
 \label{sec:learning_conditional_statistics}
 
-有时我们并不是想学习一个完整的概率分布$p(\bm{y}|\bm{x}; \bm{\theta})$，而仅仅是想学习在给定$\bm{x}$时$\bm{y}$的某个条件统计量。
+有时我们并不是想学习一个完整的概率分布$p(\bm{y}\mid\bm{x}; \bm{\theta})$，而仅仅是想学习在给定$\bm{x}$时$\bm{y}$的某个条件统计量。
 
 例如，我们可能有一个预测器$f(\bm{x}; \bm{\theta})$，我们想用它来预测$\bm{y}$的均值。
 如果我们使用一个足够强大的神经网络，我们可以认为这个神经网络能够表示一大类函数中的任何一个函数$f$，这个类仅仅被一些特征所限制，例如连续性和有界，而不是具有特殊的参数形式。
@@ -399,7 +402,7 @@ f^* = \underset{f}{\argmin} \ \SetE_{\RVx, \RVy \sim  p_\text{data}} ||\bm{y} - 
 
 不幸的是，均方误差和平均绝对误差当使用基于梯度的优化方式时往往会导致糟糕的结果。
 一些饱和的输出单元当结合这些代价函数时会产生非常小的梯度。
-这就是为什么交叉熵代价函数比均方误差或者平均绝对误差更受欢迎的原因之一了，即使是在没必要估计整个$p(\bm{y}|\bm{x})$分布时。
+这就是为什么交叉熵代价函数比均方误差或者平均绝对误差更受欢迎的原因之一了，即使是在没必要估计整个$p(\bm{y}\mid\bm{x})$分布时。
 
 
 \subsection{输出单元}
@@ -428,7 +431,7 @@ f^* = \underset{f}{\argmin} \ \SetE_{\RVx, \RVy \sim  p_\text{data}} ||\bm{y} - 
 
 线性输出层经常被用来产生条件Gaussian分布的均值：
 \begin{equation}
-p(\bm{y}|\bm{x}) = \CalN(\bm{y}; \hat{\bm{y}}, \bm{I} ).
+p(\bm{y}\mid\bm{x}) = \CalN(\bm{y}; \hat{\bm{y}}, \bm{I} ).
 \end{equation}
 最大化对数似然此时等价于最小化均方误差。
 
@@ -447,13 +450,13 @@ p(\bm{y}|\bm{x}) = \CalN(\bm{y}; \hat{\bm{y}}, \bm{I} ).
 
 此时最大似然的方法是定义$y$在$\bm{x}$条件下的Bernoulli分布。
 
-Bernoulli分布仅需一个单独的数来定义，神经网络只需要预测$P(y =1|\bm{x})$即可。
+Bernoulli分布仅需一个单独的数来定义，神经网络只需要预测$P(y =1\mid\bm{x})$即可。
 为了使这个数是有效的概率，它必须处在区间$[0, 1]$中。
 
 满足这个限制需要一些细致的设计工作。
 假设我们打算使用线性单元，并且通过阈值来限制它成为一个有效的概率：
 \begin{equation}
-P(y=1 | \bm{x}) = \max \left \{ 0, \min \{1, \bm{w}^\top \bm{h}+b \} \right \}.
+P(y=1 \mid \bm{x}) = \max \left \{ 0, \min \{1, \bm{w}^\top \bm{h}+b \} \right \}.
 \end{equation}
 这的确定义了一个有效的条件概率分布，但我们并不能使用梯度下降来高效地训练它。
 任何时候当$\bm{w}^\top \bm{h}+b$处于单位区间外时，模型的输出对它的参数的梯度都将为$\bm{0}$。
@@ -466,7 +469,7 @@ P(y=1 | \bm{x}) = \max \left \{ 0, \min \{1, \bm{w}^\top \bm{h}+b \} \right \}.
 
 sigmoid输出单元定义为
 \begin{equation}
-\hat{y} = \sigma \left (\bm{w}^\top \bm{h} + b \right )
+\hat{y} = \sigma \left (\bm{w}^\top \bm{h} + b \right ),
 \end{equation}
 这里$\sigma$是第\ref{sec:useful_properties_of_common_functions}节中介绍的logistic sigmoid函数。
 
@@ -480,9 +483,9 @@ sigmoid可以通过构造一个非标准化（和不为1）的概率分布$\tild
 如果我们假定非标准化的对数概率对$y$ 和$z$是线性的，可以对它取指数来得到非标准化的概率。
 我们然后对它归一化，可以发现这服从Bernoulli分布，它受$z$的sigmoid形式的变换控制：
 \begin{align}
-\log \tilde{P}(y) &= yz\\
-\tilde{P}(y) &= \exp(yz)\\
-P(y) &= \frac{\exp(yz)}{\sum_{y' = 0}^1 \exp(y' z)}\\
+\log \tilde{P}(y) &= yz,\\
+\tilde{P}(y) &= \exp(yz),\\
+P(y) &= \frac{\exp(yz)}{\sum_{y' = 0}^1 \exp(y' z)},\\
 P(y) &= \sigma((2y-1)z).
 \end{align}
 基于指数和归一化的概率分布在统计建模的文献中很常见。
@@ -491,11 +494,11 @@ P(y) &= \sigma((2y-1)z).
 % -- 177 --
 
 这种在对数空间里预测概率的方法可以很自然地使用最大似然学习。
-因为用于最大似然的代价函数是$-\log P(y|\bm{x})$，代价函数中的log抵消了sigmoid中的exp。
+因为用于最大似然的代价函数是$-\log P(y\mid\bm{x})$，代价函数中的log抵消了sigmoid中的exp。
 如果没有这个效果，sigmoid的饱和性会阻止基于梯度的学习做出好的改进。
 我们使用最大似然来学习一个由sigmoid参数化的Bernoulli分布，它的损失函数为
 \begin{align}
-J(\bm{\theta}) &= -\log P(y|\bm{x})\\
+J(\bm{\theta}) &= -\log P(y\mid\bm{x})\\
 &= -\log \sigma ((2y-1)z)\\
 &= \zeta((1-2y)z).
 \end{align}
@@ -530,23 +533,23 @@ softmax函数最常用作分类器的输出，来表示$n$个不同类上的概�
 
 在二元变量的情况下，我们希望计算一个单独的数
 \begin{equation}
-\hat{y} = P(y=1|\bm{x}).
+\hat{y} = P(y=1\mid\bm{x}).
 \end{equation}
-因为这个数需要处在0和1之间，并且我们想要让这个数的对数可以很好地用于对数似然的基于梯度的优化，我们选择去预测另外一个数$z=\log \hat{P}(y=1|\bm{x})$。
+因为这个数需要处在0和1之间，并且我们想要让这个数的对数可以很好地用于对数似然的基于梯度的优化，我们选择去预测另外一个数$z=\log \hat{P}(y=1\mid\bm{x})$。
 对其指数化和归一化，我们就得到了一个由sigmoid函数控制的Bernoulli分布。
 
-为了推广到具有$n$个值的离散型变量的情况，我们现在需要创造一个向量$\hat{\bm{y}}$，它的每个元素是$\hat{y}_i = P(y=i|\bm{x})$。
+为了推广到具有$n$个值的离散型变量的情况，我们现在需要创造一个向量$\hat{\bm{y}}$，它的每个元素是$\hat{y}_i = P(y=i\mid\bm{x})$。
 我们不仅要求每个$\hat{y}_i$元素介于0和1之间，还要使得整个向量的和为1使得它表示一个有效的概率分布。
 用于Bernoulli分布的方法同样可以推广到multinoulli分布。
 首先，线性层预测了非标准化的对数概率：
 \begin{equation}
 \bm{z} = \bm{W}^\top \bm{h}+\bm{b},
 \end{equation}
-其中$z_i=\log \hat{P}(y=i|\bm{x})$。
+其中$z_i=\log \hat{P}(y=i\mid\bm{x})$。
 softmax函数然后可以对$z$指数化和归一化来获得需要的$\hat{\bm{y}}$。
 最终，softmax函数的形式为
 \begin{equation}
-\text{softmax}(\bm{z})_i = \frac{\exp(z_i)}{\sum_i \exp(z_j)}.
+\text{softmax}(\bm{z})_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}.
 \end{equation}
 
 和logistic sigmoid一样，当使用最大化对数似然训练softmax来输出目标值$\RSy$时，使用指数函数工作地非常好。
@@ -611,7 +614,7 @@ $n$个输出总和必须为1的约束意味着只有$n-1$个参数是必要的�
 因此，我们可以强制要求$\bm{z}$的一个元素是固定的。
 例如，我们可以要求$z_n=0$。
 事实上，这正是sigmoid单元所做的。
-定义$P(y=1|\bm{x})=\sigma(z)$等价于用二维的$\bm{z}$以及$z_1=0$来定义$P(y=1|\bm{x})=\text{softmax}(\bm{z})_1$。
+定义$P(y=1\mid\bm{x})=\sigma(z)$等价于用二维的$\bm{z}$以及$z_1=0$来定义$P(y=1\mid\bm{x})=\text{softmax}(\bm{z})_1$。
 无论是$n-1$个变量还是$n$个变量的方法，都描述了相同的概率分布，但会产生不同的学习机制。
 在实践中，无论是过度参数化的版本还是限制的版本都很少有差别，并且实现过度参数化的版本更为简单。
 
@@ -635,7 +638,7 @@ softmax函数因此提供了argmax的``软化''版本。max函数相应的软化
 神经网络可以推广到我们希望的几乎任何种类的输出层。
 最大似然原则为如何为几乎任何种类的输出层设计一个好的代价函数提供了指导。
 
-一般的，如果我们定义了一个条件分布$p(\bm{y}|\bm{x}; \bm{\theta})$，最大似然原则建议我们使用$-\log p(\bm{y}| \bm{x};\bm{\theta})$作为代价函数。
+一般的，如果我们定义了一个条件分布$p(\bm{y}\mid\bm{x}; \bm{\theta})$，最大似然原则建议我们使用$-\log p(\bm{y}\mid \bm{x};\bm{\theta})$作为代价函数。
 
 一般来说，我们可以认为神经网络表示函数$f(\bm{x};\bm{\theta})$。
 这个函数的输出不是对$\bm{y}$值的直接预测。
@@ -644,7 +647,7 @@ softmax函数因此提供了argmax的``软化''版本。max函数相应的软化
 
 例如，我们想要学习在给定$\RVx$时$\RVy$的条件Gaussian分布的方差。
 简单情况下，方差$\sigma^2$是一个常数，此时有一个闭合的表达式，这是因为方差的最大似然估计量仅仅是观测值$\RVy$与它们的期望值的差值的平方平均。
-一种计算上更加昂贵但是不需要写特殊情况代码的方法是简单地将方差作为分布$p(\RVy|\bm{x})$的其中一个属性，这个分布受$\bm{\omega}=f(\bm{x};\bm{\theta})$控制。
+一种计算上更加昂贵但是不需要写特殊情况代码的方法是简单地将方差作为分布$p(\RVy\mid\bm{x})$的其中一个属性，这个分布受$\bm{\omega}=f(\bm{x};\bm{\theta})$控制。
 负对数似然$-\log p(\bm{y};\bm{\omega}(\bm{x}))$将为代价函数提供一个必要的合适项来使我们的优化过程可以逐渐地学到方差。
 在标准差不依赖于输入的简单情况下，我们可以在网络中创建一个直接复制到$\bm{\omega}$中的新参数。
 这个新参数可以是$\sigma$本身，或者可以是表示$\sigma^2$的参数$v$，或者可以是表示$\frac{1}{\sigma^2}$的参数$\beta$，取决于我们怎样对分布参数化。
@@ -678,17 +681,17 @@ softmax函数因此提供了argmax的``软化''版本。max函数相应的软化
 
 % -- 183 --
 
-我们经常想要执行多模型回归，即预测条件分布$p(\bm{y}|\bm{x})$的实值，该条件分布对于相同的$\bm{x}$值在$\bm{y}$空间中有多个不同的峰值。
+我们经常想要执行多模型回归，即预测条件分布$p(\bm{y}\mid\bm{x})$的实值，该条件分布对于相同的$\bm{x}$值在$\bm{y}$空间中有多个不同的峰值。
 在这种情况下，Gaussian混合是输出的自然表示\citep{Jacobs-nc91,bishop1994mixture}。
 带有将Gaussian混合作为其输出的神经网络通常被称为\firstgls{mixture_density_network}。
 具有$n$个分量的Gaussian混合输出由下面的条件分布定义
 \begin{equation}
-p(\bm{y}|\bm{x}) = \sum_{i=1}^n p(\RSc = i | \bm{x}) \CalN(\bm{y}; \bm{\mu}^{(i)}(\bm{x}), \bm{\Sigma}^{(i)}(\bm{x})).
+p(\bm{y}\mid\bm{x}) = \sum_{i=1}^n p(\RSc = i \mid \bm{x}) \CalN(\bm{y}; \bm{\mu}^{(i)}(\bm{x}), \bm{\Sigma}^{(i)}(\bm{x})).
 \end{equation}
-神经网络必须有三个输出：定义$p(\RSc=i|\bm{x})$的向量，对所有的$i$给出$\bm{\mu}^{(i)}(\bm{x})$的矩阵，以及对所有的$i$给出$\bm{\Sigma}^{(i)}(\bm{x})$的张量。
+神经网络必须有三个输出：定义$p(\RSc=i\mid\bm{x})$的向量，对所有的$i$给出$\bm{\mu}^{(i)}(\bm{x})$的矩阵，以及对所有的$i$给出$\bm{\Sigma}^{(i)}(\bm{x})$的张量。
 这些输出必须满足不同的约束：
 \begin{enumerate}
-\item 混合组件$p(\RSc=i|\bm{x})$：它们由隐变量
+\item 混合组件$p(\RSc=i\mid\bm{x})$：它们由隐变量
 \footnote{我们认为$\RSc$是隐变量是因为我们不能直接在数据中观测到它：给定输入$\RVx$和目标$\RVy$，不可能确切地知道是哪个Gaussian组件产生$\RVy$，但我们可以想象$\RVy$是通过选择其中一个来产生的，并且将那个未被观测到的选择作为随机变量。}
 $\RSc$关联着，在$n$个不同组件上形成multinoulli分布。
 这个分布通常可以由$n$维向量的softmax来获得，以确保这些输出是正的并且和为1。
@@ -712,6 +715,7 @@ $\RSc$关联着，在$n$个不同组件上形成multinoulli分布。
 Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理运动\citep{Graves-arxiv2013}中特别有效。
 混合密度策略为网络提供了一种方法来表示多种输出模式，并且控制输出的方差，这对于在这些实数域中获得高质量的结果是至关重要的。
 混合密度网络的一个实例如图\ref{fig:chap6_mdn_color}所示。
+% fig 6.4
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -784,7 +788,7 @@ Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理
 
 修正线性单元通常用于仿射变换之上：
 \begin{equation}
-\bm{h} = g(\bm{W}^\top \bm{x} + \bm{b})
+\bm{h} = g(\bm{W}^\top \bm{x} + \bm{b}).
 \end{equation}
 当初始化仿射变换的参数时，可以将$\bm{b}$的所有元素设置成一个小的正值，例如0.1。
 这使得修正线性单元很可能初始时就对训练集中的大多数输入呈现激活状态，并且允许导数通过。
@@ -931,11 +935,11 @@ softplus表明隐含单元类型的性能可能是非常反直觉的——因为
 大多数神经网络结构将这些层布置成链式结构，其中每一层都是前一层的函数。
 在这种结构中，第一层由下式给出：
 \begin{equation}
-\bm{h}^{(1)}= g^{(1)}\left ( \bm{W}^{(1)\top} \bm{x} + \bm{b}^{(1)}\right ),
+\bm{h}^{(1)}= g^{(1)}\left ( \bm{W}^{(1)\top} \bm{x} + \bm{b}^{(1)}\right );
 \end{equation}
 第二层由
 \begin{equation}
-\bm{h}^{(2)} = g^{(2)}\left ( \bm{W}^{(2)\top}\bm{h}^{(1)}+\bm{b}^{(2)} \right ),
+\bm{h}^{(2)} = g^{(2)}\left ( \bm{W}^{(2)\top}\bm{h}^{(1)}+\bm{b}^{(2)} \right );
 \end{equation}
 给出，以此类推。
 
@@ -992,6 +996,7 @@ Borel可测的概念超出了本书的范畴；对于我们想要实现的目标
 图\ref{fig:chap6_space_folding}对值修正的网络如何创建在某些隐含单元顶部计算的函数的镜像，相对于隐含单元的输入。
 每个隐含单元指定在哪里折叠输入空间，来创造镜像响应（在绝对值非线性的两侧）。
 通过组合这些折叠操作，我们获得指数级的分段线性区域，他们可以概括所有种类的规则模式（例如，重复）。
+% fig 6.5
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1026,6 +1031,7 @@ O \left ( k^{(l-1)+d} \right ).
 根据经验，更深的模型似乎确实会更适用于广泛的任务\citep{Bengio-NIPS2007,Erhan2009,Bengio-2009-book,UTLC+LISA-2011-small,Ciresan-et-al-2012,Krizhevsky-2012-small,sermanet-cvpr-13,Farabet-et-al-2013,couprie-iclr-13,LISA-EmotiW2013,Goodfellow+et+al-ICLR2014a,Szegedy-et-al-arxiv2014}。
 图\ref{fig:chap6_depth_color}和图\ref{fig:chap6_model_size_color}展示了一些经验结果的例子。
 这表明使用深层结构确实在模型学习的函数空间上表示了一个有用的先验。
+% fig 6.6
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1036,6 +1042,7 @@ O \left ( k^{(l-1)+d} \right ).
 \label{fig:chap6_depth_color}
 \end{figure}
 
+% fig 6.7
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1122,6 +1129,7 @@ O \left ( k^{(l-1)+d} \right ).
 我们有时用操作的名称来注释输出的节点，当上下文很明确时有时也会省略这个标注。
 
 计算图的实例可以参见图\ref{fig:chap6_computational_graph}。
+% fig 6.8
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1149,7 +1157,7 @@ O \left ( k^{(l-1)+d} \right ).
 假设$\bm{x}\in \SetR^m, \bm{y}\in \SetR^n$，$g$是从$\SetR^m$到$\SetR^n$的映射，$f$是从$\SetR^n$到$\SetR$的映射。
 如果$\bm{y}=g(\bm{x})$并且$z=f(\bm{y})$，那么
 \begin{equation}
-\frac{\partial z}{\partial x_i} = \sum_i \frac{\partial z}{\partial y_j} \frac{\partial y_j}{\partial x_i}.
+\frac{\partial z}{\partial x_i} = \sum_j \frac{\partial z}{\partial y_j} \frac{\partial y_j}{\partial x_i}.
 \end{equation}
 使用向量记法，可以等价地写成
 \begin{equation}
@@ -1194,15 +1202,6 @@ $\TSX$的索引现在有多个坐标——例如，一个3维的张量由三个�
 在某些情况下，计算两次相同的子表达式纯粹是浪费。
 在复杂图中，可能存在指数多的这种计算上的浪费，使得简单的链式法则不可实现。
 在其他情况下，计算两次相同的子表达式可能是以较高的运行时间为代价来减少内存开销的有效手段。
-\begin{figure}[!htb]
-\ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
-\else
-\centerline{\includegraphics{Chapter6/figures/repeated_subexpression}}
-\fi
-\caption{Tmp}
-\label{fig:chap6_repeated_subexpression}
-\end{figure}
 
 我们首先给出一个版本的反向传播算法，它指明了梯度的直接计算方式（算法|||c|||以及相关的正向计算的算法|||c|||），按照它实际完成的顺序并且递归地使用链式法则。
 可以直接执行这些计算或者将算法的描述视为用于计算反向传播的计算图的符号表示。
@@ -1219,7 +1218,7 @@ $\TSX$的索引现在有多个坐标——例如，一个3维的张量由三个�
 我们将假设图的节点已经以一种特殊的方式被排序，使得我们可以一个接一个地计算他们的输出，从$u^{(n_i+1)}$开始，一直上升到$u^{(n)}$。
 如算法|||c|||中所定义的，每个节点$u^{(i)}$与操作$f^{(i)}$相关联，并且通过对该函数求值来得到
 \begin{equation}
-  u^{(i)} = f(\SetA^{(i)})
+  u^{(i)} = f(\SetA^{(i)}),
 \end{equation}
 其中$\SetA^{(i)}$是$u^{(i)}$所有双亲节点的集合。
 
@@ -1231,7 +1230,7 @@ $\TSX$的索引现在有多个坐标——例如，一个3维的张量由三个�
 $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中的每个节点计算导数$\frac{\partial u^{(n)}}{\partial u^{(i)}}$与前向图中的节点$u^{(i)}$相关联。
 这通过对标量输出$u^{(n)}$使用链式法则来完成
 \begin{equation}
-  \frac{\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i:j \in Pa(u^{(i)})} \frac{\partial u^{(n)} \partial u^{(i)}}{ \partial u^{(i)} \partial u^{(j)} }
+  \frac{\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i:j \in Pa(u^{(i)})} \frac{\partial u^{(n)} }{ \partial u^{(i)} } \frac{ \partial u^{(i)} }{ \partial u^{(j)} }
   \label{eq:6.49}
 \end{equation}
 在算法|||c|||中详细说明。
@@ -1240,6 +1239,25 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 另外，对于每个节点都要执行一个内积，内积的一个因子是对于$u^{j}$孩子节点$u^{(i)}$的已经计算的梯度，另一个因子是对于相同孩子节点$u^{(i)}$ 的偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$组成的向量。
 总而言之，执行反向传播所需的计算量与$\CalG$中的边的数量成比例，其中每条边的计算包括计算偏导数（节点关于它的一个双亲节点的偏导数）以及执行一次乘法和一次加法。
 下面，我们将此分析推广到张量值节点，这只是在同一节点中对多个标量值进行分组并能够更有效的实现。
+% fig 6.9
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter6/figures/repeated_subexpression}}
+\fi
+\captionsetup{singlelinecheck=off}
+\caption[.]{
+TODO.
+\begin{align}
+& \frac{\partial z}{\partial w}\\
+=& \frac{\partial z}{\partial y} \frac{\partial y}{\partial x} \frac{\partial x}{\partial w}\\
+=& f'(y)f'(x)f'(w)\\
+=& f'(f(f(w))) f'(f(w)) f'(w).
+\end{align}
+TODO.}
+\label{fig:chap6_repeated_subexpression}
+\end{figure}
 
 % -- 203 --
 
@@ -1288,6 +1306,7 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 这种方法的主要优点是导数可以使用与原始表达式相同的语言来描述。
 因为导数只是另外一张计算图，可以再次运行反向传播，对导数再进行求导以得到更高阶的导数。
 高阶导数的计算在\ref{sec:higher_order_derivatives}中描述。
+% fig 6.10
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1385,7 +1404,7 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 \begin{equation}
   \frac{\partial u^{(n)}}{\partial u^{(j)}} =
   \sum_{\substack{\text{path}(u^{(\pi_1)}, u^{(\pi_2)}, \ldots, u^{(\pi_t)}  ),\\ \text{from } \pi_1=j \text{ to }\pi_t = n}}
-  \prod_{k=2}^t \frac{\partial u^{(\pi_k)}}{\partial u^{(\pi_{k-1})}}
+  \prod_{k=2}^t \frac{\partial u^{(\pi_k)}}{\partial u^{(\pi_{k-1})}}.
 \end{equation}
 由于节点$j$到节点$n$的路径数目可以在这些路径的长度上指数地增长，所以上述求和符号中的项数（这些路径的数目），可能以前向传播图的深度的指数级增长。
 会产生如此大的成本是因为对于$\frac{\partial u^{(i)}}{\partial u^{(j)}}$，相同的计算会重复进行很多次。
@@ -1414,10 +1433,11 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 然而，为了使得这个例子更加真实，我们也包含一个正则项。
 总的代价函数为
 \begin{equation}
-  J = J_{\text{MLE}} + \lambda \left ( \sum_{i, j} (W_{i, j}^{(1)})^2 + \sum_{i, j} (W_{i, j}^{(2)})^2 \right )
+  J = J_{\text{MLE}} + \lambda \left ( \sum_{i, j} \left (W_{i, j}^{(1)} \right )^2 + \sum_{i, j} \left (W_{i, j}^{(2)} \right)^2 \right )
 \end{equation}
 包含了交叉熵和系数为$\lambda$的权重衰减项。
 它的计算图在图\ref{fig:chap6_mlp_example}中给出。
+% fig 6.11
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}

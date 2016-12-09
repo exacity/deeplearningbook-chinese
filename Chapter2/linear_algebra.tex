@@ -1,3 +1,4 @@
+% !Mode:: "TeX:UTF-8"
 % Translator: Yujun Li 
 \chapter{线性代数}
 \label{chap:linear_algebra}
@@ -56,7 +57,7 @@
     我们通常会赋予矩阵粗体的大写变量名称，比如$\MA$。
     如果一个实数矩阵高度为$m$，宽度为$n$，那么我们说$\MA\in \SetR^{m\times n}$。
     我们在表示矩阵中的元素时，通常使用其名称以不加粗的斜体形式，\gls{index}用逗号间隔。
-    比如，$\SA_{1,1}$表示$\MA$左上的元素，$\MA_{m,n}$表示$\MA$右下的元素。
+    比如，$\SA_{1,1}$表示$\MA$左上的元素，$\SA_{m,n}$表示$\MA$右下的元素。
     我们表示垂直坐标$\Si$中的所有元素时，用“:”来表示水平坐标。
     比如，$\MA_{i,:}$表示$\MA$中垂直坐标$i$上的一横排元素。
     这也被称为$\MA$的第$i$\firstgls{column}。
@@ -306,13 +307,13 @@
 这个特殊的生成子空间被称为$\MA$的\firstgls{column_space}或者$\MA$的\firstgls{range}。
 
 
-为了让方程$\MA \Vx=\Vb$对于任意的向量$\Vb$都有解的话，我们需要要求$\MA$的列空间构成整个$\SetR^{\Sm}$。
+为了让方程$\MA \Vx=\Vb$对于任意的向量$\Vb \in \SetR^m$都有解的话，我们需要要求$\MA$的列空间构成整个$\SetR^{\Sm}$。
 如果$\SetR^m$中的某个点不在$\MA$的列空间中，那么该点对应的$\Vb$会使得该方程没有解。
 矩阵$\MA$的列空间是整个$\SetR^m$的要求，意味着$\MA$至少有$m$列，即$n\geq m$。
 否则，$\MA$列空间的维数会小于$m$。
 例如，假设$\MA$是一个$3\times 2$的矩阵。
-目标$b$是$3$维的，但是$x$只有$2$维。
-所以无论如何修改$x$的值，也只能描绘出$\SetR^3$空间中的二维平面。
+目标$\Vb$是$3$维的，但是$\Vx$只有$2$维。
+所以无论如何修改$\Vx$的值，也只能描绘出$\SetR^3$空间中的二维平面。
 当且仅当向量$\Vb$在该二维平面中时，该方程有解。
 
 
@@ -344,7 +345,7 @@
 综上所述，这意味着该矩阵必须是一个\firstgls{square}，即$m=n$，并且所有列向量都是线性无关的。一个列向量线性相关的方阵被称之为\firstgls{singular}。
 
 
-如果矩阵$A$不是一个方阵或者是一个奇异的方阵，该方程仍然可能有解。
+如果矩阵$\MA$不是一个方阵或者是一个奇异的方阵，该方程仍然可能有解。
 但是我们不能使用逆矩阵去求解。
 
 
@@ -387,7 +388,7 @@
 当$p=2$时，$L^2$被称为\firstgls{euclidean_norm}。
 它表示从原点出发到向量$\Vx$确定的点的欧几里得距离。
 $L^2$范数十分频繁地出现在机器学习中，它经常被简化表示为$\norm{x}$，略去了下标$2$。
-平方$L^2$范数也经常被用来衡量向量的大小，可以简单地t通过\gls{dot_product}$\Vx^\top\Vx$计算。
+平方$L^2$范数也经常被用来衡量向量的大小，可以简单地通过\gls{dot_product}$\Vx^\top\Vx$计算。
 
 
 平方$L^2$范数在数学和计算上都比$L^2$范数本身更方便。
@@ -423,7 +424,8 @@ $L^1$范数可以简化如下：
 有时候我们可能也需要衡量矩阵的大小。
 在深度学习中，最常见的做法是使用\firstgls{frobenius_norm}，
 \begin{equation}
-    \norm{A}_F = \sqrt{\sum_{i,j} A_{i,j}^2},
+    \norm{\MA}_F = \sqrt{\sum_{i,j} A_{i,j}^2}, 
+%%lyj 原文是\norm{A}_F ...
 \end{equation}
 类似于向量的$L^2$范数。
 
@@ -472,7 +474,7 @@ $L^1$范数可以简化如下：
 例如，如果$\MA$一个表示距离的矩阵，$\MA_{i,j}$表示点$i$到点$j$的距离，那么$\MA_{i,j}=\MA_{j,i}$，因为距离函数是对称的。
 
 
-\firstgls{unit_vector}是具有\emph{单位范数}的向量：
+\firstgls{unit_vector}是具有\firstgls{unit_norm}的向量：
 \begin{equation}
 \norm{\Vx}_2=1.
 \end{equation}
@@ -526,7 +528,7 @@ $L^1$范数可以简化如下：
 （类似地，我们也可以定义\firstgls{left_Svector}$\Vv^\top\MA=\lambda \Vv^\top$，但是通常我们更关注\firstgls{right_Svector}）。
 
 
-如果$\Vv$是$\MA$的特征向量，那么任何放缩后的向量$s\Vv$($s\in \SetR$)也是$\MA$的特征向量。
+如果$\Vv$是$\MA$的特征向量，那么任何放缩后的向量$s\Vv$($s\in \SetR$，$s\neq 0$)也是$\MA$的特征向量。
 此外，$s\Vv$和$\Vv$有相同的特征值。
 基于这个原因，通常我们只考虑单位特征向量。
 
@@ -534,7 +536,7 @@ $L^1$范数可以简化如下：
 假设矩阵$\MA$有$n$个线性无关的特征向量$\{\Vv^{(1)}, \dots, \Vv^{(n)}\}$，对应着特征值$\{\lambda_1, \dots , \lambda_n \}$。
 我们将特征向量连接一个矩阵，使得每一列是一个特征向量：$V=[\Vv^{(1)}, \dots, \Vv^{(n)}]$.
 类似地，我们也可以将特征值连接成一个向量$\Vlambda = [\lambda_1, \dots , \lambda_n]^\top$。
-因此$\MA$的\gls{eigendecomposition}可以记作
+因此$\MA$的\firstgls{eigendecomposition}可以记作
 \begin{equation}
     \MA = \MV \text{diag}(\mathbf{\Vlambda}) \MV^{-1}.
 \end{equation}
@@ -636,7 +638,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \MA$的非零特征值是$\MA^\top\MA$特征值的平方根，也是$\MA\MA^\top$特征值的平方根。
 
 
-\firstgls{SVD}最有用的一个性质可能是拓展矩阵求逆到非方矩阵上。我们将在下一节中探讨。
+\glssymbol{SVD}最有用的一个性质可能是拓展矩阵求逆到非方矩阵上。我们将在下一节中探讨。
 
 
 
@@ -782,7 +784,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 在PCA算法中，我们使用$L^2$范数：
 \begin{equation}
 \label{eq:2.52}
-\Vc^* = \underset{\Vc}{\arg\min} \norm{x-g(\Vc)}_2.
+\Vc^* = \underset{\Vc}{\arg\min} \norm{\Vx-g(\Vc)}_2.
 \end{equation}
 
 
