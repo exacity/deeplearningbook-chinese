@@ -83,7 +83,7 @@
 
 \subsection{$L^2$参数\glsentrytext{regularization}}
 \label{sec:l2_parameter_regularization}
-在\ref{sec：capacity_overfitting_and_underfitting}节中我们已经看到最简单和最常见的参数范数惩罚是，通常被称为\firstgls{weight_decay}的$L^2$参数范数惩罚。
+在\ref{sec:capacity_overfitting_and_underfitting}节中我们已经看到最简单和最常见的参数范数惩罚是，通常被称为\firstgls{weight_decay}的$L^2$参数范数惩罚。
 这个\gls{regularization}策略通过向\gls{objective_function}添加一个正则项$\Omega(\Vtheta) = \frac{1}{2} \norm{\Vw}_2^2$，使权重更加接近原点\footnote{更一般地，我们可以将参数\gls{regularization}为接近空间中的任意特定点，令人惊讶的是仍有\gls{regularization}效果，并且更接近真实值将获得更好的结果。
 当我们不知道正确的值应该是正还是负，零是有意义的默认值。
 由于将模型参数\gls{regularization}为零的情况更常见，我们将关注这种特殊情况。}。
@@ -275,7 +275,7 @@ $\tilde{w_i} = \frac{H_{i,i}}{H_{i,i} + \alpha} w_i^*$。
 Selection Operator）模型将$L^1$惩罚和\gls{linear_model}结合，并使用最小二乘\gls{cost_function}。 
 $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全地忽略。
  
-在\ref{sec:maximum_a_posteriori_estimation}节，我们看到许多\gls{regularization}策略可以被解释为\glssymbol{MAP}贝叶斯推断，
+在\ref{sec:maximum_a_posteriori_map_estimation}节，我们看到许多\gls{regularization}策略可以被解释为\glssymbol{MAP}贝叶斯推断，
  特别是$L^2$\gls{regularization}相当于权重是高斯先验的\glssymbol{MAP}贝叶斯推断。
  对于$L^1$\gls{regularization}，
 用于\gls{regularization}一个\gls{cost_function}的惩罚项$\alpha \Omega(\Vw) =  \alpha \sum_i |w_i |$与先验是各向同性拉普拉斯分布|||c|||($\Vw \in \SetR^n$)的\glssymbol{MAP}贝叶斯推断的最大化对数先验项是等价的：
@@ -391,7 +391,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 
 
 \section{数据集增强}
-\label{sec:dataset_augmentation}
+\label{sec:dataset_augmentation_chap7}
 让\gls{ML}模型泛化得更好的最好办法是用更多的数据来训练。
 当然，在实践中，我们拥有数据量是有限的。
 解决这个问题的一种方法是创建假数据并把它添加到训练集。
@@ -445,7 +445,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 \section{噪声鲁棒性}
 \label{sec:noise_robustness}
 
-\ref{sec:dataset_augmentation}节已经将噪声作用于输入的数据集增强策略。
+\ref{sec:dataset_augmentation_chap7}节已经将噪声作用于输入的数据集增强策略。
 对于某些模型，在模型的输入加上方差极小的噪音等价于对权重施加范数惩罚\citep{Bishop1995,bishop95training}。
 在一般情况下，噪声注入远远比简单地收缩参数强大，特别是噪声被添加到\gls{hidden_unit}时。
 向\gls{hidden_unit}添加噪音是值得单独讨论重要的话题；在\ref{sec:dropout}节所述\gls{dropout}算法这种做法主要发展方向。
@@ -744,7 +744,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 \gls{parameter_sharing}显著降低\glssymbol{CNN}模型不同参数的数量，并显著提高了网络的大小而不需要增加相应的训练数据。
 它仍然是将领域知识有效地整合到网络架构的最佳范例之一。
 
-\gls{CNN}将会在第\ref{char:convolutional_networks}章更详细地讨论。
+\gls{CNN}将会在第\ref{chap:convolutional_networks}章更详细地讨论。
 
 \section{\glsentrytext{sparse}\glsentrytext{representation}}
 \label{sec:sparse_representations}
@@ -1260,7 +1260,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 流形切面分类器\citep{Dauphin-et-al-NIPS2011}无需知道切线向量的先验。
 正如我们将在第\ref{chap:autoencoders}章看到，\gls{AE}可以估算流形的切向量。
 流形切面分类器使用这种技术来避免用户指定切向量。
-如图\ref{fig:14iotv}所示，这些估计的切向量超出了图像（如转化、旋转和缩放）几何的经典不变，还必须掌握因为特定对象（如移动身体的部分）的因素。
+如图\ref{fig:chap14_cifar_cae}所示，这些估计的切向量超出了图像（如转化、旋转和缩放）几何的经典不变，还必须掌握因为特定对象（如移动身体的部分）的因素。
 因此根据流形切面分类提出的算法是简单：
 （1）使用\gls{AE}通过无监督学习来学习流形的结构，以及（2）如\gls{tangent_prop}（式\ref{eq:767}）一样使用这些切面\gls{regularization}\gls{NN}分类器。
 

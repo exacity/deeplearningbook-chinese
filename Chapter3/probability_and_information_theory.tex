@@ -16,7 +16,7 @@
 
 概率论使我们能够作出不确定的\gls{statement}以及在不确定性存在的情况下推理，而信息论使我们能够量化\gls{PD}中的不确定性总量。
 
-如果你已经对概率论和信息论很熟悉了，那么你可能会希望跳过除了\ref{sec:structured_probabilistic_models}节以外的整章内容，而在这一节中我们会介绍用来描述机器学习中\gls{structured_probabilistic_models}的图。
+如果你已经对概率论和信息论很熟悉了，那么你可能会希望跳过除了\ref{sec:structured_probabilistic_models_chap3}节以外的整章内容，而在这一节中我们会介绍用来描述机器学习中\gls{structured_probabilistic_models}的图。
 如果你对这些主题完全没有任何的先验知识，本章对于完成深度学习的研究项目来说已经足够，但我们还是建议你能够参考一些额外的资料，例如\cite{Jaynes03}。
 
 % -- 51 --
@@ -659,6 +659,7 @@ p_x(x) = p_y(g(x)) \left | \frac{\partial g(x)}{\partial x} \right |.
 在高维空间中，微分运算扩展为\firstgls{jacobian_matrix}的行列式——矩阵的每个元素为$J_{i, j} = \frac{\partial x_i}{\partial y_j}$。
 因此，对于实数值的向量$\bm{x}$和$\bm{y}$，
 \begin{equation}
+\label{eqn:3.47}
 p_x(\bm{x}) = p_y(g(\bm{x})) \left | \det \left ( \frac{\partial g(\bm{x})}{\partial \bm{x}} \right) \right |.
 \end{equation}
 
@@ -763,7 +764,7 @@ H(P, Q) = -\SetE_{\RSx\sim P} \log Q(x).
 % -- 73 --
 
 \section{\glsentrytext{structured_probabilistic_models}}
-\label{sec:structured_probabilistic_models}
+\label{sec:structured_probabilistic_models_chap3}
 
 机器学习的算法经常会涉及到在非常多的\gls{RV}上的\gls{PD}。
 通常，这些\gls{PD}涉及到的直接相互作用都是介于非常少的变量之间的。

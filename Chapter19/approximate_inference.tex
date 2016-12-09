@@ -318,7 +318,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 在这种情况下，我们要用$q$来拟合$p$。
 然而，我们并不是直接拟合一个近似，而是处理一个\gls{KL}的问题。
 当我们使用\gls{MLE}来将数据拟合到模型的时候，我们最小化$D_{\text{KL}}(p_{\text{data}\Vert p_{\text{model}}})$。
-如同图\ref{fig:chap3}中所示，这意味着\gls{MLE}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
+如同图\ref{fig:chap3_kl_direction_color}中所示，这意味着\gls{MLE}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
 这两种方法都有各自的优点与缺点。
 选择哪一种方法取决于在具体应用中哪一种性质更受偏好。
 在基于优化的推断问题中，从计算角度考虑，我们选择使用$D_{\text{KL}}(q(\Vh\vert\Vv)\Vert p(\Vh\vert\Vv))$。
@@ -361,7 +361,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 为了具体化这些描述，我们接下来会讲如何将变分推断应用到\firstgls{binary_sparse_coding}模型（这里我们所描述的模型是\citet{henniges2010binary}提出的，但是我们采用了传统的通用的\gls{mean_field}方法，而原文作者采用了一种特殊设计的算法）中。
 推导过程在数学上非常详细，为希望完全了解变分推断细节的读者所准备。
 而对于并不计划推导或者实现变分学习算法的读者来说，可以完全跳过，直接阅读下一节，这并不会导致重要概念的遗漏。
-那些从事过\gls{binary_sparse_coding}研究的读者可以重新看一下\ref{sec:userful_properties_of_common_functions}节中的一些经常在概率模型中出现的有用的函数性质。
+那些从事过\gls{binary_sparse_coding}研究的读者可以重新看一下\ref{sec:useful_properties_of_common_functions}节中的一些经常在概率模型中出现的有用的函数性质。
 我们在推导过程中随意的使用了这些性质，并没有特别强调它们。
 % 632  head
 
@@ -532,7 +532,7 @@ $p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构参见\ref{fig:bsc}。
 在\gls{binary_sparse_coding}的后杨分布中，\gls{mean_field}近似为了捕获到更多的\gls{explaining_away}作用，产生了这种竞争。
 事实上，\gls{explaining_away}效应会导致一个多峰值的后验分布，所以我们如果从后验分布中采样，一些样本只有一个结点是活跃的，其它的样本在其它的结点活跃，只有很少的样本能够所有的结点都处于活跃状态。
 不幸的是，\gls{explaining_away}作用无法通过\gls{mean_field}中可分解的$q$分布来建模，因此建模时\gls{mean_field}近似只能选择一个峰值。
-这个现象的一个例子可以参考图~\ref{fig:}。
+这个现象的一个例子可以参考图~\ref{fig:chap3_kl_direction_color}。
 % 636
 
 

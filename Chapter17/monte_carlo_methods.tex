@@ -80,13 +80,13 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\Vx)]
 % 583
 
 以上的所有结论都依赖于我们可以从基准分布$p(\Vx)$中轻易的采样，但是这个假设并不是一直成立的。
-当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在Sec~\ref{sec:importance_sampling}会讲到。
+当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在Sec~\ref{sec:importance_sampling_chap17}会讲到。
 一种更加通用的方式是采样一系列的趋近于目标分布的估计。
 这就是\gls{mcmc}方法（见Sec~\ref{sec:markov_chain_monte_carlo_methods}）。
 % 583
 
 \section{\glsentrytext{importance_sampling}}
-\label{sec:importance_sampling}
+\label{sec:importance_sampling_chap17}
 
 如方程~\eqref{eqn:integra}所示，在\gls{monte_carlo}方法求积分（或者求和）的过程中，确定积分的哪一部分作为概率分布$p(\Vx)$，哪一部分作为被积的函数$f(\Vx)$（我们感兴趣的是估计$f(\Vx)$在概率分布$p(\Vx)$下的期望）是很关键的一步。
 $p(\Vx)f(\Vx)$存在不唯一的分解因为它通常可以被写成
@@ -166,7 +166,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 585
 
 尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}中的应用中仍然扮演着重要的角色，包括\gls{DL}问题。
-比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\ref{sec:chap12_importance_sampling}章）或者其它有着大量输出结点的\gls{NN}中。
+比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\ref{sec:importance_sampling_chap12}章）或者其它有着大量输出结点的\gls{NN}中。
 此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见第\ref{sec:estimating_the_partition_function}章）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见第\ref{sec:variational_autoencoders}章）。
 采用\gls{SGD}训练模型参数的时候\gls{importance_sampling}可以用来改进对\gls{cost_function}的梯度的估计，尤其是针对于分类器模型的训练中一小部分错误分类样本产生的\gls{cost_function}。
 在这种情况下更加频繁的采集这些困难的样本可以降低梯度的估计的方差\citep{Hinton06}。
