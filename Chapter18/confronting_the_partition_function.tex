@@ -1,7 +1,7 @@
 % Translator: Yujun Li 
 \chapter{面对区分函数}
 \label{chap:confronting_the_partition_function}
-在第16.2.2节中，我们看到许多概率模型（通常被称为\gls{undirected_graphical_model}）由未归一化的\gls{PD}$\tilde{p}(\Vx, \theta)$所定义。
+在第16.2.2节中，我们看到许多概率模型（通常被称为\gls{undirected_graphical_model}）由未归一化的\gls{PD}$\tilde{p}(\RVx, \theta)$所定义。
 我们必须通过除以\gls{partition_function}$Z(\Vtheta)$来归一化$\tilde{p}$，以获得有效的\gls{PD}：
 \begin{equation}
 	p(\RVx; \Vtheta) = \frac{1}{Z(\Vtheta)} \tilde{p}(\RVx; \Vtheta).
@@ -570,10 +570,10 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 例如，假设我们有两个模型：定义\gls{PD}$p_A(\Vx; \Vtheta_A)= \frac{1}{Z_A} \tilde{p}_A(\RVx; \Vtheta_A)$的模型$\CalM_A$和定义\gls{PD} $p_B(\RVx; \Vtheta_B)= \frac{1}{Z_B} \tilde{p}_B(\RVx; \Vtheta_B)$的模型$\CalM_B$。
 比较模型的常用方法是评估和比较两个模型分配给\gls{iid_chap18}测试数据集的似然。
 假设测试集含$m$个样本$\{ \Vx^{(1)}, \dots, \Vx^{(m)} \}$。
-如果 $\prod_i p_A ( x^{(i)}; \Vtheta_A) > \prod_i p_B( x^{(i)}; \Vtheta_B)$，或等价地，如果
+如果 $\prod_i p_A ( \RSx^{(i)}; \Vtheta_A) > \prod_i p_B( \RSx^{(i)}; \Vtheta_B)$，或等价地，如果
 \begin{equation}
 \label{eq:18.38}
-	\sum_i \log p_A (\Rx^{(i)}; \Vtheta_A) - \sum_i \log p_B(\Rx^{(i)}; \Vtheta_B) > 0,
+	\sum_i \log p_A (\RSx^{(i)}; \Vtheta_A) - \sum_i \log p_B(\RSx^{(i)}; \Vtheta_B) > 0,
 \end{equation}
 那么我们说$\CalM_A$是一个比$\CalM_B$更好的模型（或者，至少可以说，它在测试集上是一个更好的模型），这是指它有一个更好的测试对数似然。
 不幸的是，测试这个条件是否成立需要知道\gls{partition_function}。
