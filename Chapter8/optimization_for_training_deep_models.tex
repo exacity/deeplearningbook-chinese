@@ -36,7 +36,6 @@
 \begin{equation}
 \label{eq:8.1}
     J(\Vtheta) = \SetE_{(\Vx, y) \sim\hat{p}_\text{data}} L(f(\Vx; \Vtheta), y),
-}
 \end{equation}
 其中$L$是每个样本的损失函数，$f(\Vx;\Vtheta)$是输入是$\Vx$时的预测输出，$\hat{p}_{\text{data}}$是经验分布。
 监督学习中，$y$是目标输出。
@@ -969,7 +968,6 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 \begin{equation}
 \label{eq:8.27}
     \Vtheta^* = \Vtheta_0 - \MH^{-1}\nabla_{\Vtheta} J(\Vtheta_0).
-}
 \end{equation}
 因此，对于局部的二次函数（具有正定的$\MH$），用$H^{-1}$重新调整梯度，牛顿法会直接跳到极小值。
 如果目标函数是凸的但非二次的（有高阶项），该更新会是迭代的，得到和牛顿法相关的算法，如算法8.8所示。
