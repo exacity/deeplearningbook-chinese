@@ -81,7 +81,7 @@
 逻辑提供了一套形式化的规则在给定某些命题是真或假的假设下，判断另外一些命题是真的还是假的。
 概率论提供了一套形式化的规则在给定一些命题的\gls{likelihood}(likelihood)后，计算其他命题为真的\gls{likelihood}。
 
-\section{\gls{RV}}
+\section{\glsentrytext{RV}}
 \label{sec:random_variables}
 
 \firstgls{RV}是可以随机地取不同值的变量。
@@ -95,13 +95,13 @@
 注意这些状态不一定非要是整数；它们也可能只是一些被命名的状态并且没有数值。
 连续型\gls{RV}伴随着实数值。
 
-\section{\gls{PD}}
+\section{\glsentrytext{PD}}
 \label{sec:probability_distributions}
 
 \firstgls{PD}用来描述\gls{RV}或一簇\gls{RV}在每一个可能取到的状态的可能性大小。
 我们描述\gls{PD}的方式取决于\gls{RV}是离散的还是连续的。
 
-\subsection{离散型变量和\gls{PMF}}
+\subsection{离散型变量和\glsentrytext{PMF}}
 \label{sec:discrete_variables_and_probability_mass_functions}
 
 离散型变量的\gls{PD}可以用\firstall{PMF}来描述。
@@ -145,7 +145,7 @@ $\frac{1}{k}$是正的，因为$k$是一个正整数。我们也可以看出
 
 % -- 55 --
 
-\subsection{连续型变量和\gls{PDF}}
+\subsection{连续型变量和\glsentrytext{PDF}}
 \label{sec:continuous_variables_and_probability_density_functions}
 
 当我们研究的对象是连续型\gls{RV}时，我们用\firstall{PDF}而不是\gls{PMF}来描述它的\gls{PD}。
@@ -194,7 +194,7 @@ $\frac{1}{k}$是正的，因为$k$是一个正整数。我们也可以看出
 p(x) = \int p(x, y)dy.
 \end{equation}
 
-\section{\gls{conditional_probability}}
+\section{\glsentrytext{conditional_probability}}
 \label{sec:conditional_probability}
 
 在很多情况下，我们感兴趣的是某个事件，在给定其他事件发生时，出现的概率。
@@ -213,7 +213,7 @@ P(\RSy = y\mid \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)}
 计算一个行动的后果被称为\firstgls{intervention_query}。
 \gls{intervention_query}属于\firstgls{causal_modeling}的范畴，我们不在本书中讨论。
 
-\section{\gls{conditional_probability}的\gls{chain_rule}}
+\section{\glsentrytext{conditional_probability}的\glsentrytext{chain_rule}}
 \label{sec:the_chain_rule_of_conditional_probabilities}
 
 任何多维\gls{RV}的\gls{joint_probability_distribution}，都可以分解成只有一个变量的\gls{conditional_probability}相乘的形式：
@@ -248,7 +248,7 @@ p(\RSx = x \mid \RSz = z) p(\RSy = y \mid \RSz = z).
 
 我们可以采用一种简化形式来表示独立性和条件独立性：$\RSx \bot \RSy$表示$\RSx$和$\RSy$相互独立，$\RSx \bot \RSy \mid \RSz$表示$\RSx$和$\RSy$在给定$\RSz$时条件独立。
 
-\section{\gls{expectation}，\gls{variance}和\gls{covariance}}
+\section{\glsentrytext{expectation}，\glsentrytext{variance}和\glsentrytext{covariance}}
 \label{sec:expectation_variance_and_covariance}
 
 函数$f(x)$关于某分布$P(\RSx)$的\firstgls{expectation}或者\firstgls{expected_value}是指，当$x$由$P$产生时，$f$作用于$x$的平均值。
@@ -312,12 +312,12 @@ $s$以$\frac{1}{2}$的概率值为1，否则为-1。
 \Cov(\RSx_i, \RSx_i) = \Var(\RSx_i).
 \end{equation}
 
-\section{常用\gls{PD}}
+\section{常用\glsentrytext{PD}}
 \label{sec:common_probability_distributions}
 
 许多简单的\gls{PD}在机器学习的众多领域中都是有用的。
 
-\subsection{\gls{bernoulli_distribution}}
+\subsection{\glsentrytext{bernoulli_distribution}}
 \label{sec:bernoulli_distribution}
 
 \firstgls{bernoulli_distribution}是单个二值型\gls{RV}的分布。
@@ -331,7 +331,7 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 \Var_{\RSx}(\RSx) = \phi(1-\phi)
 \end{gather}
 
-\subsection{\gls{multinoulli_distribution}}
+\subsection{\glsentrytext{multinoulli_distribution}}
 \label{sec:multinoulli_distribution}
 
 \firstgls{multinoulli_distribution}或者\firstgls{categorical_distribution}是指在具有$k$个不同状态的单个离散型\gls{RV}上的分布，$k$是有限的。
@@ -352,7 +352,7 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 它们可以对那些，能够将所有的状态进行标号的离散型\gls{RV}，进行建模。
 当处理的是连续型\gls{RV}时，会有不可数无限多的状态，所以任何通过少量参数描述的\gls{PD}都必须在分布上采用严格的极限。
 
-\subsection{\gls{gaussian_distribution}}
+\subsection{\glsentrytext{gaussian_distribution}}
 \label{sec:gaussian_distribution}
 
 
@@ -417,7 +417,7 @@ $\bm{\beta}$ 进行替代：
 我们常常把\gls{covariance_matrix}固定成一个对角阵。
 一个更简单的版本是\firstgls{isotropic}\gls{gaussian_distribution}，它的\gls{covariance_matrix}是一个标量乘以单位阵。
 
-\subsection{\gls{exponential_distribution}和\gls{laplace_distribution}}
+\subsection{\glsentrytext{exponential_distribution}和\glsentrytext{laplace_distribution}}
 \label{sec:exponential_and_laplace_distributions}
 
 在深度学习中，我们经常会需要一个在$x=0$点处取得边界点(sharp point)的分布。
@@ -432,7 +432,7 @@ p(x; \lambda) = \lambda \bm{1}_{x\ge 0} \exp(-\lambda x).
 \text{Laplace}(x; \mu, \gamma) = \frac{1}{2\gamma} \exp \left( -\frac{|x-\mu|}{\gamma}  \right).
 \end{equation}
 
-\subsection{\gls{dirac_distribution}和\gls{empirical_distribution}}
+\subsection{\glsentrytext{dirac_distribution}和\glsentrytext{empirical_distribution}}
 \label{sec:the_dirac_distribution_and_empirical_distribution}
 
 在一些情况下，我们想要所有的概率都集中在一个点上。
@@ -579,7 +579,7 @@ x^+ = \max(0, x).
 为了获得类似\gls{negative part function}的一个平滑函数，我们可以使用$\zeta(-x)$。
 就像$x$可以用它的正部和负部通过等式$x^+ - x^- = x$恢复一样，我们也可以用同样的方式对$\zeta(x)$和$\zeta(-x)$进行操作，就像公式\ref{eq: 3.41}中那样。
 
-\section{\gls{bayes_rule}}
+\section{\glsentrytext{bayes_rule}}
 \label{sec:bayes_rule}
 
 我们经常会需要在已知$P(\RSy \mid \RSx)$时计算$P(\RSx \mid \RSy)$。
@@ -762,7 +762,7 @@ H(P, Q) = -\SetE_{\RSx\sim P} \log Q(x).
 
 % -- 73 --
 
-\section{\gls{structured_probabilistic_models}}
+\section{\glsentrytext{structured_probabilistic_models}}
 \label{sec:structured_probabilistic_models}
 
 机器学习的算法经常会涉及到在非常多的\gls{RV}上的\gls{PD}。

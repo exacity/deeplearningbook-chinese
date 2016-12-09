@@ -1,6 +1,6 @@
 % !Mode:: "TeX:UTF-8"
 % Translator: Kai Li
-\chapter{\gls{CNN}}
+\chapter{\glsentrytext{CNN}}
 \label{chap:convolutional_networks}
 
 \firstgls{convolutional_network}\citep{LeCun89a}，也叫做\firstall{CNN}，是一种专门用来处理具有类似网格结构的数据的神经网络。
@@ -239,7 +239,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 
 最后，一些不能被传统的由（固定大小的）矩阵乘法定义的神经网络处理的特殊数据，可能通过卷积神经网络来处理，我们将在\ref{sec:data_types}节中进行讨论。
 
-\section{\gls{pooling}}
+\section{\glsentrytext{pooling}}
 \label{sec:pooling}
 
 卷积神经网路的卷积层通常包含三级（如图\ref{fig:chap9_conv_layer}所示）。
@@ -344,7 +344,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \label{fig:chap9_cnn_classifier}
 \end{figure}
 
-\section{卷积与\gls{pooling}作为一种无限强的先验}
+\section{卷积与\glsentrytext{pooling}作为一种无限强的先验}
 \label{sec:convolution_and_pooling_as_an_infinitely_strong_prior}
 
 回忆一下\ref{sec:capacity_overfitting_and_underfitting}节中\firstgls{prior_probability_distribution}的概念，这是一种在我们看到数据之前，将我们对于什么样的模型是合理的信念转化成的模型参数的概率分布。
@@ -755,7 +755,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 与其他无监督预训练的方法一样，使用这种方法的一些好处仍然难以说清。
 无监督预训练可以提供一些相对于有监督训练的正则化，或者它可以简单地允许我们训练更大的结构，因为它的学习规则减少了计算成本。
 
-\section{\gls{CNN}的神经科学基础}
+\section{\glsentrytext{CNN}的神经科学基础}
 \label{sec:the_neuroscientific_basis_for_convolutional_networks}
 
 \gls{convolutional_network}也许是生物学启发人工智能的最为成功的故事。

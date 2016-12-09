@@ -36,7 +36,7 @@
 
 我们现在描述这个过程中的每一个步骤。
 
-\section{\gls{performance_metrics}}
+\section{\glsentrytext{performance_metrics}}
 \label{sec:performance_metrics}
 确定你的目标，即用什么\gls{error_metric}，是必要的第一步，因为你的\gls{error_metric}将指导你接下来的所有行动。
 你也应该知道目标性能大概在什么级别。
@@ -208,7 +208,7 @@
 自动选择超参数算法大大减少了解这些想法的需要，但它们往往需要更高的计算成本。
 
 \subsection{手动调整超参数}
-\label{subsec:manual_hyperparameter_tuning}
+\label{sec:manual_hyperparameter_tuning}
 要手动设置超参数，我们必须了解超参数，训练误差，\gls{generalization_error}和计算资源（内存和运行时间）之间的关系。
 这意味着建立第\ref{chap:machine_learning_basics}章关于学习算法有效容量基本思想的坚实基础。
 
@@ -290,7 +290,7 @@
 % -- 418 --
 
 \subsection{自动超参数优化算法}
-\label{subsec:automatic_hyperparameter_optimization_algorithms}
+\label{sec:automatic_hyperparameter_optimization_algorithms}
 理想的学习算法应该是只需要一个数据集，然后输出学习出的函数，而并不需要手动调整超参数。
 一些流行的学习算法，如逻辑回归和支持向量机，流行的部分原因是只有一到两个需要调整的超参数，它们也能表现出不错的性能。
 有时神经网络可以在只有少数需要调整的超参数时表现良好，但往往调整几十或者更多超参数会受益更明显。
@@ -305,7 +305,7 @@
 然而，这些次级超参数通常很容易选择，这是说，同一次级超参数能够很多问题上实现良好的性能。
 
 \subsection{格点搜索}
-\label{subsec:grid_search}
+\label{sec:grid_search}
 当有三个或更少的超参数时，常见的超参数搜索方法是\firstgls{grid_search}。
 对于每个超参数，用户选择一个较小的有限值集去探索。
 然后，格点搜索算法训练为超参数笛卡尔乘积后的每个特定联合值训练模型。
@@ -345,7 +345,7 @@
 
 
 \subsection{随机搜索}
-\label{subsec:random_search}
+\label{sec:random_search}
 幸运的是，有一个格点搜索的替代方法，并且其编程简单，使用更方便，能更快地收敛到超参数的良好值：随机搜索\citep{Bergstra+Bengio-2012-small}。
 
 随机搜索过程如下。
@@ -371,7 +371,7 @@
 % -- 422 --
 
 \subsection{基于模型的超参数优化}
-\label{subsec:model_based_hyperparameter_optimization}
+\label{sec:model_based_hyperparameter_optimization}
 良好超参数的搜索可以转换为一个优化问题。
 决策变量是超参数。
 优化的目标是使用这些超参数训练结果的验证集误差。
@@ -406,7 +406,7 @@
 
 另一个难点是，大部分\gls{ML}模型有多个自适应的部分。
 如果一个部分失效了，其他部分仍然可以自适应，并获得大致可接受的性能。
-例如，假设我们正在训练多层神经网络，其中参数为权重$\MW$和\gls{bias}$\Vb$。
+例如，假设我们正在训练多层神经网络，其中参数为权重$\MW$和\gls{bias_aff}$\Vb$。
 进一步假设，我们单独手动实现了每个参数的梯度下降规则。
 而我们在偏置更新时犯了一个错误：
 \begin{equation}

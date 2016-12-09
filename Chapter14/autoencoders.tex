@@ -1,6 +1,6 @@
 % !Mode:: "TeX:UTF-8"
 % Translator: Shenjian Zhao
-\chapter{\gls{AE}}
+\chapter{\glsentrytext{AE}}
 \label{chap:autoencoders}
 \firstgls{AE}是\gls{NN}的一种，经过训练后能尝试将输入复制到输出。
 \firstgls{AE}内部有一个隐含层$\Vh$，可以产生\firstgls{code}来表示输入。
@@ -34,7 +34,7 @@
 
 % -- 493 --
 
-\section{\gls{undercomplete}\gls{AE}}
+\section{\glsentrytext{undercomplete}\glsentrytext{AE}}
 \label{sec:undercomplete_autoencoders}
 将输入复制到输出听起来没什么用，但我们通常不关心\gls{decoder}的输出。
 相反，我们希望通过训练\gls{AE}对输入进行复制的任务使$\Vh$获得有用的特性。
@@ -63,7 +63,7 @@ L(\Vx, g(f(\Vx)),
 
 % -- 494 --
 
-\section{正则\gls{AE}}
+\section{正则\glsentrytext{AE}}
 \label{sec:regularized_autoencoders}
 \gls{code}维数小于输入维数的\gls{undercomplete}\gls{AE}可以学习数据分布最显著的特征。
 我们已经看到，如果这类\gls{AE}被赋予过大的\gls{capacity}，它就不能学到任何有用的信息。
@@ -88,7 +88,7 @@ L(\Vx, g(f(\Vx)),
 
 % -- 495 --
 
-\subsection{\gls{sparse}\gls{AE}}
+\subsection{\glsentrytext{sparse}\glsentrytext{AE}}
 \label{sec:sparse_autoencoders}
 \gls{sparse}\gls{AE}简单地在训练时结合\gls{code}层的\gls{sparse}惩罚$\Omega(\Vh)$和\gls{reconstruction_error}：
 \begin{align}
@@ -160,7 +160,7 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 
 
 
-\subsection{\gls{DAE}}
+\subsection{\glsentrytext{DAE}}
 \label{sec:sub_denoising_autoencoders}
 除了向\gls{cost_function}增加一个惩罚项，我们也可以改变\gls{reconstruction_error}项得到一个能学到有用信息的\gls{AE}。
 
@@ -238,7 +238,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 所以我们经常会遇到浅层\gls{AE}，即使最终目标是训练深度\gls{AE}。
 
 
-\section{随机\gls{encoder}和\gls{decoder}}
+\section{随机\glsentrytext{encoder}和\glsentrytext{decoder}}
 \label{sec:stochastic_encoders_and_decoders}
 \gls{AE}仅仅是一个\gls{feedforward_network}，可以使用与传统的\gls{feedforward_network}同样的\gls{loss_function}和输出单元。
 
@@ -284,7 +284,7 @@ p_{\text{decoder}}(\Vx ~|~ \Vh) = p_{\text{model}}(\Vx~|~\Vh).
 
 
 
-\section{\gls{DAE}}
+\section{\glsentrytext{DAE}}
 \label{sec:denoising_autoencoders}
 \firstall{DAE}是一类接受损坏数据作为输入，并训练来预测原始未被损坏数据作为输出的\gls{AE}。
 
@@ -320,7 +320,7 @@ $p_{\text{reconstruct}} (\Vx ~|~ \tilde \Vx) = p_{\text{decoder}}(\Vx ~|~\Vh)$�
 
 % -- 502 --
 
-\subsection{\gls{score}估计}
+\subsection{\glsentrytext{score}估计}
 \label{sec:estimating_the_score}
 \gls{score_matching}\citep{Hyvarinen-2005}是最大似然的代替。
 它提供了概率分布的一致估计，鼓励模型在各个数据点$\Vx$上获得与数据分布相同的\firstgls{score}。
@@ -394,7 +394,7 @@ $p_{\text{reconstruct}} (\Vx ~|~ \tilde \Vx) = p_{\text{decoder}}(\Vx ~|~\Vh)$�
 % -- 505 --
 
 \subsection{历史观点}
-\label{sec:historical_perspective}
+\label{sec:historical_perspective_chap14}
 采用\glssymbol{MLP}\gls{denoising}的想法可以追溯到\cite{Lecun-these87}和\citet{Gallinari87}的工作。
 \citet{Behnke-2001}也曾使用\gls{recurrent_network}对图像去噪。
 在某种意义上，\gls{DAE}仅仅是被训练\gls{denoising}的\glssymbol{MLP}。
@@ -410,7 +410,7 @@ $p_{\text{reconstruct}} (\Vx ~|~ \tilde \Vx) = p_{\text{decoder}}(\Vx ~|~\Vh)$�
 
 
 
-\section{使用\gls{AE}学习\gls{manifold}}
+\section{使用\glsentrytext{AE}学习\glsentrytext{manifold}}
 \label{sec:learning_manifolds_with_autoencoders}
 
 如\ref{sec:manifold_learning}描述，\gls{AE}跟其它很多\gls{ML}算法一样，也应用了将数据集中在一个低维\gls{manifold}或者一小组这样的\gls{manifold}的思想。
@@ -514,7 +514,7 @@ $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{A
 
 % -- 509 --
 
-\section{\gls{CAE}}
+\section{\glsentrytext{CAE}}
 \label{sec:contractive_autoencoders}
 \gls{CAE}\citep{Rifai+al-2011-small,Salah+al-2011-small}在\gls{code}$\Vh = f(\Vx)$的基础上添加了显式的正则项，鼓励$f$的导数尽可能小：
 \begin{align}
@@ -593,7 +593,7 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 
 % -- 513 --
 
-\section{\gls{PSD}}
+\section{\glsentrytext{PSD}}
 \label{sec:predictive_sparse_decomposition}
 
 \firstall{PSD}是\gls{sparse_coding}和参数化\gls{AE}\citep{koray-psd-08}的混合模型。
@@ -626,7 +626,7 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 
 % -- 514 --
 
-\section{\gls{AE}的应用}
+\section{\glsentrytext{AE}的应用}
 \label{sec:applications_of_autoencoders}
 
 \gls{AE}已成功应用于\gls{dimensionality_reduction}和\gls{information_retrieval}任务。
