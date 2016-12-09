@@ -56,7 +56,7 @@
 许多\gls{regularization}方法通过对\gls{objective_function}$J$添加一个参数范数惩罚$\Omega(\Vtheta)$，以限制模型（如\gls{NN}、\gls{linear_regression}或\gls{logistic_regression}）的学习能力。
 我们将正则化后的\gls{objective_function}记为$\tilde{J}$：
 \begin{align}
- \tilde{J}(\Vtheta;\MX, \Vy) = J(\Vtheta;\MX, \Vy) + \alpha \Omega(\Vtheta)
+ \tilde{J}(\Vtheta;\MX, \Vy) = J(\Vtheta;\MX, \Vy) + \alpha \Omega(\Vtheta),
 \end{align}
 其中$\alpha \in [0, \infty)$是权衡范数惩罚项$\Omega$和标准\gls{objective_function}$J(\MX;\Vtheta)$相对贡献的超参数。
 将$\alpha$设为0就是没有\gls{regularization}。
@@ -191,7 +191,7 @@
 变为
 \begin{align}
 \label{eq:717mw}
-   \Vw = (\MX^\top \MX + \alpha \MI)^{-1} \MX^\top \Vy
+   \Vw = (\MX^\top \MX + \alpha \MI)^{-1} \MX^\top \Vy .
 \end{align}
 式\ref{eq:716w}中的矩阵$\MX^\top\MX$与\gls{covariance}矩阵$\frac{1}{m}\MX^\top\MX$成正比。
 $L^2$正则项将这个矩阵替换为式\ref{eq:717mw}中的$ (\MX^\top \MX + \alpha \MI)^{-1}$
@@ -215,12 +215,12 @@ $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，还有其他的
 与$L^2$\gls{weight_decay}类似，$L^1$\gls{weight_decay}的强度也可以通过缩放惩罚项$\Omega$的正超参数$\alpha$控制。 
 因此，\gls{regularization}的\gls{objective_function}$\tilde{J}(\Vw;\MX, \Vy)$如下给出
 \begin{align}
-\tilde{J}(\Vw;\MX, \Vy) = \alpha \| \Vw \|_1 +  J(\Vw;\MX, \Vy) 
+\tilde{J}(\Vw;\MX, \Vy) = \alpha \| \Vw \|_1 +  J(\Vw;\MX, \Vy) ,
 \end{align}
 对应的梯度(实际上是次梯度)：
 \begin{align}
 \label{eq:subgradient}
-  \nabla_{\Vw} \tilde{J}(\Vw; \MX, \Vy) = \alpha~ \text{sign}(\Vw) + \nabla_{\Vw} J(\Vw; \MX, \Vy) 
+  \nabla_{\Vw} \tilde{J}(\Vw; \MX, \Vy) = \alpha \text{sign}(\Vw) + \nabla_{\Vw} J(\Vw; \MX, \Vy), % ?? may be wrong
 \end{align}
 其中$\text{sign}(\Vw)$只是简单地取$\Vw$各个元素的符号。
 
@@ -244,11 +244,11 @@ $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，还有其他的
 我们可以将$L^1$\gls{regularization}目标函数的二次近似分解成一个关于参数的求和：
 \begin{align}
  \hat J(\Vw; \MX, \Vy) = J(\Vw^*; \MX, \Vy) + \sum_i \Bigg [\frac{1}{2} H_{i,i} (w_i - w_i^*)^2 
- + \alpha |w_i| \Bigg].
+ + \alpha |w_i| \Bigg].  % I think this is correct
 \end{align}
 有解析解（对每一维$i$）可以最小化这个近似\gls{cost_function},如下列形式：
 \begin{align}
-w_i = \text{sign}(w_i^*) \max\{ |w_i^*| - \frac{\alpha}{H_{i,i}} , 0\}
+w_i = \text{sign}(w_i^*) \max\Big\{ |w_i^*| - \frac{\alpha}{H_{i,i}} , 0\Big\} .
 \end{align}
 考虑所有$i$且$w_i^* > 0$的情形，会有两种可能输出：
 \begin{enumerate}
@@ -279,7 +279,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
  对于$L^1$\gls{regularization}，
 用于\gls{regularization}一个\gls{cost_function}的惩罚项$\alpha \Omega(\Vw) =  \alpha \sum_i |w_i |$与先验是各向同性拉普拉斯分布|||c|||($\Vw \in \SetR^n$)的\glssymbol{MAP}贝叶斯推断的最大化对数先验项是等价的：
 \begin{align}
-\log p(\Vw) = \sum_i \log ~\text{Laplace}(w_i;0,\frac{1}{\alpha}) = 
+\log p(\Vw) = \sum_i \log \text{Laplace}(w_i;0,\frac{1}{\alpha}) = 
   -\alpha \norm{\Vw}_1 + n \log \alpha - n \log 2.
 \end{align}
 因为是关于$\Vw$最大化进行学习，我们可以忽略$\log \alpha - \log 2$项，因为它们与$\Vw$无关。
@@ -290,7 +290,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
  \label{sec:7.2}
 考虑通过参数范数\gls{regularization}的\gls{cost_function}：
 \begin{align}
- \tilde{J}(\Vtheta;\MX, \Vy) = J(\Vtheta;\MX, \Vy) + \alpha \Omega(\Vtheta)
+ \tilde{J}(\Vtheta;\MX, \Vy) = J(\Vtheta;\MX, \Vy) + \alpha \Omega(\Vtheta) .
 \end{align}
 
 回顾\ref{sec:constrained_optimization}节我们可以通过构造一个\gls{generalized_lagrange_function}来最小化受约束的函数，即在原始\gls{objective_function}加上一系列惩罚项。
@@ -313,9 +313,9 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 
 为了洞察约束的影响，我们可以固定$\alpha^*$，把这个问题看成只跟$\Vtheta$有关的函数：
 \begin{align}
- \Vtheta^* =  \underset{\Vtheta}{ \argmin} ~\CalL(\Vtheta, \alpha) = 
+ \Vtheta^* =  \underset{\Vtheta}{ \argmin} ~\CalL(\Vtheta, \alpha^*) = 
  \underset{\Vtheta}{ \argmin}~
- J(\Vtheta; \MX, \Vy) + \alpha^* \Omega(\Vtheta)
+ J(\Vtheta; \MX, \Vy) + \alpha^* \Omega(\Vtheta).
 \end{align}
 这和最小化$\tilde J$的\gls{regularization}训练问题是完全一样的。
 因此，我们可以把参数范数惩罚看作对权重强加的约束。
@@ -470,7 +470,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 \begin{align}
  \tilde J_{\MW} &= \SetE_{p(\Vx,y,\epsilon_{\MW})}[(\hat y_{\epsilon_{\MW}}(\Vx) - y)^2] \\
    &=  \SetE_{p(\Vx,y,\epsilon_{\MW})}[\hat y_{\epsilon_{\MW}}^2(\Vx) -  2y\hat y_{\epsilon_{\MW}}
-   (\Vx)+ y^2] 
+   (\Vx)+ y^2] .
 \end{align}
 
 对于小的$\eta$，最小化带权重噪声（方差为$\eta \MI$）的$J$等同于最小化附加上\gls{regularization}项的$J$：
@@ -669,8 +669,8 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
  \end{align}
 现在让我们在$\MH$特征向量的空间中改写表达式，利用$\MH$的特征分解：$\MH = \MQ \VLambda \MQ^\top$，其中$\VLambda$是对角矩阵，$\MQ$是特征向量的一组正交基。
 \begin{align}
-\Vw^{(\tau)}  -  \Vw^* &= (\MI - \epsilon \MQ \VLambda \MQ^\top) ( \Vw^{(\tau-1)} -  \Vw^* ), \\
-\MQ^\top (\Vw^{(\tau)}  -  \Vw^*) &= (\MI - \epsilon \VLambda)\MQ^\top ( \Vw^{(\tau-1)} -  \Vw^* ).
+\Vw^{(\tau)}  -  \Vw^* &= (\MI - \epsilon \MQ \VLambda \MQ^\top) ( \Vw^{(\tau-1)} -  \Vw^* ) \\
+\MQ^\top (\Vw^{(\tau)}  -  \Vw^*) &= (\MI - \epsilon \VLambda)\MQ^\top ( \Vw^{(\tau-1)} -  \Vw^* )
 \end{align}
 假定$\Vw^{(0)} = 0$并且$\epsilon$选择得足够小以保证$|1 - \epsilon \lambda_i |<1$，经过$\tau$次参数更新后轨迹如下：
 \begin{align} \label{eq:740qw}
@@ -679,7 +679,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 现在,式\ref{eq:713L2}中$\MQ^\top \tilde \Vw$的表达式能被重写为：
 \begin{align}
 \MQ^\top  \tilde \Vw &= (\VLambda + \alpha \MI)^{-1} \VLambda \MQ^\top  \Vw^*, \\
-\MQ^\top  \tilde \Vw &= [\MI - (\VLambda + \alpha \MI)^{-1} \alpha] \VLambda \MQ^\top  \Vw^*. 
+\MQ^\top  \tilde \Vw &= [\MI - (\VLambda + \alpha \MI)^{-1} \alpha] \MQ^\top  \Vw^*. 
 \label{eq:742qw}
 \end{align}
 比较式\ref{eq:740qw}和式\ref{eq:742qw}，我们能够发现,如果超参数$\epsilon, \alpha$和$\tau$满足如下：
@@ -801,7 +801,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 记这个惩罚为$\Omega(\Vh)$。
 和以前一样，我们将\gls{regularization}后的损失函数记为$\tilde J$：
 \begin{align}
- \tilde J(\Vtheta; \MX, \Vy) =  J(\Vtheta; \MX, \Vy)  + \alpha \Omega(\Vh)
+ \tilde J(\Vtheta; \MX, \Vy) =  J(\Vtheta; \MX, \Vy)  + \alpha \Omega(\Vh),
 \end{align}
 其中$\alpha \in [0, \infty]$ 权衡范数惩罚项的相对贡献，越大的$\alpha$对应更多的\gls{regularization}。
 
@@ -840,7 +840,7 @@ $\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
 通过所有\gls{ensemble}模型的平均预测所得误差是$\frac{1}{k} \sum_i \epsilon_i$。 
 \gls{ensemble}预测器平方误差的期望是
 \begin{align}
- \SetE \Bigg[\Big(\frac{1}{k} \sum_i \epsilon_i \Big)^2\Bigg] &= \frac{1}{k^2} 
+ \SetE \Bigg[\Bigg(\frac{1}{k} \sum_i \epsilon_i \Bigg)^2\Bigg] &= \frac{1}{k^2} 
  \SetE \Bigg[\sum_i \Bigg(\epsilon_i^2 + \sum_{j \neq i} \epsilon_i \epsilon_j\Bigg)\Bigg], \\
 &= \frac{1}{k} v + \frac{k-1}{k} c .                             
 \end{align}
@@ -957,13 +957,13 @@ $\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
 在\gls{bagging}的情况下，每个模型$i$产生一个概率分布$p^{(i)}(y | \Vx)$。 
 \gls{ensemble}的预测由这些分布的算术平均值给出，
 \begin{align}
- \frac{1}{k} \sum_{i=1}^k p^{(i)}(y | \Vx)
+ \frac{1}{k} \sum_{i=1}^k p^{(i)}(y \mid \Vx).
 \end{align}
 
 在\gls{dropout}的情况下，通过\gls{mask}$\Vmu$定义每个子模型的概率分布$p(y | \Vx, \Vmu)$。
 关于所有\gls{mask}的算术平均值由下式给出
 \begin{align}
-  \sum_{u} p(\Vmu) p(y | \Vx, \Vmu)
+  \sum_{u} p(\Vmu) p(y \mid \Vx, \Vmu),
 \end{align}
 其中$p(\Vmu)$是训练时采$\Vmu$的概率分布。
 
@@ -982,17 +982,17 @@ $\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
 为了保证结果是一个概率分布，我们要求没有子模型给某一事件分配概率0，并重新标准化所得分布。
 通过几何平均直接定义的非标准化概率分布由下式给出
 \begin{align}
-\tilde{p}_{\text{ensemble}}(y | \Vx) = \sqrt[2^d]{\prod_{\Vmu} p(y | \Vx, \Vmu)},
+\tilde{p}_{\text{ensemble}}(y \mid \Vx) = \sqrt[2^d]{\prod_{\Vmu} p(y \mid \Vx, \Vmu)},
 \end{align}
 其中$d$是可被丢弃的单元数。
 在这里，我们使用一个均匀分布的$\Vmu$以简化介绍，但非均匀分布也是可能的。
 为了作出预测，我们必须重新标准化\gls{ensemble}：
 \begin{align}
-p_{\text{ensemble}}(y | \Vx)  = \frac{\tilde{p}_{\text{ensemble}}(y | \Vx)}
- {\sum_{y'}\tilde{p}_{\text{ensemble}}(y' | \Vx) }.
+p_{\text{ensemble}}(y \mid \Vx)  = \frac{\tilde{p}_{\text{ensemble}}(y \mid \Vx)}
+ {\sum_{y'}\tilde{p}_{\text{ensemble}}(y' \mid \Vx) }.
 \end{align}
  
-涉及\gls{dropout}的一个重要观点\citep{Hinton-et-al-arxiv2012}是，我们可以通过评估模型中$p(y | \Vx)$近似$ p_{\text{ensemble}}(y | \Vx) $：
+涉及\gls{dropout}的一个重要观点\citep{Hinton-et-al-arxiv2012}是，我们可以通过评估模型中$p(y \mid \Vx)$近似$ p_{\text{ensemble}}(y \mid \Vx) $：
 该模型具有所有单元，但单元$i$输出的权重乘以包括单元$i$的概率。
 这个修改的动机是捕获从该单元输出的正确期望值。
 我们把这种方法称为\firstgls{weight_scaling_inference_rule}。
@@ -1007,27 +1007,27 @@ p_{\text{ensemble}}(y | \Vx)  = \frac{\tilde{p}_{\text{ensemble}}(y | \Vx)}
 对许多不具有非线性\gls{hidden_unit}的模型族，\gls{weight_scaling_inference_rule}是精确的。
 举个简单的例子，考虑\gls{softmax}回归分类，其中由向量$\RVv$表示$n$个输入变量：
 \begin{align}
- P(\RSy = \Sy ~|~ \RVv) = \text{softmax}\big(\MW^\top\RVv + \Vb\big)_y.
+ P(\RSy = \Sy \mid \RVv) = \text{softmax}\big(\MW^\top\RVv + \Vb\big)_y.
 \end{align}
 我们可以根据二值向量$\Vd$逐元素的乘法将一类子模型进行索引：
 \begin{align}
-P(\RSy = \Sy ~|~ \RVv; \Vd) = \text{softmax}\big(\MW^\top(\Vd \odot \RVv) + \Vb \big)_y.
+P(\RSy = \Sy \mid \RVv; \Vd) = \text{softmax}\big(\MW^\top(\Vd \odot \RVv) + \Vb \big)_y.
 \end{align}
 \gls{ensemble}预测器被定义为重新标准化所有\gls{ensemble}成员预测的几何平均：
 \begin{align} \label{eq:758pe}
-P_{\text{ensemble}}(\RSy = \Sy ~|~ \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\RSy = \Sy ~|~ \RVv)}
- {\sum_{y'}\tilde{P}_{\text{ensemble}}(\RSy = \Sy' ~|~ \RVv) },
+P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\RSy = \Sy \mid \RVv)}
+ {\sum_{y'}\tilde{P}_{\text{ensemble}}(\RSy = \Sy' \mid \RVv) },
 \end{align}
 其中
 \begin{align}
-\tilde{P}_{\text{ensemble}}(\RSy=\Sy ~|~ \RVv) =
-\sqrt[2^n]{\prod_{\Vd \in \{0,1\}^n} P(\RSy = \Sy ~|~ \RVv; \Vd)}.
+\tilde{P}_{\text{ensemble}}(\RSy=\Sy \mid \RVv) =
+\sqrt[2^n]{\prod_{\Vd \in \{0,1\}^n} P(\RSy = \Sy \mid \RVv; \Vd)}.
 \end{align}
 
 为了证明\gls{weight_scaling_inference_rule}是精确的，我们简化$ \tilde{P}_{\text{ensemble}}$：
 \begin{align}
-\tilde{P}_{\text{ensemble}}(\RSy=\Sy ~|~ \RVv) =
-\sqrt[2^n]{\prod_{\Vd \in \{0,1\}^n} P(\RSy = \Sy ~|~ \RVv; \Vd)} \\
+\tilde{P}_{\text{ensemble}}(\RSy=\Sy \mid \RVv) =
+\sqrt[2^n]{\prod_{\Vd \in \{0,1\}^n} P(\RSy = \Sy \mid \RVv; \Vd)} \\
 = \sqrt[2^n]{\prod_{\Vd \in \{0,1\}^n} \text{softmax}(\MW^\top(\Vd \odot \RVv) + \Vb)_y} \\
 = \sqrt[2^n]{\prod_{\Vd \in \{0,1\}^n} \frac{\exp (\MW_{y,:}^\top(\Vd \odot \RVv) + \Vb_y)}
 {\sum_{y'}\exp (\MW_{y',;}^\top(\Vd \odot \RVv) + \Vb_{y'})}}\\
@@ -1037,10 +1037,10 @@ P_{\text{ensemble}}(\RSy = \Sy ~|~ \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\R
 
 由于$\tilde P$将被标准化，我们可以放心地忽略那些相对$y$不变的乘法：
 \begin{align}
-\tilde{P}_{\text{ensemble}}(\RSy=\Sy ~|~ \RVv) &\propto 
+\tilde{P}_{\text{ensemble}}(\RSy=\Sy \mid \RVv) &\propto 
 \sqrt[2^n]{\prod_{\Vd \in \{0,1\}^n} \exp (\MW_{y,:}^\top(\Vd \odot \RVv) + \Vb_y)} \\
-& = \exp \Big(\frac{1}{2^n} \sum_{\Vd \in \{0,1\}^n} \MW_{y,;}^\top(\Vd \odot \RVv) + \Vb_y \Big) \\
-& = \exp \big(\frac{1}{2}\MW_{y,:}^\top \RVv + \Vb_y \big) 
+& = \exp \Bigg(\frac{1}{2^n} \sum_{\Vd \in \{0,1\}^n} \MW_{y,;}^\top(\Vd \odot \RVv) + \Vb_y \Bigg) \\
+& = \exp \Big(\frac{1}{2}\MW_{y,:}^\top \RVv + \Vb_y \Big) .
 \end{align}
 将其代入式\ref{eq:758pe}，我们得到了一个权重为$\frac{1}{2}\MW$的\gls{softmax}分类器。
 
