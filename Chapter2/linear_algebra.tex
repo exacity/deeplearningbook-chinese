@@ -110,7 +110,7 @@
 % -- 31 --
 
 只要矩阵的形状一样，我们可以把两个矩阵相加。
-两个矩阵相加是指对应位置的元素相加，比如$\MC=\MA+\MB$，其中$\SC_{i,j}= \SA_{i,j}＋\SB_{i,j}$。
+两个矩阵相加是指对应位置的元素相加，比如$\MC=\MA+\MB$，其中$\SC_{i,j}= \SA_{i,j}+\SB_{i,j}$。
 
 
 标量和矩阵相乘，或是和矩阵相加时，我们将其与矩阵的每个元素相乘或相加，比如$\MD = \Sa \cdot \MB + \Sc$，其中$\SD_{i,j} = \Sa\cdot  \SB_{i,j} + \Sc$。
@@ -452,7 +452,7 @@ $L^1$范数可以简化如下：
 计算乘法$\text{diag}(\Vv)\Vx$，我们只需要将$\Vx$中的每个元素$x_i$放大$v_i$倍。
 换言之，$\text{diag}(\Vv)\Vx=\Vv \odot \Vx$。
 计算对角矩阵的逆矩阵也很高效。
-对角矩阵的逆矩阵存在，当且仅当对角元素都是非零的，在这种情况下，$\text{diag}(\Vv)^{-1}=\text{diag}([1/v_1,\dots,1/v_n]^\top$。
+对角矩阵的逆矩阵存在，当且仅当对角元素都是非零的，在这种情况下，$\text{diag}(\Vv)^{-1}=\text{diag}([1/v_1,\dots,1/v_n]^\top)$。
 在很多情况，我们可以根据任意矩阵导出一些通用的机器学习算法；但通过将一些矩阵限制为对角矩阵，我们可以得到计算代价较低的（并且描述语言较少的）算法。
 
 
@@ -531,8 +531,8 @@ $L^1$范数可以简化如下：
 基于这个原因，通常我们只考虑单位特征向量。
 
 
-假设矩阵$\MA$有$n$个线性无关的特征向量$\{\Vv_1, \dots, \Vv_n\}$，对应着特征值$\{\lambda_1, \dots , \lambda_n \}$。
-我们将特征向量连接一个矩阵，使得每一列是一个特征向量：$V=[\Vv_1, \dots , \Vv_n]$.
+假设矩阵$\MA$有$n$个线性无关的特征向量$\{\Vv^{(1)}, \dots, \Vv^{(n)}\}$，对应着特征值$\{\lambda_1, \dots , \lambda_n \}$。
+我们将特征向量连接一个矩阵，使得每一列是一个特征向量：$V=[\Vv^{(1)}, \dots, \Vv^{(n)}]$.
 类似地，我们也可以将特征值连接成一个向量$\Vlambda = [\lambda_1, \dots , \lambda_n]^\top$。
 因此$\MA$的\gls{eigendecomposition}可以记作
 \begin{equation}
@@ -715,7 +715,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \end{equation}
 或者更一般地，
 \begin{equation}
-\Tr(\prod_{i=1}^n \MF^{(i)})= \Tr(\MF^{(n)} \prod_{i=1}^{n-1} \MF^{(i)}.
+\Tr(\prod_{i=1}^n \MF^{(i)})= \Tr(\MF^{(n)} \prod_{i=1}^{n-1} \MF^{(i)}).
 \end{equation}
 即使循环置换后矩阵乘积得到的矩阵形状变了，迹运算的结果依然不变。
 例如，假设矩阵$\MA\in \SetR^{m\times n}$，矩阵$\MB\in \SetR^{n\times m}$，我们可以得到
@@ -805,7 +805,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \begin{equation}
     = \Vx^\top \Vx - 2\Vx^\top g(\Vc) + g(\Vc)^\top g(\Vc)
 \end{equation}
-(因为标量$g(\Vx)^\top\Vx$的转置等于自己)
+(因为标量$g(\Vc)^\top\Vx$的转置等于自己)
 
 
 因为第一项$\Vx^\top\Vx$不依赖于$\Vc$，所以我们可以忽略它，得到如下的优化目标：
@@ -856,8 +856,8 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \end{equation}
 
 为了推导用于寻求$\MD^*$的算法，我们首先考虑$l=1$的情况。
-在这种情况下，$\MD$是一个单一向量$d$。
-将式\ref{eq:2.67}代入式\ref{eq:2.68}，简化$\MD$为$d$，问题简化为
+在这种情况下，$\MD$是一个单一向量$\Vd$。
+将式\ref{eq:2.67}代入式\ref{eq:2.68}，简化$\MD$为$\Vd$，问题简化为
 \begin{equation}
 \label{eq:2.67}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd\Vd^\top \Vx^{(i)}}_2^2
@@ -908,7 +908,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \begin{equation}
     = \underset{\Vd}{\arg\min} \, - \Tr(\MX^\top\MX \Vd\Vd^\top)  - \Tr(\Vd\Vd^\top \MX^\top\MX) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
-（因为与$\Vd$无关的项不影响$\argmin$）
+（因为与$\Vd$无关的项不影响$\arg\min$）
 \begin{equation}
     = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
