@@ -291,7 +291,7 @@ XOR问题的其他的一些等价解也可以被梯度下降算法找到。
 偏置可以初始化为零或者小的正值。
 这种用于训练\gls{feedforward_neural_network}以及几乎所有深度模型的迭代的基于梯度的优化算法会在第\ref{chap:optimization_for_training_deep_models}章详细介绍，参数初始化会在\ref{sec:parameter_initialization_strategies}节中特别说明。
 就目前而言，只需要懂得，训练算法几乎总是基于使用代价函数的梯度下降的这种或那种方式即可。
-一些特别的算法是对梯度下降思想的改进和提纯，在\ref{sec:gradient_based_optimization}节中介绍，还有一些更特别的，大多数是对随机梯度下降算法的改进，在\ref{sec:stochastic_gradient_descent}节中介绍。
+一些特别的算法是对梯度下降思想的改进和提纯，在\ref{sec:gradient_based_optimization}节中介绍，还有一些更特别的，大多数是对随机梯度下降算法的改进，在\ref{sec:stochastic_gradient_descent_chap5}节中介绍。
 
 % -- 171 --
 
@@ -1417,7 +1417,7 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
   J = J_{\text{MLE}} + \lambda \left ( \sum_{i, j} (W_{i, j}^{(1)})^2 + \sum_{i, j} (W_{i, j}^{(2)})^2 \right )
 \end{equation}
 包含了交叉熵和系数为$\lambda$的权重衰减项。
-它的计算图在图\label{fig:chap6_mlp_example}中给出。
+它的计算图在图\ref{fig:chap6_mlp_example}中给出。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1431,7 +1431,7 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 这个示例的梯度计算图实在太大，以至于绘制或者阅读都将是乏味的。
 这显示出了反向传播算法的优点之一，即它可以自动生成梯度，而这种计算对于软件工程师来说需要进行直观但冗长的手动推导。
 
-我们可以通过观察图\label{fig:chap6_mlp_example}中的正向传播图来粗略地描述反向传播算法的行为。
+我们可以通过观察图\ref{fig:chap6_mlp_example}中的正向传播图来粗略地描述反向传播算法的行为。
 为了训练，我们希望计算$\nabla_{\bm{W}^{(1)}} J$和$\nabla_{\bm{W}^{(2)}} J$。
 有两种不同的路径从$J$后退到权重：一条通过交叉熵成本，另一条通过权重衰减成本。
 权重衰减成本相对简单，它总是对$\bm{W}^{(i)}$上的梯度贡献$2\lambda \bm{W}^{(i)}$。

@@ -375,7 +375,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 这个算法虽然已经黯然失色不再流行，但截至写书之时，仍是训练深度模型的主要方法。
 
 在20世纪90年代，研究人员在使用\gls{NN}进行序列建模的方面取得了重要进展。
-\citet{Hochreiter91}和\citet{Bengio1994ITNN}指出了建模长序列的一些根本数学难题，将在\ref{sec:the_challenge_of_longterm_dependencies}节中描述。
+\citet{Hochreiter91}和\citet{Bengio1994ITNN}指出了建模长序列的一些根本数学难题，将在\ref{sec:the_challenge_of_long_term_dependencies}节中描述。
 \citet{Hochreiter+Schmidhuber-1997}引入\gls{LSTM}(\glssymbol{LSTM})网络来解决这些难题。
 如今，\glssymbol{LSTM}在许多序列建模任务中广泛应用，包括Google的许多自然语言处理任务。
 
@@ -398,7 +398,7 @@ CIFAR NCAP研究计划具有多学科的性质，其中还包括在人类神经�
 这个问题可能是单纯的因为计算复杂性太高，而以当时可用的硬件难以进行足够的实验。
 
 神经网络研究的第三次浪潮开始于2006年的突破。
-\ENNAME{Geoffrey Hinton}表明名为\gls{DBN}的\gls{NN}可以使用一种称为贪婪逐层训练的策略进行有效地训练\citep{Hinton06}，我们将在\ref{sec:greedy_layerwise_unsupervised_pretraining}中更详细地描述。
+\ENNAME{Geoffrey Hinton}表明名为\gls{DBN}的\gls{NN}可以使用一种称为贪婪逐层训练的策略进行有效地训练\citep{Hinton06}，我们将在\ref{sec:greedy_layer_wise_unsupervised_pretraining}中更详细地描述。
 CIFAR附属的其他研究小组很快表明，同样的策略可以被用来训练许多其他类型的深度网络\citep{Bengio+Lecun-chapter2007-small,ranzato-07}，并能系统地帮助提高在测试样例上的泛化能力。
 \gls{NN}研究的这一次浪潮普及了``\gls{DL}''这一术语的使用，强调研究人员现在可以训练以前不可能训练的更深的神经网络，并把注意力集中于深度的理论意义\citep{Bengio+Lecun-chapter2007,Delalleau+Bengio-2011-small,Pascanu-et-al-ICLR2014,Montufar-et-al-NIPS2014}。
 此时，深度\gls{NN}已经优于与之竞争的基于其他\gls{ML}技术以及手工设计函数的\glssymbol{AI}系统。

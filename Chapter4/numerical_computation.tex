@@ -7,7 +7,7 @@
 常见的操作包括优化（找到最小化或最大化函数值的参数）和线性方程的求解。
 对数字计算机来说，即使计算只涉及实数的函数也是困难的，因为实数无法在有限内存下精确表示。
 
-\section{\gls{overflow}和\gls{underflow}}
+\section{\glsentrytext{overflow}和\glsentrytext{underflow}}
 \label{sec:overflow_and_underflow}
 在数字计算机上实现连续数学的基本困难是，我们需要通过有限数量的位模式来表示无限多的实数。
 这意味着我们在计算机中表示实数时，几乎都会引入一些近似误差。
@@ -55,7 +55,7 @@ Theano\citep{bergstra+al:2010-scipy,Bastien-2012}就是这样软件包的一个�
 
 % -- 78 --
 
-\section{\gls{poor_conditioning}}
+\section{\glsentrytext{poor_conditioning}}
 \label{sec:poor_conditioning}
 
 条件数表明函数相对于输入的微小变化而变化的快慢程度。
@@ -197,7 +197,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 虽然\gls{GD}被限制在连续空间中的优化问题，但不断向更好的情况移动一小步（即近似最佳的小移动）的一般概念可以被推广到离散空间。
 递增带有离散参数的\gls{objective_function}被称为\firstgls{hill_climbing}算法\citep{Russel+Norvig-book2003}。
 
-\subsection{\gls{gradient}之上：\gls{jacobian}和\gls{hessian}矩阵}
+\subsection{\glsentrytext{gradient}之上：\glsentrytext{jacobian}和\glsentrytext{hessian}矩阵}
 \label{sec:beyond_the_gradient_jacobian_and_hessian_matrices}
 有时我们需要计算输入和输出都为向量的函数的所有\gls{partial_derivatives}。
 包含所有这样的偏导数的矩阵被称为\firstgls{jacobian}矩阵。
@@ -373,7 +373,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 有关\gls{convex_optimization}的详细信息，见\cite{Boyd04}或\cite{rockafellar1997convex}。
 
 
-\section{\gls{constrained_optimization}}
+\section{\glsentrytext{constrained_optimization}}
 \label{sec:constrained_optimization}
 有时候，在$\Vx$的所有可能值下最大化或最小化一个函数$f(x)$不是我们所希望的。
 相反，我们可能希望在$\Vx$的某些集合$\SetS$中找$f(\Vx)$的最大值或最小值。

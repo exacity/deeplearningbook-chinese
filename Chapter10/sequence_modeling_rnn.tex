@@ -51,7 +51,7 @@
 
 % -- 364 --
 
-\section{\gls{unfolding}\gls{computational_graph}}
+\section{\glsentrytext{unfolding}\glsentrytext{computational_graph}}
 \label{sec:unfolding_computational_graphs}
 \gls{computational_graph}是一种形式化一组计算结构的方式，如那些涉及将输入和参数映射到输出和损失的计算。
 综合的介绍请参考\ref{sec:computational_graphs}。
@@ -177,7 +177,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 
 
 
-\section{\gls{RNN}}
+\section{\glsentrytext{RNN}}
 \label{sec:recurrent_neural_networks}
 基于\ref{sec:unfolding_computational_graphs}节中的图展开和\gls{parameter_sharing}的思想，我们可以设计各种\gls{RNN}。
 \begin{figure}[!htb]
@@ -262,7 +262,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 
 % -- 371 --
 
-\subsection{\gls{teacher_forcing}和输出\gls{recurrent_network}}
+\subsection{\glsentrytext{teacher_forcing}和输出\glsentrytext{recurrent_network}}
 \label{sec:teacher_forcing_and_networks_with_output_recurrence}
 仅在一个\gls{time_step}的输出和下一个\gls{time_step}的\gls{hidden_unit}间存在循环连接的网络（示于图\ref{fig:chap10_output_recurrence_rnn}）确实没有那么强大（因为缺乏隐藏到隐藏的循环连接）。
 例如，它不能模拟通用图灵机。
@@ -311,7 +311,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 这种方法利用了\gls{curriculum_learning}策略，逐步使用更多生成值作为输入。
 
 
-\subsection{计算\gls{RNN}的\gls{gradient}}
+\subsection{计算\glsentrytext{RNN}的\glsentrytext{gradient}}
 \label{sec:computing_the_gradient_in_a_recurrent_neural_network}
 计算\gls{RNN}的\gls{gradient}是容易的。
 可以简单地将\ref{sec:general_back_propagation}节中的推广\gls{backward_propagation}算法应用于展开的\gls{computational_graph}。
@@ -377,7 +377,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 
 % -- 375 --
 
-\subsection{作为\gls{directed_graphical_model}的\gls{recurrent_network}}
+\subsection{作为\glsentrytext{directed_graphical_model}的\glsentrytext{recurrent_network}}
 \label{sec:recurrent_networks_as_directed_graphical_models}
 目前为止，我们接触的\gls{recurrent_network}例子中损失$L^{(t)}$是训练目标$\Vy^{(t)}$和输出$\Vo^{(t)}$之间的\gls{cross_entropy}。
 与\gls{feedforward_network}类似，原则上\gls{recurrent_network}几乎可以使用任何损失。
@@ -648,7 +648,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 
 % -- 386 --
 
-\section{深度\gls{recurrent_network}}
+\section{深度\glsentrytext{recurrent_network}}
 \label{sec:deep_recurrent_networks}
 大多数\glssymbol{RNN}中的计算可以分解成三块参数及其相关的变换：
 \begin{enumerate}
@@ -719,7 +719,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 由每个节点执行的计算无须是传统的人工神经计算（所有输入的仿射变换后跟一个单调非线性）。
 例如，\cite{Socher-et-al-EMNLP2013}提出用张量运算和双线性形式，在这之前人们已经发现当概念是由连续向量（嵌入）表示时，这种方式有利于建模概念之间的关系\citep{Weston+Bengio+Usunier-2010,Bordes-et-al-AISTATS2012-small}。
 
-\section{\gls{long_term_dependency}的挑战}
+\section{\glsentrytext{long_term_dependency}的挑战}
 \label{sec:the_challenge_of_long_term_dependencies}
 学习\gls{recurrent_network}\gls{long_term_dependency}的数学挑战在\ref{sec:long_term_dependencies}中引入。
 根本问题是，经过许多阶段传播后的\gls{gradient}倾向于消失（大部分时间）或爆炸（很少，但对优化过程影响很大）。
@@ -789,7 +789,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 本章的其余部分将讨论目前已经提出的降低学习\gls{long_term_dependency}（在某些情况下，允许一个\glssymbol{RNN}学习横跨数百步的依赖）难度的不同方法，但学习\gls{long_term_dependency}的问题仍是\gls{DL}中的一个主要挑战。
 
 
-\section{\gls{ESN}}
+\section{\glsentrytext{ESN}}
 \label{sec:echo_state_networks}
 从$\Vh^{(t-1)}$到$\Vh^{(t)}$的循环权重映射以及从$\Vx^{(t)}$到$\Vh^{(t)}$的输入权重映射是一个\gls{recurrent_network}中最难学习的参数。
 研究者\citep{Jaeger-NIPS2002,Maass-et-al-2002,Jaeger+Haas-2004}提出避免这种困难的方法是设定循环\gls{hidden_unit}，使其能很好地捕捉过去输入历史，并且\emph{只学习输出权重}。
@@ -859,14 +859,14 @@ $n$步之后，我们将得到$\MJ^n(\Vg + \delta \Vv)$。
 在这种设定下，结合\ref{sec:parameter_initialization_strategies}中稀疏初始化的方案，设置$1.2$的初始\gls{spectral_radius}表现不错。
 
 
-\section{\gls{leaky_unit}和其他多时间尺度的策略}
+\section{\glsentrytext{leaky_unit}和其他多时间尺度的策略}
 \label{sec:leaky_units_and_other_strategiesfor_multiple_time_scales}
 处理\gls{long_term_dependency}的一种方法是设计工作在多个时间尺度的模型，使其某些部分在细粒度时间尺度上操作并能处理小细节，而其他部分在粗时间尺度上操作并能把遥远过去的信息更有效地传递过来。
 存在多种同时构建粗细时间尺度的策略。
 这些策略包括在时间轴增加\gls{skip_connection}，``\gls{leaky_unit}''使用不同时间常数整合信号，并去除一些用于建模细粒度时间尺度的连接。
 
 
-\subsection{时间维度的\gls{skip_connection}}
+\subsection{时间维度的\glsentrytext{skip_connection}}
 \label{sec:adding_skip_connections_through_time}
 增加从遥远过去的变量到目前变量的直接连接是得到粗时间尺度的一种方法。
 使用这样\gls{skip_connection}的想法可以追溯到\cite{Lin-ieeetnn96}，紧接是向\gls{feedforward_network}引入延迟的想法\citep{Lang+Hinton88}。
@@ -881,7 +881,7 @@ $n$步之后，我们将得到$\MJ^n(\Vg + \delta \Vv)$。
 
 % -- 395 --
 
-\subsection{\gls{leaky_unit}和一系列不同时间尺度}
+\subsection{\glsentrytext{leaky_unit}和一系列不同时间尺度}
 \label{sec:leaky_units_and_a_spectrum_of_different_time_scales}
 获得导数乘积接近1的另一方式是设置\emph{线性}自连接单元，并且这些连接的权重接近1。
 
@@ -920,7 +920,7 @@ $d$\gls{time_step}的\gls{skip_connection}是确保单元总能被之前$d$个\g
 这是\cite{ElHihi+Bengio-nips8}和\cite{Koutnik-et-al-ICML2014}的方法。
 它在一些基准数据集上表现不错。
 
-\section{\gls{LSTM}和其他\gls{gated_rnn}}
+\section{\glsentrytext{LSTM}和其他\glsentrytext{gated_rnn}}
 \label{sec:the_long_short_term_memory_and_other_gated_rnns}
 本文撰写之时，实际应用中最有效的序列模型称为\firstgls{gated_rnn}。
 包括基于\firstgls{LSTM}和基于\firstgls{gated_recurrent_unit}的网络。
@@ -991,7 +991,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 \glssymbol{LSTM}网络比简单的循环架构更易于学习\gls{long_term_dependency}，先是用于测试\gls{long_term_dependency}学习能力的人工数据集\citep{Bengio-trnn94,Hochreiter+Schmidhuber-1997,chapter-gradient-flow-2001}，然后是在具有挑战性的序列处理任务上获得最先进的表现（\citep{Graves-book2012,Graves-arxiv2013,Sutskever-et-al-NIPS2014}）。
 \glssymbol{LSTM}的变体和替代也已经被研究和使用，会在下文进行讨论。
 
-\subsection{其他\gls{gated_rnn}}
+\subsection{其他\glsentrytext{gated_rnn}}
 \label{sec:other_gated_rnns}
 \glssymbol{LSTM}架构中哪些部分是真正必须的？
 还可以设计哪些其他成功架构允许网络动态地控制的时间尺度和不同单元的遗忘行为？
@@ -1026,7 +1026,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 \gls{forget_gate}，而\cite{Jozefowicz-et-al-ICML2015}发现向\glssymbol{LSTM}\gls{forget_gate}加入1的\gls{bias_aff}(由\cite{Gers-et-al-2000}提倡)能让\glssymbol{LSTM}变得与已探索的最佳变种一样健壮。
 
 
-\section{优化\gls{long_term_dependency}}
+\section{优化\glsentrytext{long_term_dependency}}
 \label{sec:optimization_for_long_term_dependencies}
 \ref{sec:long_term_dependencies}和\ref{sec:the_challenge_of_long_term_dependencies}节已经描述过在许多\gls{time_step}上优化\glssymbol{RNN}时发生的\gls{gradient}消失和爆炸的问题。
 
@@ -1042,7 +1042,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 
 % -- 401 --
 
-\subsection{\gls{clipping_gradient}}
+\subsection{\glsentrytext{clipping_gradient}}
 \label{sec:clipping_gradients}
 如\ref{sec:cliffs_and_exploding_gradients}节讨论，强非线性函数如由许多\gls{time_step}计算的\gls{recurrent_network}往往倾向于非常大或非常小幅度的\gls{gradient}。
 如图|||c|||和图\ref{fig:chap10_cliff_clipping_color}所示，我们可以看到，\gls{objective_function}（作为参数的函数）有一个``地形''伴随一个``悬崖''：宽且相当平坦区域被\gls{objective_function}变化快的小区域隔开，形成了一种悬崖。

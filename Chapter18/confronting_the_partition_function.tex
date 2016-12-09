@@ -107,7 +107,7 @@
 在这种情况下，\gls{positive_phase}可以被解释为推动训练从模型抽取出的样本能量下降，\gls{negative_phase}可以被解释为推动从模型抽取出的样本能量上升，如图18.1所示。
 
 
-\section{随机最大似然和\gls{contrastive_divergence}}
+\section{随机最大似然和\glsentrytext{contrastive_divergence}}
 \label{sec:stochastic_maximum_likelihood_and_contrastive_divergence}
 实现方程18.15最简单的方法是，每次需要计算梯度时，\gls{burn_in}随机初始化的一组\gls{markov_chain}。
 当使用\gls{SGD}进行学习时，这意味着\gls{markov_chain}必须在每次梯度步骤中被\gls{burn_in}。
@@ -267,7 +267,7 @@
 
 % -- 606 --
 
-\section{\gls{pseudolikelihood}}
+\section{\glsentrytext{pseudolikelihood}}
 \label{sec:pseudolikelihood}
 \gls{monte_carlo}近似\gls{partition_function}及其梯度需要直接面对\gls{partition_function}。
 有些其他方法通过训练不需要计算\gls{partition_function}的模型来解决这个问题。
@@ -345,7 +345,7 @@
 了解\gls{pseudolikelihood}渐近效率的理论分析，请参看\cite{Marlin11-small}。
 
 
-\section{\gls{score_matching}和\gls{ratio_matching}}
+\section{\glsentrytext{score_matching}和\glsentrytext{ratio_matching}}
 \label{sec:score_matching_and_ratio_matching}
 \gls{score_matching}\citep{Hyvarinen-2005-small}提供了另一种训练模型而不需要估计$Z$或其导数的一致性方法。
 对数密度相对于其参数的导数$\nabla_{\Vx} \log p(\Vx)$被称为其\firstgls{score}，名称\emph{\gls{score_matching}}正是来自这样的术语。
@@ -424,7 +424,7 @@
 了解\gls{ratio_matching}渐近效率的理论分析，请参看\cite{Marlin11-small}。
 
 
-\section{\gls{denoising_score_matching}}
+\section{\glsentrytext{denoising_score_matching}}
 \label{sec:denoising_score_matching}
 在某些情况下，我们可能希望通过拟合以下分布来正则化\gls{score_matching}
 \begin{equation}
@@ -445,7 +445,7 @@
 
 % -- 611 --
 
-\section{\gls{NCE}}
+\section{\glsentrytext{NCE}}
 \label{sec:noise_contrastive_estimation}
 大多数估计具有难处理的\gls{partition_function}的模型都没有提供\gls{partition_function}的估计。
 \glssymbol{SML}和\glssymbol{contrastive_divergence}只估计对数\gls{partition_function}的梯度，而不是\gls{partition_function}本身。
@@ -557,7 +557,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 这个想法诞生了\gls{generative_adversarial_networks}（第20.10.4节）。
 
 
-\section{估计\gls{partition_function}}
+\section{估计\glsentrytext{partition_function}}
 \label{sec:estimating_the_partition_function}
 尽管本章中的大部分内容都在描述避免计算与\gls{undirected_graphical_model}相关的难处理\gls{partition_function}$Z(\Vtheta)$，但在本节中我们将会讨论直接估计\gls{partition_function}的几种方法。
 
@@ -646,8 +646,8 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 两者都始于上面介绍的简单\gls{importance_sampling}方法，并且都试图通过引入\emph{桥接}$p_0$和$p_1$之间\emph{差距}的中间分布来克服建议$p_0$远离$p_1$的问题。
 
 
-\subsection{\gls{AIS}}
-\label{subsec:annealed_importance_sampling}
+\subsection{\glsentrytext{AIS}}
+\label{sec:annealed_importance_sampling}
 在$D_{KL}(p_0 \| p_1)$很大的情况下（即，$p_0$和$p_1$之间几乎没有重叠），一种称为\textbf{\gls{AIS}}（\textbf{annealed importance sampling}，AIS）的方法试图通过引入中间分布来桥接差距\citep{Jarzynski1997,Neal-2001}。
 考虑分布序列$p_{\eta_0},\dots,p_{\eta_n}$，其中$0=\eta_0 < \eta_1 < \dots < \eta_{n-1} < \eta_n = 1$，使得序列中的第一个和最后一个分布分别是$p_0$和$p_1$。
 
@@ -765,8 +765,8 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 关于\glssymbol{AIS}估计性质（例如，方差和效率）的讨论，请参看\cite{Neal-2001}。
 
 
-\subsection{\gls{bridge_sampling}}
-\label{subsec:bridge_sampling}
+\subsection{\glsentrytext{bridge_sampling}}
+\label{sec:bridge_sampling}
 类似于\glssymbol{AIS}，\gls{bridge_sampling}\citep{Bennet76}是另一种解决\gls{importance_sampling}缺点的方法。
 并非将一系列中间分布链接在一起，\gls{bridge_sampling}依赖于单个分布$p_*$（被称为桥），在已知\gls{partition_function}的$p_0$和我们试图估计\gls{partition_function}$Z_1$的分布$p_1$之间插值。
 

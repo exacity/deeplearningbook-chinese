@@ -49,8 +49,8 @@
     J^*(\Vtheta) = \SetE_{(\Vx, y) \sim p_\text{data}} L(f(\Vx;\Vtheta),y).
 \end{equation}
 
-\subsection{\gls{empirical_risk_minimization}}
-\label{subsec:empirical_risk_minimization}
+\subsection{\glsentrytext{empirical_risk_minimization}}
+\label{sec:empirical_risk_minimization}
 机器学习算法的目标是降低式\ref{eq:8.2}所示的期望泛化误差。
 这个数据量被称为\firstgls{risk}。
 值得注意的是，该期望取自真实的数据分布$p_\text{data}$。
@@ -82,7 +82,7 @@
 反之，我们会使用一个稍稍不同的方法，我们真正优化的目标会更加不同于我们希望优化的目标。
 
 \subsection{替代损失函数和提前终止}
-\label{subsec:surrogate_loss_functions_and_early_stopping}
+\label{sec:surrogate_loss_functions_and_early_stopping}
 有时，我们真正关心的损失函数（比如分类误差）并不能有效地优化。
 例如，即使对于线性分类器而言，精确地最小化$0-1$损失通常是不可解的（复杂度几何级数增长于输入维数）\citep{Marcotte-92}。
 在这种情况下，我们通常会优化\firstgls{surrogate_loss_function}。
@@ -104,7 +104,7 @@
 纯优化通常会考虑算法收敛到梯度很小的时候。
 
 \subsection{（小）批算法}
-\label{subsec:batch_and_minibatch_algorithms}
+\label{sec:batch_and_minibatch_algorithms}
 机器学习算法区别于一般优化算法的一方面是其目标函数通常可以分解为关于训练样本的总和。
 机器学习优化算法通常使用整个损失函数中的一部分项去更新其参数。
 
@@ -271,7 +271,7 @@
 在这一节中，我们会总结几个训练深度模型时会涉及到的主要挑战。
 
 \subsection{病态}
-\label{subsec:ill_conditioning}
+\label{sec:ill_conditioning}
 在优化凸函数时，会遇到一些挑战。
 这其中最突出的是\gls{hessian}矩阵$\MH$的病态（ill-conditioning）。
 这是数值优化，凸优化或其他形式的优化中普遍存在的问题，更多细节请参看第4.3.1节。
@@ -297,7 +297,7 @@
 但是我们将会在以下小节中说明牛顿法运用在神经网络前需要很大的改动。
 
 \subsection{局部极小值}
-\label{subsec:local_minima}
+\label{sec:local_minima}
 凸优化问题的一个突出特点是其可以归约为寻找一个局部极小值的问题。
 任何一个局部极小值都是全局最小值。
 有些凸函数的底部是一个平坦的区域，而不是单一的全局最小点，但该平坦区域中的任意点都是可行最优解。
@@ -318,7 +318,7 @@
 
 包括权重空间对称性，很多神经网络还有其他导致不可辨认的原因。
 例如，在任意整流线性或者最大化输出的网络中，
-我们可以放大传入权重和\gls{bias}$\alpha$，然后缩小传出权重$\frac{1}{\alpha}$倍，而保持模型等价。
+我们可以放大传入权重和\gls{bias_aff}$\alpha$，然后缩小传出权重$\frac{1}{\alpha}$倍，而保持模型等价。
 这意味着，如果损失函数不包括如权重衰减这种直接依赖于权重而非模型输出的项，那么整流线性或者最大化网络的每一个局部极小解都在等价局部极小解的$(m\times n)$维双曲线上。
 
 这些\gls{model_identifiability}问题意味着神经网络损失函数具有非常多，甚至无穷的局部极小解。
@@ -345,8 +345,8 @@
 在高维空间中，很难正面证明并非是局部极小值导致的问题。
 许多并非局部极小值的结构也具有很小的梯度。
 
-\subsection{高原，\gls{saddle_points}和其他平坦区域}
-\label{subsec:plateaus_saddle_points_and_other_flat_regions}
+\subsection{高原，\glsentrytext{saddle_points}和其他平坦区域}
+\label{sec:plateaus_saddle_points_and_other_flat_regions}
 对于很多高维非凸函数而言，局部极小值（或极大值）事实上都远少于另一类梯度为零的点：\gls{saddle_points}。
 \gls{saddle_points}附近的某些点比\gls{saddle_points}有更大的损失，而其他点则有更小的损失。
 在\gls{saddle_points}处，\gls{hessian}矩阵同时具有正负特征值。
@@ -414,7 +414,7 @@
 % -- 280 --
 
 \subsection{悬崖和梯度爆炸}
-\label{subsec:cliffs_and_exploding_gradients}
+\label{sec:cliffs_and_exploding_gradients}
 多层神经网络通常有像悬崖一样的斜率较大区域，如图8.3所示。
 这是由于几个较大的权重相乘导致的。
 遇到斜率极大的悬崖结构时，梯度更新会很大程度地改变参数值，通常会跳过这类悬崖结构。
@@ -426,7 +426,7 @@
 因此，长期时间序列会产生大量相乘。
 
 \subsection{长期相关性}
-\label{subsec:long_term_dependencies}
+\label{sec:long_term_dependencies}
 当计算图变得非常之深时，神经网络优化算法必须克服的另一个难题出现了。
 多层前馈网络会有这么深的计算图。
 第\ref{chap:sequence_modeling_recurrent_and_recursive_nets}章会介绍的循环网络会在很长的时间序列的每个时间点上重复应用相同的操作，因此也会有很深的计算图。
@@ -455,7 +455,7 @@
 在循环网络已经被更详细地描述了之后，我们将会在第10.7节进一步讨论循环网络训练中的挑战。
 
 \subsection{非精确梯度}
-\label{subsec:inexact_gradients}
+\label{sec:inexact_gradients}
 大多数优化算法的出发点都是我们知道精确的梯度或是\gls{hessian}矩阵。
 在实践中，通常这些量会有噪音，甚至是有偏的估计。
 几乎每一个深度学习算法都需要基于采样的估计，至少使用了小批训练样本计算梯度。
@@ -472,7 +472,7 @@
 我们可以选择比真实损失函数更容易估计的替代损失函数来避免这个问题。
 
 \subsection{局部和全局结构间的弱对应}
-\label{subsec:poor_correspondence_between_local_and_global_structure}
+\label{sec:poor_correspondence_between_local_and_global_structure}
 迄今为止，我们讨论的许多问题都是关于损失函数在单点的性质----若$J(\Vtheta)$在当前点$\Vtheta$是\gls{poor_conditioning}，或者$\Vtheta$在悬崖中，或者$\Vtheta$是一个隐藏下降梯度的\gls{saddle_points}，那么会很难更新当前步。
 
 如果其方向在局部改进了很多，但是并没有指向损失低得多的遥远区域，那么有可能在单点处克服以上所有困难，但仍然表现不佳。
@@ -512,7 +512,7 @@
 最后一个观点建议研究选择良好的初始点以使用传统优化算法。
 
 \subsection{优化的理论限制}
-\label{subsec:theoretical_limits_of_optimization}
+\label{sec:theoretical_limits_of_optimization}
 一些理论结果表明，我们为神经网络设计的任何优化算法都有性能限制\citep{Blum92,JuddBook,wolpert96no}。
 通常这些结果不影响神经网络在实践中的应用。
 
@@ -533,7 +533,7 @@
 这可以使用随机梯度下降很大程度地加速，沿着随机挑选的小批量数据的梯度下降方向，请参看第5.9节和第8.1.3节。
 
 \subsection{随机梯度下降}
-\label{subsec:stochastic_gradient_descent}
+\label{sec:stochastic_gradient_descent_chap8}
 \gls{SGD}（SGD）及其变种很可能是一般机器学习中用得最多的优化算法，特别是在深度学习中。
 如第8.1.3节讨论，通过计算独立同分布地从数据生成分布中抽取的$m$个小批量样本的梯度均值，我们可以得到梯度的无偏估计。
 
@@ -599,7 +599,7 @@
 了解\glssymbol{SGD}更多的信息，请参看\cite{Bottou98}。
 
 \subsection{动量}
-\label{subsec:momentum}
+\label{sec:momentum}
 虽然随机梯度下降仍然是非常受欢迎的优化方法，但学习速率有时会很慢。
 动量方法\citep{polyak1964some}旨在加速学习，特别是处理高曲率，小但一致的梯度，或是带噪音的梯度。
 动量算法积累了之前梯度指数级衰减的移动平均，并且继续沿该方向移动。
@@ -690,7 +690,7 @@
 粘性阻力避免了这两个问题----它足够弱，可以使梯度引起的运动直到达到最小，但又足够强，使得坡度不够时可以阻止运动。
 
 \subsection{Nesterov动量}
-\label{subsec:nesterov_momentum}
+\label{sec:nesterov_momentum}
 受Nesterov加速梯度算法\citep{Nesterov83b,Nesterov03}启发，\cite{sutskeverimportance}提出了动量算法的一个变种。
 这种情况的更新规则如下：
 \begin{equation}
@@ -742,7 +742,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 例如，如果我们有和输出一样多的输入，我们可以使用Gram-Schmidt正交化于初始的权重矩阵，保证每个单元计算彼此非常不同的函数。
 在高维空间上使用高熵分布来随机初始化，计算代价小并且不太可能分配单元计算彼此相同的函数。
 
-通常情况下，我们可以为每个单元的\gls{bias}设置启发式挑选的常数，仅随机初始化权重。
+通常情况下，我们可以为每个单元的\gls{bias_aff}设置启发式挑选的常数，仅随机初始化权重。
 额外的参数----例如编码预测条件方差的参数----通常和偏差一样设置为启发式选择的常数。
 
 我们几乎总是初始化模型的权重为高斯或均匀分布中随机抽取的值。
@@ -824,27 +824,27 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 
 % -- 296 --
 
-设置\gls{bias}的方法必须和设置权重的方法协调。
-设置\gls{bias}为零通常在大多数权重初始化方案中是可行的。
-有些我们可能设置\gls{bias}为非零值的情况：
+设置\gls{bias_aff}的方法必须和设置权重的方法协调。
+设置\gls{bias_aff}为零通常在大多数权重初始化方案中是可行的。
+有些我们可能设置\gls{bias_aff}为非零值的情况：
 \begin{itemize}
-\item 如果\gls{bias}是作为输出单元，那么初始化\gls{bias}以获取正确的输出边缘统计通常是有利的。
-要做到这一点，我们假设初始权重足够小，该单元的输出仅由\gls{bias}决定。
-这说明设置\gls{bias}为应用于训练集上输出边缘统计的激励函数的逆。
+\item 如果\gls{bias_aff}是作为输出单元，那么初始化\gls{bias_aff}以获取正确的输出边缘统计通常是有利的。
+要做到这一点，我们假设初始权重足够小，该单元的输出仅由\gls{bias_aff}决定。
+这说明设置\gls{bias_aff}为应用于训练集上输出边缘统计的激励函数的逆。
 例如，如果输出是类上的分布，且该分布是高度偏态分布，第$i$类的边缘概率由某个向量$\Vc$的第$i$个元素给定，那么我们可以通过求解方程$\text{softmax}(\Vb)=\Vc$来设置偏置向量$\Vb$。
 这不仅适用于分类器，也适用于我们将在第III部分遇到的模型，例如\gls{AE}和波尔兹曼机。
 这些模型拥有输出类似于输入数据$\Vx$的网络层，非常有助于初始化这些层的偏置以匹配$\Vx$上的边缘分布。
 
-\item 有时，我们可能想要选择\gls{bias}以避免初始化引起太大饱和。
+\item 有时，我们可能想要选择\gls{bias_aff}以避免初始化引起太大饱和。
 例如，我们可能会将ReLU的隐层单元设为$0.1$而非$0$，以避免ReLU在初始化时饱和。
 尽管这种方法不符合不希望偏置具有很强输入的权重初始化准则。
 例如，不建议使用随机游走初始化\citep{Sussillo14}。
 
 \item 有时，一个单元会控制其他单元能否参与到方程中。
 在这种情况下，我们有一个单元输出$u$，另一个单元$h\in[0,1]$，那么我们可以将$h$视作闸门，以决定$uh\approx 1$还是$uh\approx 0$。
-在这种情形下，我们希望设置\gls{bias}$h$，使得在初始化的大多数情况下$h\approx 1$。
+在这种情形下，我们希望设置\gls{bias_aff}$h$，使得在初始化的大多数情况下$h\approx 1$。
 否则，$u$没有机会学习。
-例如，\cite{Jozefowicz-et-al-ICML2015}提议设置LSTM模型遗忘门的\gls{bias}为$1$，如第10.10节所述。
+例如，\cite{Jozefowicz-et-al-ICML2015}提议设置LSTM模型遗忘门的\gls{bias_aff}为$1$，如第10.10节所述。
 \end{itemize}
 
 另一种常见类型的参数是方差或精确度参数。
@@ -883,7 +883,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 % -- 298 --
 
 \subsection{AdaGrad}
-\label{subsec:adagrad}
+\label{sec:adagrad}
 \textbf{AdaGrad}算法，如算法8.4所示，独立地适应所有模型参数的学习速率，放缩每个参数反比于其所有梯度历史平方值总和的平方根\citep{Duchi+al-2011}。
 具有损失最大偏导的参数相应地有一个快速下降的学习速率，而具有小偏导的参数在学习速率上有相对较小的下降。
 净效果是在参数空间中更为平缓的倾斜方向会取得更大的进步。
@@ -893,7 +893,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 AdaGrad在某些深度学习模型上效果不错，但不是全部。
 
 \subsection{RMSProp}
-\label{subsec:rmsprop}
+\label{sec:rmsprop}
 \textbf{RMSProp}算法\citep{Hinton-ipam2012}修改AdaGrad以在非凸设定下效果更好，改变梯度积累为指数加权的移动均值。
 AdaGrad旨在应用于凸问题时快速收敛。
 当应用于非凸函数训练神经网络时，学习轨迹可能穿过了很多不同的结构，最终到达一个局部是凸碗的区域。
@@ -912,7 +912,7 @@ RMSProp的标准形式如算法8.5所示，结合Nesterov动量的形式如算�
 目前它是深度学习从业者经常采用的优化方法之一。
 
 \subsection{Adam}
-\label{subsec:adam}
+\label{sec:adam}
 \textbf{Adam}\citep{kingma2014adam}是另一种学习率自适应的优化算法，如算法8.7所示。
 “Adam”这个名字派生自短语“Adaptive moments”。
 早期算法背景下，它也许最好被看作结合RMSProp和具有一些重要区别的动量的变种。
@@ -927,7 +927,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 % -- 301 --
 
 \subsection{选择正确的优化算法}
-\label{subsec:choosing_the_right_optimization_algorithms}
+\label{sec:choosing_the_right_optimization_algorithms}
 在本节中，我们讨论了一系列算法，通过自适应每个模型参数的学习速率以解决优化深度模型中的难题。
 此时，一个自然的问题是：该选择哪种算法呢？
 
@@ -952,7 +952,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 % -- 302 --
 
 \subsection{牛顿方法}
-\label{subsec:newton_method}
+\label{sec:newton_method}
 在第4.3节，我们介绍了二阶梯度方法。
 与一阶方法相比，二阶方法使用二阶导数改进了优化。
 最广泛使用的二阶方法是牛顿法。
@@ -1000,8 +1000,8 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 其结果是，只有参数很少的网络才能在实际中用牛顿法训练。
 在本节的剩余部分，我们将讨论一些试图保持牛顿法优点，同时避免计算障碍的替代算法。
 
-\subsection{\gls{CG}}
-\label{subsec:conjugate_gradients}
+\subsection{\glsentrytext{CG}}
+\label{sec:conjugate_gradients}
 \gls{CG}是一种通过迭代下降的\firstgls{conjugate_directions}以有效避免\gls{hessian}矩阵求逆计算的方法。
 这种方法的灵感来自于最速下降方法弱点的仔细研究（详细信息请参看第4.3节），其中线性搜索迭代地用于梯度相关的方向中。
 图8.6说明了该方法在二次碗型目标中如何表现的，是一个相当无效的来回往复，锯齿形模式。
@@ -1068,8 +1068,8 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 另外，尽管（非线性）\gls{CG}算法传统上作为批方法，小批量版本已经成功用于训练神经网络\citep{LeRoux-chapter-2011}。
 针对神经网路的\gls{CG}应用早已被提出，例如放缩的\gls{CG}算法\citep{Moller}。
 
-\subsection{\gls{BFGS}}
-\label{subsec:bfgs}
+\subsection{\glsentrytext{BFGS}}
+\label{sec:bfgs}
 \textbf{Broyden-Fletcher-Goldfarb-Shanno}（\textbf{\gls{BFGS}}）算法具有牛顿法的一些优点，但没有牛顿法的计算负担。
 在这方面，\gls{BFGS}和CG很像。
 然而，\gls{BFGS}使用了一个更直接的方法近似牛顿更新。回顾牛顿更新由下式给出
@@ -1109,8 +1109,8 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 \label{sec:optimization_strategies_and_meta_algorithms}
 许多优化技术并非真正的算法，而是一般化的模板，可以特定产生算法，或是并入到很多不同的算法中。
 
-\subsection{\gls{batch_normalization}}
-\label{subsec:batch_normalization}
+\subsection{\glsentrytext{batch_normalization}}
+\label{sec:batch_normalization}
 \gls{batch_normalization}\citep{Ioffe+Szegedy-2015}是优化\gls{DNN}中最激动人心的最新创新之一。
 实际上它并不是一个优化算法，而是一个自适应的重新参数化的方法，试图解决训练非常深层模型的困难。
 
@@ -1220,7 +1220,7 @@ $\hat{y}$的更新值为
 第\ref{chap:convolutional_networks}章所述的卷积网络，在特征映射中每个空间位置同样地标准化$\Vmu$和$\Vsigma$是很重要的，能使特征映射的统计量不因空间位置而保持相同。
 
 \subsection{坐标下降}
-\label{subsec:coordinate_descent}
+\label{sec:coordinate_descent}
 在某些情况下，将一个优化问题分解成几个部分，可以更快地解决原问题。
 如果我们最小化$f(\Vx)$相对于某个单一变量$x_i$，然后相对于另一个变量$x_j$，等等，反复循环所有的变量，我们会保证到达（局部）极小值。
 这种做法被称为\firstgls{coordinate_descent}，因为我们一次优化一个坐标。
@@ -1250,7 +1250,7 @@ $\hat{y}$的更新值为
 
 
 \subsection{Polyak平均}
-\label{subsec:polyak_averaging}
+\label{sec:polyak_averaging}
 Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访问轨迹中的几个点。
 如果$t$次迭代梯度下降访问了点$\Vtheta^{(1)},...,\Vtheta^{(t)}$，那么Polyak平均算法的输出是$\hat{\Vtheta}^{(t)} = \frac{1}{t} \sum_i \Vtheta^{(i)}$。
 在某些问题中，如梯度下降应用于凸问题，这种方法具有较强的收敛保证。
@@ -1270,7 +1270,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 这个计算平均值的方法被用于大量数值应用中。最近的例子请参看\cite{Szegedy-et-al-2015}。
 
 \subsection{监督提前训练}
-\label{subsec:supervised_pretraining}
+\label{sec:supervised_pretraining}
 有时，如果模型太复杂难以优化，或是如果任务非常困难，直接训练模型来解决特定任务可能太过挑战。
 有时训练一个较简单的模型来求解问题，然后使模型更复杂会更有效。
 训练模型来求解一个简化的问题，然后转移到最后的问题，有时也会更有效些。
@@ -1321,7 +1321,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 % -- 316 --
 
 \subsection{设计有助于优化的模型}
-\label{subsec:designing_models_to_aid_optimization}
+\label{sec:designing_models_to_aid_optimization}
 改进优化的最好方法并不总是改进优化算法。
 相反，深度模型中优化的许多改进来自于设计易于优化的模型。
 
@@ -1349,7 +1349,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 % -- 317 --
 
 \subsection{连续方法和课程学习}
-\label{subsec:continuation_methods_and_curriculum_learning}
+\label{sec:continuation_methods_and_curriculum_learning}
 正如第8.2.7节探讨的，许多优化挑战都来自于损失函数的全局结构，不能仅通过局部更新方向上更好的估计来解决。
 解决这个问题的主要方法是尝试初始化参数在一个区域内，该区域可以在参数空间中通过一个局部下降能发现的短路径连接到解。
 
