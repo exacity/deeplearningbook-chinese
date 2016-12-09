@@ -21,7 +21,11 @@
 *.sh
 *.glo
 *.ist
+Chapter20
 agreement.jpg
 dlbook_cn_public.tex
 dlbook_cn_public.bib
 font
+
+main.bib
+main.tex

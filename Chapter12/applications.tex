@@ -273,7 +273,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 因此，在针对诸如电话的低功率设备开发新的硬件设计的时候，建立专用硬件是一种进一步推动发展的方式，旨在用于\gls{DL}的一般公共应用（例如，具有语音，\gls{CV}或 自然语言功能的设施）。
 
 
-最近对基于\gls{BP}的神经网络的低精度实现的工作\citep{Vanhoucke-et-al-2011,}表明，8和16位之间的精度可以足以使用或训练具有\gls{BP}的\gls{DNN}。
+最近对基于\gls{BP}的神经网络的低精度实现的工作\citep{Vanhoucke-et-al-2011,Courbariaux-et-al-ICLR2015workshop,Gupta-et-al-2015}表明，8和16位之间的精度可以足以使用或训练具有\gls{BP}的\gls{DNN}。
 显而易见的是，在训练期间需要比在推理时更精确，并且数字的一些形式的动态定点表示可以用于减少每个数需要的存储空间。
 传统的固定点数限制为固定范围（其对应于浮点表示中的给定指数）。
  动态固定点表示在一组数字 （例如一个层中的所有权重） 之间共享该范围。
@@ -448,7 +448,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 
 \subsection{\glsentrytext{dataset_augmentation}}
 \label{sec:dataset_augmentation_chap12}
-如\ref{sec:chap7_dataset_augmentation}节中所讲到的，通过增加训练集的额外副本来增加训练集的大小，从而改进分类器的\gls{generalization}能力。
+如\ref{sec:dataset_augmentation_chap7}节中所讲到的，通过增加训练集的额外副本来增加训练集的大小，从而改进分类器的\gls{generalization}能力。
 其中训练集的额外副本并不改变其标签。
 对象识别是特别适合于这种形式的\gls{dataset_augmentation}的分类任务，因为标签对于许多变换是不变的，可以对输入使用许多几何变换。
 如前所述，分类器可以受益于随机转换旋转，以及在某些情况下，输入的翻转以增强数据集。
@@ -715,7 +715,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 这些嵌套类别构成一棵树，其叶上是词。
 在平衡树中，树的深度为$\log |\SetV|$。
 选择一个词的概率是由路径（从树根到包含该词叶子的路径）上的每个节点通向该词分支概率的乘积给出。
-图\ref{chap12_word_hierarchy}是一个简单的例子。
+图\ref{fig:chap12_word_hierarchy}是一个简单的例子。
 \citet{Mnih+Hinton-2009}也描述了使用多个路径来识别单个词的方法，以便更好地建模具有多个含义的词。
 计算词的概率则涉及在导向该词所有路径上的求和。
 \begin{figure}[htp]
@@ -775,6 +775,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 这可能是词类选择得不好。
 
 \subsubsection{\glsentrytext{importance_sampling}}
+\label{sec:importance_sampling_chap12}
 加速\gls{NLM}训练的一种方式是避免明确计算所有词（未出现在下一位置）对梯度的贡献。
 每个不正确的词在此模型下应该具有低概率。
 枚举所有这些单词计算成本可能会很高。
@@ -793,7 +794,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 从模型中抽样需要对词汇表中所有的$i$计算$P(i \mid C)$，这正是我们试图避免的。
 
 我们可以从另一个分布中抽样，而不是从模型中抽样，称为\firstgls{proposal_distribution}（记为$q$），并通过适当的权重来校正从错误分布抽样引入的\gls{bias_sta} \citep{Bengio+Senecal-2003-small,Bengio+Senecal-2008}。
-这是一种称为\firstgls{importance_sampling}的更通用技术的应用，我们将在\ref{sec:importance_sampling}节中更详细地描述。
+这是一种称为\firstgls{importance_sampling}的更通用技术的应用，我们将在\ref{sec:importance_sampling_chap12}节中更详细地描述。
 不幸的是，即使精确\gls{importance_sampling}也不一定有效，因为需要计算权重$p_i / q_i$，其中的$p_i = P(i \mid C)$只能在计算所有得分$a_i$后才能计算。
 这个应用采取的解决方案称为\gls{biased_importance_sampling}，其中重要性权重被归一化加和为1。
 当对负词$n_i$进行采样时，相关联的梯度被加权为：
