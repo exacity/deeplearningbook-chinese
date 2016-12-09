@@ -921,6 +921,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 % -- 462 --
 
 \subsubsection{使用\glsentrytext{attention_mechanism}并对齐数据片段}
+\label{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}
  使用固定大小的表示来概括非常长的句子（例如60个词）的所有语义细节是非常困难的。 
  这可以使用足够大的RNN，并且用足够长时间训练得很好，才能实现，如 \citet{Cho-et-al-EMNLP2014}和\citet{Sutskever-et-al-NIPS2014}所表明的。
  然而，更高效的方法是先读取整个句子或段落（以获得正在表达的上下文和焦点），然后一次翻译一个词，每次聚焦于输入句子的不同部分来收集产生下一个输出词所需的语义细节。
