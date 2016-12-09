@@ -51,7 +51,7 @@
 \begin{itemize}
     \item \textbf{分类}：
     在这类任务中，计算机程序被要求指定某些输入属于$k$类中的哪一类。
-    为了完成这个任务，学习算法通常被要求返回一个函数$f:\SetR^n \to \{1,...,k\}$。
+    为了完成这个任务，学习算法通常被要求返回一个函数$f:\SetR^n \to \{1,\dots,k\}$。
     当$y=f(\Vx)$时，模型为向量$\Vx$所代表的输入指定数字码$y$所代表的类别。
     还有一些其他的分类问题，例如，$f$输出的是不同类别的概率分布。
     分类任务中有一类是对象识别，输入是图片（通常用一组像素亮度值表示），输出是表示图片物体的数字码。
@@ -114,7 +114,7 @@
     例如，视频游戏可以自动生成大型物体或风景的纹理，而不是让艺术家手动标记每个像素\citep{Luo+al-AISTATS2013-small}。
     在某些情况下，我们希望采样或合成过程可以根据给定的输入来生成一些特定类型的输出。
     例如，在语音合成任务中，我们提供书写的句子，要求程序输出这个句子语音的音频波形。
-    这是一类结构化输出任务，但是多了每个输入并非只有一个正确输出的条件，我们明确希望输出有很大的偏差，使结果看上去更加自然和真实。
+    这是一类\emph{结构化输出任务}，但是多了每个输入并非只有一个正确输出的条件，我们明确希望输出有很大的偏差，使结果看上去更加自然和真实。
 
     \item \textbf{缺失值归责}：这类任务中，\gls{ML}算法给定一个新\gls{example:chap5}$\Vx\in\SetR^n$，$\Vx$中某些元素$x_i$缺失。
     算法必须预测这些缺失值。
@@ -124,7 +124,7 @@
     \item \textbf{降噪}：这类任务中，\gls{ML}算法的输入是，由未知破坏过程从\emph{干净\gls{example:chap5}}$\Vx \in \SetR^n$得到的\emph{污染\gls{example:chap5}}$\tilde{\Vx} \in \SetR^n$。
     算法根据污染后的\gls{example:chap5}$\tilde{\Vx}$预测干净的\gls{example:chap5}$\Vx$，或者更一般地预测条件概率分布$P(\Vx|\tilde{\Vx})$。
     
-    \item \textbf{密度估计}\textbf{或}\textbf{概率质量函数估计}：在密度估计问题中，\gls{ML}算法学习函数$p_{\text{model}}:\SetR^n \to \SetR$，其中$p_{\text{model}}$可以解释成\gls{example:chap5}采样空间的概率密度函数（如果$\Vx$是连续的）或者概率质量函数（如果$\Vx$是离散的）。
+    \item \textbf{密度估计}\textbf{或}\textbf{概率质量函数估计}：在密度估计问题中，\gls{ML}算法学习函数$p_{\text{model}}:\SetR^n \to \SetR$，其中$p_{\text{model}}(\Vx)$可以解释成\gls{example:chap5}采样空间的概率密度函数（如果$\RVx$是连续的）或者概率质量函数（如果$\RVx$是离散的）。
     要做好这样的任务（当我们讨论\gls{performance_measures}$P$时，我们会明确定义任务是什么），算法需要学习它观测到的数据的结构。
     算法必须知道什么情况\gls{example:chap5}聚堆出现，哪些情况不太可能出现。
     以上描述的大多数任务都要求学习算法至少能隐式地抓住概率分布的结构。
@@ -195,22 +195,22 @@
 例如，Iris\gls{dataset}注明了每个鸢尾花卉\gls{example:chap5}属于什么品种。
 \gls{supervised_learning}算法通过研究Iris\gls{dataset}，学习如何根据测量结果将\gls{example:chap5}划分到三个不同品种。
 
-大致说来，\gls{unsupervised_learning}涉及到观察随机向量$\Vx$的好几个\gls{example:chap5}，试图隐式或显式地学习出概率分布$p(\Vx)$，或者是该分布一些有意思的性质；
-而\gls{supervised_learning}包含观察随机向量$\Vx$及其相关联的值或向量$\Vy$，然后从$\Vx$预测$\Vy$，通常是估计$p(\Vy|\Vx)$。
-术语\firstgls{supervised}源自这样一个视角，教员或者老师提供\gls{target}$\Vy$给\gls{ML}系统，指导其应该做什么。
+大致说来，\gls{unsupervised_learning}涉及到观察随机向量$\RVx$的好几个\gls{example:chap5}，试图隐式或显式地学习出概率分布$p(\RVx)$，或者是该分布一些有意思的性质；
+而\gls{supervised_learning}包含观察随机向量$\RVx$及其相关联的值或向量$\RVy$，然后从$\RVx$预测$\RVy$，通常是估计$p(\RVy|\RVx)$。
+术语\firstgls{supervised}源自这样一个视角，教员或者老师提供\gls{target}$\RVy$给\gls{ML}系统，指导其应该做什么。
 在\gls{unsupervised_learning}中，没有教员或者老师，算法必须学会在没有指导的情况下让数据有意义。
 
 \gls{unsupervised_learning}和\gls{supervised_learning}不是严格定义的术语。
 它们之间界线通常是模糊的。
 大部分\gls{ML}技术可以用于这两个任务。
-例如，概率的链式法则表明对于向量$\Vx\in\SetR^n$，联合分布可以分解成
+例如，概率的链式法则表明对于向量$\RVx\in\SetR^n$，联合分布可以分解成
 \begin{equation}
-    p(\Vx) = \prod_{i=1}^n p(x_i \mid x_1,...,x_{i-1}) .
+    p(\RVx) = \prod_{i=1}^n p(\RSx_i \mid \RSx_1,\dots,\RSx_{i-1}) .
 \end{equation}
 该分解意味着我们通过将其拆分成$n$个\gls{unsupervised_learning}，来解决表面上的\gls{unsupervised_learning}$p(\Vx)$。
-另外，我们求解\gls{supervised_learning}问题$p(y|\Vx)$时，也可以使用传统的\gls{unsupervised_learning}技巧学习联合分布$p(\Vx|y)$，然后推测
+另外，我们求解\gls{supervised_learning}问题$p(y|\RVx)$时，也可以使用传统的\gls{unsupervised_learning}技巧学习联合分布$p(\RVx,y)$，然后推测
 \begin{equation}
-    p(y|\Vx) = \frac{p(\Vx,y)}{\sum_{y'}p(\Vx,y')}.
+    p(y|\RVx) = \frac{p(\RVx,y)}{\sum_{y'}p(\RVx,y')}.
 \end{equation}
 尽管\gls{unsupervised_learning}和\gls{supervised_learning}并非完全正式或不同的概念，它们确实有助于粗略分类我们研究\gls{ML}算法时遇到的问题。
 传统地，人们将回归，分类，或者结构化输出问题称为\gls{supervised_learning}。
@@ -244,7 +244,7 @@
 例如，你有不同宽度和高度的照片的集合，那么不同的照片将会包含不同数量的像素。
 因此不是所有的照片都可以表示成相同长度的向量。
 第9.7节和第\ref{chap:sequence_modeling_recurrent_and_recursive_nets}章将会介绍如何处理这类异质问题的不同类型。
-在上述的这类情况下，我们不会将\gls{dataset}表示成$m$行的矩阵，而是表示成$m$个元素的结合：$\{\Vx^{(1)},\Vx^{(2)},...,\Vx^{(m)}\}$。
+在上述的这类情况下，我们不会将\gls{dataset}表示成$m$行的矩阵，而是表示成$m$个元素的结合：$\{\Vx^{(1)},\Vx^{(2)},\dots,\Vx^{(m)}\}$。
 这种表示方式并非意味着\gls{example:chap5}向量$\Vx^{(i)}$和$\Vy^{(j)}$有相同的大小。
 
 % -- 103 --
@@ -295,7 +295,7 @@
 我们将输入的\gls{design_matrix}记作$\MX^{\text(test)}$，回归\gls{target}向量记作$\Vy^{(\text{test})}$。
 
 衡量模型性能的一种方法是计算模型在\gls{test_set}上的\firstgls{mean_squared_error}。
-如果$\hat{y}^{(\text{test})}$表示模型在\gls{test_set}上的预测值，那么\gls{mean_squared_error}表示为：
+如果$\hat{\Vy}^{(\text{test})}$表示模型在\gls{test_set}上的预测值，那么\gls{mean_squared_error}表示为：
 \begin{equation}
     \text{MSE}_{\text{test}} = \frac{1}{m} \sum_i ( \hat{\Vy}^{(\text{test})} - \Vy^{(\text{test})})_i^2.
 \end{equation}
@@ -306,7 +306,7 @@
 \end{equation}
 所以当预测值和\gls{target}值之间的欧几里得距离增加时，误差也会增加。
 
-为了得到一个\gls{ML}算法，我们需要设计一个算法，通过观察训练集$(\MX^{(\text{train})}$是算法获得\gls{experience}，以减少$\text{MSE}_{\text{test}}$的方式改进权重$\Vw$。
+为了得到一个\gls{ML}算法，我们需要设计一个算法，通过观察训练集$(\MX^{(\text{train})},\Vy^{(\text{train})})$是算法获得\gls{experience}，以减少$\text{MSE}_{\text{test}}$的方式改进权重$\Vw$。
 这样做的一种直观的方式（我们将在后续的第5.5.1节说明其合法性）是最小化训练集上的\gls{mean_squared_error}，$\text{MSE}_{\text{train}}$。
 
 最小化$\text{MSE}_{\text{train}}$，我们可以简单地求解它的导数为$\mathbf{0}$的情况：
@@ -314,7 +314,7 @@
 \nabla_{\Vw} \text{MSE}_{\text{train}} = 0
 \end{equation}
 \begin{equation}
-\Rightarrow \nabla_{\Vw} \frac{1}{m} \norm{ \hat{\Vy}^{(\text{test})} - \Vy^{(\text{test})}}_2^2 = 0
+\Rightarrow \nabla_{\Vw} \frac{1}{m} \norm{ \hat{\Vy}^{(\text{train})} - \Vy^{(\text{train})}}_2^2 = 0
 \end{equation}
 \begin{equation}
 \Rightarrow \frac{1}{m} \nabla_{\Vw} \norm{ \MX^{(\text{train})}\Vw - \Vy^{(\text{train})}}_2^2 = 0
@@ -324,17 +324,17 @@
 \end{equation}
 \begin{equation}
 \Rightarrow \nabla_{\Vw} \left( 
-    \Vw^\Tsp \MX^{(\text{train})^\Tsp}\MX^{(\text{train})}\Vw - 2\Vw^\Tsp\MX^{(\text{train})^\Tsp} \Vy^{(\text{train})} + \Vy^{(\text{train})T}\Vy^{(\text{train})}  
+    \Vw^\Tsp \MX^{(\text{train})\Tsp}\MX^{(\text{train})}\Vw - 2\Vw^\Tsp\MX^{(\text{train})\Tsp} \Vy^{(\text{train})} + \Vy^{(\text{train})\Tsp}\Vy^{(\text{train})}  
   \right) = 0
 \end{equation}
 \begin{equation}
-    \Rightarrow 2\MX^{(\text{train})T}\MX^{(\text{train})} \Vw  -
-    2\MX^{(\text{train})T} \Vy^{(\text{train})}  = 0
+    \Rightarrow 2\MX^{(\text{train})\Tsp}\MX^{(\text{train})} \Vw  -
+    2\MX^{(\text{train})\Tsp} \Vy^{(\text{train})}  = 0
 \end{equation}
 \begin{equation}
 \label{eq:5.12}
-    \Rightarrow \Vw =  \left(\MX^{(\text{train})T}\MX^{(\text{train})}
-     \right)^{-1} \MX^{(\text{train})T} \Vy^{(\text{train})}
+    \Rightarrow \Vw =  \left(\MX^{(\text{train})\Tsp}\MX^{(\text{train})}
+     \right)^{-1} \MX^{(\text{train})\Tsp} \Vy^{(\text{train})}
 \end{equation}
 
 % -- 105 --
@@ -572,7 +572,7 @@
 逻辑地推断一个规则去描述集合中的元素，我们必须对集合中的每个元素都有信息。
 
 在一定程度上，\gls{ML}只是通过概率法则就可以避免这个问题，而不是使用纯逻辑推理的整个确定性法则。
-\gls{ML}保证找到一个所关心的 \emph{大多数}\gls{example:chap5}\emph{可能正确}的规则。
+\gls{ML}保证找到一个所关心的 \emph{大多数}\gls{example:chap5}\emph{可能}正确的规则。
 
 不幸的是，即使这样也不能解决整个问题。
 \gls{ML}的\firstgls{no_free_lunch_theorem}表明，在所有可能的数据生成分布上平均，每一个分类算法在未事先观测的点上都有相同的错误率。
@@ -634,7 +634,7 @@
 \label{fig:chap5_underfit_just_right_overfit_wd_color}
 \end{figure}
 
-更一般地，\gls{regularization}一个学习函数$f(\Vx;\Vtheta$的模型，我们可以给损失函数添加称为\firstgls{regularizer}的惩罚。
+更一般地，\gls{regularization}一个学习函数$f(\Vx;\Vtheta)$的模型，我们可以给损失函数添加称为\firstgls{regularizer}的惩罚。
 在权重衰减的例子中，\gls{regularizer}是$\Omega(\Vw) = \Vw^\Tsp \Vw$。在第\ref{chap:regularization_for_deep_learning}章，我们将看到很多其他可能的\gls{regularizer}。
 
 % -- 116 --
@@ -684,7 +684,7 @@
 所有超参数优化完成之后，泛化误差可能通过\gls{test_set}来估计。
 
 在实际中，当相同的\gls{test_set}已经重复地用于评估不同算法的性能很多年，特别是如果我们考虑来自学术界的各种尝试去挑战该\gls{test_set}上报道出来的最佳性能，我们最后也会对\gls{test_set}有着乐观的估计。
-\firstgls{benchmarks}会因之变得陈旧，而后不能反映训练系统的真实性能。
+\gls{benchmarks}会因之变得陈旧，而后不能反映训练系统的真实性能。
 值得庆幸的是，学术界往往会移到新的（通常会更具大更具挑战性的）基准\gls{dataset}上。
 
 \subsection{交叉验证}
@@ -714,7 +714,7 @@
 
 为了区分参数估计和真实值，我们习惯表示参数$\Vtheta$的点估计为$\hat{\Vtheta}$。
 
-让$\{\Vx^{(1)},...,\Vx^{(m)}\}$是$m$个独立同分布（i.i.d.）的数据点。
+让$\{\Vx^{(1)},\dots,\Vx^{(m)}\}$是$m$个独立同分布（i.i.d.）的数据点。
 \firstgls{point_estimator}或\firstgls{statistics}是这些数据的任意函数：
 \begin{equation}
     \hat{\Vtheta}_m = g(\Vx^{(1)}, \dots, \Vx^{(m)}) .
@@ -728,7 +728,7 @@
 现在，我们采取频率派在统计上的观点。
 换言之，我们假设真实参数$\Vtheta$是固定但未知的，而点估计$\hat{\Vtheta}$是数据的函数。
 由于数据是随机过程采样出来的，数据的任何函数都是随机的。
-因此$\Vtheta$是一个随机变量。
+因此$\hat{\Vtheta}$是一个随机变量。
 
 % -- 120 --
 
@@ -759,7 +759,7 @@
 % -- 121 --
 
 \textbf{实例：伯努利分布}\quad 
-考虑一组服从均值为$\theta$的伯努利分布的独立同分布采样$\{x^{(1)}, …, x^{(m)}\}$：
+考虑一组服从均值为$\theta$的伯努利分布的独立同分布采样$\{x^{(1)}, \dots , x^{(m)}\}$：
 \begin{equation}
     P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{(1 - x^{(i)})}.
 \end{equation}
@@ -770,18 +770,18 @@
 \end{equation}
 判断这个\gls{estimator:chap5} 是否有偏，我们将式\ref{eq:5.22}代入式\ref{eq:5.20}：
 \begin{align}
-    \text{bias}(\hat{\theta}_m)     &= \SetE(\hat{\theta}_m) - \theta  \\
+    \text{bias}(\hat{\theta}_m)     &= \SetE[\hat{\theta}_m] - \theta  \\
             &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m x^{(i)} \right] - \theta \\
-            &= \frac{1}{m} \sum_{i=1}^m \SetE[x^{(i)}] - \theta \\
+            &= \frac{1}{m} \sum_{i=1}^m \SetE \left[x^{(i)} \right] - \theta \\
             &= \frac{1}{m} \sum_{i=1}^m \sum_{x^{(i)} = 0}^1 \left( x^{(i)} \theta^{x^{(i)}} (1-\theta)^{(1-x^{(i)})} \right) - \theta \\
             &= \frac{1}{m} \sum_{i=1}^m (\theta) - \theta \\
             &= \theta - \theta = 0
 \end{align}
 
-因为$\text{bias}(\hat{\theta}_m)=0$，我们称估计$\hat{\theta}$是无偏的。
+因为$\text{bias}(\hat{\theta})=0$，我们称估计$\hat{\theta}$是无偏的。
 
 \textbf{实例：均值的高斯分布估计}\quad 
-现在，考虑一组独立同分布的\gls{example:chap5}$\{x^{(1)}, …, x^{(m)}\}$服从高斯分布$p(x^{(i)}) = \mathcal{N}(x^{(i)}; \mu, \sigma^2)$，其中$i\in\{1,..., m\}$。
+现在，考虑一组独立同分布的\gls{example:chap5}$\{x^{(1)}, \dots , x^{(m)}\}$服从高斯分布$p(x^{(i)}) = \mathcal{N}(x^{(i)}; \mu, \sigma^2)$，其中$i\in\{1, \dots, m\}$。
 回顾高斯概率密度函数如下：
 \begin{equation}
     p(x^{(i)}; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{1}{2} \frac{(x^{(i)} - \mu)^2}{\sigma^2}  \right).
@@ -795,7 +795,7 @@
 \begin{align}
 \text{bias} (\hat{\mu}_m) &= \SetE[ \hat{\mu}_m ]  - \mu \\
     &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m x^{(i)}  \right] - \mu \\
-    &= \left( \frac{1}{m}\sum_{i=1}^m \SetE[ x^{(i)} ] \right) - \mu \\
+    &= \left( \frac{1}{m}\sum_{i=1}^m \SetE \left[ x^{(i)} \right] \right) - \mu \\
     &= \left( \frac{1}{m}\sum_{i=1}^m \mu \right) - \mu \\
     &= \mu - \mu = 0
 \end{align}
@@ -819,7 +819,7 @@
 \end{equation}
 我们首先估计项$\SetE [ \hat{\sigma}_m^2 ]$：
 \begin{align}
-    \SetE [ \hat{\sigma}_m^2 ]  &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m \left( x^{(i)} - \hat{mu}_m \right)^2  \right] \\
+    \SetE [ \hat{\sigma}_m^2 ]  &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2  \right] \\
     &= \frac{m-1}{m} \sigma^2
 \end{align}
 回到式\ref{eq:5.37}，我们得到结论$\hat{\sigma}^2_m$的偏差是$-\frac{\sigma^2}{m}$。

@@ -30,7 +30,7 @@
 % -- 29 --
 
     \item \firstgls{vector}：一个向量是一列数。
-    这些数是有序排布的。
+    这些数是有序排列的。
     通过次序中的\gls{index}，我们可以确定每个单独的数。
     通常我们会赋予向量粗体的小写名称，比如$\Vx$。
     向量中的元素会通过带脚标的斜体来表示。
@@ -845,7 +845,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \end{equation}
 进一步使用矩阵乘法，我们也可以定义PCA重构操作：
 \begin{equation}
-    r(\Vx)=g(f(\Vx)) = \MD\MD^\top \Vx
+    r(\Vx)=g(f(\Vx)) = \MD\MD^\top \Vx.
 \end{equation}
 
 
@@ -854,7 +854,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 因为我们用相同的矩阵$\MD$对所有点进行解码，我们不能再孤立地看待每个点。
 反之，我们必须最小化所有维数和所有点上的误差矩阵的Frobenius范数：
 \begin{equation}
-    \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{限制在} \MD^\top\MD = \MI_l
+    \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{限制在} \MD^\top\MD = \MI_l.
 \end{equation}
 
 为了推导用于寻求$\MD^*$的算法，我们首先考虑$l=1$的情况。
@@ -869,7 +869,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 % -- 47 --
 
 上述公式是进行代入最直接的方式，但不是文体表述最舒服的方式。
-在上述公式中，我们将标量$\Vd^\top\Vx$放在了向量$\Vd$的右边。
+在上述公式中，我们将标量$\Vd^\top\Vx^{(i)}$放在了向量$\Vd$的右边。
 将该标量放在左边的写法更为传统。
 于是我们通常写作如下：
 \begin{equation}
