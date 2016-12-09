@@ -1,5 +1,5 @@
 % Translator: Shenjian Zhao
-\chapter{\gls{DL}的正则化}
+\chapter{\glsentrytext{DL}的正则化}
 \label{chap:regularization_for_deep_learning}
 \gls{ML}中的一个核心问题是设计不只在训练数据表现好，而且能在新输入上泛化的算法。
 在\gls{ML}中,许多策略被明确设计为以增大训练误差为代价来减少测试误差。
@@ -80,7 +80,7 @@
 
 % -- 223 --
 
-\subsection{$L^2$ 参数\gls{regularization}}
+\subsection{$L^2$参数\glsentrytext{regularization}}
 \label{sec:l2_parameter_regularization}
 在\ref{sec：capacity_overfitting_and_underfitting}节中我们已经看到最简单和最常见的参数范数惩罚是，通常被称为\firstgls{weight_decay}的$L^2$参数范数惩罚。
 这个\gls{regularization}策略通过向\gls{objective_function}添加一个正则项$\Omega(\Vtheta) = \frac{1}{2} \norm{\Vw}_2^2$，使权重更加接近原点\footnote{更一般地，我们可以将参数\gls{regularization}为接近空间中的任意特定点，令人惊讶的是仍有\gls{regularization}效果，并且更接近真实值将获得更好的结果。
@@ -199,7 +199,7 @@ $L^2$正则项将这个矩阵替换为式\ref{eq:717mw}中的$ (\MX^\top \MX + \
 这个矩阵的对角项对应于每个输入特征的\gls{variance}。
 我们可以看到，$L^2$\gls{regularization}能让学习算法``感知''到具有较高方差的输入$\Vx$， 因此与输出目标的\gls{covariance}较小（相对增加方差）的特征的权重将会被收缩。
 
-\subsection{$L^1$ 参数\gls{regularization}}
+\subsection{$L^1$参数\glsentrytext{regularization}}
 \label{sec:l1_regularization}
 $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，还有其他的方法来惩罚模型参数的大小。
 另一种选择是使用$L^1$\gls{regularization}。
@@ -354,7 +354,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 每个\glssymbol{KKT}乘子分别会被动态更新，以使每个\gls{hidden_unit} 服从约束。
 在实践中，列范数的限制总是通过重投影的显式约束实现。
 
-\section{\gls{regularization}和欠约束问题}
+\section{\glsentrytext{regularization}和欠约束问题}
 \label{sec:regularization_and_under_constrained_problems}
 在某些情况下，为了正确定义\gls{ML}问题，\gls{regularization}是必要的。
 \gls{ML}中许多\gls{linear_model}，包括\gls{linear_regression}和PCA，都依赖于求逆矩阵$\MX^\top\MX$。
@@ -547,7 +547,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 % -- 238 --
 
-\section{\gls{early_stopping}}
+\section{\glsentrytext{early_stopping}}
 \label{sec:early_stopping}
 当训练有足够的表示能力甚至会过度拟合的大模型时，我们经常观察到，训练误差会随着时间的推移逐渐降低但验证集的误差会再次上升。
 图|||c|||是这些现象的一个例子，这种现象几乎一定会出现。
@@ -732,7 +732,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 
 
 % -- 246 --
-\subsection{\gls{CNN}}
+\subsection{\glsentrytext{CNN}}
 目前为止，最流行和广泛使用的\gls{parameter_sharing}出现在应用于\gls{CV}的\firstacr{CNN}。
 自然图像有许多统计属性是对转换不变的。
 例如，猫的照片即使向右边移了一个像素，仍保持猫的相片，。
@@ -745,7 +745,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 
 \gls{CNN}将会在第\ref{char:convolutional_networks}章更详细地讨论。
 
-\section{\gls{sparse}\gls{representation}}
+\section{\glsentrytext{sparse}\glsentrytext{representation}}
 \label{sec:sparse_representations}
 \gls{weight_decay}施加直接作用于模型参数的惩罚。
 另一种策略是将惩罚放在\gls{NN}的激活单元，鼓励对应的激活是\gls{sparse}。
@@ -826,7 +826,7 @@ $\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
 有\gls{hidden_unit}的模型本质上都能变得\gls{sparse}。
 在这本书中，我们将看到各种情况下使用\gls{sparse}\gls{regularization}的例子。
 
-\section{\gls{bagging}和其他\gls{ensemble}的方法}
+\section{\glsentrytext{bagging}和其他\glsentrytext{ensemble}的方法}
 \label{sec:bagging_and_other_ensemble_methods}
 \firstgls{bagging}是通过结合几个模型降低泛化误差的技术\citep{ML:Breiman:bagging}。
 主要想法是分别训练几个不同的模型，然后让所有模型表决测试样例的输出。
@@ -888,7 +888,7 @@ $\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
 向\gls{ensemble}逐步添加\gls{NN},\gls{boosting}已经应用于构建神经网络的\gls{ensemble}\citep{Schwenk-nips10}。
 \gls{boosting}也可以将单个神经网络解释为单个\gls{ensemble}，即通过逐渐增加\gls{NN}的\gls{hidden_unit}。
 
-\section{\gls{dropout}}
+\section{\glsentrytext{dropout}}
 \label{sec:dropout}
 \firstgls{dropout}\citep{Srivastava14}提供了\gls{regularization}一大类模型的方法，计算方便但功能强大的。
 第一个近似下，\gls{dropout}可以被认为是\gls{ensemble}非常多的大\gls{NN}的实用\gls{bagging}方法。
@@ -1203,7 +1203,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %       Hard to translate
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\gls{tangent_distance}、\gls{tangent_prop}和流形切分类}
+\section{\glsentrytext{tangent_distance}、\glsentrytext{tangent_prop}和流形切分类}
 \label{sec:tangent_distance_tangent_prop_and_manifold_tangent_classifier}
 许多\gls{ML}的目标旨在假设数据位于低维流形附近来克服维数灾难，如\ref{sec:manifold_learning}描述。
 

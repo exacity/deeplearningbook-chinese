@@ -12,7 +12,7 @@
 \gls{NLP}中对每一个输入特征都需要对大量的可能值（词汇）建模。
 % 431
 
-\section{大规模\gls{DL}}
+\section{大规模\glsentrytext{DL}}
 \label{sec:large_scale_deep_learning}
 % 431 
 
@@ -149,7 +149,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 % 435
 
 
-\subsection{\gls{model_compression}}
+\subsection{\glsentrytext{model_compression}}
 \label{sec:model_compression}
 % 435 
 
@@ -180,7 +180,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 此外，人们还可以在原始训练数据上训练一个更小的模型，但是只是为了复制模型的其它特征，比如在不正确的类上的后验分布\citep{Hinton-dark-2014,hinton2015distilling}。
 % 436 
 
-\subsection{\gls{dynamic_structure}}
+\subsection{\glsentrytext{dynamic_structure}}
 \label{sec:dynamic_structure}
 
 一般来说，加速数据处理系统的一种策略是构造一个系统，这个系统用\firstgls{dynamic_structure}来描述处理输入的过程。
@@ -282,7 +282,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 
 
 % 440 new
-\section{\gls{CV}}
+\section{\glsentrytext{CV}}
 \label{sec:computer_vision}
 
 一直以来\gls{CV}就是\gls{DL}应用的几个最活跃的研究方向。
@@ -445,8 +445,8 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 % 445
 
 
-\subsection{\gls{dataset_augmentation}}
-\label{sec:dataset_augmentation}
+\subsection{\glsentrytext{dataset_augmentation}}
+\label{sec:dataset_augmentation_chap12}
 如\ref{sec:chap7_dataset_augmentation}节中所讲到的，通过增加训练集的额外副本来增加训练集的大小，从而改进分类器的\gls{generalization}能力。
 其中训练集的额外副本并不改变其标签。
 对象识别是特别适合于这种形式的\gls{dataset_augmentation}的分类任务，因为标签对于许多变换是不变的，可以对输入使用许多几何变换。
@@ -458,7 +458,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 
 
 
-\section{\gls{SR}}
+\section{\glsentrytext{SR}}
 \label{sec:speech_recognition}
 % 446
 
@@ -526,7 +526,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\Vy \vert \RMX = \MX)
 
 
 % Translator: Shenjian Zhao
-\section{\gls{NLP}}
+\section{\glsentrytext{NLP}}
 \label{sec: natural_language_processing}
 
 \firstgls{NLP} 让计算机使用人类语言，例如英语或法语。
@@ -544,7 +544,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\Vy \vert \RMX = \MX)
 因为可能的词总数非常大，基于词的\gls{language_model}必须在极高维度和稀疏的离散空间上操作。
 为使这种空间上的模型在计算和统计意义上都高效，研究者已经开发了几种策略。
 
-\subsection{\gls{n_gram}}
+\subsection{\glsentrytext{n_gram}}
 \label{sec:n_grams}
 
 \firstgls{language_model}定义了自然语言中的\gls{token}序列的概率分布。
@@ -618,7 +618,7 @@ P({\tt THE\ DOG\ RAN\ AWAY}) = P_3({\tt THE\ DOG\ RAN}) P_3({\tt DOG\ RAN\ AWAY}
 混合（或回退）词模型和类模型的复合模型也是可能的。
 尽管词类提供了在序列之间泛化的方式，但其中一些词被相同类的另一个替换，导致该\gls{representation}丢失了很多信息。
 
-\subsection{\gls{NLM}}
+\subsection{\glsentrytext{NLM}}
 \label{sec:neural_language_models}
 
 \firstall{NLM}是一类设计用来克服\gls{curse_of_dimensionality}的\gls{language_model}，它使用词的\gls{distributed_representation}对自然语言序列建模~\citep{BenDucVin01-small}。
@@ -687,7 +687,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 
 % -- 453 --
 
-\subsubsection{使用\gls{shortlist}}
+\subsubsection{使用\glsentrytext{shortlist}}
 第一个\gls{NLM}\citep{BenDucVin01-small,Bengio-nnlm2003-small}通过将词汇量限制为10,000或20,000来减轻大词汇表上\ENNAME{softmax}的高成本。
 \citet{Schwenk+Gauvain2002}和 \citet{Schwenk-2007}在这种方法的基础上建立新的方式，将词汇表$\SetV$分为最常见词汇（由\gls{NN}处理）的\firstgls{shortlist}~$\SetL$和较稀有词汇的尾列表$\SetT = \SetV \backslash \SetL$（由\gls{n_gram}模型处理）。
 为了组合这两个预测，\gls{NN}还必须预测在上下文$C$之后出现的词位于尾部列表的概率。
@@ -773,7 +773,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 缺点是在实践中，分层\ENNAME{softmax}倾向于更差的测试结果（相对基于采样的方法），我们将在下面描述。
 这可能是词类选择得不好。
 
-\subsubsection{\gls{importance_sampling}}
+\subsubsection{\glsentrytext{importance_sampling}}
 加速\gls{NLM}训练的一种方式是避免明确计算所有词（未出现在下一位置）对梯度的贡献。
 每个不正确的词在此模型下应该具有低概率。
 枚举所有这些单词计算成本可能会很高。
@@ -843,7 +843,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 
 % -- 459 --
 
-\subsection{结合\gls{n_gram}和\gls{NLM}}
+\subsection{结合\glsentrytext{n_gram}和\glsentrytext{NLM}}
 \gls{n_gram}模型相对\gls{NN}的主要优点是\gls{n_gram}模型具有更高的模型\gls{capacity}（通过存储非常多的元组的频率），并且处理样本只需非常少的计算量（通过查找只匹配当前上下文的几个元组）。
 如果我们使用哈希表或树来访问计数，那么用于\gls{n_gram}的计算量几乎与\gls{capacity}无关。
 相比之下，将\gls{NN}的参数数目加倍通常也大致加倍计算时间。
@@ -862,7 +862,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 
 模型\gls{capacity}的增加是巨大的 （架构的新部分包含高达$| sV |^n$个参数 ），但是处理输入所需的额外计算量是很小的（因为额外输入非常稀疏）。
 
-\subsection{\gls{NMT}}
+\subsection{\glsentrytext{NMT}}
 \label{sec:neural_machine_translation}
 
 机器翻译以一种自然语言读取句子并产生等同含义的另一种语言的句子。
@@ -919,7 +919,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 
 % -- 462 --
 
-\subsubsection{使用\gls{attention_mechanism}并对齐数据片段}
+\subsubsection{使用\glsentrytext{attention_mechanism}并对齐数据片段}
  使用固定大小的表示来概括非常长的句子（例如60个词）的所有语义细节是非常困难的。 
  这可以使用足够大的RNN，并且用足够长时间训练得很好，才能实现，如 \citet{Cho-et-al-EMNLP2014}和\citet{Sutskever-et-al-NIPS2014}所表明的。
  然而，更高效的方法是先读取整个句子或段落（以获得正在表达的上下文和焦点），然后一次翻译一个词，每次聚焦于输入句子的不同部分来收集产生下一个输出词所需的语义细节。
@@ -953,7 +953,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 例如，允许在更大数据集训练的更高效的跨语言对齐~\citep{Gouws-et-al-arxiv2014} 。
 
 \subsection{历史观点}
-\label{sec:historical_perspective}
+\label{sec:historical_perspective_chap12}
 
 <BAD>在\gls{back_propagation}的第一次探索中，\citet{Rumelhart86b-small}等人提出了\gls{distributed_representation}符号的思想，其中符号对应于族成员的身份，而\gls{NN}捕获族成员之间的关系，训练样本形成三元组如（Colin，Mother，Victoria）。
 \gls{NN}的第一层学习每个族成员的表示。例如，Colin的特征可能代表Colin所在的族树，他所在树的分支，他来自哪一代等等。
@@ -987,7 +987,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 本书的第三部分将扩大这个范围，甚至进一步扩展到仍是目前主要研究领域的任务。
 
 
-\subsection{\gls{recommender_system}}
+\subsection{\glsentrytext{recommender_system}}
 \label{sec:recommender_systems}
 信息技术部门中\gls{ML}的主要应用之一是向潜在用户或客户推荐项目。
 可以分为两种主要的应用：在线广告和项目建议（通常这些建议的目的仍然是为了销售产品）。
@@ -1050,7 +1050,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 
 % -- 467 --
 
-\subsubsection{\gls{exploration}与\gls{exploitation}}
+\subsubsection{\glsentrytext{exploration}与\glsentrytext{exploitation}}
 当向用户推荐时，会产生超出普通\gls{supervised_learning}范围的问题，并进入\gls{RL}的领域。
 理论上，许多推荐问题最准确的描述是\gls{contextual_bandit}\citep{Langford+Zhang-NIPS2008,Lu-et-al-2010}。
 问题是，当我们使用\gls{recommender_system}收集数据时，我们得到一个有偏的和不完整的用户偏好观：我们只能看到用户对推荐给他们项目的反应，而不是其他项目。

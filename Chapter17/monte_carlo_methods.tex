@@ -1,5 +1,5 @@
 % Translator: Tianfan Fu
-\chapter{\gls{monte_carlo}方法}
+\chapter{\glsentrytext{monte_carlo}方法}
 \label{chap:monte_carlo_methods}
 % 581
 
@@ -17,7 +17,7 @@
 本章主要关注\gls{monte_carlo}方法。
 % 581
 
-\section{采样和\gls{monte_carlo}方法}
+\section{采样和\glsentrytext{monte_carlo}方法}
 \label{sec:sampling_and_monte_carlo_methods}
 
 \gls{ML}中的许多工具是基于从某种分布中采样以及用这些样本对目标量做一个\gls{monte_carlo}估计。
@@ -32,7 +32,7 @@
 在许多其他情况下，抽样实际上是我们的目标，就像我们想训练一个可以从训练分布采样的模型。
 % 582 
 
-\subsection{\gls{monte_carlo}采样的基础}
+\subsection{\glsentrytext{monte_carlo}采样的基础}
 \label{sec:basics_of_monte_carlo_sampling}
 
 当无法精确计算和或积分（例如，和具有指数数量个项，且无法被精确简化）时，通常可以使用\gls{monte_carlo}采样。
@@ -84,7 +84,7 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\Vx)]
 这就是\gls{mcmc}方法（见Sec~\ref{sec:markov_chain_monte_carlo_methods}）。
 % 583
 
-\section{\gls{importance_sampling}}
+\section{\glsentrytext{importance_sampling}}
 \label{sec:importance_sampling}
 
 如方程~\eqref{eqn:integra}所示，在\gls{monte_carlo}方法求积分（或者求和）的过程中，确定积分的哪一部分作为概率分布$p(\Vx)$，哪一部分作为被积的函数$f(\Vx)$（我们感兴趣的是估计$f(\Vx)$在概率分布$p(\Vx)$下的期望）是很关键的一步。
@@ -172,7 +172,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 586 
 
 
-\section{\gls{mcmc}方法}
+\section{\glsentrytext{mcmc}方法}
 \label{sec:markov_chain_monte_carlo_methods}
 
 在许多实例中，我们希望采用\gls{monte_carlo}方法，然而往往又不存在一种直接从目标分布$p_{\text{model}}(\Vx)$中精确采样或者一个好的（方差较小的）\gls{importance_sampling}分布$q(\Vx)$。
@@ -327,7 +327,7 @@ q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
 
 
 
-\section{\gls{gibbs_sampling}}
+\section{\glsentrytext{gibbs_sampling}}
 \label{sec:gibbs_sampling}
 
 截至目前我们已经了解了如何通过反复的更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\vert\Vx)$从一个分布$q(\Vx)$中采样。
@@ -359,7 +359,7 @@ q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
 % 590
 
 
-\section{不同的峰值之间的\gls{mixing}挑战}
+\section{不同的峰值之间的\glsentrytext{mixing}挑战}
 \label{sec:the_challenge_of_mixing_between_separated_modes}
 % 591
 
@@ -442,7 +442,7 @@ q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
 
 
 
-\subsection{不同峰值之间通过\gls{tempering}来\gls{mixing}}
+\subsection{不同峰值之间通过\glsentrytext{tempering}来\glsentrytext{mixing}}
 \label{sec:tempering_to_mix_between_modes}
 % 594
 
@@ -483,7 +483,7 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 
 
 % 595
-\subsection{深度也许会有助于\gls{mixing}}
+\subsection{深度也许会有助于\glsentrytext{mixing}}
 \label{sec:depth_may_help_mixing}
 
 当我们从隐变量模型$p(\Vh,\Vx)$中采样的时候，我们可以发现如果$p(\Vh\vert \Vx)$将$\Vx$编码的非常好，那么从$p(\Vx \vert \Vh)$中采样的时候，并不会太大的改变$\Vx$，那么\gls{mixing}结果会很糟糕。
