@@ -292,7 +292,7 @@
 假设我们有$m$个输入\gls{example:chap5}组成的\gls{design_matrix}，我们不用它来训练模型，而是评估模型性能如何。
 我们也有每个\gls{example:chap5}对应的正确值$y$组成的回归\gls{target}向量。
 因为这个\gls{dataset}只是用来评估性能，我们称之为\gls{test_set}。
-我们将输入的\gls{design_matrix}记作$\MX^{\text(test)}$，回归\gls{target}向量记作$\Vy^{(\text{test})}$。
+我们将输入的\gls{design_matrix}记作$\MX^{\text{(test)}}$，回归\gls{target}向量记作$\Vy^{(\text{test})}$。
 
 衡量模型性能的一种方法是计算模型在\gls{test_set}上的\firstgls{mean_squared_error}。
 如果$\hat{\Vy}^{(\text{test})}$表示模型在\gls{test_set}上的预测值，那么\gls{mean_squared_error}表示为：
@@ -952,7 +952,7 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 \firstgls{almost_sure_convergence}是指当$p(\lim_{m\to\infty} \RVx^{(m)} = \Vx) = 1 $时，随机变量序列$\RVx^{(1)}$，$\RVx^{(2)}$，$\dots$收敛到$\Vx$。
 
 一致性保证了估计偏差会随数据\gls{example:chap5}数目的增多而减少。
-然而，反过来不是正确的----渐近无偏并不意味着一致性。
+然而，反过来不是正确的---渐近无偏并不意味着一致性。
 例如，考虑用包含$m$个样本的\gls{dataset}$\{x^{(1)},\dots,x^{(m)}\}$估计正态分布$\mathcal{N}(x;\mu,\sigma^2)$的均值参数$\mu$。
 我们可以使用\gls{dataset}的第一个\gls{example:chap5}$x^{(1)}$作为无偏（unbiased）估计：$\hat{\theta} = x^{(1)}$。
 在该情况下，$\SetE(\hat{\theta}_m) = \theta$，所以不管观测到多少数据点，该估计都是无偏的。
@@ -1119,7 +1119,7 @@ KL散度定义为
 
 相对于\gls{maximum_likelihood_estimation}，贝叶斯估计有两个重要区别。
 第一，不像最大似然方法预测时使用$\Vtheta$的点估计，贝叶斯方法预测$\Vtheta$的全分布。
-例如，在观测到$m$个\gls{example:chap5}后，下一个数据\gls{example:chap5}的预测分布如下：
+例如，在观测到$m$个\gls{example:chap5}后，下一个数据\gls{example:chap5}，$x^{(m+1)}$，的预测分布如下：
 \begin{equation}
     p(x^{(m+1)} | x^{(1)},\dots,x^{(m)}) = 
     \int p(x^{(m+1)} | \Vtheta) p(\Vtheta | x^{(1)},\dots,x^{(m)}) 
@@ -1143,11 +1143,11 @@ KL散度定义为
 
 \textbf{实例：贝叶斯\gls{linear_regression}} \quad 我们使用贝叶斯估计方法学习\gls{linear_regression}参数。
 在\gls{linear_regression}中，我们学习从输入向量$\Vx\in\SetR^n$预测标量$y\in\SetR$的映射。
-该预测参数化为向量$\Vw \in \SetR$：
+该预测参数化为向量$\Vw \in \SetR^n$：
 \begin{equation}
     \hat{y} = \Vw^\Tsp \Vx .
 \end{equation}
-给定一组$m$个训练样本$(\MX^{(\text{train})}), \Vy^{(\text{train})}$，
+给定一组$m$个训练样本$(\MX^{(\text{train})}, \Vy^{(\text{train})})$，
 我们可以表示整个训练集对$y$的预测为：
 \begin{equation}
     \hat{\Vy}^{(\text{train})} = \MX^{(\text{train})} \Vw .
@@ -1155,14 +1155,14 @@ KL散度定义为
 表示为$\Vy^{(\text{train})}$上的高斯条件分布，我们得到
 \begin{align}
     p(\Vy^{(\text{train})} | \MX^{(\text{train})}, \Vw) &= 
-    \mathcal{N}( \Vy^{(\text{train})}; \MX^{(\text{train})}\Vw, I ) \\
+    \mathcal{N}( \Vy^{(\text{train})}; \MX^{(\text{train})}\Vw, \MI ) \\
     & \propto \exp\left( 
         -\frac{1}{2}( \Vy^{(\text{train})} - \MX^{(\text{train})}\Vw )^\Tsp
         ( \Vy^{(\text{train})} - \MX^{(\text{train})}\Vw )
     \right),
 \end{align}
 其中，我们根据标准的MSE公式假设$y$上的高斯方差为$1$。
-在下文中，为减少符号负担，我们将$(\MX^{(\text{train})}), \Vy^{(\text{train})}$简单表示为$(\MX, \Vy)$。
+在下文中，为减少符号负担，我们将$(\MX^{(\text{train})}, \Vy^{(\text{train})})$简单表示为$(\MX, \Vy)$。
 
 % -- 133 --
 
@@ -1210,7 +1210,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
     -\frac{1}{2} (\Vw - \Vmu_m)^\Tsp \VLambda_m^{-1} (\Vw - \Vmu_m)
     \right).
 \end{align}
-所有不包括的参数向量$\Vw$的项都已经被删去了；它们意味着分布的积分必须归一这个事实确定。
+所有不包括的参数向量$\Vw$的项都已经被删去了；它们意味着分布的积分必须归一这个事实。
 式\ref{eq:3.23}显示了如何标准化多元高斯分布。
 
 % -- 134 --
@@ -1218,7 +1218,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 检查此后验分布可以让我们获得贝叶斯推理效果的一些直觉。
 大多数情况下，我们设置$\Vmu_0 = 0$。
 如果我们设置$\VLambda_0 = \frac{1}{\alpha}\MI$，那么$\mu_m$对$\Vw$的估计就和频率派带权重衰减惩罚$\alpha\Vw^\Tsp\Vw$的\gls{linear_regression}的估计一样。
-一个区别是若$\alpha$设为$0$则贝叶斯估计是未定义的----不能初始化贝叶斯学习过程为一个无限宽的$\Vw$先验。
+一个区别是若$\alpha$设为$0$则贝叶斯估计是未定义的---不能初始化贝叶斯学习过程为一个无限宽的$\Vw$先验。
 更重要的区别是贝叶斯估计会给出一个协方差矩阵，表示$\Vw$所有不同值的可能范围，而不仅是估计$\mu_m$。
 
 \subsection{\glsentrytext{MAP}（\glssymbol{MAP}）估计}
@@ -1230,8 +1230,8 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 \glssymbol{MAP}估计选择后验概率最大的点（或在$\Vtheta$是连续值的更常见情况下，概率密度最大的点）：
 \begin{equation}
 \label{eq:5.79}
-    \Vtheta_{\text{MAP}} = \underset{\Vtheta}{\argmax} p(\Vtheta|\Vx)
-    \underset{\Vtheta}{\argmax} \log p(\Vx | \Vtheta) + \log p(\Vtheta) .
+    \Vtheta_{\text{MAP}} = \underset{\Vtheta}{\argmax} \, p(\Vtheta|\Vx)
+    = \underset{\Vtheta}{\argmax} \, \log p(\Vx | \Vtheta) + \log p(\Vtheta) .
 \end{equation}
 我们可以认出上式右边的$\log p(\Vx | \Vtheta)$对应着标准的对数似然项，$\log p(\Vtheta)$对应着先验分布。
 
@@ -1257,7 +1257,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 \section{\glsentrytext{supervised_learning}算法}
 \label{sec:supervised_learning_algorithms}
 回顾第5.1.3节，\gls{supervised_learning}算法，粗略地说，是给定一组输入$\Vx$和输出$\Vy$的训练集，学习如何关联输入和输出。
-在许多情况下，输出$\Vy$很难自动收集，必须由人来提供“管理”，不过该术语仍然适用于训练集目标$\Vy$可以被自动收集的情况。
+在许多情况下，输出$\Vy$很难自动收集，必须由人来提供“管理”，不过该术语仍然适用于训练集目标可以被自动收集的情况。
 
 % -- 136 --
 
@@ -1268,7 +1268,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 我们已经看到，\gls{linear_regression}对应于分布族
 \begin{equation}
-    p(y | \Vx; \Vtheta) = \mathcal{N}( y; \Vtheta^\Tsp \Vx, I).
+    p(y | \Vx; \Vtheta) = \mathcal{N}( y; \Vtheta^\Tsp \Vx, \MI).
 \end{equation}
 通过定义一族不同的概率分布，我们可以将\gls{linear_regression}扩展到分类情况中。
 如果我们有两个类，类$0$和类$1$，那么我们只需要指定这两类之一的概率。
@@ -1288,7 +1288,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 相比而言，逻辑回归会更困难些。
 其最佳权重没有闭解。
 反之，我们必须最大化对数似然来搜索最优解。
-我们可以通过\gls{GD}最小化负对数似然（NLL）达到这一点。
+我们可以通过\gls{GD}最小化负对数似然达到这一点。
 
 通过确定正确的输入和输出变量上的有参条件概率分布族，相同的策略基本上可以用于任何\gls{supervised_learning}问题。
 
@@ -1328,7 +1328,7 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 这是可能的，因为我们可以认为$\phi$是固定的，仅优化$\alpha$，即优化算法可以将决策函数视为不同空间中的线性函数。
 其二，核函数$k$的实现方法通常有比直接构建$\phi(\Vx)$再算\gls{dot_product}高效很多。
 
-在某些情况下，$\phi(Vx)$甚至可以使无限维的，对于普通的显式方法而言，这将是无限的计算代价。
+在某些情况下，$\phi(\Vx)$甚至可以使无限维的，对于普通的显式方法而言，这将是无限的计算代价。
 在很多情况下，即使$\phi(\Vx)$是难算的，$k(\Vx,\Vx')$却会是一个关于$\Vx$非线性的，易算的函数。
 举个无限维空间易解的核的例子，我们构建一个作用于非负整数$x$上的\gls{feature}映射$\phi(x)$。
 假设这个映射返回一个由开头$x$个$1$，随后时无限个$0$的向量。
@@ -1338,7 +1338,7 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 
 最常用的核函数是\firstgls{gaussian_kernel}，
 \begin{equation}
-    k(\Vu, \Vv) = \mathcal(\Vu - \Vv; \mathbf{0}, \sigma^2 I) ,
+    k(\Vu, \Vv) = \mathcal{N} (\Vu - \Vv; \mathbf{0}, \sigma^2 I) ,
 \end{equation}
 其中$\mathcal{N}(x; \Vmu, \VSigma)$是标准正态密度。
 这个核也被称为\firstall{RBF}核，因为其值沿$\Vv$中从$\Vu$向外辐射的方向减小。
@@ -1376,8 +1376,8 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 作为一个非参数学习算法，$k$-最近邻并不局限于固定数目的参数。
 我们通常认为$k$-最近邻算法没有任何参数，而是使用训练数据的简单函数。
 事实上，甚至也没有一个真正的训练阶段或学习过程。
-反之，在测试阶段我们希望在新的测试输入$\Vx$上产生$\Vy$，我们需要在训练数据$\MX$上找到$\Vx$的$k$-最近邻。
-然后我们返回训练集上对应的$k$个$\Vy$值。
+反之，在测试阶段我们希望在新的测试输入$\Vx$上产生$y$，我们需要在训练数据$\MX$上找到$\Vx$的$k$-最近邻。
+然后我们返回训练集上对应的$y$值的平均值。
 这几乎适用于任何类型可以确定$y$值平均值的\gls{supervised_learning}。
 在分类情况中，我们可以平均独热码向量$\Vc$，其中$c_y = 1$，其他的$i$值取$c_i=0$。
 然后，我们可以解释这些独热码的均值为类别的概率分布。
@@ -1390,10 +1390,10 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 $k$-最近邻的高容量使其在训练\gls{example:chap5}数目大时能够获取较高的精度。
 然而，它的计算成本很高，另外在训练集较小时泛化能力很差。
 $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他更具识别力。
-例如，假设我们在做从各向同性的高斯分布中抽取$\Vx\in\SetR^100$的回归任务，但是只有一个变量$x_1$和结果相关。
+例如，假设我们在做从各向同性的高斯分布中抽取$\Vx\in\SetR^{100}$的回归任务，但是只有一个变量$x_1$和结果相关。
 进一步假设该\gls{feature}直接决定了输出，即在所有情况中$y=x_1$。
 最近邻回归不能检测到这个简单模式。
-大多数点$\Vx$的最近邻将取决于$x_2$到$x_100$的大多数\gls{feature}，
+大多数点$\Vx$的最近邻将取决于$x_2$到$x_{100}$的大多数\gls{feature}，
 而不是单独取决于\gls{feature}$x_1$。
 因此，小训练集上的输出将会非常随机。
 
@@ -1489,7 +1489,7 @@ $\MX$对应的无偏样本协方差矩阵给定如下
 \begin{equation}
     \text{Var}[\Vx] = \frac{1}{m-1} \MX^\Tsp \MX .
 \end{equation}
-\glssymbol{PCA}会找到一个$\text{Var}[\Vz]$是对角矩阵的表示（通过线性变换）$\Vz=\Vx^\Tsp\MW$。
+\glssymbol{PCA}会找到一个$\text{Var}[\Vz]$是对角矩阵的表示（通过线性变换）$\Vz=\MW^\Tsp\Vx$。
 
 在第2.12节，我们看到\gls{design_matrix}$\MX$的主成分由$\MX^\Tsp\MX$的\gls{feature}向量给定。
 从这个角度，我们有
@@ -1499,10 +1499,10 @@ $\MX$对应的无偏样本协方差矩阵给定如下
 本节中，我们会探索主成分分析的另一种推导。
 主成分也可以通过奇异值分解得到。
 具体地，它们是$\MX$的右奇异向量。
-为了说明这点，假设$\MW$是奇异值分解$\MX = \MU\VSigma\Vw$的右奇异向量。
+为了说明这点，假设$\MW$是奇异值分解$\MX = \MU\VSigma\MW^\Tsp$的右奇异向量。
 以$\MW$作为特征向量基，我们可以得到原来的特征向量方程：
 \begin{equation}
-    \MX^\Tsp\MX = \left( \MU\VSigma \MW \right)^\Tsp \MU\VSigma \MW = 
+    \MX^\Tsp\MX = \left( \MU\VSigma \MW^\Tsp \right)^\Tsp \MU\VSigma \MW^\Tsp = 
     \MW \VSigma^2 \MW^\Tsp .
 \end{equation}
 
@@ -1512,12 +1512,12 @@ $\MX$对应的无偏样本协方差矩阵给定如下
 使用$\MX$的\glssymbol{SVD}分解，$\MX$的方差可以表示为
 \begin{align}
     \text{Var}[\Vx] &= \frac{1}{m-1} \MX^\Tsp\MX \\
-    &= \frac{1}{m-1} \left( \MU\VSigma \MW \right)^\Tsp \MU\VSigma \MW \\
-    &= \frac{1}{m-1} \MW \VSigma^\Tsp \MU^\Tsp \MU\VSigma \MW \\
-    &= \frac{1}{m-1} \MW \VSigma^2 \MW ,
+    &= \frac{1}{m-1} \left( \MU\VSigma \MW^\Tsp \right)^\Tsp \MU\VSigma \MW^\Tsp \\
+    &= \frac{1}{m-1} \MW \VSigma^\Tsp \MU^\Tsp \MU\VSigma \MW^\Tsp \\
+    &= \frac{1}{m-1} \MW \VSigma^2 \MW^\Tsp ,
 \end{align}
 其中，我们使用$\MU^\Tsp\MU = \MI$，因为根据奇异值的定义矩阵$\MU$是正交的。
-这表明，如果我们取$\MZ=\Vx\MW$，那么我们可以确保$\Vz$的协方差满足对角的要求：
+这表明$\Vz$的协方差满足对角的要求：
 \begin{align}
     \text{Var}[\Vz] &= \frac{1}{m-1} \MZ^\Tsp\MZ \\
     &= \frac{1}{m-1} \MW^\Tsp \MX^\Tsp \MX^\Tsp \MW \\
@@ -1546,7 +1546,7 @@ $k$-均值聚类算法将训练集分成$k$个靠近彼此的不同\gls{example:
 当$\Vx$属于聚类$i$时，有$h_i=1$，$\Vh$的其他项为零。
 
 $k$-均值聚类提供的独热码也是一种稀疏表示，因为每个输入的对应表示大部分元素为零。
-之后，我们会介绍能够学习更灵活的稀疏表示的一些其他算法（表示中不只一个非零项）。
+之后，我们会介绍能够学习更灵活的稀疏表示的一些其他算法（表示中每个输入$\Vx$不只一个非零项）。
 独热码是稀疏表示的一个极端实例，丢失了很多分布式表示的优点。
 独热码仍然有一些统计优点（自然地传达了相同聚类中的\gls{example:chap5}彼此相似的观点），
 也具有计算上的优势，因为整个表示可以用一个单独的整数表示。
@@ -1574,7 +1574,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 % -- 146 --
 
 这些问题说明了一些我们可能更偏好于分布式表示（相对于独热码表示而言）的原因。
-分布式表示可以对每个车辆赋予两个属性----一个表示它颜色，一个表示它是汽车还是卡车。
+分布式表示可以对每个车辆赋予两个属性---一个表示它颜色，一个表示它是汽车还是卡车。
 目前仍然不清楚什么是最优的分布式表示（学习算法如何知道我们关心的两个属性是颜色和是否汽车或卡车，而不是制造商和车龄？），
 但是多个属性减少了算法去猜我们关心哪一个属性的负担，允许我们通过比较很多属性而非测试一个单一属性来细粒度地衡量相似性。
 
@@ -1590,7 +1590,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \gls{ML}算法中的损失函数通常可以分解成每个\gls{example:chap5}损失函数的总和。
 例如，训练数据的负条件对数似然可以写成
 \begin{equation}
-    J(\Vtheta) = \SetE_{\Vx,y \sim \hat{p}_{\text{data}}}
+    J(\Vtheta) = \SetE_{\RVx,\RSy \sim \hat{p}_{\text{data}}}
     L(\Vx, y, \Vtheta) = 
     \frac{1}{m} \sum_{i=1}^m  L(\Vx^{(i)}, y^{(i)}, \Vtheta) ,
 \end{equation}
@@ -1639,7 +1639,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 然而，当$m$趋向于无限时，该模型最终会在\gls{SGD}抽样训练集上的每个\gls{example:chap5}前
 收敛到可能的最优测试误差。
 继续增加$m$不会延长达到模型可能的最优测试误差的时间。
-从这点来看，我们可以认为用\gls{SGD}训练模型的渐近代价是关于$m$的函数的$O(1)$级别。
+从这点来看，我们可以认为用\glssymbol{SGD}训练模型的渐近代价是关于$m$的函数的$O(1)$级别。
 
 在\gls{DL}之前，学习非线性模型的主要方法是结合核技巧的线性模型。
 很多核学习算法需要构建一个$m\times m$的矩阵$G_{i,j}=k(\Vx^{(i)}, \Vx^{(j)})$。
@@ -1656,10 +1656,10 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 例如，\gls{linear_regression}算法的组成成分有$\MX$和$\Vy$构成的\gls{dataset}，损失函数
 \begin{equation}
-    J(\Vw, b) = -\SetE_{\Vx,y\sim\hat{p}_{\text{data}}}
+    J(\Vw, b) = -\SetE_{\RVx,\RSy\sim\hat{p}_{\text{data}}}
     \log p_{\text{model}} (y | \Vx) ,
 \end{equation}
-模型是$p_{\text{model}} (y | \Vx) \mathcal{N}(y; \Vx^\Tsp \Vw + b, 1)$，
+模型是$p_{\text{model}} (y | \Vx) = \mathcal{N}(y; \Vx^\Tsp \Vw + b, 1)$，
 在大多数情况下，优化算法可以定义为求解损失函数梯度为零的标准方程。
 
 意识到我们可以替换独立于其他成分的大多数成分，因此我们能得到很多不同的算法。
@@ -1672,7 +1672,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 损失函数也可能含有附加项，如\gls{regularizer}。
 例如，我们可以将权重衰减加到\gls{linear_regression}的损失函数中
 \begin{equation}
-    J(\Vw, b) = \lambda \norm{\Vw}_2^2 - \SetE_{\Vx,y\sim p_{\text{data}}}
+    J(\Vw, b) = \lambda \norm{\Vw}_2^2 - \SetE_{\RVx,\RSy\sim \hat{p}_{\text{data}}}
     \log p_{\text{model}} (y | \Vx) .
 \end{equation}
 该优化仍然有闭解。
@@ -1685,7 +1685,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \gls{unsupervised_learning}时，我们需要定义一个只包含$\MX$的\gls{dataset}，一个合适的无监督损失函数和一个模型。
 例如，通过指定如下损失函数可以得到\glssymbol{PCA}的第一个主向量
 \begin{equation}
-    J(\Vw) = \SetE_{\Vx \sim p_{\text{data}}} \norm{\Vx - r(\Vx; \Vw)}_2^2
+    J(\Vw) = \SetE_{\RVx \sim \hat{p}_{\text{data}}} \norm{\Vx - r(\Vx; \Vw)}_2^2
 \end{equation}
 模型定义为重建函数$r(\Vx) = \Vw^\Tsp\Vx \Vw$，并且$\Vw$有范数为$1$的限制。
 
@@ -1714,7 +1714,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \subsection{\glsentrytext{curse_of_dimensionality}}
 \label{sec:the_curse_of_dimensionality}
 当数据的维数很高时，很多\gls{ML}问题变得相当困难。
-这种现象被称为\firstgls{curse_of_dimensionality}（curse of dimensionality）。
+这种现象被称为\firstgls{curse_of_dimensionality}。
 特别值得注意的是，一组变量的不同可能配置数量随着变量数目的增加而指数级增长。
 
 维数灾难发生在计算机科学的许多地方，在\gls{ML}中尤其如此。
@@ -1780,7 +1780,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 虽然$k$近邻算法拷贝了附近训练\gls{example:chap5}的输出，大部分核机器也是在和附近训练\gls{example:chap5}相关的训练集输出上插值。
 一类重要的核函数是\firstgls{local_kernel}，其核函数$k(\Vu,\Vv)$在$\Vu=\Vv$时很大，
 当$\Vu$和$\Vv$距离拉大时而减小。
-局部核可以看作是执行模版匹配的相似函数，衡量测试\gls{example:chap5}$\Vx$和每个训练\gls{example:chap5}$\Vx{(i)}$有多么相似。
+局部核可以看作是执行模版匹配的相似函数，衡量测试\gls{example:chap5}$\Vx$和每个训练\gls{example:chap5}$\Vx^{(i)}$有多么相似。
 大部分\gls{DL}的现代动机源自研究局部模版匹配的局限性，以及\gls{DL}如何克服这些局限性\citep{NIPS2005_424}。
 
 决策树也有平滑学习的局限性，因为它将输入空间分成和叶节点一样多的区间，并在每个区间使用单独的参数（或者有些决策树的拓展有多个参数）。
@@ -1811,7 +1811,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 如果函数在不同的区间中表现不一样，那么就非常难用一组训练\gls{example:chap5}去刻画函数。
 如果函数是复杂的（我们希望区分多于训练\gls{example:chap5}数目的大量区间），有希望很好地泛化么？
 
-回答这些问题----是否可以有效地表示复杂的函数，以及所估计的函数是否可以良好地泛化到新的输入----有。
+回答这些问题---是否可以有效地表示复杂的函数，以及所估计的函数是否可以良好地泛化到新的输入---有。
 关键观点是，只要我们在区间相关性上引入额外的数据生成分布上的假设，那么$O(k)$个\gls{example:chap5}是足以描述多如$O(2^k)$的大量区间。
 这样，我们真的能做到非局部地泛化\citep{Bengio+Monperrus-2005,NIPS2005_539}。
 许多不同的\gls{DL}算法提出隐式或显式的适用于大范围人工智能问题的合理假设， 使其可以利用这些优势。
@@ -1835,7 +1835,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \firstgls{manifold}指连接在一起的区域。
 数学上，它是指一组点，且每个点都有其邻域。
 给定一个任意的点，其流形局部看起来像是欧几里得空间。
-日常生活中，我们将世界视为2-D平面，但实际上它是3-D的球形\gls{manifold}。
+日常生活中，我们将世界视为二维平面，但实际上它是三维球形\gls{manifold}。
 
 每个点周围邻域的定义暗示着存在变换能够从一个位置移动到其邻域位置。
 例如在地球表面这个流形中，我们可以朝东南西北走。
@@ -1892,7 +1892,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 当数据位于低维流形中，使用流形中的坐标，而非$\SetR^n$中的坐标表示\gls{ML}中的数据更为自然。
 日常生活中，我们可以认为道路是嵌入在三维空间的一维流形。
-我们用1-D道路中的地址号码去明确地址，而非3-D空间中的坐标。
+我们用一维道路中的地址号码去明确地址，而非三维空间中的坐标。
 提取这些流形中的坐标是非常具有挑战性的，但是很有希望改进很多\gls{ML}算法。
 这个一般性原则用于很多情况下。
 图5.13展示了包含脸的\gls{dataset}的流形结构。
