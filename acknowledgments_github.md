@@ -17,3 +17,5 @@
  - @RuiZhang1993 ==> Chapter2 公式有误
  - @zymiboxpay ==> Chapter2 等号消失
  - @xingkongliang ==> Chapter2 公式有误
+ - @oisc ==> Chapter2 公式有误
+
