@@ -28,7 +28,7 @@
 必须对\gls{overflow}和\gls{underflow}进行数值稳定的一个例子是\firstgls{softmax}。
 \gls{softmax}经常用于预测与\gls{multinoulli}相关联的概率，定义为
 \begin{align}
- \text{softmax}(\Vx)_i = \frac{\exp(\Sx_i)}{\sum_{j=1}^n \exp(\Sx_j)}
+ \text{softmax}(\Vx)_i = \frac{\exp(\Sx_i)}{\sum_{j=1}^n \exp(\Sx_j)} .
 \end{align}
 考虑一下当所有$\Sx_i$都等于某个常数$\Sc$时会发生什么。
 从理论分析上说，我们可以发现所有的输出都应该为$\frac{1}{n}$。
@@ -64,7 +64,7 @@ Theano\citep{bergstra+al:2010-scipy,Bastien-2012}就是这样软件包的一个�
 考虑函数$f(\Vx) = \MA^{-1} \Vx$。
 当$\MA \in \SetR^{n \times n}$ 具有特征值分解时，其条件数为
 \begin{align}
- \underset{i,j}{\max} \Bigg| \frac{\lambda_i}{ \lambda_j} \Bigg|.
+ \underset{i,j}{\max}~ \Bigg| \frac{\lambda_i}{ \lambda_j} \Bigg|.
 \end{align}
 这是最大和最小特征值的模之比。
 当该数很大时，矩阵求逆对输入的误差特别敏感。
@@ -87,7 +87,7 @@ Theano\citep{bergstra+al:2010-scipy,Bastien-2012}就是这样软件包的一个�
 当我们对其进行最小化时，我们也把它叫做\firstgls{cost_function}，\firstgls{loss_function}或\firstgls{error_function}。
 虽然有些机器学习著作赋予这些名称特殊的意义，但在这本书中我们交替使用这些术语。
 
-我们经常使用一个上标$*$表示最小化或最大化函数的$\Vx$值。
+我们通常使用一个上标$*$表示最小化或最大化函数的$\Vx$值。
 如我们记$\Vx^*=\argmin f(\Vx)$。
 
 我们假设读者已经熟悉微积分，这里简要回顾微积分概念如何与优化联系。
@@ -155,7 +155,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 
 % -- 81 --
 
-我们必须利用\firstgls{partial_derivatives}的概念针对具有多维输入的函数。
+针对具有多维输入的函数，我们必须使用\firstgls{partial_derivatives}的概念。
 \gls{partial_derivatives}$\frac{\partial}{\partial \Sx_i}f(\Vx)$衡量点$\Vx$处只有$x_i$增加时$f(\Vx)$如何变化。
 \firstgls{gradient}是相对一个向量求导的\gls{derivative}:$f$的导数是包含所有\gls{partial_derivatives}的向量，记为$\nabla_{\Vx} f(\Vx)$。
 \gls{gradient}的第$i$的元素是$f$关于$x_i$的\gls{partial_derivatives}。
@@ -263,7 +263,6 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \begin{align}
 \label{eq:4.9}
  f(\Vx^{(0)} - \epsilon \Vg ) \approx f(\Vx^{(0)})  - \epsilon \Vg^\Tsp \Vg + \frac{1}{2} \epsilon^2 \Vg^\Tsp \MH  \Vg.
-}
 \end{align}
 其中有3项：函数的原始值、函数斜率导致的预期改善、函数\gls{curvature}导致的校正。
 当这最后一项太大时，\gls{GD}实际上是可能向上移动的。
@@ -271,7 +270,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 在实践中，\gls{taylor}级数不会在$\epsilon$大的时候也保持准确，因此在这种情况下我们必须采取更启发式的选择。
 当$\Vg^\Tsp \MH  \Vg$为正时，通过计算可得，使近似\gls{taylor}级数下降最多的最优步长为
 \begin{align}
- \epsilon^* = \frac{ \Vg^\Tsp \Vg}{ \Vg^\Tsp \MH  \Vg}
+ \epsilon^* = \frac{ \Vg^\Tsp \Vg}{ \Vg^\Tsp \MH  \Vg} .
 \end{align}
 最坏的情况下，$\Vg$与$\MH$最大特征值$\lambda_{\max}$对应的特征向量对齐，则最优步长是$\frac{1}{\lambda_{\max}}$。
 我们要最小化的函数能用二次函数很好地近似的情况下，\gls{hessian}的特征值决定了学习速率的量级。
@@ -339,7 +338,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \end{align}
 接着通过计算，我们可以得到这个函数的\gls{critical_points}：
 \begin{align} \label{eq:newtonstep}
- \Vx^* =  \Vx^{(0)} -  \MH(f)(\Vx^{(0)})^{-1}  \nabla_{\Vx} f(\Vx^{(0)})
+ \Vx^* =  \Vx^{(0)} -  \MH(f)(\Vx^{(0)})^{-1}  \nabla_{\Vx} f(\Vx^{(0)}) .
 \end{align}
 当$f$是一个正定二次函数时，\gls{newton_method}只要应用一次式\ref{eq:newtonstep}就能直接跳到函数的最小点。
 如果$f$不是一个真正二次但能在局部近似为正定二次，\gls{newton_method}则需要多次迭代应用式 \ref{eq:newtonstep}。
@@ -416,12 +415,12 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \end{align}
 与如下函数有相同的最优\gls{objective_function}值和最优点集$\Vx$
 \begin{align}
- \underset{\Vx \in \SetS}{\min} f(\Vx).
+ \underset{\Vx \in \SetS}{\min}~ f(\Vx).
 \end{align}
 这是因为当约束满足时，
 \begin{align}
   \underset{\Vlambda}{\max}~
- \underset{\Valpha, \Valpha \geq 0}{\max}   L(\Vx, \Vlambda, \Valpha)  = f(\Vx)
+ \underset{\Valpha, \Valpha \geq 0}{\max}   L(\Vx, \Vlambda, \Valpha)  = f(\Vx) ,
 \end{align}
 而违反任意约束时，
 \begin{align}
@@ -477,7 +476,7 @@ $中的$\alpha_i = 0$。
 \label{sec:example_linear_least_squares}
 假设我们希望找到最小化下式的$\Vx$的值
 \begin{align}
- f(\Vx) = \frac{1}{2}\| \MA \Vx - \Vb \|_2^2
+ f(\Vx) = \frac{1}{2}\| \MA \Vx - \Vb \|_2^2 .
 \end{align}
 专门线性代数算法能够高效地解决这个问题；但是，我们也可以探索如何使用基于\gls{gradient}的优化来解决这个问题，这可以作为这些技术是如何工作的一个简单例子。
 
@@ -499,7 +498,7 @@ $中的$\alpha_i = 0$。
 现在，我们解决以下问题
 \begin{align}
   \underset{\Vx}{\min}~
- \underset{\lambda, \lambda \geq 0}{\max} L(\Vx, \lambda) 
+ \underset{\lambda, \lambda \geq 0}{\max}~ L(\Vx, \lambda) .
 \end{align}
 
 % -- 92 --

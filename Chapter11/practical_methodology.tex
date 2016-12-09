@@ -86,7 +86,7 @@
 在很多情况下，我们希望用一个数而不是曲线来概括分类器的性能。
 要做到这一点，我们可以转换精度$p$和\gls{recall}$r$为\textbf{F-score}
 \begin{equation}
-	F = \frac{2pr}{p+r}
+	F = \frac{2pr}{p+r}.
 \end{equation}
 另一种方法是报告PR曲线下方的总面积。
 
@@ -409,7 +409,7 @@
 进一步假设，我们单独手动实现了每个参数的梯度下降规则。
 而我们在偏置更新时犯了一个错误：
 \begin{equation}
-	\Vb \leftarrow \Vb - \alpha
+	\Vb \leftarrow \Vb - \alpha,
 \end{equation}
 其中$\alpha$是学习率。
 这个错误更新没有使用梯度。
@@ -465,15 +465,15 @@
 验证这些求导正确的一种方法是比较实现的自动求导和\firstgls{finite_difference}计算的导数。
 因为
 \begin{equation}
-	f'(x) = \lim_{\epsilon \to 0} \frac{f(x+\epsilon) - f(x)}{\epsilon}，
+	f'(x) = \lim_{\epsilon \to 0} \frac{f(x+\epsilon) - f(x)}{\epsilon},
 \end{equation}
 我们可以使用小的，有限的$\epsilon$近似导数：
 \begin{equation}
-	f'(x) \approx \frac{f(x+\epsilon) - f(x)}{\epsilon}。
+	f'(x) \approx \frac{f(x+\epsilon) - f(x)}{\epsilon}.
 \end{equation}
 我们可以使用\firstgls{centered_difference}提高近似的精度：
 \begin{equation}
-	f'(x) \approx \frac{ f(x+\frac{1}{2}\epsilon) - f(x-\frac{1}{2}\epsilon) }{\epsilon}。
+	f'(x) \approx \frac{ f(x+\frac{1}{2}\epsilon) - f(x-\frac{1}{2}\epsilon) }{\epsilon}.
 \end{equation}
 扰动大小$\epsilon$必须足够大，以确保该扰动不会由于数值计算的有限精度问题向下近似太多。
 
@@ -490,7 +490,7 @@
 如果可以在复数上进行数值计算，那么使用复数作为函数的输入能有非常高效的数值方法估算梯度\citep{Squire+Trapp-1998}。
 该方法基于如下观察
 \begin{align}
-	f(x + i\epsilon) &= f(x) + i\epsilon f'(x) + O(\epsilon^2) \\
+	f(x + i\epsilon) &= f(x) + i\epsilon f'(x) + O(\epsilon^2) ,\\
 	\text{real}( f(x+i\epsilon) ) &= f(x) + O(\epsilon^2), \quad \text{image}( \frac{f(x+i\epsilon)}{ \epsilon } ) = f'(x) + O(\epsilon^2),
 \end{align}
 其中$i=\sqrt{-1}$。

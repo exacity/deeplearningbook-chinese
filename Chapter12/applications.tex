@@ -695,7 +695,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 额外输出则可以用来估计$\SetV$中所有词的概率分布，如下：
 \begin{align}
  P(y=i\mid C)  =& 1_{i \in \SetL} P(y=i\mid C, i \in \SetL) (1 - P(i \in \SetT\mid C)) \nonumber \\
-     & + 1_{i \in \SetT} P(y=i\mid C, i \in \SetT) P(i \in \SetT\mid C)
+     & + 1_{i \in \SetT} P(y=i\mid C, i \in \SetT) P(i \in \SetT\mid C),
 \end{align}
 其中$P(y=i\mid C, i \in \SetL)$由\gls{NLM}提供$P(y=i\mid C, i \in \SetT)$由\gls{n_gram}模型提供。
 稍作修改，这种方法也可以在\gls{NLM}模型的\ENNAME{softmax}层中使用额外的输出值，而不是单独的\ENNAME{sigmoid}单元。
@@ -730,6 +730,10 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 \caption{TODO}
 \label{fig:chap12_word_hierarchy}
 \end{figure}
+\begin{align}
+    \text{TODO Equation in Figure}  \\
+    \text{TODO Equation in Figure}
+\end{align}
 
 为了预测树的每个节点所需的条件概率，我们通常在树的每个节点处使用\gls{logistic_regression}模型，并且为所有这些模型提供与输入相同的上下文$C$。
 因为正确的输出被编码在训练集中，我们可以使用\gls{supervised_learning}训练\gls{logistic_regression}模型。
@@ -779,9 +783,8 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
  \frac{\partial \log P(y \mid C)}{\partial \theta} &= \frac{\partial \log {\rm softmax}_y(\Va)}{\partial \theta} \\ 
   &= \frac{\partial}{\partial \theta} \log \frac{e^{a_y}}{\sum_i e^{a_i}} \\ 
  &= \frac{\partial}{\partial \theta} (a_y - \log \sum_i e^{a_i}) \\ 
- &= \frac{\partial a_y}{\partial \theta}  - \sum_i P(y = i \mid C) \frac{\partial a_i}{\partial \theta} 
+ &= \frac{\partial a_y}{\partial \theta}  - \sum_i P(y = i \mid C) \frac{\partial a_i}{\partial \theta},
 \end{align}
-
 其中$\Va$是\ENNAME{presoftmax}激活（或分数）向量，每个词对应一个元素。
 第一项是\textbf{正相}(positive phase)项推动$a_y$向上，而第二项是\textbf{负相}(negative phase)项，对于所有$i$以权重$P(i \mid C)$推动$a_i$向下。
 由于负相项是期望值，我们可以用\gls{monte_carlo}采样来估计。
