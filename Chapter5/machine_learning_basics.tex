@@ -334,8 +334,6 @@
 \label{eq:5.12}
     \Rightarrow \Vw =  \left(\MX^{(\text{train})T}\MX^{(\text{train})}
      \right)^{-1} \MX^{(\text{train})T} \Vy^{(\text{train})}
-}
-}
 \end{equation}
 
 % -- 105 --
@@ -768,7 +766,6 @@
 \begin{equation}
 \label{eq:5.22}
     \hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}.
-}
 \end{equation}
 判断这个\gls{estimator:chap5} 是否有偏，我们将式\ref{eq:5.22}代入式\ref{eq:5.20}：
 \begin{align}
@@ -868,7 +865,6 @@
 \begin{equation}
 \label{eq:5.46}
     \text{SE}(\hat{\mu}_m) = \sqrt{ \text{Var}[ \frac{1}{m} \sum_{i=1}^m x^{(i)} ] } = \frac{\sigma}{\sqrt{m}},
-}
 \end{equation}
 其中$\sigma^2$是\gls{example:chap5}$x^i$的真实方差。
 \gls{standard_error}通常被记作$\sigma$。
@@ -949,7 +945,6 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 \begin{equation}
 \label{eq:5.55}
     \plim_{m\to\infty} \hat{\theta}_m = \theta.
-}
 \end{equation}
 符号$\plim$表示依概率收敛，即对于任意的$\epsilon > 0$，当$m\to\infty$时，有$P(|\hat{\theta}_m - \theta| > \epsilon) \to 0$。
 式\ref{eq:5.55}表示的条件被称为\firstgls{consistency}。
@@ -994,7 +989,6 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 \begin{equation}
 \label{eq:5.59}
     \Vtheta_{\text{ML}} = \underset{\theta}{\argmax} \SetE_{\Vx \sim \hat{p}_{\text{data}}} \log p_{\text{model}} (\Vx^; \Vtheta) .
-}
 \end{equation}
 
 解释\gls{maximum_likelihood_estimation}的一种观点是将它看作最小化训练集上的经验分布$\hat{p}_{\text{data}}$和模型分布之的间差异，两者之间的差异程度可以通过KL散度衡量。
