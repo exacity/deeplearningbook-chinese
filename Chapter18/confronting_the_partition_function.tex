@@ -398,7 +398,7 @@
 \gls{ratio_matching}特别适用于二元数据。
 \gls{ratio_matching}要最小化以下目标函数在样本上的均值：
 \begin{equation}
-	L^{(RM)} (\Vx, \Vtheta) = \sum_{j=1}^n \left( 
+	L^{(\text{RM})} (\Vx, \Vtheta) = \sum_{j=1}^n \left( 
 	\frac{1}{ 1 + \frac{ p_{\text{model}}(\Vx; \Vtheta) }{ p_{\text{model}}(f(\Vx), j); \Vtheta) } } 
 \right)^2.
 \end{equation}
@@ -573,7 +573,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 如果 $\prod_i p_A ( x^{(i)}; \Vtheta_A) > \prod_i p_B( x^{(i)}; \Vtheta_B)$，或等价地，如果
 \begin{equation}
 \label{eq:18.38}
-	\sum_i \log p_A (x^{(i)}; \Vtheta_A) - \sum_i \log p_B(x^{(i)}; \Vtheta_B) > 0,
+	\sum_i \log p_A (\Rx^{(i)}; \Vtheta_A) - \sum_i \log p_B(\Rx^{(i)}; \Vtheta_B) > 0,
 \end{equation}
 那么我们说$\CalM_A$是一个比$\CalM_B$更好的模型（或者，至少可以说，它在测试集上是一个更好的模型），这是指它有一个更好的测试对数似然。
 不幸的是，测试这个条件是否成立需要知道\gls{partition_function}。
@@ -612,7 +612,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 \end{equation}
 \begin{equation}
 \label{eq:18.44}
-	\tilde{Z}_1 = \frac{Z_0}{K} \sum_{k=1}^K \frac{ \tilde{p}_1(\RVx^{(k)})  }{ \tilde{p}_0(\RVx^{(k)}) }  \quad\quad s.t.: \RVx^{(k)} \sim p_0
+	\tilde{Z}_1 = \frac{Z_0}{K} \sum_{k=1}^K \frac{ \tilde{p}_1(\RVx^{(k)})  }{ \tilde{p}_0(\RVx^{(k)}) }  \quad\quad \text{s.t.}: \RVx^{(k)} \sim p_0
 \end{equation}
 在最后一行，我们使用\gls{monte_carlo}估计，使用从$p_0(\RVx)$中抽取的采样计算积分$\tilde{Z}_1$，然后用未归一化的$\tilde{p}_1$和提议分布$p_0$的比率对每个采样加权。
 
@@ -620,7 +620,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 这种方法使得我们可以估计\gls{partition_function}之间的比率：
 \begin{equation}
 	\frac{1}{K} \sum_{k=1}^K \frac{ \tilde{p}_1 (\RVx^{(k)}) }{ \tilde{p}_0 (\RVx^{(k)}) }
-	\quad\quad s.t.: \RVx^{(k)} \sim p_0.
+	\quad\quad \text{s.t.}: \RVx^{(k)} \sim p_0.
 \end{equation}
 然后该值可以用于直接比较式\ref{eq:18.39}中的两个模型。
 
@@ -634,7 +634,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 在总和中只有少数几个具有显著权重的样本，将会由于高方差而导致估计质量较差。
 这可以通过估计我们的估计$\tilde{Z}_1$的方差来定量地理解：
 \begin{equation}
-	\hat{Var} \left( \hat{Z}_1 \right)  = \frac{Z_0 }{K^2} \sum_{k=1}^K
+	\hat{\text{Var}} \left( \hat{Z}_1 \right)  = \frac{Z_0 }{K^2} \sum_{k=1}^K
 \left(  \frac{ \tilde{p}_1(\RVx^{(k)}) }{  \tilde{p}_0(\RVx^{(k)}) } - \hat{Z}_1  \right)^2.
 \end{equation}
 当重要性权重$\frac{ \tilde{p}_1(\RVx^{(k)}) }{ \tilde{p}_0(\RVx^{(k)}) } $存在显著偏差时，上式的值是最大的。
@@ -705,7 +705,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 \begin{equation}
 \label{eq:18.52}
 	w^{(k)} = \frac{ \tilde{p}_{\eta_1} ( \Vx_{\eta_1}^{(k)} )  }{  \tilde{p}_{0} ( \Vx_{\eta_1}^{(k)} )  }
-\frac{ \tilde{p}_{\eta_2} ( \Vx_{\eta_2}^{(k)} )  }{  \tilde{p}_{\eta_1} ( \Vx_{\eta_1}^{(k)} )  }
+\frac{ \tilde{p}_{\eta_2} ( \Vx_{\eta_2}^{(k)} )  }{  \tilde{p}_{\eta_1} ( \Vx_{\eta_2}^{(k)} )  }
 \dots
 \frac{ \tilde{p}_{1} ( \Vx_{1}^{(k)} )  }{  \tilde{p}_{\eta_{n-1}} ( \Vx_{\eta_n}^{(k)} )  } .
 \end{equation}
@@ -733,29 +733,24 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 \frac{  \tilde{p}_a(\Vx')}{ \tilde{p}_a{\Vx} } T_a(\Vx | \Vx') .
 \end{equation}
 将以上插入到式\ref{eq:18.55}给出的扩展状态空间上的联合分布的表达式中，我们得到：
-\begin{equation}
-	\tilde{p} (\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)
-\end{equation}
-\begin{equation}
-	\tilde{p}_1 (\Vx_1) \frac{ \tilde{p}_{\eta_{n-1}} (\Vx_{\eta_{n-1}})  }{ \tilde{p}_{\eta_{n-1}}(\Vx_1)} T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}})
-\prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_i}(\Vx_{\eta_i}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}})} T_{\eta_i} (\Vx_{\eta_{i+1}} | \Vx_{\eta_i})
-\end{equation}
-\begin{equation}
-\label{eq:18.59}
-	= \frac{ \tilde{p}_1(\Vx_1) }{ \tilde{p}_{\eta_{n-1}}(\Vx_1) } T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}})
-\tilde{p}_{\eta_1} (\Vx_{\eta_1}) \prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_{i+1}}(\Vx_{\eta_{i+1}}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}}) } T_{\eta_i} (\Vx_{\eta_{i+1}} | \Vx_{\eta_i}) .
-\end{equation}
+\begin{align}
+	&\tilde{p} (\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1) \\
+	= &\tilde{p}_1 (\Vx_1) \frac{ \tilde{p}_{\eta_{n-1}} (\Vx_{\eta_{n-1}})  }{ \tilde{p}_{\eta_{n-1}}(\Vx_1)} T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}})
+\prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_i}(\Vx_{\eta_i}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}})} T_{\eta_i} (\Vx_{\eta_{i+1}} | \Vx_{\eta_i}) \\
+	= &\frac{ \tilde{p}_1(\Vx_1) }{ \tilde{p}_{\eta_{n-1}}(\Vx_1) } T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}})
+\tilde{p}_{\eta_1} (\Vx_{\eta_1}) \prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_{i+1}}(\Vx_{\eta_{i+1}}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}}) } T_{\eta_i} (\Vx_{\eta_{i+1}} | \Vx_{\eta_i}) . \label{eq:18.59}
+\end{align}
 通过上面给定的采样方案，现在我们有了从扩展样本上的联合提议分布$q$上生成采样的方法，联合分布如下
 \begin{equation}
-	q(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}, \Vx_1})  = p_0(\Vx_{\eta_1}) T_{\eta_1}( \Vx_{\eta_2} | \Vx_{\eta_1} ) \dots T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}}) .
+	q(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)  = p_0(\Vx_{\eta_1}) T_{\eta_1}( \Vx_{\eta_2} | \Vx_{\eta_1} ) \dots T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}}) .
 \end{equation}
 我们具有等式\ref{eq:18.59}给出的在扩展空间上的联合分布。
 以$q（\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)$作为我们从中抽样的扩展状态空间上的提议分布，仍然需要确定重要性权重
 \begin{equation}
 	w^{(k)} = \frac{ \tilde{p}(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1) }{ q( \Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1 ) } =
-\frac{ \tilde{p}_1(\Vx_1^{(k)}) }{ \tilde{p}_{\eta_{n-1}}^{(k)}(\Vx_{\eta_{n-1}}^{(k)}) } \dots
-\frac{ \tilde{p}_{\eta_{2}}^{(k)}(\Vx_{\eta_{2}}^{(k)}) }{ \tilde{p}_{\eta_1}^{(k)}(\Vx_{\eta_{1}}^{(k)}) } 
-\frac{ \tilde{p}_{\eta_{1}}^{(k)}(\Vx_{\eta_{1}}^{(k)}) }{ \tilde{p}_{0}^{(k)}(\Vx_{0}^{(k)}) } .
+\frac{ \tilde{p}_1(\Vx_1^{(k)}) }{ \tilde{p}_{\eta_{n-1}}(\Vx_{\eta_{n-1}}^{(k)}) } \dots
+\frac{ \tilde{p}_{\eta_{2}}(\Vx_{\eta_{2}}^{(k)}) }{ \tilde{p}_{\eta_1}(\Vx_{\eta_{1}}^{(k)}) } 
+\frac{ \tilde{p}_{\eta_{1}}(\Vx_{\eta_{1}}^{(k)}) }{ \tilde{p}_{0}(\Vx_{0}^{(k)}) } .
 \end{equation}
 这些权重和\glssymbol{AIS}提出的权重相同。
 因此，我们可以将\glssymbol{AIS}解释为应用于扩展状态上的简单\gls{importance_sampling}，其有效性紧紧来源于\gls{importance_sampling}的有效性。
