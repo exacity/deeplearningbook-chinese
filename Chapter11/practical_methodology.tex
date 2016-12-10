@@ -61,7 +61,7 @@
 除了\gls{performance_metrics}这个目标值之外，另一个重要的考虑是度量的选择。
 几种不同的\gls{performance_metrics}可以被用来度量一个包括\gls{ML}成分的完整应用的效能。
 这些\gls{performance_metrics}通常不同于训练模型的损失函数。 
-如第5.1.2节所述，通常会度量一个系统的准确率，或等价的\gls{error_rate}。
+如\secref{sec:the_performance_measure_p}所述，通常会度量一个系统的准确率，或等价的\gls{error_rate}。
 
 然而，许多应用需要更高级的度量。
 
@@ -81,7 +81,7 @@
 报告每个人都患病的检测器可能有很高的\gls{recall}，但是\gls{precision}等于患病人群的百分比（在我们的例子是$0.0001\%$，每一百万人只有一人患病）。
 当使用\gls{precision}和\gls{recall}时，通常会画\textbf{PR曲线}，y轴表示精度，x轴表示\gls{recall}。
 如果检测到的事件发生了，那么分类器会生成一个更高的值。
-例如，\gls{feedforward_network}设计为检测一种疾病，估计一个医疗结果由特征$\Vx$表示的人患病的概率为$\hat{y} = P(y=1|\Vx)$。
+例如，\gls{feedforward_network}设计为检测一种疾病，估计一个医疗结果由特征$\Vx$表示的人患病的概率为$\hat{y} = P(y=1\mid\Vx)$。
 每当这个值超过某个阈值时，我们报告检测结果。
 通过调整阈值，我们能以\gls{precision}换\gls{recall}。
 在很多情况下，我们希望用一个数而不是曲线来概括分类器的性能。
@@ -210,7 +210,7 @@
 \subsection{手动调整超参数}
 \label{sec:manual_hyperparameter_tuning}
 要手动设置超参数，我们必须了解超参数，训练误差，\gls{generalization_error}和计算资源（内存和运行时间）之间的关系。
-这意味着建立第\ref{chap:machine_learning_basics}章关于学习算法有效容量基本思想的坚实基础。
+这意味着建立\chapref{chap:machine_learning_basics}关于学习算法有效容量基本思想的坚实基础。
 
 手动搜索超参数的目标通常是找到受制于运行时间和内存预算的最低\gls{generalization_error}。
 我们不去探讨如何确定各种超参数对运行时间和内存的影响，因为这高度依赖于平台。
@@ -548,8 +548,8 @@
 
 我们推荐的方法是反复细化这些基准，并测试每个变化是否都有改进。
 街景\gls{transcription_system}的第一个变化受激励于\gls{coverage}指标的理论理解和数据的结构。
-具体地，当输出序列的概率低于某个值$t$，$p(\Vy|\Vx) < t$时，网络拒绝为输入$\Vx$分类。
-最初，$p(\Vy|\Vx)$的定义是临时的，简单地将所有\gls{softmax}输出乘在一起。
+具体地，当输出序列的概率低于某个值$t$，$p(\Vy\mid\Vx) < t$时，网络拒绝为输入$\Vx$分类。
+最初，$p(\Vy\mid\Vx)$的定义是临时的，简单地将所有\gls{softmax}输出乘在一起。
 这促使了能够真正计算出合理对数似然的特定输出层和损失函数的发展。
 这种方法使得样本拒绝机制发挥得更有效。
 

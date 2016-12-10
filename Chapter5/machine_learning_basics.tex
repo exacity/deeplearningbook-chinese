@@ -6,8 +6,8 @@
 要想学好\gls{DL}，必须对\gls{ML}的基本原理有深刻的理解。
 本章将探讨贯穿本书其余部分的一些\gls{ML}重要原理。
 我们建议新手读者或是希望更全面了解的读者参考一些更全面覆盖基础知识的\gls{ML}参考书，例如\cite{MurphyBook2012}或者\cite{bishop-book2006}。
-如果你已经熟知\gls{ML}，可以跳过前面的部分，前往第\ref{sec:challenges_motivating_deep_learning}节。
-第\ref{sec:challenges_motivating_deep_learning}节涵盖了一些传统\gls{ML}技术的观点，这些技术对\gls{DL}的发展有着深远影响。
+如果你已经熟知\gls{ML}，可以跳过前面的部分，前往\secref{sec:challenges_motivating_deep_learning}。
+\secref{sec:challenges_motivating_deep_learning}涵盖了一些传统\gls{ML}技术的观点，这些技术对\gls{DL}的发展有着深远影响。
 
 首先，我们将介绍学习算法的定义，并介绍一个简单的示例：\gls{linear_regression}算法。
 接下来，我们会探讨拟合训练数据和寻找能够泛化到新数据的参数有哪些不同。
@@ -16,7 +16,7 @@
 大部分\gls{ML}算法可以分成\gls{supervised_learning}和\gls{unsupervised_learning}两类；我们将探讨不同的分类，并为每类都介绍一些简单的\gls{ML}算法作为示例。
 大部分\gls{DL}算法都基于\gls{SGD}求解。
 我们将介绍如何组合不同的算法部分，例如优化算法、\gls{cost_function}、模型和\gls{dataset}，来建立一个\gls{ML}算法。
-最后在第\ref{sec:challenges_motivating_deep_learning}节，我们会介绍一些限制传统\gls{ML}泛化能力的因素。
+最后在\secref{sec:challenges_motivating_deep_learning}，我们会介绍一些限制传统\gls{ML}泛化能力的因素。
 为解决这些问题，这些挑战促进了\gls{DL}的发展。
 
 % -- 95 --
@@ -116,13 +116,13 @@
     例如，在语音合成任务中，我们提供书写的句子，要求程序输出这个句子语音的音频波形。
     这是一类\emph{结构化输出任务}，但是多了每个输入并非只有一个正确输出的条件，我们明确希望输出有很大的偏差，使结果看上去更加自然和真实。
 
-    \item \textbf{缺失值归责}：这类任务中，\gls{ML}算法给定一个新\gls{example:chap5}$\Vx\in\SetR^n$，$\Vx$中某些元素$x_i$缺失。
+    \item \textbf{缺失值填补}：这类任务中，\gls{ML}算法给定一个新\gls{example:chap5}$\Vx\in\SetR^n$，$\Vx$中某些元素$x_i$缺失。
     算法必须预测这些缺失值。
 
 % -- 99 --
 
     \item \textbf{降噪}：这类任务中，\gls{ML}算法的输入是，由未知破坏过程从\emph{干净\gls{example:chap5}}$\Vx \in \SetR^n$得到的\emph{污染\gls{example:chap5}}$\tilde{\Vx} \in \SetR^n$。
-    算法根据污染后的\gls{example:chap5}$\tilde{\Vx}$预测干净的\gls{example:chap5}$\Vx$，或者更一般地预测条件概率分布$P(\Vx|\tilde{\Vx})$。
+    算法根据污染后的\gls{example:chap5}$\tilde{\Vx}$预测干净的\gls{example:chap5}$\Vx$，或者更一般地预测条件概率分布$P(\Vx\mid\tilde{\Vx})$。
     
     \item \textbf{密度估计}\textbf{或}\textbf{概率质量函数估计}：在密度估计问题中，\gls{ML}算法学习函数$p_{\text{model}}:\SetR^n \to \SetR$，其中$p_{\text{model}}(\Vx)$可以解释成\gls{example:chap5}采样空间的概率密度函数（如果$\RVx$是连续的）或者概率质量函数（如果$\RVx$是离散的）。
     要做好这样的任务（当我们讨论\gls{performance_measures}$P$时，我们会明确定义任务是什么），算法需要学习它观测到的数据的结构。
@@ -131,7 +131,7 @@
     密度分布可以让我们显式地抓住该分布。
     原则上，我们可以在该分布上计算以便解决其他任务。
     例如，如果我们通过密度估计得到了概率分布$p(\Vx)$，我们可以用该分布解决输入缺失问题。
-    如果$x_i$的值是缺失的，但是其他的变量值$\Vx_{-i}$已知，那么我们可以得到条件概率分布$p(x_i|\Vx_{-i})$。
+    如果$x_i$的值是缺失的，但是其他的变量值$\Vx_{-i}$已知，那么我们可以得到条件概率分布$p(x_i\mid\Vx_{-i})$。
     现实中，密度估计并非能够解决所有这类问题，因为在很多情况下$p(\Vx)$是难以计算的。
 \end{itemize}
 
@@ -176,7 +176,7 @@
 根据学习过程中的不同\gls{experience}，\gls{ML}算法可以大致分类为\firstgls{unsupervised}和\firstgls{supervised}。
 
 本书中的大部分学习算法可以理解成在整个\firstgls{dataset}上获取\gls{experience}。
-\gls{dataset}是指很多\gls{example:chap5}组成的集合，如第5.1.1节的定义。有时我们也将\gls{example:chap5}称为\firstgls{data_points}。
+\gls{dataset}是指很多\gls{example:chap5}组成的集合，如\secref{sec:the_task_t}的定义。有时我们也将\gls{example:chap5}称为\firstgls{data_points}。
 
 % -- 101 --
 
@@ -196,7 +196,7 @@
 \gls{supervised_learning}算法通过研究Iris\gls{dataset}，学习如何根据测量结果将\gls{example:chap5}划分到三个不同品种。
 
 大致说来，\gls{unsupervised_learning}涉及到观察随机向量$\RVx$的好几个\gls{example:chap5}，试图隐式或显式地学习出概率分布$p(\RVx)$，或者是该分布一些有意思的性质；
-而\gls{supervised_learning}包含观察随机向量$\RVx$及其相关联的值或向量$\RVy$，然后从$\RVx$预测$\RVy$，通常是估计$p(\RVy|\RVx)$。
+而\gls{supervised_learning}包含观察随机向量$\RVx$及其相关联的值或向量$\RVy$，然后从$\RVx$预测$\RVy$，通常是估计$p(\RVy\mid\RVx)$。
 术语\firstgls{supervised}源自这样一个视角，教员或者老师提供\gls{target}$\RVy$给\gls{ML}系统，指导其应该做什么。
 在\gls{unsupervised_learning}中，没有教员或者老师，算法必须学会在没有指导的情况下让数据有意义。
 
@@ -208,11 +208,11 @@
     p(\RVx) = \prod_{i=1}^n p(\RSx_i \mid \RSx_1,\dots,\RSx_{i-1}) .
 \end{equation}
 该分解意味着我们通过将其拆分成$n$个\gls{unsupervised_learning}，来解决表面上的\gls{unsupervised_learning}$p(\Vx)$。
-另外，我们求解\gls{supervised_learning}问题$p(y|\RVx)$时，也可以使用传统的\gls{unsupervised_learning}技巧学习联合分布$p(\RVx,y)$，然后推测
+另外，我们求解\gls{supervised_learning}问题$p(y\mid\RVx)$时，也可以使用传统的\gls{unsupervised_learning}技巧学习联合分布$p(\RVx,y)$，然后推测
 \begin{equation}
-    p(y|\RVx) = \frac{p(\RVx,y)}{\sum_{y'}p(\RVx,y')}.
+    p(y\mid\RVx) = \frac{p(\RVx,y)}{\sum_{y'}p(\RVx,y')}.
 \end{equation}
-尽管\gls{unsupervised_learning}和\gls{supervised_learning}并非完全正式或不同的概念，它们确实有助于粗略分类我们研究\gls{ML}算法时遇到的问题。
+尽管\gls{unsupervised_learning}和\gls{supervised_learning}并非完全没有交集的正式概念，它们确实有助于粗略分类我们研究\gls{ML}算法时遇到的问题。
 传统地，人们将回归，分类，或者结构化输出问题称为\gls{supervised_learning}。
 支持其他任务的密度估计通常被称为\gls{unsupervised_learning}。
 
@@ -243,7 +243,7 @@
 这一点并非永远可能。
 例如，你有不同宽度和高度的照片的集合，那么不同的照片将会包含不同数量的像素。
 因此不是所有的照片都可以表示成相同长度的向量。
-第9.7节和第\ref{chap:sequence_modeling_recurrent_and_recursive_nets}章将会介绍如何处理这类异质问题的不同类型。
+\secref{sec:data_types}和\chapref{chap:sequence_modeling_recurrent_and_recursive_nets}将会介绍如何处理这类异质问题的不同类型。
 在上述的这类情况下，我们不会将\gls{dataset}表示成$m$行的矩阵，而是表示成$m$个元素的结合：$\{\Vx^{(1)},\Vx^{(2)},\dots,\Vx^{(m)}\}$。
 这种表示方式并非意味着\gls{example:chap5}向量$\Vx^{(i)}$和$\Vx^{(j)}$有相同的大小。
 
@@ -307,7 +307,7 @@
 所以当预测值和\gls{target}值之间的欧几里得距离增加时，误差也会增加。
 
 为了得到一个\gls{ML}算法，我们需要设计一个算法，通过观察训练集$(\MX^{(\text{train})},\Vy^{(\text{train})})$是算法获得\gls{experience}，以减少$\text{MSE}_{\text{test}}$的方式改进权重$\Vw$。
-这样做的一种直观的方式（我们将在后续的第5.5.1节说明其合法性）是最小化训练集上的\gls{mean_squared_error}，$\text{MSE}_{\text{train}}$。
+这样做的一种直观的方式（我们将在后续的\secref{sec:conditional_log_likelihood_and_mean_squared_error}说明其合法性）是最小化训练集上的\gls{mean_squared_error}，$\text{MSE}_{\text{train}}$。
 
 最小化$\text{MSE}_{\text{train}}$，我们可以简单地求解它的导数为$\mathbf{0}$的情况：
 \begin{equation}
@@ -339,9 +339,9 @@
 
 % -- 105 --
 
-通过式\ref{eq:5.12}给出解的系统方程被称为\firstgls{normal_equations}。
-计算式\ref{eq:5.12}构成了一个简单的机器学习算法。
-参考图\ref{fig:chap5_linreg}\gls{linear_regression}算法的动态示例。
+通过\eqnref{eq:5.12}给出解的系统方程被称为\firstgls{normal_equations}。
+计算\eqnref{eq:5.12}构成了一个简单的机器学习算法。
+参看\figref{fig:chap5_linreg}，\gls{linear_regression}算法在使用中的示例。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -362,7 +362,7 @@
 如此扩展到仿射函数意味着模型预测的曲线仍然看起来像是一条直线，只是这条直线没必要经过原点。
 不通过添加偏置参数$b$，我们仍然可以使用仅含权重的模型，但是$\Vx$需要增加一项永远为$1$的元素。
 对应于额外$1$的权重起到了偏置参数的作用。
-当我们在本书中提到仿射函数时，我们经常会使用术语``线性''。
+当我们在本书中提到仿射函数时，我们经常会使用术语“线性”。
 
 % -- 106 --
 
@@ -456,7 +456,7 @@
 \gls{capacity}不足的模型不能解决复杂任务。
 \gls{capacity}高的模型能够解决复杂的任务，但是当其容量高于任务时，有可能会过拟合。
 
-图\ref{fig:chap5_underfit_just_right_overfit}动态地展示了这个原理。
+\figref{fig:chap5_underfit_just_right_overfit}展示了这个原理在使用中的情况。
 我们比较了线性，二次和$9$次预测器拟合二次真实函数的效果。
 线性函数无法刻画真实函数的曲率，所以它欠拟合了。
 九次函数能够表示正确的函数，但是它也能够无穷个刚好穿越训练\gls{example:chap5}点的很多其他函数，因为训练参数比训练\gls{example:chap5}还多。
@@ -488,14 +488,14 @@
 
 关于提高\gls{ML}模型泛化的现代思想可以追溯到早在托勒密时期的哲学家的思想。
 许多早期的学者引用的简约原则，现在被广泛称为\firstgls{OR}（c. 1287-1387）。
-该原则指出，同样能够解释已知观测现象的假设中，我们应该挑选``最简单''的那一个。
+该原则指出，同样能够解释已知观测现象的假设中，我们应该挑选“最简单”的那一个。
 这个想法是在20世纪，由统计学习理论创始人提出来并精确化的\citep{Vapnik71,Vapnik82,Blumer-et-al-1989,Vapnik95}。
 
 统计学习理论提供了量化模型容量的不同方法。
 在这些中，最有名的是\firstall{VC}。
-\gls{VC}衡量二元分类器的容量。
-\gls{VC}定义为该分类器能够分类的训练\gls{example:chap5}的最多数目。
-假设存在$m$个不同$\Vx$点的训练集，分类器可以任意地标记该$m$个不同的$\Vx$点，\gls{VC}被定义为$m$的最大可能值。
+\glssymbol{VC}维衡量二元分类器的容量。
+\glssymbol{VC}维定义为该分类器能够分类的训练\gls{example:chap5}的最多数目。
+假设存在$m$个不同$\Vx$点的训练集，分类器可以任意地标记该$m$个不同的$\Vx$点，\glssymbol{VC}维被定义为$m$的最大可能值。
 
 量化模型的容量使得统计学习理论可以进行量化预测。
 统计学习理论中最重要的结论阐述了训练误差和泛化误差之间差异的上界随着模型容量增长而增长，但随着训练\gls{example:chap5}增多而下降\citep{Vapnik71,Vapnik82,Blumer-et-al-1989,Vapnik95}。
@@ -507,7 +507,7 @@
 我们必须记住虽然更简单的函数更可能泛化（训练误差和测试误差的差距小），但我们仍然需要选择一个充分复杂的假设以达到低的\gls{training_error}。
 通常，当模型容量上升（假设误差衡量有最小值）时，训练误差会下降，直到其渐近最小可能误差。
 通常，\gls{generalization_error}是一个关于模型容量U形曲线函数。
-如图\ref{fig:chap5_generalization_vs_capacity}所示。
+如\figref{fig:chap5_generalization_vs_capacity}所示。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -549,7 +549,7 @@
 泛化误差的期望不会随着训练\gls{example:chap5}数目的增加而增加。
 对于非参数模型而言，更多的数据会得到更好的泛化能力，直到达到最佳可能的泛化误差。
 任何模型容量小于最优容量的固定参数模型会渐近到大于\gls{bayes_error}的误差值。
-如图\ref{fig:chap5_training_size_grows}所示。
+如\figref{fig:chap5_training_size_grows}所示。
 值得注意的是，具有最优容量的模型仍然有可能在\gls{training_error}和\gls{generalization_error}之间存在很大的差距。
 在这种情况下，我们可以通过收集更多的训练\gls{example:chap5}来缩小差距。
 
@@ -584,7 +584,7 @@
 在现实世界的应用中，如果我们对遇到的概率分布的种类进行假设的话，那么我们可以设计在这些分布上效果良好的学习算法。
 
 这意味着\gls{ML}研究的\gls{target}不是找一个通用学习算法或是绝对最好的学习算法。
-反之，我们的\gls{target}是理解什么样的分布和人工智能体验的``真实世界''相关，什么样的学习算法在我们关心的数据生成分布上效果最好。
+反之，我们的\gls{target}是理解什么样的分布和人工智能体验的“真实世界”相关，什么样的学习算法在我们关心的数据生成分布上效果最好。
 
 \subsection{\glsentrytext{regularization}}
 \label{sec:regularization}
@@ -621,7 +621,7 @@
 最小化$J(\Vw)$可以看作是在拟合训练数据和使权重范数小之间的权衡。
 这会使得解决方案的斜率较小，或是将权重放在较少的\gls{feature}上。
 我们可以训练带不同$\lambda$之的高次多项式来举例说明如何通过权重衰减来控制模型欠拟合或过拟合的趋势。
-如图\ref{fig:chap5_underfit_just_right_overfit_wd_color}所示。
+如\figref{fig:chap5_underfit_just_right_overfit_wd_color}所示。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -634,7 +634,7 @@
 \end{figure}
 
 更一般地，\gls{regularization}一个学习函数$f(\Vx;\Vtheta)$的模型，我们可以给损失函数添加称为\firstgls{regularizer}的惩罚。
-在权重衰减的例子中，\gls{regularizer}是$\Omega(\Vw) = \Vw^\Tsp \Vw$。在第\ref{chap:regularization_for_deep_learning}章，我们将看到很多其他可能的\gls{regularizer}。
+在权重衰减的例子中，\gls{regularizer}是$\Omega(\Vw) = \Vw^\Tsp \Vw$。在\chapref{chap:regularization_for_deep_learning}，我们将看到很多其他可能的\gls{regularizer}。
 
 % -- 116 --
 
@@ -679,7 +679,7 @@
 用于学习参数的数据子集通常仍被称为训练集，尽管这会和整个训练过程用到的更大的\gls{dataset}相混。
 用于挑选超参数的数据子集被称为\gls{validation_set}。
 通常，$80\%$的训练数据用于训练，$20\%$用于验证。
-由于验证集是用来``训练''超参数的，尽管验证集的误差通常会比训练集误差小，验证集会低估泛化误差。
+由于验证集是用来“训练”超参数的，尽管验证集的误差通常会比训练集误差小，验证集会低估泛化误差。
 所有超参数优化完成之后，泛化误差可能通过\gls{test_set}来估计。
 
 在实际中，当相同的\gls{test_set}已经重复地用于评估不同算法的性能很多年，特别是如果我们考虑来自学术界的各种尝试去挑战该\gls{test_set}上报道出来的最佳性能，我们最后也会对\gls{test_set}有着乐观的估计。
@@ -708,8 +708,8 @@
 
 \subsection{点估计}
 \label{sec:point_estimation}
-点估计试图为一些感兴趣的量提供单个``最优''预测。
-一般地，感兴趣的量可以是单个参数，或是某些参数模型中一个向量参数，例如第5.1.4节\gls{linear_regression}中的权重，但是也有可能是整个函数。
+点估计试图为一些感兴趣的量提供单个“最优”预测。
+一般地，感兴趣的量可以是单个参数，或是某些参数模型中一个向量参数，例如\secref{sec:example_linear_regression}\gls{linear_regression}中的权重，但是也有可能是整个函数。
 
 为了区分参数估计和真实值，我们习惯表示参数$\Vtheta$的点估计为$\hat{\Vtheta}$。
 
@@ -740,7 +740,7 @@
 例如，我们可能假设$\Vy = f(\Vx) + \Vepsilon$，其中$\Vepsilon$是$\Vy$中未能从$\Vx$预测的一部分。
 在函数估计中，我们感兴趣的是用模型估计去近似$f$，或者估计$\hat{f}$。
 函数估计和估计参数$\Vtheta$是一样的；函数估计$\hat{f}$是函数空间中的一个点估计。
-\gls{linear_regression}实例（第5.1.4节中讨论的）和多项式回归实例（第5.2节中讨论的）都既可以被解释为估计参数$\Vw$，又可以解释为估计从$\Vx$到$y$的函数映射$\hat{f}$。
+\gls{linear_regression}实例（\secref{sec:example_linear_regression}中讨论的）和多项式回归实例（\secref{sec:capacity_overfitting_and_underfitting}中讨论的）都既可以被解释为估计参数$\Vw$，又可以解释为估计从$\Vx$到$y$的函数映射$\hat{f}$。
 
 现在我们回顾点估计最常研究的性质，并探讨这些性质说明了估计的什么。
 
@@ -767,7 +767,7 @@
 \label{eq:5.22}
     \hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}.
 \end{equation}
-判断这个\gls{estimator:chap5} 是否有偏，我们将式\ref{eq:5.22}代入式\ref{eq:5.20}：
+判断这个\gls{estimator:chap5} 是否有偏，我们将\eqnref{eq:5.22}代入\eqnref{eq:5.20}：
 \begin{align}
     \text{bias}(\hat{\theta}_m)     &= \SetE[\hat{\theta}_m] - \theta  \\
             &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m x^{(i)} \right] - \theta \\
@@ -821,7 +821,7 @@
     \SetE [ \hat{\sigma}_m^2 ]  &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2  \right] \\
     &= \frac{m-1}{m} \sigma^2
 \end{align}
-回到式\ref{eq:5.37}，我们得到结论$\hat{\sigma}^2_m$的偏差是$-\frac{\sigma^2}{m}$。
+回到\eqnref{eq:5.37}，我们得到结论$\hat{\sigma}^2_m$的偏差是$-\frac{\sigma^2}{m}$。
 因此\gls{sample_variance}是有偏估计。
 
 \firstgls{unbiased_sample_variance}估计
@@ -841,7 +841,7 @@
 % -- 123 --
 
 我们有两个\gls{estimator:chap5}：一个是有偏的，另一个是无偏的。
-尽管无偏估计显然是可取的，但它并不总是``最好''的估计。
+尽管无偏估计显然是可取的，但它并不总是“最好”的估计。
 我们将会看到经常会使用具有其他重要性质的有偏估计。
 
 \subsection{方差和\glsentrytext{standard_error}}
@@ -866,7 +866,7 @@
 \label{eq:5.46}
     \text{SE}(\hat{\mu}_m) = \sqrt{ \text{Var} \left[ \frac{1}{m} \sum_{i=1}^m x^{(i)} \right] } = \frac{\sigma}{\sqrt{m}},
 \end{equation}
-其中$\sigma^2$是\gls{example:chap5}$x^i$的真实方差。
+其中$\sigma^2$是\gls{example:chap5}$x^{(i)}$的真实方差。
 \gls{standard_error}通常被记作$\sigma$。
 不幸的是，样本方差的平方根和方差无偏估计的平方根都不是\gls{standard_deviation}的无偏估计。
 这两种计算方法都倾向于低估真实的\gls{standard_deviation}，但仍用于实际中。
@@ -896,7 +896,7 @@
     &= \frac{1}{m} \theta(1-\theta)
 \end{align} 
 估计方差以\gls{dataset}\gls{example:chap5}数目$m$的函数方式下降。
-这是估计普遍的共同性质，在探讨一致性（参考第5.4.5节）时，我们会继续讨论。
+这是估计普遍的共同性质，在探讨一致性（参考\secref{sec:consistency}）时，我们会继续讨论。
 
 % -- 125 --
 
@@ -917,12 +917,12 @@
         &= \text{Bias}( \hat{\theta}_m )^2 + \text{Var}( \hat{\theta}_m ) \label{eq:5.54}
 \end{align}
 MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏离。
-如式\ref{eq:5.54}所示，MSE估计包含了偏差和方差。
+如\eqnref{eq:5.54}所示，MSE估计包含了偏差和方差。
 理想的估计具有较小的MSE或是在检查中会稍微约束它们的偏差和方差。
 
 偏差和方差的关系和\gls{ML}容量，欠拟合和过拟合的概念紧密相连。
 用MSE衡量泛化误差（偏差和方差对于泛化误差都是有意义的）时，增加容量会增加方差，降低偏差。
-如图\ref{fig:chap5_bias_variance_tradeoff}所示，我们会再次看到容量函数泛化误差的U形曲线。
+如\figref{fig:chap5_bias_variance_tradeoff}所示，我们会再次看到容量函数泛化误差的U形曲线。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -947,7 +947,7 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
     \plim_{m\to\infty} \hat{\theta}_m = \theta.
 \end{equation}
 符号$\plim$表示依概率收敛，即对于任意的$\epsilon > 0$，当$m\to\infty$时，有$P(|\hat{\theta}_m - \theta| > \epsilon) \to 0$。
-式\ref{eq:5.55}表示的条件被称为\firstgls{consistency}。
+\eqnref{eq:5.55}表示的条件被称为\firstgls{consistency}。
 它有时候是指弱一致性，强一致性是指\firstgls{almost_sure}从$\hat{\theta}$收敛到$\theta$。
 \firstgls{almost_sure_convergence}是指当$p(\lim_{m\to\infty} \RVx^{(m)} = \Vx) = 1 $时，随机变量序列$\RVx^{(1)}$，$\RVx^{(2)}$，$\dots$收敛到$\Vx$。
 
@@ -975,7 +975,7 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 
  $\Vtheta$的最大后验估计被定义为：
 \begin{align}
-    \Vtheta_{\text{ML}} &= \underset{\Vtheta}{\argmax} p_{\text{model}} (\SetX; \Vtheta), \\
+    \Vtheta_{\text{ML}} &= \underset{\Vtheta}{\argmax} \, p_{\text{model}} (\SetX; \Vtheta), \\
         &= \underset{\Vtheta}{\argmax} \prod_{i=1}^m p_{\text{model}} (\Vx^{(i)}; \Vtheta).
 \end{align}
 
@@ -988,25 +988,25 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 因为当我们重新缩放损失函数时$\argmax$不会改变，我们可以除以$m$得到和训练数据经验分布$\hat{p}_{\text{data}}$相关的期望作为准则：
 \begin{equation}
 \label{eq:5.59}
-    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \SetE_{\RVx \sim \hat{p}_{\text{data}}} \log p_{\text{model}} (\Vx; \Vtheta) .
+    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \,\SetE_{\RVx \sim \hat{p}_{\text{data}}} \log p_{\text{model}} (\Vx; \Vtheta) .
 \end{equation}
 
 解释\gls{maximum_likelihood_estimation}的一种观点是将它看作最小化训练集上的经验分布$\hat{p}_{\text{data}}$和模型分布之的间差异，两者之间的差异程度可以通过KL散度衡量。
 KL散度定义为
 \begin{equation}
-    D_{\text{KL}}(\hat{p}_{\text{data}} || p_{\text{model}}) = \SetE_{\RVx \sim \hat{p}_{\text{data}}} [ \log \hat{p}_{\text{data}}(\Vx) - \log p_{\text{model}}(\Vx) ] .
+    D_{\text{KL}}(\hat{p}_{\text{data}} \| p_{\text{model}}) = \SetE_{\RVx \sim \hat{p}_{\text{data}}} [ \log \hat{p}_{\text{data}}(\Vx) - \log p_{\text{model}}(\Vx) ] .
 \end{equation}
 左边一项仅涉及到数据生成过程，和模型无关。
 这意味着当我们训练模型最小化KL散度时，我们只需要最小化
 \begin{equation}
     -\SetE_{\RVx \sim \hat{p}_{\text{data}}} [ \log p_{\text{model}}(\Vx)  ] ,
 \end{equation}
-当然，这和式\ref{eq:5.59}中最大化是相同的。
+当然，这和\eqnref{eq:5.59}中最大化是相同的。
 
 % -- 128 --
 
 最小化KL散度其实就是在最小化分布之间的交叉熵。
-许多作者使用术语``交叉熵''特定表示伯努利或softmax分布的负对数似然，但那是用词不当的。
+许多作者使用术语“交叉熵”特定表示伯努利或softmax分布的负对数似然，但那是用词不当的。
 任何一个由负对数似然组成的损失都是定义在训练集上的经验分布和定义在模型上的概率分布之间的交叉熵。
 例如，\gls{mean_squared_error}是经验分布和高斯模型之间的交叉熵。
 
@@ -1021,34 +1021,34 @@ KL散度定义为
 
 \subsection{条件对数似然和\glsentrytext{mean_squared_error}}
 \label{sec:conditional_log_likelihood_and_mean_squared_error}
-\gls{maximum_likelihood_estimation}很容易扩展到估计条件概率$P(\RVy|\RVx;\Vtheta)$，给定$\RVx$预测$\RVy$。
+\gls{maximum_likelihood_estimation}很容易扩展到估计条件概率$P(\RVy \mid \RVx;\Vtheta)$，给定$\RVx$预测$\RVy$。
 实际上这是最常见的情况，因为这构成了大多数\gls{supervised_learning}的基础。
 如果$\MX$表示所有的输入，$\MY$表示我们观测到的\gls{target}，那么条件\gls{maximum_likelihood_estimation}是
 \begin{equation}
-    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} P(\MY | \MX; \Vtheta).
+    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} P(\MY \mid \MX; \Vtheta).
 \end{equation}
 如果假设\gls{example:chap5}是独立同分布的，那么这可以分解成
 \begin{equation}
 \label{eq:5.63}
-    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \sum_{i=1}^m \log P(\Vy^{(i)} | \Vx^{(i)}; \Vtheta).
+    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \sum_{i=1}^m \log P(\Vy^{(i)} \mid \Vx^{(i)}; \Vtheta).
 \end{equation}
 
 % -- 129 --
 
-\textbf{实例：\gls{linear_regression}作为最大似然}\quad 第5.1.4节介绍的\gls{linear_regression}，可以被看作是最大似然过程。
+\textbf{实例：\gls{linear_regression}作为最大似然}\quad \secref{sec:example_linear_regression}介绍的\gls{linear_regression}，可以被看作是最大似然过程。
 之前，我们将\gls{linear_regression}作为学习从输入$\Vx$映射到输出$\hat{y}$的算法。
 从$\Vx$到$\hat{y}$的映射选自最小化\gls{mean_squared_error}（我们或多或少介绍的一个标准）。
 现在，我们以\gls{maximum_likelihood_estimation}的角度重新审视\gls{linear_regression}。
-不只是得到一个单独的预测$\hat{y}$，我们现在希望模型能够得到条件概率$p(y|\Vx)$。
+不只是得到一个单独的预测$\hat{y}$，我们现在希望模型能够得到条件概率$p(y \mid \Vx)$。
 想象下有一个无穷大的训练集，我们可能会观测到几个训练\gls{example:chap5}有相同的输入$\Vx$但是不同的$y$。
-现在学习算法的目标是拟合分布$p(y | \Vx)$到和$\Vx$相匹配的不同的$y$。
-为了得到我们之前推导出的相同的\gls{linear_regression}算法，我们定义$p(y | \Vx) = \mathcal{N}(y; \hat{y}(\Vx; \Vw), \sigma^2)$。
+现在学习算法的目标是拟合分布$p(y \mid \Vx)$到和$\Vx$相匹配的不同的$y$。
+为了得到我们之前推导出的相同的\gls{linear_regression}算法，我们定义$p(y \mid \Vx) = \mathcal{N}(y; \hat{y}(\Vx; \Vw), \sigma^2)$。
 函数$\hat{y}(\Vx; \Vw)$预测高斯的均值。
 在这个例子中，我们假设方差是用户固定的某个常量$\sigma^2$。
-这种函数形式$p(y|\Vx)$会使得\gls{maximum_likelihood_estimation}得出之前得到的相同学习算法。
-由于假设\gls{example:chap5}是独立同分布的，条件对数似然（式\ref{eq:5.63}）如下
+这种函数形式$p(y \mid \Vx)$会使得\gls{maximum_likelihood_estimation}得出之前得到的相同学习算法。
+由于假设\gls{example:chap5}是独立同分布的，条件对数似然（\eqnref{eq:5.63}）如下
 \begin{align}
-     & \sum_{i=1}^m \log p(y^{(i)} | \Vx^{(i)}; \Vtheta) \\
+     & \sum_{i=1}^m \log p(y^{(i)} \mid \Vx^{(i)}; \Vtheta) \\
     =& -m \log\sigma - \frac{m}{2} \log(2\pi) - \sum_{i=1}^m \frac{ \norm{\hat{y}^{(i)} - y^{(i)} }^2 }{2\sigma^2},
 \end{align}
 其中$\hat{y}^{(i)}$是\gls{linear_regression}在第$i$个输入$\Vx^{(i)}$上的输出，$m$是训练\gls{example:chap5}的数目。
@@ -1067,7 +1067,7 @@ KL散度定义为
 \label{sec:properties_of_maximum_likelihood}
 \gls{maximum_likelihood_estimation}最吸引人的地方在于，它被证明是当\gls{example:chap5}数目$m\to\infty$时，就收敛率而言最好的渐近估计。
 
-在合适的条件下，\gls{maximum_likelihood_estimation}具有一致性（参考第5.4.5节），意味着训练\gls{example:chap5}数目趋向于无穷时，参数的\gls{maximum_likelihood_estimation}收敛到参数的真实值。
+在合适的条件下，\gls{maximum_likelihood_estimation}具有一致性（参考\secref{sec:consistency}），意味着训练\gls{example:chap5}数目趋向于无穷时，参数的\gls{maximum_likelihood_estimation}收敛到参数的真实值。
 这些条件是：
 \begin{itemize}
     \item 真实分布$p_{\text{data}}$必须在模型族$p_{\text{model}}(\cdot; \Vtheta)$ 中。
@@ -1096,23 +1096,23 @@ KL散度定义为
 另一种方法是在做预测时会考虑所有可能$\Vtheta$。
 后者属于\firstgls{bayesian_statistics}的范畴。
 
-正如第5.4.1节中讨论的，频率派的视角是真实参数$\Vtheta$是未知的定值，而点估计$\hat{\Vtheta}$是考虑\gls{dataset}上函数（可以看作是随机的）的随机变量。
+正如\secref{sec:point_estimation}中讨论的，频率派的视角是真实参数$\Vtheta$是未知的定值，而点估计$\hat{\Vtheta}$是考虑\gls{dataset}上函数（可以看作是随机的）的随机变量。
 
 贝叶斯统计的视角完全不同。
 贝叶斯用概率反映知识状态的确定性程度。
 \gls{dataset}能够直接观测到，因此不是随机的。
 另一方面，真实参数$\Vtheta$是未知或不确定的，因此可以表示成随机变量。
 
-在观察到数据前，我们将$\Vtheta$的已知知识表示成\firstgls{prior_probability_distribution}，$p(\Vtheta)$（有时简单地称为``先验''）。
+在观察到数据前，我们将$\Vtheta$的已知知识表示成\firstgls{prior_probability_distribution}，$p(\Vtheta)$（有时简单地称为“先验”）。
 一般而言，\gls{ML}实践者会选择一个相当宽泛的（即，高熵的）先验分布，反映在观测到任何数据前参数$\Vtheta$的高度不确定性。
 例如，我们可能会假设先验$\Vtheta$在有限区间中均匀分布。
-许多先验偏好于``更简单''的解决方法（如小幅度的系数，或是接近常数的函数）。
+许多先验偏好于“更简单”的解决方法（如小幅度的系数，或是接近常数的函数）。
 
 现在假设有一组数据样本$\{x^{(1)},\dots,x^{(m)}\}$。
-通过贝叶斯法则结合数据似然$p(x^{(1)},\dots,x^{(m)}|\Vtheta)$和先验，我们可以恢复数据对我们关于$\Vtheta$信念的影响：
+通过贝叶斯法则结合数据似然$p(x^{(1)},\dots,x^{(m)} \mid \Vtheta)$和先验，我们可以恢复数据对我们关于$\Vtheta$信念的影响：
 \begin{equation}
-        p(\Vtheta|x^{(1)},\dots,x^{(m)}) = 
-        \frac{p(x^{(1)},\dots,x^{(m)}|\Vtheta) p(\Vtheta)}
+        p(\Vtheta \mid x^{(1)},\dots,x^{(m)}) = 
+        \frac{p(x^{(1)},\dots,x^{(m)} \mid \Vtheta) p(\Vtheta)}
             {p(x^{(1)},\dots,x^{(m)})}
 \end{equation}
 在贝叶斯估计通常使用的情况下，先验开始是相对均匀的分布或高熵的高斯分布，观测数据通常会使后验的熵下降，并集中在参数的几个可能性很高的值。
@@ -1121,8 +1121,8 @@ KL散度定义为
 第一，不像最大似然方法预测时使用$\Vtheta$的点估计，贝叶斯方法预测$\Vtheta$的全分布。
 例如，在观测到$m$个\gls{example:chap5}后，下一个数据\gls{example:chap5}，$x^{(m+1)}$，的预测分布如下：
 \begin{equation}
-    p(x^{(m+1)} | x^{(1)},\dots,x^{(m)}) = 
-    \int p(x^{(m+1)} | \Vtheta) p(\Vtheta | x^{(1)},\dots,x^{(m)}) 
+    p(x^{(m+1)} \mid x^{(1)},\dots,x^{(m)}) = 
+    \int p(x^{(m+1)} \mid \Vtheta) p(\Vtheta \mid x^{(1)},\dots,x^{(m)}) 
         \mathrm{d}\Vtheta .
 \end{equation}
 这里，具有正概率密度的$\Vtheta$的每个值有助于下一个\gls{example:chap5}的预测，其中贡献由后验密度本身加权。
@@ -1130,7 +1130,7 @@ KL散度定义为
 
 % -- 132 --
 
-在第5.4节中，我们已经探讨频率派方法解决给定点估计$\Vtheta$不确定性的方法是评估方差，估计的方差评估了观测数据重新从观测数据中采样后，估计可能如何变化。
+在\secref{sec:estimators_bias_and_variance}中，我们已经探讨频率派方法解决给定点估计$\Vtheta$不确定性的方法是评估方差，估计的方差评估了观测数据重新从观测数据中采样后，估计可能如何变化。
 对于如何处理估计不确定性的这个问题，贝叶斯派的答案是积分，这往往会防止过拟合。
 积分当然是概率法则的应用，使贝叶斯方法容易验证，而频率派\gls{ML}基于相当特别的决定构建了一个估计，将\gls{dataset}里的所有信息归纳到一个单独的点估计。
 
@@ -1154,7 +1154,7 @@ KL散度定义为
 \end{equation}
 表示为$\Vy^{(\text{train})}$上的高斯条件分布，我们得到
 \begin{align}
-    p(\Vy^{(\text{train})} | \MX^{(\text{train})}, \Vw) &= 
+    p(\Vy^{(\text{train})} \mid \MX^{(\text{train})}, \Vw) &= 
     \mathcal{N}( \Vy^{(\text{train})}; \MX^{(\text{train})}\Vw, \MI ) \\
     & \propto \exp\left( 
         -\frac{1}{2}( \Vy^{(\text{train})} - \MX^{(\text{train})}\Vw )^\Tsp
@@ -1183,7 +1183,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 确定好先验后，我们现在可以继续确定模型参数的\textbf{后验}\emph{分布}。
 \begin{align}
-    p(\Vw | \MX, \Vy) &\propto p(\Vy | \MX, \Vw) p(\Vw) \\
+    p(\Vw \mid \MX, \Vy) &\propto p(\Vy \mid \MX, \Vw) p(\Vw) \\
     & \propto 
         \exp\left( 
             -\frac{1}{2} ( \Vy - \MX\Vw )^\Tsp( \Vy - \MX\Vw )
@@ -1202,7 +1202,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 现在我们定义$\VLambda_m = (\MX^\Tsp\MX + \VLambda_0^{-1})^{-1}$和$\Vmu_m = \VLambda_m ( \MX^\Tsp \Vy + \VLambda_0^{-1}\Vmu_0 )$。
 使用这些新的变量，我们发现后验可改写为高斯分布：
 \begin{align}
-    p(\Vw | \MX, \Vy) &\propto \exp \left(
+    p(\Vw \mid \MX, \Vy) &\propto \exp \left(
     -\frac{1}{2} (\Vw - \Vmu_m )^\Tsp \VLambda_m^{-1}  (\Vw - \Vmu_m ) 
     + \frac{1}{2} \Vmu_m^\Tsp \VLambda_m^{-1}  \Vmu_m 
     \right) \\
@@ -1211,7 +1211,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
     \right).
 \end{align}
 所有不包括的参数向量$\Vw$的项都已经被删去了；它们意味着分布的积分必须归一这个事实。
-式\ref{eq:3.23}显示了如何标准化多元高斯分布。
+\eqnref{eq:3.23}显示了如何标准化多元高斯分布。
 
 % -- 134 --
 
@@ -1230,15 +1230,15 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 \glssymbol{MAP}估计选择后验概率最大的点（或在$\Vtheta$是连续值的更常见情况下，概率密度最大的点）：
 \begin{equation}
 \label{eq:5.79}
-    \Vtheta_{\text{MAP}} = \underset{\Vtheta}{\argmax} \, p(\Vtheta|\Vx)
-    = \underset{\Vtheta}{\argmax} \, \log p(\Vx | \Vtheta) + \log p(\Vtheta) .
+    \Vtheta_{\text{MAP}} = \underset{\Vtheta}{\argmax} \, p(\Vtheta\mid\Vx)
+    = \underset{\Vtheta}{\argmax} \, \log p(\Vx \mid \Vtheta) + \log p(\Vtheta) .
 \end{equation}
-我们可以认出上式右边的$\log p(\Vx | \Vtheta)$对应着标准的对数似然项，$\log p(\Vtheta)$对应着先验分布。
+我们可以认出上式右边的$\log p(\Vx \mid \Vtheta)$对应着标准的对数似然项，$\log p(\Vtheta)$对应着先验分布。
 
 % -- 135 --
 
 例如，考虑具有高斯先验权重$\Vw$的\gls{linear_regression}模型。
-如果先验是$\mathcal{N}(\Vw;\mathbf{0},\frac{1}{\lambda}I^2)$，那么式\ref{eq:5.79}的对数先验项正比于熟悉的权重衰减惩罚$\lambda \Vw^\Tsp\Vw$，加上一个不依赖于$\Vw$也不会影响学习过程的项。
+如果先验是$\mathcal{N}(\Vw;\mathbf{0},\frac{1}{\lambda}I^2)$，那么\eqnref{eq:5.79}的对数先验项正比于熟悉的权重衰减惩罚$\lambda \Vw^\Tsp\Vw$，加上一个不依赖于$\Vw$也不会影响学习过程的项。
 因此，具有高斯先验权重的\gls{MAP}贝叶斯推理对应着权重衰减。
 
 正如全贝叶斯推理，\gls{MAP}贝叶斯推理具有训练数据没有的，先验带来的信息利用优势。
@@ -1256,19 +1256,19 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 \section{\glsentrytext{supervised_learning}算法}
 \label{sec:supervised_learning_algorithms}
-回顾第5.1.3节，\gls{supervised_learning}算法，粗略地说，是给定一组输入$\Vx$和输出$\Vy$的训练集，学习如何关联输入和输出。
-在许多情况下，输出$\Vy$很难自动收集，必须由人来提供``管理''，不过该术语仍然适用于训练集目标可以被自动收集的情况。
+回顾\secref{sec:the_experience_e}，\gls{supervised_learning}算法，粗略地说，是给定一组输入$\Vx$和输出$\Vy$的训练集，学习如何关联输入和输出。
+在许多情况下，输出$\Vy$很难自动收集，必须由人来提供“管理”，不过该术语仍然适用于训练集目标可以被自动收集的情况。
 
 % -- 136 --
 
 \subsection{概率监督学习}
 \label{sec:probabilistic_supervised_learning}
-本书的大部分\gls{unsupervised_learning}算法都是基于估计概率分布$p(y|\Vx)$。
-我们可以使用\gls{maximum_likelihood_estimation}找到对于有参分布族$p(y|\Vx;\Vtheta)$最好的参数向量$\Vtheta$。 
+本书的大部分\gls{unsupervised_learning}算法都是基于估计概率分布$p(y\mid\Vx)$。
+我们可以使用\gls{maximum_likelihood_estimation}找到对于有参分布族$p(y\mid\Vx;\Vtheta)$最好的参数向量$\Vtheta$。 
 
 我们已经看到，\gls{linear_regression}对应于分布族
 \begin{equation}
-    p(y | \Vx; \Vtheta) = \mathcal{N}( y; \Vtheta^\Tsp \Vx, \MI).
+    p(y \mid \Vx; \Vtheta) = \mathcal{N}( y; \Vtheta^\Tsp \Vx, \MI).
 \end{equation}
 通过定义一族不同的概率分布，我们可以将\gls{linear_regression}扩展到分类情况中。
 如果我们有两个类，类$0$和类$1$，那么我们只需要指定这两类之一的概率。
@@ -1280,7 +1280,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 解决这个问题的一种方法是使用逻辑S形函数（logistic sigmoid function）将线性函数的输出压缩进区间$(0,1)$。
 该值可以解释为概率：
 \begin{equation}
-    p(y = 1 | \Vx; \Vtheta) = \sigma(\Vtheta^\Tsp \Vx).
+    p(y = 1 \mid \Vx; \Vtheta) = \sigma(\Vtheta^\Tsp \Vx).
 \end{equation}
 这个方法被称为\firstgls{logistic_regression}，名字有点奇怪，因为该模型用于分类，而非回归。
 
@@ -1361,9 +1361,9 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 这些训练\gls{example:chap5}被称为\firstgls{support_vectors}。
 
 当\gls{dataset}很大时，\gls{kernel_machines}的计算量也会很大。
-我们将会在第5.9节回顾这个想法。
+我们将会在\secref{sec:stochastic_gradient_descent_chap5}回顾这个想法。
 带通用核的核机器会泛化得更好。
-我们将在第\ref{sec:challenges_motivating_deep_learning}节解释原因。
+我们将在\secref{sec:challenges_motivating_deep_learning}解释原因。
 现代\gls{DL}的设计旨在克服核机器的这些限制。
 当前\gls{DL}的复兴始于\cite{Hinton06-small}表明神经网络能够在MNIST基准数据上胜过RBF核的\gls{SVM}。
 
@@ -1400,7 +1400,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 % -- 140 --
 
 \firstgls{decision_tree}，及其变种是一类将输入空间分成不同的区域，每个区域有独立的参数的算法\citep{Breiman84}。
-如图\ref{fig:chap5_decision_tree}所示，决策树的每个节点都与输入空间的一个区域相关联，并且内部节点继续将区域分成子节点下的子区域（通常使用坐标轴拆分区域）。
+如\figref{fig:chap5_decision_tree}所示，决策树的每个节点都与输入空间的一个区域相关联，并且内部节点继续将区域分成子节点下的子区域（通常使用坐标轴拆分区域）。
 空间由此细分成不重叠的区域，叶节点和输入区域之间形成一一对应的关系。
 每个叶结点将其输入区域的每个点映射到相同的输出。
 决策树通常有特定的训练算法，超出了本书的范围。
@@ -1428,13 +1428,13 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 
 \section{\glsentrytext{unsupervised_learning}算法}
 \label{sec:unsupervised_learning_algorithms}
-回顾第5.1.3节，无监督算法只处理``\gls{feature}''，不操作监督信号。
+回顾\secref{sec:the_experience_e}，无监督算法只处理“\gls{feature}”，不操作监督信号。
 监督和无监督算法之间的区别没有规范，严格的定义，因为没有客观的判断来区分监督者提供的值是\gls{feature}还是\gls{target}。
 通俗地说，\gls{unsupervised_learning}是指从不需要人为注释\gls{example:chap5}的分布中抽取信息的大多数尝试。
 该术语通常与密度估计相关，学习从分布中采样，学习从分布中降噪，需要数据分布的流形，或是将数据中相关的\gls{example:chap5}聚类。
 
-一个经典的\gls{unsupervised_learning}任务是找到数据的``最佳''表示。
-``最佳''可以是不同的表示，但是一般来说，是指该表示在比本身表示的信息更简单或更易访问而受到一些惩罚或限制的情况下，尽可能保存关于$\Vx$更多的信息。 
+一个经典的\gls{unsupervised_learning}任务是找到数据的“最佳”表示。
+“最佳”可以是不同的表示，但是一般来说，是指该表示在比本身表示的信息更简单或更易访问而受到一些惩罚或限制的情况下，尽可能保存关于$\Vx$更多的信息。 
 
 % -- 142 --
 
@@ -1455,9 +1455,9 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 总的来说，这些实例算法会说明如何实施上面的三个标准。
 剩余的大部分章节会介绍其他表示学习算法以不同方式处理这三个标准或是介绍其他标准。
 
-\subsection{\glssymbol{PCA}}
+\subsection{\gls{PCA}}
 \label{sec:principal_components_analysis_chap5}
-在第2.12节中，我们看到\glssymbol{PCA}算法提供了一种压缩数据的方式。
+在\secref{sec:example_principal_components_analysis_chap2}中，我们看到\glssymbol{PCA}算法提供了一种压缩数据的方式。
 我们也可以将\glssymbol{PCA}视为学习数据表示的\gls{unsupervised_learning}算法。
 这种表示基于上述简单表示的两个标准。
 \glssymbol{PCA}学习一种比原始输入低维的表示。
@@ -1467,8 +1467,8 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 
 % -- 143 --
 
-如图\ref{fig:chap5_pca}所示，\glssymbol{PCA}将输入$\Vx$投影表示成$\Vz$，学习数据的正交，线性变换。
-在第2.12节中，我们看到了如何学习重建原始数据的最佳一维表示（就\gls{mean_squared_error}而言），这种表示其实对应着数据的第一个主要成分。
+如\figref{fig:chap5_pca}所示，\glssymbol{PCA}将输入$\Vx$投影表示成$\Vz$，学习数据的正交，线性变换。
+在\secref{sec:example_principal_components_analysis_chap2}中，我们看到了如何学习重建原始数据的最佳一维表示（就\gls{mean_squared_error}而言），这种表示其实对应着数据的第一个主要成分。
 因此，我们可以用\glssymbol{PCA}作为保留数据尽可能多信息的降维方法（再次是就最小重构误差平方而言）。
 在下文中，我们将研究\glssymbol{PCA}表示如何使原始数据表示$\MX$去相关的.
 
@@ -1482,16 +1482,16 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 \label{fig:chap5_pca}
 \end{figure}
 
-假设有一个$m\times n$的\gls{design_matrix}$\MX$，数据的均值为零，$\SetE[\Vx] = 0$。
+假设有一个$m\times n$的\gls{design_matrix}$\MX$，数据的均值为零，$\SetE[\Vx\,] = 0$。
 若非如此，通过预处理步骤所有\gls{example:chap5}减去均值，数据可以很容易地中心化。
 
 $\MX$对应的无偏样本协方差矩阵给定如下
 \begin{equation}
-    \text{Var}[\Vx] = \frac{1}{m-1} \MX^\Tsp \MX .
+    \text{Var}[\Vx\,] = \frac{1}{m-1} \MX^\Tsp \MX .
 \end{equation}
 \glssymbol{PCA}会找到一个$\text{Var}[\Vz]$是对角矩阵的表示（通过线性变换）$\Vz=\MW^\Tsp\Vx$。
 
-在第2.12节，我们看到\gls{design_matrix}$\MX$的主成分由$\MX^\Tsp\MX$的\gls{feature}向量给定。
+在\secref{sec:example_principal_components_analysis_chap2}，我们看到\gls{design_matrix}$\MX$的主成分由$\MX^\Tsp\MX$的\gls{feature}向量给定。
 从这个角度，我们有
 \begin{equation}
     \MX^\Tsp\MX = \MW \VLambda \MW^\Tsp .
@@ -1581,7 +1581,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \section{\glsentrytext{SGD}}
 \label{sec:stochastic_gradient_descent_chap5}
 几乎所有的\gls{DL}算法都用到了一个非常重要的算法：\firstall{SGD}。
-\gls{SGD}是第4.3节介绍的\gls{GD}算法的一个扩展。
+\gls{SGD}是\secref{sec:gradient_based_optimization}介绍的\gls{GD}算法的一个扩展。
 
 \gls{ML}中的一个循环问题是大的\gls{dataset}是好的泛化所必要的，但大的训练集的计算代价也更大。
 
@@ -1594,7 +1594,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
     L(\Vx, y, \Vtheta) = 
     \frac{1}{m} \sum_{i=1}^m  L(\Vx^{(i)}, y^{(i)}, \Vtheta) ,
 \end{equation}
-其中$L$是每个\gls{example:chap5}的损失函数$L(\Vx, y, \Vtheta) = -\log p(y|\Vx;\Vtheta)$。
+其中$L$是每个\gls{example:chap5}的损失函数$L(\Vx, y, \Vtheta) = -\log p(y\mid\Vx;\Vtheta)$。
 
 对于这些相加的损失函数，\gls{GD}需要计算
 \begin{equation}
@@ -1648,7 +1648,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 在学术界，\gls{DL}从2006年开始收到关注的原因是，在数以万计\gls{example:chap5}的中等规模\gls{dataset}上，\gls{DL}在新\gls{example:chap5}上比当时很多热门算法泛化得更好。
 不久后，\gls{DL}在工业界受到了更多的关注，因为其提供了一种可扩展的方式训练大\gls{dataset}上的非线性模型。
 
-\gls{SGD}及其很多强化方法将会在第\ref{chap:optimization_for_training_deep_models}章继续探讨。
+\gls{SGD}及其很多强化方法将会在\chapref{chap:optimization_for_training_deep_models}继续探讨。
 
 \section{构建\glsentrytext{ML}算法}
 \label{sec:building_a_machine_learning_algorithm}
@@ -1657,9 +1657,9 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 例如，\gls{linear_regression}算法的组成成分有$\MX$和$\Vy$构成的\gls{dataset}，损失函数
 \begin{equation}
     J(\Vw, b) = -\SetE_{\RVx,\RSy\sim\hat{p}_{\text{data}}}
-    \log p_{\text{model}} (y | \Vx) ,
+    \log p_{\text{model}} (y \mid \Vx) ,
 \end{equation}
-模型是$p_{\text{model}} (y | \Vx) = \mathcal{N}(y; \Vx^\Tsp \Vw + b, 1)$，
+模型是$p_{\text{model}} (y \mid \Vx) = \mathcal{N}(y; \Vx^\Tsp \Vw + b, 1)$，
 在大多数情况下，优化算法可以定义为求解损失函数梯度为零的标准方程。
 
 意识到我们可以替换独立于其他成分的大多数成分，因此我们能得到很多不同的算法。
@@ -1673,7 +1673,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 例如，我们可以将权重衰减加到\gls{linear_regression}的损失函数中
 \begin{equation}
     J(\Vw, b) = \lambda \norm{\Vw}_2^2 - \SetE_{\RVx,\RSy\sim \hat{p}_{\text{data}}}
-    \log p_{\text{model}} (y | \Vx) .
+    \log p_{\text{model}} (y \mid \Vx) .
 \end{equation}
 该优化仍然有闭解。
 
@@ -1687,7 +1687,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \begin{equation}
     J(\Vw) = \SetE_{\RVx \sim \hat{p}_{\text{data}}} \norm{\Vx - r(\Vx; \Vw)}_2^2
 \end{equation}
-模型定义为重建函数$r(\Vx) = \Vw^\Tsp\Vx \Vw$，并且$\Vw$有范数为$1$的限制。
+模型定义为重建函数$r(\Vx) = \Vw^\Tsp\Vx \,\Vw$，并且$\Vw$有范数为$1$的限制。
 
 在某些情况下，由于计算原因，我们不能实际计算损失函数。
 在这种情况下，只要我们有近似其梯度的方法，那么我们仍然可以使用迭代数值优化近似最小化\gls{target}。
@@ -1720,7 +1720,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 维数灾难发生在计算机科学的许多地方，在\gls{ML}中尤其如此。
 
 由\gls{curse_of_dimensionality}带来的一个挑战是统计挑战。
-如图\ref{fig:chap5_curse}所示，统计挑战产生于$\Vx$的可能配置数目远大于训练\gls{example:chap5}的数目。
+如\figref{fig:chap5_curse}所示，统计挑战产生于$\Vx$的可能配置数目远大于训练\gls{example:chap5}的数目。
 为了充分理解这个问题，我们假设输入空间如图所示被分成网格。
 低维时我们可以用由数据占据的少量网格去描述这个空间。
 泛化到新数据点时，通过检测和新输入在相同网格中的训练\gls{example:chap5}，我们可以判断如何处理新数据点。
@@ -1757,7 +1757,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 % -- 152 --
 
-其中最广泛使用的隐式``先验''是\firstgls{smoothness_prior}，或\firstgls{local_constancy_prior}。
+其中最广泛使用的隐式“先验”是\firstgls{smoothness_prior}，或\firstgls{local_constancy_prior}。
 这个先验表明我们学习的函数不应在小区域内发生很大的变化。
 
 许多简单算法完全依赖于此先验达到良好的泛化，其结果是不能推广去解决\gls{AI}级别任务中的统计挑战。
@@ -1823,7 +1823,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \gls{DL}中的核心思想是我们假设数据由\emph{因素或特征组合}，也可能是由层次结构中多个层级产生。
 许多其他类似的通用假设进一步提高了\gls{DL}算法。
 这些很温和的假设允许\gls{example:chap5}数目和区间数目之间的关系有指数增益。
-这类指数增益将在第6.4.1节，第15.4节和第15.5节中被更详尽地介绍。
+这类指数增益将在\secref{sec:universal_approximation_properties_and_depth}，\secref{sec:distributed_representation}和\secref{sec:exponential_gains_from_depth}中被更详尽地介绍。
 深度分布式表示带来的指数增益有效应对了\gls{curse_of_dimensionality}引来的挑战。
 
 % -- 155 --
@@ -1840,12 +1840,12 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 每个点周围邻域的定义暗示着存在变换能够从一个位置移动到其邻域位置。
 例如在地球表面这个流形中，我们可以朝东南西北走。
 
-尽管术语``流形''有正式的数学定义，\gls{ML}倾向于更松散地定义一组点，使其只需要考虑少数嵌入在高维空间中的自由度或维数就能很好地近似。
+尽管术语“流形”有正式的数学定义，\gls{ML}倾向于更松散地定义一组点，使其只需要考虑少数嵌入在高维空间中的自由度或维数就能很好地近似。
 每一维都对应着局部的变动方向。
-如图\ref{sec:challenges_motivating_deep_learning}所示，训练数据位于二维空间中的一维流形中。
+如\figref{sec:challenges_motivating_deep_learning}所示，训练数据位于二维空间中的一维流形中。
 在\gls{ML}中，我们允许流形的维数从一个点到另一个点有所变化。
 这经常发生于流形和自身相交的情况。
-例如，数字``8''形状的流形在大多数位置只有一维，但在中心的相交处有两维。
+例如，数字“8”形状的流形在大多数位置只有一维，但在中心的相交处有两维。
 
 如果我们希望\gls{ML}算法学习$\SetR^n$上的所有感兴趣的函数时，很多\gls{ML}问题
 看上去都是不可解的。
@@ -1862,7 +1862,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 第一个支持\firstgls{manifold_hypothesis}的观察是现实生活中的图像，文本，声音的
 概率分布都是高度集中的。
 均匀的噪音从来没有和这类领域的结构化输入相似过。
-图\ref{fig:chap5_noise}显示均匀采样的点看上去像是没有信号时模拟电视上的静态模式。
+\figref{fig:chap5_noise}显示均匀采样的点看上去像是没有信号时模拟电视上的静态模式。
 同样，如果您均匀地随机抽取字母来生成文件，能有多大的概率会得到一个有意义的英语文档？
 几乎是零。因为大部分字母长序列不对应着自然语言序列：
 自然语言序列的分布只占了字母序列的总空间里非常小的体积。
