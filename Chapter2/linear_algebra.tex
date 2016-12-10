@@ -84,7 +84,7 @@
 
 \firstgls{transpose}是矩阵的重要操作之一。
 矩阵的转置是以对角线为轴的镜像，这条从左上角到右下角的对角线称为\firstgls{main_diagonal}。
-图\ref{fig:chap2_transpose}显示了这个操作。
+\figref{fig:chap2_transpose}显示了这个操作。
 我们将矩阵$\MA$的转置表示为$\MA^\top$，定义如下
 \begin{equation}
 (\MA^\top)_{i,j}= \SA_{j,i}.
@@ -191,7 +191,7 @@
 \end{equation}
 
 
-利用向量乘积是标量，标量转置是自身的事实，我们可以证明式\ref{eq:2.8}：
+利用向量乘积是标量，标量转置是自身的事实，我们可以证明\eqnref{eq:2.8}：
 \begin{equation}
     \Vx^\top \Vy = \left(\Vx^\top \Vy \right)^\top = \Vy^\top \Vx.
 \end{equation}
@@ -210,7 +210,7 @@
 其中$\MA\in \SetR^{m\times n}$是一个已知矩阵，$\Vb$是一个已知向量，$\Vx$是一个我们要求解的未知向量。
 向量$\Vx$的每一个元素$\Sx_i$都是未知的。
 矩阵$\MA$的每一行和$\Vb$中对应的元素构成另一个约束。
-我们可以把式\ref{eq:2.11}重写为
+我们可以把\eqnref{eq:2.11}重写为
 \begin{gather}
 \MA_{1,:}\Vx=b_1\\
 \MA_{2,:}\Vx=b_2 \\
@@ -237,7 +237,7 @@
 \label{sec:identity_and_inverse_atrices}
 
 
-线性代数提供了被称为\firstgls{matrix_inverse}的强大工具，使我们能够解析地求解式\ref{eq:2.11}中的多值$\MA$。
+线性代数提供了被称为\firstgls{matrix_inverse}的强大工具，使我们能够解析地求解\eqnref{eq:2.11}中的多值$\MA$。
 
 
 为了描述矩阵逆，我们首先需要定义\firstgls{identity_matrix}的概念。
@@ -255,7 +255,7 @@
 
 矩阵$\MA$的\firstgls{matrix_inverse}被记作$\MA^{-1}$，被定义为如下的矩阵
 \begin{equation} \MA^{-1}\MA = \MI_{\Sn}. \end{equation}
-现在我们可以通过如果以下步骤求解式\ref{eq:2.11}：
+现在我们可以通过如果以下步骤求解\eqnref{eq:2.11}：
 \begin{gather}
 \MA\Vx=\Vb \\
 \MA^{-1}\MA\Vx = \MA^{-1}\Vb \\
@@ -281,7 +281,7 @@
 \section{线性相关和生成子空间}
 \label{sec:linear_dependence_and_span}
 
-如果逆矩阵$\MA^{-1}$存在，那么式\ref{eq:2.11}肯定对于每一个向量$\Vb$恰好存在一个解。
+如果逆矩阵$\MA^{-1}$存在，那么\eqnref{eq:2.11}肯定对于每一个向量$\Vb$恰好存在一个解。
 对系统方程而言，对于某些$\Vb$的值，有可能不存在解，或者存在无限多个解。
 然而，存在多于一个解但是少于无穷多个解的情况是不可能发生的；因为如果$\Vx$和$\Vy$都是某系统方程的解，则
 \begin{equation}
@@ -332,12 +332,12 @@
 如果一组向量中的任意一个向量都不能表示成其他向量的线性组合，那么这组向量被称之为线性无关(linearly independent)。
 如果某个向量是一组向量中某些向量的线性组合，那么我们将这个向量加入到这组向量后不会增加这组向量的生成空间。
 这意味着，如果一个矩阵的列空间涵盖整个$\SetR^m$，那么该矩阵必须包含至少一组$m$个线性无关的向量。
-这是式\ref{eq:2.11}对于每一个向量$\Vb$的取值都有解的充足条件。
+这是\eqnref{eq:2.11}对于每一个向量$\Vb$的取值都有解的充足条件。
 值得注意的是，这个条件是说该向量集恰好有$m$个线性无关的列向量，而不是至少$m$个。
 不存在一个$m$维向量的集合具有多于$m$个彼此线性不相关的列向量，但是一个有多于$m$个列向量的矩阵却有可能拥有不止一个大小为$m$的线性无关向量集。
 
 
-要想使矩阵可逆，我们还需要保证式\ref{eq:2.11}对于每一个$\Vb$值至多有一个解。
+要想使矩阵可逆，我们还需要保证\eqnref{eq:2.11}对于每一个$\Vb$值至多有一个解。
 为此，我们需要确保该矩阵至多有$m$个列向量。
 否则，该方程会有不止一个解。
 
@@ -557,7 +557,7 @@ $L^1$范数可以简化如下：
 其中$\MQ$是$\MA$的特征向量组成的正交矩阵，$\VLambda$是对角矩阵。
 特征值$\Lambda_{i,i}$对应的特征向量是矩阵$\MQ$的第$i$列，记作$\MQ_{:,i}$。
 因为$\MQ$是正交矩阵，我们可以将$\MA$看作是沿方向$\Vv^{(i)}$延展$\lambda_i$倍的空间。
-如图\ref{fig:chap2_eigen_ellipse}所示。
+如\figref{fig:chap2_eigen_ellipse}所示。
 
 % -- 40 --
 
@@ -599,7 +599,7 @@ $L^1$范数可以简化如下：
 \section{\gls{SVD}}
 \label{sec:singular_value_decomposition}
 
-在第\ref{sec:eigendecomposition}节，我们探讨了如何将矩阵分解成特征向量和特征值。
+在\secref{sec:eigendecomposition}，我们探讨了如何将矩阵分解成特征向量和特征值。
 还有另一种分解矩阵的方法，被称为\firstall{SVD}，将矩阵分解为\firstgls{Svector}和\firstgls{Svalue}。
 通过\gls{SVD}，我们会得到一些类似\gls{eigendecomposition}的信息。
 然而，\gls{SVD}有更广泛的应用。
@@ -747,7 +747,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 
 \section{实例：\glsentrytext{PCA}}
-\label{sec:principal_components_analysis_chap2}
+\label{sec:example_principal_components_analysis_chap2}
 
 \firstall{PCA}是一个简单的机器学习算法，可以通过基础的线性代数知识推导。
 
@@ -799,7 +799,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \begin{equation}
 (\Vx-g(\Vc))^\top(\Vx-g(\Vc))
 \end{equation}
-（式\ref{eq:2.30}中$L^2$范数的定义）
+（\eqnref{eq:2.30}中$L^2$范数的定义）
 \begin{equation}
     = \Vx^\top\Vx - \Vx^\top g(\Vc) - g(\Vc)^\top\Vx + g(\Vc)^\top g(\Vc)
 \end{equation}
@@ -830,7 +830,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \end{equation}
 
 
-我们可以通过线性代数微积分来求解这个最优化问题（如果你不清楚怎么做，请参考第4.3节）
+我们可以通过线性代数微积分来求解这个最优化问题（如果你不清楚怎么做，请参考\secref{sec:gradient_based_optimization}）
 \begin{gather}
     \nabla_{\Vc} (-2\Vx^\top \MD \Vc + \Vc^\top\Vc) = 0\\
     -2\MD^\top\Vx + 2\Vc = 0\\
@@ -859,7 +859,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 为了推导用于寻求$\MD^*$的算法，我们首先考虑$l=1$的情况。
 在这种情况下，$\MD$是一个单一向量$\Vd$。
-将式\ref{eq:2.67}代入式\ref{eq:2.68}，简化$\MD$为$\Vd$，问题简化为
+将\eqnref{eq:2.67}代入\eqnref{eq:2.68}，简化$\MD$为$\Vd$，问题简化为
 \begin{equation}
 \label{eq:2.67}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd\Vd^\top \Vx^{(i)}}_2^2
@@ -900,7 +900,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \begin{equation}
     = \underset{\Vd}{\arg\min} \, \Tr \left( \left( \MX - \MX \Vd\Vd^\top  \right)^\top \left( \MX - \MX \Vd\Vd^\top  \right) \right)
 \end{equation}
-（式\ref{eq:2.49}）
+（\eqnref{eq:2.49}）
 \begin{equation}
     = \underset{\Vd}{\arg\min} \, \Tr \left( \MX^\top\MX - \MX^\top\MX \Vd\Vd^\top - \Vd\Vd^\top \MX^\top\MX + \Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top  \right)
 \end{equation}
@@ -914,7 +914,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \begin{equation}
     = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\Vd\Vd^\top \MX^\top\MX\Vd\Vd^\top)
 \end{equation}
-（因为循环改变迹运算中相乘矩阵的顺序不影响结果，如式\ref{eq:2.52}所示）
+（因为循环改变迹运算中相乘矩阵的顺序不影响结果，如\eqnref{eq:2.52}所示）
 \begin{equation}
     = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
 \end{equation}
