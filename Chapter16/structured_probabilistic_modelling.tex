@@ -500,7 +500,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 关于如何从\gls{undirected_model}结构获得\gls{energy_function}的形式的示例参见图\ref{fig:example_undirected_2}。
 人们可以将\gls{energy_function}带有多个项的\gls{energy_based_model}视作是\firstgls{product_of_expert}\citep{Hinton99}。
 \gls{energy_function}中的每一项对应的是概率分布中的一个\gls{factor}。
-\gls{energy_function}中的每一项都可以看作决定一个软约束是否能够满足的“专家”。
+\gls{energy_function}中的每一项都可以看作决定一个软约束是否能够满足的``专家''。
 每个专家可以仅执行仅涉及随机变量的低维投影的一个约束，但是结合概率的乘法时，专家们合理构造了复杂的高维约束。
 % 561
 \begin{figure}[!htb]
@@ -518,7 +518,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 \gls{energy_based_model}的定义的一部分无法用\gls{ML}观点来解释：即等式~\eqref{eqn:167}中的负号。
 这个负号的存在主要是为了保持\gls{ML}文献和物理学文献之间的兼容性。
 概率建模的许多研究最初由统计物理学家做出的，其中$E$是指实际的，物理概念的能量，没有任意的符号。
-诸如“能量”和“\gls{partition_function}”这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
+诸如``能量''和``\gls{partition_function}''这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
 一些\gls{ML}研究者（例如，\citep{Smolensky86}将负能量称为\firstgls{harmony}）发出了不同的声音，但这些都不是标准惯例。
 % 562
 
@@ -549,7 +549,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 那么我们声称给定变量$\SetS$时，变量$\SetA$与另一组变量$\SetB$\gls{separation}。
 如果两个变量$a$和$b$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
 如果它们之间没有路径，或者所有路径都包含可观测的变量，那么它们是\gls{separation}的。
-我们认为仅涉及到未观察到的变量的路径是“活跃”的，将包括观察到的变量的路径称为“非活跃”的。
+我们认为仅涉及到未观察到的变量的路径是``活跃''的，将包括观察到的变量的路径称为``非活跃''的。
 % 563
 
 
@@ -587,7 +587,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 
 
 类似的概念适用于\gls{directed_model}，除了在\gls{directed_model}中，这些概念被称为d-\gls{separation}。
-“d”代表“\gls{dependency}”程度。
+``d''代表``\gls{dependency}''程度。
 有向图的d-\gls{separation}的定义与\gls{undirected_model}的相同：我们认为如果图结构中给定$\SetS$时 $\SetA$与变量集$\SetB$无关，
 那么给定变量集$\SetS$时，变量集$\SetA$d-\gls{separation}于变量集$\SetB$。
 % 563
@@ -878,9 +878,9 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 \label{sec:learning_about_dependencies}
 % 572
 
-良好的生成模型需要准确地捕获所观察到的或“可见”变量$\Vv$上的分布。
+良好的生成模型需要准确地捕获所观察到的或``可见''变量$\Vv$上的分布。
 通常$\Vv$的不同元素彼此高度依赖。
-在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个潜在的或“隐藏”变量$\Vh$。
+在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个潜在的或``隐藏''变量$\Vh$。
 然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$v_i$和$v_j$间接依赖，$v_i$和$\Vh$之间直接依赖，$\Vv$和$h_i$直接依赖)。
 % 572  end 
 
@@ -1049,7 +1049,7 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
 其中$\Vb,\Vc$和$\MW$都是无限制的实值的可学习参数。
 我们可以看到，模型被分成两组单元：$\Vv$和$\Vh$，它们之间的相互作用由矩阵$\MW$来描述。
 该模型在图\ref{fig:rbm}中图示。
-如该图所示，该模型的一个重要方面是在任何两个可见单元之间或任何两个隐藏单元之间没有直接的相互作用（因此称为“受限”，一般的\gls{BM}可以具有任意连接）。
+如该图所示，该模型的一个重要方面是在任何两个可见单元之间或任何两个隐藏单元之间没有直接的相互作用（因此称为``受限''，一般的\gls{BM}可以具有任意连接）。
 % 577
 
 

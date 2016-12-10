@@ -90,7 +90,7 @@
 
 % -- 519 --
 
-通常而言，“\gls{pretraining}”不仅单指\gls{pretraining}阶段，也指结合\gls{pretraining}和\gls{supervised_learning}的整个两阶段协议。
+通常而言，``\gls{pretraining}''不仅单指\gls{pretraining}阶段，也指结合\gls{pretraining}和\gls{supervised_learning}的整个两阶段协议。
 \gls{supervised_learning}阶段可能会使用\gls{pretraining}阶段得到的顶层特征训练一个简单分类器，或者可能会监督\gls{fine_tune}\gls{pretraining}阶段得到的整个网络。
 不管采用什么类型的\gls{supervised_learning}算法和模型，在大多数情况下，整个训练过程几乎是相同的。
 虽然\gls{unsupervised_learning}算法的选择将明显影响到细节，但是大多数\gls{unsupervised}\gls{pretraining}应用都遵循这一基本方法。
@@ -283,7 +283,7 @@
 
 一个相关的问题是\firstgls{concept_drift}，我们可以将其视为一种\gls{transfer_learning}，因为数据分布随时间而逐渐变化。
 \gls{concept_drift}和\gls{transfer_learning}都可以被视为\gls{multitask_learning}的特定形式。
-短语“\gls{multitask_learning}”通常指\gls{supervised_learning}任务，而\gls{transfer_learning}中更一般的概念也适用于\gls{unsupervised_learning}和\gls{RL}
+短语``\gls{multitask_learning}''通常指\gls{supervised_learning}任务，而\gls{transfer_learning}中更一般的概念也适用于\gls{unsupervised_learning}和\gls{RL}
 
 在所有这些情况下，目标是利用第一个设定下的数据优势，提取在第二种设定中学习时或直接进行预测时可能有用的信息。
 \gls{representation_learning}的核心思想是相同的表示可能在两种设定中都是有用的。
@@ -316,10 +316,10 @@
 只有在训练时使用了额外信息，\gls{zero_data_learning}\citep{Larochelle2008}和\gls{zero_shot_learning}\citep{Palatucci2009,Socher-2013}才是有可能的。
 我们可以认为\gls{zero_data_learning}场景包含三个随机变量：传统输入$\Vx$，传统输出或目标$\Vy$，以及描述任务的附加随机变量，$T$。
 该模型被训练来估计条件分布$p(\Vy | \Vx, T)$，其中$T$是我们希望执行的任务的描述。
-在我们的例子中，读取猫的文本信息然后识别猫，输出是二元变量$y$，$y=1$表示“是”，$y=0$表示“不是”。
-任务变量$T$表示要回答的问题，例如“这个图像中是否有猫？”
+在我们的例子中，读取猫的文本信息然后识别猫，输出是二元变量$y$，$y=1$表示``是''，$y=0$表示``不是''。
+任务变量$T$表示要回答的问题，例如``这个图像中是否有猫？''
 如果训练集包含和$T$在相同空间的无监督对象样本，我们也许能够推断未知的$T$实例的含义。
-在我们的例子中，没有提前看到猫的图像而去识别猫，拥有一些未标记的文本数据包含句子诸如“猫有四条腿”或“猫有尖耳朵”是很重要的。
+在我们的例子中，没有提前看到猫的图像而去识别猫，拥有一些未标记的文本数据包含句子诸如``猫有四条腿''或``猫有尖耳朵''是很重要的。
 
 % -- 529 --
 
@@ -352,7 +352,7 @@
 
 \section{\glsentrytext{semi_supervised}解释因果关系}
 \label{sec:semi_supervised_disentangling_of_causal_factors}
-关于\gls{representation_learning}的一个重要问题是“什么使一个表示比另一个更好？”
+关于\gls{representation_learning}的一个重要问题是``什么使一个表示比另一个更好？''
 一种假设是，理想表示中的特征对应到观测数据的根本原因，特征空间中不同的特征或方向对应着不同的原因，从而表示能够将这些原因区分开。
 这个假设激励我们去寻找比较好地表示$p(\Vx)$的方法。
 如果$\Vy$是产生$\Vx$的重要原因之一，那么这种表示也可能是计算$p(\Vy | \Vx)$的一种良好表示。
@@ -399,8 +399,8 @@
 \begin{equation}
 	p(\Vx) = \SetE_{\RVh} p(\Vx \mid \Vh),
 \end{equation}
-从这个直观的观察，我们得出结论，$\RVx$最好可能的模型（从广义的观点）是会表示上述“真实”结构的，其中$\Vh$作为隐变量解释$\Vx$中观察到的变动。
-上文讨论的“理想”的\gls{representation_learning}应该能够反映出这些隐变量。
+从这个直观的观察，我们得出结论，$\RVx$最好可能的模型（从广义的观点）是会表示上述``真实''结构的，其中$\Vh$作为隐变量解释$\Vx$中观察到的变动。
+上文讨论的``理想''的\gls{representation_learning}应该能够反映出这些隐变量。
 如果$\RVy$是其中之一（或是紧密关联于其中之一），那么将很容易从这种表示中预测$\RVy$。
 我们也看到给定$\RVx$下$\RVy$的条件分布通过\gls{bayes_rule}关联到上式中的分量：
 \begin{equation}
@@ -478,7 +478,7 @@
 
 正如\cite{Janzing-et-al-ICML2012}指出，学习潜在因素的好处是，如果真实的生成过程中$\RVx$是结果，$\RVy$是原因，那么建模$p(\RVx \mid \RVy)$对于$p(\RVy)$的变化是鲁棒的。
 如果因果关系被逆转，这是不对的，因为根据\gls{bayes_rule}，$p(\RVx \mid \RVy)$将会对$p(\RVy)$的变化十分敏感。
-很多时候，我们考虑不同领域（例如时间不稳定性或是任务性质的变化）上分布的变化时，\emph{因果机制是保持不变的}（“宇宙定律不变”），而潜在原因的边缘分布是会变化的。
+很多时候，我们考虑不同领域（例如时间不稳定性或是任务性质的变化）上分布的变化时，\emph{因果机制是保持不变的}（``宇宙定律不变''），而潜在原因的边缘分布是会变化的。
 因此，通过学习试图恢复因果因素$\RVh$和$p(\RVx \mid \RVh)$的\gls{generative_model}，可以期望对所有种类的变化有更好的泛化和鲁棒性。
 
 % -- 535 --
@@ -533,7 +533,7 @@
 	\item 高斯混合和专家混合：模板（聚类中心）或专家关联一个激活的\emph{程度}。
 	和$k$-最近邻算法一样，每个输入用多个值表示，但是这些值不能轻易地彼此分开控制。
 
-	\item 具有高斯核（或其他相似局部核）的核机器：尽管每个“\gls{support_vectors}”或模板样本的激活程度现在是连续值，但仍然会出现和高斯混合相同的问题。
+	\item 具有高斯核（或其他相似局部核）的核机器：尽管每个``\gls{support_vectors}''或模板样本的激活程度现在是连续值，但仍然会出现和高斯混合相同的问题。
 
 	\item 基于\gls{n_gram}的语言或翻译模型：根据后缀的树结构划分上下文集合（符号序列）。
 	例如，叶节点可能对应于最好两个单词$w_1$和$w_2$。
@@ -547,9 +547,9 @@
 
 
 将\gls{distributed_representation}和符号表示区分开来的一个重要相关概念是由不同概念之间的\emph{共享属性而产生的泛化}。
-作为纯符号，“猫”和“狗”之间的距离和任意其他两种符号一样。
+作为纯符号，``猫''和``狗''之间的距离和任意其他两种符号一样。
 然而，如果将它们与有意义的\gls{distributed_representation}相关联，那么关于猫的很多特点可以推广到狗，反之亦然。
-例如，我们的\gls{distributed_representation}可能会包含诸如“是否具有皮毛”或是“腿的数目”这类用于“猫”和“狗”的嵌入具有相同值的项。
+例如，我们的\gls{distributed_representation}可能会包含诸如``是否具有皮毛''或是``腿的数目''这类用于``猫''和``狗''的嵌入具有相同值的项。
 正如第12.4节所讨论的，作用于单词\gls{distributed_representation}的神经语言模型比其他直接对单词\gls{one_hot}表示进行操作的模型泛化得更好。
 \gls{distributed_representation}具有丰富的\emph{相似性空间}，语义上相近的概念（或输入）在距离上接近，这是纯粹的符号表示所缺少的属性。
 
@@ -731,7 +731,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 
 	\item \emph{稀疏性}：大多数特征应该假定与描述的大多数输入不相关——在表示猫的图像时，没有必要使用检测大象的特征。
-	因此，应该强加一个先验，任何可以解释为“存在”或“不存在”的特征在大多数时间都应该是不存在的。
+	因此，应该强加一个先验，任何可以解释为``存在''或``不存在''的特征在大多数时间都应该是不存在的。
 
 % -- 546 --
 
