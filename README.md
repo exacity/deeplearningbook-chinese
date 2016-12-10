@@ -23,7 +23,7 @@
 面向的读者
 --------------------
 
-请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.1.2-alpha/dlbook_cn_v0.1.2-alpha.pdf)阅读(PDF 12月9日已更新)。
+请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.1.2-alpha/dlbook_cn_v0.1.2-alpha.pdf)阅读(PDF 12月10日已更新)。
 这一版读起来肯定费劲，我们建议英文好的或者研究者直接读原版。
 这一版面向的读者是英语不好，急于想入门深度学习的同学。或者希望帮忙校对的各路大哥也可以读读，只要不嫌弃。
 
