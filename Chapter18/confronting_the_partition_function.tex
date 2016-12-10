@@ -86,7 +86,7 @@
 \end{equation}
 该等式只适用于$\tilde{p}$和$\nabla_{\Vtheta} \tilde{p} (\RVx)$上的一些特定正则条件。
 在测度理论术语中，这些条件是：
-（1）对每一个$\Vtheta$而言，未归一化分布$p$必须是$\Vx$的\gls{lebesgue_integrable}函数。
+（1）对每一个$\Vtheta$而言，未归一化分布$\tilde{p}$必须是$\Vx$的\gls{lebesgue_integrable}函数。
 （2）对于所有的$\Vtheta$和几乎所有的$\Vx$，导数$\nabla_{\Vtheta} \tilde{p}(\RVx)$必须存在。
 （3）对于所有的$\Vtheta$和几乎所有的$\Vx$，在$\max_i | \frac{\partial}{\partial \theta_i } \tilde{p} (\RVx) | \leq R(\Vx)$ 的情况下，必须存在能够限制住$\nabla_{\Vtheta} \tilde{p}(\RVx)$的可积函数$R(\Vx)$。
 幸运的是，大多数感兴趣的\gls{ML}模型都具有这些性质。
@@ -283,7 +283,7 @@
 \gls{pseudolikelihood}正是基于\gls{conditional_probability}可以采用这种基于比率的形式，因此可以在没有\gls{partition_function}的情况下进行计算。
 假设我们将$\RVx$分为$\RVa$，$\RVb$和$\RVc$，其中$\RVa$包含我们想要找到的条件分布的变量，$\RVb$包含我们想要条件化的变量，$\RVc$包含不涉及的一部分变量：
 \begin{equation}
-	p(\RVa | \RVb) = \frac{ p(\RVa, \RVb) }{ p(\RVb) } = \frac{p(\RVa, \RVb)}{ \sum_{\RVa, \RVc} p(\RVa, \RVb, \RVc) } = \frac{ \tilde{p}(\RVa, \RVb) }{ \sum_{\RVa, \RVc} \tilde{p}(\RVa, \RVb, \RVc) }.
+	p(\RVa \mid \RVb) = \frac{ p(\RVa, \RVb) }{ p(\RVb) } = \frac{p(\RVa, \RVb)}{ \sum_{\RVa, \RVc} p(\RVa, \RVb, \RVc) } = \frac{ \tilde{p}(\RVa, \RVb) }{ \sum_{\RVa, \RVc} \tilde{p}(\RVa, \RVb, \RVc) }.
 \end{equation}
 这个量需要边缘化$\RVa$，假设$\RVa$和$\RVc$包含的变量并不多，那么这将是非常高效的操作。
 在极端情况下，$\RVa$可以是单个变量，$\RVc$可以为空，使得该操作仅需要估计与单个\gls{RV}值一样多的$\tilde{p}$。
@@ -293,13 +293,13 @@
 如果总共有$n$个变量，那么我们必须边缘化$n-1$个变量。
 根据概率的\gls{chain_rule}，
 \begin{equation}
-	\log p(\RVx) = \log p(x_1) + \log p(x_2 | x_1) + \dots + \log p(x_n | \RVx_{1:n−1}).
+	\log p(\RVx) = \log p(x_1) + \log p(x_2 \mid x_1) + \dots + \log p(x_n \mid \RVx_{1:n−1}).
 \end{equation}
 在这种情况下，我们已经使$\RVa$尽可能小，但是$\RVc$可以大到$\RVx_{2:n}$。
 如果我们简单地将$\RVc$移到$\RVb$中以减少计算代价，会怎么样呢？
 这便产生了\firstgls{pseudolikelihood}\citep{Besag75pseudolikelihood}目标函数，基于给定所有其他特征$\Vx_{-i}$，预测特征$x_i$的值：
 \begin{equation}
-	\sum_{i=1}^n \log p(x_i | \Vx_{-i}).
+	\sum_{i=1}^n \log p(x_i \mid \Vx_{-i}).
 \end{equation}
 
 
@@ -317,7 +317,7 @@
 在$m = n$和$\SetS^{(i)} = \{i\}$的极端情况下，广义伪似然会变为伪随机。
 \gls{generalized_pseudolikelihood_estimator}目标函数如下所示
 \begin{equation}
-	\sum_{i=1}^m \log p(\RVx_{\SetS^{(i)}} | \RVx_{- \SetS^{(i)} }).
+	\sum_{i=1}^m \log p(\RVx_{\SetS^{(i)}} \mid \RVx_{- \SetS^{(i)} }).
 \end{equation}
 
 
@@ -363,7 +363,7 @@
 
 
 该目标函数避免了微分\gls{partition_function}$Z$相关的困难，因为$Z$不是$x$的函数，因此$\nabla_{\RVx} Z = 0$。
-最初，\gls{score_matching}似乎有一个新的困难：计算数据分布的\gls{score}需要知道生成训练数据的真实分布$p_{data}$。
+最初，\gls{score_matching}似乎有一个新的困难：计算数据分布的\gls{score}需要知道生成训练数据的真实分布$p_{\text{data}}$。
 幸运的是，最小化$L(\Vx, \Vtheta)$的期望等效于最小化如下式子的期望值
 \begin{equation}
 	\tilde{L} (\Vx, \Vtheta) = \sum_{j=1}^n \left( \frac{\partial^2}{ \partial x_j^2 } 
@@ -429,10 +429,10 @@
 \label{sec:denoising_score_matching}
 在某些情况下，我们可能希望通过拟合以下分布来正则化\gls{score_matching}
 \begin{equation}
-	p_{\text{smoothed}}(\Vx) = \int p_{\text{data}} (\Vy) q( \Vx | \Vy) \mathrm{d} \Vy
+	p_{\text{smoothed}}(\Vx) = \int p_{\text{data}} (\Vy) q( \Vx \mid \Vy) \mathrm{d} \Vy
 \end{equation}
 而不是拟合真实的分布$p_{\text{data}}$。
-分布$q(\Vx | \Vy)$是一个损坏过程，通常是向$\Vy$添加少量噪扰来形成$\Vx$的过程。
+分布$q(\Vx \mid \Vy)$是一个损坏过程，通常是向$\Vy$添加少量噪扰来形成$\Vx$的过程。
 
 
 \gls{denoising_score_matching}是特别有用的，因为在实践中，我们通常不能访问真实的$p_{data}$，而只能访问由其样本所定义的\gls{empirical_distribution}。
@@ -479,11 +479,11 @@
 	p_{\text{joint}} (y = 1) = \frac{1}{2},
 \end{equation}
 \begin{equation}
-	p_{\text{joint}} (\RVx \,|\, y = 1) = p_{\text{model}} (\RVx),
+	p_{\text{joint}} (\RVx \mid y = 1) = p_{\text{model}} (\RVx),
 \end{equation}
 和
 \begin{equation}
-	p_{\text{joint}} (\RVx \,|\, y = 0) = p_{\text{noise}}(\RVx).
+	p_{\text{joint}} (\RVx \mid y = 0) = p_{\text{noise}}(\RVx).
 \end{equation}
 换言之，$y$是一个决定我们从模型还是从\gls{noise_distribution}中生成$\RVx$的开关变量。
 
@@ -491,20 +491,20 @@
 
 我们可以在训练数据上构造一个类似的联合模型。
 在这种情况下，开关变量决定是从\textbf{数据}还是从噪扰分布中抽取$\RVx$。
-形式地，$p_{\text{train}}(y = 1) = \frac{1}{2}$，$p_{\text{train}}( \RVx | y = 1) = p_{\text{data}}( \RVx)$，和
-$p_{\text{train}}(\RVx | y = 0) = p_{\text{noise}}(\RVx)$。
+形式地，$p_{\text{train}}(y = 1) = \frac{1}{2}$，$p_{\text{train}}( \RVx \mid y = 1) = p_{\text{data}}( \RVx)$，和
+$p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 
 现在我们可以应用标准的最大似然学习拟合$p_{\text{joint}}$到$p_{\text{train}}$的\textbf{监督}学习问题：
 \begin{equation}
 	\Vtheta, c = \underset{ \Vtheta, c}{\arg\max} \SetE_{\RVx, \RSy \sim p_{\text{train}}} \log 
-	p_{\text{joint}} (y | \RVx).
+	p_{\text{joint}} (y \mid \RVx).
 \end{equation}
 
 
 分布$p_{\text{joint}}$本质上是将\gls{logistic_regression}模型应用于模型和\gls{noise_distribution}之间的对数概率差异：
 \begin{equation}
-	p_{\text{joint}} (y = 1 | \RVx) = \frac{ p_{\text{model}}(\RVx) }{ p_{\text{model}}(\RVx) + p_{\text{noise}}(\RVx) }
+	p_{\text{joint}} (y = 1 \mid \RVx) = \frac{ p_{\text{model}}(\RVx) }{ p_{\text{model}}(\RVx) + p_{\text{noise}}(\RVx) }
 \end{equation}
 \begin{equation}
  = \frac{1}{1 + \frac{ p_{\text{noise}}(\RVx) }{ p_{\text{model}}(\RVx) }}
@@ -542,8 +542,8 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 
 
 类似于\gls{score_matching}和\gls{pseudolikelihood}，如果只有$p$的下限可用，那么\glssymbol{NCE}不会有效。
-这样的下界能够用于构建$p_{\text{joint}}( y = 1 | \RVx)$的下界，但是它只能用于构建$p_{\text{joint}}(y = 0 | \RVx)$（出现在一般的\glssymbol{NCE}对象中）的上界。
-同样地，$p_{\text{noise}}$的下界也没有用，因为它只提供了$p_{\text{joint}}( y = 1 | \RVx)$的上界。
+这样的下界能够用于构建$p_{\text{joint}}( y = 1 \mid \RVx)$的下界，但是它只能用于构建$p_{\text{joint}}(y = 0 \mid \RVx)$（出现在一般的\glssymbol{NCE}对象中）的上界。
+同样地，$p_{\text{noise}}$的下界也没有用，因为它只提供了$p_{\text{joint}}( y = 1 \mid \RVx)$的上界。
 
 
 当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}定义了一个被称为\gls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望\citep{Goodfellow-ICLR2015}。
@@ -677,10 +677,10 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 \end{equation}
 
 
-为了从这些中间分布中采样，我们定义了一列\gls{markov_chain}转移函数$T_{\eta_j}(\Vx' | \Vx)$，其定义了给定$\Vx$转移到$\Vx'$的\gls{conditional_probability_distribution}。
-转移算子$T_{\eta_j}(\Vx' | \Vx)$定义如下，保持$p_{\eta_j}(\Vx)$不变：
+为了从这些中间分布中采样，我们定义了一列\gls{markov_chain}转移函数$T_{\eta_j}(\Vx' \mid \Vx)$，其定义了给定$\Vx$转移到$\Vx'$的\gls{conditional_probability_distribution}。
+转移算子$T_{\eta_j}(\Vx' \mid \Vx)$定义如下，保持$p_{\eta_j}(\Vx)$不变：
 \begin{equation}
-	p_{\eta_j}(\Vx) = \int p_{\eta_j} (\Vx') T_{\eta_j} (\Vx | \Vx') \mathrm{d}\Vx'.
+	p_{\eta_j}(\Vx) = \int p_{\eta_j} (\Vx') T_{\eta_j} (\Vx \mid \Vx') \mathrm{d}\Vx'.
 \end{equation}
 这些转移可以被构造为任何\gls{mcmc}方法（例如，Metropolis-Hastings，Gibbs），包括涉及多次遍历所有\gls{RV}或其他迭代的方法。
 
@@ -691,13 +691,13 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 		\newline
 		\quad\quad -- 采样 $ \Vx_{\eta_1}^{(k)} \sim p_0(\RVx) $
 		\newline
-		\quad\quad -- 采样 $ \Vx_{\eta_2}^{(k)} \sim T_{\eta_1}(\RVx_{\eta_2}^{(k)} | \Vx_{\eta_1}^{(k)} ) $
+		\quad\quad -- 采样 $ \Vx_{\eta_2}^{(k)} \sim T_{\eta_1}(\RVx_{\eta_2}^{(k)} \mid \Vx_{\eta_1}^{(k)} ) $
 		\newline
 		\quad\quad -- $\dots$
 		\newline
-		\quad\quad -- 采样 $ \Vx_{\eta_{n-1}}^{(k)} \sim T_{\eta_{n-2}}(\RVx_{\eta_{n-1}}^{(k)} | \Vx_{\eta_{n-2}}^{(k)} ) $
+		\quad\quad -- 采样 $ \Vx_{\eta_{n-1}}^{(k)} \sim T_{\eta_{n-2}}(\RVx_{\eta_{n-1}}^{(k)} \mid \Vx_{\eta_{n-2}}^{(k)} ) $
 		\newline
-		\quad\quad -- 采样 $ \Vx_{\eta_n}^{(k)} \sim T_{\eta_{n-1}}(\RVx_{\eta_n}^{(k)} | \Vx_{\eta_{n-1}}^{(k)} ) $
+		\quad\quad -- 采样 $ \Vx_{\eta_n}^{(k)} \sim T_{\eta_{n-1}}(\RVx_{\eta_n}^{(k)} \mid \Vx_{\eta_{n-1}}^{(k)} ) $
 	\item 结束
 \end{itemize}
 
@@ -724,26 +724,26 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 为此，我们将扩展空间上的分布定义为
 \begin{align}
 &\tilde{p} (\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1) \\
-= &\tilde{p}_1 (\Vx_1) \tilde{T}_{\eta_{n-1}} (\Vx_{\eta_{n-1}} | \Vx_1)
- 	\tilde{T}_{\eta_{n-2}}  (\Vx_{\eta_{n-2}} | \Vx_{\eta_{n-1}}) \dots
- 	\tilde{T}_{\eta_1} (\Vx_{\eta_1} | \Vx_{\eta_2}) \label{eq:18.55} ,
+= &\tilde{p}_1 (\Vx_1) \tilde{T}_{\eta_{n-1}} (\Vx_{\eta_{n-1}} \mid \Vx_1)
+ 	\tilde{T}_{\eta_{n-2}}  (\Vx_{\eta_{n-2}} \mid \Vx_{\eta_{n-1}}) \dots
+ 	\tilde{T}_{\eta_1} (\Vx_{\eta_1} \mid \Vx_{\eta_2}) \label{eq:18.55} ,
 \end{align}
 其中$\tilde{T}_a$是由$T_a$定义的转移算子的逆（通过\gls{bayes_rule}的应用）：
 \begin{equation}
-	\tilde{T}_a (\Vx' | \Vx) = \frac{p_a(\Vx')}{ p_a(\Vx) } T_a(\Vx | \Vx') = 
-\frac{  \tilde{p}_a(\Vx')}{ \tilde{p}_a(\Vx) } T_a(\Vx | \Vx') .
+	\tilde{T}_a (\Vx' \mid \Vx) = \frac{p_a(\Vx')}{ p_a(\Vx) } T_a(\Vx \mid \Vx') = 
+\frac{  \tilde{p}_a(\Vx')}{ \tilde{p}_a(\Vx) } T_a(\Vx \mid \Vx') .
 \end{equation}
 将以上插入到式\ref{eq:18.55}给出的扩展状态空间上的联合分布的表达式中，我们得到：
 \begin{align}
 	&\tilde{p} (\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1) \\
-	= &\tilde{p}_1 (\Vx_1) \frac{ \tilde{p}_{\eta_{n-1}} (\Vx_{\eta_{n-1}})  }{ \tilde{p}_{\eta_{n-1}}(\Vx_1)} T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}})
-\prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_i}(\Vx_{\eta_i}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}})} T_{\eta_i} (\Vx_{\eta_{i+1}} | \Vx_{\eta_i}) \\
-	= &\frac{ \tilde{p}_1(\Vx_1) }{ \tilde{p}_{\eta_{n-1}}(\Vx_1) } T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}})
-\tilde{p}_{\eta_1} (\Vx_{\eta_1}) \prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_{i+1}}(\Vx_{\eta_{i+1}}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}}) } T_{\eta_i} (\Vx_{\eta_{i+1}} | \Vx_{\eta_i}) . \label{eq:18.59}
+	= &\tilde{p}_1 (\Vx_1) \frac{ \tilde{p}_{\eta_{n-1}} (\Vx_{\eta_{n-1}})  }{ \tilde{p}_{\eta_{n-1}}(\Vx_1)} T_{\eta_{n-1}} (\Vx_1 \mid \Vx_{\eta_{n-1}})
+\prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_i}(\Vx_{\eta_i}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}})} T_{\eta_i} (\Vx_{\eta_{i+1}} \mid \Vx_{\eta_i}) \\
+	= &\frac{ \tilde{p}_1(\Vx_1) }{ \tilde{p}_{\eta_{n-1}}(\Vx_1) } T_{\eta_{n-1}} (\Vx_1 \mid \Vx_{\eta_{n-1}})
+\tilde{p}_{\eta_1} (\Vx_{\eta_1}) \prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_{i+1}}(\Vx_{\eta_{i+1}}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}}) } T_{\eta_i} (\Vx_{\eta_{i+1}} \mid \Vx_{\eta_i}) . \label{eq:18.59}
 \end{align}
 通过上面给定的采样方案，现在我们有了从扩展样本上的联合提议分布$q$上生成采样的方法，联合分布如下
 \begin{equation}
-	q(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)  = p_0(\Vx_{\eta_1}) T_{\eta_1}( \Vx_{\eta_2} | \Vx_{\eta_1} ) \dots T_{\eta_{n-1}} (\Vx_1 | \Vx_{\eta_{n-1}}) .
+	q(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)  = p_0(\Vx_{\eta_1}) T_{\eta_1}( \Vx_{\eta_2} \mid \Vx_{\eta_1} ) \dots T_{\eta_{n-1}} (\Vx_1 \mid \Vx_{\eta_{n-1}}) .
 \end{equation}
 我们具有等式\ref{eq:18.59}给出的在扩展空间上的联合分布。
 以$q(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)$作为我们从中抽样的扩展状态空间上的提议分布，仍然需要确定重要性权重
