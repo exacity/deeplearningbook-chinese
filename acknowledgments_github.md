@@ -30,3 +30,8 @@
  - @khty2000 ==> Chapter2 "X_{-S}"问题，矩阵横列错误
  - @Qingmu ==> 用WinEdit打开文件问题
  - @tielei ==> Chapter9 公式的index问题
+
+
+2016年12月10日
+-------------
+- @fairmiracle ==> Chapter5 "\Vy"==>"\Vx"；多余括号；in action，more frequently，more formally 提议校对
