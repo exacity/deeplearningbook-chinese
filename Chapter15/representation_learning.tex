@@ -53,7 +53,7 @@
 
 人类和动物能够从非常少的标记样本中学习。
 我们至今仍不知道这是如何做到的。
-许多因素可以解释人类的卓越性能---例如，大脑可能使用了大量的分类器或者贝叶斯推断技术。
+许多因素可以解释人类的卓越性能——例如，大脑可能使用了大量的分类器或者贝叶斯推断技术。
 一种流行的假说是，大脑能够利用\gls{unsupervised_learning}和\gls{semi_supervised_learning}。
 有许多方法来利用无标记的数据。
 在本章中，我们专注于未标记的数据可以用来学习更好表示的假设。
@@ -135,7 +135,7 @@
 在\gls{pretraining}变得流行时，在一个位置初始化模型被认为会使其接近某一个\gls{local_minimum}，而不是另一个最小值。
 今天，\gls{local_minima}不再被认为是\gls{NN}优化中的严重问题。
 现在我们知道标准的\gls{NN}训练过程通常不会到达任何类型的极值点。
-仍然可能的是，\gls{pretraining}会初始化模型在一个可能不会被访问的位置----例如，某种区域，其中成本函数从一个样本点到另一个样本点变化很大，\gls{minibatch}只能提供噪音严重的梯度估计，或由该种区域中的海森矩阵条件数很差，梯度下降法必须使用非常小的步长。
+仍然可能的是，\gls{pretraining}会初始化模型在一个可能不会被访问的位置——例如，某种区域，其中成本函数从一个样本点到另一个样本点变化很大，\gls{minibatch}只能提供噪音严重的梯度估计，或由该种区域中的海森矩阵条件数很差，梯度下降法必须使用非常小的步长。
 然而，我们精确判断\gls{supervised_learning}期间\gls{pretraining}参数的哪些部分应该保留的能力是有限的。
 这是现代方法通常同时使用\gls{unsupervised_learning}和\gls{supervised_learning}而不是连续使用两个阶段的原因之一。
 我们也可以简单地固定特征提取器的参数，仅仅将\gls{supervised_learning}作为分类器学习上层特征，从而避免让\gls{supervised_learning}阶段保持\gls{unsupervised_learning}阶段所提取信息的复杂方法。
@@ -149,7 +149,7 @@
 这种方法的许多方面都高度依赖于具体使用的模型。
 例如，如果我们希望在\gls{pretraining}的特征之上添加\gls{linear_classifier}，那么特征必须使底层类别线性可分。
 这些性质通常自然地发生，但并非总是这样。
-这是另一个\gls{supervised}和\gls{unsupervised_learning}同时训练更可取的原因---输出层施加的约束自然从一开始就包括在内。
+这是另一个\gls{supervised}和\gls{unsupervised_learning}同时训练更可取的原因——输出层施加的约束自然从一开始就包括在内。
 
 % -- 522 --
 
@@ -191,7 +191,7 @@
 换言之，\gls{unsupervised_pretraining}将\gls{NN}参数初始化到它们不易逃逸的区域，并且遵循这种初始化的结果更加一致，和没有这种初始化的相比，结果很差的可能性更低。
 
 
-\cite{Erhan+al-2010-small}也提供了一些关于何时\gls{pretraining}效果最好的回答---\gls{test_error}的均值和方差在更深的\gls{pretraining}的网络中下降得最多。
+\cite{Erhan+al-2010-small}也提供了一些关于何时\gls{pretraining}效果最好的回答——\gls{test_error}的均值和方差在更深的\gls{pretraining}的网络中下降得最多。
 值得注意的是，这些实验是在训练非常深网络的现代方法发明和流行（\gls{ReLU}，\gls{dropout}和\gls{batch_normalization}）之前进行的，因此对于\gls{unsupervised_pretraining}与当前方法的结合，我们所知甚少。
 
 
@@ -205,7 +205,7 @@
 相反，会有许多超参数，但其效果只能事后测量，通常难以提前预测。
 当我们同时执行\gls{unsupervised}和\gls{supervised_learning}而不使用\gls{pretraining}策略时，会有单个超参数（通常是附加到无监督损失的系数）确定无监督目标正则化监督模型的强度。
 减少该系数，总是可以可预测地获得较少\gls{regularization}。
-在\gls{unsupervised_pretraining}的情况下，没有一种灵活适应\gls{regularization}强度的方式---要么监督模型初始化为\gls{pretraining}的参数，要么不是。
+在\gls{unsupervised_pretraining}的情况下，没有一种灵活适应\gls{regularization}强度的方式——要么监督模型初始化为\gls{pretraining}的参数，要么不是。
 
 % -- 524 --
 
@@ -360,21 +360,21 @@
 关于\gls{semi_supervised_learning}可以超过纯\gls{supervised_learning}的其他论点，请读者\cite{Chapelle-2006}的1.2节。
 
 
-在\gls{representation_learning}的其他方法中，我们经常关注易于建模的表示----例如，数据稀疏或是各项独立的情况。
+在\gls{representation_learning}的其他方法中，我们经常关注易于建模的表示——例如，数据稀疏或是各项独立的情况。
 能够清楚地分离出潜在因果因素的表示可能并不易于建模。
 然而，该假设的一个更深层的激励\gls{semi_supervised_learning}使用无监督\gls{representation_learning}的原因是，对于很多人工智能任务而言，有两个相随的特点：一旦我们能够获得对观察的基本解释，将个体属性分离出来通常很容易。
 具体来说，如果表示$\Vh$表示观察值$\Vx$的很多根本因素，输出$\Vy$是最为重要的原因之一，那么从$\Vh$预测$\Vy$会很容易。
 
 
-首先，让我们看看$p(\Vx)$的\gls{unsupervised_learning}无助于学习$p(\Vy|\Vx)$时，\gls{semi_supervised_learning}是如何失败的。
-考虑一种情况，$p(\Vx)$是均匀分布的，我们希望学习$f(\Vx) = \SetE[\Vy | \Vx]$。
-显然，仅仅观察训练集的值$\Vx$不能给我们关于$p(\Vy | \Vx)$的任何信息。
+首先，让我们看看$p(\RVx)$的\gls{unsupervised_learning}无助于学习$p(\RVy|\RVx)$时，\gls{semi_supervised_learning}是如何失败的。
+考虑一种情况，$p(\RVx)$是均匀分布的，我们希望学习$f(\Vx) = \SetE[\RVy | \Vx]$。
+显然，仅仅观察训练集的值$\Vx$不能给我们关于$p(\RVy | \RVx)$的任何信息。
 
 
 接下来，让我们看看\gls{semi_supervised_learning}成功的一个简单例子。
-考虑这样的情况，$\Vx$来自一个混合分布，每个$\Vy$值具有一个混合分量，如图\ref{fig:chap15_mixture_model}所示。
-如果混合分量很好地分出来了，那么建模$p(\Vx)$可以精确地指出每个分量的方向，每个类一个标记样本的训练集足以精确学习$p(\Vy | \Vx)$。
-但是更一般地，什么能使$p(\Vy | Vx)$和$p(\Vx)$关联在一起呢？
+考虑这样的情况，$\RVx$来自一个混合分布，每个$\RVy$值具有一个混合分量，如图\ref{fig:chap15_mixture_model}所示。
+如果混合分量很好地分出来了，那么建模$p(\RVx)$可以精确地指出每个分量的方向，每个类一个标记样本的训练集足以精确学习$p(\RVy | \RVx)$。
+但是更一般地，什么能使$p(\RVy | \RVx)$和$p(\RVx)$关联在一起呢？
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -386,39 +386,39 @@
 \label{fig:chap15_mixture_model}
 \end{figure}
 
-如果$\Vy$与$\Vx$的因果因素之一非常相关，那么$p(\Vx)$和$p(\Vy | \Vx)$也会紧密关联，试图找到变化根本因素的无监督\gls{representation_learning}可能会有助于\gls{semi_supervised_learning}。
+如果$\RVy$与$\RVx$的因果因素之一非常相关，那么$p(\RVx)$和$p(\RVy | \RVx)$也会紧密关联，试图找到变化根本因素的无监督\gls{representation_learning}可能会有助于\gls{semi_supervised_learning}。
 
 % -- 532 --
 
-假设$\Vy$是$\Vx$的因果因素之一，让$\Vh$代表所有的这些因素。
-真实的生成过程可以被认为是根据这个\gls{directed_graphical_model}结构化出来的，其中$\Vh$是$\Vx$的因素：
+假设$\RVy$是$\RVx$的因果因素之一，让$\RVh$代表所有的这些因素。
+真实的生成过程可以被认为是根据这个\gls{directed_graphical_model}结构化出来的，其中$\RVh$是$\RVx$的因素：
 \begin{equation}
-	p(\Vh, \Vx) = p(\Vx \,|\, \Vh) p(\Vh).
+	p(\RVh, \RVx) = p(\RVx \mid \RVh) p(\RVh).
 \end{equation}
 因此，数据的边缘概率是
 \begin{equation}
-	p(\Vx) = \SetE_{\Vh} p(\Vx\, |\, \Vh),
+	p(\Vx) = \SetE_{\RVh} p(\Vx \mid \Vh),
 \end{equation}
-从这个直观的观察，我们得出结论，$\Vx$最好可能的模型（从广义的观点）是会表示上述“真实”结构的，其中$\Vh$作为隐变量解释$\Vx$中观察到的变动。
+从这个直观的观察，我们得出结论，$\RVx$最好可能的模型（从广义的观点）是会表示上述“真实”结构的，其中$\Vh$作为隐变量解释$\Vx$中观察到的变动。
 上文讨论的“理想”的\gls{representation_learning}应该能够反映出这些隐变量。
-如果$\Vy$是其中之一（或是紧密关联于其中之一），那么将很容易从这种表示中预测$\Vy$。
-我们也看到给定$x$下$\Vy$的条件分布通过\gls{bayes_rule}关联到上式中的分量：
+如果$\RVy$是其中之一（或是紧密关联于其中之一），那么将很容易从这种表示中预测$\RVy$。
+我们也看到给定$\RVx$下$\RVy$的条件分布通过\gls{bayes_rule}关联到上式中的分量：
 \begin{equation}
-	p(\Vy \,|\, \Vx) = \frac{ p(\Vx\, |\, \Vy) p(\Vy) }{p(\Vx)}.
+	p(\RVy \mid \RVx) = \frac{ p(\RVx \mid \RVy) p(\RVy) }{p(\RVx)}.
 \end{equation}
-因此边缘概率$p(\Vx)$和条件概率$p(\Vy \,|\, \Vx)$密切相关，前者的结构信息应该有助于学习后者。
+因此边缘概率$p(\RVx)$和条件概率$p(\RVy \mid \RVx)$密切相关，前者的结构信息应该有助于学习后者。
 因此，在这些假设情况下，\gls{semi_supervised_learning}应该能提高性能。
 
 
 一个重要的研究问题是，大多数观察是由极其大量的潜在原因形成的。
-假设$\Vy = h_i$，但是\gls{unsupervised_learning}并不知道是哪一个$h_i$。
-\gls{unsupervised_learning}的暴力解是学习一种表示，捕获\emph{所有}合理的重要生成因子$h_j$，并将它们彼此区分开来，因此不管$h_i$是否关联于$\Vy$，从$\Vh$预测$\Vy$都是容易的。
+假设$\RVy = \RSh_i$，但是\gls{unsupervised_learning}并不知道是哪一个$\RSh_i$。
+\gls{unsupervised_learning}的暴力解是学习一种表示，捕获\emph{所有}合理的重要生成因子$\RSh_j$，并将它们彼此区分开来，因此不管$\RSh_i$是否关联于$\RVy$，从$\RVh$预测$\RVy$都是容易的。
 
 % -- 533 --
 
 在实践中，暴力解是不可行的，因为不可能捕获影响观察的所有或大多数变化。
 例如，在视觉场景中，表示应该一直对背景中的所有最小对象进行编码么？
-有一个有据可查的心理学现象，人们不会察觉到环境中和他们所在进行的任务并不紧紧相关的变化---具体例子可参考\citep{simons1998failure}。
+有一个有据可查的心理学现象，人们不会察觉到环境中和他们所在进行的任务并不紧紧相关的变化——具体例子可参考\citep{simons1998failure}。
 \gls{semi_supervised_learning}的一个重要研究前沿是确定每种情况下要编码的对象。
 目前，处理大量潜在原因的两个主要策略是，使用\gls{unsupervised_learning}信号的同时使用\gls{supervised_learning}信号，从而使模型捕获最相关的变动因素，或是在使用纯\gls{unsupervised_learning}的情况下学习更大的表示。
 
@@ -476,16 +476,16 @@
 \label{fig:chap15_manface}
 \end{figure}
 
-正如\cite{Janzing-et-al-ICML2012}指出，学习潜在因素的好处是，如果真实的生成过程中$\Vx$是结果，$\Vy$是原因，那么建模$p(\Vx \,|\, \Vy)$对于$p(\Vy)$的变化是鲁棒的。
-如果因果关系被逆转，这是不对的，因为根据\gls{bayes_rule}，$p(\Vx \,|\, \Vy)$将会对$p(\Vy)$的变化十分敏感。
+正如\cite{Janzing-et-al-ICML2012}指出，学习潜在因素的好处是，如果真实的生成过程中$\RVx$是结果，$\RVy$是原因，那么建模$p(\RVx \mid \RVy)$对于$p(\RVy)$的变化是鲁棒的。
+如果因果关系被逆转，这是不对的，因为根据\gls{bayes_rule}，$p(\RVx \mid \RVy)$将会对$p(\RVy)$的变化十分敏感。
 很多时候，我们考虑不同领域（例如时间不稳定性或是任务性质的变化）上分布的变化时，\emph{因果机制是保持不变的}（“宇宙定律不变”），而潜在原因的边缘分布是会变化的。
-因此，通过学习试图恢复因果因素$\Vh$和$p(\Vx\,|\,\Vh)$的\gls{generative_model}，可以期望对所有种类的变化有更好的泛化和鲁棒性。
+因此，通过学习试图恢复因果因素$\RVh$和$p(\RVx \mid \RVh)$的\gls{generative_model}，可以期望对所有种类的变化有更好的泛化和鲁棒性。
 
 % -- 535 --
 
 \section{\glsentrytext{distributed_representation}}
 \label{sec:distributed_representation}
-\gls{distributed_representation}的概念---由很多因素组合而成的表示，彼此可以分开设置---是\gls{representation_learning}最重要的工具之一。
+\gls{distributed_representation}的概念——由很多因素组合而成的表示，彼此可以分开设置——是\gls{representation_learning}最重要的工具之一。
 \gls{distributed_representation}非常强大，因为他们能用具有$k$个值的$n$个特征去描述$k^n$个不同的概念。
 正如我们在本书中看到的，具有多个\gls{hidden_unit}的\gls{NN}和具有多个\gls{latent_variable}的概率模型都利用了\gls{distributed_representation}的策略。
 我们现在再介绍一个观察。
@@ -583,7 +583,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 这提供了一个几何说法来解释\gls{distributed_representation}的泛化能力：$O(nd)$个参数（空间$\SetR^d$中的$n$个线性阀值特征）能够明确的表示输入空间中$O(n^d)$个区域。
 如果我们没有对数据做任何假设，并且每个区域具有唯一的符号表示，每个符号使用单独的参数去识别其对应的$\SetR^d$中的区域，那么指定$O(n^d)$个区域需要$O(n^d)$个样本。
 更一般地，有利于\gls{distributed_representation}的说法可以扩展到这样的情况，对\gls{distributed_representation}中的每个特征我们使用非线性的，可能连续的特征提取器，代替线性阀值单元。
-在这种情况下，如果$k$个参数的参数变换可以学习输入空间中的$r$个区域（$k\gg r$），如果学习这样的表示有助于感兴趣的任务，那么我们可以以这种方式潜在地推广到比非分布式设定更好的表示，我们只需要$O(r)$个样本来获得相同的特征，并将输入空间相关联地划分成$r$个区域。
+在这种情况下，如果$k$个参数的参数变换可以学习输入空间中的$r$个区域（$k\ll r$），如果学习这样的表示有助于感兴趣的任务，那么我们可以以这种方式潜在地推广到比非分布式设定更好的表示，我们只需要$O(r)$个样本来获得相同的特征，并将输入空间相关联地划分成$r$个区域。
 使用较少的参数来表示模型意味着我们会拟合较少的参数，因此只需要更少的训练样本去获得良好的泛化。
 
 
@@ -691,7 +691,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 	\item \emph{线性}：很多学习算法假定一些变量之间的关系是线性的。
 	这使得算法能够预测远离观测数据的点，但有时可能会导致一些极端的预测。
 	大多数简单的学习算法不会做平滑假设，而会做线性假设。
-	这些实际上是不同的假设---具有很大权重的线性函数在高维空间中可能不是非常平滑。
+	这些实际上是不同的假设——具有很大权重的线性函数在高维空间中可能不是非常平滑。
 	参看\cite{Goodfellow-2015-adversarial}了解关于线性假设局限性的进一步讨论。
 
 
@@ -711,8 +711,8 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 
 	\item \emph{任务间共享的因素}：
-	当多个对应到不同变量$y_i$的任务共享相同的输入$\Vx$时，或者当每个任务关联到全局输入$\Vx$的子集或是函数$f^{(i)}(\Vx)$时，我们会假设每个变量$y_i$关联到来自相关因素$\Vh$公共池的不同子集。
-	因为这些子集有重叠，所以通过共享的中间表示$ P(\Vh | \Vx)$来学习所有的$P(y_i | \Vx)$能够让任务间共享统计强度。
+	当多个对应到不同变量$y_i$的任务共享相同的输入$\RVx$时，或者当每个任务关联到全局输入$\RVx$的子集或是函数$f^{(i)}(\RVx)$时，我们会假设每个变量$\RSy_i$关联到来自相关因素$\RVh$公共池的不同子集。
+	因为这些子集有重叠，所以通过共享的中间表示$ P(\RVh | \RVx)$来学习所有的$P(\RSy_i | \RVx)$能够让任务间共享统计强度。
 
 
 	\item \emph{\gls{manifold}}：概率质量集中，并且其集中的区域是局部连通的，且占据很小的体积。
@@ -730,13 +730,13 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 	参考第13.3节，进一步了解这个方法。
 
 
-	\item \emph{稀疏性}：大多数特征应该假定与描述的大多数输入不相关---在表示猫的图像时，没有必要使用检测大象的特征。
+	\item \emph{稀疏性}：大多数特征应该假定与描述的大多数输入不相关——在表示猫的图像时，没有必要使用检测大象的特征。
 	因此，应该强加一个先验，任何可以解释为“存在”或“不存在”的特征在大多数时间都应该是不存在的。
 
 % -- 546 --
 
 	\item \emph{因素依赖性的简化}：在良好的高级表示中，因素会通过简单的依赖相互关联。
-	最简单的可能是边缘独立，$P(\Vh) = \Pi_i P(\Vh_i)$，但是线性依赖或浅层\gls{AE}捕获的那些依赖也是合理的假设。
+	最简单的可能是边缘独立，$P(\RVh) = \Pi_i P(\RVh_i)$，但是线性依赖或浅层\gls{AE}捕获的那些依赖也是合理的假设。
 	这可以在许多物理定律中看出来，在学习到的表示顶部插入线性预测器或分解的先验时使用该假设。
 \end{itemize}
 
