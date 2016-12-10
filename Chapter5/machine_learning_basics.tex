@@ -122,7 +122,7 @@
 % -- 99 --
 
     \item \textbf{降噪}：这类任务中，\gls{ML}算法的输入是，由未知破坏过程从\emph{干净\gls{example:chap5}}$\Vx \in \SetR^n$得到的\emph{污染\gls{example:chap5}}$\tilde{\Vx} \in \SetR^n$。
-    算法根据污染后的\gls{example:chap5}$\tilde{\Vx}$预测干净的\gls{example:chap5}$\Vx$，或者更一般地预测条件概率分布$P(\Vx|\tilde{\Vx})$。
+    算法根据污染后的\gls{example:chap5}$\tilde{\Vx}$预测干净的\gls{example:chap5}$\Vx$，或者更一般地预测条件概率分布$P(\Vx\mid\tilde{\Vx})$。
     
     \item \textbf{密度估计}\textbf{或}\textbf{概率质量函数估计}：在密度估计问题中，\gls{ML}算法学习函数$p_{\text{model}}:\SetR^n \to \SetR$，其中$p_{\text{model}}(\Vx)$可以解释成\gls{example:chap5}采样空间的概率密度函数（如果$\RVx$是连续的）或者概率质量函数（如果$\RVx$是离散的）。
     要做好这样的任务（当我们讨论\gls{performance_measures}$P$时，我们会明确定义任务是什么），算法需要学习它观测到的数据的结构。
@@ -131,7 +131,7 @@
     密度分布可以让我们显式地抓住该分布。
     原则上，我们可以在该分布上计算以便解决其他任务。
     例如，如果我们通过密度估计得到了概率分布$p(\Vx)$，我们可以用该分布解决输入缺失问题。
-    如果$x_i$的值是缺失的，但是其他的变量值$\Vx_{-i}$已知，那么我们可以得到条件概率分布$p(x_i|\Vx_{-i})$。
+    如果$x_i$的值是缺失的，但是其他的变量值$\Vx_{-i}$已知，那么我们可以得到条件概率分布$p(x_i\mid\Vx_{-i})$。
     现实中，密度估计并非能够解决所有这类问题，因为在很多情况下$p(\Vx)$是难以计算的。
 \end{itemize}
 
@@ -196,7 +196,7 @@
 \gls{supervised_learning}算法通过研究Iris\gls{dataset}，学习如何根据测量结果将\gls{example:chap5}划分到三个不同品种。
 
 大致说来，\gls{unsupervised_learning}涉及到观察随机向量$\RVx$的好几个\gls{example:chap5}，试图隐式或显式地学习出概率分布$p(\RVx)$，或者是该分布一些有意思的性质；
-而\gls{supervised_learning}包含观察随机向量$\RVx$及其相关联的值或向量$\RVy$，然后从$\RVx$预测$\RVy$，通常是估计$p(\RVy|\RVx)$。
+而\gls{supervised_learning}包含观察随机向量$\RVx$及其相关联的值或向量$\RVy$，然后从$\RVx$预测$\RVy$，通常是估计$p(\RVy\mid\RVx)$。
 术语\firstgls{supervised}源自这样一个视角，教员或者老师提供\gls{target}$\RVy$给\gls{ML}系统，指导其应该做什么。
 在\gls{unsupervised_learning}中，没有教员或者老师，算法必须学会在没有指导的情况下让数据有意义。
 
@@ -208,9 +208,9 @@
     p(\RVx) = \prod_{i=1}^n p(\RSx_i \mid \RSx_1,\dots,\RSx_{i-1}) .
 \end{equation}
 该分解意味着我们通过将其拆分成$n$个\gls{unsupervised_learning}，来解决表面上的\gls{unsupervised_learning}$p(\Vx)$。
-另外，我们求解\gls{supervised_learning}问题$p(y|\RVx)$时，也可以使用传统的\gls{unsupervised_learning}技巧学习联合分布$p(\RVx,y)$，然后推测
+另外，我们求解\gls{supervised_learning}问题$p(y\mid\RVx)$时，也可以使用传统的\gls{unsupervised_learning}技巧学习联合分布$p(\RVx,y)$，然后推测
 \begin{equation}
-    p(y|\RVx) = \frac{p(\RVx,y)}{\sum_{y'}p(\RVx,y')}.
+    p(y\mid\RVx) = \frac{p(\RVx,y)}{\sum_{y'}p(\RVx,y')}.
 \end{equation}
 尽管\gls{unsupervised_learning}和\gls{supervised_learning}并非完全没有交集的正式概念，它们确实有助于粗略分类我们研究\gls{ML}算法时遇到的问题。
 传统地，人们将回归，分类，或者结构化输出问题称为\gls{supervised_learning}。
@@ -866,7 +866,7 @@
 \label{eq:5.46}
     \text{SE}(\hat{\mu}_m) = \sqrt{ \text{Var} \left[ \frac{1}{m} \sum_{i=1}^m x^{(i)} \right] } = \frac{\sigma}{\sqrt{m}},
 \end{equation}
-其中$\sigma^2$是\gls{example:chap5}$x^i$的真实方差。
+其中$\sigma^2$是\gls{example:chap5}$x^{(i)}$的真实方差。
 \gls{standard_error}通常被记作$\sigma$。
 不幸的是，样本方差的平方根和方差无偏估计的平方根都不是\gls{standard_deviation}的无偏估计。
 这两种计算方法都倾向于低估真实的\gls{standard_deviation}，但仍用于实际中。
@@ -975,7 +975,7 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 
  $\Vtheta$的最大后验估计被定义为：
 \begin{align}
-    \Vtheta_{\text{ML}} &= \underset{\Vtheta}{\argmax} p_{\text{model}} (\SetX; \Vtheta), \\
+    \Vtheta_{\text{ML}} &= \underset{\Vtheta}{\argmax} \, p_{\text{model}} (\SetX; \Vtheta), \\
         &= \underset{\Vtheta}{\argmax} \prod_{i=1}^m p_{\text{model}} (\Vx^{(i)}; \Vtheta).
 \end{align}
 
@@ -988,13 +988,13 @@ MSE衡量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 因为当我们重新缩放损失函数时$\argmax$不会改变，我们可以除以$m$得到和训练数据经验分布$\hat{p}_{\text{data}}$相关的期望作为准则：
 \begin{equation}
 \label{eq:5.59}
-    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \SetE_{\RVx \sim \hat{p}_{\text{data}}} \log p_{\text{model}} (\Vx; \Vtheta) .
+    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \,\SetE_{\RVx \sim \hat{p}_{\text{data}}} \log p_{\text{model}} (\Vx; \Vtheta) .
 \end{equation}
 
 解释\gls{maximum_likelihood_estimation}的一种观点是将它看作最小化训练集上的经验分布$\hat{p}_{\text{data}}$和模型分布之的间差异，两者之间的差异程度可以通过KL散度衡量。
 KL散度定义为
 \begin{equation}
-    D_{\text{KL}}(\hat{p}_{\text{data}} || p_{\text{model}}) = \SetE_{\RVx \sim \hat{p}_{\text{data}}} [ \log \hat{p}_{\text{data}}(\Vx) - \log p_{\text{model}}(\Vx) ] .
+    D_{\text{KL}}(\hat{p}_{\text{data}} \| p_{\text{model}}) = \SetE_{\RVx \sim \hat{p}_{\text{data}}} [ \log \hat{p}_{\text{data}}(\Vx) - \log p_{\text{model}}(\Vx) ] .
 \end{equation}
 左边一项仅涉及到数据生成过程，和模型无关。
 这意味着当我们训练模型最小化KL散度时，我们只需要最小化
@@ -1021,16 +1021,16 @@ KL散度定义为
 
 \subsection{条件对数似然和\glsentrytext{mean_squared_error}}
 \label{sec:conditional_log_likelihood_and_mean_squared_error}
-\gls{maximum_likelihood_estimation}很容易扩展到估计条件概率$P(\RVy|\RVx;\Vtheta)$，给定$\RVx$预测$\RVy$。
+\gls{maximum_likelihood_estimation}很容易扩展到估计条件概率$P(\RVy \mid \RVx;\Vtheta)$，给定$\RVx$预测$\RVy$。
 实际上这是最常见的情况，因为这构成了大多数\gls{supervised_learning}的基础。
 如果$\MX$表示所有的输入，$\MY$表示我们观测到的\gls{target}，那么条件\gls{maximum_likelihood_estimation}是
 \begin{equation}
-    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} P(\MY | \MX; \Vtheta).
+    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} P(\MY \mid \MX; \Vtheta).
 \end{equation}
 如果假设\gls{example:chap5}是独立同分布的，那么这可以分解成
 \begin{equation}
 \label{eq:5.63}
-    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \sum_{i=1}^m \log P(\Vy^{(i)} | \Vx^{(i)}; \Vtheta).
+    \Vtheta_{\text{ML}} = \underset{\Vtheta}{\argmax} \sum_{i=1}^m \log P(\Vy^{(i)} \mid \Vx^{(i)}; \Vtheta).
 \end{equation}
 
 % -- 129 --
@@ -1039,16 +1039,16 @@ KL散度定义为
 之前，我们将\gls{linear_regression}作为学习从输入$\Vx$映射到输出$\hat{y}$的算法。
 从$\Vx$到$\hat{y}$的映射选自最小化\gls{mean_squared_error}（我们或多或少介绍的一个标准）。
 现在，我们以\gls{maximum_likelihood_estimation}的角度重新审视\gls{linear_regression}。
-不只是得到一个单独的预测$\hat{y}$，我们现在希望模型能够得到条件概率$p(y|\Vx)$。
+不只是得到一个单独的预测$\hat{y}$，我们现在希望模型能够得到条件概率$p(y \mid \Vx)$。
 想象下有一个无穷大的训练集，我们可能会观测到几个训练\gls{example:chap5}有相同的输入$\Vx$但是不同的$y$。
-现在学习算法的目标是拟合分布$p(y | \Vx)$到和$\Vx$相匹配的不同的$y$。
-为了得到我们之前推导出的相同的\gls{linear_regression}算法，我们定义$p(y | \Vx) = \mathcal{N}(y; \hat{y}(\Vx; \Vw), \sigma^2)$。
+现在学习算法的目标是拟合分布$p(y \mid \Vx)$到和$\Vx$相匹配的不同的$y$。
+为了得到我们之前推导出的相同的\gls{linear_regression}算法，我们定义$p(y \mid \Vx) = \mathcal{N}(y; \hat{y}(\Vx; \Vw), \sigma^2)$。
 函数$\hat{y}(\Vx; \Vw)$预测高斯的均值。
 在这个例子中，我们假设方差是用户固定的某个常量$\sigma^2$。
-这种函数形式$p(y|\Vx)$会使得\gls{maximum_likelihood_estimation}得出之前得到的相同学习算法。
+这种函数形式$p(y \mid \Vx)$会使得\gls{maximum_likelihood_estimation}得出之前得到的相同学习算法。
 由于假设\gls{example:chap5}是独立同分布的，条件对数似然（式\ref{eq:5.63}）如下
 \begin{align}
-     & \sum_{i=1}^m \log p(y^{(i)} | \Vx^{(i)}; \Vtheta) \\
+     & \sum_{i=1}^m \log p(y^{(i)} \mid \Vx^{(i)}; \Vtheta) \\
     =& -m \log\sigma - \frac{m}{2} \log(2\pi) - \sum_{i=1}^m \frac{ \norm{\hat{y}^{(i)} - y^{(i)} }^2 }{2\sigma^2},
 \end{align}
 其中$\hat{y}^{(i)}$是\gls{linear_regression}在第$i$个输入$\Vx^{(i)}$上的输出，$m$是训练\gls{example:chap5}的数目。
@@ -1109,10 +1109,10 @@ KL散度定义为
 许多先验偏好于“更简单”的解决方法（如小幅度的系数，或是接近常数的函数）。
 
 现在假设有一组数据样本$\{x^{(1)},\dots,x^{(m)}\}$。
-通过贝叶斯法则结合数据似然$p(x^{(1)},\dots,x^{(m)}|\Vtheta)$和先验，我们可以恢复数据对我们关于$\Vtheta$信念的影响：
+通过贝叶斯法则结合数据似然$p(x^{(1)},\dots,x^{(m)} \mid \Vtheta)$和先验，我们可以恢复数据对我们关于$\Vtheta$信念的影响：
 \begin{equation}
-        p(\Vtheta|x^{(1)},\dots,x^{(m)}) = 
-        \frac{p(x^{(1)},\dots,x^{(m)}|\Vtheta) p(\Vtheta)}
+        p(\Vtheta \mid x^{(1)},\dots,x^{(m)}) = 
+        \frac{p(x^{(1)},\dots,x^{(m)} \mid \Vtheta) p(\Vtheta)}
             {p(x^{(1)},\dots,x^{(m)})}
 \end{equation}
 在贝叶斯估计通常使用的情况下，先验开始是相对均匀的分布或高熵的高斯分布，观测数据通常会使后验的熵下降，并集中在参数的几个可能性很高的值。
@@ -1121,8 +1121,8 @@ KL散度定义为
 第一，不像最大似然方法预测时使用$\Vtheta$的点估计，贝叶斯方法预测$\Vtheta$的全分布。
 例如，在观测到$m$个\gls{example:chap5}后，下一个数据\gls{example:chap5}，$x^{(m+1)}$，的预测分布如下：
 \begin{equation}
-    p(x^{(m+1)} | x^{(1)},\dots,x^{(m)}) = 
-    \int p(x^{(m+1)} | \Vtheta) p(\Vtheta | x^{(1)},\dots,x^{(m)}) 
+    p(x^{(m+1)} \mid x^{(1)},\dots,x^{(m)}) = 
+    \int p(x^{(m+1)} \mid \Vtheta) p(\Vtheta \mid x^{(1)},\dots,x^{(m)}) 
         \mathrm{d}\Vtheta .
 \end{equation}
 这里，具有正概率密度的$\Vtheta$的每个值有助于下一个\gls{example:chap5}的预测，其中贡献由后验密度本身加权。
@@ -1154,7 +1154,7 @@ KL散度定义为
 \end{equation}
 表示为$\Vy^{(\text{train})}$上的高斯条件分布，我们得到
 \begin{align}
-    p(\Vy^{(\text{train})} | \MX^{(\text{train})}, \Vw) &= 
+    p(\Vy^{(\text{train})} \mid \MX^{(\text{train})}, \Vw) &= 
     \mathcal{N}( \Vy^{(\text{train})}; \MX^{(\text{train})}\Vw, \MI ) \\
     & \propto \exp\left( 
         -\frac{1}{2}( \Vy^{(\text{train})} - \MX^{(\text{train})}\Vw )^\Tsp
@@ -1183,7 +1183,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 确定好先验后，我们现在可以继续确定模型参数的\textbf{后验}\emph{分布}。
 \begin{align}
-    p(\Vw | \MX, \Vy) &\propto p(\Vy | \MX, \Vw) p(\Vw) \\
+    p(\Vw \mid \MX, \Vy) &\propto p(\Vy \mid \MX, \Vw) p(\Vw) \\
     & \propto 
         \exp\left( 
             -\frac{1}{2} ( \Vy - \MX\Vw )^\Tsp( \Vy - \MX\Vw )
@@ -1202,7 +1202,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 现在我们定义$\VLambda_m = (\MX^\Tsp\MX + \VLambda_0^{-1})^{-1}$和$\Vmu_m = \VLambda_m ( \MX^\Tsp \Vy + \VLambda_0^{-1}\Vmu_0 )$。
 使用这些新的变量，我们发现后验可改写为高斯分布：
 \begin{align}
-    p(\Vw | \MX, \Vy) &\propto \exp \left(
+    p(\Vw \mid \MX, \Vy) &\propto \exp \left(
     -\frac{1}{2} (\Vw - \Vmu_m )^\Tsp \VLambda_m^{-1}  (\Vw - \Vmu_m ) 
     + \frac{1}{2} \Vmu_m^\Tsp \VLambda_m^{-1}  \Vmu_m 
     \right) \\
@@ -1230,10 +1230,10 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 \glssymbol{MAP}估计选择后验概率最大的点（或在$\Vtheta$是连续值的更常见情况下，概率密度最大的点）：
 \begin{equation}
 \label{eq:5.79}
-    \Vtheta_{\text{MAP}} = \underset{\Vtheta}{\argmax} \, p(\Vtheta|\Vx)
-    = \underset{\Vtheta}{\argmax} \, \log p(\Vx | \Vtheta) + \log p(\Vtheta) .
+    \Vtheta_{\text{MAP}} = \underset{\Vtheta}{\argmax} \, p(\Vtheta\mid\Vx)
+    = \underset{\Vtheta}{\argmax} \, \log p(\Vx \mid \Vtheta) + \log p(\Vtheta) .
 \end{equation}
-我们可以认出上式右边的$\log p(\Vx | \Vtheta)$对应着标准的对数似然项，$\log p(\Vtheta)$对应着先验分布。
+我们可以认出上式右边的$\log p(\Vx \mid \Vtheta)$对应着标准的对数似然项，$\log p(\Vtheta)$对应着先验分布。
 
 % -- 135 --
 
@@ -1263,12 +1263,12 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 \subsection{概率监督学习}
 \label{sec:probabilistic_supervised_learning}
-本书的大部分\gls{unsupervised_learning}算法都是基于估计概率分布$p(y|\Vx)$。
-我们可以使用\gls{maximum_likelihood_estimation}找到对于有参分布族$p(y|\Vx;\Vtheta)$最好的参数向量$\Vtheta$。 
+本书的大部分\gls{unsupervised_learning}算法都是基于估计概率分布$p(y\mid\Vx)$。
+我们可以使用\gls{maximum_likelihood_estimation}找到对于有参分布族$p(y\mid\Vx;\Vtheta)$最好的参数向量$\Vtheta$。 
 
 我们已经看到，\gls{linear_regression}对应于分布族
 \begin{equation}
-    p(y | \Vx; \Vtheta) = \mathcal{N}( y; \Vtheta^\Tsp \Vx, \MI).
+    p(y \mid \Vx; \Vtheta) = \mathcal{N}( y; \Vtheta^\Tsp \Vx, \MI).
 \end{equation}
 通过定义一族不同的概率分布，我们可以将\gls{linear_regression}扩展到分类情况中。
 如果我们有两个类，类$0$和类$1$，那么我们只需要指定这两类之一的概率。
@@ -1280,7 +1280,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 解决这个问题的一种方法是使用逻辑S形函数（logistic sigmoid function）将线性函数的输出压缩进区间$(0,1)$。
 该值可以解释为概率：
 \begin{equation}
-    p(y = 1 | \Vx; \Vtheta) = \sigma(\Vtheta^\Tsp \Vx).
+    p(y = 1 \mid \Vx; \Vtheta) = \sigma(\Vtheta^\Tsp \Vx).
 \end{equation}
 这个方法被称为\firstgls{logistic_regression}，名字有点奇怪，因为该模型用于分类，而非回归。
 
@@ -1482,12 +1482,12 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 \label{fig:chap5_pca}
 \end{figure}
 
-假设有一个$m\times n$的\gls{design_matrix}$\MX$，数据的均值为零，$\SetE[\Vx] = 0$。
+假设有一个$m\times n$的\gls{design_matrix}$\MX$，数据的均值为零，$\SetE[\Vx\,] = 0$。
 若非如此，通过预处理步骤所有\gls{example:chap5}减去均值，数据可以很容易地中心化。
 
 $\MX$对应的无偏样本协方差矩阵给定如下
 \begin{equation}
-    \text{Var}[\Vx] = \frac{1}{m-1} \MX^\Tsp \MX .
+    \text{Var}[\Vx\,] = \frac{1}{m-1} \MX^\Tsp \MX .
 \end{equation}
 \glssymbol{PCA}会找到一个$\text{Var}[\Vz]$是对角矩阵的表示（通过线性变换）$\Vz=\MW^\Tsp\Vx$。
 
@@ -1594,7 +1594,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
     L(\Vx, y, \Vtheta) = 
     \frac{1}{m} \sum_{i=1}^m  L(\Vx^{(i)}, y^{(i)}, \Vtheta) ,
 \end{equation}
-其中$L$是每个\gls{example:chap5}的损失函数$L(\Vx, y, \Vtheta) = -\log p(y|\Vx;\Vtheta)$。
+其中$L$是每个\gls{example:chap5}的损失函数$L(\Vx, y, \Vtheta) = -\log p(y\mid\Vx;\Vtheta)$。
 
 对于这些相加的损失函数，\gls{GD}需要计算
 \begin{equation}
@@ -1657,9 +1657,9 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 例如，\gls{linear_regression}算法的组成成分有$\MX$和$\Vy$构成的\gls{dataset}，损失函数
 \begin{equation}
     J(\Vw, b) = -\SetE_{\RVx,\RSy\sim\hat{p}_{\text{data}}}
-    \log p_{\text{model}} (y | \Vx) ,
+    \log p_{\text{model}} (y \mid \Vx) ,
 \end{equation}
-模型是$p_{\text{model}} (y | \Vx) = \mathcal{N}(y; \Vx^\Tsp \Vw + b, 1)$，
+模型是$p_{\text{model}} (y \mid \Vx) = \mathcal{N}(y; \Vx^\Tsp \Vw + b, 1)$，
 在大多数情况下，优化算法可以定义为求解损失函数梯度为零的标准方程。
 
 意识到我们可以替换独立于其他成分的大多数成分，因此我们能得到很多不同的算法。
@@ -1673,7 +1673,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 例如，我们可以将权重衰减加到\gls{linear_regression}的损失函数中
 \begin{equation}
     J(\Vw, b) = \lambda \norm{\Vw}_2^2 - \SetE_{\RVx,\RSy\sim \hat{p}_{\text{data}}}
-    \log p_{\text{model}} (y | \Vx) .
+    \log p_{\text{model}} (y \mid \Vx) .
 \end{equation}
 该优化仍然有闭解。
 
@@ -1687,7 +1687,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \begin{equation}
     J(\Vw) = \SetE_{\RVx \sim \hat{p}_{\text{data}}} \norm{\Vx - r(\Vx; \Vw)}_2^2
 \end{equation}
-模型定义为重建函数$r(\Vx) = \Vw^\Tsp\Vx \Vw$，并且$\Vw$有范数为$1$的限制。
+模型定义为重建函数$r(\Vx) = \Vw^\Tsp\Vx \,\Vw$，并且$\Vw$有范数为$1$的限制。
 
 在某些情况下，由于计算原因，我们不能实际计算损失函数。
 在这种情况下，只要我们有近似其梯度的方法，那么我们仍然可以使用迭代数值优化近似最小化\gls{target}。
