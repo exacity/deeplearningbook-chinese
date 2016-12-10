@@ -212,7 +212,7 @@
 \begin{equation}
     p(y|\RVx) = \frac{p(\RVx,y)}{\sum_{y'}p(\RVx,y')}.
 \end{equation}
-尽管\gls{unsupervised_learning}和\gls{supervised_learning}并非完全正式或不同的概念，它们确实有助于粗略分类我们研究\gls{ML}算法时遇到的问题。
+尽管\gls{unsupervised_learning}和\gls{supervised_learning}并非完全没有交集的正式概念，它们确实有助于粗略分类我们研究\gls{ML}算法时遇到的问题。
 传统地，人们将回归，分类，或者结构化输出问题称为\gls{supervised_learning}。
 支持其他任务的密度估计通常被称为\gls{unsupervised_learning}。
 
@@ -493,9 +493,9 @@
 
 统计学习理论提供了量化模型容量的不同方法。
 在这些中，最有名的是\firstall{VC}。
-\gls{VC}衡量二元分类器的容量。
-\gls{VC}定义为该分类器能够分类的训练\gls{example:chap5}的最多数目。
-假设存在$m$个不同$\Vx$点的训练集，分类器可以任意地标记该$m$个不同的$\Vx$点，\gls{VC}被定义为$m$的最大可能值。
+\glssymbol{VC}维衡量二元分类器的容量。
+\glssymbol{VC}维定义为该分类器能够分类的训练\gls{example:chap5}的最多数目。
+假设存在$m$个不同$\Vx$点的训练集，分类器可以任意地标记该$m$个不同的$\Vx$点，\glssymbol{VC}维被定义为$m$的最大可能值。
 
 量化模型的容量使得统计学习理论可以进行量化预测。
 统计学习理论中最重要的结论阐述了训练误差和泛化误差之间差异的上界随着模型容量增长而增长，但随着训练\gls{example:chap5}增多而下降\citep{Vapnik71,Vapnik82,Blumer-et-al-1989,Vapnik95}。
