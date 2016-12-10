@@ -36,7 +36,7 @@
 通常，损失函数可写为训练集上的平均，如
 \begin{equation}
 \label{eq:8.1}
-    J(\Vtheta) = \SetE_{(\RVx, \RSy) \sim\hat{p}_\text{data}} L(f(\Vx; \Vtheta), y),
+    J(\Vtheta) = \SetE_{(\RVx, \RSy) \sim\hat{p}_\text{data}} L(f(\Vx ; \Vtheta), y),
 \end{equation}
 其中$L$是每个样本的损失函数，$f(\Vx;\Vtheta)$是输入是$\Vx$时的预测输出，$\hat{p}_{\text{data}}$是经验分布。
 监督学习中，$y$是目标输出。
@@ -47,7 +47,7 @@
 通常，我们更希望最小化期望取自\emph{数据生成分布}$p_{\text{data}}$而不仅是有限个训练集上的对应目标函数：
 \begin{equation}
 \label{eq:8.2}
-    J^*(\Vtheta) = \SetE_{(\RVx, \RSy) \sim p_\text{data}} L(f(\Vx;\Vtheta),y).
+    J^*(\Vtheta) = \SetE_{(\RVx, \RSy) \sim p_\text{data}} L(f(\Vx ;\Vtheta),y).
 \end{equation}
 
 \subsection{\glsentrytext{empirical_risk_minimization}}
@@ -65,7 +65,7 @@
 如此，我们将最小化\firstgls{empirical_risk}：
 \begin{equation}
 \label{eq:8.3}
-    \SetE_{\RVx, \RSy \sim \hat{p}_\text{data}} [L(f(\Vx; \Vtheta), y)]
+    \SetE_{\RVx, \RSy \sim \hat{p}_\text{data}} [L(f(\Vx ; \Vtheta), y)]
     = \frac{1}{m} \sum_{i=1}^m L( f(\Vx^{(i)}; \Vtheta), y^{(i)}) ,
 \end{equation}
 其中$m$表示训练样本的数目。
@@ -484,9 +484,9 @@
 大多数优化研究的难点集中于训练是否到达了全局最小值，局部最小值，或是\gls{saddle_points}，但在实践中神经网络不会到达任何一种临界点。
 图8.1表明神经网络通常不会到达梯度很小的区域。
 甚至，这些临界点不是必然存在的。
-例如，损失函数$-\log p(y|\Vx;\Vtheta)$没有全局极小点，而是当模型更自信时会逐渐趋向某个值。    
-对于具有离散标签$y$和softmax分布$p(y|\Vx)$的分类器而言，若模型能够正确分类训练集上的每个样本，则负对数似然可以任意地趋近于零，但是不可能实际达到零值。
-同样地，实值模型$p(y|\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无穷——如果$f(\Vtheta)$能够正确预测所有的训练集目标$y$，学习算法会无边界地增加$\beta$。
+例如，损失函数$-\log p(y\mid\Vx;\Vtheta)$没有全局极小点，而是当模型更自信时会逐渐趋向某个值。    
+对于具有离散标签$y$和softmax分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类训练集上的每个样本，则负对数似然可以任意地趋近于零，但是不可能实际达到零值。
+同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无穷——如果$f(\Vtheta)$能够正确预测所有的训练集目标$y$，学习算法会无边界地增加$\beta$。
 如图8.4所示，即使没有局部极小值和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的损失函数值。
 
 % -- 283 --
@@ -851,7 +851,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 另一种常见类型的参数是方差或精确度参数。
 例如，我们用以下模型进行带条件方差估计的线性回归
 \begin{equation}
-    p(y|\Vx) = \mathcal{N} (y | \Vw^\top \Vx + b, 1/\beta) ,
+    p(y\mid\Vx) = \mathcal{N} (y \mid \Vw^\top \Vx + b, 1/\beta) ,
 \end{equation}
 其中$\beta$是精确度参数。
 通常我们能安全地初始化方差或精确度参数为$1$。
@@ -1202,7 +1202,7 @@ $\hat{y}$的更新值为
 % -- 311 --
 
 标准化一个单元的均值和标准差会降低包含该单元的神经网络的表达能力。
-为了保持网络的表现力，通常会取代批量隐单元激励$\MH$为$\gamma \MH + \Vbeta$，而不是简单地使用标准化的$\MH'$。
+为了保持网络的表现力，通常会取代批量\gls{hidden_unit}激励$\MH$为$\gamma \MH' + \Vbeta$，而不是简单地使用标准化的$\MH'$。
 变量$\Vgamma$和$\Vbeta$是允许新变量有任意均值和\gls{standard_deviation}的学习参数。
 乍一看，这似乎是无用的——为什么我们将均值设为$0$，然后又引入参数允许它被重设为任意值$\Vbeta$？
 答案是，新的参数可以表示旧参数作为输入的同一族函数，但是新参数有不同的学习动态。

@@ -315,7 +315,7 @@
 
 只有在训练时使用了额外信息，\gls{zero_data_learning}\citep{Larochelle2008}和\gls{zero_shot_learning}\citep{Palatucci2009,Socher-2013}才是有可能的。
 我们可以认为\gls{zero_data_learning}场景包含三个随机变量：传统输入$\Vx$，传统输出或目标$\Vy$，以及描述任务的附加随机变量，$T$。
-该模型被训练来估计条件分布$p(\Vy | \Vx, T)$，其中$T$是我们希望执行的任务的描述。
+该模型被训练来估计条件分布$p(\Vy \mid \Vx, T)$，其中$T$是我们希望执行的任务的描述。
 在我们的例子中，读取猫的文本信息然后识别猫，输出是二元变量$y$，$y=1$表示``是''，$y=0$表示``不是''。
 任务变量$T$表示要回答的问题，例如``这个图像中是否有猫？''
 如果训练集包含和$T$在相同空间的无监督对象样本，我们也许能够推断未知的$T$实例的含义。
@@ -355,7 +355,7 @@
 关于\gls{representation_learning}的一个重要问题是``什么使一个表示比另一个更好？''
 一种假设是，理想表示中的特征对应到观测数据的根本原因，特征空间中不同的特征或方向对应着不同的原因，从而表示能够将这些原因区分开。
 这个假设激励我们去寻找比较好地表示$p(\Vx)$的方法。
-如果$\Vy$是产生$\Vx$的重要原因之一，那么这种表示也可能是计算$p(\Vy | \Vx)$的一种良好表示。
+如果$\Vy$是产生$\Vx$的重要原因之一，那么这种表示也可能是计算$p(\Vy \mid \Vx)$的一种良好表示。
 至少从20世纪90年代以来，这个想法已经知道了大量的\gls{DL}研究工作\citep{Becker92,hinton1999unsupervised}。
 关于\gls{semi_supervised_learning}可以超过纯\gls{supervised_learning}的其他论点，请读者\cite{Chapelle-2006}的1.2节。
 
@@ -366,15 +366,15 @@
 具体来说，如果表示$\Vh$表示观察值$\Vx$的很多根本因素，输出$\Vy$是最为重要的原因之一，那么从$\Vh$预测$\Vy$会很容易。
 
 
-首先，让我们看看$p(\RVx)$的\gls{unsupervised_learning}无助于学习$p(\RVy|\RVx)$时，\gls{semi_supervised_learning}是如何失败的。
-考虑一种情况，$p(\RVx)$是均匀分布的，我们希望学习$f(\Vx) = \SetE[\RVy | \Vx]$。
-显然，仅仅观察训练集的值$\Vx$不能给我们关于$p(\RVy | \RVx)$的任何信息。
+首先，让我们看看$p(\RVx)$的\gls{unsupervised_learning}无助于学习$p(\RVy\mid\RVx)$时，\gls{semi_supervised_learning}是如何失败的。
+考虑一种情况，$p(\RVx)$是均匀分布的，我们希望学习$f(\Vx) = \SetE[\RVy \mid \Vx]$。
+显然，仅仅观察训练集的值$\Vx$不能给我们关于$p(\RVy \mid \RVx)$的任何信息。
 
 
 接下来，让我们看看\gls{semi_supervised_learning}成功的一个简单例子。
 考虑这样的情况，$\RVx$来自一个混合分布，每个$\RVy$值具有一个混合分量，如图\ref{fig:chap15_mixture_model}所示。
-如果混合分量很好地分出来了，那么建模$p(\RVx)$可以精确地指出每个分量的方向，每个类一个标记样本的训练集足以精确学习$p(\RVy | \RVx)$。
-但是更一般地，什么能使$p(\RVy | \RVx)$和$p(\RVx)$关联在一起呢？
+如果混合分量很好地分出来了，那么建模$p(\RVx)$可以精确地指出每个分量的方向，每个类一个标记样本的训练集足以精确学习$p(\RVy \mid \RVx)$。
+但是更一般地，什么能使$p(\RVy \mid \RVx)$和$p(\RVx)$关联在一起呢？
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -386,7 +386,7 @@
 \label{fig:chap15_mixture_model}
 \end{figure}
 
-如果$\RVy$与$\RVx$的因果因素之一非常相关，那么$p(\RVx)$和$p(\RVy | \RVx)$也会紧密关联，试图找到变化根本因素的无监督\gls{representation_learning}可能会有助于\gls{semi_supervised_learning}。
+如果$\RVy$与$\RVx$的因果因素之一非常相关，那么$p(\RVx)$和$p(\RVy \mid \RVx)$也会紧密关联，试图找到变化根本因素的无监督\gls{representation_learning}可能会有助于\gls{semi_supervised_learning}。
 
 % -- 532 --
 
@@ -697,7 +697,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 	\item \emph{多个解释因素}：许多\gls{representation_learning}算法受激励于这样的假设，数据是由多个潜在解释性因素生成的，并且给定这些因素每一个的状态，大多数任务都能轻易解决。
 	第15.3节描述了这种观点如何通过\gls{representation_learning}促进\gls{semi_supervised_learning}的。
-	学习$p(\Vx)$的结构要求学习出一些对建模$p(\Vy|\Vx)$同样有用的特征，因为它们都涉及到相同的潜在解释因素。
+	学习$p(\Vx)$的结构要求学习出一些对建模$p(\Vy\mid\Vx)$同样有用的特征，因为它们都涉及到相同的潜在解释因素。
 	第15.4节介绍了这种观点是如何激发\gls{distributed_representation}的使用的，表示空间中不同的方向对应着不同的变化因素。
 
 
@@ -712,7 +712,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 	\item \emph{任务间共享的因素}：
 	当多个对应到不同变量$\RSy_i$的任务共享相同的输入$\RVx$时，或者当每个任务关联到全局输入$\RVx$的子集或是函数$f^{(i)}(\RVx)$时，我们会假设每个变量$\RSy_i$关联到来自相关因素$\RVh$公共池的不同子集。
-	因为这些子集有重叠，所以通过共享的中间表示$ P(\RVh | \RVx)$来学习所有的$P(\RSy_i | \RVx)$能够让任务间共享统计强度。
+	因为这些子集有重叠，所以通过共享的中间表示$ P(\RVh \mid \RVx)$来学习所有的$P(\RSy_i \mid \RVx)$能够让任务间共享统计强度。
 
 
 	\item \emph{\gls{manifold}}：概率质量集中，并且其集中的区域是局部连通的，且占据很小的体积。
