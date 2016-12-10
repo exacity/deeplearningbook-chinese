@@ -61,7 +61,7 @@
 除了\gls{performance_metrics}这个目标值之外，另一个重要的考虑是度量的选择。
 几种不同的\gls{performance_metrics}可以被用来度量一个包括\gls{ML}成分的完整应用的效能。
 这些\gls{performance_metrics}通常不同于训练模型的损失函数。 
-如第5.1.2节所述，通常会度量一个系统的准确率，或等价的\gls{error_rate}。
+如\secref{sec:the_performance_measure_p}所述，通常会度量一个系统的准确率，或等价的\gls{error_rate}。
 
 然而，许多应用需要更高级的度量。
 
@@ -210,7 +210,7 @@
 \subsection{手动调整超参数}
 \label{sec:manual_hyperparameter_tuning}
 要手动设置超参数，我们必须了解超参数，训练误差，\gls{generalization_error}和计算资源（内存和运行时间）之间的关系。
-这意味着建立第\ref{chap:machine_learning_basics}章关于学习算法有效容量基本思想的坚实基础。
+这意味着建立\chapref{chap:machine_learning_basics}关于学习算法有效容量基本思想的坚实基础。
 
 手动搜索超参数的目标通常是找到受制于运行时间和内存预算的最低\gls{generalization_error}。
 我们不去探讨如何确定各种超参数对运行时间和内存的影响，因为这高度依赖于平台。
