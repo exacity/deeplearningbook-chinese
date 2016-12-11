@@ -289,7 +289,18 @@
 判断病态是否不利于神经网络训练任务，我们可以检测梯度平方范数$\Vg^\top\Vg$和$\Vg^\top \MH\Vg$。
 在很多情况中，梯度范数不会在训练过程中显著缩小，但是$\Vg^\top\MH\Vg$的增长会超过一个数量级。
 其结果是尽管梯度很强，学习会变得非常缓慢，因为学习率必须收缩以弥补更强的曲率。
-如图8.1所示，成功训练的神经网络中，梯度显著增加。
+如\figref{fig:chap8_grad_norm_increases}所示，成功训练的神经网络中，梯度显著增加。
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter8/figures/grad_norm_increases_color}}
+\fi
+\caption{TODO}
+\label{fig:chap8_grad_norm_increases}
+\end{figure}
+
 
 % -- 275 --
 
@@ -387,10 +398,20 @@
 对于只使用梯度信息的一阶优化算法而言，情况是不明的。
 \gls{saddle_points}附近的梯度通常会非常小。
 另一方面，实验中梯度下降似乎可以在许多情况下逃离\gls{saddle_points}。
-\cite{GoodfellowOptimization15}可视化了最新神经网络的几个学习轨迹，如图8.2所示。
+\cite{GoodfellowOptimization15}可视化了最新神经网络的几个学习轨迹，如\figref{fig:chap8_plot_atmu_relu_5}所示。
 这些可视化显示权重都为零的\gls{saddle_points}附近，损失函数都是平坦的。
 但是他们也展示了梯度下降轨迹能够迅速逸出该区间。
 \cite{GoodfellowOptimization15}还认为，或许可以解析地表明连续时间的梯度下降会逃离，而不是吸引，附近的\gls{saddle_points}，但是对于梯度下降更现实的使用，情况或许是不同的。
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter8/figures/plot_atmu_relu_5}}
+\fi
+\caption{TODO}
+\label{fig:chap8_plot_atmu_relu_5}
+\end{figure}
 
 对于牛顿法而言，显然\gls{saddle_points}会是一个问题。
 梯度下降旨在朝``下坡路''移动，而非明确寻求临界点。
@@ -416,9 +437,20 @@
 
 \subsection{悬崖和梯度爆炸}
 \label{sec:cliffs_and_exploding_gradients}
-多层神经网络通常有像悬崖一样的斜率较大区域，如图8.3所示。
+多层神经网络通常有像悬崖一样的斜率较大区域，如\figref{fig:chap8_cliff}所示。
 这是由于几个较大的权重相乘导致的。
 遇到斜率极大的悬崖结构时，梯度更新会很大程度地改变参数值，通常会跳过这类悬崖结构。
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter8/figures/cliff_color}}
+\fi
+\caption{TODO}
+\label{fig:chap8_cliff}
+\end{figure}
+
 
 不管我们是从上还是从下接近悬崖，情况都很糟糕，但幸运的是可以用使用\secref{sec:clipping_gradients}介绍的启发式\firstgls{gradient_clipping}来避免其主要缺点。
 基本想法源自考虑到梯度并没有指明最佳步长，只是说明在无穷小区域内的最佳方向。
@@ -479,15 +511,26 @@
 如果其方向在局部改进了很多，但是并没有指向损失低得多的遥远区域，那么有可能在单点处克服以上所有困难，但仍然表现不佳。
 
 \cite{GoodfellowOptimization15}认为大部分训练的运行时间取决于到达解决方案的轨迹的长度。 
-如图8.2所示，学习轨迹将花费大量的时间探寻一个围绕山形结构的宽弧。
+如\figref{fig:chap8_plot_atmu_relu_5}所示，学习轨迹将花费大量的时间探寻一个围绕山形结构的宽弧。
 
 大多数优化研究的难点集中于训练是否到达了全局最小值，局部最小值，或是\gls{saddle_points}，但在实践中神经网络不会到达任何一种临界点。
-图8.1表明神经网络通常不会到达梯度很小的区域。
+\figref{fig:chap8_grad_norm_increases}表明神经网络通常不会到达梯度很小的区域。
 甚至，这些临界点不是必然存在的。
 例如，损失函数$-\log p(y\mid\Vx;\Vtheta)$没有全局极小点，而是当模型更自信时会逐渐趋向某个值。    
 对于具有离散标签$y$和softmax分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类训练集上的每个样本，则负对数似然可以任意地趋近于零，但是不可能实际达到零值。
 同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无穷——如果$f(\Vtheta)$能够正确预测所有的训练集目标$y$，学习算法会无边界地增加$\beta$。
-如图8.4所示，即使没有局部极小值和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的损失函数值。
+如\figref{fig:chap8_bad_global}所示，即使没有局部极小值和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的损失函数值。
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter8/figures/bad_global_color}}
+\fi
+\caption{TODO}
+\label{fig:chap8_bad_global}
+\end{figure}
+
 
 % -- 283 --
 
@@ -504,7 +547,7 @@
 在这些情况下，局部下降或许能 定义一个寻求解法的路径，但是该路径包含很多次更新，因此遵循该路径会带来很高的计算代价。
 有时，目标函数有一个宽而平的区域，或是我们试图寻求精确的临界点（通常只发生于显示求解临界点的方法，如牛顿法），局部信息不能为我们提供任何指导。
 在这些情况下，局部下降不能定义寻求解法的路径。
-在其他情况下，局部移动可能太过贪心化，朝着梯度下降方向移动，却远离了任何解决方案，如图8.4所示，或者是沿着一个不必要的长路径到达解决方法，如图8.2所示。
+在其他情况下，局部移动可能太过贪心化，朝着梯度下降方向移动，却远离了任何解决方案，如\figref{fig:chap8_bad_global}所示，或者是沿着一个不必要的长路径到达解决方法，如\figref{fig:chap8_plot_atmu_relu_5}所示。
 目前，我们还不了解这些问题中的哪一个与神经网络优化难题最相关，这是研究领域的热点方向。
 
 % -- 284 --
@@ -604,7 +647,17 @@
 虽然随机梯度下降仍然是非常受欢迎的优化方法，但学习速率有时会很慢。
 动量方法\citep{polyak1964some}旨在加速学习，特别是处理高曲率，小但一致的梯度，或是带噪音的梯度。
 动量算法积累了之前梯度指数级衰减的移动平均，并且继续沿该方向移动。
-动量的效果如图8.5所示。
+动量的效果如\figref{fig:chap8_momentum}所示。
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter8/figures/momentum_color}}
+\fi
+\caption{TODO}
+\label{fig:chap8_momentum}
+\end{figure}
 
 从形式上看，动量算法引入了变量$\Vv$充当速度的角色——它代表参数在参数空间移动的方向和速度。
 速度被设为负梯度的指数衰减平均。
@@ -1005,8 +1058,19 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 \label{sec:conjugate_gradients}
 \gls{CG}是一种通过迭代下降的\firstgls{conjugate_directions}以有效避免\gls{hessian}矩阵求逆计算的方法。
 这种方法的灵感来自于最速下降方法弱点的仔细研究（详细信息请参看\secref{sec:gradient_based_optimization}），其中线性搜索迭代地用于梯度相关的方向中。
-图8.6说明了该方法在二次碗型目标中如何表现的，是一个相当无效的来回往复，锯齿形模式。
+\figref{fig:chap8_steepest_descent_quadratic}说明了该方法在二次碗型目标中如何表现的，是一个相当无效的来回往复，锯齿形模式。
 这是因为每一个由梯度给定的线性搜索方向，都保证正交于上一个线性搜索方向。
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter8/figures/steepest_descent_quadratic_color}}
+\fi
+\caption{TODO}
+\label{fig:chap8_steepest_descent_quadratic}
+\end{figure}
+
 
 % -- 304 --
 
@@ -1014,7 +1078,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 在极小值处，线性搜索终止，方向$\Vd_{t-1}$处的方向导数为零：$\nabla_{\Vtheta} J(\Vtheta) \cdot \Vd_{t-1} = 0$。
 因为该点的梯度定义了当前的搜索方向，$\Vd_t = \nabla_{\Vtheta} J(\Vtheta)$将不会贡献于方向$\Vd_{t-1}$。
 因此方向$\Vd_t$正交于$\Vd_{t-1}$。
-最速下降多次迭代中，方向$\Vd_{t-1}$和$\Vd_t$之间的关系如图8.6所示。
+最速下降多次迭代中，方向$\Vd_{t-1}$和$\Vd_t$之间的关系如\figref{fig:chap8_steepest_descent_quadratic}所示。
 如图展示的，下降正交方向的选择不会保持前一搜索方向上的最小值。
 这产生了锯齿形的过程。
 在当前梯度方向下降到极小值，我们必须重新最小化之前梯度方向上的目标。
@@ -1291,11 +1355,22 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 % -- 314 --
 
 在\gls{greedy_supervised_pretraining}的原始版本\citep{Bengio-nips-2006-short}中，每个阶段包括一个仅涉及最终神经网络的子集层的监督学习训练任务。
-\gls{greedy_supervised_pretraining}的一个例子如图8.7所示，其中每个附加的\gls{hidden_layer}作为浅监督MLP的一部分提前训练，以先前训练的\gls{hidden_layer}输出作为输入。
+\gls{greedy_supervised_pretraining}的一个例子如\figref{fig:chap8_deep_sup}所示，其中每个附加的\gls{hidden_layer}作为浅监督MLP的一部分提前训练，以先前训练的\gls{hidden_layer}输出作为输入。
 并非一次提前训练一层，\cite{Simonyan2015}提前训练深度卷积网络（11层权重），然后使用该网络前四层和最后三层初始化更深的网络（多达19层权重）。
 非常深的新网络的中间层是随机初始化的。
 然后联合训练新网络。
 还有一种选择，由\cite{Yu+al-2010}提出，将先前训练MLP的\emph{输出}，以及原始输入，作为每个附加阶段的输入。
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter8/figures/deep_sup}}
+\fi
+\caption{TODO}
+\label{fig:chap8_deep_sup}
+\end{figure}
+
 
 为什么\gls{greedy_supervised_pretraining}会有帮助呢？
 最初由\cite{Bengio-nips-2006}提出的假说是，其有助于更好地知道深层次中间阶段的学习。
