@@ -24,7 +24,7 @@
 
 
 我们可以将\gls{supervised_learning}训练的\gls{feedforward_network}视为一种\gls{representation_learning}。
-具体地，该网络的最后一层通常是\gls{linear_classifier}，如SOFTMAX回归分类器。
+具体地，该网络的最后一层通常是\gls{linear_classifier}，如\gls{softmax_chap15}回归分类器。
 该网络的其余部分学习提供该分类器的表示。
 监督准则下的训练自然会使得每个\gls{hidden_layer}（比较接近上面的\gls{hidden_layer}）的表示趋向于具有使训练任务更容易的性质。
 例如，输入特征线性不可分的类别可能在最后一个\gls{hidden_layer}变成线性可分的。
@@ -117,7 +117,7 @@
 % -- 520 --
 
 首先，要注意的是这个讨论大部分都是针对\gls{greedy_unsupervised_pretraining}的。
-还有很多其他完全不同的方法用于训练\gls{semi_supervised_learning}\gls{NN}，比如第7.13节介绍的\gls{virtual_adversarial_training}。
+还有很多其他完全不同的方法用于训练\gls{semi_supervised_learning}\gls{NN}，比如\secref{sec:adversarial_training}介绍的\gls{virtual_adversarial_training}。
 还可以在训练\gls{supervised_model}的同时训练\gls{AE}或\gls{generative_model}。
 这种单阶段方法的例子包括\gls{discriminative_RBM}\citep{Larochelle+Bengio-2008}和梯形网络\citep{Rasmus-et-al-arxiv2015}，总体目标明确的是两项之和（一个使用标签，另一个使用输入）。
 
@@ -357,7 +357,7 @@
 这个假设激励我们去寻找比较好地表示$p(\Vx)$的方法。
 如果$\Vy$是产生$\Vx$的重要原因之一，那么这种表示也可能是计算$p(\Vy \mid \Vx)$的一种良好表示。
 至少从20世纪90年代以来，这个想法已经知道了大量的\gls{DL}研究工作\citep{Becker92,hinton1999unsupervised}。
-关于\gls{semi_supervised_learning}可以超过纯\gls{supervised_learning}的其他论点，请读者\cite{Chapelle-2006}的第1.2节。
+关于\gls{semi_supervised_learning}可以超过纯\gls{supervised_learning}的其他论点，请读者\cite{Chapelle-2006}的\secref{sec:historical_trends_in_deep_learning}。
 
 
 在\gls{representation_learning}的其他方法中，我们经常关注易于建模的表示——例如，数据稀疏或是各项独立的情况。
@@ -550,7 +550,7 @@
 作为纯符号，``猫''和``狗''之间的距离和任意其他两种符号一样。
 然而，如果将它们与有意义的\gls{distributed_representation}相关联，那么关于猫的很多特点可以推广到狗，反之亦然。
 例如，我们的\gls{distributed_representation}可能会包含诸如``是否具有皮毛''或是``腿的数目''这类用于``猫''和``狗''的嵌入具有相同值的项。
-正如第12.4节所讨论的，作用于单词\gls{distributed_representation}的神经语言模型比其他直接对单词\gls{one_hot}表示进行操作的模型泛化得更好。
+正如\secref{sec:neural_language_models}所讨论的，作用于单词\gls{distributed_representation}的神经语言模型比其他直接对单词\gls{one_hot}表示进行操作的模型泛化得更好。
 \gls{distributed_representation}具有丰富的\emph{相似性空间}，语义上相近的概念（或输入）在距离上接近，这是纯粹的符号表示所缺少的属性。
 
 % -- 539 --
