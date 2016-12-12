@@ -342,8 +342,8 @@ J(\bm{\theta}) = -\SetE_{\mathbf{x}, \mathbf{y} \sim \hat{p}_\text{data}} \log p
 J(\theta) = \frac{1}{2} \SetE_{\RVx, \RVy \sim  \hat{p}_\text{data}} || \bm{y} - f(\bm{x}; \bm{\theta}) ||^2 + \text{const},
 \end{equation}
 至少系数$\frac{1}{2}$和常数项不依赖于$\bm{\theta}$。
-舍弃的常数是基于Gaussian分布的方差，在这种情况下我们选择不把它参数化。
-先前，我们看到了对输出分布的最大似然估计和线性模型均方误差的最小化之间的等价性，但事实上，这种等价性并不要求$f(\bm{x}; \bm{\theta})$用于预测Gaussian分布的均值。
+舍弃的常数是基于\gls{gaussian_distribution}的方差，在这种情况下我们选择不把它参数化。
+先前，我们看到了对输出分布的最大似然估计和线性模型均方误差的最小化之间的等价性，但事实上，这种等价性并不要求$f(\bm{x}; \bm{\theta})$用于预测\gls{gaussian_distribution}的均值。
 
 使用最大似然来导出代价函数的方法的一个优势是，它减轻了为每个模型设计代价函数的负担。
 明确一个模型$p(\bm{y}\mid\bm{x})$则自动地确定了一个代价函数$\log p(\bm{y}\mid\bm{x})$。
@@ -429,13 +429,13 @@ f^* = \underset{f}{\argmin} \ \SetE_{\RVx, \RVy \sim  p_\text{data}} ||\bm{y} - 
 
 给定特征$\bm{h}$，线性输出单元层产生一个向量$\hat{\bm{y}} = \bm{W}^\top \bm{h}+\bm{b}$。
 
-线性输出层经常被用来产生条件Gaussian分布的均值：
+线性输出层经常被用来产生条件\gls{gaussian_distribution}的均值：
 \begin{equation}
 p(\bm{y}\mid\bm{x}) = \CalN(\bm{y}; \hat{\bm{y}}, \bm{I} ).
 \end{equation}
 最大化对数似然此时等价于最小化均方误差。
 
-最大化似然的框架使它也可以很直观的来学习Gaussian分布的协方差矩阵，或者使得Gaussian 分布的协方差是输入的函数。
+最大化似然的框架使它也可以很直观的来学习\gls{gaussian_distribution}的协方差矩阵，或者使得\gls{gaussian_distribution}的协方差是输入的函数。
 然而，对于所有输入协方差矩阵都必须被限制成一个正定的矩阵。
 用线性输出层来满足这种限制是困难的，所以通常其他的输出单元被用来对协方差参数化。
 对协方差建模的方法在\ref{sec:other_output_types}节中简要介绍。
@@ -645,7 +645,7 @@ softmax函数因此提供了argmax的``软化''版本。max函数相应的软化
 相反，$f(\bm{x};\bm{\theta})=\bm{\omega}$提供了$y$分布的参数。
 我们的损失函数就可以表示成$-\log p(\RVy; \bm{\omega}(\bm{x}))$。
 
-例如，我们想要学习在给定$\RVx$时$\RVy$的条件Gaussian分布的方差。
+例如，我们想要学习在给定$\RVx$时$\RVy$的条件\gls{gaussian_distribution}的方差。
 简单情况下，方差$\sigma^2$是一个常数，此时有一个闭合的表达式，这是因为方差的最大似然估计量仅仅是观测值$\RVy$与它们的期望值的差值的平方平均。
 一种计算上更加昂贵但是不需要写特殊情况代码的方法是简单地将方差作为分布$p(\RVy\mid\bm{x})$的其中一个属性，这个分布受$\bm{\omega}=f(\bm{x};\bm{\theta})$控制。
 负对数似然$-\log p(\bm{y};\bm{\omega}(\bm{x}))$将为代价函数提供一个必要的合适项来使我们的优化过程可以逐渐地学到方差。
@@ -654,19 +654,19 @@ softmax函数因此提供了argmax的``软化''版本。max函数相应的软化
 我们可能希望模型对不同的$\RVx$值预测出$\RVy$不同的方差。
 这被称为\firstgls{heteroscedastic}模型。
 在异方差情况下，我们简单地把方差指定为$f(\RVx;\bm{\theta})$其中一个输出值。
-实现它的典型方法是使用精度而不是方差来表示Gaussian分布，就像公式\ref{eq:3.22}所描述的。
+实现它的典型方法是使用精度而不是方差来表示\gls{gaussian_distribution}，就像公式\ref{eq:3.22}所描述的。
 在多维变量的情况下，最常见的是使用一个对角精度矩阵
 \begin{equation}
 \text{diag}(\bm{\beta}).
 \end{equation}
-这个公式适用于梯度下降，因为由$\bm{\beta}$参数化的Gaussian分布的对数似然的公式仅涉及$\beta_i$的乘法和$\log \beta_i$的加法。
+这个公式适用于梯度下降，因为由$\bm{\beta}$参数化的\gls{gaussian_distribution}的对数似然的公式仅涉及$\beta_i$的乘法和$\log \beta_i$的加法。
 乘法、加法和对数运算的梯度表现良好。
 相比之下，如果我们用方差来参数化输出，我们需要用到除法。
 除法函数在零附近会变得任意陡峭。
 虽然大梯度可以帮助学习，但任意大的梯度通常导致不稳定。
 如果我们用标准差来参数化输出，对数似然仍然会涉及除法，并且还将涉及平方。
 通过平方运算的梯度可能在零附近消失，这使得学习被平方的参数变得困难。
-无论我们使用的是标准差，方差还是精度，我们必须确保Gaussian分布的协方差矩阵是正定的。
+无论我们使用的是标准差，方差还是精度，我们必须确保\gls{gaussian_distribution}的协方差矩阵是正定的。
 因为精度矩阵的特征值是协方差矩阵特征值的倒数，所以这等价于确保精度矩阵是正定的。
 如果我们使用对角矩阵，或者是一个常数乘以单位矩阵，那么我们需要对模型输出强加的唯一条件是它的元素都为正。
 如果我们假设$\bm{a}$是用于确定对角精度的模型的原始激活，那么可以用softplus 函数来获得正的精度向量：$\bm{\beta}=\bm{\zeta}(\bm{a})$。
@@ -681,7 +681,7 @@ softmax函数因此提供了argmax的``软化''版本。max函数相应的软化
 
 % -- 183 --
 
-我们经常想要执行多模型回归，即预测条件分布$p(\bm{y}\mid\bm{x})$的实值，该条件分布对于相同的$\bm{x}$值在$\bm{y}$空间中有多个不同的峰值。
+我们经常想要执行多峰回归(multimodal regression)，即预测条件分布$p(\bm{y}\mid\bm{x})$的实值，该条件分布对于相同的$\bm{x}$值在$\bm{y}$空间中有多个不同的峰值。
 在这种情况下，Gaussian混合是输出的自然表示\citep{Jacobs-nc91,bishop1994mixture}。
 带有将Gaussian混合作为其输出的神经网络通常被称为\firstgls{mixture_density_network}。
 具有$n$个分量的Gaussian混合输出由下面的条件分布定义
