@@ -36,3 +36,4 @@
 -------------
 - @fairmiracle ==> Chapter5 "\Vy"==>"\Vx"；多余括号；in action，more frequently，more formally 提议校对，imputation 翻译建议
 - @huangpingchun ==> Chapter5 not completely formal or distinct concepts, VC维，imputation of missing data 翻译建议
+- @tielei ==> Chapter9 "full convolution"；翻译建议；"tiling range"
