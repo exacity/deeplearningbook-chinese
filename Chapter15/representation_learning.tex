@@ -186,7 +186,7 @@
 \gls{NN}训练是非确定性的，并且每次运行时会收敛到不同的函数。
 训练可以在梯度变小的点停止，也可以\gls{early_stopping}结束训练以防止过拟合，还可以在梯度很大但由于诸如随机性或海森矩阵\gls{poor_conditioning}等问题难以找到下坡方向的点停止。
 经过\gls{unsupervised_pretraining}的神经网络会一致地停止在一片相同的区域，但未经过\gls{pretraining}的\gls{NN}会一致地停在另一个区域。
-参看图\ref{fig:chap15_isomap}了解这种现象。
+参看\figref{fig:chap15_isomap}了解这种现象。
 经过\gls{pretraining}的网络到达的区域是较小的，这表明\gls{pretraining}减少了估计过程的方差，这转而又可以降低严重过拟合的风险。
 换言之，\gls{unsupervised_pretraining}将\gls{NN}参数初始化到它们不易逃逸的区域，并且遵循这种初始化的结果更加一致，和没有这种初始化的相比，结果很差的可能性更低。
 
@@ -255,12 +255,12 @@
 如果第一种设定（从$P_1$采样）中存在明显更多的数据，那么这有助于在从$P_2$抽取到的非常少的样本中快速泛化。
 许多视觉类别共享一些低级概念，比如边缘，视觉形状，几何变化，照明变化的影响等。
 一般而言，当存在对不同设定或任务有用，且对应于多个设定的潜在因素的特征时，\gls{transfer_learning}，\gls{multitask_learning}（\secref{sec:multitask_learning}）和\gls{domain_adaption}可以使用\gls{representation_learning}来完成。
-如图7.2所示，共享的底层和任务相关的上层。
+如\figref{fig:chap7_multi_factor_output}所示，共享的底层和任务相关的上层。
 
 
 然而，有时不同任务之间共享的不是输入的语义，而是输出的语义。
 例如，语音识别系统需要在输出层产生有效的句子，但是输入附近的较低层可能需要识别相同音素或子音素发音的非常不同的版本（这取决于哪个人正在说话）。
-在这样的情况下，共享神经网络的上层（输出附近）和进行任务特定的预处理是有意义的，如图\ref{fig:chap15_multi_task_input}所示。
+在这样的情况下，共享神经网络的上层（输出附近）和进行任务特定的预处理是有意义的，如\figref{fig:chap15_multi_task_input}所示。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -336,7 +336,7 @@
 \gls{zero_shot_learning}是一种特殊形式的\gls{transfer_learning}。
 同样的原理可以解释如何能执行\firstgls{multimodal_learning}，学习两种模态的表示，和一种模态中的观察$\Vx$和另一种模态中的观察$\Vy$组成的对$(\Vx, \Vy)$之间的关系（通常是一个联合分布）\citep{Srivastava+Salakhutdinov-NIPS2012-small}。
 通过学习所有的三组参数（从$\Vx$到它的表示，从$\Vy$到它的表示，以及两个表示之间的关系），一个表示中的概念被锚定在另一个表示中，反之亦然，从而可以有意义地推广到新的对组。
-这个过程如图\ref{fig:chap15_maps_between_representations}所示。
+这个过程如\figref{fig:chap15_maps_between_representations}所示。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -372,7 +372,7 @@
 
 
 接下来，让我们看看\gls{semi_supervised_learning}成功的一个简单例子。
-考虑这样的情况，$\RVx$来自一个混合分布，每个$\RVy$值具有一个混合分量，如图\ref{fig:chap15_mixture_model}所示。
+考虑这样的情况，$\RVx$来自一个混合分布，每个$\RVy$值具有一个混合分量，如\figref{fig:chap15_mixture_model}所示。
 如果混合分量很好地分出来了，那么建模$p(\RVx)$可以精确地指出每个分量的方向，每个类一个标记样本的训练集足以精确学习$p(\RVy \mid \RVx)$。
 但是更一般地，什么能使$p(\RVy \mid \RVx)$和$p(\RVx)$关联在一起呢？
 
@@ -428,7 +428,7 @@
 这些固定标准确定了哪些原因是突出的。
 例如，应用于图像像素的\gls{mean_squared_error}隐式地指定，一个潜在因素只有在其显著地改变大量像素的亮度时，它才是重要的影响因素。
 如果我们希望解决的问题涉及到小对象的交互，那么这可能是有问题的。
-如图\ref{fig:chap15_pingpong}，在机器人任务中，\gls{AE}未能学习到编码小乒乓球。
+如\figref{fig:chap15_pingpong}，在机器人任务中，\gls{AE}未能学习到编码小乒乓球。
 同样是这个机器人，它可以成功地与更大的对象进行交互（例如棒球，这种情况根据\gls{mean_squared_error}是很突出的）。
 
 \begin{figure}[!htb]
@@ -455,7 +455,7 @@
 就现在的讨论而言，知道它能学习出确定什么是突出的就可以了。
 \cite{lotter2015unsupervised}表明，训练生成人类头部头像的模型在训练时使用\gls{mean_squared_error}往往会忽视耳朵，但是对抗式框架学习能够成功地产生耳朵。
 因为耳朵与周围的皮肤相比不是非常明亮或黑暗，所以根据\gls{mean_squared_error}它们不是特别突出，但是它们高度可识别的形状和一致的位置意味着前向网络能够轻易地学习检测它们，从而使得它们在生成式对抗框架下是高度突出的。
-如图\ref{fig:chap15_manface}请看图片示例。
+如\figref{fig:chap15_manface}请看图片示例。
 \gls{generative_adversarial_networks}只是确定应该表示哪些因素的一步。
 我们期望未来的研究能够发现更好的方式来确定表示哪些因素，并且根据任务来发展表示不同因素的机制。
 
@@ -494,10 +494,10 @@
 
 % -- 536 --
 
-一个\gls{distributed_representation}的示例是$n$维二元向量，可以有$2^n$种配置，每一种都对应于输入空间中的一个不同区域，如图\ref{fig:chap15_distributed}所示。
+一个\gls{distributed_representation}的示例是$n$维二元向量，可以有$2^n$种配置，每一种都对应于输入空间中的一个不同区域，如\figref{fig:chap15_distributed}所示。
 这可以与\emph{符号表示}相比较，其中输入关联到单一符号或类别。
 如果字典中有$n$个符号，那么可以想象有$n$个特征监测器，每个对应地监测相关类别的存在。
-在这种情况下，只有表示空间中$n$个不同配置才有可能在输入空间中刻画$n$个不同的区域，如图\ref{fig:chap15_nondistributed}所示。
+在这种情况下，只有表示空间中$n$个不同配置才有可能在输入空间中刻画$n$个不同的区域，如\figref{fig:chap15_nondistributed}所示。
 这样的符号表示也被称为\gls{one_hot}表示，因为它可以表示成互相排斥的$n$维二元向量（其中只有一位是激活的）。
 符号表示是更广泛的非\gls{distributed_representation}中的一个具体示例，可以包含很多条目，但是每个条目是没有显著意义的单独控制。
 
@@ -569,7 +569,7 @@
 
 
 让我们检查\gls{distributed_representation}学习算法的一个特殊情况，它通过对输入的线性函数进行阀值处理来提取二元特征。
-该表示中的每个二元特征将$\SetR^d$分成一对半空间，如图15.7所示。
+该表示中的每个二元特征将$\SetR^d$分成一对半空间，如\figref{fig:chap15_distributed}所示。
 $n$个半空间的指数级数量的交集确定了该\gls{distributed_representation}学习能够区分多少区域。
 空间$\SetR^d$中的$n$个超平面的排列组合能够生成多少区间？
 通过应用关于超平面交集的一般结果\citep{Zaslavsky-1975}，我们可以展示\citep{Pascanu+et+al-ICLR2014b}这个二元特征表示能够区分的空间是
@@ -601,7 +601,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 在实践中，\gls{hidden_unit}并不能总是学习出具有简单语言名称的事物，但有趣的是，这些会在最好的计算机视觉深度网络的顶层附近出现。
 这些特征的共同之处在于，我们可以想象\emph{学习其中的每个特征不需要知道所有其他特征的所有配置}。
 \cite{radford2015unsupervised}展示生成模型可以学习人脸图像的表示，在表示空间中的不同方向捕获不同的潜在变化因素。
-图\ref{fig:chap15_generative_glasses}展示表示空间中的一个方向对应着该人是男性还是女性，而另一个方向对应着该人是否戴着眼镜。
+\figref{fig:chap15_generative_glasses}展示表示空间中的一个方向对应着该人是男性还是女性，而另一个方向对应着该人是否戴着眼镜。
 这些特征都是自动发现的，而并非先验固定的。
 没有必要为\gls{hidden_unit}分类器提供标签：只要该任务需要这样的特征，\gls{GD}就能在感兴趣的目标函数上自然地学习出语义上有趣的特征。
 我们可以学习出男性和女性之间的区别，或者是眼镜的存在与否，而不必通过涵盖所有这些值组合的样本来表征其他$n-1$个特征的所有配置。
