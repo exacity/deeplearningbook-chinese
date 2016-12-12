@@ -8,7 +8,7 @@
 正如我们会看到的，\gls{DL}工作者可以使用许多形式的\gls{regularization}。
 事实上，开发更有效的\gls{regularization}策略已成为本领域的主要研究工作之一。
 
-第\ref{chap:machine_learning_basics}章介绍了\gls{generalization}、\gls{underfitting}、\gls{overfitting}、\gls{bias_sta}、\gls{variance}和\gls{regularization}的基本概念。
+\chapref{chap:machine_learning_basics}介绍了\gls{generalization}、\gls{underfitting}、\gls{overfitting}、\gls{bias_sta}、\gls{variance}和\gls{regularization}的基本概念。
 如果你不熟悉这些概念，请参考该章节再继续阅读本章。
 
 在本章中，我们会更详细地描述\gls{regularization}，重点描述深度模型（或模块）的\gls{regularization}策略。
@@ -17,7 +17,7 @@
 如果你已经熟悉了这些概念，可以随意跳过相关章节。
 然而，本章的大多数内容涉及这些基本概念到特定\gls{NN}的扩展。
 
-在\ref{sec:regularization}节，我们将\gls{regularization}定义为``旨在减少学习算法的\gls{generalization}误差而不是训练误差的修改''。
+在\secref{sec:regularization}，我们将\gls{regularization}定义为``旨在减少学习算法的\gls{generalization}误差而不是训练误差的修改''。
 目前有许多\gls{regularization}策略。
 有些向\gls{ML}模型添加额外的约束，如增加对参数的限制。
 有些向\gls{objective_function}增加额外项,对应于参数值的软约束。
@@ -32,7 +32,7 @@
 在\gls{DL}的背景下，大多数\gls{regularization}策略都基于对\gls{estimator}进行\gls{regularization}。
 \gls{estimator}的\gls{regularization}以\gls{bias_sta}的增加换取\gls{variance}的减少。
 一个有效的\gls{regularization}是有利的``交易''，也就是能显著减少\gls{variance}而不过度增加\gls{bias_sta}。
-我们在第\ref{chap:machine_learning_basics}中讨论\gls{generalization}和\gls{overfitting}时，主要侧重模型族训练的3个情形：（1）不包括真实的数据生成过程——对应于\gls{underfitting}和\gls{bias_sta}引入，（2）匹配真实数据生成过程，（3）除了包含真实的数据生成过程，还包含了许多其他可能的生成过程——\gls{variance}（而不是\gls{bias_sta}）主导的\gls{overfitting}。
+我们在\chapref{chap:machine_learning_basics}中讨论\gls{generalization}和\gls{overfitting}时，主要侧重模型族训练的3个情形：（1）不包括真实的数据生成过程——对应于\gls{underfitting}和\gls{bias_sta}引入，（2）匹配真实数据生成过程，（3）除了包含真实的数据生成过程，还包含了许多其他可能的生成过程——\gls{variance}（而不是\gls{bias_sta}）主导的\gls{overfitting}。
 \gls{regularization}的目标是使模型从第三种情况进入到第二个情况。
 
 在实践中，过于复杂的模型族不一定包括目标函数或真实数据生成过程，甚至近似的都不包含。
@@ -83,7 +83,7 @@
 
 \subsection{$L^2$参数\glsentrytext{regularization}}
 \label{sec:l2_parameter_regularization}
-在\ref{sec:capacity_overfitting_and_underfitting}节中我们已经看到最简单和最常见的参数范数惩罚是，通常被称为\firstgls{weight_decay}的$L^2$参数范数惩罚。
+在\secref{sec:capacity_overfitting_and_underfitting}中我们已经看到最简单和最常见的参数范数惩罚是，通常被称为\firstgls{weight_decay}的$L^2$参数范数惩罚。
 这个\gls{regularization}策略通过向\gls{objective_function}添加一个正则项$\Omega(\Vtheta) = \frac{1}{2} \norm{\Vw}_2^2$，使权重更加接近原点\footnote{更一般地，我们可以将参数\gls{regularization}为接近空间中的任意特定点，令人惊讶的是仍有\gls{regularization}效果，并且更接近真实值将获得更好的结果。
 当我们不知道正确的值应该是正还是负，零是有意义的默认值。
 由于将模型参数\gls{regularization}为零的情况更常见，我们将关注这种特殊情况。}。
@@ -130,7 +130,7 @@
 \end{align}
 为0。
 
-为了研究\gls{weight_decay}的影响，我们将\gls{weight_decay}的梯度加到式\ref{eq:gradient}中。 
+为了研究\gls{weight_decay}的影响，我们将\gls{weight_decay}的梯度加到\eqnref{eq:gradient}中。 
 现在我们要找\gls{regularization}版本$\hat J$的最小值。
 我们使用变量$\tilde{\Vw}$表示最小值的位置:
 \begin{align}
@@ -142,7 +142,7 @@
 当$\alpha$趋向于0, \gls{regularization}的解$\tilde{\Vw}$趋向$\Vw^*$。 
 那么当$\alpha$增加时会发生什么？
 因为$\MH$是实对称的，我们可以将其分解为一个对角矩阵$\VLambda$和一个正交特征向量$\MQ$，并且$\MH = \MQ \VLambda \MQ^\top$。
-将其应用于式\ref{eq:final_w}，可得：
+将其应用于\eqnref{eq:final_w}，可得：
 \begin{align}
  \tilde \Vw &= ( \MQ \VLambda \MQ^\top + \alpha \MI)^{-1} \MQ \VLambda \MQ^\top \Vw^* \\
                  &=  [ \MQ( \VLambda+ \alpha \MI)  \MQ^\top ]^{-1} \MQ \VLambda \MQ^\top \Vw^* \\
@@ -154,7 +154,7 @@
 
 沿着$\MH$特征值较大的方向(如$\lambda_i \gg \alpha$)\gls{regularization}的影响较小。
 而$\lambda_i \ll \alpha$的分量将会被缩小到几乎为零。
-这种效应在图\ref{fig:chap7_reg_l2}示出。
+这种效应在\figref{fig:chap7_reg_l2}示出。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -194,8 +194,8 @@
 \label{eq:717mw}
    \Vw = (\MX^\top \MX + \alpha \MI)^{-1} \MX^\top \Vy .
 \end{align}
-式\ref{eq:716w}中的矩阵$\MX^\top\MX$与\gls{covariance}矩阵$\frac{1}{m}\MX^\top\MX$成正比。
-$L^2$正则项将这个矩阵替换为式\ref{eq:717mw}中的$ (\MX^\top \MX + \alpha \MI)^{-1}$
+\eqnref{eq:716w}中的矩阵$\MX^\top\MX$与\gls{covariance}矩阵$\frac{1}{m}\MX^\top\MX$成正比。
+$L^2$正则项将这个矩阵替换为\eqnref{eq:717mw}中的$ (\MX^\top \MX + \alpha \MI)^{-1}$
 这个新矩阵与原来的是一样的，不同的仅仅是在对角加了$\alpha$。
 这个矩阵的对角项对应于每个输入特征的\gls{variance}。
 我们可以看到，$L^2$\gls{regularization}能让学习算法``感知''到具有较高方差的输入$\Vx$， 因此与输出目标的\gls{covariance}较小（相对增加方差）的特征的权重将会被收缩。
@@ -227,7 +227,7 @@ $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，还有其他的
 
 % -- 227 --
 
-观察式\ref{eq:subgradient}，我们立刻发现$L^1$的\gls{regularization}效果与$L^2$大不一样。
+观察\eqnref{eq:subgradient}，我们立刻发现$L^1$的\gls{regularization}效果与$L^2$大不一样。
 具体来说，我们可以看到\gls{regularization}对\gls{gradient}的贡献不再是线性地缩放每个$w_i$；而是用与$\text{sign}(w_i)$同号的常数因子。
 这种形式的\gls{gradient}的一个后果是，我们不一定能得到$J(\MX, \Vy;\Vw)$二次近似的直接算术解（$L^2$\gls{regularization}时可以）。 
  
@@ -263,7 +263,7 @@ $w_i^* < 0$的情况与之类似，但是$L^1$惩罚项使$w_i$更接近0(减少
 相比$L^2$\gls{regularization}，$L^1$\gls{regularization}会产生更\firstgls{sparse}的解。
 在此\gls{sparse}性指的是一些参数具有0的最优值。
 $L^1$\gls{regularization}的\gls{sparse}性是相比$L^2$\gls{regularization}是质的不同。
-式\ref{eq:713L2}给出了$L^2$\gls{regularization}的解$\tilde \Vw$。 
+\eqnref{eq:713L2}给出了$L^2$\gls{regularization}的解$\tilde \Vw$。 
 如果我们使用$L^1$\gls{regularization}分析时\gls{hessian}$\MH$为对角正定的假设，重新考虑这个等式，我们发现
 $\tilde{w_i} = \frac{H_{i,i}}{H_{i,i} + \alpha} w_i^*$。
 如果$w_i^*$不是0，那$\tilde{w_i}$也会保持非0。 
@@ -275,7 +275,7 @@ $\tilde{w_i} = \frac{H_{i,i}}{H_{i,i} + \alpha} w_i^*$。
 Selection Operator）模型将$L^1$惩罚和\gls{linear_model}结合，并使用最小二乘\gls{cost_function}。 
 $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全地忽略。
  
-在\ref{sec:maximum_a_posteriori_map_estimation}节，我们看到许多\gls{regularization}策略可以被解释为\glssymbol{MAP}贝叶斯推断，
+在\secref{sec:maximum_a_posteriori_map_estimation}，我们看到许多\gls{regularization}策略可以被解释为\glssymbol{MAP}贝叶斯推断，
  特别是$L^2$\gls{regularization}相当于权重是高斯先验的\glssymbol{MAP}贝叶斯推断。
  对于$L^1$\gls{regularization}，
 用于\gls{regularization}一个\gls{cost_function}的惩罚项$\alpha \Omega(\Vw) =  \alpha \sum_i |w_i |$与先验是各向同性拉普拉斯分布|||c|||($\Vw \in \SetR^n$)的\glssymbol{MAP}贝叶斯推断的最大化对数先验项是等价的：
@@ -294,7 +294,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
  \tilde{J}(\Vtheta;\MX, \Vy) = J(\Vtheta;\MX, \Vy) + \alpha \Omega(\Vtheta) .
 \end{align}
 
-回顾\ref{sec:constrained_optimization}节我们可以通过构造一个\gls{generalized_lagrange_function}来最小化受约束的函数，即在原始\gls{objective_function}加上一系列惩罚项。
+回顾\secref{sec:constrained_optimization}我们可以通过构造一个\gls{generalized_lagrange_function}来最小化受约束的函数，即在原始\gls{objective_function}加上一系列惩罚项。
 每个惩罚是一个系数之间的乘积，称为\firstgls{KKT}乘子，以及一个表示约束是否满足的函数。
 如果我们想约束$\Omega(\Vtheta)$小于某个常数$k$，我们可以构建\gls{generalized_lagrange_function}
 \begin{align}
@@ -306,8 +306,8 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
  \Vtheta^* = \underset{\Vtheta}{ \argmin} \underset{\alpha, \alpha>0}{\max} \CalL(\Vtheta, \alpha).
 \end{align}
 
-如\ref{sec:constrained_optimization}节中描述，解决这个问题需要同时改变$\Vtheta$和$\alpha$。
-\ref{sec:example_linear_least_squares}给出了一个带$L^2$约束的\gls{linear_regression}实例。
+如\secref{sec:constrained_optimization}中描述，解决这个问题需要同时改变$\Vtheta$和$\alpha$。
+\secref{sec:example_linear_least_squares}给出了一个带$L^2$约束的\gls{linear_regression}实例。
 许多不同的程序是可能的，有些可能会利用\gls{GD}而其他可能使用\gls{gradient}为0的解析解，但在所有程序中$\alpha$在$\Omega(\Vtheta) > k$时必须增加，在$\Omega(\Vtheta) < k$时必须减小。
 所有正的$\alpha$鼓励$\Omega(\Vtheta)$收缩。
 最佳值$\alpha^*$也将鼓励$\Omega(\Vtheta)$收缩，但不会如$\Omega(\Vtheta)$小于$k$时那么强烈。
@@ -331,7 +331,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 % -- 230 --
 
 有时候，我们希望使用显式的限制，而不是惩罚。
-如\ref{sec:constrained_optimization}所描述，我们能修改下降算法（如\gls{SGD}算法），使其先计算$J(\Vtheta)$的下降步，然后将$\Vtheta$投影到满足$\Omega(\Vtheta) < k$的最近点。
+如\secref{sec:constrained_optimization}所描述，我们能修改下降算法（如\gls{SGD}算法），使其先计算$J(\Vtheta)$的下降步，然后将$\Vtheta$投影到满足$\Omega(\Vtheta) < k$的最近点。
 如果我们知道什么样的$k$是合适的，而不想花时间寻找对应于此$k$处的$\alpha$值，这会非常有用。
 
 另一个使用显式约束和重投影而不是使用惩罚强加约束的原因是惩罚可能导致非凸优化程序而陷入局部极小(对应于小的$\Vtheta$）。
@@ -379,14 +379,14 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 
 % -- 232 --
 
-正如我们在\ref{sec:the_moore_penrose_pseudoinverse}节看到，我们可以使用\ENNAME{Moore-Penrose}求解欠定线性方程。 
+正如我们在\secref{sec:the_moore_penrose_pseudoinverse}看到，我们可以使用\ENNAME{Moore-Penrose}求解欠定线性方程。 
 回想$\MX$伪逆$\MX^+$的一个定义：
 \begin{align} 
 \label{eq:729pseudo}
  \MX^+ = \lim_{\alpha \searrow 0} (\MX^\top \MX + \alpha \MI)^{-1}\MX^\top.
 \end{align}
-现在我们可以将式\ref{eq:729pseudo}看作执行具有\gls{weight_decay}的\gls{linear_regression}。
-具体来说，当\gls{regularization}系数趋向0时，式\ref{eq:729pseudo}是式\ref{eq:717mw}的极限。
+现在我们可以将\secref{eq:729pseudo}看作执行具有\gls{weight_decay}的\gls{linear_regression}。
+具体来说，当\gls{regularization}系数趋向0时，\eqnref{eq:729pseudo}是\eqnref{eq:717mw}的极限。
 因此，我们可以将伪逆解释为使用\gls{regularization}来稳定欠定问题。
 
 
@@ -407,7 +407,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 
 数据集增强对一个具体的分类问题来说是一个特别有效的方法：对象识别。
 图像是高维的并包括各种巨大的变化因素，其中有许多可以容易地模拟。
-即使模型已使用卷积和\gls{pooling}技术（\ref{chap:convolutional_networks}）对部分平移保持不变，沿训练图像每个方向平移几个像素的操作通常可以大大改善泛化。
+即使模型已使用卷积和\gls{pooling}技术（\chapref{chap:convolutional_networks}）对部分平移保持不变，沿训练图像每个方向平移几个像素的操作通常可以大大改善泛化。
 许多其他操作如旋转图像或缩放图像也已被证明非常有效。
 
 我们必须要小心，不能应用改变正确类别的转换。
@@ -427,7 +427,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 输入噪声注入是一些无监督学习算法的一部分，如降噪\gls{AE}\citep{VincentPLarochelleH2008}。
 当噪声被施加到\gls{hidden_unit}也是可行的，这可以被看作是在多个抽象层上进行的数据集增强。
 \cite{Poole14}最近表明，噪声的幅度被细心调整后，该方法是非常高效的。
-\gls{dropout}，一个将在\ref{sec:dropout}节描述的强大的\gls{regularization}策略，可以被看作是通过\emph{乘}噪声来构建新输入的过程。
+\gls{dropout}，一个将在\secref{sec:dropout}描述的强大的\gls{regularization}策略，可以被看作是通过\emph{乘}噪声来构建新输入的过程。
 
 当比较\gls{ML}基准测试的结果时，将其采取的数据集增强的影响考虑在内是很重要的。
 通常情况下，人工设计的数据集增强方案可以大大减少\gls{ML}技术的泛化误差。
@@ -445,10 +445,10 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 \section{噪声鲁棒性}
 \label{sec:noise_robustness}
 
-\ref{sec:dataset_augmentation_chap7}节已经将噪声作用于输入的数据集增强策略。
+\secref{sec:dataset_augmentation_chap7}已经将噪声作用于输入的数据集增强策略。
 对于某些模型，在模型的输入加上方差极小的噪音等价于对权重施加范数惩罚\citep{Bishop1995,bishop95training}。
 在一般情况下，噪声注入远远比简单地收缩参数强大，特别是噪声被添加到\gls{hidden_unit}时。
-向\gls{hidden_unit}添加噪音是值得单独讨论重要的话题；在\ref{sec:dropout}节所述\gls{dropout}算法这种做法主要发展方向。
+向\gls{hidden_unit}添加噪音是值得单独讨论重要的话题；在\secref{sec:dropout}所述\gls{dropout}算法这种做法主要发展方向。
 
 另一种\gls{regularization}模型的噪声使用方式是将其加到的权重。
 这项技术主要被用于\gls{RNN}的情况下\citep{JimGilesHorne1996,Graves-2011}。
@@ -525,11 +525,11 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 多任务学习\citep{caruana93a}是通过合并几个任务中的样例（可以视为对参数施加的软约束）来提高泛化的一种方式。
 额外的训练样本以同样的方式将模型的参数推向泛化更好的方向，当模型的一部分在任务之间共享时，模型的这一部分被更多地约束为良好的值（假设共享是合理的），往往能更好的泛化。
 
-图\ref{fig:chap7_multi_factor_output}展示了多任务学习中非常普遍的一种形式，其中不同的监督任务（给定$\RVx$预测$\RVy^{(i)}$）共享相同的输入$\RVx$以及一些中间层表示$\Vh^{(\text{share})}$，能学习共同的因素池。
+\figref{fig:chap7_multi_factor_output}展示了多任务学习中非常普遍的一种形式，其中不同的监督任务（给定$\RVx$预测$\RVy^{(i)}$）共享相同的输入$\RVx$以及一些中间层表示$\Vh^{(\text{share})}$，能学习共同的因素池。
 该模型通常可以分为两个部分和相关参数：
 \begin{enumerate}
- \item 具体任务的参数 （只能从各自任务的样本中实现良好的泛化）。如图\ref{fig:chap7_multi_factor_output}中的上层。
- \item 所有任务共享的通用参数（从所有任务的汇集数据中获益）。如图\ref{fig:chap7_multi_factor_output}中的下层。
+ \item 具体任务的参数 （只能从各自任务的样本中实现良好的泛化）。如\figref{fig:chap7_multi_factor_output}中的上层。
+ \item 所有任务共享的通用参数（从所有任务的汇集数据中获益）。如\figref{fig:chap7_multi_factor_output}中的下层。
 \end{enumerate}
 \begin{figure}[!htb]
 \ifOpenSource
@@ -577,7 +577,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 我们可以认为\gls{early_stopping}是非常高效的超参数选择算法。
 按照这种观点，训练步数仅是另一个超参数。
-我们从图\ref{fig:chap7_learning_curve_color}可以看到的，这个超参数在验证集上的具有U形性能曲线。
+我们从\figref{fig:chap7_learning_curve_color}可以看到的，这个超参数在验证集上的具有U形性能曲线。
 很多控制模型容量的超参数在验证集上都是这样的U型性能曲线，如图|||c|||。
 在\gls{early_stopping}的情况下，我们通过拟合训练集的步数来控制模型的有效容量。
 大多数超参数的选择必须使用昂贵的猜测和检查过程，我们需要在训练开始时猜测一个超参数，然后运行几个步骤检查它的训练效果。
@@ -630,7 +630,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \cite{Bishop1995}和\cite{Sjoberg95}认为\gls{early_stopping}具有将优化过程的参数空间限制在初始参数值$\Vtheta_0$相对小的邻域内的效果。
 更具体地，想象用学习率$\epsilon$进行$\tau$个优化步骤（对应于$\tau$个训练迭代）。
 我们可以将$\epsilon \tau$作为有效容量的度量。
-假设\gls{gradient}有界，限制迭代的次数和学习速率会限制从$\Vtheta_0$到达的参数空间大小，如图\ref{fig:chap7_reg_l1_vs_l2_mistake}所示。
+假设\gls{gradient}有界，限制迭代的次数和学习速率会限制从$\Vtheta_0$到达的参数空间大小，如\figref{fig:chap7_reg_l1_vs_l2_mistake}所示。
 在这个意义上，$\epsilon \tau$的行为就好像它是\gls{weight_decay}系数的倒数。
 
 \begin{figure}[!htb]
@@ -660,7 +660,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 % -- 243 --
 
 我们要研究训练时参数向量的轨迹。
-为简化起见，我们参数向量初始化为原点\footnote{对于\gls{NN},我们需要打破\gls{hidden_unit}间的对称平衡因此不能将所有参数都初始化为$\mathbf{0}$（如\ref{sec:gradient_based_learning}节所讨论的）。
+为简化起见，我们参数向量初始化为原点\footnote{对于\gls{NN},我们需要打破\gls{hidden_unit}间的对称平衡因此不能将所有参数都初始化为$\mathbf{0}$（如\secref{sec:gradient_based_learning}所讨论的）。
 然而，对于其他任何初始值$\Vw_{(0)}$该论证都成立}，也就是$\Vw^{(0)} = 0$。
 我们通过分析$\hat{J}$的\gls{GD}研究$J$上近似的\gls{GD}行为：
 \begin{align}
@@ -677,13 +677,13 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \begin{align} \label{eq:740qw}
 \MQ^\top  \Vw^{(\tau)} = [\MI - (\MI - \epsilon \VLambda)^\tau] \MQ^\top  \Vw^* .
 \end{align}
-现在,式\ref{eq:713L2}中$\MQ^\top \tilde \Vw$的表达式能被重写为：
+现在,\eqnref{eq:713L2}中$\MQ^\top \tilde \Vw$的表达式能被重写为：
 \begin{align}
 \MQ^\top  \tilde \Vw &= (\VLambda + \alpha \MI)^{-1} \VLambda \MQ^\top  \Vw^*, \\
 \MQ^\top  \tilde \Vw &= [\MI - (\VLambda + \alpha \MI)^{-1} \alpha] \MQ^\top  \Vw^*. 
 \label{eq:742qw}
 \end{align}
-比较式\ref{eq:740qw}和式\ref{eq:742qw}，我们能够发现,如果超参数$\epsilon, \alpha$和$\tau$满足如下：
+比较\eqnref{eq:740qw}和\eqnref{eq:742qw}，我们能够发现,如果超参数$\epsilon, \alpha$和$\tau$满足如下：
 \begin{align}
 (\MI - \epsilon \VLambda)^\tau =  (\VLambda + \alpha \MI)^{-1} \alpha,
 \end{align}\
@@ -744,7 +744,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 \gls{parameter_sharing}显著降低\glssymbol{CNN}模型不同参数的数量，并显著提高了网络的大小而不需要增加相应的训练数据。
 它仍然是将领域知识有效地整合到网络架构的最佳范例之一。
 
-\gls{CNN}将会在第\ref{chap:convolutional_networks}章更详细地讨论。
+\gls{CNN}将会在\chapref{chap:convolutional_networks}更详细地讨论。
 
 \section{\glsentrytext{sparse}\glsentrytext{representation}}
 \label{sec:sparse_representations}
@@ -752,7 +752,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 另一种策略是将惩罚放在\gls{NN}的激活单元，鼓励对应的激活是\gls{sparse}。
 这间接的对模型参数施加了复杂惩罚。
 
-我们已经讨论过（在\ref{sec:l1_regularization}）$L^1$惩罚如何诱导\gls{sparse}的参数，意味着许多参数为零（或接近于零）。
+我们已经讨论过（在\secref{sec:l1_regularization}）$L^1$惩罚如何诱导\gls{sparse}的参数，意味着许多参数为零（或接近于零）。
 \gls{representation}的\gls{sparse}，在另一方面描述了一种其中许多的元素是零（或接近零）的\gls{representation}。
 可以\gls{linear_regression}情况下简单说明这种区别：
 \begin{align}
@@ -831,7 +831,7 @@ $\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
 \label{sec:bagging_and_other_ensemble_methods}
 \firstgls{bagging}是通过结合几个模型降低泛化误差的技术\citep{ML:Breiman:bagging}。
 主要想法是分别训练几个不同的模型，然后让所有模型表决测试样例的输出。
-这在\gls{ML}中普通策略的一个例子，被称为模型平均\firstgls{model_averaging}。
+这在\gls{ML}中普通策略的一个例子，被称为\firstgls{model_averaging}。
 采用这种策略的技术被称为\gls{ensemble}方法。
 
 \firstgls{model_averaging}奏效的原因是不同的模型通常不会在测试集上产生完全相同的错误。
@@ -861,7 +861,7 @@ $\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
 这意味着，每个数据集以高概率缺少一些来自原始数据集的例子，还包含若干重复的例子（如果所得训练集与原始数据集大小相同，那所得数据集中大概有原始数据集$2/3$的实例）。
 模型$i$在数据集$i$上训练。
 每个数据集包含样本的差异导致训练模型之间的差异。
-图\ref{fig:chap7_bagging}是一个例子。
+\figref{fig:chap7_bagging}是一个例子。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -899,7 +899,7 @@ $\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
 \gls{dropout}提供了一种廉价的\gls{bagging}\gls{ensemble}近似,
 能够训练和评估指数级的\gls{NN}。
 
-具体而言，\gls{dropout}训练的\gls{ensemble}包括所有从基本的基础网络除去非输出单元形成子网络，如在图\ref{fig:chap7_subnetworks}所示。
+具体而言，\gls{dropout}训练的\gls{ensemble}包括所有从基本的基础网络除去非输出单元形成子网络，如在\figref{fig:chap7_subnetworks}所示。
 最先进的\gls{NN}基于一系列仿射变换和非线性变换，我们可以将一些单元的输出乘零以有效地删除一个单元。
 这个过程需要对模型一些修改，如径向基函数网络，单元的状态和参考值之间存在一定区别。
 为了简单起见，我们在这里提出乘零的简单\gls{dropout}算法，但是它被简单地修改后，可以与从网络中移除单元的其他操作一起工作。
@@ -924,7 +924,7 @@ $\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
 它不是模型当前参数值或输入样本的函数。
 通常一个输入单元包括的概率为$0.8$，一个\gls{hidden_unit}包括的概率为$0.5$。
 然后，我们运行之前一样的前向传播、反向传播以及学习更新。
-图\ref{fig:chap7_dropout_fprop}说明了在\gls{dropout}下的前向传播。
+\figref{fig:chap7_dropout_fprop}说明了在\gls{dropout}下的前向传播。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1043,7 +1043,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 & = \exp \Bigg(\frac{1}{2^n} \sum_{\Vd \in \{0,1\}^n} \MW_{y,;}^\top(\Vd \odot \RVv) + \Vb_y \Bigg) \\
 & = \exp \Big(\frac{1}{2}\MW_{y,:}^\top \RVv + \Vb_y \Big) .
 \end{align}
-将其代入式\ref{eq:758pe}，我们得到了一个权重为$\frac{1}{2}\MW$的\gls{softmax}分类器。
+将其代入\eqnref{eq:758pe}，我们得到了一个权重为$\frac{1}{2}\MW$的\gls{softmax}分类器。
 
 % -- 256 --
 
@@ -1106,7 +1106,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 
 \gls{dropout}启发其它以随机方法训练指数量级的共享权重的\gls{ensemble}。
 \ENNAME{DropConnect}是\gls{dropout}的一个特殊情况，其中一个标量权重和单个\gls{hidden_unit}状态之间的每个乘积被认为是可以丢弃的一个单元\citep{Wan+al-ICML2013-small}。
-随机\gls{pooling}是构造\gls{CNN}\gls{ensemble}的一种随机\gls{pooling}的形式(见\ref{sec:pooling}节)，其中每个卷积网络参与每个特征图的不同空间位置。
+随机\gls{pooling}是构造\gls{CNN}\gls{ensemble}的一种随机\gls{pooling}的形式(见\secref{sec:pooling})，其中每个卷积网络参与每个特征图的不同空间位置。
 目前为止，\gls{dropout}仍然是最广泛使用的隐式\gls{ensemble}方法。
 
 关于\gls{dropout}的一个重要见解是，通过随机行为训练网络并平均多个随机决定进行预测，通过\gls{parameter_sharing}实现了\gls{bagging}的一种形式。
@@ -1149,7 +1149,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 
 另一种\gls{DL}算法，\gls{batch_normalization}，在训练时向\gls{hidden_unit}引入加性和乘性噪声的方法重参数化模型。
 \gls{batch_normalization}的主要目的是改善优化，但噪音具有\gls{regularization}的效果，有时使\gls{dropout}变得没有必要。
-\gls{batch_normalization}将会在\ref{sec:batch_normalization}节更详细的讨论。
+\gls{batch_normalization}将会在\secref{sec:batch_normalization}更详细的讨论。
 
 
 
@@ -1160,7 +1160,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 为了探测网络对底层任务的理解层次，我们可以搜索这个模型错误分类的例子。
 \cite{Szegedy-ICLR2014}发现，精度达到人类水平的\gls{NN}在通过优化过程故意构造的点上的误差率接近\NUMTEXT{100\%}，模型在这个输入点$\Vx'$的输出与附近的数据点$\Vx$非常不同。
 在许多情况下，$\Vx'$与$\Vx$非常近似，人类观察者不知道原始样本和\firstgls{adversarial_example}之间的差异，但是网络会作出非常不同的预测。
-见图\ref{fig:chap7_panda_577}的例子。
+见\figref{fig:chap7_panda_577}的例子。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1206,7 +1206,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\glsentrytext{tangent_distance}、\glsentrytext{tangent_prop}和流形切分类}
 \label{sec:tangent_distance_tangent_prop_and_manifold_tangent_classifier}
-许多\gls{ML}的目标旨在假设数据位于低维流形附近来克服维数灾难，如\ref{sec:manifold_learning}描述。
+许多\gls{ML}的目标旨在假设数据位于低维流形附近来克服维数灾难，如\secref{sec:manifold_learning}描述。
 
 一个利用流形假设的早期尝试是\firstgls{tangent_distance}算法\citep{Simard93-small,Simard98}。
 它是一种非参数最近邻算法，其中度量使用的不是通用的欧几里德距离，而是是从邻近流形关于聚集概率的知识导出的。
@@ -1216,7 +1216,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 可以通过求解一个低维线性系统（流形的维数）实现。
 当然，这种算法需要制定一个的切向量。
 
-受相关启发，\firstgls{tangent_prop}算法\citep{Simard92-short}（图\ref{fig:chap7_mtc_color}）训练带有额外惩罚的\gls{NN}分类器，使\gls{NN}的每个输出$f(\Vx)$对已知的变化因素是局部不变的。
+受相关启发，\firstgls{tangent_prop}算法\citep{Simard92-short}（\figref{fig:chap7_mtc_color}）训练带有额外惩罚的\gls{NN}分类器，使\gls{NN}的每个输出$f(\Vx)$对已知的变化因素是局部不变的。
 这些变化因素对应于沿着的相同样本聚集的流形的移动。
 局部不变性是通过要求$\nabla_{\Vx} f(\Vx)$与已知流形的切向$\Vv^{(i)}$正交实现的，或者等价地通过\gls{regularization}惩罚$\Omega$使$f$在$\Vx$的$\Vv^{(i)}$方向的导数是小的：
 \begin{align} \label{eq:767}
@@ -1258,11 +1258,11 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 正如数据集增强是\gls{tangent_prop}非无限小的版本，\gls{adversarial_training}是\gls{double_backprop}非无限小的版本。
 
 流形切面分类器\citep{Dauphin-et-al-NIPS2011}无需知道切线向量的先验。
-正如我们将在第\ref{chap:autoencoders}章看到，\gls{AE}可以估算流形的切向量。
+正如我们将在\chapref{chap:autoencoders}看到，\gls{AE}可以估算流形的切向量。
 流形切面分类器使用这种技术来避免用户指定切向量。
-如图\ref{fig:chap14_cifar_cae}所示，这些估计的切向量超出了图像（如转化、旋转和缩放）几何的经典不变，还必须掌握因为特定对象（如移动身体的部分）的因素。
+如\figref{fig:chap14_cifar_cae}所示，这些估计的切向量超出了图像（如转化、旋转和缩放）几何的经典不变，还必须掌握因为特定对象（如移动身体的部分）的因素。
 因此根据流形切面分类提出的算法是简单：
-（1）使用\gls{AE}通过无监督学习来学习流形的结构，以及（2）如\gls{tangent_prop}（式\ref{eq:767}）一样使用这些切面\gls{regularization}\gls{NN}分类器。
+（1）使用\gls{AE}通过无监督学习来学习流形的结构，以及（2）如\gls{tangent_prop}（\eqnref{eq:767}）一样使用这些切面\gls{regularization}\gls{NN}分类器。
 
 在本章中，我们已经描述了大多数用于\gls{regularization}\gls{NN}的通用策略。
 \gls{regularization}是\gls{ML}的中心主题，因此将定期在其余各章中重新回顾。
