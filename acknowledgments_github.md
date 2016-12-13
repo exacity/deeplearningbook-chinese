@@ -34,16 +34,15 @@
 
 2016年12月10日
 -------------
-- @fairmiracle ==> Chapter5 "\Vy"==>"\Vx"；多余括号；in action，more frequently，more formally 提议校对，imputation 翻译建议
-- @huangpingchun ==> Chapter5 not completely formal or distinct concepts, VC维，imputation of missing data 翻译建议
-- @tielei ==> Chapter9 "full convolution"；翻译建议；"tiling range"
+ - @fairmiracle ==> Chapter5 "\Vy"==>"\Vx"；多余括号；in action，more frequently，more formally 提议校对，imputation 翻译建议
+ - @huangpingchun ==> Chapter5 not completely formal or distinct concepts, VC维，imputation of missing data 翻译建议
+ - @tielei ==> Chapter9 "full convolution"；翻译建议；"tiling range"
 
-
-2016年12月12日
+ 2016年12月12日
 ------------
  - @fairmiracle ==> Chapter6 公式错误
 
-
 2016年12月13日
-------------
+-------------
+ - @huangpingchun ==> inference的统一翻译 
  - @HC-2016 ==> Chapter6 单位阵还是对角阵问题，详见[issue](https://github.com/exacity/deeplearningbook-chinese/issues/19#issuecomment-266683442).
