@@ -522,16 +522,16 @@ $L^1$范数可以简化如下：
 \section{\glsentrytext{eigendecomposition}}
 \label{sec:eigendecomposition}
 
-许多数学对象可以通过将它们分解成多个组成部分，或者找到它们的一些属性而被更好地理解，这些属性是通用的，而不是由我们选择表示它们的方式引起的。
+许多数学对象可以通过将它们分解成多个组成部分，或者找到它们的一些属性而更好地理解，这些属性是通用的，而不是由我们选择表示它们的方式引起的。
 
 % -- 39 --
 
-例如，整数可以被分解为质数。
-我们表示整数$12$的方式取决于我们用十进制还是二进制去表示它，但质因数分解永远是对的$12=2\times 3\times 3$。
+例如，整数可以分解为质数。
+我们可以用十进制或二进制等不同方式表示整数$12$，但质因数分解永远是对的$12=2\times 3\times 3$。
 从这个表示中我们可以获得一些有用的信息，比如$12$不能被$5$整除，或者$12$的倍数可以被$3$整除。
 
 
-就像我们可以通过分解质因数来发现一些关于整数的真实性质，我们也可以通过分解矩阵来获取一些矩阵表示成数组元素时不明显的函数性质。
+正如我们可以通过分解质因数来发现一些关于整数的真实性质，我们也可以通过分解矩阵来获取矩阵表示成数组元素时不明显的函数性质。
 
 
 \firstgls{eigendecomposition}是使用最广的矩阵分解之一，即我们将矩阵分解成一组特征向量和特征值。
@@ -541,7 +541,7 @@ $L^1$范数可以简化如下：
 \begin{equation}
     \MA\Vv=\lambda \Vv.
 \end{equation}
-标量$\lambda$被称之为这个特征向量对应的\firstgls{eigenvalue}。
+标量$\lambda$被称为这个特征向量对应的\firstgls{eigenvalue}。
 （类似地，我们也可以定义\firstgls{left_Svector}$\Vv^\top\MA=\lambda \Vv^\top$，但是通常我们更关注\firstgls{right_Svector}）。
 
 
@@ -559,7 +559,7 @@ $L^1$范数可以简化如下：
 \end{equation}
 
 
-我们已经看到了\emph{构建}具体特定的特征值和特征向量，能够使我们在目标方向上延伸空间。
+我们已经看到了\emph{构建}具有特定特征值和特征向量的矩阵，能够使我们在目标方向上延伸空间。
 然而，我们也常常希望将矩阵\firstgls{decompose}成特征值和特征向量。
 这样可以帮助我们分析矩阵的特定性质，就像质因数分解有助于我们理解整数。
 
@@ -604,10 +604,10 @@ $L^1$范数可以简化如下：
 在限制条件下，函数$f$的最大值是最大特征值，最小值是最小特征值。
 
 
-所有特征值都是正数的矩阵被称为\firstgls{P_D}；所有特征值都是非负数的矩阵称为\firstgls{P_SD}。
-同样地，所有特征值都是负数的矩阵称为\firstgls{ND}；所有特征值都是非正数的矩阵称为\firstgls{NSD}。
+所有特征值都是正数的矩阵被称为\firstgls{P_D}；所有特征值都是非负数的矩阵被称为\firstgls{P_SD}。
+同样地，所有特征值都是负数的矩阵被称为\firstgls{ND}；所有特征值都是非正数的矩阵被称为\firstgls{NSD}。
 \gls{P_SD}矩阵受到关注是因为它们保证$\forall \Vx, \Vx^\top \MA \Vx \geq 0$。
-此外，\gls{P_D}矩阵另外保证$\Vx^\top \MA \Vx =0 \Rightarrow \Vx = \mathbf{0}$。
+此外，\gls{P_D}矩阵还保证$\Vx^\top \MA \Vx =0 \Rightarrow \Vx = \mathbf{0}$。
 
 
 
@@ -680,7 +680,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 如果矩阵$\MA$的行数小于列数，那么上述矩阵可能有多个解。
 
 
-\firstgls{Moore}使我们能够解决这种情况的问题。
+\firstgls{Moore}使我们能够解决这类问题。
 矩阵$\MA$的伪逆定义为：
 \begin{equation}
     \MA^+ = \lim_{a \searrow 0} (\MA^\top\MA + \alpha \MI)^{-1} \MA^\top.
@@ -690,12 +690,12 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
     \MA^+ = \MV\MD^+\MU^\top.
 \end{equation}
 其中，矩阵$\MU$，$\MD$和$\MV$是矩阵$\MA$\gls{SVD}后得到的矩阵。
-对角矩阵$\MD$的伪逆$\MD^+$是其非零元素取倒之后再转置得到的。
+对角矩阵$\MD$的伪逆$\MD^+$是其非零元素取倒数之后再转置得到的。
 
 % -- 43 --
 
 当矩阵$\MA$的列数多于行数时，使用伪逆求解线性方程是众多可能解法中的一种。
-具体地，$\Vx=\MA^+\Vy$是方程所有可行解中欧几里得距离最小的一个。
+具体地，$\Vx=\MA^+\Vy$是方程所有可行解中欧几里得范数$\norm{\Vx}_2$最小的一个。
 
 
 当矩阵$\MA$的行数多于列数时，可能没有解。
@@ -712,15 +712,15 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
     \Tr(\MA)= \sum_i \MA_{i,i}.
 \end{equation}
 迹运算因为很多原因而受到关注。
-若不使用求和符号，有些矩阵运算很难描述，而通过矩阵乘法和迹运算符号，可以进行清楚地表示。
-例如，迹运算提供了另一种描述矩阵Frobenius范数的方式：
+若不使用求和符号，有些矩阵运算很难描述，而通过矩阵乘法和迹运算符号，可以清楚地表示。
+例如，迹运算提供了另一种描述矩阵\gls{frobenius_norm}的方式：
 \begin{equation}
 \label{eq:2.49}
     \norm{A}_F = \sqrt{\text{Tr}(\MA \MA^\top)}.
 \end{equation}
 
 
-用迹运算表示式，使我们可以使用很多有用的性质来操纵表达式。。
+用迹运算表示表达式，我们可以使用很多有用的等式来操纵表达式。
 例如，迹运算在转置运算下是不变的：
 \begin{equation}
     \Tr(\MA)=\Tr(\MA^\top).
@@ -746,7 +746,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 % -- 44 --
 
-另一个有用的事实是标量在迹运算后仍然得到它自己：$a=\Tr(a)$。
+另一个有用的事实是标量在迹运算后仍然是它自己：$a=\Tr(a)$。
 
 
 
@@ -756,7 +756,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 行列式，记作$\text{det}(\MA)$，是一个将方阵$\MA$映射到实数的函数。
 行列式等于矩阵特征值的乘积。
-行列式的绝对值可以被认为是衡量矩阵相乘后空间扩大或者缩小了多少。
+行列式的绝对值可以用来衡量矩阵相乘后空间扩大或者缩小了多少。
 如果行列式是$0$,那么空间至少沿着某一维完全收缩了，使其失去了所有的体积。
 如果行列式是$1$,那么矩阵相乘没有改变空间体积。
 
@@ -780,32 +780,32 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 我们希望找到一个编码函数，根据输入返回编码，$f(\Vx)=\Vc$；我们也希望找到一个解码函数，给定编码重构输入，$\Vx\approx g(f(\Vx))$。
 
 
-\gls{PCA}被定义为我们选择的解码函数。
+\glssymbol{PCA}由我们选择的解码函数而定。
 具体地，为了简化解码器，我们使用矩阵乘法将编码映射回$\SetR^n$，即$g(\Vc)=\MD\Vc$，其中$\MD\in \SetR^{n\times l}$ 是解码矩阵。
 
 % -- 45 --
 
 
 计算这个解码器的最优编码可能是一个困难的问题。
-为了使得编码问题简单一些，PCA限制$\MD$的列向量是彼此正交的（注意，除非$l=n$，否则$\MD$严格上说不是一个正交矩阵）。
+为了使编码问题简单一些，\glssymbol{PCA}限制$\MD$的列向量为彼此正交的（注意，除非$l=n$，否则严格上$\MD$不是一个正交矩阵）。
 
 
-根据目前为止所描述的问题，可能会得到多个解。
-因为如果我们按比例地缩小所有点对应的编码向量$c_i$，那么我们只需按比例放大$\MD_{:,i}$即可保持结果不变。
-为了让问题有唯一解，我们限制$\MD$中所有列向量都有单位范数。
+目前为止所描述的问题，可能会有多个解。
+因为如果我们按比例地缩小所有点对应的编码向量$c_i$，那么我们只需按比例放大$\MD_{:,i}$，即可保持结果不变。
+为了让问题有唯一解，我们限制$\MD$中所有列向量都有\gls{unit_norm}。
 
 
 为了将这个基本想法放进我们能够实现的算法，首先我们需要明确如何根据每一个输入$\Vx$得到一个最优编码$\Vc^*$。
 一种方法是最小化原始输入向量$\Vx$和重构向量$g(\Vc^*)$之间的距离。
 我们使用范数来衡量它们之间的距离。
-在PCA算法中，我们使用$L^2$范数：
+在\glssymbol{PCA}算法中，我们使用$L^2$范数：
 \begin{equation}
 \label{eq:2.52}
 \Vc^* = \underset{\Vc}{\arg\min} \norm{\Vx-g(\Vc)}_2.
 \end{equation}
 
 
-我们可以用平方$L^2$范数替代$L^2$范数，因为在两者在相同的值$\Vc$上取得最小值。
+我们可以用平方$L^2$范数替代$L^2$范数，因为两者在相同的值$\Vc$上取得最小值。
 这是因为$L^2$范数是非负的，并且平方运算在非负值上是单调递增的。
 \begin{equation}
 \Vc^* = \argmin_{\Vc} \norm{\Vx - g(\Vc)}_2^2.
@@ -860,7 +860,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 \begin{equation}
     f(\Vx)=\MD^\top\Vx.
 \end{equation}
-进一步使用矩阵乘法，我们也可以定义PCA重构操作：
+进一步使用矩阵乘法，我们也可以定义\glssymbol{PCA}重构操作：
 \begin{equation}
     r(\Vx)=g(f(\Vx)) = \MD\MD^\top \Vx.
 \end{equation}
@@ -869,14 +869,14 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 接下来，我们需要挑选编码矩阵$\MD$。
 要做到这一点，我们回顾最小化输入和重构之间$L^2$距离的这个想法。
 因为我们用相同的矩阵$\MD$对所有点进行解码，我们不能再孤立地看待每个点。
-反之，我们必须最小化所有维数和所有点上的误差矩阵的Frobenius范数：
+反之，我们必须最小化所有维数和所有点上的误差矩阵的\gls{frobenius_norm}：
 \begin{equation}
-    \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{限制在} \MD^\top\MD = \MI_l.
+    \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{ 限制在 } \MD^\top\MD = \MI_l.
 \end{equation}
 
 为了推导用于寻求$\MD^*$的算法，我们首先考虑$l=1$的情况。
 在这种情况下，$\MD$是一个单一向量$\Vd$。
-将\eqnref{eq:2.67}代入\eqnref{eq:2.68}，简化$\MD$为$\Vd$，问题简化为
+将\eqnref{eq:2.67}代入\eqnref{eq:2.68}，简化$\MD$为$\Vd$，问题化为
 \begin{equation}
 \label{eq:2.67}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd\Vd^\top \Vx^{(i)}}_2^2
@@ -885,21 +885,21 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 
 % -- 47 --
 
-上述公式是进行代入最直接的方式，但不是文体表述最舒服的方式。
-在上述公式中，我们将标量$\Vd^\top\Vx^{(i)}$放在了向量$\Vd$的右边。
+上述公式是代入的最直接方式，但不是文体表述最舒服的方式。
+在上述公式中，我们将标量$\Vd^\top\Vx^{(i)}$放在向量$\Vd$的右边。
 将该标量放在左边的写法更为传统。
 于是我们通常写作如下：
 \begin{equation}
 \label{eq:2.68}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd^\top \Vx^{(i)}\Vd}_2^2
-        \text{限制在} \norm{\Vd}_2 = 1,
+        \text{ 限制在 } \norm{\Vd}_2 = 1,
 \end{equation}
 或者，考虑到标量的转置和自身相等，我们也可以写作：
 \begin{equation}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vx^{(i)}\Vd\Vd^\top}_2^2
-        \text{限制在} \norm{\Vd}_2 = 1.
+        \text{ 限制在 } \norm{\Vd}_2 = 1.
 \end{equation}
-读者应该慢慢对这些重排写法熟悉起来。
+读者应该对这些重排写法慢慢熟悉起来。
 
 
 此时，使用单一矩阵来重述问题，比将问题写成求和形式更有帮助。
@@ -908,7 +908,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 原问题可以重新表述为：
 \begin{equation}
     \Vd^* = \underset{\Vd}{\arg\min} \norm{\MX - \MX\Vd\Vd^\top}_F^2
-        \text{限制在} \Vd^\top \Vd = 1.
+        \text{ 限制在 } \Vd^\top \Vd = 1.
 \end{equation}
 暂时不考虑约束，我们可以将Frobenius范数部分简化成下面的形式：
 \begin{equation}
@@ -942,24 +942,24 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。$
 此时，我们再来考虑约束条件:
 \begin{equation}
     = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
-    \text{限制在} \Vd^\top \Vd = 1
+    \text{ 限制在 } \Vd^\top \Vd = 1
 \end{equation}
 \begin{equation}
     = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd \Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top )
-    \text{限制在} \Vd^\top \Vd = 1
+    \text{ 限制在 } \Vd^\top \Vd = 1
 \end{equation}
  (因为约束条件)
  \begin{equation}
      = \underset{\Vd}{\arg\min} \, - \Tr(\MX^\top\MX \Vd\Vd^\top)
-     \text{限制在} \Vd^\top \Vd = 1
+     \text{ 限制在 } \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
      = \underset{\Vd}{\arg\max} \, \Tr(\MX^\top\MX \Vd\Vd^\top)
-     \text{限制在} \Vd^\top \Vd = 1
+     \text{ 限制在 } \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
      = \underset{\Vd}{\arg\max} \, \Tr(\Vd^\top\MX^\top\MX \Vd)
-     \text{限制在} \Vd^\top \Vd = 1
+     \text{ 限制在 } \Vd^\top \Vd = 1
  \end{equation}
 
 
