@@ -656,13 +656,13 @@
 大多数\gls{ML}算法具有超参数，我们可以用来控制算法行为的设置。
 超参数的值不是通过学习算法本身拟合出来的（尽管我们可以设计一个嵌套的学习过程，一个学习算法为另一个学习算法学出最优超参数）。
 
-在图5.2所示的多项式回归实例中，有一个超参数：多项式的次数，作为\textbf{\gls{capacity}}超参数。
+在\figref{fig:chap5_underfit_just_right_overfit}所示的多项式回归实例中，有一个超参数：多项式的次数，作为\textbf{\gls{capacity}}超参数。
 控制\gls{weight_decay}程度的$\lambda$是另一个超参数。
 
 有时一个\gls{setting}被设为学习算法不用学习的超参数，是因为它太难优化了。
 更多的情况是，该设定必须是超参数，因为它不适合在训练集上学习。
 这适用于控制模型\gls{capacity}的所有超参数。
-如果在训练集上学习超参数，这些超参数总是趋向于最大可能的模型容量，导致过拟合（参考图5.3）。
+如果在训练集上学习超参数，这些超参数总是趋向于最大可能的模型容量，导致过拟合（参考\figref{fig:chap5_generalization_vs_capacity}）。
 例如，相较低次多项式和正的权重衰减设定，更高次的多项式和权重衰减参数设定为$\lambda=0$总能在训练集上更好地拟合。
 
 % -- 117 --
@@ -907,7 +907,7 @@
 另一方面，方差衡量由任意特定的数据采样可能导致的估计期望的偏差。
 
 当可以选择一个偏差更大的估计和一个方差更大的估计时，会发生什么呢？我们如何选择？
-例如，想象我们希望近似图5.2中的函数，我们只可以选择一个偏差较大的估计或一个方差较大的估计，我们该如何选择呢？
+例如，想象我们希望近似\figref{fig:chap5_underfit_just_right_overfit}中的函数，我们只可以选择一个偏差较大的估计或一个方差较大的估计，我们该如何选择呢？
 
 判断这种权衡最常用的方法是交叉验证。
 经验上，交叉验证在许多真实世界的任务中都非常成功。
@@ -1791,17 +1791,17 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 总的来说，区分输入空间中$O(k)$个区间，所有的这些方法需要$O(k)$个\gls{example:chap5}。
 通常会有$O(k)$个参数，$O(1)$参数对应于$O(k)$区间之一。
-最近邻中，每个训练\gls{example:chap5}至多用于定义一个区间，如\figref{fig:chap5_empty10}所示。
+最近邻中，每个训练\gls{example:chap5}至多用于定义一个区间，如\figref{fig:chap5_non_distributed}所示。
 
 
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter5/figures/empty10}}
+\centerline{\includegraphics{Chapter5/figures/non_distributed}}
 \fi
 \caption{TODO}
-\label{fig:chap5_empty10}
+\label{fig:chap5_non_distributed}
 \end{figure}
 
 
@@ -1854,7 +1854,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 尽管术语“流形”有正式的数学定义，\gls{ML}倾向于更松散地定义一组点，使其只需要考虑少数嵌入在高维空间中的自由度或维数就能很好地近似。
 每一维都对应着局部的变动方向。
-如\figref{fig:chap5_empty11}所示，训练数据位于二维空间中的一维流形中。
+如\figref{fig:chap5_one_dim_manifold_and_data}所示，训练数据位于二维空间中的一维流形中。
 在\gls{ML}中，我们允许流形的维数从一个点到另一个点有所变化。
 这经常发生于流形和自身相交的情况。
 例如，数字“8”形状的流形在大多数位置只有一维，但在中心的相交处有两维。
@@ -1863,10 +1863,10 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter5/figures/empty11}}
+\centerline{\includegraphics{Chapter5/figures/one_dim_manifold_and_data_color}}
 \fi
 \caption{TODO}
-\label{fig:chap5_empty11}
+\label{fig:chap5_one_dim_manifold_and_data}
 \end{figure}
 
 如果我们希望\gls{ML}算法学习$\SetR^n$上的所有感兴趣的函数时，很多\gls{ML}问题
@@ -1917,7 +1917,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 我们用一维道路中的地址号码去明确地址，而非三维空间中的坐标。
 提取这些流形中的坐标是非常具有挑战性的，但是很有希望改进很多\gls{ML}算法。
 这个一般性原则用于很多情况下。
-\figref{fig:chap5_empty13}展示了包含脸的\gls{dataset}的流形结构。
+\figref{fig:chap5_QMUL-facedataset}展示了包含脸的\gls{dataset}的流形结构。
 在本书的最后，我们会介绍一些学习这样的流形结构的必备方法。
 在图20.6中，我们将看到\gls{ML}算法如何能成功地完成这个\gls{target}。
 
@@ -1925,10 +1925,10 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter5/figures/empty13}}
+\centerline{\includegraphics{Chapter5/figures/QMUL-facedataset}}
 \fi
 \caption{TODO}
-\label{fig:chap5_empty13}
+\label{fig:chap5_QMUL-facedataset}
 \end{figure}
 
 第一部分介绍了数学和\gls{ML}中的基本概念，这将用于本书其他章节中。

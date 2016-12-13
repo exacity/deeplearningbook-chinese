@@ -1,6 +1,6 @@
 % !Mode:: "TeX:UTF-8"
 % Translator: Yujun Li 
-\chapter{面对区分函数}
+\chapter{面对\glsentrytext{partition_function}}
 \label{chap:confronting_the_partition_function}
 在\secref{sec:undirected_models}中，我们看到许多概率模型（通常被称为\gls{undirected_graphical_model}）由未归一化的\gls{PD}$\tilde{p}(\RVx, \theta)$所定义。
 我们必须通过除以\gls{partition_function}$Z(\Vtheta)$来归一化$\tilde{p}$，以获得有效的\gls{PD}：
@@ -106,7 +106,7 @@
 
 
 在\gls{DL}文献中，通常会看到用\gls{energy_function}（\eqnref{eqn:167}）来参数化$\log \tilde{p}$。
-在这种情况下，\gls{positive_phase}可以被解释为推动训练从模型抽取出的样本能量下降，\gls{negative_phase}可以被解释为推动从模型抽取出的样本能量上升，如图18.1所示。
+在这种情况下，\gls{positive_phase}可以被解释为推动训练从模型抽取出的样本能量下降，\gls{negative_phase}可以被解释为推动从模型抽取出的样本能量上升，如\figref{fig:chap18_pos_and_neg_phase}所示。
 
 
 \section{随机最大似然和\glsentrytext{contrastive_divergence}}
@@ -120,7 +120,7 @@
 % -- 599 --
 
 我们可以将\glssymbol{mcmc}方法视为在两种力之间平衡最大似然，一种力增大数据发生的模型分布，另一种力减小模型样本发生的模型分布。
-图\ref{fig:chap18_pos_and_neg_phase}展示了这个过程。
+\figref{fig:chap18_pos_and_neg_phase}展示了这个过程。
 这两种力对应于最大化$\log \tilde{p}$和最小化$\log Z$。
 对\gls{negative_phase}的几个近似也是可能的。
 这些近似中的每一个可以被理解为使得\gls{negative_phase}更容易计算，但是也会将其推向错误的位置。
@@ -164,7 +164,7 @@
 当然，\glssymbol{contrastive_divergence}仍然是正确\gls{negative_phase}的一个近似。
 \glssymbol{contrastive_divergence}定性地未能实现正确\gls{negative_phase}的主要原因是，它不能抑制远离真实训练样本的高概率区域。
 这些在模型上具有高概率，但是在数据生成区域上具有低概率的区域被称为\firstgls{spurious_modes}。
-图\ref{fig:chap18_spurious_mode}解释了为什么这种现象会发生。
+\figref{fig:chap18_spurious_mode}解释了为什么这种现象会发生。
 基本上，除非$k$非常大，否则远离数据分布的模型分布中的模式不会被\gls{markov_chain}在初始化的训练点中访问。
 
 

@@ -69,7 +69,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 在计算机科学中，如果数据集合已经过明智地结构化并建立索引，数据操作的处理速度可以成倍的加快（如搜索）。
 人们可以很容易地在阿拉伯数字的表示下进行算术运算，但在罗马数字的表示下运算会更耗时。
 毫不奇怪，表示的选择会对机器学习算法的性能产生巨大的影响。
-图\ref{fig:chap1_polar}显示了一个简单的可视化例子。
+\figref{fig:chap1_polar}显示了一个简单的可视化例子。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -126,7 +126,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 \firstgls{DL}通过其它较简单的表示来表达复杂表示，解决了\gls{representation_learning}中核心问题。
 
 \gls{DL}让计算机通过较简单概念构建复杂的概念。
-图\ref{fig:chap1_deep_learning}显示了\gls{DL}系统通过组合较简单的概念，例如转角和轮廓，转而定义边缘来表示图像中一个人的概念。
+\figref{fig:chap1_deep_learning}显示了\gls{DL}系统通过组合较简单的概念，例如转角和轮廓，转而定义边缘来表示图像中一个人的概念。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -157,7 +157,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 第一观点是基于评估架构所需执行的顺序指令的数目。
 我们可以认为这是描述每个给定输入后，计算模型输出的流程图的最长路径。
 正如两个等价的计算机程序根据不同的语言将具有不同的长度，相同的函数可以被绘制为具有不同深度的流程图，这取决于我们允许使用的单一步骤的函数。
-图\ref{fig:chap1_language}说明了语言的选择怎样给相同的架构两个不同的衡量。
+\figref{fig:chap1_language}说明了语言的选择怎样给相同的架构两个不同的衡量。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -186,7 +186,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 
 我们主张\gls{ML}是构建能在复杂实际环境下运行的\glssymbol{AI}系统的唯一可行方法。
 \gls{DL}是一种特定类型的\gls{ML}，通过将世界表示为由较简单概念定义复杂概念，从一般抽象到高级抽象的嵌套概念体系获得极大的能力和灵活性。
-图\ref{fig:chap1_venn}说明了这些不同的\glssymbol{AI}学科之间的关系。图\ref{fig:chap1_which_part_learned}给出了每个学科如何工作的一个高层次的原理。
+\figref{fig:chap1_venn}说明了这些不同的\glssymbol{AI}学科之间的关系。\figref{fig:chap1_which_part_learned}给出了每个学科如何工作的一个高层次的原理。
 \begin{figure}[!hbt]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -223,7 +223,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 
 读者可以随意跳过不感兴趣或与自己背景不相关的部分。
 熟悉线性代数、概率和基本\gls{ML}概念的读者可以跳过第一部分，例如，当读者只是想实现一个能工作的系统则不需要阅读超出第二部分的内容。
-为了帮助读者选择章节，图\ref{fig:chap1_dependency}展示了这本书的高层组织结构的流程图。
+为了帮助读者选择章节，\figref{fig:chap1_dependency}展示了这本书的高层组织结构的流程图。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -261,7 +261,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 讲述整个综合性的\gls{DL}历史超出了本书的范围。
 然而，一些基本的背景对理解\gls{DL}是有用的。
 一般来说，目前为止已经有三次\gls{DL}的发展浪潮：在20世纪40年代到60年代\gls{DL}被称为\firstgls{cybernetics}，20世纪80年代到90年代\gls{DL}被誉为\firstgls{connectionism}，并于2006年开始，\gls{DL}在当前的名称下开始复苏。
-这在图\ref{fig:chap1_cybernetics_connectionism_ngrams_color}中定量给出。
+这在\figref{fig:chap1_cybernetics_connectionism_ngrams_color}中定量给出。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -291,7 +291,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 现代\gls{DL}的最早前身是从神经科学的角度出发的简单线性模型。
 这些模型被设计为使用一组$\Sn$个输入$\Sx_1, \dots ,\Sx_n$并将它们与一个输出$\Sy$相关联。 
 这些模型将学习一组权重$\Sw_1, \dots, \Sw_n $ 并计算它们的输出$f(\Vx, \Vw) = \Sx_1 \Sw_1 + \dots + \Sx_n \Sw_n$。
-这第一波\gls{NN}研究的浪潮被称为\gls{cybernetics}，如图\ref{fig:chap1_cybernetics_connectionism_ngrams_color}所示。
+这第一波\gls{NN}研究的浪潮被称为\gls{cybernetics}，如\figref{fig:chap1_cybernetics_connectionism_ngrams_color}所示。
 
 \ENNAME{McCulloch-Pitts}神经元\citep{McCulloch43}是脑功能的早期模型。
 该线性模型通过测试函数$f(\Vx，\Vw)$的是正还是负来识别两种不同类型的输入。
@@ -329,7 +329,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 
 我们能够从神经科学得到一些粗略的指南。
 仅通过计算单元之间的相互作用而变得智能的基本思想是受大脑启发的。
-新认知机\citep{Fukushima80}受哺乳动物视觉系统的结构启发，引入了一个处理图片的强大模型架构，后来成为了现代卷积网络的基础\citep{LeCun98-small}，我们将会在\ref{sec:the_neuroscientific_basis_for_convolutional_networks}节看到。
+新认知机\citep{Fukushima80}受哺乳动物视觉系统的结构启发，引入了一个处理图片的强大模型架构，后来成为了现代卷积网络的基础\citep{LeCun98-small}，我们将会在\secref{sec:the_neuroscientific_basis_for_convolutional_networks}看到。
 目前大多数\gls{NN}基于称为\firstgls{ReLU}的神经单元模型。
 原始认知机\citep{Fukushima75}受我们关于大脑功能知识的启发， 引入了一个更复杂的版本。
 简化的现代版基于许多观点进化发展，\citet{Nair-2010}和\citet{Glorot+al-AI-2011-small}援引神经科学作为影响，\citet{Jarrett-ICCV2009}援引更多面向工程的影响。
@@ -368,7 +368,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 这需要九个不同的神经元，并且每个神经必须独立地学习颜色和对象身份的概念。
 改善这种情况的方法之一是使用\gls{distributed_representation}，即用三个神经元描述颜色,三个神经元描述对象身份。 
 这仅仅需要6个神经元而不是9个，并且描述红色的神经元能够从汽车、卡车和鸟类的图像中学习红色，而不仅仅是从一个特定类别的图像中学习。 
-\gls{distributed_representation}的概念是本书的核心，我们将在\ref{chap:representation_learning}章中更加详细地描述。
+\gls{distributed_representation}的概念是本书的核心，我们将在\chapref{chap:representation_learning}中更加详细地描述。
 
 % -- 16 --
 
@@ -376,7 +376,7 @@ MRI扫描的单一像素与分娩过程中的并发症只有微不足道的相�
 这个算法虽然已经黯然失色不再流行，但截至写书之时，仍是训练深度模型的主要方法。
 
 在20世纪90年代，研究人员在使用\gls{NN}进行序列建模的方面取得了重要进展。
-\citet{Hochreiter91}和\citet{Bengio1994ITNN}指出了建模长序列的一些根本数学难题，将在\ref{sec:the_challenge_of_long_term_dependencies}节中描述。
+\citet{Hochreiter91}和\citet{Bengio1994ITNN}指出了建模长序列的一些根本数学难题，将在\secref{sec:the_challenge_of_long_term_dependencies}中描述。
 \citet{Hochreiter+Schmidhuber-1997}引入\gls{LSTM}(\glssymbol{LSTM})网络来解决这些难题。
 如今，\glssymbol{LSTM}在许多序列建模任务中广泛应用，包括Google的许多自然语言处理任务。
 
@@ -399,7 +399,7 @@ CIFAR NCAP研究计划具有多学科的性质，其中还包括在人类神经�
 这个问题可能是单纯的因为计算复杂性太高，而以当时可用的硬件难以进行足够的实验。
 
 神经网络研究的第三次浪潮开始于2006年的突破。
-\ENNAME{Geoffrey Hinton}表明名为\gls{DBN}的\gls{NN}可以使用一种称为贪婪逐层训练的策略进行有效地训练\citep{Hinton06}，我们将在\ref{sec:greedy_layer_wise_unsupervised_pretraining}中更详细地描述。
+\ENNAME{Geoffrey Hinton}表明名为\gls{DBN}的\gls{NN}可以使用一种称为贪婪逐层训练的策略进行有效地训练\citep{Hinton06}，我们将在\secref{sec:greedy_layer_wise_unsupervised_pretraining}中更详细地描述。
 CIFAR附属的其他研究小组很快表明，同样的策略可以被用来训练许多其他类型的深度网络\citep{Bengio+Lecun-chapter2007-small,ranzato-07}，并能系统地帮助提高在测试样例上的泛化能力。
 \gls{NN}研究的这一次浪潮普及了``\gls{DL}''这一术语的使用，强调研究人员现在可以训练以前不可能训练的更深的神经网络，并把注意力集中于深度的理论意义\citep{Bengio+Lecun-chapter2007,Delalleau+Bengio-2011-small,Pascanu-et-al-ICLR2014,Montufar-et-al-NIPS2014}。
 此时，深度\gls{NN}已经优于与之竞争的基于其他\gls{ML}技术以及手工设计函数的\glssymbol{AI}系统。
@@ -414,7 +414,7 @@ CIFAR附属的其他研究小组很快表明，同样的策略可以被用来训
 幸运的是，随着训练数据的增加，所需的技巧正在减少。
 目前在复杂的任务达到与人类表现的学习算法，与20世纪80年代努力解决的玩具问题(toy problem)的学习算法几乎是一样的，尽管这些算法训练的模型经历了变革，简化了极深架构的训练。
 最重要的新进展是现在我们有了这些算法成功训练所需的资源。
-图\ref{fig:chap1_dataset_size_color}展示了基准数据集的大小如何随着时间的推移显着增加。
+\figref{fig:chap1_dataset_size_color}展示了基准数据集的大小如何随着时间的推移显着增加。
 这种趋势是由社会日益数字化驱动的。
 由于我们的活动越来越多发生在计算机上，我们做什么也越来越多地被记录。
 我们的计算机越来越多地联网在一起，变得更容易集中管理这些记录，并将它们整理成适于\gls{ML}应用的数据集。
@@ -450,7 +450,7 @@ CIFAR附属的其他研究小组很快表明，同样的策略可以被用来训
 单独神经元或小集合的神经元不是特别有用。
 
 生物神经元没有连接的特别密集。
-如图\ref{fig:chap1_number_of_synapses_color}所示，几十年来，我们的\gls{ML}模型中每个神经元的连接数量甚至与哺乳动物大脑的在同一数量级。
+如\figref{fig:chap1_number_of_synapses_color}所示，几十年来，我们的\gls{ML}模型中每个神经元的连接数量甚至与哺乳动物大脑的在同一数量级。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -461,7 +461,7 @@ CIFAR附属的其他研究小组很快表明，同样的策略可以被用来训
 \label{fig:chap1_number_of_synapses_color}
 \end{figure}
 
-如图\ref{fig:chap1_number_of_neurons_color}所示，就神经元的总数目而言，直到最近\gls{NN}都是惊人的少。
+如\figref{fig:chap1_number_of_neurons_color}所示，就神经元的总数目而言，直到最近\gls{NN}都是惊人的少。
 自从引入\gls{hidden_unit}以来，人工\gls{NN}的规模大约每2.4年扩大一倍。
 这种增长是由更大内存、更快的计算机和更大的可用数据集驱动的。
 较大的网络能够在更复杂的任务中实现更高的精度。
@@ -482,7 +482,7 @@ CIFAR附属的其他研究小组很快表明，同样的策略可以被用来训
 现在回想起来，比一个水蛭的神经元还少的\gls{NN}不能解决复杂的\gls{AI}问题是不足为奇的。
 即使是现在从一个计算系统角度来看可能相当大的网络， 实际上比相对原始的脊椎动物如青蛙的神经系统更小。
 
-由于有更快的CPU、通用GPU的到来（在\ref{sec:gpu_implementations}节中讨论）、更快的网络连接和更好的分布式计算的软件基础设施，模型的规模随着时间的推移不断增加是\gls{DL}历史中最重要的趋势之一。
+由于有更快的CPU、通用GPU的到来（在\secref{sec:gpu_implementations}中讨论）、更快的网络连接和更好的分布式计算的软件基础设施，模型的规模随着时间的推移不断增加是\gls{DL}历史中最重要的趋势之一。
 普遍预计这种趋势将很好地持续到未来。
 
 % -- 21 --
@@ -500,7 +500,7 @@ CIFAR附属的其他研究小组很快表明，同样的策略可以被用来训
 对象识别中最大的比赛是每年举行的ImageNet大型视觉识别挑战（ILSVRC）。
 <BAD>\gls{DL}迅速崛起的一个戏剧性的时刻是卷积网络第一次大幅赢得这一挑战，将最高水准的前5错误率从\NUMTEXT{26.1\%}降到\NUMTEXT{15.3\%}\citep{Krizhevsky-2012}，这意味着该卷积网络产生针对每个图像的可能类别的分级列表，尽管\NUMTEXT{15.3\%}的测试样例的正确类别不会出现在此列表中的前5。
 
-此后，深度卷积网络一直能在这些比赛中取胜，截至写书时，\gls{DL}的进步将这个比赛中的前5错误率降到\NUMTEXT{3.6％}， 如图\ref{fig:chap1_imagenet_color}所示。
+此后，深度卷积网络一直能在这些比赛中取胜，截至写书时，\gls{DL}的进步将这个比赛中的前5错误率降到\NUMTEXT{3.6％}， 如\figref{fig:chap1_imagenet_color}所示。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -516,7 +516,7 @@ CIFAR附属的其他研究小组很快表明，同样的策略可以被用来训
 \gls{DL}也对语音识别产生了巨大影响。
 语音识别在20世纪90年代提高后，直到约2000年都停滞不前。
 \gls{DL}的引入\citep{dahl2010phonerec,Deng-2010,Seide2011,Hinton-et-al-2012}导致语音识别错误率的陡然下降，有些错误率甚至降低了一半。 
-我们将在\ref{sec:speech_recognition}节更详细地探讨这个历史。
+我们将在\secref{sec:speech_recognition}更详细地探讨这个历史。
 
 深度网络在行人检测和图像分割中也有引人注目的成功\citep{sermanet-cvpr-13,Farabet-et-al-2013,couprie-iclr-13}，在交通标志分类上取得了超越人类的表现\citep{Ciresan-et-al-2012}。
 
