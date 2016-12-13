@@ -38,9 +38,11 @@
  - @huangpingchun ==> Chapter5 not completely formal or distinct concepts, VC维，imputation of missing data 翻译建议
  - @tielei ==> Chapter9 "full convolution"；翻译建议；"tiling range"
 
- 2016年12月12日
-------------
+
+2016年12月12日
+-------------
  - @fairmiracle ==> Chapter6 公式错误
+
 
 2016年12月13日
 -------------
