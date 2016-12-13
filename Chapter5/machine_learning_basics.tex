@@ -1791,17 +1791,17 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 总的来说，区分输入空间中$O(k)$个区间，所有的这些方法需要$O(k)$个\gls{example:chap5}。
 通常会有$O(k)$个参数，$O(1)$参数对应于$O(k)$区间之一。
-最近邻中，每个训练\gls{example:chap5}至多用于定义一个区间，如\figref{fig:chap5_empty10}所示。
+最近邻中，每个训练\gls{example:chap5}至多用于定义一个区间，如\figref{fig:chap5_non_distributed}所示。
 
 
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter5/figures/empty10}}
+\centerline{\includegraphics{Chapter5/figures/non_distributed}}
 \fi
 \caption{TODO}
-\label{fig:chap5_empty10}
+\label{fig:chap5_non_distributed}
 \end{figure}
 
 
@@ -1854,7 +1854,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 尽管术语“流形”有正式的数学定义，\gls{ML}倾向于更松散地定义一组点，使其只需要考虑少数嵌入在高维空间中的自由度或维数就能很好地近似。
 每一维都对应着局部的变动方向。
-如\figref{fig:chap5_empty11}所示，训练数据位于二维空间中的一维流形中。
+如\figref{fig:chap5_one_dim_manifold_and_data}所示，训练数据位于二维空间中的一维流形中。
 在\gls{ML}中，我们允许流形的维数从一个点到另一个点有所变化。
 这经常发生于流形和自身相交的情况。
 例如，数字“8”形状的流形在大多数位置只有一维，但在中心的相交处有两维。
@@ -1863,10 +1863,10 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter5/figures/empty11}}
+\centerline{\includegraphics{Chapter5/figures/one_dim_manifold_and_data_color}}
 \fi
 \caption{TODO}
-\label{fig:chap5_empty11}
+\label{fig:chap5_one_dim_manifold_and_data}
 \end{figure}
 
 如果我们希望\gls{ML}算法学习$\SetR^n$上的所有感兴趣的函数时，很多\gls{ML}问题
@@ -1917,7 +1917,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 我们用一维道路中的地址号码去明确地址，而非三维空间中的坐标。
 提取这些流形中的坐标是非常具有挑战性的，但是很有希望改进很多\gls{ML}算法。
 这个一般性原则用于很多情况下。
-\figref{fig:chap5_empty13}展示了包含脸的\gls{dataset}的流形结构。
+\figref{fig:chap5_QMUL-facedataset}展示了包含脸的\gls{dataset}的流形结构。
 在本书的最后，我们会介绍一些学习这样的流形结构的必备方法。
 在图20.6中，我们将看到\gls{ML}算法如何能成功地完成这个\gls{target}。
 
@@ -1925,10 +1925,10 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter5/figures/empty13}}
+\centerline{\includegraphics{Chapter5/figures/QMUL-facedataset}}
 \fi
 \caption{TODO}
-\label{fig:chap5_empty13}
+\label{fig:chap5_QMUL-facedataset}
 \end{figure}
 
 第一部分介绍了数学和\gls{ML}中的基本概念，这将用于本书其他章节中。
