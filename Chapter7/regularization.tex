@@ -150,7 +150,7 @@
 \end{align}
 我们可以看到\gls{weight_decay}的效果是沿着由$\MH$的特征向量所定义的轴缩放$\Vw^*$。
 具体来说，与$\MH$第$i$个特征向量对齐的$\Vw^*$的分量根据$\frac{\lambda_i}{\lambda_i + \alpha}$因子缩放。
-（不妨查看|||c|||回顾这种缩放的原理）。
+（不妨查看\figref{fig:chap2_eigen_ellipse}回顾这种缩放的原理）。
 
 沿着$\MH$特征值较大的方向(如$\lambda_i \gg \alpha$)\gls{regularization}的影响较小。
 而$\lambda_i \ll \alpha$的分量将会被缩小到几乎为零。
@@ -278,7 +278,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 在\secref{sec:maximum_a_posteriori_map_estimation}，我们看到许多\gls{regularization}策略可以被解释为\glssymbol{MAP}贝叶斯推断，
  特别是$L^2$\gls{regularization}相当于权重是高斯先验的\glssymbol{MAP}贝叶斯推断。
  对于$L^1$\gls{regularization}，
-用于\gls{regularization}一个\gls{cost_function}的惩罚项$\alpha \Omega(\Vw) =  \alpha \sum_i |w_i |$与先验是各向同性拉普拉斯分布|||c|||($\Vw \in \SetR^n$)的\glssymbol{MAP}贝叶斯推断的最大化对数先验项是等价的：
+用于\gls{regularization}一个\gls{cost_function}的惩罚项$\alpha \Omega(\Vw) =  \alpha \sum_i |w_i |$与先验是各向同性拉普拉斯分布（\eqnref{eq:chap3_laplace}）($\Vw \in \SetR^n$)的\glssymbol{MAP}贝叶斯推断的最大化对数先验项是等价的：
 \begin{align}
 \log p(\Vw) = \sum_i \log \text{Laplace}(w_i;0,\frac{1}{\alpha}) = 
   -\alpha \norm{\Vw}_1 + n \log \alpha - n \log 2.
@@ -551,7 +551,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \section{\glsentrytext{early_stopping}}
 \label{sec:early_stopping}
 当训练有足够的表示能力甚至会过度拟合的大模型时，我们经常观察到，训练误差会随着时间的推移逐渐降低但验证集的误差会再次上升。
-图|||c|||是这些现象的一个例子，这种现象几乎一定会出现。
+\figref{fig:chap7_learning_curve}是这些现象的一个例子，这种现象几乎一定会出现。
 
 这意味着我们可以返回使验证集误差最低的参数设置来获得更好的模型（因此，有希望获得更好的测试误差）。
 在每次验证集误差有所改善后，我们存储模型参数的副本。
@@ -572,13 +572,13 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \centerline{\includegraphics{Chapter7/figures/learning_curve_color}}
 \fi
 \caption{TODO}
-\label{fig:chap7_learning_curve_color}
+\label{fig:chap7_learning_curve}
 \end{figure}
 
 我们可以认为\gls{early_stopping}是非常高效的超参数选择算法。
 按照这种观点，训练步数仅是另一个超参数。
-我们从\figref{fig:chap7_learning_curve_color}可以看到的，这个超参数在验证集上的具有U形性能曲线。
-很多控制模型容量的超参数在验证集上都是这样的U型性能曲线，如图|||c|||。
+我们从\figref{fig:chap7_learning_curve}可以看到的，这个超参数在验证集上的具有U形性能曲线。
+很多控制模型容量的超参数在验证集上都是这样的U型性能曲线，如\figref{fig:chap7_learning_curve}。
 在\gls{early_stopping}的情况下，我们通过拟合训练集的步数来控制模型的有效容量。
 大多数超参数的选择必须使用昂贵的猜测和检查过程，我们需要在训练开始时猜测一个超参数，然后运行几个步骤检查它的训练效果。
 ``训练时间''唯一只要跑一次训练就能尝试很多值的超参数。
@@ -885,7 +885,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 最近一个突出的例子是\ENNAME{Netflix Grand Prize}\citep{Koren09}。
 
 不是所有构建\gls{ensemble}的技术都是为了让\gls{ensemble}模型比单一模型更加\gls{regularization}。
-例如，一种被称为\firstgls{boosting}的技术\citep{ConfLT:Freund:gametheorie,ConfLT:Freund:gametheorie}构建比单一模型容量更高\gls{ensemble}模型。
+例如，一种被称为\firstgls{boosting}的技术\citep{ConfLT:Freund:gametheorie,ConfML:Freund:AdaBoostCompar}构建比单一模型容量更高\gls{ensemble}模型。
 向\gls{ensemble}逐步添加\gls{NN},\gls{boosting}已经应用于构建神经网络的\gls{ensemble}\citep{Schwenk-nips10}。
 \gls{boosting}也可以将单个神经网络解释为单个\gls{ensemble}，即通过逐渐增加\gls{NN}的\gls{hidden_unit}。
 
@@ -997,7 +997,7 @@ p_{\text{ensemble}}(y \mid \Vx)  = \frac{\tilde{p}_{\text{ensemble}}(y \mid \Vx)
 该模型具有所有单元，但单元$i$输出的权重乘以包括单元$i$的概率。
 这个修改的动机是捕获从该单元输出的正确期望值。
 我们把这种方法称为\firstgls{weight_scaling_inference_rule}。
-目前还没有在深度非线性网络上对这种近似推理规则的准确性作任何理论上的说法，但经验上表现得很好。
+目前还没有在深度非线性网络上对这种近似推断规则的准确性作任何理论上的说法，但经验上表现得很好。
 
  % -- 255 --
  
