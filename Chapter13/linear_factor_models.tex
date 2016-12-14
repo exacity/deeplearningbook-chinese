@@ -42,7 +42,7 @@
 \Vx = \MW \Vh + \Vb + \text{noise}
 \end{align}
 其中噪声通常是对角化的（在维度上是独立的）且服从高斯分布。
-在图\ref{fig:linear_factors}有具体说明。
+在\figref{fig:linear_factors}有具体说明。
 % 480
 
 \begin{figure}[!htb]
@@ -60,7 +60,7 @@
 \label{sec:probabilistic_PCA_and_factor_analysis}
 % 480
 
-\firstgls{PPCA}，\gls{FA}和其他\gls{linear_factor}是上述等式（\eqref{eqn:131},\eqref{eqn:132}）的特殊情况，并且仅在对观测到$\Vx$之前的噪声分布和隐变量$\Vh$的先验的选择上不同。
+\firstgls{PPCA}，\gls{FA}和其他\gls{linear_factor}是上述等式（\eqnref{eqn:131},\eqnref{eqn:132}）的特殊情况，并且仅在对观测到$\Vx$之前的噪声分布和隐变量$\Vh$的先验的选择上不同。
 % 480
 
 \firstgls{FA}\citep{Bartholomew-1987,Basilevsky94}中，隐变量的先验是一个方差为单位矩阵的高斯分布
@@ -117,7 +117,7 @@
 
 \firstall{ICA}是最古老的表示学习之一算法\citep{Herault+Ans-1984,Jutten+Herault-91,Comon94,Hyvarinen-1999,Hyvarinen-2001,Hinton-ICA-2001,Teh-2003}。
 它是一种建模线性因子的方法，旨在分离观察到的信号，并转换为许多基础信号的叠加。
-这些信号是完全独立的，而不是仅仅彼此不相关\footnote{\ref{sec:expectation_variance_and_covariance}节讨论了不相关变量和独立变量之间的差异。}。
+这些信号是完全独立的，而不是仅仅彼此不相关\footnote{\secref{sec:expectation_variance_and_covariance}讨论了不相关变量和独立变量之间的差异。}。
 % 481
 
 
@@ -125,7 +125,7 @@
 与我们本书中描述的其他的\gls{generative_model}最相似的\gls{ICA}变种是训练完全参数化的\gls{generative_model}\citep{Pham-et-al-1992}。
 隐含因子$\Vh$的先验$p(\Vh)$，必须由用户给出并固定。
 接着模型确定性的生成$\Vx = \MW \Vh$。
-我们可以通过非线性变化（使用公式\eqref{eqn:3.47}）来确定$p(\Vx)$。
+我们可以通过非线性变化（使用\eqnref{eqn:3.47}）来确定$p(\Vx)$。
 然后通过一般的方法比如\gls{MLE}进行学习。
 % 482 head
 
@@ -146,7 +146,7 @@
 一些版本在$\Vx$的生成中添加一些噪声，而不是使用确定性的\gls{decoder}。
 大多数不使用\gls{MLE}准则，而是旨在使$\Vh = \MW^{-1}\Vx$的元素彼此独立。
 许多准则能够达成这个目标。
-方程\eqref{eqn:3.47}需要用到$\MW$的行列式，这可能是昂贵且数值不稳定的操作。
+\eqnref{eqn:3.47}需要用到$\MW$的行列式，这可能是昂贵且数值不稳定的操作。
 \gls{ICA}的一些变种通过将$\MW$约束为正交来避免这个有问题的操作。
 % 482
 
@@ -170,7 +170,7 @@
 % 483 head
 
 
-正如\glssymbol{PCA}可以推广到第\ref{chap:autoencoders}章中描述的非线性\gls{AE}，\gls{ICA}可以推广到非线性\gls{generative_model}，其中我们使用非线性函数$f$来生成观测数据。
+正如\glssymbol{PCA}可以推广到\chapref{chap:autoencoders}中描述的非线性\gls{AE}，\gls{ICA}可以推广到非线性\gls{generative_model}，其中我们使用非线性函数$f$来生成观测数据。
 关于非线性\gls{ICA}最初的工作可以参考\citet{hyvarinen1999nonlinear}，它和\gls{ensemble_learning}的成功结合可以参见\citet{roberts2001independent,lappalainen2000nonlinear}。
 \gls{ICA}的另一个非线性扩展是\firstall{NICE}方法\citep{Dinh-et-al-arxiv2014}，这个方法堆叠了一系列可逆变换（\gls{encoder}），从而能够高效的计算每个变换的雅可比行列式。
 这使得我们能够精确地计算似然，并且像\gls{ICA}一样，\glssymbol{NICE}尝试将数据变换到具有可分解的边缘分布的空间。
@@ -300,7 +300,7 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 严格地说，术语``\gls{sparse_coding}''是指在该模型中推断$\Vh$的值的过程，而``稀疏建模''是指设计和学习模型的过程，但是通常这两个概念都可以用术语``\gls{sparse_coding}''描述。
 % 486
 
-像其它的\gls{linear_factor}一样，它使用了线性的\gls{decoder}加上噪音的方式获得一个$\Vx$的重构，就像公式~\eqref{eqn:132}描述的一样。
+像其它的\gls{linear_factor}一样，它使用了线性的\gls{decoder}加上噪音的方式获得一个$\Vx$的重构，就像\eqnref{eqn:132}描述的一样。
 更具体的说，\gls{sparse_coding}模型通常假设线性因子有一个各向同性的精度为$\beta$的高斯噪音：
 \begin{align}
 \label{eqn:1312}
@@ -326,7 +326,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 
 使用\gls{MLE}的方法来训练\gls{sparse_coding}模型是不可行的。
 相反，训练在编码数据和训练\gls{decoder}之间交替，以在给定编码的情况下更好地重建数据。
-稍后在\ref{sec:map_inference_and_sparse_coding}节中，这种方法将被进一步证明为解决似然最大化问题的一种通用的近似方法。
+稍后在\secref{sec:map_inference_and_sparse_coding}中，这种方法将被进一步证明为解决似然最大化问题的一种通用的近似方法。
 % 487
 
 对于诸如\glssymbol{PCA}的模型，我们已经看到使用了预测$\Vh$的参数化的\gls{encoder}函数，并且该函数仅包括乘以权重矩阵。
@@ -339,7 +339,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 487
 
 
-结合方程~\eqref{eqn:1313}和~\eqref{eqn:1312}，我们得到如下的优化问题：
+结合\eqnref{eqn:1313}和\eqnref{eqn:1312}，我们得到如下的优化问题：
 \begin{align}
 \label{eqn:1316}
 & \underset{\Vh}{\arg\max}\  p(\Vh\vert\Vx) \\
@@ -349,7 +349,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 其中，我们扔掉了与$\Vh$无关的项，除以一个正的伸缩因子来简化表达。
 % 487
 
-由于在$\Vh$上施加$L^1$范数，这个过程将产生稀疏的$\Vh^*$（见\ref{sec:l1_regularization}节）。
+由于在$\Vh$上施加$L^1$范数，这个过程将产生稀疏的$\Vh^*$（\secref{sec:l1_regularization}）。
 % 487
 
 为了训练模型而不仅仅是进行推理，我们交替迭代关于$\Vh$和$\MW$的最小化过程。
@@ -385,12 +385,12 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 
 
 非参数\gls{encoder}的主要缺点是在给定$\Vx$的情况下需要大量的时间来计算$\Vh$，因为非参数方法需要运行迭代算法。
-在第\ref{chap:autoencoders}章中讲到的参数化的\gls{AE}方法仅使用固定数量的层，通常只有一层。
+在\chapref{chap:autoencoders}中讲到的参数化的\gls{AE}方法仅使用固定数量的层，通常只有一层。
 另一个缺点是它不直接通过非参数\gls{encoder}进行反向传播，这使得我们很难采用先使用无监督方式预训练\gls{sparse_coding}模型然后使用有监督方式对其进行微调的方法。
 允许近似导数的\gls{sparse_coding}模型的修改版本确实存在但未被广泛使用\citep{Bradley+Bagnell-2009-small}。
 % 488  end
 
-像其他\gls{linear_factor}一样，\gls{sparse_coding}经常产生糟糕的样本，如图\ref{fig:s3c_samples}所示。
+像其他\gls{linear_factor}一样，\gls{sparse_coding}经常产生糟糕的样本，如\figref{fig:s3c_samples}所示。
 即使当模型能够很好地重构数据并为分类器提供有用的特征时，也会发生这种情况。
 这种现象原因是每个单独的特征可以很好地被学习到，但是隐含结点可分解的先验会导致模型包括每个生成的样本中的所有特征的随机子集。
  the factorial prior on the hidden code results in the model including random subsets of all of the features in each generated sample.
@@ -417,12 +417,20 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 
 \gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以被解释为学习一个\gls{manifold}\citep{hinton97modelling}。
 我们可以将\gls{PPCA}定义为高概率的薄饼状区域，即高斯分布，沿着某些轴非常窄，就像薄饼沿着其垂直轴非常平坦，但沿着其他轴是细长的，正如薄饼在其水平轴方向是很宽的一样。
-图|||c|||解释了这种现象。
+\figref{fig:PPCA_pancake}解释了这种现象。
 \glssymbol{PCA}可以理解为将该薄饼与更高维空间中的线性\gls{manifold}对准。
 这种解释不仅适用于传统\glssymbol{PCA}，而且适用于学习矩阵$\MW$和$\MV$的任何线性\gls{AE}，其目的是使重构的$\Vx$尽可能接近于原始的$\Vx$。
 % 489 end
 
-
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter13/figures/PPCA_pancake_color}}
+\fi
+	\caption{TODO}
+    \label{fig:PPCA_pancake}
+\end{figure}
 
 
 \gls{encoder}表示为

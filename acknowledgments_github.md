@@ -20,6 +20,7 @@
  - @oisc ==>  Chapter2 公式2.83 2.84有误 是arg max
 
 
+
 2016年12月9日
 ------------
  - @fairmiracle ==> Chapter4 公式，语句，详见[issue](https://github.com/exacity/deeplearningbook-chinese/issues/3#issuecomment-265854595).
@@ -27,9 +28,10 @@
  - @tielei ==> Chapter9 equivariance
  - @yuduowu ==> contact issue
  - @minoriwww ==> Chapter2 "排布"==>"排列"
- - @khty2000 ==> Chapter2 "X_{-S}"问题，矩阵横列错误
+ - @khty2000 ==> Chapter2 "X{-S}"问题，矩阵横列错误
  - @Qingmu ==> 用WinEdit打开文件问题
  - @tielei ==> Chapter9 公式的index问题
+
 
 
 2016年12月10日
@@ -38,18 +40,23 @@
  - @huangpingchun ==> Chapter5 not completely formal or distinct concepts, VC维，imputation of missing data 翻译建议
  - @tielei ==> Chapter9 "full convolution"；翻译建议；"tiling range"
 
+
+
+2016年12月12日
+-------------
+ - @fairmiracle ==> Chapter6 公式错误
+ - @huangpingchun ==> Chapter7 "模型平均"重复
+
+
+
 2016年12月13日
 -------------
  - @huangpingchun ==> inference的统一翻译 
+ - @HC-2016 ==> Chapter6 单位阵还是对角阵问题，详见[issue](https://github.com/exacity/deeplearningbook-chinese/issues/19#issuecomment-266683442).
+ - @xiaomingabc ==> Chapter1 病句问题
+
+
 
 2016年12月14日
--------------
- - @huangpingchun ==> representation learning，"表示学习"==>"表征学习"
-
-
-
-2016年12月13日
--------------
- - @huangpingchun ==> inference的统一翻译 
-
-
+--------------
+ - @fairmiracle ==> Chapter7 \norm 括号打错

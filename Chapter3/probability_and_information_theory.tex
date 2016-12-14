@@ -219,6 +219,7 @@ P(\RSy = y\mid \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)}
 任何多维\gls{RV}的\gls{joint_probability_distribution}，都可以分解成只有一个变量的\gls{conditional_probability}相乘的形式：
 \begin{equation}
 P(\RSx^{(1)}, \ldots, \RSx^{(n)}) = P(\RSx^{(1)}) \Pi_{i=2}^n P(\RSx^{(i)} \mid \RSx^{(1)}, \ldots, \RSx^{(i-1)})
+\label{eq:chap3_chain_rule}
 \end{equation}
 
 % -- 57 --
@@ -429,6 +430,7 @@ p(x; \lambda) = \lambda \bm{1}_{x\ge 0} \exp(-\lambda x).
 
 一个非常相关的\gls{PD}是\firstgls{laplace_distribution}，它允许我们在任意一点$\mu$处设置\gls{PD}的峰值
 \begin{equation}
+\label{eq:chap3_laplace}
 \text{Laplace}(x; \mu, \gamma) = \frac{1}{2\gamma} \exp \left( -\frac{|x-\mu|}{\gamma}  \right).
 \end{equation}
 
