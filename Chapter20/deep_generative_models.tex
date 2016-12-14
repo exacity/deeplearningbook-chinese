@@ -925,7 +925,7 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 
 在实践中使用的大多数\gls{BM}在其\gls{energy_function}中仅具有二阶相互作用，意味着它们的\gls{energy_function}是许多项的和，并且每个单独项仅包括两个随机变量之间的乘积。
 这种项的一个例子是$v_iW_{i,j}h_j$。
-我们还可以训练高阶\gls{BM}\citep{sejnowski1986higher} ，其中\gls{energy_function}项涉及许多变量的乘积。
+我们还可以训练高阶\gls{BM}\citep{sejnowski1987higher} ，其中\gls{energy_function}项涉及许多变量的乘积。
 \gls{hidden_unit}和两个不同图像之间的三向交互可以建模从一个视频帧到下一个帧的空间变换 \citep{Memisevic+Hinton-2007,Memisevic+Hinton-2010}。
 通过\gls{one_hot}类别变量的乘法可以根据存在哪个类来改变可见单元和\gls{hidden_unit}之间的关系\citep{Nair2009}。
 使用高阶交互的一个最近的示例是具有两组\gls{hidden_unit}的\gls{BM}，一组同时与可见单元$\Vv$和类别标签$y$交互，另一组仅与输入值$\Vv$交互\citep{luo2011learning}。 % ?
@@ -1168,7 +1168,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 
 我们可以认为$g$提供了变量的非线性变化，将$\RVz$上的分布变换成$\RVx$上想要的分布。
 
-回想\eqnref{eq:3.47}，对于可求反的、可微的、连续的$g$，
+回想\eqnref{eqn:3.47}，对于可求反的、可微的、连续的$g$，
 \begin{align}
  p_z(\Vz) = p_x(g(\Vz)) \Big | \det (\frac{\partial g}{\partial \Vz}) \Big |.
 \end{align}
@@ -1367,7 +1367,7 @@ $v$的默认选择为
 
 % -- 691 --
 
-在实际的实验中，\glssymbol{GAN}博弈的最佳表现形式既不是零和也不等价于最大似然，而是\citet{Goodfellow-et-al-NIPS2013-small}引入的带有启发式动机的不同形式化。
+在实际的实验中，\glssymbol{GAN}博弈的最佳表现形式既不是零和也不等价于最大似然，而是\citet{Goodfellow-et-al-NIPS2014-small}引入的带有启发式动机的不同形式化。
 在这种最佳性能的形式中，生成器旨在增加判别器发生错误的对数概率，而不是旨在降低判别器进行正确预测的对数概率。
 这种重述仅仅是观察的结果，即使在判别器确信地拒绝所有生成器样本的情况下，它也能导致生成器代价函数的导数相对于判别器的对数保持很大。
 
