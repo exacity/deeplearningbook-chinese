@@ -19,12 +19,12 @@
 
 
 在本章中，我们介绍了几个基本的技巧，用来解决难以处理的推断问题。
-稍后，在第\ref{chap:deep_generative_models}章中，我们还将描述如何将这些技巧应用到训练其他方法难以奏效的概率模型中，如\gls{DBN}，\gls{DBM}。
+稍后，在\chapref{chap:deep_generative_models}中，我们还将描述如何将这些技巧应用到训练其他方法难以奏效的概率模型中，如\gls{DBN}，\gls{DBM}。
 % 623
 
 
 在\gls{DL}中难以处理的推断问题通常源于\gls{structured_probabilistic_models}中的隐含变量之间的相互作用。
-详见图\ref{fig:intractable_graphs}的几个例子。
+详见\figref{fig:intractable_graphs}的几个例子。
 这些相互作用可能是\gls{undirected_model}的直接作用，也可能是\gls{directed_model}中的一个可见变量的共同祖先之间的\gls{explaining_away}作用。
 % 623 end
 
@@ -189,7 +189,7 @@
 
 
 
-我们回过头来看看\ref{sec:inference_as_optimization}节中所描述的精确推断，它指的是关于一个不受限的$q$分布使用精确的优化算法来最大化
+我们回过头来看看\secref{sec:inference_as_optimization}中所描述的精确推断，它指的是关于一个不受限的$q$分布使用精确的优化算法来最大化
 \begin{align}
 \CalL(\Vv,{\Vtheta},q)
  = \SetE_{\Vh\sim q}[\log q(\Vh , \Vv)] + H(q).
@@ -227,7 +227,7 @@ q(\Vh\vert\Vv) = \delta(\Vh - {\Vmu})
 % 628
 
 
-我们回过头来看\ref{sec:sparse_coding}节中的\gls{sparse_coding}，\gls{sparse_coding}是一种在隐含节点上加上了鼓励稀疏的先验知识的\gls{linear_factor}。
+我们回过头来看\secref{sec:sparse_coding}中的\gls{sparse_coding}，\gls{sparse_coding}是一种在隐含节点上加上了鼓励稀疏的先验知识的\gls{linear_factor}。
 一个常用的选择是可分解的拉普拉斯先验，表示为
 \begin{align}
 	p(h_i) = \frac{\lambda}{2} \exp(-\lambda\vert h_i\vert)
@@ -318,7 +318,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 在这种情况下，我们要用$q$来拟合$p$。
 然而，我们并不是直接拟合一个近似，而是处理一个\gls{KL}的问题。
 当我们使用\gls{MLE}来将数据拟合到模型的时候，我们最小化$D_{\text{KL}}(p_{\text{data}\Vert p_{\text{model}}})$。
-如同图\ref{fig:chap3_kl_direction_color}中所示，这意味着\gls{MLE}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
+如同\figref{fig:chap3_kl_direction_color}中所示，这意味着\gls{MLE}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
 这两种方法都有各自的优点与缺点。
 选择哪一种方法取决于在具体应用中哪一种性质更受偏好。
 在基于优化的推断问题中，从计算角度考虑，我们选择使用$D_{\text{KL}}(q(\Vh\vert\Vv)\Vert p(\Vh\vert\Vv))$。
@@ -361,7 +361,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 为了具体化这些描述，我们接下来会讲如何将变分推断应用到\firstgls{binary_sparse_coding}模型（这里我们所描述的模型是\citet{henniges2010binary}提出的，但是我们采用了传统的通用的\gls{mean_field}方法，而原文作者采用了一种特殊设计的算法）中。
 推导过程在数学上非常详细，为希望完全了解变分推断细节的读者所准备。
 而对于并不计划推导或者实现变分学习算法的读者来说，可以完全跳过，直接阅读下一节，这并不会导致重要概念的遗漏。
-那些从事过\gls{binary_sparse_coding}研究的读者可以重新看一下\ref{sec:useful_properties_of_common_functions}节中的一些经常在概率模型中出现的有用的函数性质。
+那些从事过\gls{binary_sparse_coding}研究的读者可以重新看一下\secref{sec:useful_properties_of_common_functions}中的一些经常在概率模型中出现的有用的函数性质。
 我们在推导过程中随意的使用了这些性质，并没有特别强调它们。
 % 632  head
 
@@ -393,7 +393,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 这需要计算$p(\Vh\vert\Vv)$下的期望。
 不幸的是，$p(\Vh\vert\Vv)$是一个很复杂的分布。
-$p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构参见\ref{fig:bsc}。
+$p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 隐含节点的后验分布对应的是完全图，所以相对于暴力算法，消元算法并不能有助于提高计算所需要的期望的效率。
 % 633 head
 
@@ -521,18 +521,18 @@ $p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构参见\ref{fig:bsc}。
 具体的说，\gls{mean_field}\gls{fixed_point_equation}定义了一个\gls{RNN}。
 这个神经网络的任务就是完成推断。
 我们已经从模型描述角度介绍了如何推导这个网络，但是直接训练这个推断网络也是可行的。
-有关这种思路的一些想法在第\ref{chap:deep_generative_models}章中有所描述。
+有关这种思路的一些想法在\chapref{chap:deep_generative_models}中有所描述。
 % 636  head 
 
 <bad>
-在\gls{binary_sparse_coding}模型中，我们可以发现方程~\eqref{eqn:1944}中描述的循环网络包含了根据相邻的变化着的隐藏层结点值来反复更新当前隐藏层结点的操作。
+在\gls{binary_sparse_coding}模型中，我们可以发现\eqnref{eqn:1944}中描述的循环网络包含了根据相邻的变化着的隐藏层结点值来反复更新当前隐藏层结点的操作。
 输入层通常给隐藏层结点发送一个固定的信息$\Vv^{\top}\beta\MW$，然而隐藏层结点不断地更新互相传送的信息。
 具体的说，当$\hat{h}_i$和$\hat{h}_j$两个单元的权重向量对准时，他们会产生相互抑制。
 这也是一种形式的竞争－－－两个共同理解输入的隐层结点之间，只有一个解释的更好的才能继续保持活跃。
 在\gls{binary_sparse_coding}的后杨分布中，\gls{mean_field}近似为了捕获到更多的\gls{explaining_away}作用，产生了这种竞争。
 事实上，\gls{explaining_away}效应会导致一个多峰值的后验分布，所以我们如果从后验分布中采样，一些样本只有一个结点是活跃的，其它的样本在其它的结点活跃，只有很少的样本能够所有的结点都处于活跃状态。
 不幸的是，\gls{explaining_away}作用无法通过\gls{mean_field}中可分解的$q$分布来建模，因此建模时\gls{mean_field}近似只能选择一个峰值。
-这个现象的一个例子可以参考图~\ref{fig:chap3_kl_direction_color}。
+这个现象的一个例子可以参考\figref{fig:chap3_kl_direction_color}。
 % 636
 
 
@@ -843,7 +843,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 % 643
 
 
-<bad>在\ref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}节中，我们看到睡眠在人类和动物中的作用的一个可能的解释是，梦想可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}的对数\gls{partition_function}的负梯度的负相位样本。
+<bad>在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中，我们看到睡眠在人类和动物中的作用的一个可能的解释是，梦想可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}的对数\gls{partition_function}的负梯度的负相位样本。
 生物作梦的另一个可能的解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推理网络在给定$\Vv$的情况下预测$\Vh$。
 在某些意义上，这种解释比\gls{partition_function}的解释更令人满意。
 如果\gls{monte_carlo}算法仅使用梯度的正相位进行几个步骤，然后仅对梯级的负相位进行几个步骤，那么他们的结果不会很好。
@@ -868,7 +868,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 % 644
 
 
-我们已经在\ref{sec:predictive_sparse_decomposition}节中已经看到，预测性的稀疏分解模型训练浅层的\gls{encoder}网络以预测输入的\gls{sparse_coding}。
+我们已经在\secref{sec:predictive_sparse_decomposition}中已经看到，预测性的稀疏分解模型训练浅层的\gls{encoder}网络以预测输入的\gls{sparse_coding}。
 这可以被看作是\gls{AE}和\gls{sparse_coding}之间的混合。
 为模型设计概率语义是可能的，其中\gls{encoder}可以被视为执行\gls{learned}近似\gls{MAP}推断。
 由于其浅层的\gls{encoder}，PSD不能实现我们在\gls{mean_field}推理中看到的单元之间的那种竞争。
@@ -878,7 +878,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 
 近来\gls{learned}近似推理已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一\citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
 在这种优美的方法中，不需要为推断网络构造显式的目标。
-反之，推断网络被用来定义$\CalL$，然后调整推断网络的参数来增大$\CalL$。这种模型在\ref{sec:variational_autoencoders}节中详细描述。
+反之，推断网络被用来定义$\CalL$，然后调整推断网络的参数来增大$\CalL$。这种模型在\secref{sec:variational_autoencoders}中详细描述。
 % 644
 
 我们可以使用近似推理来训练和使用大量的模型。
