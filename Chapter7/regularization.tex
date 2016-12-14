@@ -807,7 +807,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 其中$\alpha \in [0, \infty]$ 权衡范数惩罚项的相对贡献，越大的$\alpha$对应更多的\gls{regularization}。
 
 正如对参数的$L^1$惩罚诱导参数\gls{sparse}性，对\gls{representation}元素的$L^1$惩罚诱导\gls{sparse}的\gls{representation}：
-$\Omega(\Vh) = \norm(\Vh)_1 = \sum_i |h_i|$。
+$\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 当然$L^1$惩罚是导致\gls{sparse}\gls{representation}的选择之一。
 其他包括从\gls{representation}上\ENNAME{Student} $t$先验导出的惩罚\citep{Olshausen+Field-1996,Bergstra-Phd-2011}和\gls{KL}惩罚\citep{Larochelle+Bengio-2008}有利于表示元素约束于单位区间上。
 <BAD>\cite{HonglakL2008-small}和\cite{Goodfellow2009}都提供了基于平均几个实例激活的\gls{regularization}策略的例子，$\sum_i^m \Vh^{(i)}$，使其接近某些目标值，如每项都是$.01$的向量。
