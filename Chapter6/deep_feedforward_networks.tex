@@ -176,7 +176,7 @@ $f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，�
 先前，为了描述线性回归模型，我们使用权重向量和一个标量的偏置参数来描述一个从输入向量到输出标量的仿射变换。
 现在，因为我们描述的是向量$\bm{x}$到向量$\bm{h}$的仿射变换，所以我们需要一整个向量的偏置参数。
 激活函数$g$通常选择一个对每个元素分别智能作用的函数，有$h_i =g(\bm{x}^\top \bm{W}_{:, i} + c_i)$。
-在现代神经网络中，默认的推荐是使用由激活函数$g(z)=\max\{0, x\}$定义的\firstgls{ReLU}或者称为\glssymbol{ReLU}\citep{Jarrett-ICCV2009-small,Nair-2010-small,Glorot+al-AI-2011-small}，如图\ref{fig:chap6_relu_color}所示。
+在现代神经网络中，默认的推荐是使用由激活函数$g(z)=\max\{0, z\}$定义的\firstgls{ReLU}或者称为\glssymbol{ReLU}\citep{Jarrett-ICCV2009-small,Nair-2010-small,Glorot+al-AI-2011-small}，如图\ref{fig:chap6_relu_color}所示。
 % fig 6.3
 \begin{figure}[!htb]
 \ifOpenSource
@@ -668,7 +668,7 @@ softmax函数因此提供了argmax的``软化''版本。max函数相应的软化
 通过平方运算的梯度可能在零附近消失，这使得学习被平方的参数变得困难。
 无论我们使用的是标准差，方差还是精度，我们必须确保\gls{gaussian_distribution}的协方差矩阵是正定的。
 因为精度矩阵的特征值是协方差矩阵特征值的倒数，所以这等价于确保精度矩阵是正定的。
-如果我们使用对角矩阵，或者是一个常数乘以单位矩阵，那么我们需要对模型输出强加的唯一条件是它的元素都为正。
+如果我们使用对角矩阵，或者是一个常数乘以单位矩阵\footnote{译者注：这里原文是``If we use a diagonal matrix, or a scalar times the diagonal matrix...''即``如果我们使用对角矩阵，或者是一个标量乘以对角矩阵...''，但一个标量乘以对角矩阵和对角矩阵没区别，结合上下文可以看出，这里原作者误把``identity''写成了``diagonal matrix''，因此这里采用``常数乘以单位矩阵''的译法。}，那么我们需要对模型输出强加的唯一条件是它的元素都为正。
 如果我们假设$\bm{a}$是用于确定对角精度的模型的原始激活，那么可以用softplus 函数来获得正的精度向量：$\bm{\beta}=\bm{\zeta}(\bm{a})$。
 这种相同的策略对于方差或标准差同样适用，也适用于常数乘以单位阵的情况。
 

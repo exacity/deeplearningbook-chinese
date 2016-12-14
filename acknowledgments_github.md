@@ -44,6 +44,7 @@
 
 2016年12月12日
 -------------
+ - @fairmiracle ==> Chapter6 公式错误
  - @huangpingchun ==> Chapter7 "模型平均"重复
 
 
@@ -51,6 +52,7 @@
 2016年12月13日
 -------------
  - @huangpingchun ==> inference的统一翻译 
+ - @HC-2016 ==> Chapter6 单位阵还是对角阵问题，详见[issue](https://github.com/exacity/deeplearningbook-chinese/issues/19#issuecomment-266683442).
  - @xiaomingabc ==> Chapter1 病句问题
 
 
