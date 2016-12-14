@@ -23,7 +23,7 @@
 面向的读者
 --------------------
 
-请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.2-alpha/dlbook_cn_v0.2-alpha.pdf)阅读(PDF 12月12日已更新)。
+请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.2-alpha/dlbook_cn_v0.2-alpha.pdf)阅读。
 这一版读起来肯定费劲，我们建议英文好的或者研究者直接读原版。
 这一版面向的读者是英语不好，急于想入门深度学习的同学。或者希望帮忙校对的各路大哥也可以读读，只要不嫌弃。
 
@@ -61,6 +61,14 @@ TODO
 如果我们采用了大家的建议，我们会列在这。具体见[acknowledgments_github.md](https://github.com/exacity/deeplearningbook-chinese/blob/master/acknowledgments_github.md)。
 
 @tttwwy @tankeco @fairmiracle @GageGao @huangpingchun @MaHongP @acgtyrant @yanhuibin315 @Buttonwood @titicacafz @weijy026a @RuiZhang1993 @zymiboxpay @xingkongliang @oisc @tielei @yuduowu @Qingmu @HC-2016 @xiaomingabc
+
+
+
+
+笔记
+---------
+为帮助小白学得轻松一点，希望大家多多贡献笔记，单靠我们估计要大半年才能写出不错的笔记，而且时间不允许。
+笔记见各章文件夹内的`README.md`。
 
 
 
