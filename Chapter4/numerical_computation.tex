@@ -105,7 +105,7 @@ $f(\Sx+\epsilon) \approx f(\Sx) + \epsilon f^\prime(\Sx) $。
 例如，我们知道对于足够小的$\epsilon$来说, $f(\Sx-\epsilon \text{sign}(f^\prime(\Sx)) )$是比$f(\Sx)$小的。
 因此我们可以将$\Sx$往\gls{derivative}的反方向移动一小步来减小$f(\Sx)$。
 这个技术被称为\firstgls{GD}\citep{cauchy1847}。
-图\ref{fig:chap4_gradient_descent_color}展示了一个例子。
+\figref{fig:chap4_gradient_descent_color}展示了一个例子。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -123,7 +123,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 一个\firstgls{local_minimum}意味着这个点的$f(\Sx)$小于所有邻近点，因此不可能通过移动无穷小的步长来减小$f(\Sx)$。
 一个\firstgls{local_maximum}是$f(x)$意味着这个点的$f(\Sx)$大于所有邻近点，因此不可能通过移动无穷小的步长来增大$f(x)$。
 有些\gls{critical_points}既不是最小点也不是最大点。这些点被称为\firstgls{saddle_points}。
-见图\ref{fig:chap4_critical_color}给出的各种临界点的例子。
+见\figref{fig:chap4_critical_color}给出的各种临界点的例子。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -140,7 +140,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 在\gls{DL}的背景下，我们优化的函数可能含有许多不是最优的\gls{local_minimum}，或许多被非常平坦的区域包围的\gls{saddle_points}。
 尤其是当输入是多维的时候，所有这些都将使优化变得困难。
 因此，我们通常寻找$f$非常小的值，但在任何形式意义下并不一定是最小。
-见图\ref{fig:chap4_approx_opt_color}的例子。
+见\figref{fig:chap4_approx_opt_color}的例子。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -217,7 +217,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 如果\gls{second_derivative}是负的，函数曲线向下凹陷(向上凸出)，因此\gls{cost_function}将下降的比$\epsilon$多。
 如果\gls{second_derivative}是正的，函数曲线是向上凹陷(向下凸出)，
 因此\gls{cost_function}将下降的比$\epsilon$少。
-从图\ref{fig:chap4_curvature_color}可以看出不同形式的\gls{curvature}如何影响基于\gls{gradient}的预测值与真实的\gls{cost_function}值的关系。
+从\figref{fig:chap4_curvature_color}可以看出不同形式的\gls{curvature}如何影响基于\gls{gradient}的预测值与真实的\gls{cost_function}值的关系。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -295,7 +295,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 同样的，当\gls{hessian}是负定的（所有特征值都是负的），这个点就是\gls{local_maximum}。
 在多维情况下，实际上可以找到确定该点是否为\gls{saddle_points}的积极迹象（某些情况下）。
 如果\gls{hessian}的特征值中至少一个是正的且至少一个是负的，那么$\Vx$是$f$某个横截面的\gls{local_maximum}，却是另一个横截面的\gls{local_minimum}。
-见图\ref{fig:chap4_saddle_3d_color}中的例子。
+见\figref{fig:chap4_saddle_3d_color}中的例子。
 最后，多维\gls{second_derivative_test}可能像单变量版本那样是不确定的。
 当所有非零特征值是同号的且至少有一个特征值是$0$时，这个检测就是不确定的。
 这是因为单变量的\gls{second_derivative_test}在零特征值对应的横截面上是不确定的。
@@ -317,7 +317,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \gls{poor_conditioning}也导致很难选择合适的步长。
 步长必须足够小，以免冲过最小而向具有较强的正\gls{curvature}方向上升。
 这通常意味着步长太小，以致于在其它较小\gls{curvature}的方向上进展不明显。
-见图\ref{fig:chap4_poor_conditioning_color}的例子。
+见\figref{fig:chap4_poor_conditioning_color}的例子。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -341,11 +341,11 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \begin{align} \label{eq:newtonstep}
  \Vx^* =  \Vx^{(0)} -  \MH(f)(\Vx^{(0)})^{-1}  \nabla_{\Vx} f(\Vx^{(0)}) .
 \end{align}
-当$f$是一个正定二次函数时，\gls{newton_method}只要应用一次式\ref{eq:newtonstep}就能直接跳到函数的最小点。
-如果$f$不是一个真正二次但能在局部近似为正定二次，\gls{newton_method}则需要多次迭代应用式 \ref{eq:newtonstep}。
+当$f$是一个正定二次函数时，\gls{newton_method}只要应用一次\eqnref{eq:newtonstep}就能直接跳到函数的最小点。
+如果$f$不是一个真正二次但能在局部近似为正定二次，\gls{newton_method}则需要多次迭代应用 \eqnref{eq:newtonstep}。
 迭代地更新近似函数和跳到近似函数的最小点可以比\gls{GD}更快地到达临界点。
 这在接近\gls{local_minimum}时是一个特别有用的性质，但是在\gls{saddle_points}附近是有害的。
-如\ref{sec:plateaus_saddle_points_and_other_flat_regions}节所讨论的，当附近的\gls{critical_points}是最小点（\gls{hessian}的所有特征值都是正的）时\gls{newton_method}才适用，而\gls{GD}不会被吸引到\gls{saddle_points}(除非\gls{gradient}指向\gls{saddle_points})。
+如\eqnref{sec:plateaus_saddle_points_and_other_flat_regions}所讨论的，当附近的\gls{critical_points}是最小点（\gls{hessian}的所有特征值都是正的）时\gls{newton_method}才适用，而\gls{GD}不会被吸引到\gls{saddle_points}(除非\gls{gradient}指向\gls{saddle_points})。
 
 仅使用\gls{gradient}信息的优化算法被称为\textbf{一阶优化算法}(first-order optimization algorithms)，如\gls{GD}。
 使用\gls{hessian}矩阵的优化算法被称为\textbf{二阶最优化算法}(second-order optimization algorithms)\citep{NumOptBook}，如\gls{newton_method}。

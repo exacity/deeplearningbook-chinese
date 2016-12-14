@@ -7,7 +7,7 @@
 
 \gls{DL}为研究者们提供了许多的指导性的建模和设计算法的思路。
 其中一种形式是\firstgls{structured_probabilistic_models}。
-我们曾经在\ref{sec:structured_probabilistic_models_chap3}中简要讨论过。
+我们曾经在\secref{sec:structured_probabilistic_models_chap3}中简要讨论过。
 那个简单的介绍已经足够使我们充分了解如何使用\gls{structured_probabilistic_models}来描述第二部分中的某些算法。
 现在，在第三部分，\gls{structured_probabilistic_models}是许多\gls{DL}中重要的研究方向的重要组成部分。
 作为讨论这些研究方向的预备知识，本章详细的描述了\gls{structured_probabilistic_models}。
@@ -24,7 +24,7 @@
 \gls{graphical_models}的研究领域是巨大的，曾提出过大量的模型，训练算法和推断算法。
 在本章中，我们介绍了\gls{graphical_models}中几个核心方法的基本背景，并且强调了在\gls{DL}领域中\gls{graphical_models}已经被公认为是有效的。
 如果你已经对\gls{graphical_models}已经了解很多，那么你可以跳过本章的绝大部分。
-然而，我们相信即使是资深的\gls{graphical_models}方向的研究者也会从本章的最后一节中获益匪浅，详见\ref{sec:the_deep_learning_approach_to_structured_probabilistic_models}节，其中我们强调了在\gls{DL}算法中一些\gls{graphical_models}特有的算法。
+然而，我们相信即使是资深的\gls{graphical_models}方向的研究者也会从本章的最后一节中获益匪浅，详见\secref{sec:the_deep_learning_approach_to_structured_probabilistic_models}，其中我们强调了在\gls{DL}算法中一些\gls{graphical_models}特有的算法。
 相比于普通的\gls{graphical_models}研究者，\gls{DL}的研究者们通常会使用完全不同的模型结构，学习算法和推断过程。
 在本章中，我们讨论了这种区别并且解释了其中的原因。
 % 550 head
@@ -34,8 +34,8 @@
 之后，我们介绍了如何使用一个图来描述概率分布的结构。
 尽管这个方法能够帮助我们解决许多的挑战和问题，它本身也有很多缺陷。
 \gls{graphical_models}中的一个主要难点就是判断哪些变量之间存在直接的相互作用关系，也就是对于给定的问题哪一种图结构是最适合的。
-在\ref{sec:learning_about_dependencies}节中，通过了解\firstgls{dependency}，我们简要概括了解决这个难点的两种基本方法。
-最后，在\ref{sec:the_deep_learning_approach_to_structured_probabilistic_models}节中，我们讨论并强调了\gls{graphical_models}在\gls{DL}中的一些独特之处和一些特有的方法，作为本章的收尾。
+在\secref{sec:learning_about_dependencies}中，通过了解\firstgls{dependency}，我们简要概括了解决这个难点的两种基本方法。
+最后，在\secref{sec:the_deep_learning_approach_to_structured_probabilistic_models}中，我们讨论并强调了\gls{graphical_models}在\gls{DL}中的一些独特之处和一些特有的方法，作为本章的收尾。
 % 550  ok
 
 
@@ -86,7 +86,7 @@
 	即使样本只有一个从错误分布中产生的元素，那么采样的过程肯定是错误的。 
 \end{itemize}
 
-图\ref{fig:chap16_fig-ssrbm}中描述了一个使用较小的自然图片的采样任务。
+\figref{fig:chap16_fig-ssrbm}中描述了一个使用较小的自然图片的采样任务。
 % 551 ok 
 
 \begin{figure}[!htb]
@@ -124,7 +124,7 @@
 	
 	\item  统计的高效性： 当模型中的参数个数增加的时候，使用随机估计时训练数据的量也需要相应的增加。
 	因为基于查表的模型拥有天文数字级别的参数，为了准确的拟合，相应的训练集的大小也是相同级别的。
-	任何这样的模型都会导致严重的过拟合，除非我们添加一些额外的假设来联系表格中的不同元素（正如第\ref{sec:n_grams}中所举的back-off或者平滑过的\gls{n_gram}模型）。
+	任何这样的模型都会导致严重的过拟合，除非我们添加一些额外的假设来联系表格中的不同元素（正如\secref{sec:n_grams}中所举的back-off或者平滑过的\gls{n_gram}模型）。
 	% 552  end
 	
 	\item 运行时间：推断的开销。
@@ -219,9 +219,9 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554
 
 
-我们继续\ref{sec:the_challenge_of_unstructured_modelling}节所讲的接力赛的例子，我们假设Alice的完成时间为$t_0$，Bob的完成时间为$t_1$，Carol的完成时间为$t_2$。
+我们继续\secref{sec:the_challenge_of_unstructured_modelling}所讲的接力赛的例子，我们假设Alice的完成时间为$t_0$，Bob的完成时间为$t_1$，Carol的完成时间为$t_2$。
 就像我们之前看到的一样，$t_1$的估计是依赖于$t_0$的，$t_2$的估计是依赖于$t_1$的，但是仅仅间接的依赖于$t_0$。
-我们用一个\gls{directed_graphical_model}来建模这种关系，就如在图\ref{fig:relay_race_graph}中看到的一样。
+我们用一个\gls{directed_graphical_model}来建模这种关系，就如在\figref{fig:relay_race_graph}中看到的一样。
 % 554 end
 
 \begin{figure}[!htb]
@@ -336,7 +336,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 
 
 我们把对应你的健康的随机变量记住$h_y$，对应你的室友健康状况的随机变量记住$h_r$，你的同事健康的变量记住$h_c$。
-图\ref{fig:cold_undirected_graph}表示来这种关系。
+\figref{fig:cold_undirected_graph}表示来这种关系。
 % 557 end
 
 \begin{figure}[!htb]
@@ -365,7 +365,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 只要所有的\gls{clique}中的结点数都不大，那么我们就能够高效的处理这些\gls{unnormalized_probability_function}。
 它包含了这样的思想，越高密切度的状态有越大的概率。
 然而，不像\gls{bayesian_network}，几乎不存在\gls{clique}的定义的结构，所以不能保证把它们乘在一起能够得到一个有效的概率分布。
-图\ref{fig:example_undirected}展示了一个从\gls{undirected_model}中读取分解信息的例子。
+\figref{fig:example_undirected}展示了一个从\gls{undirected_model}中读取分解信息的例子。
 % 558
 
 \begin{figure}[!htb]
@@ -431,7 +431,7 @@ Z = \int \tilde{p}(\Vx)d\Vx
 为了获得一个\gls{undirected_model}的归一化的概率分布，模型的结构和函数$\phi$的定义通常需要特殊的设计从而使得能够高效的计算$Z$。
 在\gls{DL}中，$Z$通常是难以处理的。
 由于$Z$难以精确的计算出，我们只能使用一些近似的方法。
-这样的近似方法是第\ref{chap:confronting_the_partition_function}章的主要内容。
+这样的近似方法是\chapref{chap:confronting_the_partition_function}的主要内容。
 % 559 
 
 
@@ -461,7 +461,7 @@ Z = \int x^2 dx
 如果$\Vx\in\{0,1\}^n$，那么$p(\Vx)$可以被分解成$n$个独立的分布，并且满足$p(x_i=1) = \text{sigmoid}(b_i)$。
 如果$\Vx$的定义域是基本单位向量的集合$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$，那么$p(x) = \text{softmax}(\Vb)$，因此一个较大的$b_i$的值会降低所有的$p(x_j = 1)$的概率（其中$j\neq i$）。
 通常情况下，通过特殊设计变量的定义域，能够使得一个相对简单的$\phi$函数可以获得一个相对复杂的表达。
-我们会在\ref{sec:convolutional_boltzmann_machines}节中讨论这个想法的实际应用。
+我们会在\secref{sec:convolutional_boltzmann_machines}中讨论这个想法的实际应用。
 % P560   
 
 
@@ -485,7 +485,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 % p 561  head
 
 
-服从方程~\eqref{eqn:167}形式的任意分布都是\firstgls{boltzmann_distribution}的一个实例。
+服从\eqnref{eqn:167}形式的任意分布都是\firstgls{boltzmann_distribution}的一个实例。
 正是基于这个原因，我们把许多的\gls{energy_based_model}叫做\firstgls{BM}\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
 关于什么时候叫\gls{energy_based_model}，什么时候叫\gls{BM}不存在一个公认的判别标准。
 一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如均值-方差\gls{RBM}，也涉及到了实值变量。
@@ -497,7 +497,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 \gls{undirected_model}中的\gls{clique}对应于\gls{unnormalized_probability_function}的\gls{factor}。 
 通过$\exp(a+b) = \exp(a) \exp(b)$，我们发现\gls{undirected_model}中的不同\gls{clique}对应于\gls{energy_function}的不同项。
 换句话说，\gls{energy_based_model}只是一种特殊的\gls{markov_network}：求幂使\gls{energy_function}中的每个项对应于不同\gls{clique}的\gls{factor}。
-关于如何从\gls{undirected_model}结构获得\gls{energy_function}的形式的示例参见图\ref{fig:example_undirected_2}。
+关于如何从\gls{undirected_model}结构获得\gls{energy_function}的形式的示例参见\figref{fig:example_undirected_2}。
 人们可以将\gls{energy_function}带有多个项的\gls{energy_based_model}视作是\firstgls{product_of_expert}\citep{Hinton99}。
 \gls{energy_function}中的每一项对应的是概率分布中的一个\gls{factor}。
 \gls{energy_function}中的每一项都可以看作决定一个软约束是否能够满足的``专家''。
@@ -515,7 +515,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 
 
 
-\gls{energy_based_model}的定义的一部分无法用\gls{ML}观点来解释：即等式~\eqref{eqn:167}中的负号。
+\gls{energy_based_model}的定义的一部分无法用\gls{ML}观点来解释：即\eqnref{eqn:167}中的负号。
 这个负号的存在主要是为了保持\gls{ML}文献和物理学文献之间的兼容性。
 概率建模的许多研究最初由统计物理学家做出的，其中$E$是指实际的，物理概念的能量，没有任意的符号。
 诸如``能量''和``\gls{partition_function}''这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
@@ -554,8 +554,8 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 
 
 当我们画图时，我们可以通过加阴影来表示观察到的变量。
-图\ref{fig:undirected_paths_active}用于描述当以这种方式绘制时\gls{undirected_model}中的活跃和非活跃路径的样子。
-图\ref{fig:example_sep}描述了一个从一个\gls{undirected_model}中读取\gls{separation}的例子。
+\figref{fig:undirected_paths_active}用于描述当以这种方式绘制时\gls{undirected_model}中的活跃和非活跃路径的样子。
+\figref{fig:example_sep}描述了一个从一个\gls{undirected_model}中读取\gls{separation}的例子。
 % 563
 
 
@@ -596,8 +596,8 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 与\gls{undirected_model}一样，我们可以通过查看图中存在的活跃路径来检查图中隐含的独立性。
 如前所述，如果两个变量之间存在活跃路径，则两个变量是相关的，如果没有活跃路径，则为d-\gls{separation}。
 在有向网络中，确定路径是否活跃有点复杂。
-关于在\gls{directed_model}中识别活跃路径的方法可以参见图\ref{fig:168}。 
-图\ref{fig:169}是从一个图中读取一些属性的例子。
+关于在\gls{directed_model}中识别活跃路径的方法可以参见\figref{fig:168}。 
+\figref{fig:169}是从一个图中读取一些属性的例子。
 % 564  head 
 
 
@@ -669,8 +669,8 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 还有其他因素可以影响我们决定使用哪种建模方式。 
 即使在使用单个概率分布时，我们有时可以在不同的建模方式之间切换。
 有时，如果我们观察到变量的某个子集，或者如果我们希望执行不同的计算任务，换一种建模方式可能更合适。
-例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\ref{sec:sampling_from_graphical_models}节中描述）的直接的方法。
-而\gls{undirected_model}公式通常用于近似推理过程（我们将在第\ref{chap:approximate_inference}章中看到，等式\eqref{eqn:1956}强调了\gls{undirected_model}的作用）。
+例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\secref{sec:sampling_from_graphical_models}中描述）的直接的方法。
+而\gls{undirected_model}公式通常用于近似推理过程（我们将在\chapref{chap:approximate_inference}中看到，\eqnref{eqn:1956}强调了\gls{undirected_model}的作用）。
 % 566
 
 
@@ -678,7 +678,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 在最坏的情况下，可以使用``完全图''来表示任何分布。
 在\gls{directed_model}的情况下，完全图是任何有向无环图，其中我们对随机变量排序，并且每个变量在排序中位于其之前的所有其他变量作为其图中的祖先。
 对于\gls{undirected_model}，完全图只是一个包含所有变量的\gls{clique}。 
-图\ref{fig:complete}给出了一个实例。
+\figref{fig:complete}给出了一个实例。
 % 566
 
 \begin{figure}[!htb]
@@ -713,7 +713,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 为了将\gls{directed_model}图$\CalD$转换为\gls{undirected_model}，我们需要创建一个新图$\CalU$。
 对于每对变量$x$和$y$，如果存在连接$x$中的$x$和$y$的有向边（在任一方向上），或者如果$x$和$y$都是图$\CalD$中另一个变量$z$的父节点，则添加将$x$和$y$连接到$\CalU$的无向边。 
 得到的图$\CalU$被称为是\firstgls{moralized_graph}。
-关于一个将\gls{directed_graphical_model}转化为\gls{undirected_model}的例子可以参见图\ref{fig:dm_to_um}。
+关于一个将\gls{directed_graphical_model}转化为\gls{undirected_model}的例子可以参见\figref{fig:dm_to_um}。
 % 567
 
 
@@ -740,7 +740,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 要从\gls{chordal_graph}构建有向图$\CalD$，我们还需要为边指定方向。
 当这样做时，我们不能在$\CalD$中创建有向循环，否则将无法定义有效的有向概率模型。
 为$\CalD$中的边分配方向的一种方法是对随机变量排序，然后将每个边从排序较早的节点指向稍后排序的节点。
-一个简单的实例参见图\ref{fig:um_to_dm}。
+一个简单的实例参见\figref{fig:um_to_dm}。
 % 569 end
 
 
@@ -776,7 +776,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 变量和\gls{factor}通过无向边连接。
 当且仅当变量包含在\gls{unnormalized_probability_function}的\gls{factor}中时，变量和\gls{factor}在图中连接。
 没有\gls{factor}可以连接到图中的另一个\gls{factor}，也不能将变量连接到变量。
-图\ref{sec:factor_graphs}给出了一个例子来说明\gls{factor_graph}如何解决无向网络中的模糊性。
+\figref{sec:factor_graphs}给出了一个例子来说明\gls{factor_graph}如何解决无向网络中的模糊性。
 % 570  
 
 
@@ -807,7 +807,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 然后可以按此顺序对变量进行采样。
 换句话说，我们可以首先采$x_1\sim P(x_1)$，然后采$x_2\sim P(x_2\vert Pa_{\CalG}(x_2))$，以此类推，直到最后我们采$x_n\sim P(x_n\vert Pa_{\CalG}(x_n))$。
 只要每个条件分布$x_i\sim P(x_i\vert Pa_{\CalG}(x_i))$都很容易从中采样，那么很容易从整个模型中抽样。
-拓扑排序操作保证我们可以按照方程~\eqref{eqn:161}中的条件分布的顺序依次采样。
+拓扑排序操作保证我们可以按照\eqnref{eqn:161}中的条件分布的顺序依次采样。
 如果没有拓扑排序，我们可能会尝试在其父节点可用之前对该变量进行抽样。
 % 571  
 
@@ -845,7 +845,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 相反，我们必须重复该过程并使用它们的邻居的更新的值对所有$n$个变量重新取样。
 在多次重复之后，该过程渐近地收敛到目标分布。
 很难确定样本何时达到期望分布的足够精确的近似。
-\gls{undirected_model}的抽样技术是一个值得深入的研究方向，第\ref{chap:monte_carlo_methods}章将对此进行更详细的讨论。
+\gls{undirected_model}的抽样技术是一个值得深入的研究方向，\chapref{chap:monte_carlo_methods}将对此进行更详细的讨论。
 % 572 head
 
 
@@ -908,9 +908,9 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 
 隐含变量还有一个额外的优势，即能够高效的描述$p(\Vv)$。
 新变量$\Vh$还提供了$\Vv$的替代表示。
-例如，如\ref{sec:mixtures_of_distributions}节所示，高斯混合模型学习了一个隐含变量，这个隐含变量对应于特征是从哪一个混合体中抽出。
+例如，如\secref{sec:mixtures_of_distributions}所示，高斯混合模型学习了一个隐含变量，这个隐含变量对应于特征是从哪一个混合体中抽出。
 这意味着高斯混合模型中的隐变量可以用于做分类。
-在\ref{chap:autoencoders}章中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的隐含变量的。
+在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的隐含变量的。
 其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
 许多方法通过学习隐含变量来完成特征学习。
 通常，给定$\Vv$和$\Vh$，实验观察显示$\SetE[\Vh\vert\Vv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
@@ -958,7 +958,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 这促使我们使用近似推理。
 在\gls{DL}中，这通常涉及变分推理，其中通过寻求尽可能接近真实分布的近似分布$q(\Vh\vert\Vv)$来逼近真实分布$p(\Vh\vert\Vv)$。
-这个技术在第\ref{chap:approximate_inference}章中有深入的描述。
+这个技术在\chapref{chap:approximate_inference}中有深入的描述。
 % 574 end
 
 
@@ -1034,11 +1034,11 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 \firstgls{RBM}\citep{Smolensky86}或者\\ \firstgls{harmonium}是\gls{graphical_models}如何用于深度学习的典型例子。 
 \glssymbol{RBM}本身不是一个深层模型。 
 相反，它有一层隐含变量，可用于学习输入的表示。 
-在第\ref{chap:deep_generative_models}章中，我们将看到\glssymbol{RBM}如何被用来构建许多的深层模型。
+在\chapref{chap:deep_generative_models}中，我们将看到\glssymbol{RBM}如何被用来构建许多的深层模型。
 在这里，我们举例展示了\glssymbol{RBM}在许多深度图模型中使用的许多实践：
 它的结点被分成层，层之间的连接由矩阵描述，连通性相对密集。
 该模型能够进行高效的\gls{gibbs_sampling}，并且模型设计的重点在于以很高的自由度来学习隐含变量，而不是设计师指定。
-之后在\ref{sec:restricted_boltzmann_machines}节，我们将更详细地再次讨论\glssymbol{RBM}。
+之后在\secref{sec:restricted_boltzmann_machines}，我们将更详细地再次讨论\glssymbol{RBM}。
 % 577
 
 规范的\glssymbol{RBM}是具有二进制的可见和隐藏单元的\gls{energy_based_model}。 其\gls{energy_function}为
@@ -1048,7 +1048,7 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
 \end{align}
 其中$\Vb,\Vc$和$\MW$都是无限制的实值的可学习参数。
 我们可以看到，模型被分成两组单元：$\Vv$和$\Vh$，它们之间的相互作用由矩阵$\MW$来描述。
-该模型在图\ref{fig:rbm}中图示。
+该模型在\figref{fig:rbm}中图示。
 如该图所示，该模型的一个重要方面是在任何两个可见单元之间或任何两个隐藏单元之间没有直接的相互作用（因此称为``受限''，一般的\gls{BM}可以具有任意连接）。
 % 577
 
@@ -1089,7 +1089,7 @@ p(h_i = 0\vert\Vv) = 1 - \sigma\big(\Vv^{\top}\MW_{:,i} + b_i\big)\\
 \end{aligned}
 \end{align}
 结合这些属性可以得到有效的\gls{block_gibbs_sampling}，它在同时采样所有$\Vh$和同时采样所有$\Vv$之间交替。
-\glssymbol{RBM}模型通过\gls{gibbs_sampling}产生的样本在图\ref{fig:rbm_sample}中。
+\glssymbol{RBM}模型通过\gls{gibbs_sampling}产生的样本在\figref{fig:rbm_sample}中。
 % 578 
 
 \begin{figure}[!htb]
@@ -1109,7 +1109,7 @@ p(h_i = 0\vert\Vv) = 1 - \sigma\big(\Vv^{\top}\MW_{:,i} + b_i\big)\\
 \frac{\partial}{\partial W_{i,j}} E(\Vv,\Vh) = - v_i h_j
 \end{align}
 这两个属性，高效的\gls{gibbs_sampling}和导数计算，使训练过程非常方便。
-在第\ref{sec:confronting_the_partition_function}章中，我们将看到，可以通过计算应用于来自模型的样本的这种导数来训练\gls{undirected_model}。
+在\chapref{chap:confronting_the_partition_function}中，我们将看到，可以通过计算应用于来自模型的样本的这种导数来训练\gls{undirected_model}。
 % 579
 
 训练模型可以得到数据$\Vv$的表示$\Vh$。

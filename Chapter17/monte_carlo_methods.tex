@@ -80,9 +80,9 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\Vx)]
 % 583
 
 以上的所有结论都依赖于我们可以从基准分布$p(\Vx)$中轻易的采样，但是这个假设并不是一直成立的。
-当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在Sec~\ref{sec:importance_sampling_chap17}会讲到。
+当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在\secref{sec:importance_sampling_chap17}会讲到。
 一种更加通用的方式是采样一系列的趋近于目标分布的估计。
-这就是\gls{mcmc}方法（见Sec~\ref{sec:markov_chain_monte_carlo_methods}）。
+这就是\gls{mcmc}方法（见\secref{sec:markov_chain_monte_carlo_methods}）。
 % 583
 
 \section{\glsentrytext{importance_sampling}}
@@ -102,7 +102,7 @@ p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 % 584
 
 
-从方程~\ref{eqn:decomposition}中所示的关系中可以发现，任意\gls{monte_carlo}估计
+从\eqnref{eqn:decomposition}中所示的关系中可以发现，任意\gls{monte_carlo}估计
 \begin{align}
 \hat{s}_p = \frac{1}{n}\sum_{i=1,\Vx^{(i)}\sim p}^{n}f(\Vx^{(i)})
 \end{align}
@@ -166,8 +166,8 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 585
 
 尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}中的应用中仍然扮演着重要的角色，包括\gls{DL}问题。
-比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\ref{sec:importance_sampling_chap12}章）或者其它有着大量输出结点的\gls{NN}中。
-此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见第\ref{sec:estimating_the_partition_function}章）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见第\ref{sec:variational_autoencoders}章）。
+比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\secref{sec:importance_sampling_chap12}）或者其它有着大量输出结点的\gls{NN}中。
+此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见\secref{sec:estimating_the_partition_function}）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见\secref{sec:variational_autoencoders}）。
 采用\gls{SGD}训练模型参数的时候\gls{importance_sampling}可以用来改进对\gls{cost_function}的梯度的估计，尤其是针对于分类器模型的训练中一小部分错误分类样本产生的\gls{cost_function}。
 在这种情况下更加频繁的采集这些困难的样本可以降低梯度的估计的方差\citep{Hinton06}。
 % 586 
@@ -182,7 +182,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 利用\gls{markov_chain}来进行\gls{monte_carlo}估计的这一类算法被称为\firstgls{mcmc}算法。
 \gls{mcmc}算法在\gls{ML}中的应用在\citep{koller-book2009}中花了大量篇幅描述。
 \gls{mcmc}算法的最标准的要求是只适用模型分布处处不为0的情况。
-因此，最方便的目标分布的表达是从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，参见\ref{sec:energy_based_models}节。
+因此，最方便的目标分布的表达是从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
 在\gls{energy_based_model}中每一个状态所对应的概率都不为零。
 事实上\gls{mcmc}方法可以被广泛的应用在了许多包含概率为0的状态的概率分布中。
 然而，在这种情况下，关于\gls{mcmc}方法性能的理论保证只能依据具体情况具体分析。
@@ -194,7 +194,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 为了采$a$，我们必须先从$p(a\vert b)$中采样，为了采$b$，我们又必须从$p(b\vert a)$中采样。
 这似乎成了难以解释的先有鸡还是先有蛋的问题。
 \gls{directed_model}避免了这一问题因为它的图是有向无环的。
-为了以拓扑顺序完成对包含各个变量的一个样本的\firstgls{ancestral_sampling}，给定每个变量的所有父结点的条件下，这个变量是确定能够被采样的（详见\ref{sec:sampling_from_graphical_models}）。
+为了以拓扑顺序完成对包含各个变量的一个样本的\firstgls{ancestral_sampling}，给定每个变量的所有父结点的条件下，这个变量是确定能够被采样的（详见\secref{sec:sampling_from_graphical_models}）。
 \gls{ancestral_sampling}定义了一种高效的，单路径的方法来采集一个样本。
 % 587 begin
 
@@ -242,7 +242,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\vert x)
 \begin{align}
 \MA_{i,j} = T(\Vx' = i\vert \Vx = j)
 \end{align}
-使用这一定义，我们可以重新写成方程\ref{eqn:transition1}。
+使用这一定义，我们可以重新写成\eqnref{eqn:transition1}。
 与之前使用$q$和$T$来理解单个状态的更新相对的是，我们现在可以使用$\Vv$和$\MA$来描述当我们更新时（并行运行的）不同个\gls{markov_chain}上的整个分布是如何变化的：
 \begin{align}
 \Vv^{(t)} = \MA \Vv^{(t-1)}
@@ -282,7 +282,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\vert x)
 % 588
 
 如果我们正确的选择了转移算子$T$，那么最终的\gls{stationary_distribution}$q$将会等于我们所希望采样的分布$p$。
-我们会简要的介绍如何选择$T$，详见\ref{sec:gibbs_sampling}。
+我们会简要的介绍如何选择$T$，详见\secref{sec:gibbs_sampling}。
 % 588
 
 
@@ -336,7 +336,7 @@ q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
 本书中描述了两种基本的方法。
 第一种方法是从已经学习到的分布$p_{\text{model}}$中推导出$T$，就像下文描述的从\gls{energy_based_model}中采样的案例一样。
 第二种方法是直接用参数描述$T$，然后学习这些参数，其\gls{stationary_distribution}隐式地定义了我们所感兴趣的模型$p_{\text{model}}$。
-我们将在第\ref{sec:generative_stochastic_networks}和第\ref{sec:other_generation_schemes}中讨论第二种方法的例子。
+我们将在\secref{sec:generative_stochastic_networks}和\secref{sec:other_generation_schemes}中讨论第二种方法的例子。
 % 590
 
 
@@ -348,7 +348,7 @@ q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
 
 \firstgls{gibbs_sampling}是一种概念简单而又有效的方法来构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\Vx'\vert \Vx)$采样是通过选择一个变量$x_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
 给定他们的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。
-正如在\ref{sec:example_the_restricted_boltzmann_machine}中看到的\gls{RBM}的例子一样，\gls{RBM}所有的隐层结点可以被同时采样，因为在给定可见层结点的条件下他们相互条件独立。
+正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\gls{RBM}的例子一样，\gls{RBM}所有的隐层结点可以被同时采样，因为在给定可见层结点的条件下他们相互条件独立。
 同样的，所有的可见层结点也可以被同时采样因为在给定隐藏层结点的情况下他们相互条件独立。
 像这样的同时更新许多变量的\gls{gibbs_sampling}通常被叫做\firstgls{block_gibbs_sampling}。
 % 590
@@ -377,10 +377,10 @@ q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
 % 591 
 
 
-当考虑到\gls{gibbs_sampling}算法（见\ref{sec:gibbs_sampling}节）时，这种现象格外明显。
+当考虑到\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。
 在这种情况下，我们考虑在一定步数内从一个峰值走向移动到一个临近的峰值的概率。
 决定这个概率的是两个峰值之间的``能量障碍''的形状。
-隔着一个巨大的``能量障碍'' （低概率的区域）的两个峰值之间的转移的概率是（随着能量障碍的高度）指数下降的，如在图\ref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
+隔着一个巨大的``能量障碍'' （低概率的区域）的两个峰值之间的转移的概率是（随着能量障碍的高度）指数下降的，如在\figref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
 当目标分布有很多峰值并且以很高的概率被低概率区域所分割，尤其当\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分又严重依赖其它的变量时，这会导致严重的问题。
 % 591
 
@@ -422,7 +422,7 @@ q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
 这两个目标是相互矛盾的。
 我们经常学习到一些有很强编码能力的生成模型，但是无法很好的\gls{mixing}。
 这种情况在\gls{BM}中经常出现，\gls{BM}学到到分布越尖锐，该分布的\gls{markov_chain}的采样越难\gls{mixing}的好。
-这个问题在图\ref{fig:chap17_fig-dbm-bad-mixing}中有所描述。
+这个问题在\figref{fig:chap17_fig-dbm-bad-mixing}中有所描述。
 % 593
 
 \begin{figure}[!htb]
