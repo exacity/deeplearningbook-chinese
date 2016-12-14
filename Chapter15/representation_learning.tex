@@ -588,7 +588,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 
 对于为什么基于\gls{distributed_representation}的模型泛化能力更好的另一个说法是，尽管能够明确地编码这么多不同的区域，但它们的容量仍然是很有限的。
-例如，线性阀值单位的\gls{NN}的VC纬度仅为$O(w\log w)$，其中$w$是权重的数目\citep{sontag1998vc}。
+例如，线性阀值单位的\gls{NN}的\glssymbol{VC}维仅为$O(w\log w)$，其中$w$是权重的数目\citep{sontag1998vc}。
 这种限制出现的原因是，虽然我们可以为表示空间分配非常多的唯一码，但是我们不能完全使用所有的码空间，也不能使用\gls{linear_classifier}学习出从表示空间$\Vh$到输出$\Vy$的任意函数映射。
 因此使用与\gls{linear_classifier}相结合的\gls{distributed_representation}传达了一种先验信念，待识别的类在$\Vh$代表的潜在因素的函数下是线性可分的。
 我们通常想要学习类别，例如所有绿色对象的所有图像集合，或是汽车的所有图像集合，但不会是需要非线性XOR逻辑的类别。
