@@ -41,3 +41,15 @@
 2016年12月13日
 -------------
  - @huangpingchun ==> inference的统一翻译 
+
+2016年12月14日
+-------------
+ - @huangpingchun ==> representation learning，"表示学习"==>"表征学习"
+
+
+
+2016年12月13日
+-------------
+ - @huangpingchun ==> inference的统一翻译 
+
+

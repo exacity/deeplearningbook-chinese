@@ -329,10 +329,10 @@
 例如，在自然图像中，在空间中相隔很远的像素也具有弱相关性，因此广义伪似然可以应用于每个$\SetS$集是小的空间定位窗口的情况。
 
 
-伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中讨论的变分推理。这是因为$\tilde{p}$出现在了分母中。
+伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中讨论的变分推断。这是因为$\tilde{p}$出现在了分母中。
 分母的下限只提供了整个表达式的上界，然而我们并不关心最大化上界。
 这使得难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的深度模型，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
-尽管如此，\gls{pseudolikelihood}仍然对\gls{DL}有用，因为它可以用于单层模型或是使用不基于下限的近似推理方法的深度模型。
+尽管如此，\gls{pseudolikelihood}仍然对\gls{DL}有用，因为它可以用于单层模型或是使用不基于下限的近似推断方法的深度模型。
 
 % -- 608 --
 
