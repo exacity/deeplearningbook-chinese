@@ -10,7 +10,7 @@
 接着，我们介绍了\gls{DL}已经成功应用的几个特定的领域。
 尽管\gls{DL}的一个目标是设计能够处理多种任务的算法，然而截止目前应用\gls{DL}仍然需要一些特定的条件。
 比如说，\gls{CV}中的任务对每一个样本都需要大量的输入特征（像素）。
-\gls{NLP}中对每一个输入特征都需要对大量的可能值（词汇）建模。
+\gls{NLP}中对每一个输入特征都需要对大量的可能值（词汇表中的词汇）建模。
 % 431
 
 \section{大规模\glsentrytext{DL}}
@@ -35,8 +35,8 @@
 % 432 head
 
 
-描述如何快速的用CPU实现以及超出了本书的讨论范围，但是我们在这里还是要强调通过设计一些特定的CPU上的操作可以大大加快效率。
-举个例子，在2011年，最好的CPU在训练\gls{NN}的时候使用\gls{fixed_point_arithmetic}比\gls{float_point_arithmetic}。
+描述如何快速的用CPU实现已经超出了本书的讨论范围，但是我们在这里还是要强调通过设计一些特定的CPU上的操作可以大大加快效率。
+举个例子，在2011年，最好的CPU在训练\gls{NN}的时候使用\gls{fixed_point_arithmetic}能够比\gls{float_point_arithmetic}跑的更快。
 通过调整\gls{fixed_point_arithmetic}的实现方式，\citet{Vanhoucke-et-al-2011}获得了相对于一个很强的\gls{float_point_arithmetic}系统3倍的加速。
 各个CPU都有各自不同的特性，所以有时候采用\gls{float_point_arithmetic}来实现会更快。
 一条重要的准则就是通过特殊设计的数值运算可以获得巨大的回报。
@@ -47,12 +47,12 @@
 \subsection{GPU 实现}
 \label{sec:gpu_implementations}
 
-许多现代的\gls{NN}的实现是基于\firstall{GPU}。
+许多现代的\gls{NN}的实现是基于\firstall{GPU}的。
 \glssymbol{GPU}是一种特殊设计的硬件，设计的原始目的是为了处理图形应用。
 它的为视频游戏所设计的特性也可以使\gls{NN}的计算受益。
 % 432  
 
-视频游戏要求许多操作能够快速的并行的实现。
+视频游戏要求许多操作能够快速并行的实现。
 环境和角色的模型是通过一系列的3D坐标结点来定位的。
 为了将大量的3D坐标转化为2D的显示器上的坐标，显卡必须快速的实现矩阵的乘法或者除法。
 之后，显卡必须并行的实现对每个像素的计算来确定每个像素点的颜色。
@@ -67,7 +67,7 @@
 与上面描述的实时的图形算法相比，\gls{NN}算法需要的是相同的硬件特性。
 \gls{NN}算法涉及大量的参数，激活值，梯度值通过缓冲区，其中在每一次训练迭代中都要被完全的更新。
 对于传统的桌面计算机来说，缓冲区是足够大的，所以内存的带宽成为了主要的瓶颈。
-相比于CPU，\glssymbol{GPU}的极高的内存带宽成为了一个显著的优势。
+相比于CPU，\glssymbol{GPU}极高的内存带宽成为了一个显著的优势。
 \gls{NN}的训练算法通常并不包含分支运算和复杂的控制指令，所以更适用于在GPU上训练。
 由于同一层\gls{NN}往往能够被分为多个独立处理的神经元，所以\gls{NN}能够从GPU的并行特性中受益匪浅。
 % 433
@@ -76,13 +76,13 @@
 \glssymbol{GPU}最初是专门为了图形任务而设计的。
 随着时间的推移，\glssymbol{GPU}也变得越发的灵活，能够处理转化结点的坐标或者计算像素颜色的任务。
 通过将缓冲区中的像素值作为计算的输出值，\glssymbol{GPU}也可以被用在科学计算中。
-\citet{Steinkrau2005}在GPU上实现了一个有两层的全连接的\gls{NN}，然后获得了相对于基于CPU的基线方法的三倍的加速。
+\citet{Steinkrau2005}在GPU上实现了一个有两层的全连接的\gls{NN}，然后获得了相对于基于CPU的基线方法三倍的加速。
 不久以后，\citet{chellapilla:inria-00112631}也论证了相同的技术可以被用来加速训练\gls{supervised}的\gls{CNN}。
 % 433
 
 
-使用显卡来训练\gls{NN}的热度在\firstall{GP_GPU}的发布以后开始爆炸性增长。
-这种\gls{GP_GPU}可以执行任意的代码，而并非渲染任务。
+使用显卡来训练\gls{NN}的热度在\gls{GP_GPU}的发布以后开始爆炸性增长。
+这种\gls{GP_GPU}可以执行任意的代码，而并非仅仅渲染任务。
 NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任意的代码。
 由于相对简便的编程语言，强大的并行能力以及巨大的内存带宽，\gls{GP_GPU}是我们\gls{NN}训练的理想平台。
 在它发布以后不久，这个平台就迅速被\gls{DL}的研究者们接纳了\citep{RainaICML09-small,Ciresan-2010}。
@@ -93,12 +93,12 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 如何在\gls{GP_GPU}上写高效的代码依然是一个难题。
 在\glssymbol{GPU}上获得很好表现所需要的技术与CPU上的技术有所不同。
 比如说，一个好的基于CPU的代码通常被设计为尽可能从cache中读取更多的信息。
-然而在\glssymbol{GPU}中，许多信息并不在cache中，所以往往重复计算某个值会比计算它一边在从内存中读取更快。
+然而在\glssymbol{GPU}中，<bad>许多信息并不在cache中，所以重复计算某个值往往会比计算一次然后从内存中读取更快。
 \glssymbol{GPU}代码是多线程的，各个线程之间必须协调好。
 比如说，如果能够把数据\firstgls{coalesced}起来，那么涉及内存的操作一般会更快。
 当几个线程同时需要读/写一个值的时候，像这样的\gls{coalesced}作为一次内存操作出现。
 不同的\glssymbol{GPU}采用了不同的\gls{coalesced}读/写数据的方式。
-通常来说，如果在$n$个线程中，线程$i$对应的是第$i+j$处的内存，其中j是2的某个幂的乘积。
+通常来说，如果在$n$个线程中，线程$i$对应的是第$i+j$处的内存，其中$j$是2的某个幂的乘积。
 具体的设定在不同的\glssymbol{GPU}中有所区别。
 \glssymbol{GPU}的另一个常见的设定是一个组中的所有线程都同时执行同一指令。
 这意味着在\glssymbol{GPU}上分支操作是很困难的。
@@ -109,7 +109,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 
 由于实现高效\glssymbol{GPU}代码的困难性，研究者们应该避免对每一个新的模型都实现新的\glssymbol{GPU}代码。
 通常来讲，人们会选择建立一个包含了高效的卷积矩阵乘法的软件库来解决这个问题，在确定模型时再从库中调用所需要的操作。
-比如说，\gls{ML}的库Pylearn2 \citep{pylearn2_arxiv_2013} 包含了许多\gls{ML}的算法通过调用Theano \citep{bergstra+al:2010-scipy-short,Bastien-2012}和cuda-convnet \citep{Krizhevsky2010tr}来提供了高性能运算操作。
+比如说，\gls{ML}的库Pylearn2  \citep{pylearn2_arxiv_2013}通过调用Theano \citep{bergstra+al:2010-scipy-short,Bastien-2012}和cuda-convnet \citep{Krizhevsky2010tr}提供高性能运算操作囊括了许多\gls{ML}的算法。
 这种分解的方法简化了硬件上的编程。
 比如说，一个Theano程序可以在CPU或者\glssymbol{GPU}上跑，而不需要改变调用Theano的方式。
 其它的库比如说Tensorflow\citep{tensorflow}，Torch\citep{Torch-2011}也提供了类似的功能。
@@ -146,7 +146,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 但是从总体上说还是加快了学习的过程。
 \citet{Dean-et-al-NIPS2012}率先提出多机器无锁的\gls{GD}方法，其中参数是通过\firstgls{parameter_server}而非存储在共用的内存中。
 分布式的异步\gls{GD}方法依然是训练\gls{DNN}的基本方法，在工业界被很多的\gls{ML}组使用\citep{chilimbi2014project,Wu-et-al-arXiv2015}。
-学术圈的\gls{DL}研究者们通常无法负担那么大的规模的学习系统，但是一些研究者关注于如何在校园环境的相对较廉价的硬件系统中构造分布式的网络\citep{icml2013_coates13}。
+学术圈的\gls{DL}研究者们通常无法负担那么大的规模的学习系统，但是一些研究者关注于如何在校园环境中相对较廉价的硬件系统中构造分布式的网络\citep{icml2013_coates13}。
 % 435
 
 
@@ -161,7 +161,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 
 
 减少推断所需要的开销中的一个关键的策略是\firstgls{model_compression}\citep{bucilua2006model}。
-\gls{model_compression}的基本思想是用一个更小的需要更少的内存和时间的模型取代替原始的耗时的模型。
+\gls{model_compression}的基本思想是用一个更小的需要更少内存和时间的模型取代替原始耗时的模型。
 
 
 
@@ -171,9 +171,9 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 有时候，当单个模型很大（比如，如果它使用\gls{dropout}）时，其\gls{generalization}能力也会很好。
 % 436 
 
-这些巨大的模型学习某个函数$f(\Vx)$的时候，选用了超过其需要的数量的参数。
+这些巨大的模型学习某个函数$f(\Vx)$的时候，选用了超过其需要数量的参数。
 训练样本的个数是有限的，所以网络的规模也是有限的。
-只要我们拟合了这个函数$f(\Vx)$，那么我们可以生成一个拥有了无穷多的训练样本的训练集，只需要作用$f$于任意生成的$\Vx$。
+只要我们拟合了这个函数$f(\Vx)$，那么我们可以生成一个拥有了无穷多训练样本的训练集，只需要作用$f$于任意生成的$\Vx$。
 然后，我们使用这些样本来训练一个新的更小的模型。
 为了更加充分的利用了这个新的小的模型的表达能力，最好能够从一个类似于真实的测试数据（后面会用到）的分布中采样$\Vx$。
 这个过程可以通过给训练样本扰动或者从由训练数据训练成的生成模型中采样来完成。
@@ -236,7 +236,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 这种动态路由方法可以理解为\firstgls{attention_mechanism} \citep{Olshausen1993}。
 到目前为止，硬开关的使用在大规模应用中还没有被证明是有效的。
 较为先进的方法一般采用对许多可能的输入使用加权平均，因此不能收获\gls{dynamic_structure}的所有可能的计算益处。
-先进的\gls{attention_mechanism}在\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}中描述。
+先进的\gls{attention_mechanism}在\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}节中描述。
 % 438
 
 
@@ -308,7 +308,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 许多应用领域需要复杂的预处理，因为原始输入以许多\gls{DL}架构难以表示的形式出现。
 \gls{CV}通常只需要相对少的这种预处理。
 图像应该被标准化，从而使得它们的像素都在相同并且合理的范围内，比如$[0,1]$或者$[-1,1]$。
-将[0,1]中的图像与[0,255]中的图像混合通常会导致失败。
+将$[0,1]$中的图像与$[0,255]$中的图像混合通常会导致失败。
 将图像格式化为具有相同的比例严格上说是唯一一种必要的预处理。
 许多\gls{CV}架构需要标准尺寸的图像，因此必须裁剪或缩放图像以适应该尺寸。
 然而，即使是这种重新调整并不总是必要的。
@@ -470,7 +470,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 \firstall{ASR}任务指的是构造一个函数$f^*_{\text{ASR}}$，使得它能够在给定语音序列$\MX$的情况下计算最有可能的$\Vy$序列：
 \begin{align}
 \label{eqn:124}
-f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\Vy \vert \RMX = \MX)
+f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \vert \RMX = \MX)
 \end{align}
 其中$P^*$是给定输入值$\MX$时对应目标$\Vy$的条件分布。
 % 446

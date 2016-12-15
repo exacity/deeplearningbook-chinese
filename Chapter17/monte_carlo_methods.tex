@@ -40,14 +40,14 @@
 这种想法把和或者积分视作某分布下的期望，然后通过估计对应的平均值来近似这个期望。
 令
 \begin{align}
-s = \sum_{\Vx} p(\Vx)f(\Vx) = E_p[f(\Vx)]
+s = \sum_{\Vx} p(\Vx)f(\Vx) = E_p[f(\RVx)]
 \end{align}
 或者
 \begin{align}
 \label{eqn:integra}
-s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\Vx)]
+s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \end{align}
-为我们所需要估计的和或者积分，写成期望的形式，$p$是一个关于随机变量$\Vx$的概率分布（求和时）或者概率密度函数（求积分时）。
+为我们所需要估计的和或者积分，写成期望的形式，$p$是一个关于随机变量$\RVx$的概率分布（求和时）或者概率密度函数（求积分时）。
 % 582 
 
 我们可以通过从$p$中采集$n$个样本$\Vx^{(1)},\ldots,\Vx^{(n)}$来近似$s$并得到一个经验平均值
@@ -67,19 +67,19 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\Vx)]
 \end{align}
 只需要满足各个单项的方差，即$\text{Var}[f(\Vx^{(i)})]$有界。
 详细地说，我们考虑当$n$增大时$\hat{s}_n$的方差。
-只要$\text{Var}[f(\Vx^{(i)})]<\infty$，方差$\text{Var}[f(\Vx^{(i)})]$减小并收敛到0：
+只要$\text{Var}[f(\Vx^{(i)})]<\infty$，方差$\text{Var}[f(\RVx^{(i)})]$减小并收敛到0：
 \begin{align}
-\text{Var}[\hat{s}_n] & = \frac{1}{n^2}\sum_{i=1}^{n}\text{Var}[f(\Vx)]\\
-&  = \frac{\text{Var}[f(\Vx)]}{n}.
+\text{Var}[\hat{s}_n] & = \frac{1}{n^2}\sum_{i=1}^{n}\text{Var}[f(\RVx)]\\
+&  = \frac{\text{Var}[f(\RVx)]}{n}.
 \end{align}
 这个简单的结果启迪我们如果估计\gls{monte_carlo}均值中的不确定性或者说是\gls{monte_carlo}估计的期望误差。
 我们计算了$f(\Vx^{(i)})$的经验均值和方差，\footnote{计算无偏估计的方差时，更倾向于用计算偏差平方和除以$n-1$而非$n$。}
 然后将估计的方差除以样本数$n$来得到$\text{Var}[\hat{s}_n]$的估计。
-\firstgls{central_limit_theorem}告诉我们$\hat{s}_n$的分布收敛到以$s$为均值以$\frac{\text{Var}[f(\Vx)]}{n}$为方差的正态分布。
+\firstgls{central_limit_theorem}告诉我们$\hat{s}_n$的分布收敛到以$s$为均值以$\frac{\text{Var}[f(\RVx)]}{n}$为方差的正态分布。
 这使得我们可以利用正态分布的累积密度函数来估计$\hat{s}_n$的置信区间。
 % 583
 
-以上的所有结论都依赖于我们可以从基准分布$p(\Vx)$中轻易的采样，但是这个假设并不是一直成立的。
+以上的所有结论都依赖于我们可以从基准分布$p(\RVx)$中轻易的采样，但是这个假设并不是一直成立的。
 当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在\secref{sec:importance_sampling_chap17}会讲到。
 一种更加通用的方式是采样一系列的趋近于目标分布的估计。
 这就是\gls{mcmc}方法（见\secref{sec:markov_chain_monte_carlo_methods}）。
@@ -118,7 +118,7 @@ p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 这个方差可以表示为
 \begin{align}
 \label{eqn:variance_of_is}
-\Var [\hat{s}_q] = \Var [\frac{p(\Vx)f(\Vx)}{q(\Vx)}]/n
+\Var [\hat{s}_q] = \Var [\frac{p(\RVx)f(\RVx)}{q(\RVx)}]/n
 \end{align}
 当$q$取到
 \begin{align}
@@ -176,9 +176,9 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 \section{\glsentrytext{mcmc}方法}
 \label{sec:markov_chain_monte_carlo_methods}
 
-在许多实例中，我们希望采用\gls{monte_carlo}方法，然而往往又不存在一种直接从目标分布$p_{\text{model}}(\Vx)$中精确采样或者一个好的（方差较小的）\gls{importance_sampling}分布$q(\Vx)$。
-在深度学习的例子中，分布$p_{\text{model}}(\Vx)$往往表达成一个无向的模型。
-在这种情况下，为了从分布$p_{\text{model}}(\Vx)$中近似采样，我们引入了一种数学工具，它被命名为\firstgls{markov_chain}。
+在许多实例中，我们希望采用\gls{monte_carlo}方法，然而往往又不存在一种直接从目标分布$p_{\text{model}}(\RVx)$中精确采样或者一个好的（方差较小的）\gls{importance_sampling}分布$q(\Vx)$。
+在深度学习的例子中，分布$p_{\text{model}}(\RVx)$往往表达成一个无向的模型。
+在这种情况下，为了从分布$p_{\text{model}}(\RVx)$中近似采样，我们引入了一种数学工具，它被命名为\firstgls{markov_chain}。
 利用\gls{markov_chain}来进行\gls{monte_carlo}估计的这一类算法被称为\firstgls{mcmc}算法。
 \gls{mcmc}算法在\gls{ML}中的应用在\citep{koller-book2009}中花了大量篇幅描述。
 \gls{mcmc}算法的最标准的要求是只适用模型分布处处不为0的情况。
@@ -190,8 +190,8 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 586 end
 
 
-为了解释从\gls{energy_based_model}中采样的困难性，我们考虑一个包含两个变量的\gls{energy_based_model}的例子，记作$p(a,b)$。
-为了采$a$，我们必须先从$p(a\vert b)$中采样，为了采$b$，我们又必须从$p(b\vert a)$中采样。
+为了解释从\gls{energy_based_model}中采样的困难性，我们考虑一个包含两个变量的\gls{energy_based_model}的例子，记作$p(\RSa,\RSb)$。
+为了采$\RSa$，我们必须先从$p(\RSa\vert \RSb)$中采样，为了采$\RSb$，我们又必须从$p(\RSb\vert \RSa)$中采样。
 这似乎成了难以解释的先有鸡还是先有蛋的问题。
 \gls{directed_model}避免了这一问题因为它的图是有向无环的。
 为了以拓扑顺序完成对包含各个变量的一个样本的\firstgls{ancestral_sampling}，给定每个变量的所有父结点的条件下，这个变量是确定能够被采样的（详见\secref{sec:sampling_from_graphical_models}）。
@@ -209,7 +209,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 
 
 为了给出\gls{mcmc}方法的一些理论解释，重定义这个问题是很有用的。
-首先我们关注一些简单的情况，其中随机变量$\Vx$有可数个状态。
+首先我们关注一些简单的情况，其中随机变量$\RVx$有可数个状态。
 我们将这种状态记作正整数$x$。
 不同的整数$x$的大小对应着原始问题中$\Vx$的不同状态。
 % 587  
@@ -224,7 +224,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 
 因为我们已经用正整数$x$重定义了这个问题，我们可以用一个向量$\Vv$来描述这个概率分布$q$，并且满足
 \begin{align}
-q(x = i) = v_i
+q(\RSx = i) = v_i
 \end{align}
 % 587
 
@@ -240,7 +240,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\vert x)
 根据状态为整数的设定，我们可以将转移算子$T$表示成一个矩阵$\MA$。
 矩阵$\MA$的定义如下：
 \begin{align}
-\MA_{i,j} = T(\Vx' = i\vert \Vx = j)
+\MA_{i,j} = T(\RVx' = i\vert \RVx = j)
 \end{align}
 使用这一定义，我们可以重新写成\eqnref{eqn:transition1}。
 与之前使用$q$和$T$来理解单个状态的更新相对的是，我们现在可以使用$\Vv$和$\MA$来描述当我们更新时（并行运行的）不同个\gls{markov_chain}上的整个分布是如何变化的：
@@ -290,10 +290,10 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\vert x)
 在这种情况下，一些研究者把\gls{markov_chain}叫做\firstgls{harris_chain}，但是这两种情况我们都用\gls{markov_chain}来表示。
 通常情况下，在一些宽松的条件下，一个带有转移算子$T$的\gls{markov_chain}都会收敛到一个固定点，这个固定点可以写成如下形式：
 \begin{align}
-q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
+q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\vert \RVx)
 \end{align}
 这个方程的离散版本就是方程~\eqref{eqn:1723}。	
-当$\Vx$离散时，这个期望对应着求和，而当$\Vx$连续时，这个期望对应的是积分。
+当$\RVx$离散时，这个期望对应着求和，而当$\RVx$连续时，这个期望对应的是积分。
 % 589 head
 
 
@@ -346,7 +346,7 @@ q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
 % 590
 
 
-\firstgls{gibbs_sampling}是一种概念简单而又有效的方法来构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\Vx'\vert \Vx)$采样是通过选择一个变量$x_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
+\firstgls{gibbs_sampling}是一种概念简单而又有效的方法来构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\vert \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
 给定他们的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。
 正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\gls{RBM}的例子一样，\gls{RBM}所有的隐层结点可以被同时采样，因为在给定可见层结点的条件下他们相互条件独立。
 同样的，所有的可见层结点也可以被同时采样因为在给定隐藏层结点的情况下他们相互条件独立。
@@ -396,14 +396,14 @@ q' (\Vx') = \SetE_{\Vx\sim q}T(\Vx'\vert \Vx)
 \end{figure}
 
 
-举一个简单的例子，考虑两个变量$a$, $b$的\gls{energy_based_model}，这两个变量都是二元的，取值$+1$或者$-1$。
-如果对某个较大的正数$w$, $E(a,b) = - w a b$，那么这个模型传达了一个强烈的信息，$a$和$b$有相同的符号。
-当$a=1$时用\gls{gibbs_sampling}更新$b$。
-给定$b$时的条件分布满足$p(b=1\vert a=1) = \sigma(w)$。
+举一个简单的例子，考虑两个变量$\RSa$, $\RSb$的\gls{energy_based_model}，这两个变量都是二元的，取值$+1$或者$-1$。
+如果对某个较大的正数$w$, $E(\RSa,\RSb) = - w \RSa \RSb$，那么这个模型传达了一个强烈的信息，$\RSa$和$\RSb$有相同的符号。
+当$\RSa=1$时用\gls{gibbs_sampling}更新$\RSb$。
+给定$\RSb$时的条件分布满足$p(\RSb=1\vert \RSa=1) = \sigma(w)$。
 如果$w$的值很大，sigmoid趋近于饱和，那么$b$取到1的概率趋近于1。
-相同的道理，如果$a=-1$，那么$b$取到$-1$的概率也趋于1。
-根据模型$p_{\text{model}}(a,b)$，两个变量取一样的符号的概率几乎相等。
-根据$p_{\text{model}}(a\vert b)$，两个变量应该有相同的符号。
+相同的道理，如果$\RSa=-1$，那么$\RSb$取到$-1$的概率也趋于1。
+根据模型$p_{\text{model}}(\RSa,\RSb)$，两个变量取一样的符号的概率几乎相等。
+根据$p_{\text{model}}(\RSa\vert \RSb)$，两个变量应该有相同的符号。
 这也意味着\gls{gibbs_sampling}很难会改变这些变量的符号。
 % 592
 
