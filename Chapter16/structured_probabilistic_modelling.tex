@@ -548,7 +548,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 在这种情况下，图中隐含的条件独立性称为\firstgls{separation}。
 如果图结构显示给定变量$\SetS$的情况下变量$\SetA$与变量$\SetB$无关，
 那么我们声称给定变量$\SetS$时，变量$\SetA$与另一组变量$\SetB$\gls{separation}。
-如果两个变量$a$和$b$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
+如果两个变量$\RSa$和$\RSb$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
 如果它们之间没有路径，或者所有路径都包含可观测的变量，那么它们是\gls{separation}的。
 我们认为仅涉及到未观察到的变量的路径是``活跃''的，将包括观察到的变量的路径称为``非活跃''的。
 % 563
@@ -643,10 +643,10 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 进一步的，使用完全图（具有所有可能的边的图）来表示任何分布总是合法的。
 事实上，一些分布包含不可能用现有图形符号表示的独立性。
 特定环境下的独立（context-specific independences）指的是取决于网络中一些变量的值的独立性。
-例如，考虑一个三个二进制变量的模型：$a, b $和$c$。
-假设当$a$是0时，$b$和$c$是独立的， 但是当$a$是1时，$b$确定地等于$c$。
-当a = 1时\gls{graphical_models}需要连接b和c的边。
-当a = 0时b和c不是独立的。
+例如，考虑一个三个二进制变量的模型：$\RSa, \RSb $和$\RSc$。
+假设当$\RSa$是0时，$\RSb$和$\RSc$是独立的， 但是当$\RSa$是1时，$\RSb$确定地等于$\RSc$。
+当$\RSa = 1$时\gls{graphical_models}需要连接$\RSb$和$\RSc$的边。
+当$\RSa = 0$时$\RSb$和$\RSc$不是独立的。
 % 564
 
 一般来说，当独立性不存在的时候，图不会显示独立性。 
@@ -709,10 +709,10 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 \gls{directed_model}能够使用一种\gls{undirected_model}不能完美地表示的特定类型的子结构。
 这个子结构被称为\firstgls{immorality}。
-这种结构出现在当两个随机变量$a$和$b$都是第三个随机变量$c$的父结点，并且不存在任一方向上直接连接a和b的边的时候。
+这种结构出现在当两个随机变量$\RSa$和$\RSb$都是第三个随机变量$\RSc$的父结点，并且不存在任一方向上直接连接a和b的边的时候。
 （``\gls{immorality}''的名字可能看起来很奇怪; 它在\gls{graphical_models}文献中被创造为一个关于未婚父母的笑话。）
 为了将\gls{directed_model}图$\CalD$转换为\gls{undirected_model}，我们需要创建一个新图$\CalU$。
-对于每对变量$x$和$y$，如果存在连接$x$中的$x$和$y$的有向边（在任一方向上），或者如果$x$和$y$都是图$\CalD$中另一个变量$z$的父节点，则添加将$x$和$y$连接到$\CalU$的无向边。 
+对于每对变量$\RSx$和$\RSy$，如果存在连接$\RSx$中的$\RSx$和$\RSy$的有向边（在任一方向上），或者如果$\RSx$和$\RSy$都是图$\CalD$中另一个变量$\RSz$的父节点，则添加将$\RSx$和$\RSy$连接到$\CalU$的无向边。 
 得到的图$\CalU$被称为是\firstgls{moralized_graph}。
 关于一个将\gls{directed_graphical_model}转化为\gls{undirected_model}的例子可以参见\figref{fig:dm_to_um}。
 % 567
@@ -803,11 +803,11 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 570  
 
 
-其基本思想是将图中的变量$x_i$使用拓扑排序，使得对于所有$i$和$j$，
-如果$x_i$是$x_j$的父亲结点，则j大于i。
+其基本思想是将图中的变量$\RSx_i$使用拓扑排序，使得对于所有$i$和$j$，
+如果$\RSx_i$是$\RSx_j$的父亲结点，则j大于i。
 然后可以按此顺序对变量进行采样。
-换句话说，我们可以首先采$x_1\sim P(x_1)$，然后采$x_2\sim P(x_2\vert Pa_{\CalG}(x_2))$，以此类推，直到最后我们采$x_n\sim P(x_n\vert Pa_{\CalG}(x_n))$。
-只要每个条件分布$x_i\sim P(x_i\vert Pa_{\CalG}(x_i))$都很容易从中采样，那么很容易从整个模型中抽样。
+换句话说，我们可以首先采$\RSx_1\sim P(\RSx_1)$，然后采$\RSx_2\sim P(\RSx_2\vert Pa_{\CalG}(\RSx_2))$，以此类推，直到最后我们采$\RSx_n\sim P(\RSx_n\vert Pa_{\CalG}(\RSx_n))$。
+只要每个条件分布$\RSx_i\sim P(\RSx_i\vert Pa_{\CalG}(\RSx_i))$都很容易从中采样，那么很容易从整个模型中抽样。
 拓扑排序操作保证我们可以按照\eqnref{eqn:161}中的条件分布的顺序依次采样。
 如果没有拓扑排序，我们可能会尝试在其父节点可用之前对该变量进行抽样。
 % 571  
@@ -839,10 +839,10 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 每个变量与每个其他变量相互作用，因此对于抽样过程没有明确的起点。
 不幸的是，从\gls{undirected_model}模型中抽取样本是一个昂贵的过程。
 理论上最简单的方法是\gls{gibbs_sampling}。
-假设我们在随机变量$\Vx$（一个$n$维向量）上有一个\gls{graphical_models}。 
-我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(x_i \vert x_{-i})$中抽样。
-由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以仅对$x_i$的邻居条件化。
-不幸的是，在我们遍历\gls{graphical_models}一次并采样 所有n个变量之后，我们仍然无法得到一个来自$p(\Vx)$的客观样本。
+假设我们在随机变量$\RVx$（一个$n$维向量）上有一个\gls{graphical_models}。 
+我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \vert \RSx_{-i})$中抽样。
+由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以仅对$\RSx_i$的邻居条件化。
+不幸的是，在我们遍历\gls{graphical_models}一次并采样 所有n个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
 相反，我们必须重复该过程并使用它们的邻居的更新的值对所有$n$个变量重新取样。
 在多次重复之后，该过程渐近地收敛到目标分布。
 很难确定样本何时达到期望分布的足够精确的近似。
@@ -879,13 +879,13 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \label{sec:learning_about_dependencies}
 % 572
 
-良好的生成模型需要准确地捕获所观察到的或``可见''变量$\Vv$上的分布。
-通常$\Vv$的不同元素彼此高度依赖。
+良好的生成模型需要准确地捕获所观察到的或``可见''变量$\RVv$上的分布。
+通常$\RVv$的不同元素彼此高度依赖。
 在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个潜在的或``隐藏''变量$\Vh$。
-然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$v_i$和$v_j$间接依赖，$v_i$和$\Vh$之间直接依赖，$\Vv$和$h_i$直接依赖)。
+然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_i$直接依赖)。
 % 572  end 
 
-一个好的不包含任何潜在变量的$\Vv$的模型需要在\gls{bayesian_network}中的每个节点具有非常大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
+一个好的不包含任何潜在变量的$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有非常大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
 但是代表这些高阶的交互是昂贵的，首先从计算角度上，存储在存储器中的参数的数量是\gls{clique}中的成员的数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
 % 573  head  
 
@@ -907,14 +907,14 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 573 
 
 
-隐含变量还有一个额外的优势，即能够高效的描述$p(\Vv)$。
-新变量$\Vh$还提供了$\Vv$的替代表示。
+隐含变量还有一个额外的优势，即能够高效的描述$p(\RVv)$。
+新变量$\RVh$还提供了$\RVv$的替代表示。
 例如，如\secref{sec:mixtures_of_distributions}所示，高斯混合模型学习了一个隐含变量，这个隐含变量对应于特征是从哪一个混合体中抽出。
 这意味着高斯混合模型中的隐变量可以用于做分类。
 在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的隐含变量的。
 其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
 许多方法通过学习隐含变量来完成特征学习。
-通常，给定$\Vv$和$\Vh$，实验观察显示$\SetE[\Vh\vert\Vv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
+通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\vert\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
 % 573
 
 \section{推断和近似推断}
@@ -924,16 +924,16 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 我们可以使用概率模型的主要方法之一是提出关于变量如何相互关联的问题。 
 给定一组医学测试，我们可以询问患者可能患有什么疾病。
-在隐含变量模型中，我们可能需要提取能够描述$\Vv$的特征$\SetE[\Vh\vert\Vv]$。
+在隐含变量模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \vert \RVv]$。
 有时我们需要解决这些问题来执行其他任务。 
 我们经常使用\gls{MLE}来训练我们的模型。
 由于
 \begin{align}
 \label{eqn:169}
-\log p(\Vv) = \SetE_{\Vh \sim p(\Vh\vert \Vv)} [\log p(\Vh,\Vv) -  \log p(\Vh\vert\Vv)]
+\log p(\Vv) = \SetE_{\RVh \sim p(\RVh\vert \Vv)} [\log p(\Vh,\Vv) -  \log p(\Vh\vert\Vv)]
 \end{align}
-学习过程中，我们经常想要计算$p(\Vh\vert\Vv)$。
-所有这些都是推理问题的例子，其中我们必须预测给定其他变量的情况下一些变量的值，或者在给定其他变量的值的情况下预测一些变量的概率分布。
+学习过程中，我们经常想要计算$p(\RVh\vert\Vv)$。
+所有这些都是\firstgls{inference}问题的例子，其中我们必须预测给定其他变量的情况下一些变量的值，或者在给定其他变量的值的情况下预测一些变量的概率分布。
 % 574
 
 不幸的是，对于大多数有趣的深层模型，这些推理问题都是难以处理的，即使我们使用结构化的\gls{graphical_models}来简化它们。
@@ -958,7 +958,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 
 这促使我们使用近似推理。
-在\gls{DL}中，这通常涉及变分推理，其中通过寻求尽可能接近真实分布的近似分布$q(\Vh\vert\Vv)$来逼近真实分布$p(\Vh\vert\Vv)$。
+在\gls{DL}中，这通常涉及变分推理，其中通过寻求尽可能接近真实分布的近似分布$q(\RVh\vert\RVv)$来逼近真实分布$p(\RVh\vert\Vv)$。
 这个技术在\chapref{chap:approximate_inference}中有深入的描述。
 % 574 end
 
@@ -1010,7 +1010,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 \gls{graphical_models}的传统方法通常旨在保持精确推断的可追踪性。
 当这个约束太强的时候，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的近似推理算法。
 这两种方法通常在连接非常稀疏的图上有很好的效果。
-相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$v_i$连接到非常多的隐藏单元$h_j$上，从而使得$\Vh$可以获得一个$v_i$的分布式表示（也可能是其他几个可观察变量）。
+相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$\RSv_i$连接到非常多的隐藏单元$\RSh_j$上，从而使得$\RVh$可以获得一个$\RSv_i$的分布式表示（也可能是其他几个可观察变量）。
 分布式表示具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，分布式表示有一个缺点就是对于精确推断和循环信任传播等传统技术来说不能产生足够稀疏的图。
 结果，\gls{graphical_models}和深度图模型的最大的区别之一就是\gls{DL}中从来不会使用\gls{loopy_belief_propagation}。
 相反的，许多\gls{DL}模型可以用来加速\gls{gibbs_sampling}或者变分推断。
@@ -1070,12 +1070,12 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
 对\glssymbol{RBM}结构的限制产生了好的属性
 \begin{align}
 \label{eqn:1611}
-p(\Vh\vert\Vv) = \prod_i p(h_i\vert \Vv)
+p(\RVh\vert\RVv) = \prod_i p(\RSh_i\vert \RVv)
 \end{align}
 以及
 \begin{align}
 \label{eqn:1612}
-p(\Vv\vert\Vh) = \prod_i p(v_i\vert \Vh)
+p(\RVv\vert\RVh) = \prod_i p(\RSv_i\vert \RVh)
 \end{align}
 % 578 head
 
@@ -1085,8 +1085,8 @@ p(\Vv\vert\Vh) = \prod_i p(v_i\vert \Vh)
 \begin{align}
 \label{eqn:1613}
 \begin{aligned}
-p(h_i = 1\vert\Vv) = \sigma\big(\Vv^{\top}\MW_{:,i} + b_i\big)\\
-p(h_i = 0\vert\Vv) = 1 - \sigma\big(\Vv^{\top}\MW_{:,i} + b_i\big)\\
+p(\RSh_i = 1\vert\RVv) = \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
+p(\RSh_i = 0\vert\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
 \end{aligned}
 \end{align}
 结合这些属性可以得到有效的\gls{block_gibbs_sampling}，它在同时采样所有$\Vh$和同时采样所有$\Vv$之间交替。
@@ -1107,14 +1107,14 @@ p(h_i = 0\vert\Vv) = 1 - \sigma\big(\Vv^{\top}\MW_{:,i} + b_i\big)\\
 由于\gls{energy_function}本身只是参数的线性函数，很容易获取\gls{energy_function}的导数。 例如，
 \begin{align}
 \label{eqn:1615}
-\frac{\partial}{\partial W_{i,j}} E(\Vv,\Vh) = - v_i h_j
+\frac{\partial}{\partial W_{i,j}} E(\RVv,\RVh) = - \RSv_i \RSh_j
 \end{align}
 这两个属性，高效的\gls{gibbs_sampling}和导数计算，使训练过程非常方便。
 在\chapref{chap:confronting_the_partition_function}中，我们将看到，可以通过计算应用于来自模型的样本的这种导数来训练\gls{undirected_model}。
 % 579
 
 训练模型可以得到数据$\Vv$的表示$\Vh$。
-我们可以经常使用$\SetE_{\Vh\sim p(\Vh\vert\Vv)}[\Vh]$ 作为一组描述$\Vv$的特征。
+我们可以经常使用$\SetE_{\RVh\sim p(\RVh\vert\Vv)}[\Vh]$ 作为一组描述$\Vv$的特征。
 % 579
 
 

@@ -75,17 +75,17 @@
 
 \begin{align}
 \CalL(\Vv,{\Vtheta},q) = & \log p(\Vv;{\Vtheta})- D_{\text{KL}}(q(\Vh\vert\Vv)\Vert p(\Vh\vert\Vv;{\Vtheta})) \\
-= & \log p(\Vv;{\Vtheta}) - \SetE_{\Vh\sim q}\log \frac{q(\Vh\vert\Vv)}{p(\Vh\vert\Vv)} \\
-= & \log p(\Vv;{\Vtheta}) -  \SetE_{\Vh\sim q} \log \frac{q(\Vh\vert\Vv) }{ \frac{p(\Vh,\Vv;{\Vtheta})}{p(\Vv; {\Vtheta})} } \\
-= & \log p(\Vv; {\Vtheta}) -  \SetE_{\Vh\sim q} [\log q(\Vh\vert\Vv) - \log {p(\Vh,\Vv; {\Vtheta})} + \log {p(\Vv; {\Vtheta})} ]\\
-= & - \SetE_{\Vh\sim q}[\log q(\Vh\vert\Vv) - \log {p(\Vh,\Vv;{\Vtheta})}]
+= & \log p(\Vv;{\Vtheta}) - \SetE_{\RVh\sim q}\log \frac{q(\Vh\vert\Vv)}{p(\Vh\vert\Vv)} \\
+= & \log p(\Vv;{\Vtheta}) -  \SetE_{\RVh\sim q} \log \frac{q(\Vh\vert\Vv) }{ \frac{p(\Vh,\Vv;{\Vtheta})}{p(\Vv; {\Vtheta})} } \\
+= & \log p(\Vv; {\Vtheta}) -  \SetE_{\RVh\sim q} [\log q(\Vh\vert\Vv) - \log {p(\Vh,\Vv; {\Vtheta})} + \log {p(\Vv; {\Vtheta})} ]\\
+= & - \SetE_{\RVh\sim q}[\log q(\Vh\vert\Vv) - \log {p(\Vh,\Vv;{\Vtheta})}]
 \end{align}
 % 625
 
 
 这也给出了\glssymbol{ELBO}的标准的定义：
 \begin{align}
-\CalL(\Vv,{\Vtheta},q) = \SetE_{\Vh\sim q}[\log p(\Vh , \Vv)] + H(q)
+\CalL(\Vv,{\Vtheta},q) = \SetE_{\RVh\sim q}[\log p(\Vh , \Vv)] + H(q)
 \end{align}
 
 
@@ -192,7 +192,7 @@
 我们回过头来看看\secref{sec:inference_as_optimization}中所描述的精确推断，它指的是关于一个不受限的$q$分布使用精确的优化算法来最大化
 \begin{align}
 \CalL(\Vv,{\Vtheta},q)
- = \SetE_{\Vh\sim q}[\log q(\Vh , \Vv)] + H(q).
+ = \SetE_{\RVh\sim q}[\log q(\Vh , \Vv)] + H(q).
 \end{align}
 我们通过限定$q$分布属于某个分布族，能够使得\gls{MAP}推断成为一种形式的近似推断。
 具体的说，我们令$q$分布满足一个\gls{dirac_distribution}：
@@ -387,7 +387,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 		= &  \frac{\frac{\partial}{\partial b_i} \sum_{\Vh}^{} p(\Vh) p(\Vv\vert \Vh)  }{p(\Vv)}\\
 		= &  \frac{ \sum_{\Vh}^{}  p(\Vv\vert \Vh) \frac{\partial}{\partial b_i} p(\Vh) }{p(\Vv)}\\
 		= &  \sum_{\Vh}^{}  p(\Vh\vert \Vv) \frac{  \frac{\partial}{\partial b_i} p(\Vh) }{p(\Vh)}\\
-		= & \SetE_{\Vh\sim p(\Vh\vert\Vv)} \frac{\partial}{\partial b_i}\log p(\Vh)
+		= & \SetE_{\RVh\sim p(\Vh\vert\Vv)} \frac{\partial}{\partial b_i}\log p(\Vh)
 \end{align}
 % 632 end
 
@@ -443,11 +443,11 @@ $p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 \begin{align}
 \label{eqn:1936}
 & \CalL(\Vv,\Vtheta,q)\\
- = & \SetE_{\Vh\sim q}[\log p(\Vh,\Vv)] + H(q)\\
- = & \SetE_{\Vh\sim q}[\log p(\Vh) + \log p(\Vv\vert\Vh) - \log q(\Vh\vert\Vv)]\\
-= & \SetE_{\Vh\sim q}\Big[\sum_{i=1}^{m}\log p(h_i) + \sum_{i=1}^{n} \log p(v_i\vert\Vh) - \sum_{i=1}^{m}\log q(h_i\vert\Vv)\Big]\\
+ = & \SetE_{\RVh\sim q}[\log p(\Vh,\Vv)] + H(q)\\
+ = & \SetE_{\RVh\sim q}[\log p(\Vh) + \log p(\Vv\vert\Vh) - \log q(\Vh\vert\Vv)]\\
+= & \SetE_{\RVh\sim q}\Big[\sum_{i=1}^{m}\log p(h_i) + \sum_{i=1}^{n} \log p(v_i\vert\Vh) - \sum_{i=1}^{m}\log q(h_i\vert\Vv)\Big]\\
 = &  \sum_{i=1}^{m}\Big[\hat{h}_i(\log \sigma(b_i) - \log \hat{h}_i) + (1 - \hat{h}_i)(\log \sigma(-b_i) - \log (1-\hat{h}_i))\Big] \\
-& +  \SetE_{\Vh\sim q} \Bigg[ \sum_{i=1}^{n}\log \sqrt{\frac{\beta_i}{2\pi}}\exp(-\frac{\beta_i}{2}(v_i - \MW_{i,:}\Vh)^2)\Bigg] \\
+& +  \SetE_{\RVh\sim q} \Bigg[ \sum_{i=1}^{n}\log \sqrt{\frac{\beta_i}{2\pi}}\exp(-\frac{\beta_i}{2}(v_i - \MW_{i,:}\Vh)^2)\Bigg] \\
 = &  \sum_{i=1}^{m}\Big[\hat{h}_i(\log \sigma(b_i) - \log \hat{h}_i) + (1 - \hat{h}_i)(\log \sigma(-b_i) - \log (1-\hat{h}_i))\Big] \\
 & + \frac{1}{2} \sum_{i=1}^{n} \Bigg[ \log {\frac{\beta_i}{2\pi}} - \beta_i \Bigg(v_i^2 - 2 v_i \MW_{i,:}\hat{\Vh} + \sum_{j}\Big[W^2_{i,j}\hat{h}_j + \sum_{k \neq j}W_{i,j}W_{i,k}\hat{h}_j\hat{h}_k \Big] \Bigg) \Bigg] 
 \end{align}
@@ -749,15 +749,15 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 展开方程~\eqref{eqn:1956}，我们可以得到
 \begin{align}
 \label{eqn:1962}
-& \tilde{q}(h_1\vert\Vv)\\ = & \exp(\SetE_{h_2\sim q(h_2\vert\Vv)} \log \tilde{p}(\Vv,\Vh))\\
-= & \exp\Big( -\frac{1}{2} \SetE_{h_2\sim q(h_2\vert\Vv)} [h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 \\
+& \tilde{q}(h_1\vert\Vv)\\ = & \exp(\SetE_{\RSh_2\sim q(\RSh_2\vert\Vv)} \log \tilde{p}(\Vv,\Vh))\\
+= & \exp\Big( -\frac{1}{2} \SetE_{\RSh_2\sim q(\RSh_2\vert\Vv)} [h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 \\
 & -2vh_1w_1 - 2vh_2w_2 + 2h_1w_1h_2w_2]\Big)	
 \end{align}
 % 641 
 
 
 % 641 
-从这里，我们可以发现其中我们只需要从$q(h_2\vert \Vv)$中获得两个值：$\SetE_{h_2\sim q(h\vert\Vv)}[h_2]$和$\SetE_{h_2\sim q(h\vert\Vv)}[h_2^2]$。
+从这里，我们可以发现其中我们只需要从$q(h_2\vert \Vv)$中获得两个值：$\SetE_{\RSh_2\sim q(\RSh\vert\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\vert\Vv)}[h_2^2]$。
 把这两项记作$\langle h_2 \rangle$和$\langle h_2^2 \rangle$，我们可以得到：
 \begin{align}
 \label{eqn:1966}
@@ -793,7 +793,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 当训练参数时，变分学习增加
 \begin{align}
 \label{eqn:1968}
-	\SetE_{\Vh \sim q}\log p(\Vv,\Vh)
+	\SetE_{\RVh \sim q}\log p(\Vv,\Vh)
 \end{align}
 % 642 
 
