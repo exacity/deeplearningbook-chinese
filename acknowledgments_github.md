@@ -60,3 +60,10 @@
 2016年12月14日
 --------------
  - @fairmiracle ==> Chapter7 \norm 括号打错
+
+
+
+2016年12月15日
+--------------
+ - @huangpingchun ==> Chapter5 "supervised"误译为"无监督"
+ - @Bojian ==> Chapter5 "supervised"误译为"无监督"，"三维空间中球状流形"翻译建议
