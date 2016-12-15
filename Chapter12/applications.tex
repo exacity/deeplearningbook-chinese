@@ -81,7 +81,7 @@
 % 433
 
 
-使用显卡来训练\gls{NN}的热度在\firstall{GP_GPU}的发布以后开始爆炸性增长。
+使用显卡来训练\gls{NN}的热度在\glssymbol{GP_GPU}的发布以后开始爆炸性增长。
 这种\gls{GP_GPU}可以执行任意的代码，而并非渲染任务。
 NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任意的代码。
 由于相对简便的编程语言，强大的并行能力以及巨大的内存带宽，\gls{GP_GPU}是我们\gls{NN}训练的理想平台。
@@ -236,7 +236,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 这种动态路由方法可以理解为\firstgls{attention_mechanism} \citep{Olshausen1993}。
 到目前为止，硬开关的使用在大规模应用中还没有被证明是有效的。
 较为先进的方法一般采用对许多可能的输入使用加权平均，因此不能收获\gls{dynamic_structure}的所有可能的计算益处。
-先进的\gls{attention_mechanism}在\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}中描述。
+先进的\gls{attention_mechanism}在\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}节中描述。
 % 438
 
 
@@ -470,7 +470,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 \firstall{ASR}任务指的是构造一个函数$f^*_{\text{ASR}}$，使得它能够在给定语音序列$\MX$的情况下计算最有可能的$\Vy$序列：
 \begin{align}
 \label{eqn:124}
-f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\Vy \vert \RMX = \MX)
+f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \vert \RMX = \MX)
 \end{align}
 其中$P^*$是给定输入值$\MX$时对应目标$\Vy$的条件分布。
 % 446
