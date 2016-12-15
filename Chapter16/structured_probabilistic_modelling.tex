@@ -128,7 +128,7 @@
 	% 552  end
 	
 	\item 运行时间：推断的开销。
-	假设我们需要完成一个推断的任务，其中我们通过对联合分布$p(\Vx)$来计算某些其它的分布，比如说边缘分布$p(x_1)$或者是条件分布$p(x_2\vert x_1)$。
+	假设我们需要完成一个推断的任务，其中我们通过对联合分布$P(\Vx)$来计算某些其它的分布，比如说边缘分布$P(x_1)$或者是条件分布$P(x_2\vert x_1)$。
 	计算这样的分布需要对整个表格的某些项进行求和操作，因此这样的操作的运行时间和上述的高昂的内存开销是一个级别的。
 	% 553 head
 	
@@ -219,8 +219,8 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554
 
 
-我们继续\secref{sec:the_challenge_of_unstructured_modelling}所讲的接力赛的例子，我们假设Alice的完成时间为$t_0$，Bob的完成时间为$t_1$，Carol的完成时间为$t_2$。
-就像我们之前看到的一样，$t_1$的估计是依赖于$t_0$的，$t_2$的估计是依赖于$t_1$的，但是仅仅间接的依赖于$t_0$。
+我们继续\secref{sec:the_challenge_of_unstructured_modelling}所讲的接力赛的例子，我们假设Alice的完成时间为$\RSt_0$，Bob的完成时间为$\RSt_1$，Carol的完成时间为$\RSt_2$。
+就像我们之前看到的一样，$\RSt_1$的估计是依赖于$\RSt_0$的，$\RSt_2$的估计是依赖于$\RSt_1$的，但是仅仅间接的依赖于$\RSt_0$。
 我们用一个\gls{directed_graphical_model}来建模这种关系，就如在\figref{fig:relay_race_graph}中看到的一样。
 % 554 end
 
@@ -236,11 +236,11 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 
 
 % 555 head 
-正式的讲，变量$\Vx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution}$p(x_i\vert P_{a\CalG}(x_i))$来定义的，其中$P_{a\CalG}(x_i)$表示结点$x_i$的所有父结点。
-$\Vx$的概率分布可以表示为
+正式的讲，变量$\RVx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution}$p(\RSx_i\vert P_{a\CalG}(\RSx_i))$来定义的，其中$P_{a\CalG}(\RSx_i)$表示结点$\RSx_i$的所有父结点。
+$\RVx$的概率分布可以表示为
 \begin{align}
 \label{eqn:161}
-p(\Vx) = \prod_{i} p(x_i\vert P_{a\CalG}(x_i))
+p(\RVx) = \prod_{i} p(\RSx_i\vert P_{a\CalG}(\RSx_i))
 \end{align}
 % 555 
 
@@ -248,7 +248,7 @@ p(\Vx) = \prod_{i} p(x_i\vert P_{a\CalG}(x_i))
 在之前所述的接力赛的例子中，这意味着概率分布可以被表示为
 \begin{align}
 \label{eqn:162}
-p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
+p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\vert \RSt_0)p(\RSt_2\vert \RSt_1)
 \end{align}
 % 555 
 
@@ -259,9 +259,9 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 
 
 假设我们采用从第0分钟到第10分钟每6秒一块的方式离散化的表示时间。
-这使得$t_0$，$t_1$和$t_2$都是一个有100个取值可能的离散变量。
-如果我们尝试着用一个表来表示$(t_0,t_1,t_2)$，那么我们需要存储$999,999$个值（$t_0$的取值100 $\times$ $t_1$的取值100 $\times$ $t_2$的取值100 减去1，所有的概率的和为1，所以其中有1个值的存储是多余的）。
-反之，如果我们用一个表来记录条件概率分布，那么记录$t_0$的分布需要存储99个值，给定$t_0$情况下$t_1$的分布需要存储9900个值,给定$t_1$情况下$t_2$的分布也需要存储9900个值。
+这使得$\RSt_0$，$\RSt_1$和$\RSt_2$都是一个有100个取值可能的离散变量。
+如果我们尝试着用一个表来表示$(\RSt_0,\RSt_1,\RSt_2)$，那么我们需要存储$999,999$个值（$\RSt_0$的取值100 $\times$ $\RSt_1$的取值100 $\times$ $\RSt_2$的取值100 减去1，所有的概率的和为1，所以其中有1个值的存储是多余的）。
+反之，如果我们用一个表来记录条件概率分布，那么记录$\RSt_0$的分布需要存储99个值，给定$\RSt_0$情况下$\RSt_1$的分布需要存储9900个值,给定$\RSt_1$情况下$\RSt_2$的分布也需要存储9900个值。
 加起来总共需要存储$19, 899$个值。
 这意味着使用\gls{directed_graphical_model}将需要存储的参数的个数减少了超过50倍！
 % 555 
@@ -286,11 +286,11 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 比如说，我们可以假设无论Alice的表现如何，Bob总是跑的一样快（实际上，Alice的表现很大概率的会影响Bob的表现，这取决于Bob的性格，如果在之前的比赛中Alice跑的特别快，这有可能鼓励Bob更加努力，当然这也有可能使得Bob懒惰）。
 那么Alice对Bob的唯一影响就是在计算Bob的完成时间时需要加上Alice的时间。
 这个假设使得我们所需要的参数量从$O(k^2)$降到了$O(k)$。
-然而，值得注意的是在这个假设下$t_0$和$t_1$仍然是直接相关的，因为$t_1$表示的是Bob完成的时间，并不是他跑的时间。
-这也意味着\gls{graphical_models}中会有一个从$t_0$指向$t_1$的箭头。
-``Bob的个人跑步时间相对于其它因素是独立的''这个假设无法在$t_0,t_1,t_2$的\gls{graphical_models}中被表示出来。
+然而，值得注意的是在这个假设下$\RSt_0$和$\RSt_1$仍然是直接相关的，因为$\RSt_1$表示的是Bob完成的时间，并不是他跑的时间。
+这也意味着\gls{graphical_models}中会有一个从$\RSt_0$指向$\RSt_1$的箭头。
+``Bob的个人跑步时间相对于其它因素是独立的''这个假设无法在$\RSt_0,\RSt_1,\RSt_2$的\gls{graphical_models}中被表示出来。
 我们只能将这个关系表示在条件分布中。
-这个条件分布不再是一个大小为$k\times k-1$的分别对应着$t_0, t_1$的表格，而是一个包含了$k-1$个参数的略复杂的公式。
+这个条件分布不再是一个大小为$k\times k-1$的分别对应着$\RSt_0,  \RSt_1$的表格，而是一个包含了$k-1$个参数的略复杂的公式。
 \gls{directed_graphical_model}并不能对我们如何定义条件分布做出任何限制。
 它只能定义哪些变量之间存在着\gls{dependency}关系。
 % 556  16.2 to 
@@ -303,7 +303,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 
 
 \gls{directed_graphical_model}为我们提供了一个描述\gls{structured_probabilistic_models}的语言。
-而另一种常见的语言则是\firstgls{undirected_model}，也叫做\firstgls{MRF}或者是\firstgls{markov_network} \citep{kindermann-book-1980}。
+而另一种常见的语言则是\firstgls{undirected_model}，也叫做\firstall{MRF}或者是\firstgls{markov_network} \citep{kindermann-book-1980}。
 就像它们的名字所说的那样，\gls{undirected_model}中所有的边都是没有方向的。
 % 556 end
 
@@ -335,7 +335,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 % 557 
 
 
-我们把对应你的健康的随机变量记住$h_y$，对应你的室友健康状况的随机变量记住$h_r$，你的同事健康的变量记住$h_c$。
+我们把对应你的健康的随机变量记住$\RSh_y$，对应你的室友健康状况的随机变量记住$\RSh_r$，你的同事健康的变量记住$\RSh_c$。
 \figref{fig:cold_undirected_graph}表示来这种关系。
 % 557 end
 
@@ -356,7 +356,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 合在一起他们定义了\firstgls{unnormalized_probability_function}：
 \begin{align}
 \label{eqn:163}
-\tilde{p}(\Vx) = \prod_{\CalC\in\CalG} 
+\tilde{p}(\RVx) = \prod_{\CalC\in\CalG} 
 \phi(\CalC)
 \end{align}
 % 558 head
@@ -381,15 +381,16 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 
 
 在你，你的室友和同事之间的感冒传染的例子中包含了两个\gls{clique}。
-一个\gls{clique}包含了$h_y$和$h_c$。
+一个\gls{clique}包含了$\RSh_y$和$\RSh_c$。
 这个\gls{clique}的\gls{factor}可以通过一个表来定义，可能取到下面的值：
+
 % \begin{table*}[!hbp]
 	% \centering
-	\begin{tabular}{c|cc}
-		& $h_y = 0$ & $h_y = 1$ \\ \hline
-		$h_c = 0$ & 2 & 1 \\
-		$h_c = 1$  & 1 & 10 \\
-	\end{tabular}
+\begin{tabular}{c|cc}
+		& $\RSh_y = 0$ & $\RSh_y = 1$ \\ \hline
+		$\RSh_c = 0$ & 2 & 1 \\
+		$\RSh_c = 1$  & 1 & 10 \\
+\end{tabular}
 % \end{table*}
 % 558
 
@@ -401,7 +402,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 % 559 head  
 
 
-为了完整的定义这个模型，我们需要对包含$h_y$和$h_r$的\gls{clique}定义类似的\gls{factor}。
+为了完整的定义这个模型，我们需要对包含$\RSh_y$和$\RSh_r$的\gls{clique}定义类似的\gls{factor}。
 % 559 head
 
 
@@ -414,11 +415,11 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 尽管这个\gls{unnormalized_probability_function}处处不为零，我们仍然无法保证它的概率之和或者积分为1。
 为了得到一个有效的概率分布，我们需要使用一个归一化的概率分布\footnote{一个通过归一化\gls{clique_potential}的乘积的分布通常被称作是\gls{gibbs_distribution}}：
 \begin{align}
-p(\Vx) = \frac{1}{Z}\tilde{p}(\Vx)
+p(\RVx) = \frac{1}{Z}\tilde{p}(\RVx)
 \end{align}
 其中，$Z$是使得所有的概率之和或者积分为1 的常数，并且满足：
 \begin{align}
-Z = \int \tilde{p}(\Vx)d\Vx
+Z = \int \tilde{p}(\RVx)d\RVx
 \end{align}
 当函数$\phi$固定的时候，我们可以把$Z$当成是一个常数。
 值得注意的是如果函数$\phi$带有参数时，那么$Z$是这些参数的一个函数。
@@ -427,7 +428,7 @@ Z = \int \tilde{p}(\Vx)d\Vx
 % 559 
 
 
-由于$Z$通常是由对所有的可能的$\Vx$的状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。
+由于$Z$通常是由对所有的可能的$\RVx$的状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。
 为了获得一个\gls{undirected_model}的归一化的概率分布，模型的结构和函数$\phi$的定义通常需要特殊的设计从而使得能够高效的计算$Z$。
 在\gls{DL}中，$Z$通常是难以处理的。
 由于$Z$难以精确的计算出，我们只能使用一些近似的方法。
@@ -446,20 +447,20 @@ Z = \int x^2 dx
 由于这个积分是发散的，所以不存在一个对应着这个势能函数的概率分布。
 有时候$\phi$函数的某些参数的选择可以决定相应的概率分布能否存在。
 比如说，对$\phi$函数$\phi(x;\beta) = \text{exp}(-\beta x^2)$来说，参数$\beta$决定了归一化常数$Z$是否存在。
-一个正的$\beta$使得$\phi$函数是一个关于$x$的高斯分布，但是一个非正的参数$\beta$则使得$\phi$不可能归一化。
+一个正的$\beta$使得$\phi$函数是一个关于$\RSx$的高斯分布，但是一个非正的参数$\beta$则使得$\phi$不可能归一化。
 
 
 % P560   
 \gls{directed_model}和\gls{undirected_model}之间的一个重要的区别就是\gls{directed_model}是通过从起始点的概率分布直接定义的，反之\gls{undirected_model}的定义显得更加宽松，通过$\phi$函数转化为概率分布而定义。
 这和我们处理这些建模问题的直觉相反。
 当我们处理\gls{undirected_model}时需要牢记一点，每一个变量的定义域对于$\phi$函数所对应的概率分布有着重要的影响。
-举个例子，我们考虑一个$n$维的向量$\Vx$以及一个由偏置向量$\Vb$参数化的\gls{undirected_model}。
-假设$\Vx$的每一个元素对应着一个\gls{clique}，并且满足$\phi^{(i)}(x_i) = \exp(b_ix_i)$。
+举个例子，我们考虑一个$n$维的向量$\RVx$以及一个由偏置向量$\Vb$参数化的\gls{undirected_model}。
+假设$\RVx$的每一个元素对应着一个\gls{clique}，并且满足$\phi^{(i)}(\RSx_i) = \exp(b_i\RSx_i)$。
 在这种情况下概率分布是怎么样的呢？
-答案是我们无法确定，因为我们并没有指定$\Vx$的定义域。
-如果$\Vx$满足$\Vx \in \SetR^n$，那么对于归一化常数$Z$的积分是发散的，这导致了对应的概率分布是不存在的。
-如果$\Vx\in\{0,1\}^n$，那么$p(\Vx)$可以被分解成$n$个独立的分布，并且满足$p(x_i=1) = \text{sigmoid}(b_i)$。
-如果$\Vx$的定义域是基本单位向量的集合$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$，那么$p(x) = \text{softmax}(\Vb)$，因此一个较大的$b_i$的值会降低所有的$p(x_j = 1)$的概率（其中$j\neq i$）。
+答案是我们无法确定，因为我们并没有指定$\RVx$的定义域。
+如果$\RVx$满足$\RVx \in \SetR^n$，那么对于归一化常数$Z$的积分是发散的，这导致了对应的概率分布是不存在的。
+如果$\RVx\in\{0,1\}^n$，那么$p(\RVx)$可以被分解成$n$个独立的分布，并且满足$p(\RSx_i=1) = \text{sigmoid}(b_i)$。
+如果$\RVx$的定义域是基本单位向量的集合$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$，那么$p(\RSx) = \text{softmax}(\Vb)$，因此一个较大的$b_i$的值会降低所有的$p(\RSx_j = 1)$的概率（其中$j\neq i$）。
 通常情况下，通过特殊设计变量的定义域，能够使得一个相对简单的$\phi$函数可以获得一个相对复杂的表达。
 我们会在\secref{sec:convolutional_boltzmann_machines}中讨论这个想法的实际应用。
 % P560   
@@ -474,10 +475,10 @@ Z = \int x^2 dx
 使这个条件满足的一种简单的方式是使用\firstgls{energy_based_model}，其中
 \begin{align}
 \label{eqn:167}
-\tilde{p}(\Vx) = \exp(-E(\Vx))
+\tilde{p}(\RVx) = \exp(-E(\RVx))
 \end{align}
-$E(\Vx)$被称作是\firstgls{energy_function}。
-对所有的$z$ $\exp(z)$都是正的，这保证了没有一个\gls{energy_function}会使得某一个状态$\Vx$的概率为0。
+$E(\RVx)$被称作是\firstgls{energy_function}。
+对所有的$\RSz$ $\exp(\RSz)$都是正的，这保证了没有一个\gls{energy_function}会使得某一个状态$\RVx$的概率为0。
 我们可以很自由的选择那些能够简化学习过程的\gls{energy_function}。
 如果我们直接学习各个\gls{clique_potential}，我们需要利用带约束的优化方法来指定一些特定的最小概率值。
 学习\gls{energy_function}的过程中，我们可以采用无约束的优化方法\footnote{对于某些模型，我们可以仍然使用带约束的优化方法来确保$Z$存在。}。
