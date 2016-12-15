@@ -1265,7 +1265,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 \subsection{概率监督学习}
 \label{sec:probabilistic_supervised_learning}
-本书的大部分\gls{unsupervised_learning}算法都是基于估计概率分布$p(y\mid\Vx)$。
+本书的大部分\gls{supervised_learning}算法都是基于估计概率分布$p(y\mid\Vx)$。
 我们可以使用\gls{maximum_likelihood_estimation}找到对于有参分布族$p(y\mid\Vx;\Vtheta)$最好的参数向量$\Vtheta$。 
 
 我们已经看到，\gls{linear_regression}对应于分布族
@@ -1296,7 +1296,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 \subsection{\glsentrytext{SVM}}
 \label{sec:support_vector_machines}
-\firstall{SVM}是\gls{unsupervised_learning}中最有影响力的方法之一\citep{Boser92,Cortes95}。
+\firstall{SVM}是\gls{supervised_learning}中最有影响力的方法之一\citep{Boser92,Cortes95}。
 类似于逻辑回归，这个模型也是基于线性函数$\Vw^\Tsp \Vx + b$。
 不同于逻辑回归的是，支持向量机不输出概率，只输出类别。
 当$\Vw^\Tsp\Vx + b$为正时，\gls{SVM}预测属于正类。
@@ -1849,7 +1849,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \firstgls{manifold}指连接在一起的区域。
 数学上，它是指一组点，且每个点都有其邻域。
 给定一个任意的点，其流形局部看起来像是欧几里得空间。
-日常生活中，我们将世界视为二维平面，但实际上它是三维球形\gls{manifold}。
+日常生活中，我们将地球视为二维平面，但实际上它是三维空间中的球形\gls{manifold}。
 
 每个点周围邻域的定义暗示着存在变换能够从一个位置移动到其邻域位置。
 例如在地球表面这个流形中，我们可以朝东南西北走。
