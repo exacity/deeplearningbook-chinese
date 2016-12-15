@@ -99,7 +99,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 在机器学习中，学习算法会在核合适的位置学得恰当的值， 所以一个基于核翻转的卷积运算的学习算法所学得的核，是对未进行翻转的算法学得的核的翻转。
 单独使用卷积运算在机器学习中是很少见的，卷积经常和其他的函数一起使用，无论卷积运算是否翻转了它的核，这些函数的组合通常是不可交换的。
 
-图\ref{fig:chap9_conv_2d}演示了一个在二维张量上的卷积运算（核没有翻转）的例子。
+图\ref{fig:chap9_conv_2d}演示了一个在2维张量上的卷积运算（核没有翻转）的例子。
 % fig 9.1
 \begin{figure}[!htb]
 \ifOpenSource
@@ -107,7 +107,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/conv_2d}}
 \fi
-\caption{Tmp}
+\caption{一个2维卷积的例子（核没有翻转）。我们限制只对核完全处在图像中的位置输出，在一些上下文中称为``\gls{valid}''卷积。我们用画有箭头的盒子来说明输出张量的左上角元素是如何通过对输入张量相应的左上角区域使用核进行卷积得到的。}
 \label{fig:chap9_conv_2d}
 \end{figure}
 
@@ -150,9 +150,11 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/area_of_effect}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[Caption for LOF]{\gls{sparse_connectivity}，对每幅图从下往上看。我们强调了一个输入单元$x_3$以及在$\bm{s}$中受该单元影响的输出单元。\emph{(上)}当$\bm{s}$是由核宽度为3的卷积产生时，只有三个输出受到$\bm{x}$的影响\protect\footnotemark。\emph{(下)}当$\bm{s}$是由矩阵乘法产生时，连接不再是稀疏的，所以所有的输出都会受到$x_3$的影响。}
 \label{fig:chap9_area_of_effect}
 \end{figure}
+ \footnotetext{译者注：译者认为此处应当是$x_3$。}
 % fig 9.3
 \begin{figure}[!htb]
 \ifOpenSource
@@ -160,7 +162,8 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/receptive_field}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{\gls{sparse_connectivity}，对每幅图从上往下看。我们强调了一个输出单元$s_3$以及$\bm{x}$中影响该单元的输入单元。这些单元被称为$s_3$的\gls{receptive_field}。\emph{(上)}当$\bm{s}$是由核宽度为3的卷积产生时，只有三个输入影响$s_3$。\emph{(下)}当$\bm{s}$是由矩阵乘法产生时，连接不再是稀疏的，所以所有的输入都会影响$s_3$。}
 \label{fig:chap9_receptive_field}
 \end{figure}
 % fig 9.4
@@ -170,7 +173,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/deep_receptive_field}}
 \fi
-\caption{Tmp}
+\caption{处于\gls{convolutional_network}更深的层中的单元，它们的\gls{receptive_field}要比处在浅层的单元的\gls{receptive_field}更大。如果网络还包含类似\gls{stride}卷积（图\ref{fig:chap9_stride_conv}）或者\gls{pooling}（\ref{sec:pooling}节）之类的结构特征，这种效应会加强。这意味着在\gls{convolutional_network}中即使是\emph{直接}连接都是很稀疏的，处在更深的层中的单元可以\emph{间接地}连接到全部或者大部分输入图像。}
 \label{fig:chap9_deep_receptive_field}
 \end{figure}
 
@@ -192,7 +195,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/parameter_sharing}}
 \fi
-\caption{Tmp}
+\caption{\gls{parameter_sharing}。黑色箭头表示在两个不同的模型中使用了特殊参数的连接。\emph{(上)}黑色箭头表示在卷积模型中3元素核的中间元素的使用。因为\gls{parameter_sharing}，这单个参数被用于所有的输入位置。\emph{(下)}这单个黑色箭头表示在全连接模型中权重矩阵的中间元素的使用。这个模型没有使用\gls{parameter_sharing}，所以参数只使用了一次。}
 \label{fig:chap9_parameter_sharing}
 \end{figure}
 % -- 326 --
