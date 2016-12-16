@@ -203,7 +203,7 @@ p(x) = \int p(x, y)dy.
 这个\gls{conditional_probability}可以通过下面的公式计算：
 \begin{equation}
 P(\RSy = y\mid \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)}
-\label{eq: 3.5}
+\label{eq:3.5}
 \end{equation}
 \gls{conditional_probability}只在$P(\RSx = x)>0$时有定义。
 我们不能计算给定在永远不会发生的事件上的\gls{conditional_probability}。
@@ -225,7 +225,7 @@ P(\RSx^{(1)}, \ldots, \RSx^{(n)}) = P(\RSx^{(1)}) \Pi_{i=2}^n P(\RSx^{(i)} \mid 
 % -- 57 --
 
 这个规则被称为概率的\firstgls{chain_rule}或者\firstgls{product_rule}。
-它可以直接从公式\ref{eq: 3.5}\gls{conditional_probability}的定义中得到。
+它可以直接从公式\ref{eq:3.5}\gls{conditional_probability}的定义中得到。
 例如，使用两次定义可以得到
 \begin{eqnarray*}
 P(\RSa, \RSb, \RSc) &=& P(\RSa \mid \RSb, \RSc) P(\RSb, \RSc)\\
@@ -569,17 +569,17 @@ x^+ = \max(0, x).
 \forall x>0, \zeta^{-1}(x) = \log(\exp(x) - 1)\\
 \zeta(x) = \int_{-\infty}^x \sigma(y) dy\\
 \zeta(x) - \zeta(-x) = x
-\label{eq: 3.41}
+\label{eq:3.41}
 \end{gather}
 函数$\sigma^{-1}(x)$在统计学中被称为\firstgls{logit}，但这个函数在机器学习中很少用到。
 
 % -- 67 --
 
-公式\ref{eq: 3.41}为函数名``softplus''提供了其他的正当理由。
+公式\ref{eq:3.41}为函数名``softplus''提供了其他的正当理由。
 \gls{softplus_function}被设计成\firstgls{positive_part_function}的平滑版本，这个\gls{positive_part_function}是指$x^+ = \max \{ 0, x\}$。
 与\gls{positive_part_function}相对的是\firstgls{negative part function}$x^- = \max\{ 0, -x\}$。
 为了获得类似\gls{negative part function}的一个平滑函数，我们可以使用$\zeta(-x)$。
-就像$x$可以用它的正部和负部通过等式$x^+ - x^- = x$恢复一样，我们也可以用同样的方式对$\zeta(x)$和$\zeta(-x)$进行操作，就像公式\ref{eq: 3.41}中那样。
+就像$x$可以用它的正部和负部通过等式$x^+ - x^- = x$恢复一样，我们也可以用同样的方式对$\zeta(x)$和$\zeta(-x)$进行操作，就像公式\ref{eq:3.41}中那样。
 
 \section{\glsentrytext{bayes_rule}}
 \label{sec:bayes_rule}
