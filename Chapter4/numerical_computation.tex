@@ -486,7 +486,23 @@ $中的$\alpha_i = 0$。
  \nabla_{\Vx} f(\Vx) = \MA^\Tsp (\MA \Vx - \Vb) = \MA^\Tsp \MA \Vx - \MA^\Tsp \Vb .
 \end{align}
 
-然后，我们可以采用小的步长，按照这个\gls{gradient}下降。见算法|||c|||中的详细信息。
+然后，我们可以采用小的步长，按照这个\gls{gradient}下降。见\algref{alg:gdlsq}中的详细信息。
+
+\begin{algorithm}[ht]
+\caption{An algorithm to minimize
+$ f(\Vx) = \frac{1}{2} || \MA \Vx - \Vb ||_2^2$ with respect to $\Vx$
+using gradient descent, starting from an arbitrary value of $\Vx$.
+}
+\label{alg:gdlsq}
+\begin{algorithmic}
+\STATE Set the step size ($\epsilon$) and tolerance ($\delta$) to small,
+positive numbers.
+\WHILE{ $ || \MA^\top \MA \Vx - \MA^\top \Vb ||_2 > \delta $}
+\STATE $\Vx \leftarrow \Vx - \epsilon \left( \MA^\top \MA \Vx - \MA^\top \Vb \right)$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 我们也可以使用\gls{newton_method}解决这个问题。
 因为在这个情况下真正的函数是二次的，\gls{newton_method}所用的二次近似是精确的，该算法会在一步后收敛到\gls{global_minimum}。

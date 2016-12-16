@@ -1235,6 +1235,26 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
   \label{eq:6.49}
 \end{equation}
 在算法|||c|||中详细说明。
+\begin{algorithm}[htbp]
+  \caption{A procedure that performs the computations
+    mapping $n_i$ inputs $u^{(1)}$ to $u^{(n_i)}$ to an output $u^{(n)}$.
+    This defines a computational graph where each node computes numerical
+value $u^{(i)}$ by applying a function $f^{(i)}$ to the set of arguments $\SetA^{(i)}$ that comprises the values
+of previous nodes $u^{(j)}$, $j<i$, with $j \in Pa(u^{(i)})$.
+The input to the computational graph is the vector $\Vx$, and is set into the first $n_i$ nodes $u^{(1)}$ to $u^{(n_i)}$.
+The output of the computational graph is read off the last (output) node $u^{(n)}$.}
+\label{alg:fprop}
+\begin{algorithmic}
+\FOR {$i=1, \ldots, n_i$}
+ \STATE $u^{(i)} \leftarrow x_i$
+\ENDFOR
+\FOR {$i=n_i+1, \ldots, n$}
+ \STATE $\SetA^{(i)} \leftarrow \{ u^{(j)} \mid j \in Pa(u^{(i)}) \}$
+ \STATE $u^{(i)} \leftarrow f^{(i)}(\SetA^{(i)})$
+\ENDFOR
+\STATE {\bf return} $u^{(n)}$
+\end{algorithmic}
+\end{algorithm}
 子图$\CalB$恰好包含每一条对应着$\CalG$中从节点$u^{(j)}$到节点$u^{(i)}$的边。
 从$u^{(j)}$到$u^{(i)}$的边对应着计算$\frac{\partial u^{(i)}}{\partial u^{(j)}}$。
 另外，对于每个节点都要执行一个内积，内积的一个因子是对于$u^{j}$孩子节点$u^{(i)}$的已经计算的梯度，另一个因子是对于相同孩子节点$u^{(i)}$ 的偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$组成的向量。
@@ -1269,6 +1289,41 @@ TODO.}
 然而，其他算法可能通过对计算图进行简化来避免更多的子表达式，或者也可能通过重新计算而不是存储这些子表达式来节省内存。
 我们将在描述完反向传播算法本身后再重新审视这些想法。
 
+\begin{algorithm}[ht]
+  \caption{Simplified version of the back-propagation algorithm for computing
+  the derivatives of $u^{(n)}$ with respect to the variables in the graph.
+  This example is intended to further understanding by showing a simplified
+  case where all variables are scalars, and we wish to compute the derivatives
+  with respect to $u^{(1)}, \dots, u^{(n_i)}$.
+  This simplified version computes the derivatives of all nodes in the graph.
+The computational cost of this algorithm
+is proportional to the number of edges in the graph, assuming that the
+partial derivative associated with each edge requires a constant time. This
+is of the same order as the number of computations for the forward propagation.
+Each $\frac{\partial u^{(i)}}{\partial u^{(j)}}$ is a function of the parents $u^{(j)}$
+of $u^{(i)}$, thus linking the nodes of the forward graph to those added for
+the back-propagation graph.
+}
+\label{alg:bprop}
+\begin{algorithmic}
+\STATE Run forward propagation (\algref{alg:fprop} for this example) to obtain
+the activations of the network
+\STATE Initialize {\tt grad\_table}, a data structure that will store the derivatives
+that have been computed. The entry ${\tt grad\_table}[u^{(i)}]$ will store the computed
+value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
+\STATE ${\tt grad\_table}[u^{(n)}] \leftarrow 1$
+\FOR {$j=n-1$ down to 1}
+\STATE The next line computes $\frac{\partial u^{(n)}}{\partial u^{(j)}} =
+  \sum_{i: j \in Pa(u^{(i)})} \frac{\partial u^{(n)}}{\partial u^{(i)}} \frac{\partial u^{(i)}}{\partial u^{(j)}}$ using stored values:
+\STATE ${\tt grad\_table}[ u^{(j)}] \leftarrow 
+\sum_{i: j \in Pa(u^{(i)})} {\tt grad\_table}[u^{(i)}]
+\frac{\partial u^{(i)}}{\partial u^{(j)}}$
+\ENDFOR
+\STATE {\bf return} $\{ {\tt grad\_table}[ u^{(i)}] \mid i=1, \dots, n_i \} $
+\end{algorithmic}
+\end{algorithm}
+
+
 % -- 204 --
 
 \subsection{全连接MLP中BP的计算}
@@ -1284,6 +1339,68 @@ TODO.}
 然而，它们专门针对特定的问题。
 
 现在的软件实现基于之后\ref{sec:general_back_propagation}节中描述的一般形式的反向传播，它可以通过明确地操作用于表示符号计算的数据结构，来适应任何计算图。
+
+\begin{algorithm}[ht]
+\caption{Forward propagation through a typical deep neural network
+and the computation of the cost function.
+The loss $L(\hat{\Vy},\Vy)$ depends on the
+output $\hat{\Vy}$ and on the target $\Vy$ (see \secref{sec:loss-as-nll} for examples of
+loss functions). To obtain the total cost $J$,
+the loss may be added to a regularizer $\Omega(\theta)$, where $\theta$
+contains all the parameters (weights and biases). \algref{alg:mlp-bprop} shows
+how to compute gradients of $J$ with respect to parameters $\MW$ and $\Vb$. 
+For simplicity, this demonstration uses only a single input example $\Vx$.
+Practical applications should use a minibatch. See \secref{sec:real_backprop}
+for a more realistic demonstration.
+}
+\label{alg:mlp-fprop}
+\begin{algorithmic}
+\REQUIRE Network depth, $l$
+\REQUIRE $\MW^{(i)}, i \in \{ 1, \dots, l\},$ the weight matrices of the model
+\REQUIRE $\Vb^{(i)}, i \in \{ 1, \dots, l\},$ the bias parameters of the model
+\REQUIRE $\Vx$, the input to process
+\REQUIRE $\Vy$, the target output
+\STATE $\Vh^{(0)}=\Vx$
+\FOR {$k=1, \ldots, l$}
+ \STATE $\Va^{(k)} = \Vb^{(k)} + \MW^{(k)} \Vh^{(k-1)}$
+ \STATE $\Vh^{(k)} = f(\Va^{(k)})$
+\ENDFOR
+\STATE $\hat{\Vy} = \Vh^{(l)}$
+\STATE $J = L(\hat{\Vy},\Vy) + \lambda \Omega(\theta)$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[htpb]
+\caption{Backward computation for the deep neural network
+of \algref{alg:mlp-fprop}, which uses in addition to the
+input $\Vx$ a target $\Vy$. This computation yields the
+gradients on the activations $\Va^{(k)}$ for each layer $k$,
+starting from the output layer and going backwards to the first
+hidden layer. From these gradients, which can be interpreted as
+an indication of how each layer's output should change to reduce
+error, one can obtain the gradient on the parameters of each layer.
+The gradients on weights and biases can be immediately used
+as part of a stochastic gradient update (performing the
+update right after the gradients have been computed) or used with other
+gradient-based optimization methods.
+}
+\label{alg:mlp-bprop}
+\begin{algorithmic}
+\STATE After the forward computation, compute the gradient on the output layer:
+\STATE $\Vg \leftarrow \nabla_{\hat{\Vy}} J = \nabla_{\hat{\Vy}} L(\hat{\Vy},\Vy)$
+\FOR {$k=l, l-1, \dots, 1$}
+\STATE Convert the gradient on the layer's output into a gradient into the pre-nonlinearity activation
+       (element-wise multiplication if $f$ is element-wise):
+  \STATE $\Vg \leftarrow \nabla_{\Va^{(k)}} J = \Vg \odot f'(\Va^{(k)})$
+  \STATE Compute gradients on weights and biases (including the regularization term, where needed):
+  \STATE $\nabla_{\Vb^{(k)}} J = \Vg + \lambda \nabla_{\Vb^{(k)}} \Omega(\theta)$
+  \STATE $\nabla_{\MW^{(k)}} J = \Vg \; \Vh^{(k-1)\top} + \lambda \nabla_{\MW^{(k)}} \Omega(\theta)$
+  \STATE Propagate the gradients w.r.t. the next lower-level hidden layer's activations:
+  \STATE $\Vg \leftarrow \nabla_{\Vh^{(k-1)}} J = \MW^{(k)\top} \; \Vg$
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
 
 % -- 205 --
 
@@ -1384,7 +1501,62 @@ TODO.}
 反向传播算法的正式描述参见算法|||c|||。
 
 % -- 209 --
-  
+
+\begin{algorithm}[ht]
+\caption{The outermost skeleton of the back-propagation algorithm.
+This portion does simple setup and cleanup work.
+Most of the important work happens in the {\tt build\_grad} subroutine
+of \algref{alg:build_grad}}. 
+\label{alg:backprop}
+\begin{algorithmic}
+\REQUIRE $\SetT$, the target set of variables whose gradients must be computed.
+\REQUIRE $\CalG$, the computational graph
+\REQUIRE $z$, the variable to be differentiated
+\STATE Let $\CalG'$ be $\CalG$ pruned to contain only nodes that are ancestors
+of $z$ and descendents of nodes in $\SetT$.
+\STATE Initialize {\tt grad\_table}, a data structure associating tensors
+to their gradients
+\STATE ${\tt grad\_table}[z] \leftarrow 1$
+\FOR{$\TSV$ in $\SetT$}
+\STATE ${\tt build\_grad}(\TSV, \CalG, \CalG', {\tt grad\_table})$
+\ENDFOR
+\STATE Return {\tt grad\_table} restricted to $\SetT$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[ht]
+\caption{The inner loop subroutine
+${\tt build\_grad}(\TSV, \CalG, \CalG', {\tt grad\_table})$
+of the back-propagation algorithm, called by
+the back-propagation algorithm defined in \algref{alg:backprop}.
+}
+\label{alg:build_grad}
+\begin{algorithmic}
+\REQUIRE $\TSV$, the variable whose gradient should be added to $\CalG$
+and {\tt grad\_table}.
+\REQUIRE $\CalG$, the graph to modify.
+\REQUIRE $\CalG'$, the restriction of $\CalG$ to nodes that participate
+in the gradient.
+\REQUIRE {\tt grad\_table}, a data structure mapping nodes to their
+gradients
+\IF{$\SetV$ is in {\tt grad\_table} }
+ \STATE Return ${\tt grad\_table}[\TSV]$
+\ENDIF
+\STATE $i \leftarrow 1$
+\FOR{$\TSC$ in ${\tt get\_consumers}(\TSV, \CalG')$ }
+\STATE ${\tt op} \leftarrow {\tt get\_operation}(\TSC)$
+\STATE $\TSD \leftarrow {\tt build\_grad}(\TSC, \CalG, \CalG', {\tt grad\_table})$
+\STATE $\TSG^{(i)} \leftarrow {\tt op.bprop}({\tt get\_inputs}(\TSC, \CalG'), \TSV, \TSD)$ 
+\STATE $i \leftarrow i + 1$
+\ENDFOR
+\STATE $\TSG \leftarrow \sum_i \TSG^{(i)}$
+\STATE ${\tt grad\_table}[\TSV] = \TSG$
+\STATE Insert $\TSG$ and the operations creating it into $\CalG$
+\STATE Return $\TSG$
+\end{algorithmic}
+\end{algorithm}
+
+
 % -- 210 --
   
 在\ref{sec:chain_rule_of_calculus}节中，我们使用反向传播作为一种策略来避免多次计算链式法则中的相同子表达式。
