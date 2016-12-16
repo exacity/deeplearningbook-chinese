@@ -1279,7 +1279,7 @@ $\hat{y}$的更新值为
 \cite{Ioffe+Szegedy-2015}推荐后者。
 更具体地，$\MX\MW+\Vb$应替换为$\MX\MW$的标准化形式。
 偏置项应被忽略，因为参数$\Vbeta$会加入\gls{batch_normalization}重新参数化，它是冗余的。
-一层的输入通常是前一层的非线性激励函数，如整\gls{rectified_linear}函数，的输出。
+一层的输入通常是前一层的非线性激励函数，如\gls{rectified_linear}函数，的输出。
 因此，输入的统计量更符合非高斯，而更不服从线性操作的标准化。
 
 \chapref{chap:convolutional_networks}所述的卷积网络，在特征映射中每个空间位置同样地标准化$\Vmu$和$\Vsigma$是很重要的，能使特征映射的统计量不因空间位置而保持相同。
