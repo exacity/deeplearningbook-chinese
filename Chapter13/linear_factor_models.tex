@@ -7,7 +7,7 @@
 
 
 许多深度学习的研究前沿涉及到了建立输入的概率模型$p_{\text{model}}(\Vx)$。
-原则上说，给定任何其他变量的情况下，这样的模型可以使用概率推理来预测其环境中的任何变量。
+原则上说，给定任何其他变量的情况下，这样的模型可以使用概率推断来预测其环境中的任何变量。
 这些模型中的许多还具有隐变量$\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\vert\Vh)$。
 这些隐变量提供了表示数据的另一种方式。
  基于隐变量的分布式表示可以有很多优点，这些我们在\gls{deep_feedforward_network}和\gls{RNN}中已经发现。
@@ -352,7 +352,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 由于在$\Vh$上施加$L^1$范数，这个过程将产生稀疏的$\Vh^*$（\secref{sec:l1_regularization}）。
 % 487
 
-为了训练模型而不仅仅是进行推理，我们交替迭代关于$\Vh$和$\MW$的最小化过程。
+为了训练模型而不仅仅是进行推断，我们交替迭代关于$\Vh$和$\MW$的最小化过程。
 在本文中，我们将$\beta$视为超参数。
 通常将其设置为1，因为其在此优化问题中的作用与$\lambda$类似，没有必要使用两个超参数。 
 原则上，我们还可以将$\beta$作为模型的参数，并学习它。
@@ -368,14 +368,14 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 
 如果我们从Laplace先验中采样$\Vh$，$\Vh$的元素实际上为零是一个零概率事件。
 \gls{generative_model}本身并不稀疏，只有特征提取器是。
-\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}描述了不同模型族中的近似推理，和spike and slab\gls{sparse_coding}模型，其中先验的样本通常包含许多0。
+\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}描述了不同模型族中的近似推断，和spike and slab\gls{sparse_coding}模型，其中先验的样本通常包含许多0。
 % 488 head
 
 与非参数化的\gls{encoder}结合的\gls{sparse_coding}方法原则上可以比任何特定的参数化的\gls{encoder}更好地最小化重构误差和对数先验的组合。
 另一个优点是\gls{encoder}没有泛化误差。
 参数化的\gls{encoder}必须泛化地学习如何将$\Vx$映射到$\Vh$。
 对于与训练数据差异很大的异常的$\Vx$，所学习的参数化的\gls{encoder}可能无法找到对应精确重建的$\Vh$或稀疏的编码。
-对于\gls{sparse_coding}模型的绝大多数形式，推理问题是凸的，优化过程将总是找到最优值（除非出现简并的情况，例如重复的权重向量）。
+对于\gls{sparse_coding}模型的绝大多数形式，推断问题是凸的，优化过程将总是找到最优值（除非出现简并的情况，例如重复的权重向量）。
 显然，稀疏和重构成本仍然可以在不熟悉的点上升，但这是归因于\gls{decoder}权重中的泛化误差，而不是\gls{encoder}中的泛化误差。
 当\gls{sparse_coding}用作分类器的特征提取器时，而不是使用参数化的函数来预测时，基于优化的\gls{sparse_coding}模型的编码过程中泛化误差的减小可导致更好的泛化能力。
 \citet{Coates2011b}证明了在对象识别任务中\gls{sparse_coding}特征比基于参数化的\gls{encoder}（如线性sigmoid \gls{AE}）的特征拥有更好的泛化能力。
