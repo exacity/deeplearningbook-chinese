@@ -207,7 +207,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554
 
 
-有一种\gls{structured_probabilistic_models}是\firstgls{directed_graphical_model}，也被叫做\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望强调从网络中计算出的值的推理本质，尤其是强调这些值代表的是置信的程度大小时，Judea Pearl建议使用\gls{bayesian_network}这个术语。} \citep{pearl85bayesian}。
+有一种\gls{structured_probabilistic_models}是\firstgls{directed_graphical_model}，也被叫做\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望强调从网络中计算出的值的推断本质，尤其是强调这些值代表的是置信的程度大小时，Judea Pearl建议使用\gls{bayesian_network}这个术语。} \citep{pearl85bayesian}。
 % 554
 
 
@@ -671,7 +671,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 即使在使用单个概率分布时，我们有时可以在不同的建模方式之间切换。
 有时，如果我们观察到变量的某个子集，或者如果我们希望执行不同的计算任务，换一种建模方式可能更合适。
 例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\secref{sec:sampling_from_graphical_models}中描述）的直接的方法。
-而\gls{undirected_model}公式通常用于近似推理过程（我们将在\chapref{chap:approximate_inference}中看到，\eqnref{eqn:1956}强调了\gls{undirected_model}的作用）。
+而\gls{undirected_model}公式通常用于近似推断过程（我们将在\chapref{chap:approximate_inference}中看到，\eqnref{eqn:1956}强调了\gls{undirected_model}的作用）。
 % 566
 
 
@@ -834,7 +834,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 不幸的是，\gls{ancestral_sampling}仅适用于\gls{directed_model}。 
-我们可以通过将\gls{undirected_model}转换为\gls{directed_model}来实现从\gls{undirected_model}中抽样，但是这通常需要解决棘手的推理问题（以确定新有向图的根节点上的边缘分布），或者需要引入许多边，从而会使得到的\gls{directed_model}变得难以处理。
+我们可以通过将\gls{undirected_model}转换为\gls{directed_model}来实现从\gls{undirected_model}中抽样，但是这通常需要解决棘手的推断问题（以确定新有向图的根节点上的边缘分布），或者需要引入许多边，从而会使得到的\gls{directed_model}变得难以处理。
 从\gls{undirected_model}抽样，而不首先将其转换为\gls{directed_model}的做法似乎需要解决循环依赖的问题。 
 每个变量与每个其他变量相互作用，因此对于抽样过程没有明确的起点。
 不幸的是，从\gls{undirected_model}模型中抽取样本是一个昂贵的过程。
@@ -867,7 +867,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 使用\gls{structured_probabilistic_models}的一个较小的益处是它们允许我们明确地将给定的现有的知识与知识的学习或者推断分开。
 这使我们的模型更容易开发和调试。 
-我们可以设计，分析和评估适用于更广范围的学习算法和推理算法。
+我们可以设计，分析和评估适用于更广范围的学习算法和推断算法。
 并且我们可以设计能够捕捉到我们认为重要的关系的模型。
 然后，我们可以组合这些不同的算法和结构，并获得不同可能性的笛卡尔乘积。
 为每种可能的情况设计端到端算法是困难的。
@@ -936,8 +936,8 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 所有这些都是\firstgls{inference}问题的例子，其中我们必须预测给定其他变量的情况下一些变量的值，或者在给定其他变量的值的情况下预测一些变量的概率分布。
 % 574
 
-不幸的是，对于大多数有趣的深层模型，这些推理问题都是难以处理的，即使我们使用结构化的\gls{graphical_models}来简化它们。
-图结构允许我们用合理数量的参数来表示复杂的高维分布，但是用于\gls{DL}的\gls{graphical_models}并不满足这样的条件，从而难以实现高效的推理。
+不幸的是，对于大多数有趣的深层模型，这些推断问题都是难以处理的，即使我们使用结构化的\gls{graphical_models}来简化它们。
+图结构允许我们用合理数量的参数来表示复杂的高维分布，但是用于\gls{DL}的\gls{graphical_models}并不满足这样的条件，从而难以实现高效的推断。
 % 574
 
 
@@ -957,8 +957,8 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 % 574
 
 
-这促使我们使用近似推理。
-在\gls{DL}中，这通常涉及变分推理，其中通过寻求尽可能接近真实分布的近似分布$q(\RVh\vert\RVv)$来逼近真实分布$p(\RVh\vert\Vv)$。
+这促使我们使用近似推断。
+在\gls{DL}中，这通常涉及变分推断，其中通过寻求尽可能接近真实分布的近似分布$q(\RVh\vert\RVv)$来逼近真实分布$p(\RVh\vert\Vv)$。
 这个技术在\chapref{chap:approximate_inference}中有深入的描述。
 % 574 end
 
@@ -1006,16 +1006,16 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 另一个明显的区别是\gls{DL}方法中经常使用的连接类型。
 深度图模型通常具有大的与其它单元组全连接的单元组，使得两个组之间的交互可以由单个矩阵描述。
 传统的\gls{graphical_models}具有非常少的连接，并且每个变量的连接的选择可以单独设计。
-模型结构的设计与推理算法的选择紧密相关。
+模型结构的设计与推断算法的选择紧密相关。
 \gls{graphical_models}的传统方法通常旨在保持精确推断的可追踪性。
-当这个约束太强的时候，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的近似推理算法。
+当这个约束太强的时候，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的近似推断算法。
 这两种方法通常在连接非常稀疏的图上有很好的效果。
 相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$\RSv_i$连接到非常多的隐藏单元$\RSh_j$上，从而使得$\RVh$可以获得一个$\RSv_i$的分布式表示（也可能是其他几个可观察变量）。
 分布式表示具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，分布式表示有一个缺点就是对于精确推断和循环信任传播等传统技术来说不能产生足够稀疏的图。
 结果，\gls{graphical_models}和深度图模型的最大的区别之一就是\gls{DL}中从来不会使用\gls{loopy_belief_propagation}。
 相反的，许多\gls{DL}模型可以用来加速\gls{gibbs_sampling}或者变分推断。
 此外，\gls{DL}模型包含了大量的隐含变量，使得高效的数值计算代码显得格外重要。
-除了选择高级推理算法之外，这提供了另外的动机，用于将结点分组成层，相邻两层之间用一个矩阵来描述相互作用。
+除了选择高级推断算法之外，这提供了另外的动机，用于将结点分组成层，相邻两层之间用一个矩阵来描述相互作用。
 这要求实现算法的各个步骤具有高效的矩阵乘积运算，或者专门适用于稀疏连接的操作，例如块对角矩阵乘积或卷积。
 % 576
 
