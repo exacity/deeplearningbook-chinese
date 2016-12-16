@@ -33,7 +33,7 @@
 首先，我们从一个分布中抽取解释性因子
 \begin{align}
 \label{eqn:131}
-\Vh \sim p(\Vh)
+\RVh \sim p(\Vh)
 \end{align}
 其中$p(\Vh)$是一个可分解的分布，满足$p(\Vh) = \prod_{i}^{}p(h_i)$，所以很容易从中采样。
 接下来，在给定因子的情况下，我们对实值的可观察变量进行抽样
@@ -66,7 +66,7 @@
 \firstgls{FA}\citep{Bartholomew-1987,Basilevsky94}中，隐变量的先验是一个方差为单位矩阵的高斯分布
 \begin{align}
 \label{eqn:133}
-\Vh \sim \CalN(\Vh; \mathbf{0},\MI)
+\RVh \sim \CalN(\Vh; \mathbf{0},\MI)
 \end{align}
 同时，假定观察值$x_i$在给定$\Vh$的条件下是\gls{conditional_independent}的。
 具体的说，噪声可以被假设为是从对角的协方差矩阵的高斯分布中抽出的，协方差矩阵为$\Vpsi = \text{diag}(\Vsigma^2)$，其中$\Vsigma^2 = [\sigma_1^2,\sigma_2^2,\ldots,\sigma_n^2]^{\top}$表示一个向量。
@@ -77,7 +77,7 @@
 实际上，可以容易地看出$\Vx$是多变量正态分布，并满足
 \begin{align}
 \label{eqn:134}
-\Vx \sim \CalN(\Vx; \Vb, \MW\MW^{\top}+\Vpsi)
+\RVx \sim \CalN(\Vx; \Vb, \MW\MW^{\top}+\Vpsi)
 \end{align}
 % 480 end
 
@@ -89,14 +89,14 @@
 由此可以得到条件分布，如下：
 \begin{align}
 \label{eqn:135}
-\Vx \sim \CalN(\Vx; \Vb, \MW\MW^{\top} + \sigma^2\MI )
+\RVx \sim \CalN(\Vx; \Vb, \MW\MW^{\top} + \sigma^2\MI )
 \end{align}
 或者等价于
 \begin{align}
 \label{eqn:136}
-\Vx = \MW\Vh + \Vb + \sigma\Vz
+\RVx = \MW\RVh + \Vb + \sigma\RVz
 \end{align}
-其中$\Vz \sim \CalN(\Vz;\mathbf{0},\MI)$是高斯噪音。
+其中$\RVz \sim \CalN(\Vz;\mathbf{0},\MI)$是高斯噪音。
 之后\citep{tipping99mixtures}提出了一种迭代的\glssymbol{EM}算法来估计参数$\MW$和$\sigma^2$。
 % 481
 
@@ -315,7 +315,7 @@ p(\Vx\vert\Vh) = \CalN
 例如，以稀疏惩罚系数$\lambda$为参数的Laplace先验可以表示为
 \begin{align}
 \label{eqn:1313}
-p(h_i) = \text{Laplace}(h_i;0,\frac{2}{\lambda}) = \frac{\lambda}{4} \text{e}^{ -\frac{1}{2}\vert h_i\vert}
+p(h_i) = \text{Laplace}(h_i;0,\frac{2}{\lambda}) = \frac{\lambda}{4} \text{e}^{ -\frac{1}{2}\lambda \vert h_i\vert}
 \end{align}
 相应的，Student-t分布可以表示为
 \begin{align}

@@ -70,12 +70,12 @@
 	% 551  ok
 	
 	
-	\item 去噪音：给定一个受损的或者观察有误的输入数据$\tilde{\Vx}$，\gls{ML}系统返回了一个对于原始的真实的$\Vx$的估计。
+	\item \gls{denoising}：给定一个受损的或者观察有误的输入数据$\tilde{\Vx}$，\gls{ML}系统返回了一个对于原始的真实的$\Vx$的估计。
 	举个例子，有时候\gls{ML}系统需要从一张老相片中去除污渍或者抓痕。
 	这个系统会产生多个输出（对应着估计的干净的样本$\Vx$的每一个元素），并且需要我们有一个对输入的整体理解（因为即使一个严重损害的区域也需要在最后的输出中恢复）。
 	% 551 ok
 	
-	\item 缺失值的插入：给定$\Vx$的某些元素作为观察值，模型被要求返回一个$\Vx$的一些或者全部未观察值的概率分布。
+	\item 缺失值的填补：给定$\Vx$的某些元素作为观察值，模型被要求返回一个$\Vx$的一些或者全部未观察值的概率分布。
 	这个模型返回的也是多个输出。
 	由于这个模型需要恢复$\Vx$的每一个元素，所以它必须理解整个输入。
 	% 551 ok
@@ -128,7 +128,7 @@
 	% 552  end
 	
 	\item 运行时间：推断的开销。
-	假设我们需要完成一个推断的任务，其中我们通过对联合分布$p(\Vx)$来计算某些其它的分布，比如说边缘分布$p(x_1)$或者是条件分布$p(x_2\vert x_1)$。
+	假设我们需要完成一个推断的任务，其中我们通过对联合分布$P(\Vx)$来计算某些其它的分布，比如说边缘分布$P(x_1)$或者是条件分布$P(x_2\vert x_1)$。
 	计算这样的分布需要对整个表格的某些项进行求和操作，因此这样的操作的运行时间和上述的高昂的内存开销是一个级别的。
 	% 553 head
 	
@@ -219,8 +219,8 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554
 
 
-我们继续\secref{sec:the_challenge_of_unstructured_modelling}所讲的接力赛的例子，我们假设Alice的完成时间为$t_0$，Bob的完成时间为$t_1$，Carol的完成时间为$t_2$。
-就像我们之前看到的一样，$t_1$的估计是依赖于$t_0$的，$t_2$的估计是依赖于$t_1$的，但是仅仅间接的依赖于$t_0$。
+我们继续\secref{sec:the_challenge_of_unstructured_modelling}所讲的接力赛的例子，我们假设Alice的完成时间为$\RSt_0$，Bob的完成时间为$\RSt_1$，Carol的完成时间为$\RSt_2$。
+就像我们之前看到的一样，$\RSt_1$的估计是依赖于$\RSt_0$的，$\RSt_2$的估计是依赖于$\RSt_1$的，但是仅仅间接的依赖于$\RSt_0$。
 我们用一个\gls{directed_graphical_model}来建模这种关系，就如在\figref{fig:relay_race_graph}中看到的一样。
 % 554 end
 
@@ -236,11 +236,11 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 
 
 % 555 head 
-正式的讲，变量$\Vx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution}$p(x_i\vert P_{a\CalG}(x_i))$来定义的，其中$P_{a\CalG}(x_i)$表示结点$x_i$的所有父结点。
-$\Vx$的概率分布可以表示为
+正式的讲，变量$\RVx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution}$p(\RSx_i\vert P_{a\CalG}(\RSx_i))$来定义的，其中$P_{a\CalG}(\RSx_i)$表示结点$\RSx_i$的所有父结点。
+$\RVx$的概率分布可以表示为
 \begin{align}
 \label{eqn:161}
-p(\Vx) = \prod_{i} p(x_i\vert P_{a\CalG}(x_i))
+p(\RVx) = \prod_{i} p(\RSx_i\vert P_{a\CalG}(\RSx_i))
 \end{align}
 % 555 
 
@@ -248,7 +248,7 @@ p(\Vx) = \prod_{i} p(x_i\vert P_{a\CalG}(x_i))
 在之前所述的接力赛的例子中，这意味着概率分布可以被表示为
 \begin{align}
 \label{eqn:162}
-p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
+p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\vert \RSt_0)p(\RSt_2\vert \RSt_1)
 \end{align}
 % 555 
 
@@ -259,9 +259,9 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 
 
 假设我们采用从第0分钟到第10分钟每6秒一块的方式离散化的表示时间。
-这使得$t_0$，$t_1$和$t_2$都是一个有100个取值可能的离散变量。
-如果我们尝试着用一个表来表示$(t_0,t_1,t_2)$，那么我们需要存储$999,999$个值（$t_0$的取值100 $\times$ $t_1$的取值100 $\times$ $t_2$的取值100 减去1，所有的概率的和为1，所以其中有1个值的存储是多余的）。
-反之，如果我们用一个表来记录条件概率分布，那么记录$t_0$的分布需要存储99个值，给定$t_0$情况下$t_1$的分布需要存储9900个值,给定$t_1$情况下$t_2$的分布也需要存储9900个值。
+这使得$\RSt_0$，$\RSt_1$和$\RSt_2$都是一个有100个取值可能的离散变量。
+如果我们尝试着用一个表来表示$(\RSt_0,\RSt_1,\RSt_2)$，那么我们需要存储$999,999$个值（$\RSt_0$的取值100 $\times$ $\RSt_1$的取值100 $\times$ $\RSt_2$的取值100 减去1，所有的概率的和为1，所以其中有1个值的存储是多余的）。
+反之，如果我们用一个表来记录条件概率分布，那么记录$\RSt_0$的分布需要存储99个值，给定$\RSt_0$情况下$\RSt_1$的分布需要存储9900个值,给定$\RSt_1$情况下$\RSt_2$的分布也需要存储9900个值。
 加起来总共需要存储$19, 899$个值。
 这意味着使用\gls{directed_graphical_model}将需要存储的参数的个数减少了超过50倍！
 % 555 
@@ -286,11 +286,11 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 比如说，我们可以假设无论Alice的表现如何，Bob总是跑的一样快（实际上，Alice的表现很大概率的会影响Bob的表现，这取决于Bob的性格，如果在之前的比赛中Alice跑的特别快，这有可能鼓励Bob更加努力，当然这也有可能使得Bob懒惰）。
 那么Alice对Bob的唯一影响就是在计算Bob的完成时间时需要加上Alice的时间。
 这个假设使得我们所需要的参数量从$O(k^2)$降到了$O(k)$。
-然而，值得注意的是在这个假设下$t_0$和$t_1$仍然是直接相关的，因为$t_1$表示的是Bob完成的时间，并不是他跑的时间。
-这也意味着\gls{graphical_models}中会有一个从$t_0$指向$t_1$的箭头。
-``Bob的个人跑步时间相对于其它因素是独立的''这个假设无法在$t_0,t_1,t_2$的\gls{graphical_models}中被表示出来。
+然而，值得注意的是在这个假设下$\RSt_0$和$\RSt_1$仍然是直接相关的，因为$\RSt_1$表示的是Bob完成的时间，并不是他跑的时间。
+这也意味着\gls{graphical_models}中会有一个从$\RSt_0$指向$\RSt_1$的箭头。
+``Bob的个人跑步时间相对于其它因素是独立的''这个假设无法在$\RSt_0,\RSt_1,\RSt_2$的\gls{graphical_models}中被表示出来。
 我们只能将这个关系表示在条件分布中。
-这个条件分布不再是一个大小为$k\times k-1$的分别对应着$t_0, t_1$的表格，而是一个包含了$k-1$个参数的略复杂的公式。
+这个条件分布不再是一个大小为$k\times k-1$的分别对应着$\RSt_0,  \RSt_1$的表格，而是一个包含了$k-1$个参数的略复杂的公式。
 \gls{directed_graphical_model}并不能对我们如何定义条件分布做出任何限制。
 它只能定义哪些变量之间存在着\gls{dependency}关系。
 % 556  16.2 to 
@@ -303,7 +303,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 
 
 \gls{directed_graphical_model}为我们提供了一个描述\gls{structured_probabilistic_models}的语言。
-而另一种常见的语言则是\firstgls{undirected_model}，也叫做\firstgls{MRF}或者是\firstgls{markov_network} \citep{kindermann-book-1980}。
+而另一种常见的语言则是\firstgls{undirected_model}，也叫做\firstall{MRF}或者是\firstgls{markov_network} \citep{kindermann-book-1980}。
 就像它们的名字所说的那样，\gls{undirected_model}中所有的边都是没有方向的。
 % 556 end
 
@@ -335,7 +335,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 % 557 
 
 
-我们把对应你的健康的随机变量记住$h_y$，对应你的室友健康状况的随机变量记住$h_r$，你的同事健康的变量记住$h_c$。
+我们把对应你的健康的随机变量记住$\RSh_y$，对应你的室友健康状况的随机变量记住$\RSh_r$，你的同事健康的变量记住$\RSh_c$。
 \figref{fig:cold_undirected_graph}表示来这种关系。
 % 557 end
 
@@ -356,7 +356,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 合在一起他们定义了\firstgls{unnormalized_probability_function}：
 \begin{align}
 \label{eqn:163}
-\tilde{p}(\Vx) = \prod_{\CalC\in\CalG} 
+\tilde{p}(\RVx) = \prod_{\CalC\in\CalG} 
 \phi(\CalC)
 \end{align}
 % 558 head
@@ -381,15 +381,16 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 
 
 在你，你的室友和同事之间的感冒传染的例子中包含了两个\gls{clique}。
-一个\gls{clique}包含了$h_y$和$h_c$。
+一个\gls{clique}包含了$\RSh_y$和$\RSh_c$。
 这个\gls{clique}的\gls{factor}可以通过一个表来定义，可能取到下面的值：
+
 % \begin{table*}[!hbp]
 	% \centering
-	\begin{tabular}{c|cc}
-		& $h_y = 0$ & $h_y = 1$ \\ \hline
-		$h_c = 0$ & 2 & 1 \\
-		$h_c = 1$  & 1 & 10 \\
-	\end{tabular}
+\begin{tabular}{c|cc}
+		& $\RSh_y = 0$ & $\RSh_y = 1$ \\ \hline
+		$\RSh_c = 0$ & 2 & 1 \\
+		$\RSh_c = 1$  & 1 & 10 \\
+\end{tabular}
 % \end{table*}
 % 558
 
@@ -401,7 +402,7 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 % 559 head  
 
 
-为了完整的定义这个模型，我们需要对包含$h_y$和$h_r$的\gls{clique}定义类似的\gls{factor}。
+为了完整的定义这个模型，我们需要对包含$\RSh_y$和$\RSh_r$的\gls{clique}定义类似的\gls{factor}。
 % 559 head
 
 
@@ -414,11 +415,11 @@ p(t_0,t_1,t_2) = p(t_0)p(t_1\vert t_0)p(t_2\vert t_1)
 尽管这个\gls{unnormalized_probability_function}处处不为零，我们仍然无法保证它的概率之和或者积分为1。
 为了得到一个有效的概率分布，我们需要使用一个归一化的概率分布\footnote{一个通过归一化\gls{clique_potential}的乘积的分布通常被称作是\gls{gibbs_distribution}}：
 \begin{align}
-p(\Vx) = \frac{1}{Z}\tilde{p}(\Vx)
+p(\RVx) = \frac{1}{Z}\tilde{p}(\RVx)
 \end{align}
 其中，$Z$是使得所有的概率之和或者积分为1 的常数，并且满足：
 \begin{align}
-Z = \int \tilde{p}(\Vx)d\Vx
+Z = \int \tilde{p}(\RVx)d\RVx
 \end{align}
 当函数$\phi$固定的时候，我们可以把$Z$当成是一个常数。
 值得注意的是如果函数$\phi$带有参数时，那么$Z$是这些参数的一个函数。
@@ -427,7 +428,7 @@ Z = \int \tilde{p}(\Vx)d\Vx
 % 559 
 
 
-由于$Z$通常是由对所有的可能的$\Vx$的状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。
+由于$Z$通常是由对所有的可能的$\RVx$的状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。
 为了获得一个\gls{undirected_model}的归一化的概率分布，模型的结构和函数$\phi$的定义通常需要特殊的设计从而使得能够高效的计算$Z$。
 在\gls{DL}中，$Z$通常是难以处理的。
 由于$Z$难以精确的计算出，我们只能使用一些近似的方法。
@@ -446,20 +447,20 @@ Z = \int x^2 dx
 由于这个积分是发散的，所以不存在一个对应着这个势能函数的概率分布。
 有时候$\phi$函数的某些参数的选择可以决定相应的概率分布能否存在。
 比如说，对$\phi$函数$\phi(x;\beta) = \text{exp}(-\beta x^2)$来说，参数$\beta$决定了归一化常数$Z$是否存在。
-一个正的$\beta$使得$\phi$函数是一个关于$x$的高斯分布，但是一个非正的参数$\beta$则使得$\phi$不可能归一化。
+一个正的$\beta$使得$\phi$函数是一个关于$\RSx$的高斯分布，但是一个非正的参数$\beta$则使得$\phi$不可能归一化。
 
 
 % P560   
 \gls{directed_model}和\gls{undirected_model}之间的一个重要的区别就是\gls{directed_model}是通过从起始点的概率分布直接定义的，反之\gls{undirected_model}的定义显得更加宽松，通过$\phi$函数转化为概率分布而定义。
 这和我们处理这些建模问题的直觉相反。
 当我们处理\gls{undirected_model}时需要牢记一点，每一个变量的定义域对于$\phi$函数所对应的概率分布有着重要的影响。
-举个例子，我们考虑一个$n$维的向量$\Vx$以及一个由偏置向量$\Vb$参数化的\gls{undirected_model}。
-假设$\Vx$的每一个元素对应着一个\gls{clique}，并且满足$\phi^{(i)}(x_i) = \exp(b_ix_i)$。
+举个例子，我们考虑一个$n$维的向量$\RVx$以及一个由偏置向量$\Vb$参数化的\gls{undirected_model}。
+假设$\RVx$的每一个元素对应着一个\gls{clique}，并且满足$\phi^{(i)}(\RSx_i) = \exp(b_i\RSx_i)$。
 在这种情况下概率分布是怎么样的呢？
-答案是我们无法确定，因为我们并没有指定$\Vx$的定义域。
-如果$\Vx$满足$\Vx \in \SetR^n$，那么对于归一化常数$Z$的积分是发散的，这导致了对应的概率分布是不存在的。
-如果$\Vx\in\{0,1\}^n$，那么$p(\Vx)$可以被分解成$n$个独立的分布，并且满足$p(x_i=1) = \text{sigmoid}(b_i)$。
-如果$\Vx$的定义域是基本单位向量的集合$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$，那么$p(x) = \text{softmax}(\Vb)$，因此一个较大的$b_i$的值会降低所有的$p(x_j = 1)$的概率（其中$j\neq i$）。
+答案是我们无法确定，因为我们并没有指定$\RVx$的定义域。
+如果$\RVx$满足$\RVx \in \SetR^n$，那么对于归一化常数$Z$的积分是发散的，这导致了对应的概率分布是不存在的。
+如果$\RVx\in\{0,1\}^n$，那么$p(\RVx)$可以被分解成$n$个独立的分布，并且满足$p(\RSx_i=1) = \text{sigmoid}(b_i)$。
+如果$\RVx$的定义域是基本单位向量的集合$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$，那么$p(\RSx) = \text{softmax}(\Vb)$，因此一个较大的$b_i$的值会降低所有的$p(\RSx_j = 1)$的概率（其中$j\neq i$）。
 通常情况下，通过特殊设计变量的定义域，能够使得一个相对简单的$\phi$函数可以获得一个相对复杂的表达。
 我们会在\secref{sec:convolutional_boltzmann_machines}中讨论这个想法的实际应用。
 % P560   
@@ -474,10 +475,10 @@ Z = \int x^2 dx
 使这个条件满足的一种简单的方式是使用\firstgls{energy_based_model}，其中
 \begin{align}
 \label{eqn:167}
-\tilde{p}(\Vx) = \exp(-E(\Vx))
+\tilde{p}(\RVx) = \exp(-E(\RVx))
 \end{align}
-$E(\Vx)$被称作是\firstgls{energy_function}。
-对所有的$z$ $\exp(z)$都是正的，这保证了没有一个\gls{energy_function}会使得某一个状态$\Vx$的概率为0。
+$E(\RVx)$被称作是\firstgls{energy_function}。
+对所有的$\RSz$ $\exp(\RSz)$都是正的，这保证了没有一个\gls{energy_function}会使得某一个状态$\RVx$的概率为0。
 我们可以很自由的选择那些能够简化学习过程的\gls{energy_function}。
 如果我们直接学习各个\gls{clique_potential}，我们需要利用带约束的优化方法来指定一些特定的最小概率值。
 学习\gls{energy_function}的过程中，我们可以采用无约束的优化方法\footnote{对于某些模型，我们可以仍然使用带约束的优化方法来确保$Z$存在。}。
@@ -547,7 +548,7 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 在这种情况下，图中隐含的条件独立性称为\firstgls{separation}。
 如果图结构显示给定变量$\SetS$的情况下变量$\SetA$与变量$\SetB$无关，
 那么我们声称给定变量$\SetS$时，变量$\SetA$与另一组变量$\SetB$\gls{separation}。
-如果两个变量$a$和$b$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
+如果两个变量$\RSa$和$\RSb$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
 如果它们之间没有路径，或者所有路径都包含可观测的变量，那么它们是\gls{separation}的。
 我们认为仅涉及到未观察到的变量的路径是``活跃''的，将包括观察到的变量的路径称为``非活跃''的。
 % 563
@@ -642,10 +643,10 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 进一步的，使用完全图（具有所有可能的边的图）来表示任何分布总是合法的。
 事实上，一些分布包含不可能用现有图形符号表示的独立性。
 特定环境下的独立（context-specific independences）指的是取决于网络中一些变量的值的独立性。
-例如，考虑一个三个二进制变量的模型：$a, b $和$c$。
-假设当$a$是0时，$b$和$c$是独立的， 但是当$a$是1时，$b$确定地等于$c$。
-当a = 1时\gls{graphical_models}需要连接b和c的边。
-当a = 0时b和c不是独立的。
+例如，考虑一个三个二进制变量的模型：$\RSa, \RSb $和$\RSc$。
+假设当$\RSa$是0时，$\RSb$和$\RSc$是独立的， 但是当$\RSa$是1时，$\RSb$确定地等于$\RSc$。
+当$\RSa = 1$时\gls{graphical_models}需要连接$\RSb$和$\RSc$的边。
+当$\RSa = 0$时$\RSb$和$\RSc$不是独立的。
 % 564
 
 一般来说，当独立性不存在的时候，图不会显示独立性。 
@@ -708,10 +709,10 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 
 \gls{directed_model}能够使用一种\gls{undirected_model}不能完美地表示的特定类型的子结构。
 这个子结构被称为\firstgls{immorality}。
-这种结构出现在当两个随机变量$a$和$b$都是第三个随机变量$c$的父结点，并且不存在任一方向上直接连接a和b的边的时候。
+这种结构出现在当两个随机变量$\RSa$和$\RSb$都是第三个随机变量$\RSc$的父结点，并且不存在任一方向上直接连接a和b的边的时候。
 （``\gls{immorality}''的名字可能看起来很奇怪; 它在\gls{graphical_models}文献中被创造为一个关于未婚父母的笑话。）
 为了将\gls{directed_model}图$\CalD$转换为\gls{undirected_model}，我们需要创建一个新图$\CalU$。
-对于每对变量$x$和$y$，如果存在连接$x$中的$x$和$y$的有向边（在任一方向上），或者如果$x$和$y$都是图$\CalD$中另一个变量$z$的父节点，则添加将$x$和$y$连接到$\CalU$的无向边。 
+对于每对变量$\RSx$和$\RSy$，如果存在连接$\RSx$中的$\RSx$和$\RSy$的有向边（在任一方向上），或者如果$\RSx$和$\RSy$都是图$\CalD$中另一个变量$\RSz$的父节点，则添加将$\RSx$和$\RSy$连接到$\CalU$的无向边。 
 得到的图$\CalU$被称为是\firstgls{moralized_graph}。
 关于一个将\gls{directed_graphical_model}转化为\gls{undirected_model}的例子可以参见\figref{fig:dm_to_um}。
 % 567
@@ -802,11 +803,11 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 % 570  
 
 
-其基本思想是将图中的变量$x_i$使用拓扑排序，使得对于所有$i$和$j$，
-如果$x_i$是$x_j$的父亲结点，则j大于i。
+其基本思想是将图中的变量$\RSx_i$使用拓扑排序，使得对于所有$i$和$j$，
+如果$\RSx_i$是$\RSx_j$的父亲结点，则j大于i。
 然后可以按此顺序对变量进行采样。
-换句话说，我们可以首先采$x_1\sim P(x_1)$，然后采$x_2\sim P(x_2\vert Pa_{\CalG}(x_2))$，以此类推，直到最后我们采$x_n\sim P(x_n\vert Pa_{\CalG}(x_n))$。
-只要每个条件分布$x_i\sim P(x_i\vert Pa_{\CalG}(x_i))$都很容易从中采样，那么很容易从整个模型中抽样。
+换句话说，我们可以首先采$\RSx_1\sim P(\RSx_1)$，然后采$\RSx_2\sim P(\RSx_2\vert Pa_{\CalG}(\RSx_2))$，以此类推，直到最后我们采$\RSx_n\sim P(\RSx_n\vert Pa_{\CalG}(\RSx_n))$。
+只要每个条件分布$\RSx_i\sim P(\RSx_i\vert Pa_{\CalG}(\RSx_i))$都很容易从中采样，那么很容易从整个模型中抽样。
 拓扑排序操作保证我们可以按照\eqnref{eqn:161}中的条件分布的顺序依次采样。
 如果没有拓扑排序，我们可能会尝试在其父节点可用之前对该变量进行抽样。
 % 571  
@@ -838,10 +839,10 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 每个变量与每个其他变量相互作用，因此对于抽样过程没有明确的起点。
 不幸的是，从\gls{undirected_model}模型中抽取样本是一个昂贵的过程。
 理论上最简单的方法是\gls{gibbs_sampling}。
-假设我们在随机变量$\Vx$（一个$n$维向量）上有一个\gls{graphical_models}。 
-我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(x_i \vert x_{-i})$中抽样。
-由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以仅对$x_i$的邻居条件化。
-不幸的是，在我们遍历\gls{graphical_models}一次并采样 所有n个变量之后，我们仍然无法得到一个来自$p(\Vx)$的客观样本。
+假设我们在随机变量$\RVx$（一个$n$维向量）上有一个\gls{graphical_models}。 
+我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \vert \RSx_{-i})$中抽样。
+由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以仅对$\RSx_i$的邻居条件化。
+不幸的是，在我们遍历\gls{graphical_models}一次并采样 所有n个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
 相反，我们必须重复该过程并使用它们的邻居的更新的值对所有$n$个变量重新取样。
 在多次重复之后，该过程渐近地收敛到目标分布。
 很难确定样本何时达到期望分布的足够精确的近似。
@@ -878,13 +879,13 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 \label{sec:learning_about_dependencies}
 % 572
 
-良好的生成模型需要准确地捕获所观察到的或``可见''变量$\Vv$上的分布。
-通常$\Vv$的不同元素彼此高度依赖。
+良好的生成模型需要准确地捕获所观察到的或``可见''变量$\RVv$上的分布。
+通常$\RVv$的不同元素彼此高度依赖。
 在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个潜在的或``隐藏''变量$\Vh$。
-然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$v_i$和$v_j$间接依赖，$v_i$和$\Vh$之间直接依赖，$\Vv$和$h_i$直接依赖)。
+然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_i$直接依赖)。
 % 572  end 
 
-一个好的不包含任何潜在变量的$\Vv$的模型需要在\gls{bayesian_network}中的每个节点具有非常大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
+一个好的不包含任何潜在变量的$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有非常大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
 但是代表这些高阶的交互是昂贵的，首先从计算角度上，存储在存储器中的参数的数量是\gls{clique}中的成员的数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
 % 573  head  
 
@@ -906,14 +907,14 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 % 573 
 
 
-隐含变量还有一个额外的优势，即能够高效的描述$p(\Vv)$。
-新变量$\Vh$还提供了$\Vv$的替代表示。
+隐含变量还有一个额外的优势，即能够高效的描述$p(\RVv)$。
+新变量$\RVh$还提供了$\RVv$的替代表示。
 例如，如\secref{sec:mixtures_of_distributions}所示，高斯混合模型学习了一个隐含变量，这个隐含变量对应于特征是从哪一个混合体中抽出。
 这意味着高斯混合模型中的隐变量可以用于做分类。
 在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的隐含变量的。
 其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
 许多方法通过学习隐含变量来完成特征学习。
-通常，给定$\Vv$和$\Vh$，实验观察显示$\SetE[\Vh\vert\Vv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
+通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\vert\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
 % 573
 
 \section{推断和近似推断}
@@ -923,16 +924,16 @@ $E(\Vx)$被称作是\firstgls{energy_function}。
 
 我们可以使用概率模型的主要方法之一是提出关于变量如何相互关联的问题。 
 给定一组医学测试，我们可以询问患者可能患有什么疾病。
-在隐含变量模型中，我们可能需要提取能够描述$\Vv$的特征$\SetE[\Vh\vert\Vv]$。
+在隐含变量模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \vert \RVv]$。
 有时我们需要解决这些问题来执行其他任务。 
 我们经常使用\gls{MLE}来训练我们的模型。
 由于
 \begin{align}
 \label{eqn:169}
-\log p(\Vv) = \SetE_{\Vh \sim p(\Vh\vert \Vv)} [\log p(\Vh,\Vv) -  \log p(\Vh\vert\Vv)]
+\log p(\Vv) = \SetE_{\RVh \sim p(\RVh\vert \Vv)} [\log p(\Vh,\Vv) -  \log p(\Vh\vert\Vv)]
 \end{align}
-学习过程中，我们经常想要计算$p(\Vh\vert\Vv)$。
-所有这些都是推理问题的例子，其中我们必须预测给定其他变量的情况下一些变量的值，或者在给定其他变量的值的情况下预测一些变量的概率分布。
+学习过程中，我们经常想要计算$p(\RVh\vert\Vv)$。
+所有这些都是\firstgls{inference}问题的例子，其中我们必须预测给定其他变量的情况下一些变量的值，或者在给定其他变量的值的情况下预测一些变量的概率分布。
 % 574
 
 不幸的是，对于大多数有趣的深层模型，这些推理问题都是难以处理的，即使我们使用结构化的\gls{graphical_models}来简化它们。
@@ -957,7 +958,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 
 这促使我们使用近似推理。
-在\gls{DL}中，这通常涉及变分推理，其中通过寻求尽可能接近真实分布的近似分布$q(\Vh\vert\Vv)$来逼近真实分布$p(\Vh\vert\Vv)$。
+在\gls{DL}中，这通常涉及变分推理，其中通过寻求尽可能接近真实分布的近似分布$q(\RVh\vert\RVv)$来逼近真实分布$p(\RVh\vert\Vv)$。
 这个技术在\chapref{chap:approximate_inference}中有深入的描述。
 % 574 end
 
@@ -1009,7 +1010,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 \gls{graphical_models}的传统方法通常旨在保持精确推断的可追踪性。
 当这个约束太强的时候，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的近似推理算法。
 这两种方法通常在连接非常稀疏的图上有很好的效果。
-相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$v_i$连接到非常多的隐藏单元$h_j$上，从而使得$\Vh$可以获得一个$v_i$的分布式表示（也可能是其他几个可观察变量）。
+相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$\RSv_i$连接到非常多的隐藏单元$\RSh_j$上，从而使得$\RVh$可以获得一个$\RSv_i$的分布式表示（也可能是其他几个可观察变量）。
 分布式表示具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，分布式表示有一个缺点就是对于精确推断和循环信任传播等传统技术来说不能产生足够稀疏的图。
 结果，\gls{graphical_models}和深度图模型的最大的区别之一就是\gls{DL}中从来不会使用\gls{loopy_belief_propagation}。
 相反的，许多\gls{DL}模型可以用来加速\gls{gibbs_sampling}或者变分推断。
@@ -1069,12 +1070,12 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
 对\glssymbol{RBM}结构的限制产生了好的属性
 \begin{align}
 \label{eqn:1611}
-p(\Vh\vert\Vv) = \prod_i p(h_i\vert \Vv)
+p(\RVh\vert\RVv) = \prod_i p(\RSh_i\vert \RVv)
 \end{align}
 以及
 \begin{align}
 \label{eqn:1612}
-p(\Vv\vert\Vh) = \prod_i p(v_i\vert \Vh)
+p(\RVv\vert\RVh) = \prod_i p(\RSv_i\vert \RVh)
 \end{align}
 % 578 head
 
@@ -1084,8 +1085,8 @@ p(\Vv\vert\Vh) = \prod_i p(v_i\vert \Vh)
 \begin{align}
 \label{eqn:1613}
 \begin{aligned}
-p(h_i = 1\vert\Vv) = \sigma\big(\Vv^{\top}\MW_{:,i} + b_i\big)\\
-p(h_i = 0\vert\Vv) = 1 - \sigma\big(\Vv^{\top}\MW_{:,i} + b_i\big)\\
+p(\RSh_i = 1\vert\RVv) = \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
+p(\RSh_i = 0\vert\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
 \end{aligned}
 \end{align}
 结合这些属性可以得到有效的\gls{block_gibbs_sampling}，它在同时采样所有$\Vh$和同时采样所有$\Vv$之间交替。
@@ -1106,14 +1107,14 @@ p(h_i = 0\vert\Vv) = 1 - \sigma\big(\Vv^{\top}\MW_{:,i} + b_i\big)\\
 由于\gls{energy_function}本身只是参数的线性函数，很容易获取\gls{energy_function}的导数。 例如，
 \begin{align}
 \label{eqn:1615}
-\frac{\partial}{\partial W_{i,j}} E(\Vv,\Vh) = - v_i h_j
+\frac{\partial}{\partial W_{i,j}} E(\RVv,\RVh) = - \RSv_i \RSh_j
 \end{align}
 这两个属性，高效的\gls{gibbs_sampling}和导数计算，使训练过程非常方便。
 在\chapref{chap:confronting_the_partition_function}中，我们将看到，可以通过计算应用于来自模型的样本的这种导数来训练\gls{undirected_model}。
 % 579
 
 训练模型可以得到数据$\Vv$的表示$\Vh$。
-我们可以经常使用$\SetE_{\Vh\sim p(\Vh\vert\Vv)}[\Vh]$ 作为一组描述$\Vv$的特征。
+我们可以经常使用$\SetE_{\RVh\sim p(\RVh\vert\Vv)}[\Vh]$ 作为一组描述$\Vv$的特征。
 % 579
 
 
