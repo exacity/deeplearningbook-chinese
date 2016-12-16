@@ -216,8 +216,8 @@
 因为每个\gls{markov_chain}在整个学习过程中不断更新，而不是在每个梯度步骤中重新开始，\gls{markov_chain}可以自由探索很远，以找到所有模型的模式。
 因此，对于形成具有\gls{spurious_modes}的模型，\glssymbol{SML}比\glssymbol{contrastive_divergence}具有更大的抵抗力。
 此外，因为有可能存储所有采样变量的状态，无论是可见的还是潜在的，\glssymbol{SML}为\gls{hidden_unit}和可见单元都提供了初始值。
-\glssymbol{contrastive_divergence}只能为可见单元提供初始化，因此需要深度模型中进行\gls{burn_in}操作。
-\glssymbol{SML}能够有效地训练深层模型。
+\glssymbol{contrastive_divergence}只能为可见单元提供初始化，因此需要\gls{deep_model}中进行\gls{burn_in}操作。
+\glssymbol{SML}能够有效地训练\gls{deep_model}。
 \cite{Marlin10Inductive-small}将\glssymbol{SML}与本章中提出的许多其他标准进行比较。
 他们发现，\glssymbol{SML}在\glssymbol{RBM}上得到了最佳的测试集对数似然，并且如果\glssymbol{RBM}的\gls{hidden_unit}被用作\glssymbol{SVM}分类器的特征，那么\glssymbol{SML}会得到最好的分类精度。
 
@@ -331,8 +331,8 @@
 
 伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中讨论的变分推断。这是因为$\tilde{p}$出现在了分母中。
 分母的下限只提供了整个表达式的上界，然而我们并不关心最大化上界。
-这使得难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的深度模型，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
-尽管如此，\gls{pseudolikelihood}仍然对\gls{DL}有用，因为它可以用于单层模型或是使用不基于下限的近似推断方法的深度模型。
+这使得难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的\gls{deep_model}，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
+尽管如此，\gls{pseudolikelihood}仍然对\gls{DL}有用，因为它可以用于单层模型或是使用不基于下限的近似推断方法的\gls{deep_model}。
 
 % -- 608 --
 
@@ -406,7 +406,7 @@
 \end{equation}
 其中$f(\Vx, j)$返回$\RVx$在位置$j$处被翻转的位。
 \gls{ratio_matching}避免\gls{partition_function}，使用了与\gls{pseudolikelihood}估计相同的技巧：在两个概率的比率中，\gls{partition_function}会抵消掉。
-\cite{Marlin10Inductive-small}发现，在使用\gls{ratio_matching}训练的模型给测试集图像去噪的能力方面，\gls{ratio_matching}要优于\glssymbol{SML}，\gls{pseudolikelihood}和\glssymbol{GSM}。
+\cite{Marlin10Inductive-small}发现，在使用\gls{ratio_matching}训练的模型给测试集图像\gls{denoising}的能力方面，\gls{ratio_matching}要优于\glssymbol{SML}，\gls{pseudolikelihood}和\glssymbol{GSM}。
 
 % -- 610 --
 
@@ -433,13 +433,13 @@
 	p_{\text{smoothed}}(\Vx) = \int p_{\text{data}} (\Vy) q( \Vx \mid \Vy) \mathrm{d} \Vy
 \end{equation}
 而不是拟合真实的分布$p_{\text{data}}$。
-分布$q(\Vx \mid \Vy)$是一个损坏过程，通常是向$\Vy$添加少量噪扰来形成$\Vx$的过程。
+分布$q(\Vx \mid \Vy)$是一个损坏过程，通常是向$\Vy$添加少量\gls{noise}来形成$\Vx$的过程。
 
 
 \gls{denoising_score_matching}是特别有用的，因为在实践中，我们通常不能访问真实的$p_{data}$，而只能访问由其样本所定义的\gls{empirical_distribution}。
 给定足够的容量，任何一致估计都会使得$p_{model}$成为一组以训练点为中心的\gls{dirac_distribution}。
 通过$q$平滑有助于减少这个问题在\secref{sec:consistency}描述的渐近一致性上的损失。
-\cite{Kingma+LeCun-2010}介绍了使用正态分布噪扰的平滑分布$q$正则化\gls{score_matching}的过程。
+\cite{Kingma+LeCun-2010}介绍了使用正态分布\gls{noise}的平滑分布$q$正则化\gls{score_matching}的过程。
 
 
 回顾\secref{sec:estimating_the_score}，有几个\gls{AE}训练算法等价于\gls{score_matching}或是\gls{denoising_score_matching}。
@@ -491,7 +491,7 @@
 % -- 612 --
 
 我们可以在训练数据上构造一个类似的联合模型。
-在这种情况下，开关变量决定是从\textbf{数据}还是从噪扰分布中抽取$\RVx$。
+在这种情况下，开关变量决定是从\textbf{数据}还是从\gls{noise}分布中抽取$\RVx$。
 形式地，$p_{\text{train}}(y = 1) = \frac{1}{2}$，$p_{\text{train}}( \RVx \mid y = 1) = p_{\text{data}}( \RVx)$，和
 $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
@@ -532,9 +532,9 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 % -- 613 --
 
 当\glssymbol{NCE}应用于具有许多\gls{RV}的问题时，其效率会变得较低。
-\gls{logistic_regression}分类器可以通过识别任何一个取值不大可能的变量来拒绝噪扰样本。
+\gls{logistic_regression}分类器可以通过识别任何一个取值不大可能的变量来拒绝\gls{noise}样本。
 这意味着在$p_{\text{model}}$学习了基本的边缘统计之后，学习会大大减慢。
-想象一个使用非结构化高斯噪扰作为$p_{\text{noise}}$来学习面部图像的模型。
+想象一个使用非结构化高斯\gls{noise}作为$p_{\text{noise}}$来学习面部图像的模型。
 如果$p_{\text{model}}$学习了眼睛，而没有学习任何其他面部特征，如嘴， 它会拒绝几乎所有的非结构化\gls{noise}样本。
 
 
@@ -548,7 +548,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 
 
 当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}定义了一个被称为\gls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望\citep{Goodfellow-ICLR2015}。
-\glssymbol{NCE}的特殊情况（噪扰采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分开的过程，而\gls{NCE}通过让模型区分现实和固定的基准（噪扰模型），实现了计算成本的降低。
+\glssymbol{NCE}的特殊情况（\gls{noise}采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分开的过程，而\gls{NCE}通过让模型区分现实和固定的基准（\gls{noise}模型），实现了计算成本的降低。
 
 
 在训练样本和生成样本（使用模型能量函数定义分类器）之间进行分类以得到模型的梯度的方法，已经在更早的时候以各种形式提出来\citep{Welling2003b,Bengio-2009-book}。
