@@ -364,7 +364,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 如此扩展到仿射函数意味着模型预测的曲线仍然看起来像是一条直线，只是这条直线没必要经过原点。
 不通过添加偏置参数$b$，我们仍然可以使用仅含权重的模型，但是$\Vx$需要增加一项永远为$1$的元素。
 对应于额外$1$的权重起到了偏置参数的作用。
-当我们在本书中提到仿射函数时，我们会经常使用术语“线性”。
+当我们在本书中提到仿射函数时，我们会经常使用术语``线性''。
 
 % -- 106 --
 
@@ -490,7 +490,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 提高\gls{ML}模型泛化的现代思想可以追溯到早在托勒密时期的哲学家的思想。
 许多早期的学者提出一个简约原则，现在被广泛称为\firstgls{OR}（c. 1287-1387）。
-该原则指出，在同样能够解释已知观测现象的假设中，我们应该挑选“最简单”的那一个。
+该原则指出，在同样能够解释已知观测现象的假设中，我们应该挑选``最简单''的那一个。
 这个想法是在20世纪，由统计学习理论创始人提出来并精确化的\citep{Vapnik71,Vapnik82,Blumer-et-al-1989,Vapnik95}。
 
 统计学习理论提供了量化模型容量的不同方法。
@@ -644,9 +644,9 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 我们可以将去掉假设空间中的某个函数看作是对不赞成这个函数的无限偏好。
 
 在我们权重衰减的示例中，通过在最小化的\gls{target}中额外增加一项，我们明确地表示了偏好权重较小的线性函数。
-有很多其他方法去隐式地或显式地表示对不同解决方法的偏好。
-总的来说，这些不同的方法都被称为\firstgls{regularization}。
-\emph{\gls{regularization}是指我们对学习算法所做的趋向于降低泛化误差而非训练误差的修改}。
+有很多其他方法隐式地或显式地表示对不同解决方法的偏好。
+总而言之，这些不同的方法都被称为\firstgls{regularization}。
+\emph{\gls{regularization}是指我们对学习算法所做的降低泛化误差而非训练误差的修改}。
 \gls{regularization}是\gls{ML}领域的中心问题之一，能够和其重要性媲美的只有优化。
 
 \gls{no_free_lunch_theorem}已经清楚阐述了没有最优的学习算法，特别地，没有最优的\gls{regularization}形式。
@@ -655,8 +655,8 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 \section{超参数和验证集}
 \label{sec:hyperparameters_and_validation_sets}
-大多数\gls{ML}算法具有超参数，我们可以用来控制算法行为的设置。
-超参数的值不是通过学习算法本身拟合出来的（尽管我们可以设计一个嵌套的学习过程，一个学习算法为另一个学习算法学出最优超参数）。
+大多数\gls{ML}算法都有设置超参数，可以用来控制算法行为。
+超参数的值不是通过学习算法本身学习出来的（尽管我们可以设计一个嵌套的学习过程，一个学习算法为另一个学习算法学出最优超参数）。
 
 在\figref{fig:chap5_underfit_just_right_overfit}所示的多项式回归实例中，有一个超参数：多项式的次数，作为\textbf{\gls{capacity}}超参数。
 控制\gls{weight_decay}程度的$\lambda$是另一个超参数。
@@ -665,27 +665,27 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 更多的情况是，该设定必须是超参数，因为它不适合在训练集上学习。
 这适用于控制模型\gls{capacity}的所有超参数。
 如果在训练集上学习超参数，这些超参数总是趋向于最大可能的模型容量，导致过拟合（参考\figref{fig:chap5_generalization_vs_capacity}）。
-例如，相较低次多项式和正的权重衰减设定，更高次的多项式和权重衰减参数设定为$\lambda=0$总能在训练集上更好地拟合。
+例如，相较低次多项式和正的权重衰减设定，更高次的多项式和权重衰减参数设定$\lambda=0$总能在训练集上更好地拟合。
 
 % -- 117 --
 
 为了解决这个问题，我们需要训练算法观测不到的\firstgls{validation_set}\gls{example:chap5}。
 
-早先我们讨论过和训练数据相同分布的\gls{example:chap5}组成的\gls{test_set}可以用来估计学习过程完成之后的学习器的泛化误差。
+早先我们讨论过和训练数据相同分布的\gls{example:chap5}组成的\gls{test_set}可以用来估计学习过程完成之后的\gls{learner}的泛化误差。
 其重点在于测试\gls{example:chap5}不能以任何形式参与到模型的选择，包括设定超参数。
 基于这个原因，\gls{test_set}中的\gls{example:chap5}不能用于验证集。
 因此，我们总是从\emph{训练}数据中构建验证集。
 特别地，我们将训练数据分成两个不相交的子集。
 其中一个用于学习参数。
-另外一个便是我们的验证集，用于估计训练中或训练后的泛化误差，使超参数相应地更新。
+另一个作为验证集，用于估计训练中或训练后的泛化误差，更新超参数。
 用于学习参数的数据子集通常仍被称为训练集，尽管这会和整个训练过程用到的更大的\gls{dataset}相混。
 用于挑选超参数的数据子集被称为\gls{validation_set}。
 通常，$80\%$的训练数据用于训练，$20\%$用于验证。
-由于验证集是用来“训练”超参数的，尽管验证集的误差通常会比训练集误差小，验证集会低估泛化误差。
-所有超参数优化完成之后，泛化误差可能通过\gls{test_set}来估计。
+由于验证集是用来``训练''超参数的，尽管验证集的误差通常会比训练集误差小，验证集会低估泛化误差。
+所有超参数优化完成之后，泛化误差可能会通过\gls{test_set}来估计。
 
-在实际中，当相同的\gls{test_set}已经重复地用于评估不同算法的性能很多年，特别是如果我们考虑来自学术界的各种尝试去挑战该\gls{test_set}上报道出来的最佳性能，我们最后也会对\gls{test_set}有着乐观的估计。
-\gls{benchmarks}会因之变得陈旧，而后不能反映训练系统的真实性能。
+在实际中，当相同的\gls{test_set}已在很多年中重复地用于评估不同算法的性能，并且考虑学术界在该\gls{test_set}上的各种尝试，我们最后可能也会对\gls{test_set}有着乐观的估计。
+\gls{benchmarks}会因之变得陈旧，而不能反映系统的真实性能。
 值得庆幸的是，学术界往往会移到新的（通常会更具大更具挑战性的）基准\gls{dataset}上。
 
 \subsection{交叉验证}
@@ -697,21 +697,21 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 当\gls{dataset}有十万计或者更多的\gls{example:chap5}时，这不会是一个严重的问题。
 当\gls{dataset}太小时，也有替代方法允许我们使用所有的\gls{example:chap5}估计平均测试误差，代价是增加了计算量。
-这些过程是基于在原始数据随机采样或分离出的不同\gls{dataset}上重复训练和测试计算的想法。
-最常见的是$k$折交叉验证过程，如算法5.1所示，将\gls{dataset}分成$k$个不重合的子集。
+这些过程是基于在原始数据上随机采样或分离出的不同\gls{dataset}上重复训练和测试的想法。
+最常见的是$k$-折交叉验证过程，如算法5.1所示，将\gls{dataset}分成$k$个不重合的子集。
 测试误差可以估计为$k$次计算后的平均测试误差。
 在第$i$次测试时，数据的第$i$个子集用于\gls{test_set}，其他的数据用于训练集。
-一个问题是不存在平均误差方差的无偏估计\citep{Bengio-Grandvalet-JMLR-04}，但是我们通常会使用近似。
+带来的一个问题是不存在平均误差方差的无偏估计\citep{Bengio-Grandvalet-JMLR-04}，但是我们通常会使用近似来解决。
 
 \section{估计，偏差和方差}
 \label{sec:estimators_bias_and_variance}
 统计领域为我们提供了很多工具用于实现\gls{ML}目标，不仅可以解决训练集上的任务，还可以泛化。
-基本的概念，例如参数估计，偏差和方差对于形式化刻画泛化，欠拟合和过拟合都非常有帮助。
+基本的概念，例如参数估计，偏差和方差，对于形式化刻画泛化，欠拟合和过拟合都非常有帮助。
 
 \subsection{点估计}
 \label{sec:point_estimation}
-点估计试图为一些感兴趣的量提供单个“最优”预测。
-一般地，感兴趣的量可以是单个参数，或是某些参数模型中一个向量参数，例如\secref{sec:example_linear_regression}\gls{linear_regression}中的权重，但是也有可能是整个函数。
+点估计试图为一些感兴趣的量提供单个``最优''预测。
+一般地，感兴趣的量可以是单个参数，或是某些参数模型中的一个向量参数，例如\secref{sec:example_linear_regression}\gls{linear_regression}中的权重，但是也有可能是整个函数。
 
 为了区分参数估计和真实值，我们习惯表示参数$\Vtheta$的点估计为$\hat{\Vtheta}$。
 
@@ -720,9 +720,9 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \begin{equation}
     \hat{\Vtheta}_m = g(\Vx^{(1)}, \dots, \Vx^{(m)}) .
 \end{equation}
-这个定义不要求$g$返回一个接近真实植$\Vtheta$的值，或是$g$的值域为$\Vtheta$的允许取值。
+这个定义不要求$g$返回一个接近真实植$\Vtheta$的值，或者$g$的值域恰好是$\Vtheta$的允许取值范围。
 点估计的定义非常宽泛，给了\gls{estimator:chap5}的设计者极大的灵活性。
-虽然几乎所有函数都可以称为\gls{estimator:chap5}，但是一个好的\gls{estimator:chap5}的输出会接近生成训练数据的真实参数$\Vtheta$。
+虽然几乎所有的函数都可以称为\gls{estimator:chap5}，但是一个好的\gls{estimator:chap5}的输出会接近生成训练数据的真实参数$\Vtheta$。
 
 % -- 119 --
 
@@ -742,9 +742,9 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 例如，我们可能假设$\Vy = f(\Vx) + \Vepsilon$，其中$\Vepsilon$是$\Vy$中未能从$\Vx$预测的一部分。
 在函数估计中，我们感兴趣的是用模型估计去近似$f$，或者估计$\hat{f}$。
 函数估计和估计参数$\Vtheta$是一样的；函数估计$\hat{f}$是函数空间中的一个点估计。
-\gls{linear_regression}实例（\secref{sec:example_linear_regression}中讨论的）和多项式回归实例（\secref{sec:capacity_overfitting_and_underfitting}中讨论的）都既可以被解释为估计参数$\Vw$，又可以解释为估计从$\Vx$到$y$的函数映射$\hat{f}$。
+\gls{linear_regression}实例（\secref{sec:example_linear_regression}中讨论的）和多项式回归实例（\secref{sec:capacity_overfitting_and_underfitting}中讨论的）都既可以解释为估计参数$\Vw$，又可以解释为估计从$\Vx$到$y$的函数映射$\hat{f}$。
 
-现在我们回顾点估计最常研究的性质，并探讨这些性质说明了估计的什么。
+现在我们回顾点估计最常研究的性质，并探讨这些性质说明了估计的什么性质。
 
 \subsection{偏差}
 \label{sec:bias}
@@ -753,7 +753,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \label{eq:5.20}
     \text{bias}(\hat{\Vtheta}_m) = \SetE(\hat{\Vtheta}_m) - \Vtheta,
 \end{equation}
-其中期望作用在所有数据（看作是从随机变量采样得到的）上，$\Vtheta$是定义数据生成分布$\Vtheta$的真实值。
+其中期望作用在所有数据（看作是从随机变量采样得到的）上，$\Vtheta$是用于定义数据生成分布的$\Vtheta$的真实值。
 如果$\text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5}$\hat{\Vtheta}_m$被称为是\firstgls{unbiased}，这意味着$\SetE(\hat{\Vtheta}_m) = \Vtheta$。
 如果$\lim_{m\to\infty} \text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5}$\hat{\Vtheta}_m$称为是\firstgls{asymptotically_unbiased}，这意味着$\lim_{m\to\infty} \SetE(\hat{\Vtheta}_m) = \Vtheta$。
 
@@ -764,12 +764,12 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \begin{equation}
     P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{(1 - x^{(i)})}.
 \end{equation}
-这个分布中参数$\theta$的常用估计是训练\gls{example:chap5}的均值：
+这个分布中参数$\theta$的常用\gls{estimator:chap5}是训练\gls{example:chap5}的均值：
 \begin{equation}
 \label{eq:5.22}
     \hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}.
 \end{equation}
-判断这个\gls{estimator:chap5} 是否有偏，我们将\eqnref{eq:5.22}代入\eqnref{eq:5.20}：
+判断这个\gls{estimator:chap5}是否有偏，我们将\eqnref{eq:5.22}代入\eqnref{eq:5.20}：
 \begin{align}
     \text{bias}(\hat{\theta}_m)     &= \SetE[\hat{\theta}_m] - \theta  \\
             &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m x^{(i)} \right] - \theta \\
@@ -788,7 +788,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     p(x^{(i)}; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{1}{2} \frac{(x^{(i)} - \mu)^2}{\sigma^2}  \right).
 \end{equation}
 
-高斯均值参数的常用\gls{estimator:chap5}被称\firstgls{sample_mean}：
+高斯均值参数的常用\gls{estimator:chap5}被称为\firstgls{sample_mean}：
 \begin{equation}
     \hat{\mu}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}
 \end{equation}
@@ -808,11 +808,11 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 本例中，我们比较高斯分布方差参数$\sigma^2$的两个不同估计。
 我们探讨是否有一个是有偏的。
 
-我们考虑的第一个方差估计称为\firstgls{sample_variance}：
+我们考虑的第一个方差估计被称为\firstgls{sample_variance}：
 \begin{equation}
     \hat{\sigma}_m^2 = \frac{1}{m} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2,
 \end{equation}
-其中$\hat{\mu}_m$是\gls{sample_variance}。
+其中$\hat{\mu}_m$是\gls{sample_mean}。
 更形式地，我们感兴趣计算
 \begin{equation}
 \label{eq:5.37}
@@ -823,7 +823,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     \SetE [ \hat{\sigma}_m^2 ]  &= \SetE \left[ \frac{1}{m} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2  \right] \\
     &= \frac{m-1}{m} \sigma^2
 \end{align}
-回到\eqnref{eq:5.37}，我们得到结论$\hat{\sigma}^2_m$的偏差是$-\frac{\sigma^2}{m}$。
+回到\eqnref{eq:5.37}，我们可以得出$\hat{\sigma}^2_m$的偏差是$-\sigma^2/m$。
 因此\gls{sample_variance}是有偏估计。
 
 \firstgls{unbiased_sample_variance}估计
@@ -831,7 +831,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     \tilde{\sigma}_m^2 = \frac{1}{m-1} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2
 \end{equation}
 提供了另一种可选方法。
-正如名字所说，这个估计是无偏的。
+正如名字所言，这个估计是无偏的。
 换言之，我们会发现$\SetE[\tilde{\sigma}_m^2] = \sigma^2$：
 \begin{align}
     \SetE[\tilde{\sigma}_m^2] &= \SetE \left[ \frac{1}{m-1} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2 \right] \\
@@ -843,13 +843,13 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 % -- 123 --
 
 我们有两个\gls{estimator:chap5}：一个是有偏的，另一个是无偏的。
-尽管无偏估计显然是可取的，但它并不总是“最好”的估计。
-我们将会看到经常会使用具有其他重要性质的有偏估计。
+尽管无偏估计显然是可取的，但它并不总是``最好''的估计。
+我们将看到，经常会使用其他具有重要性质的有偏估计。
 
 \subsection{方差和\glsentrytext{standard_error}}
 \label{sec:variance_and_standard_error}
-我们可能要考虑的\gls{estimator:chap5}另一个性质是数据样本函数的变化程度。
-正如我们可以计算\gls{estimator:chap5}的期望去决定它的偏差，我们也可以计算它的方差。
+我们有时会考虑\gls{estimator:chap5}的另一个性质，数据样本函数的变化程度。
+正如我们可以计算\gls{estimator:chap5}的期望来决定它的偏差，我们也可以计算它的方差。
 \gls{estimator:chap5}的\firstgls{variance}就是一个\gls{variance}
 \begin{equation}
     \text{Var}(\hat{\theta})
@@ -857,11 +857,11 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 其中随机变量是训练集。
 另外，方差的平方根被称为\firstgls{standard_error}，记作$\text{SE}(\hat{\theta})$。
 
-\gls{standard_error}的方差或\gls{standard_error}提供给我们，当\gls{dataset}独立地从潜在的数据生成过程中重采样数据集时，如何期望估计的变化。
-正如我们希望估计的偏差比较小，我们也希望其方差较小。
+\gls{estimator:chap5}的方差或\gls{standard_error}告诉我们，当独立地从潜在的数据生成过程中重采样数据集时，如何期望估计的变化。
+正如我们希望估计的偏差较小，我们也希望其方差较小。
 
 当我们使用有限的样本计算任何统计量时，真实参数的估计都是不确定的，在这个意义下，从相同的分布得到其他样本时，它们的统计量会不一样。
-任何估计方差的期望程度是我们想量化的误差的来源。
+任何方差估计量的期望程度是我们想量化的误差的来源。
 
 均值的\gls{standard_error}被记作
 \begin{equation}
@@ -1008,7 +1008,7 @@ KL散度定义为
 % -- 128 --
 
 最小化KL散度其实就是在最小化分布之间的交叉熵。
-许多作者使用术语“交叉熵”特定表示伯努利或softmax分布的负对数似然，但那是用词不当的。
+许多作者使用术语``交叉熵''特定表示伯努利或softmax分布的负对数似然，但那是用词不当的。
 任何一个由负对数似然组成的损失都是定义在训练集上的经验分布和定义在模型上的概率分布之间的交叉熵。
 例如，\gls{mean_squared_error}是经验分布和高斯模型之间的交叉熵。
 
@@ -1105,10 +1105,10 @@ KL散度定义为
 \gls{dataset}能够直接观测到，因此不是随机的。
 另一方面，真实参数$\Vtheta$是未知或不确定的，因此可以表示成随机变量。
 
-在观察到数据前，我们将$\Vtheta$的已知知识表示成\firstgls{prior_probability_distribution}，$p(\Vtheta)$（有时简单地称为“先验”）。
+在观察到数据前，我们将$\Vtheta$的已知知识表示成\firstgls{prior_probability_distribution}，$p(\Vtheta)$（有时简单地称为``先验''）。
 一般而言，\gls{ML}实践者会选择一个相当宽泛的（即，高熵的）先验分布，反映在观测到任何数据前参数$\Vtheta$的高度不确定性。
 例如，我们可能会假设先验$\Vtheta$在有限区间中均匀分布。
-许多先验偏好于“更简单”的解决方法（如小幅度的系数，或是接近常数的函数）。
+许多先验偏好于``更简单''的解决方法（如小幅度的系数，或是接近常数的函数）。
 
 现在假设有一组数据样本$\{x^{(1)},\dots,x^{(m)}\}$。
 通过贝叶斯法则结合数据似然$p(x^{(1)},\dots,x^{(m)} \mid \Vtheta)$和先验，我们可以恢复数据对我们关于$\Vtheta$信念的影响：
@@ -1259,7 +1259,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 \section{\glsentrytext{supervised_learning}算法}
 \label{sec:supervised_learning_algorithms}
 回顾\secref{sec:the_experience_e}，\gls{supervised_learning}算法，粗略地说，是给定一组输入$\Vx$和输出$\Vy$的训练集，学习如何关联输入和输出。
-在许多情况下，输出$\Vy$很难自动收集，必须由人来提供“管理”，不过该术语仍然适用于训练集目标可以被自动收集的情况。
+在许多情况下，输出$\Vy$很难自动收集，必须由人来提供``管理''，不过该术语仍然适用于训练集目标可以被自动收集的情况。
 
 % -- 136 --
 
@@ -1430,13 +1430,13 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 
 \section{\glsentrytext{unsupervised_learning}算法}
 \label{sec:unsupervised_learning_algorithms}
-回顾\secref{sec:the_experience_e}，无监督算法只处理“\gls{feature}”，不操作监督信号。
+回顾\secref{sec:the_experience_e}，无监督算法只处理``\gls{feature}''，不操作监督信号。
 监督和无监督算法之间的区别没有规范，严格的定义，因为没有客观的判断来区分监督者提供的值是\gls{feature}还是\gls{target}。
 通俗地说，\gls{unsupervised_learning}是指从不需要人为注释\gls{example:chap5}的分布中抽取信息的大多数尝试。
 该术语通常与密度估计相关，学习从分布中采样，学习从分布中降噪，需要数据分布的流形，或是将数据中相关的\gls{example:chap5}聚类。
 
-一个经典的\gls{unsupervised_learning}任务是找到数据的“最佳”表示。
-“最佳”可以是不同的表示，但是一般来说，是指该表示在比本身表示的信息更简单或更易访问而受到一些惩罚或限制的情况下，尽可能保存关于$\Vx$更多的信息。 
+一个经典的\gls{unsupervised_learning}任务是找到数据的``最佳''表示。
+``最佳''可以是不同的表示，但是一般来说，是指该表示在比本身表示的信息更简单或更易访问而受到一些惩罚或限制的情况下，尽可能保存关于$\Vx$更多的信息。 
 
 % -- 142 --
 
@@ -1759,7 +1759,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 % -- 152 --
 
-其中最广泛使用的隐式“先验”是\firstgls{smoothness_prior}，或\firstgls{local_constancy_prior}。
+其中最广泛使用的隐式``先验''是\firstgls{smoothness_prior}，或\firstgls{local_constancy_prior}。
 这个先验表明我们学习的函数不应在小区域内发生很大的变化。
 
 许多简单算法完全依赖于此先验达到良好的泛化，其结果是不能推广去解决\gls{AI}级别任务中的统计挑战。
@@ -1854,12 +1854,12 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 每个点周围邻域的定义暗示着存在变换能够从一个位置移动到其邻域位置。
 例如在地球表面这个流形中，我们可以朝东南西北走。
 
-尽管术语“流形”有正式的数学定义，\gls{ML}倾向于更松散地定义一组点，使其只需要考虑少数嵌入在高维空间中的自由度或维数就能很好地近似。
+尽管术语``流形''有正式的数学定义，\gls{ML}倾向于更松散地定义一组点，使其只需要考虑少数嵌入在高维空间中的自由度或维数就能很好地近似。
 每一维都对应着局部的变动方向。
 如\figref{fig:chap5_one_dim_manifold_and_data}所示，训练数据位于二维空间中的一维流形中。
 在\gls{ML}中，我们允许流形的维数从一个点到另一个点有所变化。
 这经常发生于流形和自身相交的情况。
-例如，数字“8”形状的流形在大多数位置只有一维，但在中心的相交处有两维。
+例如，数字``8''形状的流形在大多数位置只有一维，但在中心的相交处有两维。
 
 \begin{figure}[!htb]
 \ifOpenSource
