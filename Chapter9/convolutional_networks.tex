@@ -99,7 +99,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 在机器学习中，学习算法会在核合适的位置学得恰当的值， 所以一个基于核翻转的卷积运算的学习算法所学得的核，是对未进行翻转的算法学得的核的翻转。
 单独使用卷积运算在机器学习中是很少见的，卷积经常和其他的函数一起使用，无论卷积运算是否翻转了它的核，这些函数的组合通常是不可交换的。
 
-图\ref{fig:chap9_conv_2d}演示了一个在二维张量上的卷积运算（核没有翻转）的例子。
+图\ref{fig:chap9_conv_2d}演示了一个在2维张量上的卷积运算（核没有翻转）的例子。
 % fig 9.1
 \begin{figure}[!htb]
 \ifOpenSource
@@ -107,7 +107,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/conv_2d}}
 \fi
-\caption{Tmp}
+\caption{一个2维卷积的例子（核没有翻转）。我们限制只对核完全处在图像中的位置输出，在一些上下文中称为``\gls{valid}''卷积。我们用画有箭头的盒子来说明输出张量的左上角元素是如何通过对输入张量相应的左上角区域使用核进行卷积得到的。}
 \label{fig:chap9_conv_2d}
 \end{figure}
 
@@ -150,9 +150,11 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/area_of_effect}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[Caption for LOF]{\gls{sparse_connectivity}，对每幅图从下往上看。我们强调了一个输入单元$x_3$以及在$\bm{s}$中受该单元影响的输出单元。\emph{(上)}当$\bm{s}$是由核宽度为3的卷积产生时，只有三个输出受到$\bm{x}$的影响\protect\footnotemark。\emph{(下)}当$\bm{s}$是由矩阵乘法产生时，连接不再是稀疏的，所以所有的输出都会受到$x_3$的影响。}
 \label{fig:chap9_area_of_effect}
 \end{figure}
+ \footnotetext{译者注：译者认为此处应当是$x_3$。}
 % fig 9.3
 \begin{figure}[!htb]
 \ifOpenSource
@@ -160,7 +162,8 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/receptive_field}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{\gls{sparse_connectivity}，对每幅图从上往下看。我们强调了一个输出单元$s_3$以及$\bm{x}$中影响该单元的输入单元。这些单元被称为$s_3$的\gls{receptive_field}。\emph{(上)}当$\bm{s}$是由核宽度为3的卷积产生时，只有三个输入影响$s_3$。\emph{(下)}当$\bm{s}$是由矩阵乘法产生时，连接不再是稀疏的，所以所有的输入都会影响$s_3$。}
 \label{fig:chap9_receptive_field}
 \end{figure}
 % fig 9.4
@@ -170,7 +173,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/deep_receptive_field}}
 \fi
-\caption{Tmp}
+\caption{处于\gls{convolutional_network}更深的层中的单元，它们的\gls{receptive_field}要比处在浅层的单元的\gls{receptive_field}更大。如果网络还包含类似\gls{stride}卷积（图\ref{fig:chap9_stride_conv}）或者\gls{pooling}（\ref{sec:pooling}节）之类的结构特征，这种效应会加强。这意味着在\gls{convolutional_network}中即使是\emph{直接}连接都是很稀疏的，处在更深的层中的单元可以\emph{间接地}连接到全部或者大部分输入图像。}
 \label{fig:chap9_deep_receptive_field}
 \end{figure}
 
@@ -192,7 +195,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/parameter_sharing}}
 \fi
-\caption{Tmp}
+\caption{\gls{parameter_sharing}。黑色箭头表示在两个不同的模型中使用了特殊参数的连接。\emph{(上)}黑色箭头表示在卷积模型中3元素核的中间元素的使用。因为\gls{parameter_sharing}，这单个参数被用于所有的输入位置。\emph{(下)}这单个黑色箭头表示在全连接模型中权重矩阵的中间元素的使用。这个模型没有使用\gls{parameter_sharing}，所以参数只使用了一次。}
 \label{fig:chap9_parameter_sharing}
 \end{figure}
 % -- 326 --
@@ -254,7 +257,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/conv_layer}}
 \fi
-\caption{Tmp}
+\caption{典型\gls{CNN}层的组件。有两组常用的术语用于描述这些层。\emph{(左)}在这组术语中，\gls{convolutional_network}被视为少量相对复杂的层，每层具有许多``级''。在这组术语中，核张量与网络层之间存在一一对应关系。在本书中，我们通常使用这组术语。\emph{(右)}在这组术语中，\gls{convolutional_network}被视为更大数量的简单层；每一个处理步骤都被认为是一个独立的层。这意味着不是每个``层''都有参数。}
 \label{fig:chap9_conv_layer}
 \end{figure}
 
@@ -278,7 +281,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/max_pool_invariance}}
 \fi
-\caption{Tmp}
+\caption{\gls{max_pooling}引入不变性。\emph{(上)}卷积层中间输出的视图。下面一行显示非线性的输出。上面一行显示\gls{max_pooling}的输出，每个\gls{pool}的宽度为三个像素并且\gls{pooling}区域的\gls{stride}为一个像素。\emph{(下)}相同网络的视图，不过对输入右移了一个像素。下面一行的所有值都发生了改变，但上面一行只有一半的值发生了改变，这是因为\gls{max_pooling}单元只对周围的最大值比较敏感，而不是对精确的位置。}
 \label{fig:chap9_max_pool_invariance}
 \end{figure}
 
@@ -312,7 +315,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/pool_downsample}}
 \fi
-\caption{Tmp}
+\caption{带有\gls{downsampling}的\gls{pooling}。这里我们使用\gls{max_pooling}，\gls{pool}的宽度为三并且\gls{pool}之间的\gls{stride}为二。这使得表示的大小减少了一半，减轻了下一层的计算和统计负担。注意到最右边的\gls{pooling}区域尺寸较小，但如果我们不想忽略一些探测单元的话就必须包含这个区域。}
 \label{fig:chap9_pool_downsample}
 \end{figure}
 
@@ -431,7 +434,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/stride_conv}}
 \fi
-\caption{Tmp}
+\caption{带有\gls{stride}的卷积。在这个例子中，我们的\gls{stride}为二。\emph{(上)}在单个操作中实现的\gls{stride}为二的卷积。\emph{(下)}\gls{stride}大于一个像素的卷积在数学上等价于单位\gls{stride}的卷积随后\gls{downsampling}。显然，涉及\gls{downsampling}的两步法在计算上是浪费的，因为它计算了许多将被丢弃的值。}
 \label{fig:chap9_stride_conv}
 \end{figure}
 
@@ -447,7 +450,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/zero_pad_shrink}}
 \fi
-\caption{Tmp}
+\caption{零填充对网络大小的影响。考虑一个\gls{convolutional_network}，每层有一个宽度为六的核。 在这个例子中，我们不使用任何\gls{pooling}，所以只有卷积操作本身缩小网络的大小。\emph{(上)}在这个卷积网络中，我们不使用任何隐含的零填充。这使得表示在每层缩小五个像素。从十六个像素的输入开始，我们只能有三个卷积层，并且最后一层不能移动核，所以可以说只有两层是真正的卷积层。可以通过使用较小的核来减缓收缩速率，但是较小的核表示能力不足，并且在这种结构中一些收缩是不可避免的。\emph{(下)}通过向每层添加五个隐含的零，我们防止了表示随深度收缩。这允许我们设计一个任意深的卷积网络。}
 \label{fig:chap9_zero_pad_shrink}
 \end{figure}
 
@@ -458,29 +461,29 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 然而，输出的大小在每一层都会缩减。
 如果输入的图像宽度是$m$，核的宽度是$k$，那么输出的宽度就会变成$m-k+1$。
 如果卷积核非常大的话缩减率会非常显著。
-因为缩减数大于0，这限制了网络中的卷积层的层数。
-当层数增加时，网络的空间维度最终会缩减到$1\times 1$，这种情况下其他的层就不可能进行有意义的卷积了。
+因为缩减数大于0，这限制了网络中能够包含的卷积层的层数。
+当层数增加时，网络的空间维度最终会缩减到$1\times 1$，这种情况下另外的层就不可能进行有意义的卷积了。
 第二种特殊的情况是只进行足够的零填充来保持输出和输入具有相同的大小。
 在MATLAB中，这称为\firstgls{same}卷积。
-在这种情况下，网络能够包含足够多的卷积层，只要硬件可以支持，这是因为卷积运算并没有改变相关的结构。
+在这种情况下，网络能够包含任意多的卷积层，只要硬件可以支持，这是因为卷积运算并没有改变相关的结构。
 然而，输入像素中靠近边界的部分相比于中间部分对于输出像素的影响更小。
 这可能会导致边界像素存在一定程度的欠表示。
 这使得第三种极端情况产生了，在MATLAB中称为\firstgls{full}卷积。
-它进行了足够多的零填充使得每个像素在每个方向上恰好被访问了$k$次\footnote{译者注：图\ref{fig:chap9_zero_pad_shrink}给出了\gls{valid}卷积和\gls{same}卷积的例子，这里对\gls{full}卷积略作说明：我们可以认为\gls{full}卷积是在输入的两端各填充$k-1$个零，使得输入的每个像素都恰好被核访问$k$次，最终得到的输出的宽度为$[m+2(k-1)]-k+1=m+k-1$}，最终输出的图像的宽度为$m+k-1$。%译者注
+它进行了足够多的零填充使得每个像素在每个方向上恰好被访问了$k$次\footnote{译者注：图\ref{fig:chap9_zero_pad_shrink}给出了\gls{valid}卷积和\gls{same}卷积的例子，这里对\gls{full}卷积略作说明：我们可以认为\gls{full}卷积是在输入的两端各填充$k-1$个零，使得输入的每个像素都恰好被核访问$k$次，最终得到的输出的宽度为$[m+2(k-1)]-k+1=m+k-1$}，最终输出图像的宽度为$m+k-1$。%译者注
 在这种情况下，输出像素中靠近边界的部分相比于中间部分是更少像素的函数。
-这将导致学得一个在卷积特征图的所有位置都表现不错的单核更为困难。
-通常零填充的最优数量（对于测试集的分类正确率）处于``有效卷积''和``相同卷积''之间的某个位置。
+这将导致学得一个在卷积特征映射的所有位置都表现不错的单核更为困难。
+通常零填充的最优数量（对于测试集的分类正确率）处于``\gls{valid}卷积''和``\gls{same}卷积''之间的某个位置。
 
 % -- 338 --
  
 % -- 339 --
 
 在一些情况下，我们并不一定真正想用卷积，而只是用一些局部连接的网络层\citep{LeCun86,LeCun89a}。
-在这种情况下，我们的多重感知机对应的邻接矩阵是相同的，但每一个连接都有它自己的权重，用一个6维的张量$\TSW$来表示。
+在这种情况下，我们的\gls{MLP}对应的邻接矩阵是相同的，但每一个连接都有它自己的权重，用一个6维的张量$\TSW$来表示。
 $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输入的通道$l$，输入的行偏置$m$和列偏置$n$。
 局部连接层的线性部分可以表示为
 \begin{equation}
-\TEZ_{i,j,k} = \sum_{l,m,n} [\TEV_{l, j+m-1, k+n-1} w_{i, j, k, l, m, n}].
+\TEZ_{i,j,k} = \sum_{l,m,n} [\TEV_{l, j+m-1, k+n-1} w_{i, j, k, l, m, n}]. %这里应该是$\TEW$?
 \end{equation}
 这有时也被称为\firstgls{unshared_convolution}，因为它和带有一个小核的离散卷积运算很像，但并不横跨位置来共享参数。
 图\ref{fig:chap9_local}比较了局部连接、卷积和全连接的区别。
@@ -491,20 +494,20 @@ $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输�
 \else
 \centerline{\includegraphics{Chapter9/figures/local}}
 \fi
-\caption{Tmp}
+\caption{局部连接，卷积和全连接的比较。\emph{(上)}每一小片（接受域）有两个像素的局部连接层。每条边用唯一的字母标记，来显示每条边都有自身的权重参数。\emph{(中)}核宽度为两个像素的卷积层。该模型与局部连接层具有完全相同的连接。区别不在于哪些单元相互交互，而在于如何共享参数。局部连接层没有\gls{parameter_sharing}。卷积层在整个输入上重复使用相同的两个权重，正如用于标记每条边的字母重复出现所指示的那样。\emph{(下)}全连接层类似于局部连接层，它的每条边都有其自身的参数（在该图中用字母明确标记的话就太多了）。 然而，它不具有局部连接层的连接受限的特征。}
 \label{fig:chap9_local}
 \end{figure}
  
 % -- 340 --
  
 当我们知道每一个特征都是一小部分空间的函数而不是整个空间的特征时，局部连接层是很有用的。
-例如，如果我们想要辨别一张图片是否是人脸图像时，我们只需要去寻找嘴是否在图像的下部的居中部分即可。
+例如，如果我们想要辨别一张图片是否是人脸图像时，我们只需要去寻找嘴是否在图像的下部中央部分即可。
 
-在连接被更进一步限制时，使用一些新版本的卷积或者局部连接层是有用的，例如，当每一个输出的通道$i$被限制成仅仅是输入的一部分通道$l$的函数时。
-处理这种情况的一种通用方法是使输出的前$m$个通道仅仅连接到输入的前$n$个通道，输出的接下来的$m$个通道仅仅连接到输入的接下来的$n$个通道，以此类推。
-如图\ref{fig:chap9_conv_groups}所示。
-对少量通道的连接进行建模允许网络使用更少的参数来降低存储的消耗以及提高统计效率，并且减少了前向和后向传播所需要的计算量。
-这些目标的实现并没有减少隐藏单元的数目。
+使用那些连接被更进一步限制的卷积或者局部连接层也是有用的，例如，限制每一个输出的通道$i$仅仅是输入通道$l$的一部分的函数时。
+实现这种情况的一种通用方法是使输出的前$m$个通道仅仅连接到输入的前$n$个通道，输出的接下来的$m$个通道仅仅连接到输入的接下来的$n$个通道，以此类推。
+图\ref{fig:chap9_conv_groups}给出了一个例子。
+对少量通道间的连接进行建模允许网络使用更少的参数，这降低了存储的消耗以及提高了统计效率，并且减少了前向和反向传播所需要的计算量。
+这些目标的实现并没有减少\gls{hidden_unit}的数目。
 % fig 9.15
 \begin{figure}[!htb]
 \ifOpenSource
@@ -512,14 +515,14 @@ $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输�
 \else
 \centerline{\includegraphics{Chapter9/figures/conv_groups}}
 \fi
-\caption{Tmp}
+\caption{\gls{convolutional_network}的前两个输出通道只和前两个输入通道相连，随后的两个输出通道只和随后的两个输入通道相连。}
 \label{fig:chap9_conv_groups}
 \end{figure}
 
-\firstgls{tiled_convolution}\citep{Gregor+LeCun-2010,Le2010}对卷积层和局部连接层进行了折衷。
-这里并不是对\emph{每一个}空间位置的权重进行学习，我们学习一些核使得当我们在空间移动时它们可以循环利用。
-这意味着在最近邻的位置拥有不同的过滤器，就像局部连接层一样，但是对于这些参数的存储需求仅仅会随着核的集合的大小成常数倍增长，而不是整个输出的特征图的大小。
-图\ref{fig:chap9_tiled}对局部连接层、尾卷积和标准卷积进行了比较。
+\firstgls{tiled_convolution}\citep{Gregor+LeCun-2010,Le2010}对卷积层和局部连接层进行了折衷。%这里翻译成啥？瓷砖？平铺？
+这里并不是对\emph{每一个}空间位置的权重集合进行学习，我们学习一组核使得当我们在空间移动时它们可以循环利用。
+这意味着在近邻的位置上拥有不同的过滤器，就像局部连接层一样，但是对于这些参数的存储需求仅仅会增长常数倍，这个常数就是核的集合的大小，而不是整个输出的特征映射的大小。
+图\ref{fig:chap9_tiled}对局部连接层、\gls{tiled_convolution}和标准卷积进行了比较。
 % fig 9.16
 \begin{figure}[!htb]
 \ifOpenSource
@@ -527,13 +530,14 @@ $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输�
 \else
 \centerline{\includegraphics{Chapter9/figures/tiled}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{局部连接层、\gls{tiled_convolution}和标准卷积的比较。当使用大小相同的核时，这三种方法的单元之间具有相同的连接。此图是对使用两个像素宽的核的说明。这三种方法之间的区别在于它们如何共享参数。\emph{(上)}局部连接层根本没有共享参数。我们对每个连接使用唯一的字母标记，来表明每个连接都有它自身的权重。\emph{(中)}\gls{tiled_convolution}有$t$个不同的核。这里我们说明$t=2$的情况。其中一个核具有标记为``a''和``b''的边，而另一个具有标记为``c''和``d''的边。我们每次在输出中向右移动一个像素，移动后使用不同的核。这意味着，与局部连接层类似，输出中的相邻单元具有不同的参数。与局部连接层不同的是，在我们遍历所有可用的$t$个核之后，我们循环回到了第一个核。如果两个输出单元间隔$t$个步长的倍数，则它们共享参数。\emph{(下)}传统卷积等效于$t=1$的\gls{tiled_convolution}。它只有一个核，并且被应用到各个地方，我们在图中表示为在各处使用具有标记为``a''和``b''的边的核。}
 \label{fig:chap9_tiled}
 \end{figure}
  
 % -- 341 --
  
-为了代数化地定义尾卷积，令$\TSK$是一个6维的张量\footnote{译者注：原文将$\TSK$误写成了$k$。}，其中的两维对应着输出图中的不同位置。%译者注
+为了代数化地定义\gls{tiled_convolution}，令$\TSK$是一个6维的张量\footnote{译者注：原文将$\TSK$误写成了$k$。}，其中的两维对应着输出图中的不同位置。%译者注
 我们这里并不是使用离散的索引来表示输出图中的每一个位置，输出的位置在每个方向上在$t$个不同的核的栈组成的集合中进行循环。
 如果$t$等于输出的宽度，这就和局部连接层等价了。
 \begin{equation}
@@ -546,7 +550,7 @@ $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输�
   
 % -- 343 --
  
-局部连接层和尾卷积层都和最大\gls{pooling}有一些有趣的关联：这些层的探测单元都是由不同的过滤器驱动的。
+局部连接层和\gls{tiled_convolution}层都和最大\gls{pooling}有一些有趣的关联：这些层的探测单元都是由不同的过滤器驱动的。
 如果这些过滤器能够学会对相同隐藏特征的不同变换形式进行探测，那么最大\gls{pooling}的单元对于学得的变换就具有不变性（如图\ref{fig:chap9_learned_rotation}所示）。
 卷积层对于平移具有内置的不变性。
  
@@ -619,7 +623,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 一般来说，在卷积层从输入到输出的变换中我们不仅仅只用线性运算。
 我们一般也会在进行非线性运算前对每个输出加入一些偏置项。
 这样就产生了如何在偏置项中共享参数的问题。
-对于局部连接层，对于每个单元都给定它特有的偏置是很自然的，对于尾卷积，用与核一样的方式来共享参数也是很自然的。
+对于局部连接层，对于每个单元都给定它特有的偏置是很自然的，对于\gls{tiled_convolution}，用与核一样的方式来共享参数也是很自然的。
 对于卷积层来说，典型的做法是在输出的每一个通道上都设置一个偏置，这个偏置在每个卷积映射中的所有位置进行共享。
 然而，如果输入是已知的固定大小，也可以在输出映射的每个位置学习一个单独的偏置。
 分离这些偏置可能会稍稍降低模型的统计效率，但同时也允许模型来校正图像中不同位置的统计差异。
