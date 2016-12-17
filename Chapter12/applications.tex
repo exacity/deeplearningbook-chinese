@@ -204,7 +204,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 在这些情况下，我们可以训练一系列分类器。
 序列中的第一分类器具有低\gls{capacity}，高\gls{recall}。
 换句话说，他们被训练确保当对象存在时，我们不会错误地拒绝输入。
-通过训练最终的分类器具有高精度。
+最终训练好的分类器具有高精度。
 在测试时，我们按照顺序运行分类器来进行推断，一旦\gls{cascade}中的任何一个元素拒绝它，就选择放弃。
 总的来说，这允许我们使用高\gls{capacity}模型以较高的置信度验证对象的存在，而不是强制我们为每个样本付出完全推断的成本。
 有两种不同的方式可以使得\gls{cascade}实现高\gls{capacity}。
@@ -212,11 +212,11 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 在这种情况下，系统作为一个整体显然具有高\gls{capacity}，因为它的一些个体成员。 还可以进行\gls{cascade}，其中每个单独的模型具有低\gls{capacity}，但是由于许多小型模型的组合，整个系统具有高\gls{capacity}。
 \citet{Viola01}使用\gls{cascade}的增强\gls{decision_tree}来实现适合在手持数字相机中使用的快速并且鲁棒的面部检测器。
 它们的分类器使用滑动窗口方法来定位面部，许多窗口被检查，如果它们不包含面部则被拒绝。
-\gls{cascade}的另一个版本使用早期的模型来实现一种强制\gls{attention_mechanism}：\gls{cascade}的早期成员本地化对象，并且\gls{cascade}的后续成员在给定对象的位置的情况下执行进一步处理。
+\gls{cascade}的另一个版本使用早期的模型来实现一种强制\gls{attention_mechanism}：\gls{cascade}的早期成员局部化定位对象，并且\gls{cascade}的后续成员在给定对象的位置的情况下执行进一步处理。
 例如，Google使用两步\gls{cascade}从街景视图图像中转换地址编号，首先使用一个\gls{ML}模型查找地址编号，然后使用另一个\gls{ML}模型将其转录\citep{Goodfellow+et+al-ICLR2014a}。
 % 437 
 
-\gls{decision_tree}本身是\gls{dynamic_structure}的一个例子，因为树中的每个节点决定应该使用哪个子树评估输入。
+\gls{decision_tree}本身是\gls{dynamic_structure}的一个例子，因为树中的每个节点决定应该使用哪个子树来评估输入。
 一个结合\gls{DL}和\gls{dynamic_structure}的简单方法是训练一个\gls{decision_tree}，其中每个节点使用神经网络做出决策\citep{guo1992classification}，虽然这种方法没有实现加速推断计算的目标。
 % 437 end
 
@@ -225,7 +225,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 类似的，我们可以使用称为\firstgls{gater}的神经网络来选择在给定当前输入的情况下将使用几个\firstgls{expert_network}中的哪一个来计算输出。
 这个想法的第一个版本被称为\firstgls{mixture_of_experts}\citep{Nowlan90,Jacobs-nc91}，其中\gls{gater}为每个专家输出一个概率或权重（通过非线性的\gls{softmax}获得），并且最终输出由各个专家输出的加权组合获得。
 在这种情况下，使用\gls{gater}不会减少计算成本，但如果每个样本的\gls{gater}选择单个专家，我们获得一个特殊的\firstgls{hard_mixture_of_experts}~\citep{collobert:2001:rr01-12,collobert:2002}，这可以加速推断和训练的时间。
-当\gls{gater}决策的数量很小，由于它不是组合的，这个策略效果会很好。
+当\gls{gater}决策的数量很小的时候，这个策略效果会很好，因为它不是组合的。
 但是当我们想要选择不同的单元或参数子集时，不可能使用``软开关''，因为它需要枚举（和计算输出）所有的\gls{gater}配置。
 为了解决这个问题，许多工作探索了几种方法来训练组合的\gls{gater}。
 \citet{bengio-arxiv13-condcomp}提出使用\gls{gater}概率梯度的若干估计器，而\citet{Bacon-et-al-RLDM2015,BengioE-et-al-arXiv2015}使用\gls{RL}技术（\firstgls{policy_gradient}）来学习一种形式的隐藏单元的条件\gls{dropout}，减少了实际的计算成本，而不会对近似的质量产生负面影响。
@@ -245,7 +245,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 这意味着网络中很少的操作可以被描述为对样本\gls{minibatch}的矩阵乘法或批量卷积。
 我们可以写更多的专用子程序，来用不同的核对样本做卷积，或者通过不同的权重列来乘以设计矩阵的每一行。
 不幸的是，这些专业的子程序难以高效地实现。
-CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
+由于缺乏高速缓存的一致性，CPU实现将是缓慢的。
 \glssymbol{GPU}的实现也将是缓慢的，因为缺乏\gls{coalesced}的内存操作以及\gls{warp}成员使用不同分支时需要串行化操作。
 在一些情况下，可以通过将样本分成组，这些组都采用相同的分支并且同时处理这些样本组来缓解这些问题。
 在离线环境中，这是最小化处理固定量样本所需时间的一项可接受的策略。
@@ -272,10 +272,10 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 这已成为近年来更迫切的问题，因为\gls{DL}在工业产品中越来越受欢迎，并且由于更快的硬件产生的巨大影响已经通过\glssymbol{GPU}的使用得到了证明。
 激励当前对深度网络专用硬件研究的另一个因素是单个CPU或\glssymbol{GPU}核心的进展速度已经减慢，并且最近计算速度的改进来自于核心的并行化（无论CPU还是\glssymbol{GPU}）。
 这与20世纪90年代的情况（前面的神经网络时代）非常不同，其中神经网络的硬件实现（从开始到芯片的可用性可能需要两年）不能跟上快速进展和价格低廉的通用CPU的脚步。
-因此，在针对诸如电话的低功率设备开发新的硬件设计的时候，建立专用硬件是一种进一步推动发展的方式，旨在用于\gls{DL}的一般公共应用（例如，具有语音，\gls{CV}或自然语言功能的设施）。
+因此，在针对诸如电话的低功率设备开发新的硬件设计的时候，研究专用硬件是一种进一步推动其发展的方式，旨在用于\gls{DL}的一般公共应用（例如，具有语音，\gls{CV}或自然语言功能的设施）。
 
 
-最近对基于\gls{BP}的神经网络的低精度实现的工作\citep{Vanhoucke-et-al-2011,Courbariaux-et-al-ICLR2015workshop,Gupta-et-al-2015}表明，8和16位之间的精度可以足以使用或训练具有\gls{BP}的\gls{DNN}。
+最近对基于\gls{BP}神经网络的低精度实现的工作\citep{Vanhoucke-et-al-2011,Courbariaux-et-al-ICLR2015workshop,Gupta-et-al-2015}表明，8和16位之间的精度足以满足使用或训练基于\gls{BP}的\gls{DNN}的要求。
 显而易见的是，在训练期间需要比在推断时更精确，并且数字的一些形式的动态定点表示可以用于减少每个数需要的存储空间。
 传统的固定点数限制为固定范围（其对应于浮点表示中的给定指数）。
 动态固定点表示在一组数字 （例如一个层中的所有权重） 之间共享该范围。
@@ -298,7 +298,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 \gls{CV}的应用既包含复现人类视觉能力，比如识别人脸，也囊括了可视化一个新类别的物体这样的任务。
 举个例子，近期一个新的\gls{CV}应用是从视频中可视物体振动中识别相应的声波\citep{Davis2014VisualMic}。
 大多数\gls{CV}领域的\gls{DL}研究未曾关注过这样一个奇异的应用，它扩展了图像的范围，而不是仅仅关注于\gls{AI}中较小的核心目标，即复制人类的能力。
-无论是报告图像中存在哪个物体，还是用每个对象周围的边界框注释图像，从图像转录符号序列，或给图像中的每个像素标记它所属对象的标识，\gls{CV}中的\gls{DL}往往用于某种形式的对象识别或检测。
+无论是报告图像中存在哪个物体，还是给图像中每个对象的添加注释性的边框，从图像中转录符号序列，或给图像中的每个像素标记它所属对象的标识，\gls{CV}中的\gls{DL}往往用于某种形式的对象识别或检测。
 因为\gls{generative_model}已经是\gls{DL}研究的指导原则，还有大量的使用深度模型的图像合成工作。
 尽管图像合成通常不包括在\gls{CV}内，但是能够进行图像合成的模型通常用于图像恢复，修复图像中的缺陷或从图像中移除对象这样的\gls{CV}任务。
 % 441 
@@ -338,9 +338,9 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 
 可以为许多任务安全地移除的最明显的变化源之一是图像中的对比度量。
 对比度仅指图像中亮像素和暗像素之间的差异的大小。
-存在量化图像对比度的许多方式。
+量化图像对比度有许多方式。
 在\gls{DL}中，对比度通常指的是图像或图像区域中像素的\gls{standard_deviation}。
-假设我们有一个张量表示的图像$\TSX \in\SetR^{r\times c\times 3}$，其中$\TSXX_{i,j,1}$表示第i行第j列的红色的强度，$\TSXX_{i,j,2}$对应的是绿色，$\TSXX_{i,j,3}$对应的是蓝色。
+假设我们有一个张量表示的图像$\TSX \in\SetR^{r\times c\times 3}$，其中$\TSXX_{i,j,1}$表示第i行第j列红色的强度，$\TSXX_{i,j,2}$对应的是绿色，$\TSXX_{i,j,3}$对应的是蓝色。
 然后整个图像的对比度可以表示如下：
 \begin{align}
 \label{eqn:121}
@@ -431,7 +431,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 
 \gls{LCN}的各种定义都是可行的。
  在所有情况下，我们可以通过减去邻近像素的平均值并除以邻近像素的\gls{standard_deviation}来修改每个像素。
-在一些情况下，要计算修改的像素为中心的矩形窗口中的所有像素的平均值和\gls{standard_deviation}\citep{Pinto08}。
+在一些情况下，要计算修改像素为中心的矩形窗口中的所有像素的平均值和\gls{standard_deviation}\citep{Pinto08}。
 在其他情况下，这是使用以要修改的像素为中心的高斯权重的加权平均和加权\gls{standard_deviation}。
 在彩色图像的情况下，一些策略分别处理不同的颜色通道，而其他策略组合来自不同通道的信息以使每个像素标准化\citep{sermanet-icpr-12}。
 % 444
@@ -439,7 +439,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 \gls{LCN}通常可以通过使用可分离卷积（参见\secref{sec:efficient_convolution_algorithms}）来计算\gls{feature_map}所需要的局部平均值和局部\gls{standard_deviation}，然后使用元素层面的减法和元素层面的除法实现不同的\gls{feature_map}。
 % 444
 
-\gls{LCN}是可微分的操作，并且还可以用作应用于网络隐藏层的非线性作用，以及应用于输入的预处理操作。
+\gls{LCN}是可微分的操作，并且还可以应用于网络隐藏层的非线性作用，以及应用于输入的预处理操作。
 % 444
 
 与\gls{GCN}一样，我们通常需要\gls{regularization}\gls{LCN}来避免除以零。
@@ -465,7 +465,7 @@ CPU实现将是缓慢的，由于缺乏高速缓存的一致性。
 \label{sec:speech_recognition}
 % 446
 
-\gls{SR}任务是将一段包括了自然语言发音的声音信号投影到对应说话人的词序列上。
+\gls{SR}任务将一段包括了自然语言发音的声音信号投影到对应说话人的词序列上。
 令$\MX=(\Vx^{(1)},\Vx^{(2)},\ldots,\Vx^{(T)})$表示语音的输入向量（传统做法以20ms为一帧分割信号）。
 许多\gls{SR}的系统通过特殊的手工设计方法预处理输入信号，从而提取特征，但是某些\gls{DL}系统\citep{jaitly2011learning}直接从原始输入中学习特征。
 令$\Vy=(y_{1},y_{2},\ldots,y_{N})$表示目标的输出序列（通常是一个词或者字符的序列）。
@@ -485,7 +485,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \vert \RMX = \MX)
 在那段时间，基于\gls{NN}的\gls{ASR}的表现和\glssymbol{GMM}-\glssymbol{HMM}系统的表现差不多。
 比如说，\citet{Robinson+Fallside91}在TIMIT数据集\citep{garofolo1993darpa}（有39个区分的\gls{phoneme}\footnote{39}）上达到了26\%的\gls{phoneme}错误率，这个结果优于或者是可比于基于\glssymbol{HMM}的结果。
 从那时起，TIMIT成为了\gls{phoneme}识别的一个基准数据集，在\gls{SR}中的作用就和MNIST在图像中的作用差不多。
-然而，由于\gls{SR}软件系统中的复杂的工程因素以及在基于\glssymbol{GMM}-\glssymbol{HMM}的系统中所已经付出的巨大努力，工业界并没有转向\gls{NN}。
+然而，由于\gls{SR}软件系统中复杂的工程因素以及在基于\glssymbol{GMM}-\glssymbol{HMM}的系统中所已经付出的巨大努力，工业界并没有转向\gls{NN}。
 结果，直到21世纪00年代末期，学术界和工业界的研究者们更多的是用\gls{NN}为\glssymbol{GMM}-\glssymbol{HMM}系统学习一些额外的特征。
 % 447
 
@@ -509,7 +509,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \vert \RMX = \MX)
 % 447
 
 用\gls{SR}中词错误率来衡量，在\gls{SR}性能上的这些突破是史无前例的（大约30\%的提高），在这之前的长达十年左右的时间基于\glssymbol{GMM}-\glssymbol{HMM}的系统的传统技术已经停滞不前了，尽管数据集的规模是随时间增长的（见\citet{Deng+Yu-2014}的图2.4）。
-这也导致了\gls{SR}领域快速的转向\gls{DL}的研究。
+这也导致了\gls{SR}领域快速地转向\gls{DL}的研究。
 在大约的两年时间内，工业界的大多数的\gls{SR}产品都包含了\gls{DL}，这种成功也激发了\gls{ASR}领域对\gls{DL}算法和结构的一波新的研究浪潮，并且影响至今。
 % 448
 
@@ -519,8 +519,8 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \vert \RMX = \MX)
 % 448
 
 另一个重要的至今仍然活跃的推动，是完全抛弃了\glssymbol{HMM}的\firstgls{end_to_end}\gls{DL}\gls{SR}系统。
-这个领域的第一个主要的突破是\citep{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}的\gls{RNN}（见\secref{sec:the_long_short_term_memory_and_other_gated_rnns}），使用了帧－\gls{phoneme}排列的\gls{MAP}估计推断，比如\citet{chapter-gradient-document-2001}，以及CTC框架~\citep{Graves-et-al-2006,Graves-book2012}。
-一个深度\gls{RNN}~\citep{Graves-et-al-ICASSP2013}在每一步都有状态变量，每个$\gls{time_step}$各层都有状态变量，有两种\gls{unfolded_graph}的方式：一种是根据层的堆叠，另一种是时间展开。
+这个领域的第一个主要的突破是\citet{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}的\gls{RNN}（见\secref{sec:the_long_short_term_memory_and_other_gated_rnns}），使用了帧－\gls{phoneme}排列的\gls{MAP}估计推断，比如\citet{chapter-gradient-document-2001}，以及CTC框架~\citep{Graves-et-al-2006,Graves-book2012}。
+一个深度\gls{RNN}~\citep{Graves-et-al-ICASSP2013}在每一步都有状态变量，每个\gls{time_step}各层都有状态变量，有两种\gls{unfolded_graph}的方式：一种是根据层的堆叠，另一种是时间展开。
 这个工作把TIMIT数据集上\gls{phoneme}的错误率降到了记录的新低17.7\%。关于应用于其它领域的深度\gls{RNN}的变种可以参考\citet{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
 % 448
 
