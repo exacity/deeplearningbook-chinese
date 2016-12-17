@@ -509,7 +509,7 @@ $p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 \end{align}
 % 635  
 
-为了应用固定点更新的推理规则，我们通过令方程~\eqref{eqn:1943}等于0来解$\hat{h}_i$：
+为了应用固定点更新的推断规则，我们通过令方程~\eqref{eqn:1943}等于0来解$\hat{h}_i$：
 
 \begin{align}
 \label{eqn:1944}
@@ -784,12 +784,12 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 % 641 end  19.4.4  
 
 
-%使用近似推理作为学习算法的一部分影响学习过程，反过来这也影响推理算法的准确性。
-在学习算法中使用近似推理会影响学习的过程，反过来这也会影响推理算法的准确性。
+%使用近似推断作为学习算法的一部分影响学习过程，反过来这也影响推断算法的准确性。
+在学习算法中使用近似推断会影响学习的过程，反过来这也会影响推断算法的准确性。
 % 641 end
 
 
-具体来说，训练算法倾向于以使得近似推理算法中的近似假设变得更加真实的方向来适应模型。<bad>
+具体来说，训练算法倾向于以使得近似推断算法中的近似假设变得更加真实的方向来适应模型。<bad>
 当训练参数时，变分学习增加
 \begin{align}
 \label{eqn:1968}
@@ -801,7 +801,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 % 642
 
 这种行为使得我们做的近似假设变得合理。 %这种行为使我们的近似假设成为自我实现。
-<bad> 如果我们用单峰值的模型近似后验分布，我们将获得一个真实后验的模型，该模型比我们通过使用精确推理训练模型获得的模型更接近单峰。
+<bad> 如果我们用单峰值的模型近似后验分布，我们将获得一个真实后验的模型，该模型比我们通过使用精确推断训练模型获得的模型更接近单峰。
 % 642
 
 
@@ -838,13 +838,13 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 \firstgls{wake_sleep}算法\citep{Hinton95,Frey96}通过从模型分布中抽取$\Vv$和$\Vh$样本来解决这个问题。
 例如，在\gls{directed_model}中，这可以通过执行从$\Vh$开始并在$\Vv$结束的\gls{ancestral_sampling}来高效地完成。
 然后推断网络可以被训练来执行反向的映射：预测哪一个$\Vh$产生了当前的$\Vv$。
-<bad>这种方法的主要缺点是我们将只能够训练推理网络在模型下具有高概率的v值。
-在学习早期，模型分布将不像数据分布，因此推理网络将不具有学习类似数据的样本的机会。
+<bad>这种方法的主要缺点是我们将只能够训练推断网络在模型下具有高概率的v值。
+在学习早期，模型分布将不像数据分布，因此推断网络将不具有学习类似数据的样本的机会。
 % 643
 
 
 <bad>在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中，我们看到睡眠在人类和动物中的作用的一个可能的解释是，梦想可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}的对数\gls{partition_function}的负梯度的负相位样本。
-生物作梦的另一个可能的解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推理网络在给定$\Vv$的情况下预测$\Vh$。
+生物作梦的另一个可能的解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推断网络在给定$\Vv$的情况下预测$\Vh$。
 在某些意义上，这种解释比\gls{partition_function}的解释更令人满意。
 如果\gls{monte_carlo}算法仅使用梯度的正相位进行几个步骤，然后仅对梯级的负相位进行几个步骤，那么他们的结果不会很好。
 人类和动物通常醒来连续几个小时，然后睡着连续几个小时。
@@ -864,24 +864,24 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 
 这种\gls{learned}近似推断策略已经被应用到了其它模型中。
 \citep{Salakhutdinov+Larochelle-2010}证明了在\gls{learned}推断网络中的单一路径相比于在\gls{DBM}中迭代\gls{mean_field}\gls{fixed_point_equation}能够得到更快的推断。
-训练过程基于运行推理网络，然后应用\gls{mean_field}的一步来改进其估计，并训练推理网络来输出这个精细的估计而不是其原始估计。
+训练过程基于运行推断网络，然后应用\gls{mean_field}的一步来改进其估计，并训练推断网络来输出这个精细的估计而不是其原始估计。
 % 644
 
 
 我们已经在\secref{sec:predictive_sparse_decomposition}中已经看到，预测性的稀疏分解模型训练浅层的\gls{encoder}网络以预测输入的\gls{sparse_coding}。
 这可以被看作是\gls{AE}和\gls{sparse_coding}之间的混合。
 为模型设计概率语义是可能的，其中\gls{encoder}可以被视为执行\gls{learned}近似\gls{MAP}推断。
-由于其浅层的\gls{encoder}，PSD不能实现我们在\gls{mean_field}推理中看到的单元之间的那种竞争。
-然而，该问题可以通过训练深度\gls{encoder}来执行\gls{learned}近似推理来补救，如ISTA技术\citep{Gregor+LeCun-ICML2010}。
+由于其浅层的\gls{encoder}，PSD不能实现我们在\gls{mean_field}推断中看到的单元之间的那种竞争。
+然而，该问题可以通过训练深度\gls{encoder}来执行\gls{learned}近似推断来补救，如ISTA技术\citep{Gregor+LeCun-ICML2010}。
 % 644
 
 
-近来\gls{learned}近似推理已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一\citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
+近来\gls{learned}近似推断已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一\citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
 在这种优美的方法中，不需要为推断网络构造显式的目标。
 反之，推断网络被用来定义$\CalL$，然后调整推断网络的参数来增大$\CalL$。这种模型在\secref{sec:variational_autoencoders}中详细描述。
 % 644
 
-我们可以使用近似推理来训练和使用大量的模型。
+我们可以使用近似推断来训练和使用大量的模型。
 许多模型将在下一章中被描述。
 % 644
 
