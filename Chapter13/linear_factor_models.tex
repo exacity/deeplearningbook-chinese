@@ -6,9 +6,9 @@
 
 
 
-许多深度学习的研究前沿涉及到了建立输入的概率模型$p_{\text{model}}(\Vx)$。
+许多深度学习的研究前沿涉及到了构建输入的概率模型$p_{\text{model}}(\Vx)$。
 原则上说，给定任何其他变量的情况下，这样的模型可以使用概率推断来预测其环境中的任何变量。
-这些模型中的许多还具有隐变量$\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\vert\Vh)$。
+许多这样的模型还具有隐变量$\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\mid\Vh)$。
 这些隐变量提供了表示数据的另一种方式。
  基于隐变量的分布式表示可以有很多优点，这些我们在\gls{deep_feedforward_network}和\gls{RNN}中已经发现。
 % 479
@@ -304,7 +304,7 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 更具体的说，\gls{sparse_coding}模型通常假设线性因子有一个各向同性的精度为$\beta$的高斯噪音：
 \begin{align}
 \label{eqn:1312}
-p(\Vx\vert\Vh) = \CalN
+p(\Vx\mid \Vh) = \CalN
 (\Vx;\MW\Vh + \Vb ,\frac{1}{\beta}\MI)
 \end{align}
 % 486
@@ -334,7 +334,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 相反，\gls{encoder}是一个优化算法，在这个优化问题中，我们寻找单个最可能的编码值：
 \begin{align}
 \label{eqn:1315}
-\Vh^* = f(\Vx) = \underset{\Vh}{\arg\max}\  p(\Vh\vert\Vx)
+\Vh^* = f(\Vx) = \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vx)
 \end{align}
 % 487
 
@@ -342,8 +342,8 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 结合\eqnref{eqn:1313}和\eqnref{eqn:1312}，我们得到如下的优化问题：
 \begin{align}
 \label{eqn:1316}
-& \underset{\Vh}{\arg\max}\  p(\Vh\vert\Vx) \\
-= & \underset{\Vh}{\arg\max}\ \log  p(\Vh\vert\Vx)\\
+& \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vx) \\
+= & \underset{\Vh}{\arg\max}\ \log  p(\Vh\mid\Vx)\\
 = & \underset{\Vh}{\arg\min}\ \lambda \Vert \Vh\Vert_1 + \beta  \Vert \Vx - \MW \Vh\Vert_2^2
 \end{align}
 其中，我们扔掉了与$\Vh$无关的项，除以一个正的伸缩因子来简化表达。
@@ -362,7 +362,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 
 
 
-不是所有的\gls{sparse_coding}方法都显式地构建了$p(\Vh)$和$p(\Vx\vert\Vh)$。 
+不是所有的\gls{sparse_coding}方法都显式地构建了$p(\Vh)$和$p(\Vx\mid\Vh)$。 
 通常我们只是对学习一个带有激活值的特征的字典感兴趣，当使用这个推断过程时，这个激活值通常为0。
 % 487 end
 

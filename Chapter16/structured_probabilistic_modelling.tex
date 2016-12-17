@@ -128,7 +128,7 @@
 	% 552  end
 	
 	\item 运行时间：推断的开销。
-	假设我们需要完成一个推断的任务，其中我们通过对联合分布$P(\Vx)$来计算某些其它的分布，比如说边缘分布$P(x_1)$或者是条件分布$P(x_2\vert x_1)$。
+	假设我们需要完成一个推断的任务，其中我们通过对联合分布$P(\Vx)$来计算某些其它的分布，比如说边缘分布$P(x_1)$或者是条件分布$P(x_2\mid x_1)$。
 	计算这样的分布需要对整个表格的某些项进行求和操作，因此这样的操作的运行时间和上述的高昂的内存开销是一个级别的。
 	% 553 head
 	
@@ -236,11 +236,11 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 
 
 % 555 head 
-正式的讲，变量$\RVx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution}$p(\RSx_i\vert P_{a\CalG}(\RSx_i))$来定义的，其中$P_{a\CalG}(\RSx_i)$表示结点$\RSx_i$的所有父结点。
+正式的讲，变量$\RVx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution}$p(\RSx_i\mid P_{a\CalG}(\RSx_i))$来定义的，其中$P_{a\CalG}(\RSx_i)$表示结点$\RSx_i$的所有父结点。
 $\RVx$的概率分布可以表示为
 \begin{align}
 \label{eqn:161}
-p(\RVx) = \prod_{i} p(\RSx_i\vert P_{a\CalG}(\RSx_i))
+p(\RVx) = \prod_{i} p(\RSx_i\mid P_{a\CalG}(\RSx_i))
 \end{align}
 % 555 
 
@@ -248,7 +248,7 @@ p(\RVx) = \prod_{i} p(\RSx_i\vert P_{a\CalG}(\RSx_i))
 在之前所述的接力赛的例子中，这意味着概率分布可以被表示为
 \begin{align}
 \label{eqn:162}
-p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\vert \RSt_0)p(\RSt_2\vert \RSt_1)
+p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1)
 \end{align}
 % 555 
 
@@ -806,8 +806,8 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 其基本思想是将图中的变量$\RSx_i$使用拓扑排序，使得对于所有$i$和$j$，
 如果$\RSx_i$是$\RSx_j$的父亲结点，则j大于i。
 然后可以按此顺序对变量进行采样。
-换句话说，我们可以首先采$\RSx_1\sim P(\RSx_1)$，然后采$\RSx_2\sim P(\RSx_2\vert Pa_{\CalG}(\RSx_2))$，以此类推，直到最后我们采$\RSx_n\sim P(\RSx_n\vert Pa_{\CalG}(\RSx_n))$。
-只要每个条件分布$\RSx_i\sim P(\RSx_i\vert Pa_{\CalG}(\RSx_i))$都很容易从中采样，那么很容易从整个模型中抽样。
+换句话说，我们可以首先采$\RSx_1\sim P(\RSx_1)$，然后采$\RSx_2\sim P(\RSx_2\mid Pa_{\CalG}(\RSx_2))$，以此类推，直到最后我们采$\RSx_n\sim P(\RSx_n\mid Pa_{\CalG}(\RSx_n))$。
+只要每个条件分布$\RSx_i\sim P(\RSx_i\mid Pa_{\CalG}(\RSx_i))$都很容易从中采样，那么很容易从整个模型中抽样。
 拓扑排序操作保证我们可以按照\eqnref{eqn:161}中的条件分布的顺序依次采样。
 如果没有拓扑排序，我们可能会尝试在其父节点可用之前对该变量进行抽样。
 % 571  
@@ -840,7 +840,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 不幸的是，从\gls{undirected_model}模型中抽取样本是一个昂贵的过程。
 理论上最简单的方法是\gls{gibbs_sampling}。
 假设我们在随机变量$\RVx$（一个$n$维向量）上有一个\gls{graphical_models}。 
-我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \vert \RSx_{-i})$中抽样。
+我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \mid \RSx_{-i})$中抽样。
 由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以仅对$\RSx_i$的邻居条件化。
 不幸的是，在我们遍历\gls{graphical_models}一次并采样 所有n个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
 相反，我们必须重复该过程并使用它们的邻居的更新的值对所有$n$个变量重新取样。
@@ -914,7 +914,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的隐含变量的。
 其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
 许多方法通过学习隐含变量来完成特征学习。
-通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\vert\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
+通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\mid\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
 % 573
 
 \section{推断和近似推断}
@@ -924,15 +924,15 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 我们可以使用概率模型的主要方法之一是提出关于变量如何相互关联的问题。 
 给定一组医学测试，我们可以询问患者可能患有什么疾病。
-在隐含变量模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \vert \RVv]$。
+在隐含变量模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \mid \RVv]$。
 有时我们需要解决这些问题来执行其他任务。 
 我们经常使用\gls{MLE}来训练我们的模型。
 由于
 \begin{align}
 \label{eqn:169}
-\log p(\Vv) = \SetE_{\RVh \sim p(\RVh\vert \Vv)} [\log p(\Vh,\Vv) -  \log p(\Vh\vert\Vv)]
+\log p(\Vv) = \SetE_{\RVh \sim p(\RVh\mid \Vv)} [\log p(\Vh,\Vv) -  \log p(\Vh\mid\Vv)]
 \end{align}
-学习过程中，我们经常想要计算$p(\RVh\vert\Vv)$。
+学习过程中，我们经常想要计算$p(\RVh\mid\Vv)$。
 所有这些都是\firstgls{inference}问题的例子，其中我们必须预测给定其他变量的情况下一些变量的值，或者在给定其他变量的值的情况下预测一些变量的概率分布。
 % 574
 
@@ -958,7 +958,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 
 这促使我们使用近似推断。
-在\gls{DL}中，这通常涉及变分推断，其中通过寻求尽可能接近真实分布的近似分布$q(\RVh\vert\RVv)$来逼近真实分布$p(\RVh\vert\Vv)$。
+在\gls{DL}中，这通常涉及变分推断，其中通过寻求尽可能接近真实分布的近似分布$q(\RVh\mid\RVv)$来逼近真实分布$p(\RVh\mid\Vv)$。
 这个技术在\chapref{chap:approximate_inference}中有深入的描述。
 % 574 end
 
@@ -1070,12 +1070,12 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
 对\glssymbol{RBM}结构的限制产生了好的属性
 \begin{align}
 \label{eqn:1611}
-p(\RVh\vert\RVv) = \prod_i p(\RSh_i\vert \RVv)
+p(\RVh\mid\RVv) = \prod_i p(\RSh_i\mid \RVv)
 \end{align}
 以及
 \begin{align}
 \label{eqn:1612}
-p(\RVv\vert\RVh) = \prod_i p(\RSv_i\vert \RVh)
+p(\RVv\mid\RVh) = \prod_i p(\RSv_i\mid \RVh)
 \end{align}
 % 578 head
 
@@ -1085,8 +1085,8 @@ p(\RVv\vert\RVh) = \prod_i p(\RSv_i\vert \RVh)
 \begin{align}
 \label{eqn:1613}
 \begin{aligned}
-p(\RSh_i = 1\vert\RVv) = \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
-p(\RSh_i = 0\vert\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
+p(\RSh_i = 1\mid\RVv) = \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
+p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
 \end{aligned}
 \end{align}
 结合这些属性可以得到有效的\gls{block_gibbs_sampling}，它在同时采样所有$\Vh$和同时采样所有$\Vv$之间交替。
@@ -1114,7 +1114,7 @@ p(\RSh_i = 0\vert\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
 % 579
 
 训练模型可以得到数据$\Vv$的表示$\Vh$。
-我们可以经常使用$\SetE_{\RVh\sim p(\RVh\vert\Vv)}[\Vh]$ 作为一组描述$\Vv$的特征。
+我们可以经常使用$\SetE_{\RVh\sim p(\RVh\mid\Vv)}[\Vh]$ 作为一组描述$\Vv$的特征。
 % 579
 
 
