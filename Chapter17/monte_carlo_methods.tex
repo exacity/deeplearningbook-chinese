@@ -122,7 +122,7 @@ p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 \end{align}
 当$q$取到
 \begin{align}
-q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z}
+q^*(\Vx) = \frac{p(\Vx)\mid f(\Vx)\mid}{Z}
 \end{align}
 时，方差达到最小值。
 % 584
@@ -158,9 +158,9 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z}
 我们回过头来看看方程~\eqref{eqn:variance_of_is}会发现，如果存在一个$q$使得$\frac{p(\Vx)f(\Vx)}{q(\Vx)}$很大，那么这个估计的方差也会很大。
 当$q(\Vx)$很小，而$f(\Vx)$和$p(\Vx)$都较大并且无法抵消$q$时，这种情况会非常明显。
 $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布中容易的采样。
-当$\Vx$是高维数据的时候，$q$分布的简单性使得它很难于$p$或者$p\vert f\vert$相匹配。
-当$q(x^{(i)})\gg p(x^{(i)}) \vert f(x^{(i)})\vert $的时候，\gls{importance_sampling}采到了很多无用的样本（权值之和很小或趋于零）。
-另一方面，当$q(x^{(i)})\ll p(x^{(i)}) \vert f(x^{(i)})\vert $的时候， 样本会很少被采到，其对应的权值却会非常大。
+当$\Vx$是高维数据的时候，$q$分布的简单性使得它很难于$p$或者$p\mid f\mid$相匹配。
+当$q(x^{(i)})\gg p(x^{(i)}) \mid f(x^{(i)})\mid $的时候，\gls{importance_sampling}采到了很多无用的样本（权值之和很小或趋于零）。
+另一方面，当$q(x^{(i)})\ll p(x^{(i)}) \mid f(x^{(i)})\mid $的时候， 样本会很少被采到，其对应的权值却会非常大。
 正因为后一个事件是很少发生的，这些样本很难被采到，通常使得对$s$的估计出现了估计不足，于之前过度估计相对。
 这样的不均匀情况在高维数据屡见不鲜，因为在高维度分布中联合分布的动态域通常非常大。
 % 585
@@ -191,7 +191,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 
 
 为了解释从\gls{energy_based_model}中采样的困难性，我们考虑一个包含两个变量的\gls{energy_based_model}的例子，记作$p(\RSa,\RSb)$。
-为了采$\RSa$，我们必须先从$p(\RSa\vert \RSb)$中采样，为了采$\RSb$，我们又必须从$p(\RSb\vert \RSa)$中采样。
+为了采$\RSa$，我们必须先从$p(\RSa\mid \RSb)$中采样，为了采$\RSb$，我们又必须从$p(\RSb\mid \RSa)$中采样。
 这似乎成了难以解释的先有鸡还是先有蛋的问题。
 \gls{directed_model}避免了这一问题因为它的图是有向无环的。
 为了以拓扑顺序完成对包含各个变量的一个样本的\firstgls{ancestral_sampling}，给定每个变量的所有父结点的条件下，这个变量是确定能够被采样的（详见\secref{sec:sampling_from_graphical_models}）。
@@ -203,8 +203,8 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 \gls{markov_chain}的核心思想是以一个任意状态的点$\Vx$作为起始点。
 随着时间的推移，我们随机的反复的更新状态$\Vx$。
 最终$\Vx$成为了一个从$p(\Vx)$中抽出的（接近）比较公正的样本。
-在正式的定义中，\gls{markov_chain}由一个随机状态$x$和一个转移分布$T(\Vx'\vert \Vx)$定义而成，$T(\Vx'\vert \Vx)$是一个概率分布，说明了给定状态$\Vx$的情况下随机的转移到$\Vx'$的概率。
-运行一个\gls{markov_chain}意味着根据转移分布$T(\Vx'\vert \Vx)$反复的用状态$\Vx'$来更新状态$\Vx$。
+在正式的定义中，\gls{markov_chain}由一个随机状态$x$和一个转移分布$T(\Vx'\mid \Vx)$定义而成，$T(\Vx'\mid \Vx)$是一个概率分布，说明了给定状态$\Vx$的情况下随机的转移到$\Vx'$的概率。
+运行一个\gls{markov_chain}意味着根据转移分布$T(\Vx'\mid \Vx)$反复的用状态$\Vx'$来更新状态$\Vx$。
 % 587
 
 
@@ -232,7 +232,7 @@ q(\RSx = i) = v_i
 单一状态转移到$x'$的概率可以表示为
 \begin{align}
 \label{eqn:transition1}
-q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\vert x)
+q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x)
 \end{align}
 % 587
 
@@ -240,7 +240,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\vert x)
 根据状态为整数的设定，我们可以将转移算子$T$表示成一个矩阵$\MA$。
 矩阵$\MA$的定义如下：
 \begin{align}
-\MA_{i,j} = T(\RVx' = i\vert \RVx = j)
+\MA_{i,j} = T(\RVx' = i\mid \RVx = j)
 \end{align}
 使用这一定义，我们可以重新写成\eqnref{eqn:transition1}。
 与之前使用$q$和$T$来理解单个状态的更新相对的是，我们现在可以使用$\Vv$和$\MA$来描述当我们更新时（并行运行的）不同个\gls{markov_chain}上的整个分布是如何变化的：
@@ -290,7 +290,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\vert x)
 在这种情况下，一些研究者把\gls{markov_chain}叫做\firstgls{harris_chain}，但是这两种情况我们都用\gls{markov_chain}来表示。
 通常情况下，在一些宽松的条件下，一个带有转移算子$T$的\gls{markov_chain}都会收敛到一个固定点，这个固定点可以写成如下形式：
 \begin{align}
-q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\vert \RVx)
+q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx)
 \end{align}
 这个方程的离散版本就是方程~\eqref{eqn:1723}。	
 当$\RVx$离散时，这个期望对应着求和，而当$\RVx$连续时，这个期望对应的是积分。
@@ -331,7 +331,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\vert \RVx)
 \section{\glsentrytext{gibbs_sampling}}
 \label{sec:gibbs_sampling}
 
-截至目前我们已经了解了如何通过反复的更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\vert\Vx)$从一个分布$q(\Vx)$中采样。
+截至目前我们已经了解了如何通过反复的更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。
 然而我们还没有提到过如何确定一个有效的$q(\Vx)$分布。
 本书中描述了两种基本的方法。
 第一种方法是从已经学习到的分布$p_{\text{model}}$中推导出$T$，就像下文描述的从\gls{energy_based_model}中采样的案例一样。
@@ -342,11 +342,11 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\vert \RVx)
 
 在\gls{DL}中，我们通常使用\gls{markov_chain}从定义为\gls{energy_based_model}的分布$p_{\text{model}}(\Vx)$中采样。
 在这种情况下，我们希望\gls{markov_chain}的$q(\Vx)$分布就是$p_{\text{model}}(\Vx)$。
-为了得到所期望的$q(\Vx)$分布，我们必须选取合适的$T(\Vx'\vert \Vx)$。
+为了得到所期望的$q(\Vx)$分布，我们必须选取合适的$T(\Vx'\mid \Vx)$。
 % 590
 
 
-\firstgls{gibbs_sampling}是一种概念简单而又有效的方法来构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\vert \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
+\firstgls{gibbs_sampling}是一种概念简单而又有效的方法来构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
 给定他们的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。
 正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\gls{RBM}的例子一样，\gls{RBM}所有的隐层结点可以被同时采样，因为在给定可见层结点的条件下他们相互条件独立。
 同样的，所有的可见层结点也可以被同时采样因为在给定隐藏层结点的情况下他们相互条件独立。
@@ -399,11 +399,11 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\vert \RVx)
 举一个简单的例子，考虑两个变量$\RSa$, $\RSb$的\gls{energy_based_model}，这两个变量都是二元的，取值$+1$或者$-1$。
 如果对某个较大的正数$w$, $E(\RSa,\RSb) = - w \RSa \RSb$，那么这个模型传达了一个强烈的信息，$\RSa$和$\RSb$有相同的符号。
 当$\RSa=1$时用\gls{gibbs_sampling}更新$\RSb$。
-给定$\RSb$时的条件分布满足$p(\RSb=1\vert \RSa=1) = \sigma(w)$。
+给定$\RSb$时的条件分布满足$p(\RSb=1\mid \RSa=1) = \sigma(w)$。
 如果$w$的值很大，sigmoid趋近于饱和，那么$b$取到1的概率趋近于1。
 相同的道理，如果$\RSa=-1$，那么$\RSb$取到$-1$的概率也趋于1。
 根据模型$p_{\text{model}}(\RSa,\RSb)$，两个变量取一样的符号的概率几乎相等。
-根据$p_{\text{model}}(\RSa\vert \RSb)$，两个变量应该有相同的符号。
+根据$p_{\text{model}}(\RSa\mid \RSb)$，两个变量应该有相同的符号。
 这也意味着\gls{gibbs_sampling}很难会改变这些变量的符号。
 % 592
 
@@ -416,8 +416,8 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\vert \RVx)
 归根结底，\gls{markov_chain}最初就是被提出来解决这个问题，即从大组的变量中采样的问题。
 % 592
 
-在含有隐含变量的模型中，其中定义来一个联合分布$p_{\text{model}}(\Vx,\Vh)$，我们经常通过交替的从$p_{\text{model}}(\Vx\vert \Vh)$和$p_{\text{model}}(\Vh\vert \Vx)$中采样来达到抽$\Vx$的目的。
-从快速\gls{mixing}的角度上说，我们更希望$p_{\text{model}}(\Vh\vert \Vx)$有很大的熵。
+在含有隐含变量的模型中，其中定义来一个联合分布$p_{\text{model}}(\Vx,\Vh)$，我们经常通过交替的从$p_{\text{model}}(\Vx\mid \Vh)$和$p_{\text{model}}(\Vh\mid \Vx)$中采样来达到抽$\Vx$的目的。
+从快速\gls{mixing}的角度上说，我们更希望$p_{\text{model}}(\Vh\mid \Vx)$有很大的熵。
 然而，从学习一个$\Vh$的有用表示的角度上考虑，我们还是希望$\Vh$能够包含$\Vx$的足够的信息从而能够较完整的重构它，这意味$\Vh$和$\Vx$有着非常高的互信息。
 这两个目标是相互矛盾的。
 我们经常学习到一些有很强编码能力的生成模型，但是无法很好的\gls{mixing}。
@@ -487,7 +487,7 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 \subsection{深度也许会有助于\glsentrytext{mixing}}
 \label{sec:depth_may_help_mixing}
 
-当我们从隐变量模型$p(\Vh,\Vx)$中采样的时候，我们可以发现如果$p(\Vh\vert \Vx)$将$\Vx$编码的非常好，那么从$p(\Vx \vert \Vh)$中采样的时候，并不会太大的改变$\Vx$，那么\gls{mixing}结果会很糟糕。
+当我们从隐变量模型$p(\Vh,\Vx)$中采样的时候，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码的非常好，那么从$p(\Vx \mid \Vh)$中采样的时候，并不会太大的改变$\Vx$，那么\gls{mixing}结果会很糟糕。
 解决这个问题的一种方法是使得$\Vh$成为一种将$\Vx$编码为$\Vh$的深度表达，从而使得\gls{markov_chain}在$\Vh$空间中更快的\gls{mixing}。
 在许多表达学习的算法诸如自编码器（autoencoder）和\gls{RBM}中，$\Vh$的边缘分布并不像$\Vx$的原始数据分布，反而通常表现为均匀的单一峰值的分布。
 <bad> 值得指出的是，这些方法往往利用所有可用的表达空间并尽量减小重构误差，因为当训练集上的不同样本能够被非常容易的在$\Vh$空间区分的时候，我们也会很容易的最小化重构误差。

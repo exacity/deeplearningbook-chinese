@@ -885,8 +885,8 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \begin{equation}
     ( \hat{\mu}_m - 1.96\text{SE}(\hat{\mu}_m), \hat{\mu}_m + 1.96 \text{SE}(\hat{\mu}_m) ),
 \end{equation}
-以上区间基于均值是$\hat{\mu}_m$和方差$\text{SE}(\hat{\mu}_m)^2$的高斯分布。
-在\gls{ML}实验中，我们通常说算法$A$比算法$B$好，是指算法$A$的误差的$95\%$置信区间的上界小于算法算法$B$的误差的$95\%$置信区间的下界。
+以上区间是基于均值$\hat{\mu}_m$和方差$\text{SE}(\hat{\mu}_m)^2$的高斯分布。
+在\gls{ML}实验中，我们通常说算法$A$比算法$B$好，是指算法$A$的误差的$95\%$置信区间的上界小于算法$B$的误差的$95\%$置信区间的下界。
 
 \textbf{实例：伯努利分布} \quad 我们再次考虑从伯努利分布（回顾$P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{1 - x^{(i)}}$）中独立同分布采样出来的一组\gls{example:chap5}$\{ x^{(1)}, \dots, x^{(m)} \}$。
 这次我们关注估计$\hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}$的方差：
@@ -897,18 +897,18 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     &= \frac{1}{m^2} m\theta(1-\theta) \\
     &= \frac{1}{m} \theta(1-\theta)
 \end{align} 
-估计方差以\gls{dataset}\gls{example:chap5}数目$m$的函数方式下降。
-这是估计普遍的共同性质，在探讨一致性（参考\secref{sec:consistency}）时，我们会继续讨论。
+\gls{estimator:chap5}方差的下降速率是关于\gls{dataset}\gls{example:chap5}数目$m$的函数。
+这是常见估计量的普遍性质，在探讨一致性（参考\secref{sec:consistency}）时，我们会继续讨论。
 
 % -- 125 --
 
 \subsection{权衡偏值和方差以最小化均方误差}
 \label{sec:trading_off_bias_and_variance_to_minimize_mean_squared_error}
-偏差和方差度量估计的两个不同误差来源。
-偏差度量离真实函数或参数的误差期望。
-另一方面，方差度量由任意特定的数据采样可能导致的估计期望的偏差。
+偏差和方差度量着估计量的两个不同误差来源。
+偏差度量着离真实函数或参数的误差期望。
+而方差度量着数据上任意特定采样可能导致的估计期望的偏差。
 
-当可以选择一个偏差更大的估计和一个方差更大的估计时，会发生什么呢？我们如何选择？
+当可以选择一个偏差更大的估计和一个方差更大的估计时，会发生什么呢？我们该如何选择？
 例如，想象我们希望近似\figref{fig:chap5_underfit_just_right_overfit}中的函数，我们只可以选择一个偏差较大的估计或一个方差较大的估计，我们该如何选择呢？
 
 判断这种权衡最常用的方法是交叉验证。
@@ -918,13 +918,13 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     \text{MSE} &= \SetE[ ( \hat{\theta}_m - \theta  )^2 ] \\
         &= \text{Bias}( \hat{\theta}_m )^2 + \text{Var}( \hat{\theta}_m ) \label{eq:5.54}
 \end{align}
-MSE度量估计和真实参数$\theta$之间使用平方误差的总体期望偏离。
-如\eqnref{eq:5.54}所示，MSE估计包含了偏差和方差。
-理想的估计具有较小的MSE或是在检查中会稍微约束它们的偏差和方差。
+\glssymbol{mean_squared_error}度量着估计和真实参数$\theta$之间平方误差的总体期望偏差。
+如\eqnref{eq:5.54}所示，\glssymbol{mean_squared_error}估计包含了偏差和方差。
+理想的估计量具有较小的\glssymbol{mean_squared_error}或是在检查中会稍微约束它们的偏差和方差。
 
-偏差和方差的关系和\gls{ML}容量，欠拟合和过拟合的概念紧密相连。
-用MSE度量泛化误差（偏差和方差对于泛化误差都是有意义的）时，增加容量会增加方差，降低偏差。
-如\figref{fig:chap5_bias_variance_tradeoff}所示，我们会再次看到容量函数泛化误差的U形曲线。
+偏差和方差的关系和\gls{ML}容量，欠拟合和过拟合的概念紧密相联。
+用\glssymbol{mean_squared_error}度量泛化误差（偏差和方差对于泛化误差都是有意义的）时，增加容量会增加方差，降低偏差。
+如\figref{fig:chap5_bias_variance_tradeoff}所示，我们再次在关于容量的函数中，看到泛化误差的U形曲线。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -940,8 +940,8 @@ MSE度量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 
 \subsection{一致性}
 \label{sec:consistency}
-目前我们已经探讨了固定大小训练集下不同估计的性质。
-通常，我们也会关注训练数据增多后估计的性能。
+目前我们已经探讨了，固定大小训练集下不同\gls{estimator:chap5}的性质。
+通常，我们也会关注训练数据增多后\gls{estimator:chap5}的效果。
 特别地，我们希望当\gls{dataset}中数据点的数量$m$增加时，点估计会收敛到对应参数的真实值。
 更形式地，我们想要
 \begin{equation}
@@ -950,15 +950,15 @@ MSE度量估计和真实参数$\theta$之间使用平方误差的总体期望偏
 \end{equation}
 符号$\plim$表示依概率收敛，即对于任意的$\epsilon > 0$，当$m\to\infty$时，有$P(|\hat{\theta}_m - \theta| > \epsilon) \to 0$。
 \eqnref{eq:5.55}表示的条件被称为\firstgls{consistency}。
-它有时候是指弱一致性，强一致性是指\firstgls{almost_sure}从$\hat{\theta}$收敛到$\theta$。
+有时它是指弱一致性，强一致性是指\firstgls{almost_sure}从$\hat{\theta}$收敛到$\theta$。
 \firstgls{almost_sure_convergence}是指当$p(\lim_{m\to\infty} \RVx^{(m)} = \Vx) = 1 $时，随机变量序列$\RVx^{(1)}$，$\RVx^{(2)}$，$\dots$收敛到$\Vx$。
 
-一致性保证了估计偏差会随数据\gls{example:chap5}数目的增多而减少。
-然而，反过来不是正确的——渐近无偏并不意味着一致性。
+一致性保证了\gls{estimator:chap5}的偏差会随数据\gls{example:chap5}数目的增多而减少。
+然而，反过来是不正确的——渐近无偏并不意味着一致性。
 例如，考虑用包含$m$个样本的\gls{dataset}$\{x^{(1)},\dots,x^{(m)}\}$估计正态分布$\mathcal{N}(x;\mu,\sigma^2)$的均值参数$\mu$。
-我们可以使用\gls{dataset}的第一个\gls{example:chap5}$x^{(1)}$作为无偏（unbiased）估计：$\hat{\theta} = x^{(1)}$。
-在该情况下，$\SetE(\hat{\theta}_m) = \theta$，所以不管观测到多少数据点，该估计都是无偏的。
-然而，这不是一个一致性估计，因为它\emph{不}满足当$m\to\infty$时，$\hat{\theta}_m \to \theta$。
+我们可以使用\gls{dataset}的第一个\gls{example:chap5}$x^{(1)}$作为无偏估计量：$\hat{\theta} = x^{(1)}$。
+在该情况下，$\SetE(\hat{\theta}_m) = \theta$，所以不管观测到多少数据点，该\gls{estimator:chap5}都是无偏的。
+然而，这不是一个一致估计，因为它\emph{不}满足当$m\to\infty$时，$\hat{\theta}_m \to \theta$。
 
 % -- 127 --
 
@@ -1279,7 +1279,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 我们用于\gls{linear_regression}的实数正态分布是用均值参数化的。
 我们提供这个均值的任何值都是有效的。
 二元变量上的的分布稍微复杂些，因为它的均值必须始终在$0$和$1$之间。
-解决这个问题的一种方法是使用逻辑S形函数（logistic sigmoid function）将线性函数的输出压缩进区间$(0,1)$。
+解决这个问题的一种方法是使用\gls{logistic_sigmoid}函数将线性函数的输出压缩进区间$(0,1)$。
 该值可以解释为概率：
 \begin{equation}
     p(y = 1 \mid \Vx; \Vtheta) = \sigma(\Vtheta^\Tsp \Vx).
@@ -1394,7 +1394,7 @@ $k$-最近邻的高容量使其在训练\gls{example:chap5}数目大时能够获
 $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他更具识别力。
 例如，假设我们在做从各向同性的高斯分布中抽取$\Vx\in\SetR^{100}$的回归任务，但是只有一个变量$x_1$和结果相关。
 进一步假设该\gls{feature}直接决定了输出，即在所有情况中$y=x_1$。
-最近邻回归不能检测到这个简单模式。
+\gls{nearest_neighbor_regression}不能检测到这个简单模式。
 大多数点$\Vx$的最近邻将取决于$x_2$到$x_{100}$的大多数\gls{feature}，
 而不是单独取决于\gls{feature}$x_1$。
 因此，小训练集上的输出将会非常随机。
