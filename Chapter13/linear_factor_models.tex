@@ -97,7 +97,7 @@
 \RVx = \MW\RVh + \Vb + \sigma\RVz
 \end{align}
 其中$\RVz \sim \CalN(\Vz;\mathbf{0},\MI)$是高斯噪音。
-之后\citep{tipping99mixtures}提出了一种迭代的\glssymbol{EM}算法来估计参数$\MW$和$\sigma^2$。
+之后\citet{tipping99mixtures}提出了一种迭代的\glssymbol{EM}算法来估计参数$\MW$和$\sigma^2$。
 % 481
 
 
@@ -115,16 +115,16 @@
 % 481
 
 
-\firstall{ICA}是最古老的表示学习之一算法\citep{Herault+Ans-1984,Jutten+Herault-91,Comon94,Hyvarinen-1999,Hyvarinen-2001,Hinton-ICA-2001,Teh-2003}。
+\firstall{ICA}是最古老的\gls{representation_learning}算法之一\citep{Herault+Ans-1984,Jutten+Herault-91,Comon94,Hyvarinen-1999,Hyvarinen-2001,Hinton-ICA-2001,Teh-2003}。
 它是一种建模线性因子的方法，旨在分离观察到的信号，并转换为许多基础信号的叠加。
 这些信号是完全独立的，而不是仅仅彼此不相关\footnote{\secref{sec:expectation_variance_and_covariance}讨论了不相关变量和独立变量之间的差异。}。
 % 481
 
 
 许多不同的具体方法被称为\gls{ICA}。
-与我们本书中描述的其他的\gls{generative_model}最相似的\gls{ICA}变种是训练完全参数化的\gls{generative_model}\citep{Pham-et-al-1992}。
+与我们本书中描述的其他\gls{generative_model}最相似的\gls{ICA}变种是训练完全参数化的\gls{generative_model}\citep{Pham-et-al-1992}。
 隐含因子$\Vh$的先验$p(\Vh)$，必须由用户给出并固定。
-接着模型确定性的生成$\Vx = \MW \Vh$。
+接着模型确定性地生成$\Vx = \MW \Vh$。
 我们可以通过非线性变化（使用\eqnref{eqn:3.47}）来确定$p(\Vx)$。
 然后通过一般的方法比如\gls{MLE}进行学习。
 % 482 head
@@ -172,10 +172,10 @@
 
 正如\glssymbol{PCA}可以推广到\chapref{chap:autoencoders}中描述的非线性\gls{AE}，\gls{ICA}可以推广到非线性\gls{generative_model}，其中我们使用非线性函数$f$来生成观测数据。
 关于非线性\gls{ICA}最初的工作可以参考\citet{hyvarinen1999nonlinear}，它和\gls{ensemble_learning}的成功结合可以参见\citet{roberts2001independent,lappalainen2000nonlinear}。
-\gls{ICA}的另一个非线性扩展是\firstall{NICE}方法\citep{Dinh-et-al-arxiv2014}，这个方法堆叠了一系列可逆变换（\gls{encoder}），从而能够高效的计算每个变换的雅可比行列式。
-这使得我们能够精确地计算似然，并且像\gls{ICA}一样，\glssymbol{NICE}尝试将数据变换到具有可分解的边缘分布的空间。
-由于非线性\gls{encoder}的使用相比于\glssymbol{NICE}，这种方法更可能成功。
-因为\gls{encoder}和一个于其（\gls{encoder}）完美逆作用的\gls{decoder}相关联，所以可以直接从模型生成样本（通过首先从$p(\Vh)$采样，然后应用\gls{decoder}）。
+\gls{ICA}的另一个非线性扩展是\firstall{NICE}方法\citep{Dinh-et-al-arxiv2014}，这个方法堆叠了一系列可逆变换（\gls{encoder}），从而能够高效地计算每个变换的\gls{jacobian}行列式。
+这使得我们能够精确地计算似然，并且像\glssymbol{ICA}一样，\glssymbol{NICE}尝试将数据变换到具有可分解的边缘分布的空间。
+由于非线性\gls{encoder}的使用\footnote{译者注：相比于\glssymbol{ICA}}，这种方法更可能成功。
+因为\gls{encoder}和一个与其（\gls{encoder}）完美逆作用的\gls{decoder}相关联，所以可以直接从模型生成样本（通过首先从$p(\Vh)$采样，然后应用\gls{decoder}）。
 % 483
 
 
@@ -193,13 +193,13 @@
 % 484 head
 
 
-\firstgls{SFA} 是使用来自时间信号的信息来学习不变特征的\gls{linear_factor}\citep{WisSej2002}。
+\firstall{SFA}是使用来自时间信号的信息来学习不变特征的\gls{linear_factor}\citep{WisSej2002}。
 % 484
 
 
 \glssymbol{SFA}的想法源于所谓的\firstgls{slow_principle}。
 基本思想是，与场景中的描述作用的物体相比，场景的重要特性通常变化得非常缓慢。
-例如，在计算机视觉中，单个像素值可以非常快速地改变。
+例如，在\gls{CV}中，单个像素值可以非常快速地改变。
 如果斑马从左到右移动穿过图像并且它的条纹穿过对应的像素时，该像素将迅速从黑色变为白色，并再次恢复。
 通过比较，指示斑马是否在图像中的特征将根本不改变，并且描述斑马的位置的特征将缓慢地改变。
 因此，我们可能希望规范我们的模型，从而能够学习到随时间变化缓慢的特征。
@@ -207,14 +207,14 @@
 
 
 \gls{slow_principle}早于\glssymbol{SFA}，并已被应用于各种模型\citep{Hinton89b,Foldiak89,MobahiCollobertWestonICML2009,Bergstra+Bengio-2009}。
-一般来说，我们可以将\gls{slow_principle}应用于可以使用梯度下降训练的任何可微分模型。 
+一般来说，我们可以将\gls{slow_principle}应用于可以使用\gls{GD}训练的任何可微分模型。 
 为了引入\gls{slow_principle}，我们可以通过向\gls{cost_function}添加以下项
 \begin{align}
 \label{eqn:137}
 \lambda \sum_t 
 L(f(\Vx^{(t+1)}),f(\Vx^{(t)}))
 \end{align}
-其中$\lambda$是确定慢度正则化的强度的超参数项，$t$是实例的时间序列的索引，$f$是特征提取器，$L$是测量$f(\Vx^{(t)})$和$f(\Vx^{(t+1)})$之间的距离的\gls{loss_function}。
+其中$\lambda$是确定慢度正则化的强度的超参数项，$t$是样本时间序列的索引，$f$是特征提取器，$L$是测量$f(\Vx^{(t)})$和$f(\Vx^{(t+1)})$之间的距离的\gls{loss_function}。
 $L$的一个常见选择是平均误差平方。
 % 484
 
