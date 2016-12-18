@@ -4,9 +4,9 @@
 \label{chap:numerical_computation}
 
 \gls{ML}算法通常需要大量的数值计算。
-<BAD>数值计算通常指的是通过迭代地更新解来解决数学问题的算法，而不是解析地提供正确解的符号表达。
-常见的操作包括优化（找到最小化或最大化函数值的参数）和线性方程的求解。
-对数字计算机来说，即使计算只涉及实数的函数也是困难的，因为实数无法在有限内存下精确表示。
+这通常是指通过迭代地更新解来解决数学问题的算法，而不是解析地提供正确解的符号表达。
+常见的操作包括优化（找到最小化或最大化函数值的参数）和线性方程组的求解。
+对数字计算机来说实数无法在有限内存下精确表示，所以计算涉及实数的函数也是困难的。
 
 \section{\glsentrytext{overflow}和\glsentrytext{underflow}}
 \label{sec:overflow_and_underflow}
@@ -112,7 +112,8 @@ $f(\Sx+\epsilon) \approx f(\Sx) + \epsilon f^\prime(\Sx) $。
 \else
 \centerline{\includegraphics{Chapter4/figures/gradient_descent_color}}
 \fi
-\caption{TODO}
+\caption{\gls{GD}。 
+\gls{GD}算法如何使用函数导数的示意图，即沿着函数的下坡方向（导数反方向）直到最小。}
 \label{fig:chap4_gradient_descent_color}
 \end{figure}
 
@@ -130,7 +131,11 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \else
 \centerline{\includegraphics{Chapter4/figures/critical_color}}
 \fi
-\caption{TODO}
+\caption{\gls{critical_points}的类型。 
+一维情况下，三种\gls{critical_points}的示例。
+\gls{critical_points}是斜率为零的点。
+这样的点可以是\firstgls{local_minimum}，其值低于相邻点; \firstgls{local_maximum}，其值高于相邻点; 或\gls{saddle_points}，同时存在更高和更低的相邻点。
+}
 \label{fig:chap4_critical_color}
 \end{figure}
 
@@ -147,7 +152,10 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \else
 \centerline{\includegraphics{Chapter4/figures/approx_opt_color}}
 \fi
-\caption{TODO}
+\caption{近似最小化。 
+当存在多个\gls{local_minimum}或平坦区域时，优化算法可能无法找到\gls{global_minimum}。
+在深度学习的背景下，即使找到的解不是真正最小的，但只要它们对应于\gls{cost_function}的显著低的值，我们通常就能接受这样的解。
+}
 \label{fig:chap4_approx_opt_color}
 \end{figure}
 
@@ -224,7 +232,13 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \else
 \centerline{\includegraphics{Chapter4/figures/curvature_color}}
 \fi
-\caption{TODO}
+\caption{\gls{second_derivative}确定函数的\gls{curvature}。
+这里我们展示具有各种\gls{curvature}的二次函数。
+虚线表示我们仅根据梯度信息进行\gls{GD}后预期的\gls{cost_function}值。
+对于负\gls{curvature}，\gls{cost_function}实际上比梯度预测下降得更快。
+没有\gls{curvature}时，梯度正确预测下降值。
+对于正\gls{curvature}，函数比预期下降得更慢，并且最终会开始增加，因此太大的步骤实际上可能会无意地增加函数值。
+}
 \label{fig:chap4_curvature_color}
 \end{figure}
 
