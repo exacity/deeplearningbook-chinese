@@ -6,9 +6,9 @@
 
 
 
-许多深度学习的研究前沿涉及到了建立输入的概率模型$p_{\text{model}}(\Vx)$。
+许多深度学习的研究前沿涉及到了构建输入的概率模型$p_{\text{model}}(\Vx)$。
 原则上说，给定任何其他变量的情况下，这样的模型可以使用概率推断来预测其环境中的任何变量。
-这些模型中的许多还具有隐变量$\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\vert\Vh)$。
+许多这样的模型还具有隐变量$\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\mid\Vh)$。
 这些隐变量提供了表示数据的另一种方式。
  基于隐变量的分布式表示可以有很多优点，这些我们在\gls{deep_feedforward_network}和\gls{RNN}中已经发现。
 % 479
@@ -35,7 +35,7 @@
 \label{eqn:131}
 \RVh \sim p(\Vh)
 \end{align}
-其中$p(\Vh)$是一个可分解的分布，满足$p(\Vh) = \prod_{i}^{}p(h_i)$，所以很容易从中采样。
+其中$p(\Vh)$是一个\gls{factorial}分布，满足$p(\Vh) = \prod_{i}^{}p(h_i)$，所以很容易从中采样。
 接下来，在给定因子的情况下，我们对实值的可观察变量进行抽样
 \begin{align}
 \label{eqn:132}
@@ -97,7 +97,7 @@
 \RVx = \MW\RVh + \Vb + \sigma\RVz
 \end{align}
 其中$\RVz \sim \CalN(\Vz;\mathbf{0},\MI)$是高斯噪音。
-之后\citep{tipping99mixtures}提出了一种迭代的\glssymbol{EM}算法来估计参数$\MW$和$\sigma^2$。
+之后\citet{tipping99mixtures}提出了一种迭代的\glssymbol{EM}算法来估计参数$\MW$和$\sigma^2$。
 % 481
 
 
@@ -115,16 +115,16 @@
 % 481
 
 
-\firstall{ICA}是最古老的表示学习之一算法\citep{Herault+Ans-1984,Jutten+Herault-91,Comon94,Hyvarinen-1999,Hyvarinen-2001,Hinton-ICA-2001,Teh-2003}。
+\firstall{ICA}是最古老的\gls{representation_learning}算法之一\citep{Herault+Ans-1984,Jutten+Herault-91,Comon94,Hyvarinen-1999,Hyvarinen-2001,Hinton-ICA-2001,Teh-2003}。
 它是一种建模线性因子的方法，旨在分离观察到的信号，并转换为许多基础信号的叠加。
 这些信号是完全独立的，而不是仅仅彼此不相关\footnote{\secref{sec:expectation_variance_and_covariance}讨论了不相关变量和独立变量之间的差异。}。
 % 481
 
 
 许多不同的具体方法被称为\gls{ICA}。
-与我们本书中描述的其他的\gls{generative_model}最相似的\gls{ICA}变种是训练完全参数化的\gls{generative_model}\citep{Pham-et-al-1992}。
+与我们本书中描述的其他\gls{generative_model}最相似的\gls{ICA}变种是训练完全参数化的\gls{generative_model}\citep{Pham-et-al-1992}。
 隐含因子$\Vh$的先验$p(\Vh)$，必须由用户给出并固定。
-接着模型确定性的生成$\Vx = \MW \Vh$。
+接着模型确定性地生成$\Vx = \MW \Vh$。
 我们可以通过非线性变化（使用\eqnref{eqn:3.47}）来确定$p(\Vx)$。
 然后通过一般的方法比如\gls{MLE}进行学习。
 % 482 head
@@ -172,10 +172,10 @@
 
 正如\glssymbol{PCA}可以推广到\chapref{chap:autoencoders}中描述的非线性\gls{AE}，\gls{ICA}可以推广到非线性\gls{generative_model}，其中我们使用非线性函数$f$来生成观测数据。
 关于非线性\gls{ICA}最初的工作可以参考\citet{hyvarinen1999nonlinear}，它和\gls{ensemble_learning}的成功结合可以参见\citet{roberts2001independent,lappalainen2000nonlinear}。
-\gls{ICA}的另一个非线性扩展是\firstall{NICE}方法\citep{Dinh-et-al-arxiv2014}，这个方法堆叠了一系列可逆变换（\gls{encoder}），从而能够高效的计算每个变换的雅可比行列式。
-这使得我们能够精确地计算似然，并且像\gls{ICA}一样，\glssymbol{NICE}尝试将数据变换到具有可分解的边缘分布的空间。
-由于非线性\gls{encoder}的使用相比于\glssymbol{NICE}，这种方法更可能成功。
-因为\gls{encoder}和一个于其（\gls{encoder}）完美逆作用的\gls{decoder}相关联，所以可以直接从模型生成样本（通过首先从$p(\Vh)$采样，然后应用\gls{decoder}）。
+\gls{ICA}的另一个非线性扩展是\firstall{NICE}方法\citep{Dinh-et-al-arxiv2014}，这个方法堆叠了一系列可逆变换（\gls{encoder}），从而能够高效地计算每个变换的\gls{jacobian}行列式。
+这使得我们能够精确地计算似然，并且像\glssymbol{ICA}一样，\glssymbol{NICE}尝试将数据变换到具有可分解的边缘分布的空间。
+由于非线性\gls{encoder}的使用\footnote{译者注：相比于\glssymbol{ICA}}，这种方法更可能成功。
+因为\gls{encoder}和一个与其（\gls{encoder}）完美逆作用的\gls{decoder}相关联，所以可以直接从模型生成样本（通过首先从$p(\Vh)$采样，然后应用\gls{decoder}）。
 % 483
 
 
@@ -193,13 +193,13 @@
 % 484 head
 
 
-\firstgls{SFA} 是使用来自时间信号的信息来学习不变特征的\gls{linear_factor}\citep{WisSej2002}。
+\firstall{SFA}是使用来自时间信号的信息来学习不变特征的\gls{linear_factor}\citep{WisSej2002}。
 % 484
 
 
 \glssymbol{SFA}的想法源于所谓的\firstgls{slow_principle}。
 基本思想是，与场景中的描述作用的物体相比，场景的重要特性通常变化得非常缓慢。
-例如，在计算机视觉中，单个像素值可以非常快速地改变。
+例如，在\gls{CV}中，单个像素值可以非常快速地改变。
 如果斑马从左到右移动穿过图像并且它的条纹穿过对应的像素时，该像素将迅速从黑色变为白色，并再次恢复。
 通过比较，指示斑马是否在图像中的特征将根本不改变，并且描述斑马的位置的特征将缓慢地改变。
 因此，我们可能希望规范我们的模型，从而能够学习到随时间变化缓慢的特征。
@@ -207,14 +207,14 @@
 
 
 \gls{slow_principle}早于\glssymbol{SFA}，并已被应用于各种模型\citep{Hinton89b,Foldiak89,MobahiCollobertWestonICML2009,Bergstra+Bengio-2009}。
-一般来说，我们可以将\gls{slow_principle}应用于可以使用梯度下降训练的任何可微分模型。 
+一般来说，我们可以将\gls{slow_principle}应用于可以使用\gls{GD}训练的任何可微分模型。 
 为了引入\gls{slow_principle}，我们可以通过向\gls{cost_function}添加以下项
 \begin{align}
 \label{eqn:137}
 \lambda \sum_t 
 L(f(\Vx^{(t+1)}),f(\Vx^{(t)}))
 \end{align}
-其中$\lambda$是确定慢度正则化的强度的超参数项，$t$是实例的时间序列的索引，$f$是特征提取器，$L$是测量$f(\Vx^{(t)})$和$f(\Vx^{(t+1)})$之间的距离的\gls{loss_function}。
+其中$\lambda$是确定慢度正则化的强度的超参数项，$t$是样本时间序列的索引，$f$是特征提取器，$L$是测量$f(\Vx^{(t)})$和$f(\Vx^{(t+1)})$之间的距离的\gls{loss_function}。
 $L$的一个常见选择是平均误差平方。
 % 484
 
@@ -296,7 +296,7 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 % 486
 
 
-\firstgls{sparse_coding}\citep{Olshausen+Field-1996}是一个\gls{linear_factor}，已作为无监督特征学习和特征提取机制进行了大量研究。
+\firstgls{sparse_coding}\citep{Olshausen+Field-1996}是一个\gls{linear_factor}，已作为\gls{unsupervised}特征学习和特征提取机制进行了大量研究。
 严格地说，术语``\gls{sparse_coding}''是指在该模型中推断$\Vh$的值的过程，而``稀疏建模''是指设计和学习模型的过程，但是通常这两个概念都可以用术语``\gls{sparse_coding}''描述。
 % 486
 
@@ -304,7 +304,7 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 更具体的说，\gls{sparse_coding}模型通常假设线性因子有一个各向同性的精度为$\beta$的高斯噪音：
 \begin{align}
 \label{eqn:1312}
-p(\Vx\vert\Vh) = \CalN
+p(\Vx\mid \Vh) = \CalN
 (\Vx;\MW\Vh + \Vb ,\frac{1}{\beta}\MI)
 \end{align}
 % 486
@@ -325,7 +325,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 487 head
 
 使用\gls{MLE}的方法来训练\gls{sparse_coding}模型是不可行的。
-相反，训练在编码数据和训练\gls{decoder}之间交替，以在给定编码的情况下更好地重建数据。
+相反，为了在给定编码的情况下更好地重建数据，训练过程在编码数据和训练\gls{decoder}之间交替进行。
 稍后在\secref{sec:map_inference_and_sparse_coding}中，这种方法将被进一步证明为解决似然最大化问题的一种通用的近似方法。
 % 487
 
@@ -334,7 +334,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 相反，\gls{encoder}是一个优化算法，在这个优化问题中，我们寻找单个最可能的编码值：
 \begin{align}
 \label{eqn:1315}
-\Vh^* = f(\Vx) = \underset{\Vh}{\arg\max}\  p(\Vh\vert\Vx)
+\Vh^* = f(\Vx) = \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vx)
 \end{align}
 % 487
 
@@ -342,8 +342,8 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 结合\eqnref{eqn:1313}和\eqnref{eqn:1312}，我们得到如下的优化问题：
 \begin{align}
 \label{eqn:1316}
-& \underset{\Vh}{\arg\max}\  p(\Vh\vert\Vx) \\
-= & \underset{\Vh}{\arg\max}\ \log  p(\Vh\vert\Vx)\\
+& \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vx) \\
+= & \underset{\Vh}{\arg\max}\ \log  p(\Vh\mid\Vx)\\
 = & \underset{\Vh}{\arg\min}\ \lambda \Vert \Vh\Vert_1 + \beta  \Vert \Vx - \MW \Vh\Vert_2^2
 \end{align}
 其中，我们扔掉了与$\Vh$无关的项，除以一个正的伸缩因子来简化表达。
@@ -361,24 +361,23 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 487
 
 
-
-不是所有的\gls{sparse_coding}方法都显式地构建了$p(\Vh)$和$p(\Vx\vert\Vh)$。 
+不是所有的\gls{sparse_coding}方法都显式地构建了$p(\Vh)$和$p(\Vx\mid\Vh)$。 
 通常我们只是对学习一个带有激活值的特征的字典感兴趣，当使用这个推断过程时，这个激活值通常为0。
 % 487 end
 
 如果我们从Laplace先验中采样$\Vh$，$\Vh$的元素实际上为零是一个零概率事件。
 \gls{generative_model}本身并不稀疏，只有特征提取器是。
-\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}描述了不同模型族中的近似推断，和spike and slab\gls{sparse_coding}模型，其中先验的样本通常包含许多0。
+\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}描述了不同模型族中的近似推断，和\gls{ss}\gls{sparse_coding}模型，其中先验的样本通常包含许多0。
 % 488 head
 
-与非参数化的\gls{encoder}结合的\gls{sparse_coding}方法原则上可以比任何特定的参数化的\gls{encoder}更好地最小化重构误差和对数先验的组合。
+与非参数化\gls{encoder}结合的\gls{sparse_coding}方法原则上可以比任何特定的参数化\gls{encoder}更好地最小化重构误差和对数先验的组合。
 另一个优点是\gls{encoder}没有泛化误差。
 参数化的\gls{encoder}必须泛化地学习如何将$\Vx$映射到$\Vh$。
 对于与训练数据差异很大的异常的$\Vx$，所学习的参数化的\gls{encoder}可能无法找到对应精确重建的$\Vh$或稀疏的编码。
 对于\gls{sparse_coding}模型的绝大多数形式，推断问题是凸的，优化过程将总是找到最优值（除非出现简并的情况，例如重复的权重向量）。
-显然，稀疏和重构成本仍然可以在不熟悉的点上升，但这是归因于\gls{decoder}权重中的泛化误差，而不是\gls{encoder}中的泛化误差。
+显然，稀疏和重构成本仍然可以在不熟悉的点上升，但这归因于\gls{decoder}权重中的泛化误差，而不是\gls{encoder}中的泛化误差。
 当\gls{sparse_coding}用作分类器的特征提取器时，而不是使用参数化的函数来预测时，基于优化的\gls{sparse_coding}模型的编码过程中泛化误差的减小可导致更好的泛化能力。
-\citet{Coates2011b}证明了在对象识别任务中\gls{sparse_coding}特征比基于参数化的\gls{encoder}（如线性sigmoid \gls{AE}）的特征拥有更好的泛化能力。
+\citet{Coates2011b}证明了在对象识别任务中\gls{sparse_coding}特征比基于参数化的\gls{encoder}（如线性\gls{sigmoid}\gls{AE}）的特征拥有更好的泛化能力。
 受他们的工作启发，\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}表明\gls{sparse_coding}的变体在其中极少标签（每类20个或更少标签）的情况中比其他特征提取器拥有更好的泛化能力。
 % 488 
 
@@ -386,15 +385,14 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 
 非参数\gls{encoder}的主要缺点是在给定$\Vx$的情况下需要大量的时间来计算$\Vh$，因为非参数方法需要运行迭代算法。
 在\chapref{chap:autoencoders}中讲到的参数化的\gls{AE}方法仅使用固定数量的层，通常只有一层。
-另一个缺点是它不直接通过非参数\gls{encoder}进行反向传播，这使得我们很难采用先使用无监督方式预训练\gls{sparse_coding}模型然后使用有监督方式对其进行微调的方法。
+另一个缺点是它不直接通过非参数\gls{encoder}进行反向传播，这使得我们很难采用先使用\gls{unsupervised}方式预训练\gls{sparse_coding}模型然后使用\gls{supervised}方式对其进行微调的方法。
 允许近似导数的\gls{sparse_coding}模型的修改版本确实存在但未被广泛使用\citep{Bradley+Bagnell-2009-small}。
 % 488  end
 
 像其他\gls{linear_factor}一样，\gls{sparse_coding}经常产生糟糕的样本，如\figref{fig:s3c_samples}所示。
 即使当模型能够很好地重构数据并为分类器提供有用的特征时，也会发生这种情况。
-这种现象原因是每个单独的特征可以很好地被学习到，但是隐含结点可分解的先验会导致模型包括每个生成的样本中的所有特征的随机子集。
- the factorial prior on the hidden code results in the model including random subsets of all of the features in each generated sample.
-这促使人们在深度模型中的最深层以及一些复杂成熟的浅层模型上施加一个不可分解的分布。
+<bad>这种现象原因是每个单独的特征可以很好地被学习到，但是隐含结点\gls{factorial}先验会导致模型包括每个生成的样本中的所有特征的随机子集。
+这促使人们在深度模型中的最深层以及一些复杂成熟的浅层模型上施加一个不\gls{factorial}的分布。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -415,7 +413,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 489 au
 
 
-\gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以被解释为学习一个\gls{manifold}\citep{hinton97modelling}。
+\gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以理解为学习一个\gls{manifold}\citep{hinton97modelling}。
 我们可以将\gls{PPCA}定义为高概率的薄饼状区域，即高斯分布，沿着某些轴非常窄，就像薄饼沿着其垂直轴非常平坦，但沿着其他轴是细长的，正如薄饼在其水平轴方向是很宽的一样。
 \figref{fig:PPCA_pancake}解释了这种现象。
 \glssymbol{PCA}可以理解为将该薄饼与更高维空间中的线性\gls{manifold}对准。
@@ -450,12 +448,12 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 490
 
 
-选择适当的线性\gls{encoder}和\gls{decoder}来最小化重建误差
+选择适当的线性\gls{encoder}和\gls{decoder}来最小化\gls{reconstruction_error}
 \begin{align}
 \label{eqn:1321}
 \SetE[\Vert\Vx - \hat{\Vx}\Vert^2]
 \end{align}
-其中$\MV = \MW$，${\Vmu} = \Vb = \SetE[\Vx] $，$\MW$的列形成一组正交基，这组基生成的子空间于主特征向量对应的协方差矩阵相同。
+其中$\MV = \MW$，${\Vmu} = \Vb = \SetE[\Vx] $，$\MW$的列形成一组正交基，这组基生成的子空间相同与主特征向量对应的\gls{covariance}矩阵$\MC$
 \begin{align}
 \label{eqn:1322}
 \MC = \SetE[(\Vx - {\Vmu})(\Vx - {\Vmu})^{\top}]
@@ -468,7 +466,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 490 end
 
 我们还可以发现$\MC$的特征值$\lambda_i$对应了$\Vx$在特征向量$\Vv^{(i)}$方向上的方差。
-如果$\Vx\in \SetR^D$，$\Vh\in\SetR^d$并且满足$d<D$，则（给定上述的${\Vmu},\Vb,\MV,\MW$的情况下）最佳的重构误差是
+如果$\Vx\in \SetR^D$，$\Vh\in\SetR^d$并且满足$d<D$，则（给定上述的${\Vmu},\Vb,\MV,\MW$的情况下）最佳的\gls{reconstruction_error}是
 \begin{align}
 \label{eqn:1323}
 \min \SetE[\Vert \Vx - \hat{\Vx} \Vert^2]
@@ -477,7 +475,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 因此，如果协方差矩阵的秩为d，则特征值$\lambda_{d+1}$到$\lambda_{D}$都为0，并且重构误差为0。
 % 491 head 
 
-此外，还可以证明上述解可以通过在正交矩阵$\MW$下最大化$\Vh$元素的方差而不是最小化重建误差来获得。
+此外，还可以证明上述解可以通过在正交矩阵$\MW$下最大化$\Vh$元素的方差而不是最小化\gls{reconstruction_error}来获得。
 % 491 
 
 
