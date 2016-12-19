@@ -340,16 +340,16 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 对比度仅指图像中亮像素和暗像素之间的差异的大小。
 量化图像对比度有许多方式。
 在\gls{DL}中，对比度通常指的是图像或图像区域中像素的\gls{standard_deviation}。
-假设我们有一个张量表示的图像$\TSX \in\SetR^{r\times c\times 3}$，其中$\TSXX_{i,j,1}$表示第i行第j列红色的强度，$\TSXX_{i,j,2}$对应的是绿色，$\TSXX_{i,j,3}$对应的是蓝色。
+假设我们有一个张量表示的图像$\TSX \in\SetR^{r\times c\times 3}$，其中$\TEX_{i,j,1}$表示第$i$行第$j$列红色的强度，$\TEX_{i,j,2}$对应的是绿色，$\TEX_{i,j,3}$对应的是蓝色。
 然后整个图像的对比度可以表示如下：
 \begin{align}
 \label{eqn:121}
-\sqrt{\frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3} (\TSXX_{i,j,k} - \bar{\TSX} )^2}
+\sqrt{\frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3} (\TEX_{i,j,k} - \bar{\TSX} )^2}
 \end{align}
 其中$\bar{\TSX}$是图片的平均强度，满足
 \begin{align}
 \label{eqn:122}
- \bar{\TSX} =  \frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3}\TSXX_{i,j,k}
+ \bar{\TSX} =  \frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3}\TEX_{i,j,k}
 \end{align}
 \firstall{GCN}旨在通过从每个图像中减去平均值，然后重新缩放其使得其像素上的\gls{standard_deviation}等于某个常数s来防止图像具有变化的对比度。
 这种方法非常复杂，没有缩放因子可以改变零对比度图像（所有像素都具有相等强度的图像）的对比度。
@@ -360,8 +360,8 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 给定输入图像$\TSX$，\gls{GCN}产生输出图像$\TSX'$，定义为
 \begin{align}
 \label{eqn:123}
-\TSXX'_{i,j,k} = s\frac{\TSXX_{i,j,k} - \bar{\TSXX}}{\max\{ \epsilon, \sqrt{ \lambda + 
-{\frac{1}{3rc}\sum_{i=1}^{r}\sum_{j=1}^{c}\sum_{k=1}^{3}} (\TSXX_{i,j,k} - \bar{\TSXX} )^2} \}}
+\TEX'_{i,j,k} = s\frac{\TEX_{i,j,k} - \bar{\TEX}}{\max\{ \epsilon, \sqrt{ \lambda + 
+{\frac{1}{3rc}\sum_{i=1}^{r}\sum_{j=1}^{c}\sum_{k=1}^{3}} (\TEX_{i,j,k} - \bar{\TEX} )^2} \}}
 \end{align}
 
 
