@@ -396,8 +396,8 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx)
 \end{figure}
 
 
-举一个简单的例子，考虑两个变量$\RSa$, $\RSb$的\gls{energy_based_model}，这两个变量都是二元的，取值$+1$或者$-1$。
-如果对某个较大的正数$w$, $E(\RSa,\RSb) = - w \RSa \RSb$，那么这个模型传达了一个强烈的信息，$\RSa$和$\RSb$有相同的符号。
+举一个简单的例子，考虑两个变量$\RSa$， $\RSb$的\gls{energy_based_model}，这两个变量都是二元的，取值$+1$或者$-1$。
+如果对某个较大的正数$w$， $E(\RSa,\RSb) = - w \RSa \RSb$，那么这个模型传达了一个强烈的信息，$\RSa$和$\RSb$有相同的符号。
 当$\RSa=1$时用\gls{gibbs_sampling}更新$\RSb$。
 给定$\RSb$时的条件分布满足$p(\RSb=1\mid \RSa=1) = \sigma(w)$。
 如果$w$的值很大，sigmoid趋近于饱和，那么$b$取到1的概率趋近于1。

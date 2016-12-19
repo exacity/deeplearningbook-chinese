@@ -6,7 +6,7 @@
 \firstgls{AE}内部有一个隐含层$\Vh$，可以产生\firstgls{code}来表示输入。
 该网络可以看作由两部分组成：一个\gls{encoder}函数$ \Vh = f(\Vx)$和一个生成\gls{reconstruction}的\gls{decoder}$\Vr=g(\Vh)$。
 \figref{fig:chap14_autoencoder}展示了这种架构。
-如果一个\gls{AE}学会简单地设置$g(f(\Vx)) =\Vx$,那么这个\gls{AE}不会很有用。
+如果一个\gls{AE}学会简单地设置$g(f(\Vx)) =\Vx$，那么这个\gls{AE}不会很有用。
 相反，\gls{AE}应该被设计成不能学会完美地复制。
 这通常需要强加一些约束，使\gls{AE}只能近似地复制，并只能复制类似训练数据的输入。
 这些约束强制模型划定输入数据不同方面的主次顺序，因此它往往能学习到数据的有用特性。
@@ -105,7 +105,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh),
 我们可以简单地将惩罚项$\Omega(\Vh)$视为加到\gls{feedforward_network}的正则项，这个\gls{feedforward_network}的主要任务是将输入复制到输出（\gls{unsupervised_learning}的目标），并尽可能地根据这些\gls{sparse}特征执行一些\gls{supervised_learning}任务（根据\gls{supervised_learning}的目标）。
 不像其它正则项如\gls{weight_decay}，这个\gls{regularization}没有直观的贝叶斯解释。
 如\secref{sec:maximum_a_posteriori_map_estimation}描述，\gls{weight_decay}和其他正则惩罚可以被解释为一个\glssymbol{MAP}近似贝叶斯\gls{inference}，\gls{regularization}的惩罚对应于模型参数的先验概率分布。
-这种观点认为，\gls{regularization}的最大似然对应最大化$p(\Vtheta | \Vx)$, 相当于最大化$\log p(\Vx ~|~ \Vtheta) + \log p(\Vtheta)$。 $\log p(\Vx | \Vtheta)$即通常的数据似然项，参数的对数先验项$\log p(\Vtheta)$则包含了对$\Vtheta$特定值的偏好。
+这种观点认为，\gls{regularization}的最大似然对应最大化$p(\Vtheta | \Vx)$， 相当于最大化$\log p(\Vx ~|~ \Vtheta) + \log p(\Vtheta)$。 $\log p(\Vx | \Vtheta)$即通常的数据似然项，参数的对数先验项$\log p(\Vtheta)$则包含了对$\Vtheta$特定值的偏好。
 这种观点在\secref{sec:bayesian_statistics}有所描述。
 正则\gls{AE}不适用这样的解释是因为正则项取决于数据，因此根据定义上（从文字的正式意义）来说，它不是一个先验。
 我们仍可以认为这些正则项隐式地表达了对函数的偏好。
@@ -189,7 +189,7 @@ L(\Vx, g(f(\tilde \Vx)),
 
 \subsection{惩罚导数作为正则}
 \label{sec:regularizing_by_penalizing_derivatives}
-另一正则化\gls{AE}的策略是使用一个类似\gls{sparse}\gls{AE}中的惩罚项$\Omega$,
+另一正则化\gls{AE}的策略是使用一个类似\gls{sparse}\gls{AE}中的惩罚项$\Omega$，
 \begin{align}
 L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 \end{align}
@@ -259,7 +259,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 
 % -- 500 --
 
-为了更彻底地区别之前看到的\gls{feedforward_network}，我们也可以将\textbf{编码函数}(encoding function)~$f(\Vx)$的概念推广为\textbf{编码分布}(encoding distribution)~$ p_{\text{encoder}}(\Vh | \Vx)$, 如\figref{fig:chap14_stochastic-autoencoder}中所示。
+为了更彻底地区别之前看到的\gls{feedforward_network}，我们也可以将\textbf{编码函数}(encoding function)~$f(\Vx)$的概念推广为\textbf{编码分布}(encoding distribution)~$ p_{\text{encoder}}(\Vh | \Vx)$， 如\figref{fig:chap14_stochastic-autoencoder}中所示。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -346,7 +346,7 @@ $p_{\text{reconstruct}} (\Vx ~|~ \tilde \Vx) = p_{\text{decoder}}(\Vx ~|~\Vh)$�
 \label{fig:chap14_denoising_task}
 \end{figure}
 
-\gls{denoising}地训练一类采用高斯噪声和\gls{mean_squared_error}作为\gls{reconstruction_error}的特定\gls{DAE}（sigmoid\gls{hidden_unit}， 线性\gls{reconstruction}单元）,与训练一类特定的被称为\glssymbol{RBM}的无向概率模型是等价的\citep{Vincent-NC-2011-small}。
+\gls{denoising}地训练一类采用高斯噪声和\gls{mean_squared_error}作为\gls{reconstruction_error}的特定\gls{DAE}（sigmoid\gls{hidden_unit}， 线性\gls{reconstruction}单元），与训练一类特定的被称为\glssymbol{RBM}的无向概率模型是等价的\citep{Vincent-NC-2011-small}。
 这类模型将在\secref{sec:gaussian_bernoulli_rbms}给出更详细的介绍；对于现在的讨论，我们只需知道这个模型能显式的给出$p_{\text{model}}(\Vx; \Vtheta)$。
 当\glssymbol{RBM}使用\firstgls{denoising_score_matching}~\citep{Kingma+LeCun-2010-small}训练时，它的学习算法与训练对应的\gls{DAE}是等价的。
 在一个确定的噪声水平下，\gls{regularization}的\gls{score_matching}不是一致估计量；相反它会恢复分布的一个模糊版本。
