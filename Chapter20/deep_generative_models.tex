@@ -931,7 +931,7 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 使用高阶交互的一个最近的示例是具有两组\gls{hidden_unit}的\gls{BM}，一组同时与可见单元$\Vv$和类别标签$y$交互，另一组仅与输入值$\Vv$交互\citep{luo2011learning}。 % ?
 这可以被解释为鼓励一些\gls{hidden_unit}学习使用与类相关的特征来建模输入，而且还学习额外的\gls{hidden_unit}（不需要根据样本类别，学习逼真$\Vv$样本所需的繁琐细节）。
 高阶交互的另一个用途是选通一些特征。
-\citet{Sohn-et-al-ICML2013} 介绍了一个带有三阶交互的\gls{BM},以及与每个可见单元相关的二进制掩码变量。
+\citet{Sohn-et-al-ICML2013} 介绍了一个带有三阶交互的\gls{BM}，以及与每个可见单元相关的二进制掩码变量。
 当这些掩码变量设置为零时，它们消除可见单元对\gls{hidden_unit}的影响。
 这允许将与分类问题不相关的可见单元从估计类别的\gls{inference}路径中移除。
 

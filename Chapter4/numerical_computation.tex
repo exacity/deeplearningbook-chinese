@@ -375,7 +375,7 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
  \Vx^* =  \Vx^{(0)} -  \MH(f)(\Vx^{(0)})^{-1}  \nabla_{\Vx} f(\Vx^{(0)}) .
 \end{align}
 当$f$是一个正定二次函数时，\gls{newton_method}只要应用一次\eqnref{eq:newtonstep}就能直接跳到函数的最小点。
-如果$f$不是一个真正二次但能在局部近似为正定二次，\gls{newton_method}则需要多次迭代应用 \eqnref{eq:newtonstep}。
+如果$f$不是一个真正二次但能在局部近似为正定二次，\gls{newton_method}则需要多次迭代应用\eqnref{eq:newtonstep}。
 迭代地更新近似函数和跳到近似函数的最小点可以比\gls{GD}更快地到达临界点。
 这在接近\gls{local_minimum}时是一个特别有用的性质，但是在\gls{saddle_points}附近是有害的。
 如\eqnref{sec:plateaus_saddle_points_and_other_flat_regions}所讨论的，当附近的\gls{critical_points}是最小点（\gls{hessian}的所有特征值都是正的）时\gls{newton_method}才适用，而\gls{GD}不会被吸引到\gls{saddle_points}(除非\gls{gradient}指向\gls{saddle_points})。
@@ -383,14 +383,14 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
 仅使用\gls{gradient}信息的优化算法被称为\textbf{一阶优化算法}(first-order optimization algorithms)，如\gls{GD}。
 使用\gls{hessian}矩阵的优化算法被称为\textbf{二阶最优化算法}(second-order optimization algorithms)\citep{NumOptBook}，如\gls{newton_method}。
 
-在本书的大多数上下文中使用的优化算法适用于各种各样的函数，但几乎都没有保证。
+在本书大多数上下文中使用的优化算法适用于各种各样的函数，但几乎都没有保证。
 因为在\gls{DL}中使用的函数族是相当复杂的，所以\gls{DL}算法往往缺乏保证。
 在许多其他领域，优化的主要方法是为有限的函数族设计优化算法。
 
 在\gls{DL}的背景下，限制函数满足\firstgls{lipschitz_continuous}或其导数\gls{lipschitz}连续可以获得一些保证。
 \gls{lipschitz}连续函数的变化速度以\firstgls{lipschitz_constant}$\CalL$为界：
 \begin{align}
- \forall \Vx, \forall \Vy, | f(\Vx) - f(\Vy)|  \leq \CalL \| \Vx - \Vy \|_2 .
+ \forall \Vx,~\forall \Vy, ~| f(\Vx) - f(\Vy)|  \leq \CalL \| \Vx - \Vy \|_2 .
 \end{align}
 这个属性允许我们量化我们的假设——\gls{GD}等算法导致的输入的微小变化将使输出只产生微小变化，因此是很有用的。
 \gls{lipschitz}连续性也是相当弱的约束，并且\gls{DL}中很多优化问题经过相对较小的修改后就能变得\gls{lipschitz_continuous}。
@@ -403,7 +403,7 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
 因为这些函数没有\gls{saddle_points}而且其所有\gls{local_minimum}必然是\gls{global_minimum}，所以表现很好。
 然而，\gls{DL}中的大多数问题都难以表示成\gls{convex_optimization}的形式。
 \gls{convex_optimization}仅用作的一些\gls{DL}算法的子程序。
-\gls{convex_optimization}中的分析思路对证明\gls{DL}算法的收敛性非常有用，然而一般来说，\gls{DL}的背景下的\gls{convex_optimization}的重要性大大减少。 
+\gls{convex_optimization}中的分析思路对证明\gls{DL}算法的收敛性非常有用，然而一般来说，\gls{DL}背景下的\gls{convex_optimization}的重要性大大减少。 
 有关\gls{convex_optimization}的详细信息，见\cite{Boyd04}或\cite{rockafellar1997convex}。
 
 
@@ -477,7 +477,7 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
  \underset{\Valpha, \Valpha \geq 0}{\min} 
   f(\Vx) + \sum_i \lambda_i g^{(i)}(\Vx) - \sum_j \alpha_j h^{(j)}(\Vx).
 \end{align}
-\gls{equality_constraints}对应项的符号并不重要；因为优化可以自由选择每个$\lambda_i$的符号，我们可以随意将其定义为加法或减法，
+\gls{equality_constraints}对应项的符号并不重要；因为优化可以自由选择每个$\lambda_i$的符号，我们可以随意将其定义为加法或减法。
 
 \gls{inequality_constraints}特别有趣。
 如果$h^{(i)}(\Vx^*)= 0$，我们就说说这个约束$h^{(i)}(\Vx)$是\textbf{活跃}(active)的。
@@ -508,7 +508,7 @@ $中的$\alpha_i = 0$。
 
 \section{实例：线性最小二乘}
 \label{sec:example_linear_least_squares}
-假设我们希望找到最小化下式的$\Vx$的值
+假设我们希望找到最小化下式的$\Vx$值
 \begin{align}
  f(\Vx) = \frac{1}{2}\| \MA \Vx - \Vb \|_2^2 .
 \end{align}
@@ -573,7 +573,7 @@ $\lambda$的选择必须使结果服从约束。
 求解线性方程和调整$\lambda$的过程一直持续到$\Vx$具有正确的范数并且关于$\lambda$的\gls{derivative}是$0$。
 
 本章总结了开发\gls{ML}算法所需的数学基础。
-现在，我们已经做好了建立和分析一些成熟学习系统的准备。
+现在，我们已经准备好建立和分析一些成熟学习系统。
 
 % -- 93 --
 
