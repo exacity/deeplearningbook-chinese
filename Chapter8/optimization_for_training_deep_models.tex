@@ -582,6 +582,23 @@
 如\secref{sec:batch_and_minibatch_algorithms}讨论，通过计算独立同分布地从数据生成分布中抽取的$m$个\gls{minibatch}样本的梯度均值，我们可以得到梯度的无偏估计。
 
 算法8.1展示了如何使用这个下降梯度的估计。
+\begin{algorithm}[ht]
+\caption{Stochastic gradient descent (SGD) update at training iteration $k$}
+\label{alg:sgd}
+\begin{algorithmic}
+\REQUIRE Learning rate $\epsilon_k$.
+\REQUIRE Initial parameter $\Vtheta$
+\WHILE{stopping criterion not met}% NOTE: the while is lower case in the text,
+% so the condition should be too
+    \STATE Sample a minibatch of $m$ examples from the training set $\{ \Vx^{(1)},
+    \dots, \Vx^{(m)}\}$ with corresponding targets $\Vy^{(i)}$.
+    \STATE Compute gradient estimate: $\hat{\Vg} \leftarrow + 
+         \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$
+    \STATE Apply update: $\Vtheta \leftarrow \Vtheta - \epsilon \hat{\Vg}$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 \glssymbol{SGD}算法中的一个关键参数是学习速率。
 之前，我们介绍的\glssymbol{SGD}使用固定的学习速率。
@@ -676,6 +693,25 @@
 相对于$\epsilon$的$\alpha$越大，之前梯度对现在方向的影响也越大。
 带动量的\glssymbol{SGD}算法如算法8.2所示。
 
+\begin{algorithm}[ht]
+\caption{Stochastic gradient descent (SGD) with momentum}
+\label{alg:momentum}
+\begin{algorithmic}
+\REQUIRE Learning rate $\epsilon$, momentum parameter $\alpha$.
+\REQUIRE Initial parameter $\Vtheta$, initial velocity $\Vv$.
+\WHILE{stopping criterion not met} % NOTE: do not capitalize the condition
+    \STATE Sample a minibatch of $m$ examples from the training set $\{ \Vx^{(1)},
+    \dots, \Vx^{(m)}\}$ with corresponding targets $\Vy^{(i)}$.
+    \STATE Compute gradient estimate: $\Vg \leftarrow 
+         \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$
+    \STATE Compute velocity update: $\Vv \leftarrow \alpha \Vv - 
+    \epsilon \Vg$
+    \STATE Apply update: $\Vtheta \leftarrow \Vtheta + \Vv$ 
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
 % -- 288 --
 
 之前，步长只是梯度范数乘以学习率。
@@ -760,6 +796,27 @@ Nesterov动量和标准动量之间的区别体现在梯度计算上。
 Nesterov动量中，梯度计算在施加当前速度之后。
 因此，Nesterov动量可以解释为往标准动量方法中添加了一个\emph{校正因子}。
 完整的Nesterov动量算法如算法8.3所示。
+
+\begin{algorithm}[ht]
+\caption{Stochastic gradient descent (SGD) with Nesterov momentum}
+\label{alg:nesterov}
+\begin{algorithmic}
+\REQUIRE Learning rate $\epsilon$, momentum parameter $\alpha$.
+\REQUIRE Initial parameter $\Vtheta$, initial velocity $\Vv$.
+\WHILE{stopping criterion not met} % NOTE: do not capitalize the condition
+    \STATE Sample a minibatch of $m$ examples from the training set $\{ \Vx^{(1)},
+    \dots, \Vx^{(m)}\}$ with corresponding labels $\Vy^{(i)}$.
+    \STATE Apply interim update: $\tilde{\Vtheta} \leftarrow \Vtheta  + \alpha \Vv$
+         \STATE Compute gradient (at interim point): $\Vg \leftarrow 
+         \frac{1}{m} \nabla_{\tilde{\Vtheta}} \sum_i L(f(\Vx^{(i)};\tilde{\Vtheta}),\Vy^{(i)})$
+    \STATE Compute velocity update: $\Vv \leftarrow \alpha \Vv - 
+    \epsilon \Vg$
+    \STATE Apply update: $\Vtheta \leftarrow \Vtheta + \Vv$ 
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
 
 % -- 291 --
 
@@ -946,6 +1003,28 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 然而，经验上已经发现，对于训练\gls{DNN}模型而言，\emph{从训练开始时}积累梯度平方会导致有效学习速率过早和过量的减小。
 AdaGrad在某些深度学习模型上效果不错，但不是全部。
 
+\begin{algorithm}[ht]
+\caption{The AdaGrad algorithm}
+\label{alg:ada_grad}
+\begin{algorithmic}
+\REQUIRE Global learning rate $\epsilon$
+\REQUIRE Initial parameter $\Vtheta$
+\REQUIRE Small constant $\delta$, perhaps $10^{-7}$, for numerical stability
+\STATE Initialize gradient accumulation variable $\Vr = 0$
+\WHILE{stopping criterion not met} % NOTE: do not capitalize the condition
+    \STATE Sample a minibatch of $m$ examples from the training set $\{ \Vx^{(1)},
+    \dots, \Vx^{(m)}\}$ with corresponding targets $\Vy^{(i)}$.
+    \STATE Compute gradient: $\Vg \leftarrow  
+         \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE Accumulate squared gradient: $\Vr \leftarrow \Vr + \Vg \odot \Vg$
+    \STATE Compute update: $\Delta \Vtheta \leftarrow -
+    \frac{\epsilon}{\delta+ \sqrt{\Vr}} \odot\Vg$.   \ \  (Division and square root applied element-wise)
+    \STATE Apply update: $\Vtheta \leftarrow \Vtheta + \Delta \Vtheta$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
 \subsection{RMSProp}
 \label{sec:rmsprop}
 \textbf{RMSProp}算法\citep{Hinton-ipam2012}修改AdaGrad以在非凸设定下效果更好，改变梯度积累为指数加权的移动均值。
@@ -965,6 +1044,56 @@ RMSProp的标准形式如算法8.5所示，结合Nesterov动量的形式如算�
 经验上，RMSProp已被证明是一种有效且实用的\gls{DNN}优化算法。
 目前它是深度学习从业者经常采用的优化方法之一。
 
+
+\begin{algorithm}[ht]
+\caption{The RMSProp algorithm}
+\label{alg:rms_prop}
+\begin{algorithmic}
+\REQUIRE Global learning rate $\epsilon$, decay rate $\rho$.
+\REQUIRE Initial parameter $\Vtheta$
+\REQUIRE Small constant $\delta$, usually $10^{-6}$, used to stabilize division
+by small numbers.
+\STATE Initialize accumulation variables $\Vr = 0$
+\WHILE{stopping criterion not met} % NOTE: do not capitalize the condition
+    \STATE Sample a minibatch of $m$ examples from the training set $\{ \Vx^{(1)},
+    \dots, \Vx^{(m)}\}$ with corresponding targets $\Vy^{(i)}$.
+    \STATE Compute gradient: $\Vg \leftarrow  
+         \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE Accumulate squared gradient: $\Vr \leftarrow \rho
+    \Vr + (1-\rho) \Vg \odot \Vg$
+    \STATE Compute parameter update: $\Delta \Vtheta =
+    -\frac{\epsilon}{\sqrt{\delta + \Vr}} \odot \Vg$.  \ \  ($\frac{1}{\sqrt{\delta + \Vr}}$ applied element-wise)
+    \STATE Apply update: $\Vtheta \leftarrow \Vtheta + \Delta \Vtheta$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[ht]
+\caption{RMSProp algorithm with Nesterov momentum}
+% 2ED: Greg Brockman was confused why we do not build a \Delta variable
+% here when we do in many of the other algorithms, including RMSProp.
+% IG would prefer to just eliminate \Delta in all of them.
+\label{alg:rms_nesterov}
+\begin{algorithmic}
+\REQUIRE Global learning rate $\epsilon$, decay rate $\rho$, momentum coefficient $\alpha$.
+\REQUIRE Initial parameter $\Vtheta$, initial velocity $\Vv$.
+\STATE Initialize accumulation variable $\Vr = 0$
+\WHILE{stopping criterion not met} % NOTE: do not capitalize the condition
+    \STATE Sample a minibatch of $m$ examples from the training set $\{ \Vx^{(1)},
+    \dots, \Vx^{(m)}\}$ with corresponding targets $\Vy^{(i)}$.
+    \STATE Compute interim update: $\tilde{\Vtheta} \leftarrow \Vtheta + \alpha \Vv$
+    \STATE Compute gradient: $\Vg \leftarrow  
+         \frac{1}{m} \nabla_{\tilde{\Vtheta}} \sum_i L(f(\Vx^{(i)};\tilde{\Vtheta}),\Vy^{(i)})$ 
+    \STATE Accumulate gradient: $\Vr \leftarrow \rho
+    \Vr + (1-\rho) \Vg \odot \Vg$
+    \STATE Compute velocity update: $\Vv \leftarrow \alpha \Vv
+    -\frac{\epsilon}{\sqrt{\Vr}} \odot \Vg$. \ \  ($\frac{1}{\sqrt{\Vr}}$ applied element-wise)
+    \STATE Apply update: $\Vtheta \leftarrow \Vtheta + \Vv$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
 \subsection{Adam}
 \label{sec:adam}
 \textbf{Adam}\citep{kingma2014adam}是另一种学习率自适应的优化算法，如算法8.7所示。
@@ -977,6 +1106,33 @@ RMSProp的标准形式如算法8.5所示，结合Nesterov动量的形式如算�
 RMSProp也采用了（非中心的）二阶矩估计，然而缺失了修正因子。
 因此，不像Adam，RMSProp二阶矩估计可能在训练初期有很高的偏置。
 Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时需要从建议的默认修改。
+
+\begin{algorithm}[ht]
+\caption{The Adam algorithm}
+\label{alg:adam}
+\begin{algorithmic}
+\REQUIRE Step size $\epsilon$ (Suggested default: $0.001$)
+\REQUIRE Exponential decay rates for moment estimates, $\rho_1$ and $\rho_2$ in $[0, 1)$.
+(Suggested defaults: $0.9$ and $0.999$ respectively)
+\REQUIRE Small constant $\delta$ used for numerical stabilization. (Suggested default: $10^{-8}$)
+\REQUIRE Initial parameters $\Vtheta$
+\STATE Initialize 1st and 2nd moment variables $\Vs = 0 $, $\Vr = 0$
+\STATE Initialize time step $t=0$ 
+\WHILE{stopping criterion not met} % NOTE: do not capitalize the condition
+    \STATE Sample a minibatch of $m$ examples from the training set $\{ \Vx^{(1)},
+    \dots, \Vx^{(m)}\}$ with corresponding targets $\Vy^{(i)}$.
+    \STATE Compute gradient: $\Vg \leftarrow \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE $t \leftarrow t + 1$
+    \STATE Update biased first moment estimate: $\Vs \leftarrow \rho_1 \Vs + (1-\rho_1) \Vg$
+    \STATE Update biased second moment estimate: $\Vr \leftarrow \rho_2 \Vr + (1-\rho_2) \Vg \odot \Vg$
+    \STATE Correct bias in first moment: $\hat{\Vs} \leftarrow \frac{\Vs}{1-\rho_1^t}$
+    \STATE Correct bias in second moment: $\hat{\Vr} \leftarrow \frac{\Vr}{1-\rho_2^t}$
+    \STATE Compute update: $\Delta \Vtheta = - \epsilon \frac{\hat{\Vs}}{\sqrt{\hat{\Vr}} + \delta}$ \ \  (operations applied element-wise)
+    \STATE Apply update: $\Vtheta \leftarrow \Vtheta + \Delta \Vtheta$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 % -- 301 --
 
@@ -1047,6 +1203,29 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 在曲率有更极端方向的情况下，$\alpha$的值必须足够大，以抵消负特征值。
 然而，如果$\alpha$持续增加，\gls{hessian}矩阵会变得由对角矩阵$\alpha \MI$主导，通过牛顿法所选择的方向会收敛到普通梯度除以$\alpha$。
 当很强的负曲率存在时，$\alpha$可能需要特别大，以至于牛顿法比选择合适学习率的梯度下降的步长更小。
+
+\begin{algorithm}[ht]
+\caption{Newton's method with objective $J(\Vtheta)= \frac{1}{m} \sum_{i=1}^m L(f(\Vx^{(i)};\Vtheta), y^{(i)})$.}
+\label{alg:newton}
+\begin{algorithmic}
+\REQUIRE Initial parameter $\Vtheta_{0}$
+\REQUIRE Training set of $m$ examples
+\WHILE{stopping criterion not met}  % NOTE: do not capitalize the condition
+    % NOTE: the algorithmic package puts the word "do" in the .pdf file
+    % after the contents of the FOR command. So we do not want to put
+    % comment marks inside the FOR block. If we do that, it looks like
+    % the "do" is commented.
+      \STATE Compute gradient: $\Vg \leftarrow 
+     \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+      \STATE Compute Hessian: $\MH \leftarrow  
+     \frac{1}{m} \nabla_{\Vtheta}^2 \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE Compute Hessian inverse: $\MH^{-1}$
+    \STATE Compute update: $\Delta \Vtheta = - \MH^{-1} \Vg$
+    \STATE Apply update: $\Vtheta = \Vtheta+\Delta \Vtheta$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 除了目标函数的某些特征带来的挑战，如\gls{saddle_points}，牛顿法用于训练大型神经网络还受限于其显著的计算负担。
 \gls{hessian}矩阵中元素树木是参数数量的平方，因此，如果参数数目为$k$（甚至是在非常小的神经网络中$k$也可能是百万级别），牛顿法需要计算$k\times k$矩阵的逆，计算复杂度为$O(k^3)$。
@@ -1119,6 +1298,36 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 因此，我们在前一方向上仍然是极小值。
 其结果是，在$k$-维参数空间中，\gls{CG}只需要至多$k$次线性搜索就能达到极小值。
 \gls{CG}算法如算法8.9所示。
+
+\begin{algorithm}[ht]
+\caption{The conjugate gradient method}
+% 2ED: ideally this would use superscript indexing
+\label{alg:cg}
+\begin{algorithmic}
+\REQUIRE Initial parameters $\Vtheta_{0}$
+\REQUIRE Training set of $m$ examples
+\STATE Initialize $\Vrho_{0} = 0$
+\STATE Initialize $g_0 = 0$
+\STATE Initialize $t = 1$
+\WHILE{stopping criterion not met} % NOTE: do not capitalize the condition
+    \STATE Initialize the gradient $\Vg_{t} = 0$
+    \STATE Compute gradient: $\Vg_{t} \leftarrow
+         \frac{1}{m}\nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE Compute $\beta_{t} = \frac{(\Vg_{t}-\Vg_{t-1})^\top \Vg_{t}}{\Vg_{t-1}^\top \Vg_{t-1}}$  (Polak-Ribi\`{e}re)
+    \STATE (Nonlinear conjugate gradient: optionally reset $\beta_{t}$ to zero,
+           for example if $t$ is a multiple of some constant $k$, such
+               as $k=5$)
+    \STATE Compute search direction: $\Vrho_{t} = -\Vg_{t} + \beta_{t} \Vrho_{t-1}$ 
+    \STATE Perform line search to find: $\epsilon^{*} = \arg\!\min_{\epsilon}
+    \frac{1}{m} \sum_{i=1}^{m}L(f(\Vx^{(i)};\Vtheta_t + \epsilon \Vrho_t),\Vy^{(i)})$ 
+    \STATE (On a truly quadratic cost function, analytically solve for $\epsilon^*$
+            rather than explicitly searching for it)
+    \STATE Apply update: $\Vtheta_{t+1} = \Vtheta_{t}+ \epsilon^{*} \Vrho_{t}$
+    \STATE $t \leftarrow t + 1$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 \textbf{\gls{nonlinear_CG}：}
 目前，我们已经讨论了\gls{CG}法用于二次目标函数。
