@@ -413,7 +413,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 489 au
 
 
-\gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以被解释为学习一个\gls{manifold}\citep{hinton97modelling}。
+\gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以理解为学习一个\gls{manifold}\citep{hinton97modelling}。
 我们可以将\gls{PPCA}定义为高概率的薄饼状区域，即高斯分布，沿着某些轴非常窄，就像薄饼沿着其垂直轴非常平坦，但沿着其他轴是细长的，正如薄饼在其水平轴方向是很宽的一样。
 \figref{fig:PPCA_pancake}解释了这种现象。
 \glssymbol{PCA}可以理解为将该薄饼与更高维空间中的线性\gls{manifold}对准。
@@ -448,12 +448,12 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 490
 
 
-选择适当的线性\gls{encoder}和\gls{decoder}来最小化重建误差
+选择适当的线性\gls{encoder}和\gls{decoder}来最小化\gls{reconstruction_error}
 \begin{align}
 \label{eqn:1321}
 \SetE[\Vert\Vx - \hat{\Vx}\Vert^2]
 \end{align}
-其中$\MV = \MW$，${\Vmu} = \Vb = \SetE[\Vx] $，$\MW$的列形成一组正交基，这组基生成的子空间于主特征向量对应的协方差矩阵相同。
+其中$\MV = \MW$，${\Vmu} = \Vb = \SetE[\Vx] $，$\MW$的列形成一组正交基，这组基生成的子空间相同与主特征向量对应的\gls{covariance}矩阵$\MC$
 \begin{align}
 \label{eqn:1322}
 \MC = \SetE[(\Vx - {\Vmu})(\Vx - {\Vmu})^{\top}]
@@ -466,7 +466,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 490 end
 
 我们还可以发现$\MC$的特征值$\lambda_i$对应了$\Vx$在特征向量$\Vv^{(i)}$方向上的方差。
-如果$\Vx\in \SetR^D$，$\Vh\in\SetR^d$并且满足$d<D$，则（给定上述的${\Vmu},\Vb,\MV,\MW$的情况下）最佳的重构误差是
+如果$\Vx\in \SetR^D$，$\Vh\in\SetR^d$并且满足$d<D$，则（给定上述的${\Vmu},\Vb,\MV,\MW$的情况下）最佳的\gls{reconstruction_error}是
 \begin{align}
 \label{eqn:1323}
 \min \SetE[\Vert \Vx - \hat{\Vx} \Vert^2]
@@ -475,7 +475,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 因此，如果协方差矩阵的秩为d，则特征值$\lambda_{d+1}$到$\lambda_{D}$都为0，并且重构误差为0。
 % 491 head 
 
-此外，还可以证明上述解可以通过在正交矩阵$\MW$下最大化$\Vh$元素的方差而不是最小化重建误差来获得。
+此外，还可以证明上述解可以通过在正交矩阵$\MW$下最大化$\Vh$元素的方差而不是最小化\gls{reconstruction_error}来获得。
 % 491 
 
 
