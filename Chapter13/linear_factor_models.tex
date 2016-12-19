@@ -35,7 +35,7 @@
 \label{eqn:131}
 \RVh \sim p(\Vh)
 \end{align}
-其中$p(\Vh)$是一个可分解的分布，满足$p(\Vh) = \prod_{i}^{}p(h_i)$，所以很容易从中采样。
+其中$p(\Vh)$是一个\gls{factorial}分布，满足$p(\Vh) = \prod_{i}^{}p(h_i)$，所以很容易从中采样。
 接下来，在给定因子的情况下，我们对实值的可观察变量进行抽样
 \begin{align}
 \label{eqn:132}
@@ -296,7 +296,7 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 % 486
 
 
-\firstgls{sparse_coding}\citep{Olshausen+Field-1996}是一个\gls{linear_factor}，已作为无监督特征学习和特征提取机制进行了大量研究。
+\firstgls{sparse_coding}\citep{Olshausen+Field-1996}是一个\gls{linear_factor}，已作为\gls{unsupervised}特征学习和特征提取机制进行了大量研究。
 严格地说，术语``\gls{sparse_coding}''是指在该模型中推断$\Vh$的值的过程，而``稀疏建模''是指设计和学习模型的过程，但是通常这两个概念都可以用术语``\gls{sparse_coding}''描述。
 % 486
 
@@ -325,7 +325,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 487 head
 
 使用\gls{MLE}的方法来训练\gls{sparse_coding}模型是不可行的。
-相反，训练在编码数据和训练\gls{decoder}之间交替，以在给定编码的情况下更好地重建数据。
+相反，为了在给定编码的情况下更好地重建数据，训练过程在编码数据和训练\gls{decoder}之间交替进行。
 稍后在\secref{sec:map_inference_and_sparse_coding}中，这种方法将被进一步证明为解决似然最大化问题的一种通用的近似方法。
 % 487
 
@@ -361,24 +361,23 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 487
 
 
-
 不是所有的\gls{sparse_coding}方法都显式地构建了$p(\Vh)$和$p(\Vx\mid\Vh)$。 
 通常我们只是对学习一个带有激活值的特征的字典感兴趣，当使用这个推断过程时，这个激活值通常为0。
 % 487 end
 
 如果我们从Laplace先验中采样$\Vh$，$\Vh$的元素实际上为零是一个零概率事件。
 \gls{generative_model}本身并不稀疏，只有特征提取器是。
-\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}描述了不同模型族中的近似推断，和spike and slab\gls{sparse_coding}模型，其中先验的样本通常包含许多0。
+\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}描述了不同模型族中的近似推断，和\gls{ss}\gls{sparse_coding}模型，其中先验的样本通常包含许多0。
 % 488 head
 
-与非参数化的\gls{encoder}结合的\gls{sparse_coding}方法原则上可以比任何特定的参数化的\gls{encoder}更好地最小化重构误差和对数先验的组合。
+与非参数化\gls{encoder}结合的\gls{sparse_coding}方法原则上可以比任何特定的参数化\gls{encoder}更好地最小化重构误差和对数先验的组合。
 另一个优点是\gls{encoder}没有泛化误差。
 参数化的\gls{encoder}必须泛化地学习如何将$\Vx$映射到$\Vh$。
 对于与训练数据差异很大的异常的$\Vx$，所学习的参数化的\gls{encoder}可能无法找到对应精确重建的$\Vh$或稀疏的编码。
 对于\gls{sparse_coding}模型的绝大多数形式，推断问题是凸的，优化过程将总是找到最优值（除非出现简并的情况，例如重复的权重向量）。
-显然，稀疏和重构成本仍然可以在不熟悉的点上升，但这是归因于\gls{decoder}权重中的泛化误差，而不是\gls{encoder}中的泛化误差。
+显然，稀疏和重构成本仍然可以在不熟悉的点上升，但这归因于\gls{decoder}权重中的泛化误差，而不是\gls{encoder}中的泛化误差。
 当\gls{sparse_coding}用作分类器的特征提取器时，而不是使用参数化的函数来预测时，基于优化的\gls{sparse_coding}模型的编码过程中泛化误差的减小可导致更好的泛化能力。
-\citet{Coates2011b}证明了在对象识别任务中\gls{sparse_coding}特征比基于参数化的\gls{encoder}（如线性sigmoid \gls{AE}）的特征拥有更好的泛化能力。
+\citet{Coates2011b}证明了在对象识别任务中\gls{sparse_coding}特征比基于参数化的\gls{encoder}（如线性\gls{sigmoid}\gls{AE}）的特征拥有更好的泛化能力。
 受他们的工作启发，\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}表明\gls{sparse_coding}的变体在其中极少标签（每类20个或更少标签）的情况中比其他特征提取器拥有更好的泛化能力。
 % 488 
 
@@ -386,15 +385,14 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 
 非参数\gls{encoder}的主要缺点是在给定$\Vx$的情况下需要大量的时间来计算$\Vh$，因为非参数方法需要运行迭代算法。
 在\chapref{chap:autoencoders}中讲到的参数化的\gls{AE}方法仅使用固定数量的层，通常只有一层。
-另一个缺点是它不直接通过非参数\gls{encoder}进行反向传播，这使得我们很难采用先使用无监督方式预训练\gls{sparse_coding}模型然后使用有监督方式对其进行微调的方法。
+另一个缺点是它不直接通过非参数\gls{encoder}进行反向传播，这使得我们很难采用先使用\gls{unsupervised}方式预训练\gls{sparse_coding}模型然后使用\gls{supervised}方式对其进行微调的方法。
 允许近似导数的\gls{sparse_coding}模型的修改版本确实存在但未被广泛使用\citep{Bradley+Bagnell-2009-small}。
 % 488  end
 
 像其他\gls{linear_factor}一样，\gls{sparse_coding}经常产生糟糕的样本，如\figref{fig:s3c_samples}所示。
 即使当模型能够很好地重构数据并为分类器提供有用的特征时，也会发生这种情况。
-这种现象原因是每个单独的特征可以很好地被学习到，但是隐含结点可分解的先验会导致模型包括每个生成的样本中的所有特征的随机子集。
- the factorial prior on the hidden code results in the model including random subsets of all of the features in each generated sample.
-这促使人们在深度模型中的最深层以及一些复杂成熟的浅层模型上施加一个不可分解的分布。
+<bad>这种现象原因是每个单独的特征可以很好地被学习到，但是隐含结点\gls{factorial}先验会导致模型包括每个生成的样本中的所有特征的随机子集。
+这促使人们在深度模型中的最深层以及一些复杂成熟的浅层模型上施加一个不\gls{factorial}的分布。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -415,7 +413,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 489 au
 
 
-\gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以被解释为学习一个\gls{manifold}\citep{hinton97modelling}。
+\gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以理解为学习一个\gls{manifold}\citep{hinton97modelling}。
 我们可以将\gls{PPCA}定义为高概率的薄饼状区域，即高斯分布，沿着某些轴非常窄，就像薄饼沿着其垂直轴非常平坦，但沿着其他轴是细长的，正如薄饼在其水平轴方向是很宽的一样。
 \figref{fig:PPCA_pancake}解释了这种现象。
 \glssymbol{PCA}可以理解为将该薄饼与更高维空间中的线性\gls{manifold}对准。
@@ -450,12 +448,12 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 490
 
 
-选择适当的线性\gls{encoder}和\gls{decoder}来最小化重建误差
+选择适当的线性\gls{encoder}和\gls{decoder}来最小化\gls{reconstruction_error}
 \begin{align}
 \label{eqn:1321}
 \SetE[\Vert\Vx - \hat{\Vx}\Vert^2]
 \end{align}
-其中$\MV = \MW$，${\Vmu} = \Vb = \SetE[\Vx] $，$\MW$的列形成一组正交基，这组基生成的子空间于主特征向量对应的协方差矩阵相同。
+其中$\MV = \MW$，${\Vmu} = \Vb = \SetE[\Vx] $，$\MW$的列形成一组正交基，这组基生成的子空间相同与主特征向量对应的\gls{covariance}矩阵$\MC$
 \begin{align}
 \label{eqn:1322}
 \MC = \SetE[(\Vx - {\Vmu})(\Vx - {\Vmu})^{\top}]
@@ -468,7 +466,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 % 490 end
 
 我们还可以发现$\MC$的特征值$\lambda_i$对应了$\Vx$在特征向量$\Vv^{(i)}$方向上的方差。
-如果$\Vx\in \SetR^D$，$\Vh\in\SetR^d$并且满足$d<D$，则（给定上述的${\Vmu},\Vb,\MV,\MW$的情况下）最佳的重构误差是
+如果$\Vx\in \SetR^D$，$\Vh\in\SetR^d$并且满足$d<D$，则（给定上述的${\Vmu},\Vb,\MV,\MW$的情况下）最佳的\gls{reconstruction_error}是
 \begin{align}
 \label{eqn:1323}
 \min \SetE[\Vert \Vx - \hat{\Vx} \Vert^2]
@@ -477,7 +475,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}
 因此，如果协方差矩阵的秩为d，则特征值$\lambda_{d+1}$到$\lambda_{D}$都为0，并且重构误差为0。
 % 491 head 
 
-此外，还可以证明上述解可以通过在正交矩阵$\MW$下最大化$\Vh$元素的方差而不是最小化重建误差来获得。
+此外，还可以证明上述解可以通过在正交矩阵$\MW$下最大化$\Vh$元素的方差而不是最小化\gls{reconstruction_error}来获得。
 % 491 
 
 
