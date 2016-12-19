@@ -98,7 +98,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 比如说，如果能够把数据\firstgls{coalesced}起来，那么涉及内存的操作一般会更快。
 当几个线程同时需要读/写一个值的时候，像这样的\gls{coalesced}作为一次内存操作出现。
 不同的\glssymbol{GPU}采用了不同的\gls{coalesced}读/写数据的方式。
-通常来说，如果在$n$个线程中，线程$i$对应的是第$i+j$处的内存，其中$j$是2的某个幂的乘积。
+通常来说，如果在$n$个线程中，线程$i$对应的是第$i+j$处的内存，其中$j$是$2$的某个幂的乘积。
 具体的设定在不同的\glssymbol{GPU}中有所区别。
 \glssymbol{GPU}的另一个常见的设定是一个组中的所有线程都同时执行同一指令。
 这意味着在\glssymbol{GPU}上分支操作是很困难的。
@@ -135,7 +135,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 对于\gls{SGD}的一步来说，我们可以增加\gls{minibatch}的数量，但是从优化性能角度说，我们无法得到一个线性的反馈。
 使用多个机器并行的计算多个\gls{GD}是一个更好的选择。
 不幸的是，\gls{GD}的标准定义完全是一个串行的过程。
-在第t步的梯度是一个第t-1步所获得的参数的函数。
+在第$t$步的梯度是一个第$t-1$步所获得的参数的函数。
 % 435
 
 
@@ -195,8 +195,6 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 神经网络中\gls{dynamic_structure}的最简单的应用是决定一组神经网络（或者其它\gls{ML}模型）
 模型中的哪些神经网络能够运行相应的输入。
 % 437 
-
-
 
 用于在分类器中加速推断的可行策略是使用\firstgls{cascade}的分类器。 当目标是检测稀有对象（或事件）的存在时，可以应用\gls{cascade}策略。
 要确定对象是否存在，我们必须使用具有高\gls{capacity}，运行昂贵的复杂分类器。 
@@ -344,12 +342,12 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 然后整个图像的对比度可以表示如下：
 \begin{align}
 \label{eqn:121}
-\sqrt{\frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3} (\TEX_{i,j,k} - \bar{\TSX} )^2}
+\sqrt{\frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3} (\TEX_{i,j,k} - \bar{\TSX} )^2},
 \end{align}
 其中$\bar{\TSX}$是图片的平均强度，满足
 \begin{align}
 \label{eqn:122}
- \bar{\TSX} =  \frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3}\TEX_{i,j,k}
+ \bar{\TSX} =  \frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3}\TEX_{i,j,k}.
 \end{align}
 \firstall{GCN}旨在通过从每个图像中减去平均值，然后重新缩放其使得其像素上的\gls{standard_deviation}等于某个常数s来防止图像具有变化的对比度。
 这种方法非常复杂，没有缩放因子可以改变零对比度图像（所有像素都具有相等强度的图像）的对比度。
@@ -360,22 +358,21 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 给定输入图像$\TSX$，\gls{GCN}产生输出图像$\TSX'$，定义为
 \begin{align}
 \label{eqn:123}
-\TEX'_{i,j,k} = s\frac{\TEX_{i,j,k} - \bar{\TEX}}{\max\{ \epsilon, \sqrt{ \lambda + 
-{\frac{1}{3rc}\sum_{i=1}^{r}\sum_{j=1}^{c}\sum_{k=1}^{3}} (\TEX_{i,j,k} - \bar{\TEX} )^2} \}}
+\TEX'_{i,j,k} = s\frac{\TEX_{i,j,k} - \bar{\TEX}}{\max\{ \epsilon, \sqrt{ \lambda + {\frac{1}{3rc}\sum_{i=1}^{r}\sum_{j=1}^{c}\sum_{k=1}^{3}} (\TEX_{i,j,k} - \bar{\TEX} )^2} \}}.
 \end{align}
 
 
 从大图像中剪切有趣对象所组成的数据集不可能包含具有几乎恒定强度的任何图像。
-在这些情况下，通过设置$\lambda = 0$来忽略小分母问题是安全的，并且在极少的情况下为了避免除以0，通过将极小值设置为$10^{-8}$。
+在这些情况下，通过设置$\lambda = 0$来忽略小分母问题是安全的，并且在极少的情况下为了避免除以$0$，通过将极小值设置为$10^{-8}$。
 这也是\citet{Goodfellow+al-arxiv-2013}在CIFAR-10数据集上所使用的方法。
 随机剪裁的小图像更可能具有几乎恒定的强度，使得\gls{regularization}更有用。
 在处理从CIFAR-10数据中随机选择的补丁时，\citet{Coates2011}使用$\epsilon = 0, \lambda = 10$。
 % 443
 
-尺度参数$s$通常可以设置为1，如\citet{Coates2011}，或选择使所有样本上每个像素的\gls{standard_deviation}接近1，如\citet{Goodfellow+al-arxiv-2013}。
+尺度参数$s$通常可以设置为$1$，如\citet{Coates2011}，或选择使所有样本上每个像素的\gls{standard_deviation}接近$1$，如\citet{Goodfellow+al-arxiv-2013}。
 
 公式~\eqref{eqn:123}中的\gls{standard_deviation}仅仅是对$L^2$范数的重新缩放（假设图像的平均值已经被移除）。
-我们更偏向于根据\gls{standard_deviation}而不是$L^2$范数来定义\gls{GCN}，因为\gls{standard_deviation}包括除以像素数量，因此基于\gls{standard_deviation}的\gls{GCN}允许使用与图像大小无关的相同的s。
+我们更偏向于根据\gls{standard_deviation}而不是$L^2$范数来定义\gls{GCN}，因为\gls{standard_deviation}包括除以像素数量，因此基于\gls{standard_deviation}的\gls{GCN}允许使用与图像大小无关的相同的$s$。
 然而，观察到$L^2$范数与\gls{standard_deviation}成比例，这符合我们的直觉。
 我们可以把\gls{GCN}理解成到球壳的一种映射。
 \figref{fig:gcn_sphere_color}给了一个说明。
@@ -466,13 +463,13 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 % 446
 
 \gls{SR}任务将一段包括了自然语言发音的声音信号投影到对应说话人的词序列上。
-令$\MX=(\Vx^{(1)},\Vx^{(2)},\ldots,\Vx^{(T)})$表示语音的输入向量（传统做法以20ms为一帧分割信号）。
+令$\MX=(\Vx^{(1)},\Vx^{(2)},\ldots,\Vx^{(T)})$表示语音的输入向量（传统做法以$20$ms为一帧分割信号）。
 许多\gls{SR}的系统通过特殊的手工设计方法预处理输入信号，从而提取特征，但是某些\gls{DL}系统\citep{jaitly2011learning}直接从原始输入中学习特征。
 令$\Vy=(y_{1},y_{2},\ldots,y_{N})$表示目标的输出序列（通常是一个词或者字符的序列）。
 \firstall{ASR}任务指的是构造一个函数$f^*_{\text{ASR}}$，使得它能够在给定语音序列$\MX$的情况下计算最有可能的$\Vy$序列：
 \begin{align}
 \label{eqn:124}
-f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX)
+f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
 \end{align}
 其中$P^*$是给定输入值$\MX$时对应目标$\Vy$的条件分布。
 % 446
@@ -483,7 +480,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX)
 尽管直到最近\glssymbol{GMM}-\glssymbol{HMM}一直在\gls{ASR}中占据主导地位，\gls{SR}仍然是\gls{NN}所成功应用的第一个领域。
 从20世纪80年代末期到90年代初期，许多的\gls{SR}系统使用了\gls{NN}\citep{Bourlard-cspla89,Waibel89b,Robinson+Fallside91,Bengio91z,Bengio92c,Konig96}。
 在那段时间，基于\gls{NN}的\gls{ASR}的表现和\glssymbol{GMM}-\glssymbol{HMM}系统的表现差不多。
-比如说，\citet{Robinson+Fallside91}在TIMIT数据集\citep{garofolo1993darpa}（有39个区分的\gls{phoneme}\footnote{39}）上达到了26\%的\gls{phoneme}错误率，这个结果优于或者是可比于基于\glssymbol{HMM}的结果。
+比如说，\citet{Robinson+Fallside91}在TIMIT数据集\citep{garofolo1993darpa}（有$39$个区分的\gls{phoneme}\footnote{39}）上达到了$26$\%的\gls{phoneme}错误率，这个结果优于或者是可比于基于\glssymbol{HMM}的结果。
 从那时起，TIMIT成为了\gls{phoneme}识别的一个基准数据集，在\gls{SR}中的作用就和MNIST在图像中的作用差不多。
 然而，由于\gls{SR}软件系统中复杂的工程因素以及在基于\glssymbol{GMM}-\glssymbol{HMM}的系统中所已经付出的巨大努力，工业界并没有转向\gls{NN}。
 结果，直到21世纪00年代末期，学术界和工业界的研究者们更多的是用\gls{NN}为\glssymbol{GMM}-\glssymbol{HMM}系统学习一些额外的特征。
@@ -496,7 +493,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX)
  \gls{RBM}将会在第三部分中被描述。
  为了完成\gls{SR}任务，\gls{unsupervised}的\gls{pretraining}被用来构造一个\gls{deep_feedforward_network}，这个\gls{NN}是通过训练\gls{RBM}来初始化的。
  这些网络的输入是从一个固定规格的滑动窗（以当前帧为中心）的谱特征中抽取，预测了当前帧所对应的\glssymbol{HMM}状态的条件概率。
- 训练一个这样的\gls{NN}能够可以显著提高在TIMIT数据集上的识别率~\citep{mohamed2009deep,Mohamed+Dahl+Hinton-2012}，并将\gls{phoneme}级别的错误率从26\%降到了20.7\%。
+ 训练一个这样的\gls{NN}能够可以显著提高在TIMIT数据集上的识别率~\citep{mohamed2009deep,Mohamed+Dahl+Hinton-2012}，并将\gls{phoneme}级别的错误率从$26$\%降到了$20.7$\%。
 关于这个模型成功原因的详细分析可以参考\citet{mohamed2012understanding}。
  对于基础\gls{SR}的扩展包括了添加自适应的说话人相关的特征\citep{mohamed2011deep}的方法，可以进一步的降低错误率。
  紧接着的工作是将结构从\gls{phoneme}识别（TIMIT所主要关注的）转向了大规模词汇语音识别\citep{Dahl2012}，这不仅包含了识别\gls{phoneme}，还包括了识别大规模词汇的序列。
@@ -508,7 +505,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX)
 随后，当他们使用了越来越大的带标签的数据集，加入了各种初始化，训练方法以及调试\gls{DNN}的结构之后，他们发现这种\gls{unsupervised}的\gls{pretraining}方式是没有必要的，或者说不能带来任何显著的改进。
 % 447
 
-用\gls{SR}中词错误率来衡量，在\gls{SR}性能上的这些突破是史无前例的（大约30\%的提高），在这之前的长达十年左右的时间基于\glssymbol{GMM}-\glssymbol{HMM}的系统的传统技术已经停滞不前了，尽管数据集的规模是随时间增长的（见\citet{Deng+Yu-2014}的图2.4）。
+用\gls{SR}中词错误率来衡量，在\gls{SR}性能上的这些突破是史无前例的（大约$30$\%的提高），在这之前的长达十年左右的时间基于\glssymbol{GMM}-\glssymbol{HMM}的系统的传统技术已经停滞不前了，尽管数据集的规模是随时间增长的（见\citet{Deng+Yu-2014}的图2.4）。
 这也导致了\gls{SR}领域快速地转向\gls{DL}的研究。
 在大约的两年时间内，工业界的大多数的\gls{SR}产品都包含了\gls{DL}，这种成功也激发了\gls{ASR}领域对\gls{DL}算法和结构的一波新的研究浪潮，并且影响至今。
 % 448
@@ -521,7 +518,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX)
 另一个重要的至今仍然活跃的推动，是完全抛弃了\glssymbol{HMM}的\firstgls{end_to_end}\gls{DL}\gls{SR}系统。
 这个领域的第一个主要的突破是\citet{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}的\gls{RNN}（见\secref{sec:the_long_short_term_memory_and_other_gated_rnns}），使用了帧－\gls{phoneme}排列的\gls{MAP}估计推断，比如\citet{chapter-gradient-document-2001}，以及CTC框架~\citep{Graves-et-al-2006,Graves-book2012}。
 一个深度\gls{RNN}~\citep{Graves-et-al-ICASSP2013}在每一步都有状态变量，每个\gls{time_step}各层都有状态变量，有两种\gls{unfolded_graph}的方式：一种是根据层的堆叠，另一种是时间展开。
-这个工作把TIMIT数据集上\gls{phoneme}的错误率降到了记录的新低17.7\%。关于应用于其它领域的深度\gls{RNN}的变种可以参考\citet{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
+这个工作把TIMIT数据集上\gls{phoneme}的错误率降到了记录的新低$17.7$\%。关于应用于其它领域的深度\gls{RNN}的变种可以参考\citet{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
 % 448
 
 另一个\gls{end_to_end}\gls{DL}\gls{SR}的最新方法是让系统学习如何利用\firstgls{phonetic}层级的信息排列\firstgls{acoustic}层级的信息\citep{Chorowski-et-al-arxiv2014,llu_is2015b}。
