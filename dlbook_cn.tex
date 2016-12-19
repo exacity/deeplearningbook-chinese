@@ -43,6 +43,9 @@
 \usepackage{algorithmic}
 % Include chapter number in algorithm number
 \renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
+\makeatletter
+\renewcommand*{\ALG@name}{算法}
+\makeatother
 
 \usepackage[pdfpagelabels=true,
 pdffitwindow=false,
