@@ -632,20 +632,20 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 \section{结构化输出}
 \label{sec:structured_outputs}
 
-\gls{CNN}可以用于输出高维的结构化对象，而不仅仅是预测分类任务的类标签或回归任务的实际值。
+\gls{CNN}可以用于输出高维的结构化对象，而不仅仅是预测分类任务的类标签或回归任务的实数值。
 通常这个对象只是一个张量，由标准卷积层产生。
 例如，模型可以产生张量$\TSS$，其中$\TES_{i,j,k}$是网络的输入像素$(j, k)$属于类$i$的概率。
-这允许模型标记图像中的每个像素，并绘制遵循单个对象轮廓的精确掩模。
+这允许模型标记图像中的每个像素，并绘制沿着单个对象轮廓的精确掩模。
 
 经常出现的一个问题是输出平面可能比输入平面要小，如图\ref{fig:chap9_zero_pad_shrink}所示。
-在通常用于图像中单个对象分类的各种结构中，网络空间维数的最大减少来源于使用具有大步幅的\gls{pooling}层。
-为了产生与输入大小相似的输出映射，可以避免完全的\gls{pooling}\citep{jain2007supervised}。
-另一种策略是简单地产生低分辨率的标签网格\citep{Pinheiro+Collobert-ICML2014,Pinheiro+Collobert-CVPR2015}。
-最后，原则上，可以使用具有单位步长的\gls{pooling}操作。
+用于对图像中单个对象分类的常用结构中，网络空间维数的最大减少来源于使用大\gls{stride}的\gls{pooling}层。
+为了产生与输入大小相似的输出映射，我们可以避免把\gls{pooling}放在一起\citep{jain2007supervised}。
+另一种策略是单纯地产生一张低分辨率的标签网格\citep{Pinheiro+Collobert-ICML2014,Pinheiro+Collobert-CVPR2015}。
+最后，原则上可以使用具有单位\gls{stride}的\gls{pooling}操作。
 
-用于图像中逐个像素标记的一种策略是先产生图像标签的原始猜测，然后使用相邻像素之间的交互来修正该原始猜测。
-重复这个修正步骤几次对应于在每一步使用相同的卷积，在深层网络的最后几层之间共享权重\citep{jain2007supervised}。
-这使得在层之间共享参数的连续\gls{convolutional_network}执行的一系列运算，形成了一种特殊的循环神经网络\citep{Pinheiro+Collobert-ICML2014,Pinheiro+Collobert-CVPR2015}。
+对图像逐个像素标记的一种策略是先产生图像标签的原始猜测，然后使用相邻像素之间的交互来修正该原始猜测。
+重复这个修正步骤数次对应于在每一步使用相同的卷积，该卷积在深层网络的最后几层之间共享权重\citep{jain2007supervised}。
+这使得在层之间共享参数的连续的卷积层所执行的一系列运算，形成了一种特殊的\gls{RNN}\citep{Pinheiro+Collobert-ICML2014,Pinheiro+Collobert-CVPR2015}。
 图\ref{fig:chap9_iterative}给出了这样一个循环\gls{convolutional_network}的结构。
 % fig 9.17
 \begin{figure}[!htb]
@@ -660,15 +660,15 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 
 % -- 347 --
  
-一旦对每个像素都进行了预测，可以使用各种方法来进一步处理这些预测，以便获得图像区域上的分割\citep{Briggman-et-al-NIPS2009,Turaga2010,Farabet-et-al-2013}。
-一般的想法是假设大组连续的像素倾向于对应着相同的标签。
-图模型可以描述相邻像素之间的概率关系。
-或者，\gls{convolutional_network}可以被训练来最大化地近似图模型训练的目标\citep{Ning-et-al-2005,Thompson-et-al-NIPS2014}。
+一旦对每个像素都进行了预测，可以使用各种方法来进一步处理这些预测，以便获得图像在区域上的分割\citep{Briggman-et-al-NIPS2009,Turaga2010,Farabet-et-al-2013}。
+一般的想法是假设大片相连的像素倾向于对应着相同的标签。
+图模型可以描述相邻像素间的概率关系。
+或者，\gls{convolutional_network}可以被训练来最大化地近似图模型的训练目标\citep{Ning-et-al-2005,Thompson-et-al-NIPS2014}。
 
 \section{数据类型}
 \label{sec:data_types}
 
-\gls{convolutional_network}使用的数据通常包含多个通道，每个通道是在时间或空间中的某一点观测到的一个不同的量。
+\gls{convolutional_network}使用的数据通常包含多个通道，每个通道是时间上或空间中某一点的不同观测量。
 参见表|||c|||来了解具有不同维数和通道数的数据类型的例子。
  
 % -- 348 --
