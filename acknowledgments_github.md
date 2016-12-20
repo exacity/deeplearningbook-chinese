@@ -60,13 +60,16 @@
 2016年12月14日
 --------------
  - @fairmiracle ==> Chapter7 \norm 括号打错
+ - @bengordai ==> Chapter1 区分出合法邮件与垃圾邮件
 
 
 
 2016年12月15日
 --------------
- - @huangpingchun ==> Chapter5 "supervised"误译为"无监督"
+ - @huangpingchun ==> Chapter5 "supervised"误译为"无监督, Chapter7 模块翻译
  - @Bojian ==> Chapter5 "supervised"误译为"无监督"，"三维空间中球状流形"翻译建议
+
+
 
 2016年12月16日
 -------------

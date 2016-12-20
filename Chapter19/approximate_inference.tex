@@ -7,11 +7,11 @@
 
 许多概率模型是很难训练的，其根本原因是很难进行推断。
 在\gls{DL}中，我们通常有一系列的可见变量$\Vv$和一系列的隐含变量$\Vh$。
-推断的挑战往往在于计算$P(\Vh\vert\Vv)$或者计算在$P(\Vh\vert\Vv)$下的期望的困难性。
+推断的挑战往往在于计算$P(\Vh\mid\Vv)$或者计算在$P(\Vh\mid\Vv)$下的期望的困难性。
 这样的操作在一些任务比如\gls{MLE}中往往又是必须的。
 % 623
 
-许多诸如\gls{RBM}和\gls{PPCA}这样的仅仅含有一层隐层的简单的\gls{graphical_models}的定义，往往使得推断操作如计算$P(\Vh\vert\Vv)$或者计算$P(\Vh\vert\Vv)$下的期望是非常容易的。
+许多诸如\gls{RBM}和\gls{PPCA}这样的仅仅含有一层隐层的简单的\gls{graphical_models}的定义，往往使得推断操作如计算$P(\Vh\mid\Vv)$或者计算$P(\Vh\mid\Vv)$下的期望是非常容易的。
 不幸的是，大多数的具有多层隐藏变量的\gls{graphical_models}的后验分布都很难处理。
 精确的推断算法需要一个指数量级的运行时间。
 即使一些只有单层的模型，如\gls{sparse_coding}，也存在着这样的问题。
@@ -58,7 +58,7 @@
 这个\glssymbol{ELBO}是这样定义的：
 
 \begin{align}
-\CalL(\Vv,{\Vtheta},q) = \log p(\Vv;{\Vtheta}) - D_{\text{KL}}(q(\Vh\vert\Vv) \Vert p(\Vh\vert\Vv;{\Vtheta}))
+\CalL(\Vv,{\Vtheta},q) = \log p(\Vv;{\Vtheta}) - D_{\text{KL}}(q(\Vh\mid\Vv) \Vert p(\Vh\mid\Vv;{\Vtheta}))
 \end{align}
 在这里 $q$是关于$\Vh$的一个任意的概率分布。
 % 625
@@ -66,7 +66,7 @@
 
 因为$\log p(\Vv)$和$\CalL(\Vv,{\Vtheta},q)$之间的距离是由\gls{KL}来衡量的。
 因为\gls{KL}总是非负的，我们可以发现$\CalL$小于等于所求的概率的对数。
-当且仅当$q$完全相等于$p(\Vh\vert\Vv)$时取到等号。
+当且仅当$q$完全相等于$p(\Vh\mid\Vv)$时取到等号。
 % 625
 
 
@@ -74,11 +74,11 @@
 通过简单的代数运算我们可以把$\CalL$写成更加简单的形式：
 
 \begin{align}
-\CalL(\Vv,{\Vtheta},q) = & \log p(\Vv;{\Vtheta})- D_{\text{KL}}(q(\Vh\vert\Vv)\Vert p(\Vh\vert\Vv;{\Vtheta})) \\
-= & \log p(\Vv;{\Vtheta}) - \SetE_{\RVh\sim q}\log \frac{q(\Vh\vert\Vv)}{p(\Vh\vert\Vv)} \\
-= & \log p(\Vv;{\Vtheta}) -  \SetE_{\RVh\sim q} \log \frac{q(\Vh\vert\Vv) }{ \frac{p(\Vh,\Vv;{\Vtheta})}{p(\Vv; {\Vtheta})} } \\
-= & \log p(\Vv; {\Vtheta}) -  \SetE_{\RVh\sim q} [\log q(\Vh\vert\Vv) - \log {p(\Vh,\Vv; {\Vtheta})} + \log {p(\Vv; {\Vtheta})} ]\\
-= & - \SetE_{\RVh\sim q}[\log q(\Vh\vert\Vv) - \log {p(\Vh,\Vv;{\Vtheta})}]
+\CalL(\Vv,{\Vtheta},q) = & \log p(\Vv;{\Vtheta})- D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv;{\Vtheta})) \\
+= & \log p(\Vv;{\Vtheta}) - \SetE_{\RVh\sim q}\log \frac{q(\Vh\mid\Vv)}{p(\Vh\mid\Vv)} \\
+= & \log p(\Vv;{\Vtheta}) -  \SetE_{\RVh\sim q} \log \frac{q(\Vh\mid\Vv) }{ \frac{p(\Vh,\Vv;{\Vtheta})}{p(\Vv; {\Vtheta})} } \\
+= & \log p(\Vv; {\Vtheta}) -  \SetE_{\RVh\sim q} [\log q(\Vh\mid\Vv) - \log {p(\Vh,\Vv; {\Vtheta})} + \log {p(\Vv; {\Vtheta})} ]\\
+= & - \SetE_{\RVh\sim q}[\log q(\Vh\mid\Vv) - \log {p(\Vh,\Vv;{\Vtheta})}]
 \end{align}
 % 625
 
@@ -91,13 +91,13 @@
 
 对于一个较好的选择$q$来说，$\CalL$是可以计算的。
 对任意选择$q$来说，$\CalL$提供了一个似然函数的下界。
-越好的近似$q$的分布$q(\Vh\vert\Vv)$得到的下界就越紧，即与$\log p(\Vv)$更加接近。
-当$q(\Vh\vert\Vv) = p(\Vh\vert\Vv)$时，这个近似是完美的，也意味着$\CalL(\Vv,{\Vtheta},q) = \log {p(\Vv;{\Vtheta})} $。
+越好的近似$q$的分布$q(\Vh\mid\Vv)$得到的下界就越紧，即与$\log p(\Vv)$更加接近。
+当$q(\Vh\mid\Vv) = p(\Vh\mid\Vv)$时，这个近似是完美的，也意味着$\CalL(\Vv,{\Vtheta},q) = \log {p(\Vv;{\Vtheta})} $。
 % 625
 
 
 我们可以将推断问题看做是找一个分布$q$使得$\CalL$最大的过程。
-精确的推断能够通过找一组包含分布$p(\Vh\vert\Vv)$的函数，完美的最大化$\CalL$。
+精确的推断能够通过找一组包含分布$p(\Vh\mid\Vv)$的函数，完美的最大化$\CalL$。
 在本章中，我们将会讲到如何通过近似优化来找$q$的方法来推导出不同形式的的近似推断。
 我们可以通过限定分布$q$的形式或者使用并不彻底的优化方法来使得优化的过程更加高效，但是优化的结果是不完美的，因为只能显著的提升$\CalL$而无法彻底的最大化$\CalL$。
 % 625  end
@@ -123,9 +123,9 @@
 \glssymbol{EM}算法包含了交替的两步运算直到收敛的过程：
 \begin{itemize}
 	\item \firstgls{e_step}: 令${\Vtheta^{(0)}}$表示在这一步开始时参数的初始值。
-	令$q(\Vh^{(i)}\vert \Vv) = p(\Vh^{(i)}\vert\Vv^{(i)};\Vtheta^{(0)})$对任何我们想要训练的(对所有的或者小批数据均成立)索引为$i$的训练样本$\Vv^{(i)}$。
+	令$q(\Vh^{(i)}\mid \Vv) = p(\Vh^{(i)}\mid\Vv^{(i)};\Vtheta^{(0)})$对任何我们想要训练的(对所有的或者小批数据均成立)索引为$i$的训练样本$\Vv^{(i)}$。
 	通过这个定义，我们认为$q$在当前的参数$\Vtheta^{(0)}$下定义。
-	如果我们改变$\Vtheta$，那么$p(\Vh\vert\Vv;\Vtheta)$将会相应的变化，但是$q(\Vh\vert\Vv)$还是不变并且等于$p(\Vh\vert\Vv;\Vtheta^{(0)})$。
+	如果我们改变$\Vtheta$，那么$p(\Vh\mid\Vv;\Vtheta)$将会相应的变化，但是$q(\Vh\mid\Vv)$还是不变并且等于$p(\Vh\mid\Vv;\Vtheta^{(0)})$。
 	\item \firstgls{m_step}：使用选择的优化算法完全地或者部分的最大化关于$\Vtheta$的
 	\begin{align}
 	\sum_i \CalL(\Vv^{(i)},\Vtheta,q)
@@ -171,11 +171,11 @@
 
 
 我们通常使用\firstgls{inference}这个术语来指代给定一定条件下计算一系列变量的概率分布的过程。
-当训练带有隐含变量的概率模型的时候，我们通常关注于计算$p(\Vh\vert\Vv)$。
+当训练带有隐含变量的概率模型的时候，我们通常关注于计算$p(\Vh\mid\Vv)$。
 在推断中另一个选择是计算一个最有可能的隐含变量的值来代替在其完整分布上的抽样。
 在隐含变量模型中，这意味着计算
 \begin{align}
-\Vh^* = \underset{\Vh}{\arg\max} \ \  p(\Vh\vert\Vv)
+\Vh^* = \underset{\Vh}{\arg\max} \ \  p(\Vh\mid\Vv)
 \end{align}
 这被称作是\firstall{MAP}推断。
 % 627  
@@ -197,7 +197,7 @@
 我们通过限定$q$分布属于某个分布族，能够使得\gls{MAP}推断成为一种形式的近似推断。
 具体的说，我们令$q$分布满足一个\gls{dirac_distribution}：
 \begin{align}
-q(\Vh\vert\Vv) = \delta(\Vh - {\Vmu})
+q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu})
 \end{align}
 这也意味着我们可以通过$\Vmu$来完全控制$q$。
 通过将$\CalL$中不随$\Vmu$变化的项丢弃，剩下的我们遇到的是一个优化问题：
@@ -206,7 +206,7 @@ q(\Vh\vert\Vv) = \delta(\Vh - {\Vmu})
 \end{align}
 这等价于\gls{MAP}推断问题
 \begin{align}
-\Vh^* = \underset{\Vh}{\arg\max}\  p(\Vh\vert\Vv)
+\Vh^* = \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vv)
 \end{align}
 % 628
 
@@ -230,28 +230,28 @@ q(\Vh\vert\Vv) = \delta(\Vh - {\Vmu})
 我们回过头来看\secref{sec:sparse_coding}中的\gls{sparse_coding}，\gls{sparse_coding}是一种在隐含节点上加上了鼓励稀疏的先验知识的\gls{linear_factor}。
 一个常用的选择是可分解的拉普拉斯先验，表示为
 \begin{align}
-	p(h_i) = \frac{\lambda}{2} \exp(-\lambda\vert h_i\vert)
+	p(h_i) = \frac{\lambda}{2} \exp(-\lambda\mid h_i\mid)
 \end{align}
 可见的节点是由一个线性变化加上噪音生成的\footnote{此处似乎有笔误，$\Vx$应为$\Vv$}:
 \begin{align}
-	p(\Vx\vert\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI})
+	p(\Vx\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI})
 \end{align}
 % 628 end
 
 
 
 
-计算或者表达$p(\Vh\vert\Vv)$太过困难。
+计算或者表达$p(\Vh\mid\Vv)$太过困难。
 每一对$h_i$， $h_j$变量都是$\Vv$的母节点。
 这也意味着当$\Vv$是可观察时，\gls{graphical_models}包含了连接$h_i$和$h_j$的路径。
-因此在$p(\Vh \vert\Vv)$中所有的隐含节点都包含在了一个巨大的\gls{clique}中。
+因此在$p(\Vh \mid\Vv)$中所有的隐含节点都包含在了一个巨大的\gls{clique}中。
 如果模型是高斯的，那么这些关系可以通过协方差矩阵来高效的建模。
 然而稀疏型先验使得模型并不是高斯。
 % 629 head
 
 
 
-$p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难得到。
+$p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难得到。
 因此我们不能使用精确的\gls{MLE}来进行学习。
 取而代之的是，我们通过\glssymbol{MAP}推断以及最大化由以$\Vh$为中心的\gls{dirac_distribution}所定义而成的\glssymbol{ELBO}来学习模型参数。
 % 629
@@ -259,8 +259,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 如果我们将训练集中的所有的$\Vh$向量拼在一起并且记为$\MH$，并将所有的$\Vv$向量拼起来组成矩阵$\MV$，那么\gls{sparse_coding}问题意味着最小化
 \begin{align}
-	J(\MH,\MW) = \sum_{i,j}^{}\vert H_{i,j}\vert 
-	+ \sum_{i,j}^{}\Big(\MV - \MH \MW^{\top}\Big)^2_{i,j}
+	J(\MH,\MW) = \sum_{i,j}^{}\vert H_{i,j}\vert + \sum_{i,j}^{}\Big(\MV - \MH \MW^{\top}\Big)^2_{i,j}
 \end{align}
 为了避免如极端小的$\MH$和极端大的$\MW$这样的病态的解，许多\gls{sparse_coding}的应用包含了权值衰减或者$\MH$的列的范数的限制。
 % 629
@@ -283,7 +282,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 
 我们已经说明过了为什么\glssymbol{ELBO}是$\log  p(\Vv;\Vtheta)$的一个下界， 如何将推断看做是 关于$q$分布最大化$\CalL$ 的过程以及如何将学习看做是关于参数$\Vtheta$最大化$\CalL$的过程。
-我们也讲到了\glssymbol{EM}算法在给定了$q$分布的条件下进行学习，而\glssymbol{MAP}推断的算法则是学习一个$p(\Vh \vert \Vv)$的点估计而非推断整个完整的分布。
+我们也讲到了\glssymbol{EM}算法在给定了$q$分布的条件下进行学习，而\glssymbol{MAP}推断的算法则是学习一个$p(\Vh \mid \Vv)$的点估计而非推断整个完整的分布。
 在这里我们介绍一些变分学习中更加通用的算法。
 % 629
 
@@ -296,7 +295,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 一种常用的变分学习的方法是加入一些限制使得$q$是一个可以分解的分布：
 \begin{align}
-	q(\Vh\vert\Vv) = \prod_{i}^{}q(h_i \vert \Vv)
+	q(\Vh\mid\Vv) = \prod_{i}^{}q(h_i \mid \Vv)
 \end{align}
 这被叫做是\firstgls{mean_field}方法。
 一般来说，我们可以通过选择$q$分布的形式来选择任何\gls{graphical_models}的结构，通过选择变量之间的相互作用来决定近似程度的大小。
@@ -314,17 +313,17 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 % 630 
 
 
-因为$\CalL(\Vv,\Vtheta,q)$定义成$\log p(\Vv;\Vtheta) - D_{\text{KL}}(q(\Vh\vert\Vv)\Vert p(\Vh\vert\Vv;\Vtheta))$，我们可以认为关于$q$最大化$\CalL$的问题等价于最小化$D_{\text{KL}}(q(\Vh\vert\Vv)\Vert p(\Vh\vert\Vv))$。
+因为$\CalL(\Vv,\Vtheta,q)$定义成$\log p(\Vv;\Vtheta) - D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv;\Vtheta))$，我们可以认为关于$q$最大化$\CalL$的问题等价于最小化$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
 在这种情况下，我们要用$q$来拟合$p$。
 然而，我们并不是直接拟合一个近似，而是处理一个\gls{KL}的问题。
 当我们使用\gls{MLE}来将数据拟合到模型的时候，我们最小化$D_{\text{KL}}(p_{\text{data}\Vert p_{\text{model}}})$。
 如同\figref{fig:chap3_kl_direction_color}中所示，这意味着\gls{MLE}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
 这两种方法都有各自的优点与缺点。
 选择哪一种方法取决于在具体应用中哪一种性质更受偏好。
-在基于优化的推断问题中，从计算角度考虑，我们选择使用$D_{\text{KL}}(q(\Vh\vert\Vv)\Vert p(\Vh\vert\Vv))$。
-具体的说，计算$D_{\text{KL}}(q(\Vh\vert\Vv)\Vert p(\Vh\vert\Vv))$涉及到了计算$q$分布下的期望，所以通过将分布$q$设计的较为简单，我们可以简化求所需要的期望的计算过程。
+在基于优化的推断问题中，从计算角度考虑，我们选择使用$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
+具体的说，计算$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$涉及到了计算$q$分布下的期望，所以通过将分布$q$设计的较为简单，我们可以简化求所需要的期望的计算过程。
 另一个\gls{KL}的方向需要计算真实后验分布下的期望。
-因为真实后验分布的形式是由模型的选择决定的，我们不能设计出一种能够精确计算$D_{\text{KL}}(p(\Vh\vert\Vv) \Vert q(\Vh\vert\Vv))$的开销较小的方法。
+因为真实后验分布的形式是由模型的选择决定的，我们不能设计出一种能够精确计算$D_{\text{KL}}(p(\Vh\mid\Vv) \Vert q(\Vh\mid\Vv))$的开销较小的方法。
 % 631 head
 
 
@@ -337,7 +336,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 关于离散型的隐含变量的变分推断相对来说更为直接。
 我们定义一个分布$q$，通常$q$的每个因子都由一些离散状态的表格定义。
 在最简单的情况中，$\Vh$是二元的并且我们做了\gls{mean_field}的假定，$q$可以根据每一个$h_i$分解。
-在这种情况下，我们可以用一个向量$\hat{\Vh}$来参数化$q$分布，$\hat{\Vh}$的每一个元素都代表一个概率，即$q(h_i = 1\vert \Vv) = \hat{h}_i$。
+在这种情况下，我们可以用一个向量$\hat{\Vh}$来参数化$q$分布，$\hat{\Vh}$的每一个元素都代表一个概率，即$q(h_i = 1\mid \Vv) = \hat{h}_i$。
 % 631
 
 
@@ -372,7 +371,7 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 	p(h_i = 1) = \sigma(b_i)
 \end{align}
 \begin{align}
-	p(\Vv\vert\Vh) = \CalN(\Vv;\MW \Vh,{\Vbeta}^{-1})
+	p(\Vv\mid\Vh) = \CalN(\Vv;\MW \Vh,{\Vbeta}^{-1})
 \end{align}
 其中$\Vb$是一个可以学习的偏置向量\footnote{此处似乎有笔误，公式里面漏了$\Vb$?}，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角的精度矩阵。
 % 632
@@ -384,16 +383,16 @@ $p(\Vx\vert\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 		& \frac{\partial}{\partial b_i} \log p(\Vv) \\
 		= &  \frac{\frac{\partial}{\partial b_i} p(\Vv)}{p(\Vv)}\\
 		= & \frac{\frac{\partial}{\partial b_i} \sum_{\Vh}^{} p(\Vh,\Vv)}{p(\Vv)}\\
-		= &  \frac{\frac{\partial}{\partial b_i} \sum_{\Vh}^{} p(\Vh) p(\Vv\vert \Vh)  }{p(\Vv)}\\
-		= &  \frac{ \sum_{\Vh}^{}  p(\Vv\vert \Vh) \frac{\partial}{\partial b_i} p(\Vh) }{p(\Vv)}\\
-		= &  \sum_{\Vh}^{}  p(\Vh\vert \Vv) \frac{  \frac{\partial}{\partial b_i} p(\Vh) }{p(\Vh)}\\
-		= & \SetE_{\RVh\sim p(\Vh\vert\Vv)} \frac{\partial}{\partial b_i}\log p(\Vh)
+		= &  \frac{\frac{\partial}{\partial b_i} \sum_{\Vh}^{} p(\Vh) p(\Vv\mid \Vh)  }{p(\Vv)}\\
+		= &  \frac{ \sum_{\Vh}^{}  p(\Vv\mid \Vh) \frac{\partial}{\partial b_i} p(\Vh) }{p(\Vv)}\\
+		= &  \sum_{\Vh}^{}  p(\Vh\mid \Vv) \frac{  \frac{\partial}{\partial b_i} p(\Vh) }{p(\Vh)}\\
+		= & \SetE_{\RVh\sim p(\Vh\mid\Vv)} \frac{\partial}{\partial b_i}\log p(\Vh)
 \end{align}
 % 632 end
 
-这需要计算$p(\Vh\vert\Vv)$下的期望。
-不幸的是，$p(\Vh\vert\Vv)$是一个很复杂的分布。
-$p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
+这需要计算$p(\Vh\mid\Vv)$下的期望。
+不幸的是，$p(\Vh\mid\Vv)$是一个很复杂的分布。
+$p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 隐含节点的后验分布对应的是完全图，所以相对于暴力算法，消元算法并不能有助于提高计算所需要的期望的效率。
 % 633 head
 
@@ -416,13 +415,13 @@ $p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 
 我们可以做一个\gls{mean_field}的假设：
 \begin{align}
-	q(\Vh\vert\Vv) = \prod_{i}^{}q(h_i\vert\Vv)
+	q(\Vh\mid\Vv) = \prod_{i}^{}q(h_i\mid\Vv)
 \end{align}
 % 633
 
 
-\gls{binary_sparse_coding}中的隐含变量是二值的，所以为了表示可分解的$q$我们假设模型为$m$个\gls{bernoulli_distribution}$q(h_i\vert\Vv)$。
-表示\gls{bernoulli_distribution}的一种常见的方法是一个概率向量$\hat{\Vh}$，满足$q(h_i\vert\Vv) = \hat{h}_i$。
+\gls{binary_sparse_coding}中的隐含变量是二值的，所以为了表示可分解的$q$我们假设模型为$m$个\gls{bernoulli_distribution}$q(h_i\mid\Vv)$。
+表示\gls{bernoulli_distribution}的一种常见的方法是一个概率向量$\hat{\Vh}$，满足$q(h_i\mid\Vv) = \hat{h}_i$。
 为了避免计算中的误差，比如说计算$\log \hat{h}_i$的时候，我们对$\hat{h}_i$添加一个约束，即$\hat{h}_i$不等于0或者1。
 % 633 
 
@@ -444,8 +443,8 @@ $p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 \label{eqn:1936}
 & \CalL(\Vv,\Vtheta,q)\\
  = & \SetE_{\RVh\sim q}[\log p(\Vh,\Vv)] + H(q)\\
- = & \SetE_{\RVh\sim q}[\log p(\Vh) + \log p(\Vv\vert\Vh) - \log q(\Vh\vert\Vv)]\\
-= & \SetE_{\RVh\sim q}\Big[\sum_{i=1}^{m}\log p(h_i) + \sum_{i=1}^{n} \log p(v_i\vert\Vh) - \sum_{i=1}^{m}\log q(h_i\vert\Vv)\Big]\\
+ = & \SetE_{\RVh\sim q}[\log p(\Vh) + \log p(\Vv\mid\Vh) - \log q(\Vh\mid\Vv)]\\
+= & \SetE_{\RVh\sim q}\Big[\sum_{i=1}^{m}\log p(h_i) + \sum_{i=1}^{n} \log p(v_i\mid\Vh) - \sum_{i=1}^{m}\log q(h_i\mid\Vv)\Big]\\
 = &  \sum_{i=1}^{m}\Big[\hat{h}_i(\log \sigma(b_i) - \log \hat{h}_i) + (1 - \hat{h}_i)(\log \sigma(-b_i) - \log (1-\hat{h}_i))\Big] \\
 & +  \SetE_{\RVh\sim q} \Bigg[ \sum_{i=1}^{n}\log \sqrt{\frac{\beta_i}{2\pi}}\exp(-\frac{\beta_i}{2}(v_i - \MW_{i,:}\Vh)^2)\Bigg] \\
 = &  \sum_{i=1}^{m}\Big[\hat{h}_i(\log \sigma(b_i) - \log \hat{h}_i) + (1 - \hat{h}_i)(\log \sigma(-b_i) - \log (1-\hat{h}_i))\Big] \\
@@ -509,7 +508,7 @@ $p(\Vh\vert\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 \end{align}
 % 635  
 
-为了应用固定点更新的推理规则，我们通过令方程~\eqref{eqn:1943}等于0来解$\hat{h}_i$：
+为了应用固定点更新的推断规则，我们通过令方程~\eqref{eqn:1943}等于0来解$\hat{h}_i$：
 
 \begin{align}
 \label{eqn:1944}
@@ -688,7 +687,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 
 
 当我们的\gls{graphical_models}包含了连续型隐含变量的时候，我们仍然可以通过最大化$\CalL$进行变分推断和学习。
-然而，我们需要使用\gls{calculus_of_variations}来实现关于$q(\Vh\vert\Vv)$最大化$\CalL$。
+然而，我们需要使用\gls{calculus_of_variations}来实现关于$q(\Vh\mid\Vv)$最大化$\CalL$。
 % 639 end  
 
 
@@ -698,17 +697,17 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 如果我们做了\gls{mean_field}的近似：
 \begin{align}
 \label{eqn:1955}
-	q(\Vh\vert\Vv) = \prod_i q(h_i \vert\Vv)
+	q(\Vh\mid\Vv) = \prod_i q(h_i \mid\Vv)
 \end{align}
-并且对任何的$j\neq i$固定了$q(h_j\vert\Vv)$，那么只需要满足$p$中任何联合分布中的变量不为0,我们就可以通过归一化下面这个未归一的分布
+并且对任何的$j\neq i$固定了$q(h_j\mid\Vv)$，那么只需要满足$p$中任何联合分布中的变量不为0,我们就可以通过归一化下面这个未归一的分布
 \begin{align}
 	\label{eqn:1956}
-	\tilde{q}(h_i \vert\Vv) = \exp
-	(\SetE_{h_{-i}\sim q(h_{-i}\vert\Vv)}
+	\tilde{q}(h_i \mid\Vv) = \exp
+	(\SetE_{h_{-i}\sim q(h_{-i}\mid\Vv)}
 	\log \tilde{p}(\Vv,\Vh))
 \end{align}
-来得到最优的$q(h_i\vert\Vv)$。
-在这个方程中计算期望就能得到一个$q(h_i\vert\Vv)$的正确表达式。
+来得到最优的$q(h_i\mid\Vv)$。
+在这个方程中计算期望就能得到一个$q(h_i\mid\Vv)$的正确表达式。
 我们只有在希望提出一种新形式的变分学习算法时才需要直接推导$q$的函数形式。
 方程~\eqref{eqn:1956}给出了适用于任何概率模型的\gls{mean_field}近似。
 % 640  
@@ -725,7 +724,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 
 % 640  
 我们拿一个简单的概率模型作为一个例子，其中隐含变量满足$\Vh\in\SetR^2$，可视的变量只有一个$v$。
-假设$p(\Vh) = \CalN(\Vh;0,\MI)$以及$p(v\vert\Vh) = \CalN(v;\Vw^{\top}\Vh;1)$，我们可以通过把$\Vh$积掉来简化这个模型，结果是关于$v$的高斯分布。
+假设$p(\Vh) = \CalN(\Vh;0,\MI)$以及$p(v\mid\Vh) = \CalN(v;\Vw^{\top}\Vh;1)$，我们可以通过把$\Vh$积掉来简化这个模型，结果是关于$v$的高斯分布。
 这个模型本身并不有趣。
 为了说明\gls{calculus_of_variations}如何应用在概率建模，我们构造了这个模型。
 
@@ -735,9 +734,9 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 忽略归一化常数的时候，真实的后验分布可以给出：
 \begin{align}
 	\label{eqn:1957}
-   & p(\Vh\vert\Vv)\\
+   & p(\Vh\mid\Vv)\\
  \propto & p(\Vh, \Vv)\\
- = & p(h_1) p(h_2) p(\Vv\vert\Vh)\\
+ = & p(h_1) p(h_2) p(\Vv\mid\Vh)\\
  \propto & \exp(-\frac{1}{2} [h_1^2 + h_2^2 + (v-h_1w_1 - h_2w_2)^2])\\
  = & \exp(-\frac{1}{2}[h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 - 2vh_2w_2 - 2vh_2w_2 + 2h_1w_1h_2w_2])
 \end{align}
@@ -749,26 +748,26 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 展开方程~\eqref{eqn:1956}，我们可以得到
 \begin{align}
 \label{eqn:1962}
-& \tilde{q}(h_1\vert\Vv)\\ = & \exp(\SetE_{\RSh_2\sim q(\RSh_2\vert\Vv)} \log \tilde{p}(\Vv,\Vh))\\
-= & \exp\Big( -\frac{1}{2} \SetE_{\RSh_2\sim q(\RSh_2\vert\Vv)} [h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 \\
+& \tilde{q}(h_1\mid\Vv)\\ = & \exp(\SetE_{\RSh_2\sim q(\RSh_2\mid\Vv)} \log \tilde{p}(\Vv,\Vh))\\
+= & \exp\Big( -\frac{1}{2} \SetE_{\RSh_2\sim q(\RSh_2\mid\Vv)} [h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 \\
 & -2vh_1w_1 - 2vh_2w_2 + 2h_1w_1h_2w_2]\Big)	
 \end{align}
 % 641 
 
 
 % 641 
-从这里，我们可以发现其中我们只需要从$q(h_2\vert \Vv)$中获得两个值：$\SetE_{\RSh_2\sim q(\RSh\vert\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\vert\Vv)}[h_2^2]$。
+从这里，我们可以发现其中我们只需要从$q(h_2\mid \Vv)$中获得两个值：$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2^2]$。
 把这两项记作$\langle h_2 \rangle$和$\langle h_2^2 \rangle$，我们可以得到：
 \begin{align}
 \label{eqn:1966}
-\tilde{q}(h_1\vert\Vv) = & \exp(-\frac{1}{2} [h_1^2 + \langle h_2^2 \rangle  + v^2 + h_1^2w_1^2 + \langle h_2^2 \rangle w_2^2 
+\tilde{q}(h_1\mid\Vv) = & \exp(-\frac{1}{2} [h_1^2 + \langle h_2^2 \rangle  + v^2 + h_1^2w_1^2 + \langle h_2^2 \rangle w_2^2 
 \\ &	-2vh_1w_1 - 2v\langle h_2 \rangle w_2 + 2h_1w_1\langle h_2 \rangle w_2])	
 \end{align}
 % 641 
 
 
 从这里，我们可以发现$\tilde{q}$形式满足高斯分布。
-因此，我们可以得到$q(\Vh\vert\Vv) = \CalN(\Vh;\Vmu,\Vbeta^{-1})$，其中$\Vmu$和对角的$\Vbeta$是变分参数，我们可以使用任何方法来优化它。
+因此，我们可以得到$q(\Vh\mid\Vv) = \CalN(\Vh;\Vmu,\Vbeta^{-1})$，其中$\Vmu$和对角的$\Vbeta$是变分参数，我们可以使用任何方法来优化它。
 有必要说明一下，我们并没有假设$q$是一个高斯分布，这个高斯是使用\gls{calculus_of_variations}来最大化$q$关于$\CalL$\footnote{此处似乎有笔误。}推导出的。
 在不同的模型上应用相同的方法可能会得到不同形式的$q$分布。
 % 641
@@ -784,12 +783,12 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 % 641 end  19.4.4  
 
 
-%使用近似推理作为学习算法的一部分影响学习过程，反过来这也影响推理算法的准确性。
-在学习算法中使用近似推理会影响学习的过程，反过来这也会影响推理算法的准确性。
+%使用近似推断作为学习算法的一部分影响学习过程，反过来这也影响推断算法的准确性。
+在学习算法中使用近似推断会影响学习的过程，反过来这也会影响推断算法的准确性。
 % 641 end
 
 
-具体来说，训练算法倾向于以使得近似推理算法中的近似假设变得更加真实的方向来适应模型。<bad>
+具体来说，训练算法倾向于以使得近似推断算法中的近似假设变得更加真实的方向来适应模型。<bad>
 当训练参数时，变分学习增加
 \begin{align}
 \label{eqn:1968}
@@ -797,11 +796,11 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 \end{align}
 % 642 
 
-对于一个特定的$\Vv$，对于$q(\Vh \vert \Vv)$中概率很大的$\Vh$它增加了$p(\Vh\vert\Vv)$，对于$q(\Vh \vert \Vv)$中概率很小的$\Vh$它减小了$p(\Vh\vert\Vv)$。
+对于一个特定的$\Vv$，对于$q(\Vh \mid \Vv)$中概率很大的$\Vh$它增加了$p(\Vh\mid\Vv)$，对于$q(\Vh \mid \Vv)$中概率很小的$\Vh$它减小了$p(\Vh\mid\Vv)$。
 % 642
 
 这种行为使得我们做的近似假设变得合理。 %这种行为使我们的近似假设成为自我实现。
-<bad> 如果我们用单峰值的模型近似后验分布，我们将获得一个真实后验的模型，该模型比我们通过使用精确推理训练模型获得的模型更接近单峰。
+<bad> 如果我们用单峰值的模型近似后验分布，我们将获得一个真实后验的模型，该模型比我们通过使用精确推断训练模型获得的模型更接近单峰。
 % 642
 
 
@@ -838,13 +837,13 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 \firstgls{wake_sleep}算法\citep{Hinton95,Frey96}通过从模型分布中抽取$\Vv$和$\Vh$样本来解决这个问题。
 例如，在\gls{directed_model}中，这可以通过执行从$\Vh$开始并在$\Vv$结束的\gls{ancestral_sampling}来高效地完成。
 然后推断网络可以被训练来执行反向的映射：预测哪一个$\Vh$产生了当前的$\Vv$。
-<bad>这种方法的主要缺点是我们将只能够训练推理网络在模型下具有高概率的v值。
-在学习早期，模型分布将不像数据分布，因此推理网络将不具有学习类似数据的样本的机会。
+<bad>这种方法的主要缺点是我们将只能够训练推断网络在模型下具有高概率的v值。
+在学习早期，模型分布将不像数据分布，因此推断网络将不具有学习类似数据的样本的机会。
 % 643
 
 
 <bad>在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中，我们看到睡眠在人类和动物中的作用的一个可能的解释是，梦想可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}的对数\gls{partition_function}的负梯度的负相位样本。
-生物作梦的另一个可能的解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推理网络在给定$\Vv$的情况下预测$\Vh$。
+生物作梦的另一个可能的解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推断网络在给定$\Vv$的情况下预测$\Vh$。
 在某些意义上，这种解释比\gls{partition_function}的解释更令人满意。
 如果\gls{monte_carlo}算法仅使用梯度的正相位进行几个步骤，然后仅对梯级的负相位进行几个步骤，那么他们的结果不会很好。
 人类和动物通常醒来连续几个小时，然后睡着连续几个小时。
@@ -864,24 +863,24 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 
 这种\gls{learned}近似推断策略已经被应用到了其它模型中。
 \citep{Salakhutdinov+Larochelle-2010}证明了在\gls{learned}推断网络中的单一路径相比于在\gls{DBM}中迭代\gls{mean_field}\gls{fixed_point_equation}能够得到更快的推断。
-训练过程基于运行推理网络，然后应用\gls{mean_field}的一步来改进其估计，并训练推理网络来输出这个精细的估计而不是其原始估计。
+训练过程基于运行推断网络，然后应用\gls{mean_field}的一步来改进其估计，并训练推断网络来输出这个精细的估计而不是其原始估计。
 % 644
 
 
 我们已经在\secref{sec:predictive_sparse_decomposition}中已经看到，预测性的稀疏分解模型训练浅层的\gls{encoder}网络以预测输入的\gls{sparse_coding}。
 这可以被看作是\gls{AE}和\gls{sparse_coding}之间的混合。
 为模型设计概率语义是可能的，其中\gls{encoder}可以被视为执行\gls{learned}近似\gls{MAP}推断。
-由于其浅层的\gls{encoder}，PSD不能实现我们在\gls{mean_field}推理中看到的单元之间的那种竞争。
-然而，该问题可以通过训练深度\gls{encoder}来执行\gls{learned}近似推理来补救，如ISTA技术\citep{Gregor+LeCun-ICML2010}。
+由于其浅层的\gls{encoder}，PSD不能实现我们在\gls{mean_field}推断中看到的单元之间的那种竞争。
+然而，该问题可以通过训练深度\gls{encoder}来执行\gls{learned}近似推断来补救，如ISTA技术\citep{Gregor+LeCun-ICML2010}。
 % 644
 
 
-近来\gls{learned}近似推理已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一\citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
+近来\gls{learned}近似推断已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一\citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
 在这种优美的方法中，不需要为推断网络构造显式的目标。
 反之，推断网络被用来定义$\CalL$，然后调整推断网络的参数来增大$\CalL$。这种模型在\secref{sec:variational_autoencoders}中详细描述。
 % 644
 
-我们可以使用近似推理来训练和使用大量的模型。
+我们可以使用近似推断来训练和使用大量的模型。
 许多模型将在下一章中被描述。
 % 644
 

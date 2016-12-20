@@ -20,6 +20,7 @@
 */figures
 *.sh
 *.glo
+*.ilg
 *.ist
 agreement.jpg
 dlbook_cn_public.tex
