@@ -433,7 +433,7 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
 为介绍\glssymbol{KKT}方法，我们引入一个称为\firstgls{generalized_lagrangian}或\firstgls{generalized_lagrange_function}的新函数。
 
 为了定义\ENNAME{Lagrangian}，我们先要通过等式和不等式的形式描述$\SetS$。 
-我们希望通过$m$个函数$g^{(i)}$和$n$个函数$h^{(j)}$描述$\SetS$，那么$\SetS$可以表示为$\SetS = \{ \Vx ~|~ \forall i, g^{(i)}(\Vx) = 0 ~\text{and}~ \forall j, h^{(j)}(\Vx) \leq 0  \}$。
+我们希望通过$m$个函数$g^{(i)}$和$n$个函数$h^{(j)}$描述$\SetS$，那么$\SetS$可以表示为$\SetS = \{ \Vx \mid \forall i, g^{(i)}(\Vx) = 0 ~\text{and}~ \forall j, h^{(j)}(\Vx) \leq 0  \}$。
 其中涉及$g^{(i)}$的等式称为\firstgls{equality_constraints}，涉及$h^{(j)}$的不等式称为\firstgls{inequality_constraints}。
 
 我们为每个约束引入新的变量$\lambda_i$和$\alpha_j$，这些新变量被称为\glssymbol{KKT}乘子。\gls{generalized_lagrangian}可以如下定义：

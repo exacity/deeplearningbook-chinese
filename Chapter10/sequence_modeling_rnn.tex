@@ -516,7 +516,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 % -- 381 --
 
 \glssymbol{RNN}可以接收向量序列$\Vx^{(t)}$作为输入，而不是仅接收单个向量$\Vx$作为输入。
-式\eqref{eq:108a}描述的\glssymbol{RNN}对应条件分布$P(\Vy^{(1)}, \dots, \Vy^{(\tau)} ~|~ \Vx^{(1)}, \dots, \Vx^{(\tau)})$，并在条件独立的假设下这个分布分解为
+式\eqref{eq:108a}描述的\glssymbol{RNN}对应条件分布$P(\Vy^{(1)}, \dots, \Vy^{(\tau)} \mid \Vx^{(1)}, \dots, \Vx^{(\tau)})$，并在条件独立的假设下这个分布分解为
 \begin{align}
  \prod_t P(\Vy^{(t)} \mid \Vx^{(1)}, \dots, \Vx^{(t)}).
 \end{align}
@@ -589,7 +589,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 \gls{encoder}输出上下文$C$（通常是最终隐藏状态的简单函数）。
 (2)\firstgls{decoder}或\textbf{写入器}(writer)或\textbf{输出}(output)\glssymbol{RNN}则以固定长度的向量（如\figref{fig:chap10_conditional_rnn}）为条件产生输出序列$\MY=(\Vy^{(1)}, \dots, \Vy^{(n_y)})$。
 这种架构对比本章前几节提出的架构的创新之处在于长度$n_x$和$n_y$可以彼此不同，而之前的架构约束$n_x = n_y = \tau$。
-在一个序列到序列的架构中，两个\glssymbol{RNN}共同训练以最大化$\log P( \Vy^{(1)}, \dots, \Vy^{(n_y)} ~|~ \Vx^{(1)},\dots,\Vx^{(n_x)} )$(关于训练集中所有$\Vx$和$\Vy$对的平均)。
+在一个序列到序列的架构中，两个\glssymbol{RNN}共同训练以最大化$\log P( \Vy^{(1)}, \dots, \Vy^{(n_y)} \mid \Vx^{(1)},\dots,\Vx^{(n_x)} )$(关于训练集中所有$\Vx$和$\Vy$对的平均)。
 \gls{encoder}\glssymbol{RNN}的最后一个状态$\Vh_{n_x}$通常被当作输入的表示$C$并作为\gls{decoder}\glssymbol{RNN}的输入。
 
 % -- 385 --
