@@ -73,3 +73,10 @@
  - @huangpingchun ==> "infinite" 翻译统一化
  - @JoyFYan ==> 错字"植"
  - @fairmiracle ==> 修正翻译"based on making small local moves"
+
+2016年12月18日
+--------------
+ - @bengordai ==> "until"和"address"的翻译；双引号
+
+2016年12月20日
+ - @zdx3578 ==> 错别字"如果"改成"如何"
