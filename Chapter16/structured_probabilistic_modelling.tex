@@ -240,7 +240,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 $\RVx$的概率分布可以表示为
 \begin{align}
 \label{eqn:161}
-p(\RVx) = \prod_{i} p(\RSx_i\mid P_{a\CalG}(\RSx_i))
+p(\RVx) = \prod_{i} p(\RSx_i\mid P_{a\CalG}(\RSx_i)).
 \end{align}
 % 555 
 
@@ -248,7 +248,7 @@ p(\RVx) = \prod_{i} p(\RSx_i\mid P_{a\CalG}(\RSx_i))
 在之前所述的接力赛的例子中，这意味着概率分布可以被表示为
 \begin{align}
 \label{eqn:162}
-p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1)
+p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \end{align}
 % 555 
 
@@ -258,12 +258,12 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1)
 % 555 
 
 
-假设我们采用从第0分钟到第10分钟每6秒一块的方式离散化的表示时间。
-这使得$\RSt_0$，$\RSt_1$和$\RSt_2$都是一个有100个取值可能的离散变量。
+假设我们采用从第$0$分钟到第$10$分钟每$6$秒一块的方式离散化的表示时间。
+这使得$\RSt_0$，$\RSt_1$和$\RSt_2$都是一个有$100$个取值可能的离散变量。
 如果我们尝试着用一个表来表示$(\RSt_0,\RSt_1,\RSt_2)$，那么我们需要存储$999,999$个值（$\RSt_0$的取值100 $\times$ $\RSt_1$的取值100 $\times$ $\RSt_2$的取值100 减去1，所有的概率的和为1，所以其中有1个值的存储是多余的）。
-反之，如果我们用一个表来记录条件概率分布，那么记录$\RSt_0$的分布需要存储99个值，给定$\RSt_0$情况下$\RSt_1$的分布需要存储9900个值，给定$\RSt_1$情况下$\RSt_2$的分布也需要存储9900个值。
+反之，如果我们用一个表来记录条件概率分布，那么记录$\RSt_0$的分布需要存储$99$个值，给定$\RSt_0$情况下$\RSt_1$的分布需要存储9900个值，给定$\RSt_1$情况下$\RSt_2$的分布也需要存储$9900$个值。
 加起来总共需要存储$19, 899$个值。
-这意味着使用\gls{directed_graphical_model}将需要存储的参数的个数减少了超过50倍！
+这意味着使用\gls{directed_graphical_model}将需要存储的参数的个数减少了超过$50$倍！
 % 555 
 
 
@@ -356,8 +356,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1)
 合在一起他们定义了\firstgls{unnormalized_probability_function}：
 \begin{align}
 \label{eqn:163}
-\tilde{p}(\RVx) = \prod_{\CalC\in\CalG} 
-\phi(\CalC)
+\tilde{p}(\RVx) = \prod_{\CalC\in\CalG} \phi(\CalC).
 \end{align}
 % 558 head
 
@@ -412,14 +411,14 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1)
 
 
 
-尽管这个\gls{unnormalized_probability_function}处处不为零，我们仍然无法保证它的概率之和或者积分为1。
+尽管这个\gls{unnormalized_probability_function}处处不为零，我们仍然无法保证它的概率之和或者积分为$1$。
 为了得到一个有效的概率分布，我们需要使用一个归一化的概率分布\footnote{一个通过归一化\gls{clique_potential}的乘积的分布通常被称作是\gls{gibbs_distribution}}：
 \begin{align}
-p(\RVx) = \frac{1}{Z}\tilde{p}(\RVx)
+p(\RVx) = \frac{1}{Z}\tilde{p}(\RVx),
 \end{align}
-其中，$Z$是使得所有的概率之和或者积分为1 的常数，并且满足：
+其中，$Z$是使得所有的概率之和或者积分为$1$的常数，并且满足：
 \begin{align}
-Z = \int \tilde{p}(\RVx)d\RVx
+Z = \int \tilde{p}(\RVx)d\RVx.
 \end{align}
 当函数$\phi$固定的时候，我们可以把$Z$当成是一个常数。
 值得注意的是如果函数$\phi$带有参数时，那么$Z$是这些参数的一个函数。
@@ -442,7 +441,7 @@ Z = \int \tilde{p}(\RVx)d\RVx
 比如说， 当我们需要对一个单独的标量变量$x\in\SetR$建模，并且这个包含一个点的\gls{clique_potential}定义为$\phi(x) = x^2$时。
 在这种情况下，
 \begin{align}
-Z = \int x^2 dx
+Z = \int x^2 dx.
 \end{align}
 由于这个积分是发散的，所以不存在一个对应着这个势能函数的概率分布。
 有时候$\phi$函数的某些参数的选择可以决定相应的概率分布能否存在。
@@ -475,14 +474,14 @@ Z = \int x^2 dx
 使这个条件满足的一种简单的方式是使用\firstgls{energy_based_model}，其中
 \begin{align}
 \label{eqn:167}
-\tilde{p}(\RVx) = \exp(-E(\RVx))
+\tilde{p}(\RVx) = \exp(-E(\RVx)).
 \end{align}
 $E(\RVx)$被称作是\firstgls{energy_function}。
-对所有的$\RSz$ $\exp(\RSz)$都是正的，这保证了没有一个\gls{energy_function}会使得某一个状态$\RVx$的概率为0。
+对所有的$\RSz$ $\exp(\RSz)$都是正的，这保证了没有一个\gls{energy_function}会使得某一个状态$\RVx$的概率为$0$。
 我们可以很自由的选择那些能够简化学习过程的\gls{energy_function}。
 如果我们直接学习各个\gls{clique_potential}，我们需要利用带约束的优化方法来指定一些特定的最小概率值。
 学习\gls{energy_function}的过程中，我们可以采用无约束的优化方法\footnote{对于某些模型，我们可以仍然使用带约束的优化方法来确保$Z$存在。}。
-\gls{energy_based_model}中的概率可以无限趋近于0但是永远达不到0。
+\gls{energy_based_model}中的概率可以无限趋近于$0$但是永远达不到$0$。
 % p 561  head
 
 
@@ -528,7 +527,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 对于具有隐含变量$\Vh$的\gls{energy_based_model}，这些算法有时会将该量的负数称为\firstgls{free_energy}：
 \begin{align}
 \label{eqn:168}
-\CalF (\Vx) = -\log \sum_{\Vh} \exp(-E(\Vx,\Vh))
+\CalF (\Vx) = -\log \sum_{\Vh} \exp(-E(\Vx,\Vh)).
 \end{align}
 在本书中，我们更倾向于更为通用的基于$\log \tilde{p}_{\text{model}}(\Vx)$的定义。
 % 562
@@ -642,7 +641,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 不需要表示存在的所有独立性的图。 
 进一步的，使用完全图（具有所有可能的边的图）来表示任何分布总是合法的。
 事实上，一些分布包含不可能用现有图形符号表示的独立性。
-特定环境下的独立（context-specific independences）指的是取决于网络中一些变量的值的独立性。
+\firstgls{context_specific_independence}指的是取决于网络中一些变量的值的独立性。
 例如，考虑一个三个二进制变量的模型：$\RSa，\RSb $和$\RSc$。
 假设当$\RSa$是0时，$\RSb$和$\RSc$是独立的， 但是当$\RSa$是1时，$\RSb$确定地等于$\RSc$。
 当$\RSa = 1$时\gls{graphical_models}需要连接$\RSb$和$\RSc$的边。
@@ -731,10 +730,10 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 同样的，\gls{undirected_model}可以包括\gls{directed_model}不能完美表示的子结构。
-具体来说，如果$\CalU$包含长度大于3的循环，则有向图$\CalD$不能捕获\gls{undirected_model}$\CalU$所包含的所有条件独立性，除非该循环还包含\gls{chord}。
+具体来说，如果$\CalU$包含长度大于$3$的循环，则有向图$\CalD$不能捕获\gls{undirected_model}$\CalU$所包含的所有条件独立性，除非该循环还包含\gls{chord}。
 \firstgls{loop}指的是由无向边连接的变量的序列，并且满足序列中的最后一个变量连接回序列中的第一个变量。
 \firstgls{chord}是定义环的序列中任意两个非连续变量之间的连接。
-如果$\CalU$具有长度为4或更大的环，并且这些环没有\gls{chord}，我们必须在将它们转换为\gls{directed_model}之前添加\gls{chord}。
+如果$\CalU$具有长度为$4$或更大的环，并且这些环没有\gls{chord}，我们必须在将它们转换为\gls{directed_model}之前添加\gls{chord}。
 添加这些\gls{chord}会丢弃了在$\CalU$中编码的一些独立信息。
 通过将\gls{chord}添加到$\CalU$形成的图被称为\firstgls{chordal_graph}或者\firstgls{triangulated_graph}，
 现在可以用更小的三角形环来描述所有的环。
