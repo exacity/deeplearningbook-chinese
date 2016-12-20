@@ -161,7 +161,18 @@
 \else
 \centerline{\includegraphics{Chapter7/figures/reg_l2}}
 \fi
-\caption{TODO}
+\caption{$L^2$（或\gls{weight_decay}）\gls{regularization}对最佳的$\Vw$值的影响。
+实线椭圆表示没有\gls{regularization}目标的等值线。
+虚线圆圈表示$L^2$正则化项的等值线。
+在$\tilde{\Vw}$点，这两个竞争目标达到平衡。
+目标函数$J$的\gls{hessian}的第一维特征值很小。
+当从$\Vw^*$水平移动时，\gls{objective_function}不会增加得太多。
+因为\gls{objective_function}对这个方向没有强烈的偏好，所以正则化项对该轴具有强烈的影响。
+正则化项将$w_1$拉向零。
+而\gls{objective_function}对沿着第二维远离$\Vw^*$的移动非常敏感。
+对应的特征值较大，表示高\gls{curvature}。
+因此，\gls{weight_decay}对$w_2$的位置影响相对较小。
+}
 \label{fig:chap7_reg_l2}
 \end{figure}
 
@@ -486,7 +497,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \subsection{向输出目标注入噪声}
 \label{sec:injecting_noise_at_the_output_targets}
 大多数数据集的$y$标签都有一定错误。
-当$y$是错误的，那对最大化$\log p(y | \Vx)$会是有害的。
+当$y$是错误的，那对最大化$\log p(y \mid \Vx)$会是有害的。
 为了防止这一点的一种方法是显式地对标签上的噪声进行建模。
 例如，我们可以假设，对于一些小常数$\epsilon$，训练集标记$y$是正确的概率是$1-\epsilon$，任何其他可能的标签可能是正确的。
 这个假设很容易就能解析地与\gls{cost_function}结合，而不用显式地采噪声样本。
@@ -502,7 +513,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 \section{半监督学习}
 \label{sec:semi_supervised_learning}
-在半监督学习的框架下，$P(\RVx)$产生的未标记样本和$P(\RVx, \RVy)$中的标记样本都用于估计$P(\RVy | \RVx)$或者根据$\RVx$预测$\RVy$。
+在半监督学习的框架下，$P(\RVx)$产生的未标记样本和$P(\RVx, \RVy)$中的标记样本都用于估计$P(\RVy \mid \RVx)$或者根据$\RVx$预测$\RVy$。
 
 在\gls{DL}的背景下，半监督学习通常指的是学习一个\gls{representation}$h = f(\Vx)$。 
 学习\gls{representation}的目标是使相同类中的\gls{example}有类似的表示。
@@ -511,12 +522,12 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 在新空间上的线性分类器在许多情况下可以达到较好的泛化\citep{Belkin+Niyogi-2002,Chapelle+al-2003}。
 这种方法的长期存在的一个变种是应用主成分分析作为分类前（在投影后的数据上分类）的预处理步骤。
 
-我们可以构建一个模型，其中生成模型$P(\RVx)$或$P(\RVx, \RVy)$与判别模型$P(\RVy | \RVx)$共享参数，而不用将无监督和监督部分分离。
-可以对监督\gls{criterion}$-\log P(\Vy | \Vx)$与无监督或生成的\gls{criterion}（如$-\log P(\Vx)$或$-\log P(\Vx, \Vy)$)进行权衡。
-生成模型\gls{criterion}表达了对监督学习问题解的特殊形式的先验知识\citep{LasserreJ2006}，即$P(\RVx)$的结构通过某种共享参数的方式连接到$P(\RVy | \RVx)$。
+我们可以构建一个模型，其中生成模型$P(\RVx)$或$P(\RVx, \RVy)$与判别模型$P(\RVy \mid \RVx)$共享参数，而不用将无监督和监督部分分离。
+可以对监督\gls{criterion}$-\log P(\Vy \mid \Vx)$与无监督或生成的\gls{criterion}（如$-\log P(\Vx)$或$-\log P(\Vx, \Vy)$)进行权衡。
+生成模型\gls{criterion}表达了对监督学习问题解的特殊形式的先验知识\citep{LasserreJ2006}，即$P(\RVx)$的结构通过某种共享参数的方式连接到$P(\RVy \mid \RVx)$。
 通过控制在总\gls{criterion}中的生成\gls{criterion}，我们可以找到比纯生成或纯判别训练\gls{criterion}更好的权衡\citep{LasserreJ2006,Larochelle2008}。
 
-\cite{Russ+Geoff-nips-2007}描述了一种学习回归内核机中内核函数的方法，其中建模的$P(\RVx)$时使用的未标记的样本大大提高了$P(\RVy | \RVx)$。
+\cite{Russ+Geoff-nips-2007}描述了一种学习回归内核机中内核函数的方法，其中建模的$P(\RVx)$时使用的未标记的样本大大提高了$P(\RVy \mid \RVx)$。
 
 更多半监督学习的信息，请参阅\cite{SSL-Book-2006}。
 
@@ -954,13 +965,13 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 在这种背景下，我们将这个过程称为\gls{inference}。
 目前为止，\gls{bagging}和\gls{dropout}的描述中没有要求模型具有明确的概率。
 现在，我们假定该模型的作用是输出一个概率分布。
-在\gls{bagging}的情况下，每个模型$i$产生一个概率分布$p^{(i)}(y | \Vx)$。 
+在\gls{bagging}的情况下，每个模型$i$产生一个概率分布$p^{(i)}(y \mid \Vx)$。 
 \gls{ensemble}的预测由这些分布的算术平均值给出，
 \begin{align}
  \frac{1}{k} \sum_{i=1}^k p^{(i)}(y \mid \Vx).
 \end{align}
 
-在\gls{dropout}的情况下，通过\gls{mask}$\Vmu$定义每个子模型的概率分布$p(y | \Vx, \Vmu)$。
+在\gls{dropout}的情况下，通过\gls{mask}$\Vmu$定义每个子模型的概率分布$p(y \mid \Vx, \Vmu)$。
 关于所有\gls{mask}的算术平均值由下式给出
 \begin{align}
   \sum_{u} p(\Vmu) p(y \mid \Vx, \Vmu),
@@ -1114,7 +1125,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 原则上，任何一种随机的修改都是可接受的。
 在实践中，我们必须选择能让\gls{NN}能够学习对抗的修改类型。
 理想情况下，我们也应该使用可以快速近似\gls{inference}的模型类。
-我们可以认为由向量$\Vmu$作为任何形式修改的参数，对于$\Vmu$所有可能的值训练$p(y ~|~ \Vx, \Vmu)$的\gls{ensemble}。
+我们可以认为由向量$\Vmu$作为任何形式修改的参数，对于$\Vmu$所有可能的值训练$p(y \mid \Vx, \Vmu)$的\gls{ensemble}。
 这里不要求$\Vmu$具有有限值。
 例如，$\Vmu$可以是实值。
 \cite{Srivastava14}表明，权重乘以$\Vmu \sim \CalN(1, \MI)$比基于二值\gls{mask} \gls{dropout}表现更好。
