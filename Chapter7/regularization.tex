@@ -3,7 +3,7 @@
 \chapter{\glsentrytext{DL}的正则化}
 \label{chap:regularization_for_deep_learning}
 \gls{ML}中的一个核心问题是设计不只在训练数据表现好，而且能在新输入上泛化的算法。
-在\gls{ML}中,许多策略被明确设计为以增大训练误差为代价来减少测试误差。
+在\gls{ML}中，许多策略被明确设计为以增大训练误差为代价来减少测试误差。
 这些策略统称为\gls{regularization}。
 正如我们会看到的，\gls{DL}工作者可以使用许多形式的\gls{regularization}。
 事实上，开发更有效的\gls{regularization}策略已成为本领域的主要研究工作之一。
@@ -20,12 +20,12 @@
 在\secref{sec:regularization}，我们将\gls{regularization}定义为``旨在减少学习算法的\gls{generalization}误差而不是训练误差的修改''。
 目前有许多\gls{regularization}策略。
 有些向\gls{ML}模型添加额外的约束，如增加对参数的限制。
-有些向\gls{objective_function}增加额外项,对应于参数值的软约束。
+有些向\gls{objective_function}增加额外项，对应于参数值的软约束。
 如果仔细选择，这些额外的约束和惩罚可以改善模型在测试集上的表现。
 有时，这些约束和惩罚设计为编码特定类型的先验知识。
 其他时候，这些约束和惩罚的目的是表达对简单模型的一般偏好，以便提高\gls{generalization}能力。
 有时候，惩罚和约束对于确定欠定的问题是必要的。
-其他形式的\gls{regularization},如\gls{ensemble}方法，结合多个假说来解释训练数据。
+其他形式的\gls{regularization}，如\gls{ensemble}方法，结合多个假说来解释训练数据。
 
 % -- 221 --
 
@@ -68,7 +68,7 @@
 在本节中，我们讨论各种范数惩罚模型参数时的影响。
 
 在探究不同范数的\gls{regularization}表现之前，我们需要提一下，在神经网络中我们通常只对每一层仿射变换的\emph{权重}做惩罚而不对\gls{bias_aff}做正则惩罚。
-通常使用比拟合权重更少的数据,就能精确拟合\gls{bias_aff}。
+通常使用比拟合权重更少的数据，就能精确拟合\gls{bias_aff}。
 每个权重指定两个变量如何相互作用。
 需要在各种条件下观察这两个变量才能拟合权重。
 而每个\gls{bias_aff}仅控制一个单变量。
@@ -113,7 +113,7 @@
 
 % -- 224 --
 
-我们进一步简化分析,令$\Vw^*$为没有\gls{regularization}的\gls{objective_function}取得最小训练误差的权重向量，即$\Vw^* = \argmin_{\Vw} J(\Vw)$， 并在$\Vw^*$的邻域作二次近似。
+我们进一步简化分析，令$\Vw^*$为没有\gls{regularization}的\gls{objective_function}取得最小训练误差的权重向量，即$\Vw^* = \argmin_{\Vw} J(\Vw)$， 并在$\Vw^*$的邻域作二次近似。
 如果\gls{objective_function}确实是二次的(如以均方误差拟合\gls{linear_regression}模型的情况下)，则该近似是完美的。
 近似的$\hat J(\Vtheta)$如下
 \begin{align}
@@ -139,7 +139,7 @@
  \tilde{\Vw} = (\MH + \alpha \MI)^{-1} \MH \Vw^* \label{eq:final_w}
  \end{align}
 
-当$\alpha$趋向于0, \gls{regularization}的解$\tilde{\Vw}$趋向$\Vw^*$。 
+当$\alpha$趋向于0， \gls{regularization}的解$\tilde{\Vw}$趋向$\Vw^*$。 
 那么当$\alpha$增加时会发生什么？
 因为$\MH$是实对称的，我们可以将其分解为一个对角矩阵$\VLambda$和一个正交特征向量$\MQ$，并且$\MH = \MQ \VLambda \MQ^\top$。
 将其应用于\eqnref{eq:final_w}，可得：
@@ -161,7 +161,18 @@
 \else
 \centerline{\includegraphics{Chapter7/figures/reg_l2}}
 \fi
-\caption{TODO}
+\caption{$L^2$（或\gls{weight_decay}）\gls{regularization}对最佳的$\Vw$值的影响。
+实线椭圆表示没有\gls{regularization}目标的等值线。
+虚线圆圈表示$L^2$正则化项的等值线。
+在$\tilde{\Vw}$点，这两个竞争目标达到平衡。
+目标函数$J$的\gls{hessian}的第一维特征值很小。
+当从$\Vw^*$水平移动时，\gls{objective_function}不会增加得太多。
+因为\gls{objective_function}对这个方向没有强烈的偏好，所以正则化项对该轴具有强烈的影响。
+正则化项将$w_1$拉向零。
+而\gls{objective_function}对沿着第二维远离$\Vw^*$的移动非常敏感。
+对应的特征值较大，表示高\gls{curvature}。
+因此，\gls{weight_decay}对$w_2$的位置影响相对较小。
+}
 \label{fig:chap7_reg_l2}
 \end{figure}
 
@@ -233,21 +244,21 @@ $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，还有其他的
  
 我们可以通过\gls{taylor}级数表示\gls{cost_function}是二次的简单\gls{linear_model}。
 或者我们可以设想，这是一个逼近更复杂模型的\gls{cost_function}的截断\gls{taylor}级数。
-在这个设定下,\gls{gradient}由下式给出
+在这个设定下，\gls{gradient}由下式给出
 \begin{align}
   \nabla_{\Vw} \hat{J}(\Vw) = \MH (\Vw - \Vw^*),
 \end{align}
 同样，$\MH$是$J$在$\Vw^*$处计算的\gls{hessian}矩阵(关于$\Vw$)。
 
 由于$L^1$惩罚项在满的、一般的\gls{hessian}的情况下，无法得到直接干净的代数表达式，因此我们将进一步简化假设\gls{hessian}是对角的，即$\MH = \text{diag}([H_{1,1},\dots, H_{n,n}])$，其中每个$H_{i,i}>0$。
-如果用于\gls{linear_regression}问题的数据已被预处理（如可以使用PCA）,去除了输入特征之间的相关性，那么这一假设成立。
+如果用于\gls{linear_regression}问题的数据已被预处理（如可以使用PCA），去除了输入特征之间的相关性，那么这一假设成立。
 
 我们可以将$L^1$\gls{regularization}目标函数的二次近似分解成一个关于参数的求和：
 \begin{align}
  \hat J(\Vw; \MX, \Vy) = J(\Vw^*; \MX, \Vy) + \sum_i \Bigg [\frac{1}{2} H_{i,i} (w_i - w_i^*)^2 
  + \alpha |w_i| \Bigg].  % I think this is correct
 \end{align}
-有解析解（对每一维$i$）可以最小化这个近似\gls{cost_function},如下列形式：
+有解析解（对每一维$i$）可以最小化这个近似\gls{cost_function}，如下列形式：
 \begin{align}
 w_i = \text{sign}(w_i^*) \max\Big\{ |w_i^*| - \frac{\alpha}{H_{i,i}} , 0\Big\} .
 \end{align}
@@ -486,7 +497,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \subsection{向输出目标注入噪声}
 \label{sec:injecting_noise_at_the_output_targets}
 大多数数据集的$y$标签都有一定错误。
-当$y$是错误的，那对最大化$\log p(y | \Vx)$会是有害的。
+当$y$是错误的，那对最大化$\log p(y \mid \Vx)$会是有害的。
 为了防止这一点的一种方法是显式地对标签上的噪声进行建模。
 例如，我们可以假设，对于一些小常数$\epsilon$，训练集标记$y$是正确的概率是$1-\epsilon$，任何其他可能的标签可能是正确的。
 这个假设很容易就能解析地与\gls{cost_function}结合，而不用显式地采噪声样本。
@@ -502,7 +513,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 \section{半监督学习}
 \label{sec:semi_supervised_learning}
-在半监督学习的框架下，$P(\RVx)$产生的未标记样本和$P(\RVx, \RVy)$中的标记样本都用于估计$P(\RVy | \RVx)$或者根据$\RVx$预测$\RVy$。
+在半监督学习的框架下，$P(\RVx)$产生的未标记样本和$P(\RVx, \RVy)$中的标记样本都用于估计$P(\RVy \mid \RVx)$或者根据$\RVx$预测$\RVy$。
 
 在\gls{DL}的背景下，半监督学习通常指的是学习一个\gls{representation}$h = f(\Vx)$。 
 学习\gls{representation}的目标是使相同类中的\gls{example}有类似的表示。
@@ -511,12 +522,12 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 在新空间上的线性分类器在许多情况下可以达到较好的泛化\citep{Belkin+Niyogi-2002,Chapelle+al-2003}。
 这种方法的长期存在的一个变种是应用主成分分析作为分类前（在投影后的数据上分类）的预处理步骤。
 
-我们可以构建一个模型，其中生成模型$P(\RVx)$或$P(\RVx, \RVy)$与判别模型$P(\RVy | \RVx)$共享参数，而不用将无监督和监督部分分离。
-可以对监督\gls{criterion}$-\log P(\Vy | \Vx)$与无监督或生成的\gls{criterion}（如$-\log P(\Vx)$或$-\log P(\Vx, \Vy)$)进行权衡。
-生成模型\gls{criterion}表达了对监督学习问题解的特殊形式的先验知识\citep{LasserreJ2006}，即$P(\RVx)$的结构通过某种共享参数的方式连接到$P(\RVy | \RVx)$。
+我们可以构建一个模型，其中生成模型$P(\RVx)$或$P(\RVx, \RVy)$与判别模型$P(\RVy \mid \RVx)$共享参数，而不用将无监督和监督部分分离。
+可以对监督\gls{criterion}$-\log P(\Vy \mid \Vx)$与无监督或生成的\gls{criterion}（如$-\log P(\Vx)$或$-\log P(\Vx, \Vy)$)进行权衡。
+生成模型\gls{criterion}表达了对监督学习问题解的特殊形式的先验知识\citep{LasserreJ2006}，即$P(\RVx)$的结构通过某种共享参数的方式连接到$P(\RVy \mid \RVx)$。
 通过控制在总\gls{criterion}中的生成\gls{criterion}，我们可以找到比纯生成或纯判别训练\gls{criterion}更好的权衡\citep{LasserreJ2006,Larochelle2008}。
 
-\cite{Russ+Geoff-nips-2007}描述了一种学习回归内核机中内核函数的方法，其中建模的$P(\RVx)$时使用的未标记的样本大大提高了$P(\RVy | \RVx)$。
+\cite{Russ+Geoff-nips-2007}描述了一种学习回归内核机中内核函数的方法，其中建模的$P(\RVx)$时使用的未标记的样本大大提高了$P(\RVy \mid \RVx)$。
 
 更多半监督学习的信息，请参阅\cite{SSL-Book-2006}。
 
@@ -643,7 +654,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \label{fig:chap7_reg_l1_vs_l2_mistake}
 \end{figure}
 
-事实上，在二次误差的简单\gls{linear_model}和简单的\gls{GD}情况下,我们可以展示\gls{early_stopping}相当于$L^2$\gls{regularization} 。
+事实上，在二次误差的简单\gls{linear_model}和简单的\gls{GD}情况下，我们可以展示\gls{early_stopping}相当于$L^2$\gls{regularization} 。
 
 为了与经典$L^2$\gls{regularization}比较，我们考察唯一的参数是线性权重（$\Vtheta = \Vw$）的简单设定。
 我们在权重$\Vw$的经验最佳值$\Vw^*$附近以二次近似建模\gls{cost_function} $J$：
@@ -660,7 +671,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 % -- 243 --
 
 我们要研究训练时参数向量的轨迹。
-为简化起见，我们参数向量初始化为原点\footnote{对于\gls{NN},我们需要打破\gls{hidden_unit}间的对称平衡因此不能将所有参数都初始化为$\mathbf{0}$（如\secref{sec:gradient_based_learning}所讨论的）。
+为简化起见，我们参数向量初始化为原点\footnote{对于\gls{NN}，我们需要打破\gls{hidden_unit}间的对称平衡因此不能将所有参数都初始化为$\mathbf{0}$（如\secref{sec:gradient_based_learning}所讨论的）。
 然而，对于其他任何初始值$\Vw_{(0)}$该论证都成立}，也就是$\Vw^{(0)} = 0$。
 我们通过分析$\hat{J}$的\gls{GD}研究$J$上近似的\gls{GD}行为：
 \begin{align}
@@ -677,13 +688,13 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \begin{align} \label{eq:740qw}
 \MQ^\top  \Vw^{(\tau)} = [\MI - (\MI - \epsilon \VLambda)^\tau] \MQ^\top  \Vw^* .
 \end{align}
-现在,\eqnref{eq:713L2}中$\MQ^\top \tilde \Vw$的表达式能被重写为：
+现在，\eqnref{eq:713L2}中$\MQ^\top \tilde \Vw$的表达式能被重写为：
 \begin{align}
 \MQ^\top  \tilde \Vw &= (\VLambda + \alpha \MI)^{-1} \VLambda \MQ^\top  \Vw^*, \\
 \MQ^\top  \tilde \Vw &= [\MI - (\VLambda + \alpha \MI)^{-1} \alpha] \MQ^\top  \Vw^*. 
 \label{eq:742qw}
 \end{align}
-比较\eqnref{eq:740qw}和\eqnref{eq:742qw}，我们能够发现,如果超参数$\epsilon, \alpha$和$\tau$满足如下：
+比较\eqnref{eq:740qw}和\eqnref{eq:742qw}，我们能够发现，如果超参数$\epsilon,\alpha$和$\tau$满足如下：
 \begin{align}
 (\MI - \epsilon \VLambda)^\tau =  (\VLambda + \alpha \MI)^{-1} \alpha,
 \end{align}\
@@ -886,7 +897,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 
 不是所有构建\gls{ensemble}的技术都是为了让\gls{ensemble}模型比单一模型更加\gls{regularization}。
 例如，一种被称为\firstgls{boosting}的技术\citep{ConfLT:Freund:gametheorie,ConfML:Freund:AdaBoostCompar}构建比单一模型容量更高\gls{ensemble}模型。
-向\gls{ensemble}逐步添加\gls{NN},\gls{boosting}已经应用于构建神经网络的\gls{ensemble}\citep{Schwenk-nips10}。
+向\gls{ensemble}逐步添加\gls{NN}，\gls{boosting}已经应用于构建神经网络的\gls{ensemble}\citep{Schwenk-nips10}。
 \gls{boosting}也可以将单个神经网络解释为单个\gls{ensemble}，即通过逐渐增加\gls{NN}的\gls{hidden_unit}。
 
 \section{\glsentrytext{dropout}}
@@ -896,8 +907,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 \gls{bagging}涉及训练多个模型，并在每个测试样本上评估多个模型。
 当每个模型是一个大型\gls{NN}时，这似乎是不切实际的，因为训练和评估这样的网络需要花费很多运行时间和内存。
 通常\gls{ensemble}五至十个神经网络，如\cite{Szegedy-et-al-arxiv2014}用六个赢得ILSVRC，超过这个数量就会迅速变得难处理。
-\gls{dropout}提供了一种廉价的\gls{bagging}\gls{ensemble}近似,
-能够训练和评估指数级的\gls{NN}。
+\gls{dropout}提供了一种廉价的\gls{bagging}\gls{ensemble}近似，能够训练和评估指数级的\gls{NN}。
 
 具体而言，\gls{dropout}训练的\gls{ensemble}包括所有从基本的基础网络除去非输出单元形成子网络，如在\figref{fig:chap7_subnetworks}所示。
 最先进的\gls{NN}基于一系列仿射变换和非线性变换，我们可以将一些单元的输出乘零以有效地删除一个单元。
@@ -952,16 +962,16 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 例如，每个子网络中遇到的训练集确实是有替换采样的原始训练集的一个子集。
 
 \gls{bagging}\gls{ensemble}必须从所有成员的积累投票做一个预测。
-在这种背景下,我们将这个过程称为\gls{inference}。
+在这种背景下，我们将这个过程称为\gls{inference}。
 目前为止，\gls{bagging}和\gls{dropout}的描述中没有要求模型具有明确的概率。
 现在，我们假定该模型的作用是输出一个概率分布。
-在\gls{bagging}的情况下，每个模型$i$产生一个概率分布$p^{(i)}(y | \Vx)$。 
+在\gls{bagging}的情况下，每个模型$i$产生一个概率分布$p^{(i)}(y \mid \Vx)$。 
 \gls{ensemble}的预测由这些分布的算术平均值给出，
 \begin{align}
  \frac{1}{k} \sum_{i=1}^k p^{(i)}(y \mid \Vx).
 \end{align}
 
-在\gls{dropout}的情况下，通过\gls{mask}$\Vmu$定义每个子模型的概率分布$p(y | \Vx, \Vmu)$。
+在\gls{dropout}的情况下，通过\gls{mask}$\Vmu$定义每个子模型的概率分布$p(y \mid \Vx, \Vmu)$。
 关于所有\gls{mask}的算术平均值由下式给出
 \begin{align}
   \sum_{u} p(\Vmu) p(y \mid \Vx, \Vmu),
@@ -1115,7 +1125,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 原则上，任何一种随机的修改都是可接受的。
 在实践中，我们必须选择能让\gls{NN}能够学习对抗的修改类型。
 理想情况下，我们也应该使用可以快速近似\gls{inference}的模型类。
-我们可以认为由向量$\Vmu$作为任何形式修改的参数，对于$\Vmu$所有可能的值训练$p(y ~|~ \Vx, \Vmu)$的\gls{ensemble}。
+我们可以认为由向量$\Vmu$作为任何形式修改的参数，对于$\Vmu$所有可能的值训练$p(y \mid \Vx, \Vmu)$的\gls{ensemble}。
 这里不要求$\Vmu$具有有限值。
 例如，$\Vmu$可以是实值。
 \cite{Srivastava14}表明，权重乘以$\Vmu \sim \CalN(1, \MI)$比基于二值\gls{mask} \gls{dropout}表现更好。
@@ -1222,7 +1232,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 \begin{align} \label{eq:767}
  \Omega(f) = \sum_i \Big((\nabla_{\Vx} f(\Vx)^\top \Vv^{(i)}) \Big)^2 .
 \end{align}
-这个\gls{regularization}项当然可以通过适当的超参数缩放，并且对于大多数\gls{NN}，我们将需要对许多输出求和(此处为描述简单,$f(\Vx)$为唯一输出)。
+这个\gls{regularization}项当然可以通过适当的超参数缩放，并且对于大多数\gls{NN}，我们将需要对许多输出求和(此处为描述简单，$f(\Vx)$为唯一输出)。
 与\gls{tangent_distance}算法一样,切向量推导先验，通常是从变换，如平移、旋转和缩放图像的效果获得形式知识。
 \gls{tangent_prop}不仅用于监督学习\citep{Simard92-short}，还在强化学习\citep{Thrun-NIPS1994}中有所应用。
 \begin{figure}[!htb]
