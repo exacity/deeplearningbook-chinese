@@ -58,7 +58,7 @@
 这个\glssymbol{ELBO}是这样定义的：
 
 \begin{align}
-\CalL(\Vv,{\Vtheta},q) = \log p(\Vv;{\Vtheta}) - D_{\text{KL}}(q(\Vh\mid\Vv) \Vert p(\Vh\mid\Vv;{\Vtheta}))
+\CalL(\Vv,{\Vtheta},q) = \log p(\Vv;{\Vtheta}) - D_{\text{KL}}(q(\Vh\mid\Vv) \Vert p(\Vh\mid\Vv;{\Vtheta})).
 \end{align}
 在这里 $q$是关于$\Vh$的一个任意的概率分布。
 % 625
@@ -78,14 +78,14 @@
 = & \log p(\Vv;{\Vtheta}) - \SetE_{\RVh\sim q}\log \frac{q(\Vh\mid\Vv)}{p(\Vh\mid\Vv)} \\
 = & \log p(\Vv;{\Vtheta}) -  \SetE_{\RVh\sim q} \log \frac{q(\Vh\mid\Vv) }{ \frac{p(\Vh,\Vv;{\Vtheta})}{p(\Vv; {\Vtheta})} } \\
 = & \log p(\Vv; {\Vtheta}) -  \SetE_{\RVh\sim q} [\log q(\Vh\mid\Vv) - \log {p(\Vh,\Vv; {\Vtheta})} + \log {p(\Vv; {\Vtheta})} ]\\
-= & - \SetE_{\RVh\sim q}[\log q(\Vh\mid\Vv) - \log {p(\Vh,\Vv;{\Vtheta})}]
+= & - \SetE_{\RVh\sim q}[\log q(\Vh\mid\Vv) - \log {p(\Vh,\Vv;{\Vtheta})}].
 \end{align}
 % 625
 
 
 这也给出了\glssymbol{ELBO}的标准的定义：
 \begin{align}
-\CalL(\Vv,{\Vtheta},q) = \SetE_{\RVh\sim q}[\log p(\Vh , \Vv)] + H(q)
+\CalL(\Vv,{\Vtheta},q) = \SetE_{\RVh\sim q}[\log p(\Vh , \Vv)] + H(q).
 \end{align}
 
 
@@ -128,7 +128,7 @@
 	如果我们改变$\Vtheta$，那么$p(\Vh\mid\Vv;\Vtheta)$将会相应的变化，但是$q(\Vh\mid\Vv)$还是不变并且等于$p(\Vh\mid\Vv;\Vtheta^{(0)})$。
 	\item \firstgls{m_step}：使用选择的优化算法完全地或者部分的最大化关于$\Vtheta$的
 	\begin{align}
-	\sum_i \CalL(\Vv^{(i)},\Vtheta,q)
+	\sum_i \CalL(\Vv^{(i)},\Vtheta,q).
 	\end{align}
 \end{itemize}
 % 626  
@@ -148,7 +148,7 @@
 即使\gls{e_step}采用的是精确推断，我们仍然可以将\glssymbol{EM}算法视作是某种程度上的近似推断。
 具体地说，\gls{m_step}假设了一个$q$分布可以被所有的$\Vtheta$分享。
 当\gls{m_step}越来越远离\gls{e_step}中的$\Vtheta^{(0)}$的时候，这将会导致$\CalL$和真实的$\log p(\Vv)$的差距。
-此外，当下一个循环的时候，\gls{e_step}把这种差距又降到了0。
+此外，当下一个循环的时候，\gls{e_step}把这种差距又降到了$0$。
 % 627 head
 
 
@@ -175,7 +175,7 @@
 在推断中另一个选择是计算一个最有可能的隐含变量的值来代替在其完整分布上的抽样。
 在隐含变量模型中，这意味着计算
 \begin{align}
-\Vh^* = \underset{\Vh}{\arg\max} \ \  p(\Vh\mid\Vv)
+\Vh^* = \underset{\Vh}{\arg\max} \ \  p(\Vh\mid\Vv).
 \end{align}
 这被称作是\firstall{MAP}推断。
 % 627  
@@ -197,16 +197,16 @@
 我们通过限定$q$分布属于某个分布族，能够使得\gls{MAP}推断成为一种形式的近似推断。
 具体的说，我们令$q$分布满足一个\gls{dirac_distribution}：
 \begin{align}
-q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu})
+q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 \end{align}
 这也意味着我们可以通过$\Vmu$来完全控制$q$。
 通过将$\CalL$中不随$\Vmu$变化的项丢弃，剩下的我们遇到的是一个优化问题：
 \begin{align}
-\Vmu^*  =  \underset{\Vmu}{\arg\max}\ \log p(\Vh = \Vmu,\Vv)
+\Vmu^*  =  \underset{\Vmu}{\arg\max}\ \log p(\Vh = \Vmu,\Vv).
 \end{align}
 这等价于\gls{MAP}推断问题
 \begin{align}
-\Vh^* = \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vv)
+\Vh^* = \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vv).
 \end{align}
 % 628
 
@@ -230,11 +230,11 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu})
 我们回过头来看\secref{sec:sparse_coding}中的\gls{sparse_coding}，\gls{sparse_coding}是一种在隐含节点上加上了鼓励稀疏的先验知识的\gls{linear_factor}。
 一个常用的选择是可分解的拉普拉斯先验，表示为
 \begin{align}
-	p(h_i) = \frac{\lambda}{2} \exp(-\lambda\mid h_i\mid)
+	p(h_i) = \frac{\lambda}{2} \exp(-\lambda\mid h_i\mid).
 \end{align}
 可见的节点是由一个线性变化加上噪音生成的\footnote{此处似乎有笔误，$\Vx$应为$\Vv$}:
 \begin{align}
-	p(\Vx\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI})
+	p(\Vx\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 \end{align}
 % 628 end
 
@@ -259,7 +259,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 如果我们将训练集中的所有的$\Vh$向量拼在一起并且记为$\MH$，并将所有的$\Vv$向量拼起来组成矩阵$\MV$，那么\gls{sparse_coding}问题意味着最小化
 \begin{align}
-	J(\MH,\MW) = \sum_{i,j}^{}\vert H_{i,j}\vert + \sum_{i,j}^{}\Big(\MV - \MH \MW^{\top}\Big)^2_{i,j}
+	J(\MH,\MW) = \sum_{i,j}^{}\vert H_{i,j}\vert + \sum_{i,j}^{}\Big(\MV - \MH \MW^{\top}\Big)^2_{i,j}.
 \end{align}
 为了避免如极端小的$\MH$和极端大的$\MW$这样的病态的解，许多\gls{sparse_coding}的应用包含了权值衰减或者$\MH$的列的范数的限制。
 % 629
@@ -295,7 +295,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 一种常用的变分学习的方法是加入一些限制使得$q$是一个可以分解的分布：
 \begin{align}
-	q(\Vh\mid\Vv) = \prod_{i}^{}q(h_i \mid \Vv)
+	q(\Vh\mid\Vv) = \prod_{i}^{}q(h_i \mid \Vv).
 \end{align}
 这被叫做是\firstgls{mean_field}方法。
 一般来说，我们可以通过选择$q$分布的形式来选择任何\gls{graphical_models}的结构，通过选择变量之间的相互作用来决定近似程度的大小。
@@ -351,7 +351,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 这些算法通常能够在极少的循环内解决一些小而简单的问题。
 一个常见的选择是使用\gls{fixed_point_equation}，换句话说，就是对$\hat{h}_i$解决
 \begin{align}
-	\frac{\partial}{\partial \hat{h}_i}\CalL = 0
+	\frac{\partial}{\partial \hat{h}_i}\CalL = 0.
 \end{align}
 我们反复的更新$\hat{\Vh}$不同的元素直到收敛条件满足。
 % 631
@@ -368,10 +368,10 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 在\gls{binary_sparse_coding}模型中，输入$\Vv\in\SetR^n$，是由模型通过添加高斯噪音到$m$个或有或无的成分。
 每一个成分可以是开或者关的通过对应的隐藏层节点$\Vh \in\{0,1\}^m$:
 \begin{align}
-	p(h_i = 1) = \sigma(b_i)
+	p(h_i = 1) = \sigma(b_i),
 \end{align}
 \begin{align}
-	p(\Vv\mid\Vh) = \CalN(\Vv;\MW \Vh,{\Vbeta}^{-1})
+	p(\Vv\mid\Vh) = \CalN(\Vv;\MW \Vh,{\Vbeta}^{-1}),
 \end{align}
 其中$\Vb$是一个可以学习的偏置向量\footnote{此处似乎有笔误，公式里面漏了$\Vb$?}，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角的精度矩阵。
 % 632
@@ -386,7 +386,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 		= &  \frac{\frac{\partial}{\partial b_i} \sum_{\Vh}^{} p(\Vh) p(\Vv\mid \Vh)  }{p(\Vv)}\\
 		= &  \frac{ \sum_{\Vh}^{}  p(\Vv\mid \Vh) \frac{\partial}{\partial b_i} p(\Vh) }{p(\Vv)}\\
 		= &  \sum_{\Vh}^{}  p(\Vh\mid \Vv) \frac{  \frac{\partial}{\partial b_i} p(\Vh) }{p(\Vh)}\\
-		= & \SetE_{\RVh\sim p(\Vh\mid\Vv)} \frac{\partial}{\partial b_i}\log p(\Vh)
+		= & \SetE_{\RVh\sim p(\Vh\mid\Vv)} \frac{\partial}{\partial b_i}\log p(\Vh).
 \end{align}
 % 632 end
 
@@ -415,7 +415,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 
 我们可以做一个\gls{mean_field}的假设：
 \begin{align}
-	q(\Vh\mid\Vv) = \prod_{i}^{}q(h_i\mid\Vv)
+	q(\Vh\mid\Vv) = \prod_{i}^{}q(h_i\mid\Vv).
 \end{align}
 % 633
 
@@ -426,8 +426,8 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 % 633 
 
 
-我们将会看到变分推断方程理论上永远不会赋予$\hat{h}_i\ $ 0或者1。
-然而在软件实现过程中，机器的舍入误差会导致0或者1的值。
+我们将会看到变分推断方程理论上永远不会赋予$\hat{h}_i\ $ $0$或者$1$。
+然而在软件实现过程中，机器的舍入误差会导致$0$或者$1$的值。
 在\gls{binary_sparse_coding}的实现中，我们希望使用一个没有限制的变分参数向量$\Vz$以及
 通过关系$\hat{\Vh} = \sigma(\Vz)$来获得$\Vh$。
 因此我们可以放心的在计算机上计算$\log \hat{h}_i$通过使用关系式$\log \sigma(z_i) = -\zeta(-z_i)$来建立sigmoid和softplus的关系。
@@ -448,7 +448,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 = &  \sum_{i=1}^{m}\Big[\hat{h}_i(\log \sigma(b_i) - \log \hat{h}_i) + (1 - \hat{h}_i)(\log \sigma(-b_i) - \log (1-\hat{h}_i))\Big] \\
 & +  \SetE_{\RVh\sim q} \Bigg[ \sum_{i=1}^{n}\log \sqrt{\frac{\beta_i}{2\pi}}\exp(-\frac{\beta_i}{2}(v_i - \MW_{i,:}\Vh)^2)\Bigg] \\
 = &  \sum_{i=1}^{m}\Big[\hat{h}_i(\log \sigma(b_i) - \log \hat{h}_i) + (1 - \hat{h}_i)(\log \sigma(-b_i) - \log (1-\hat{h}_i))\Big] \\
-& + \frac{1}{2} \sum_{i=1}^{n} \Bigg[ \log {\frac{\beta_i}{2\pi}} - \beta_i \Bigg(v_i^2 - 2 v_i \MW_{i,:}\hat{\Vh} + \sum_{j}\Big[W^2_{i,j}\hat{h}_j + \sum_{k \neq j}W_{i,j}W_{i,k}\hat{h}_j\hat{h}_k \Big] \Bigg) \Bigg] 
+& + \frac{1}{2} \sum_{i=1}^{n} \Bigg[ \log {\frac{\beta_i}{2\pi}} - \beta_i \Bigg(v_i^2 - 2 v_i \MW_{i,:}\hat{\Vh} + \sum_{j}\Big[W^2_{i,j}\hat{h}_j + \sum_{k \neq j}W_{i,j}W_{i,k}\hat{h}_j\hat{h}_k \Big] \Bigg) \Bigg]. 
 \end{align}
 % 634 head 
 
@@ -481,7 +481,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 然而，我们可以解决单个变量的问题：
 \begin{align}
 \label{eqn:1937}
-\frac{\partial}{\partial \hat{h}_i} \CalL(\Vv,\Vtheta,\hat{\Vh}) = 0 
+\frac{\partial}{\partial \hat{h}_i} \CalL(\Vv,\Vtheta,\hat{\Vh}) = 0 .
 \end{align}
 % 634 end  
 
@@ -504,15 +504,15 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 & + \frac{1}{2} \sum_{j=1}^{n} \Bigg[ \log {\frac{\beta_j}{2\pi}} - \beta_j \Bigg(v_j^2 - 2 v_j \MW_{j,:}\hat{\Vh} + \sum_{k}\Bigg[W^2_{j,k}\hat{h}_k + \sum_{l \neq k}W_{j,k}W_{j,l}\hat{h}_k\hat{h}_l \Bigg] \Bigg) \Bigg]\Bigg] \\
 = & \log \sigma(b_i) - \log \hat{h}_i - 1 + \log (1 - \hat{h}_i ) + 1 - \log \sigma (- b_i ) \\
  & + \sum_{j=1}^{n} \Bigg[\beta_j \Bigg(v_j W_{j,i} - \frac{1}{2} W_{j,i}^2 - \sum_{k \neq i} \MW_{j,k}\MW_{j,i} \hat{h}_k\Bigg) \Bigg]\\
- = & b_i - \log \hat{h}_i + \log (1 - \hat{h}_i ) + \Vv^{\top} {\Vbeta} \MW_{:,i} - \frac{1}{2} \MW_{:,i}^{\top} {\Vbeta}\MW_{:,i} -\sum_{j\neq i}\MW^{\top}_{:,j}{\Vbeta}\MW_{:,i}\hat{h}_j 
+ = & b_i - \log \hat{h}_i + \log (1 - \hat{h}_i ) + \Vv^{\top} {\Vbeta} \MW_{:,i} - \frac{1}{2} \MW_{:,i}^{\top} {\Vbeta}\MW_{:,i} -\sum_{j\neq i}\MW^{\top}_{:,j}{\Vbeta}\MW_{:,i}\hat{h}_j.
 \end{align}
 % 635  
 
-为了应用固定点更新的推断规则，我们通过令方程~\eqref{eqn:1943}等于0来解$\hat{h}_i$：
+为了应用固定点更新的推断规则，我们通过令方程~\eqref{eqn:1943}等于$0$来解$\hat{h}_i$：
 
 \begin{align}
 \label{eqn:1944}
-\hat{h}_i = \sigma\Bigg(b_i + \Vv^{\top} {\Vbeta} \MW_{:,i} - \frac{1}{2} \MW_{:,i}^{\top} {\Vbeta} \MW_{:,i} - \sum_{j \neq i }  \MW_{:,j}^{\top} {\Vbeta}  \MW_{:,i} \hat{h}_j \Bigg)
+\hat{h}_i = \sigma\Bigg(b_i + \Vv^{\top} {\Vbeta} \MW_{:,i} - \frac{1}{2} \MW_{:,i}^{\top} {\Vbeta} \MW_{:,i} - \sum_{j \neq i }  \MW_{:,j}^{\top} {\Vbeta}  \MW_{:,i} \hat{h}_j \Bigg).
 \end{align}
 % 635 end
 
@@ -539,7 +539,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 
 我们将方程~\eqref{eqn:1944}重写成等价的形式来揭示一些深层的含义：
 \begin{align}
-\hat{h}_i = \sigma\Bigg(b_i + \Big(\Vv - \sum_{j\neq i} \MW_{:,j}\hat{h}_j\Big)^{\top} {\Vbeta}\MW_{:,i} - \frac{1}{2} \MW_{:,i}^{\top} {\Vbeta} \MW_{:,i}\Bigg) 
+\hat{h}_i = \sigma\Bigg(b_i + \Big(\Vv - \sum_{j\neq i} \MW_{:,j}\hat{h}_j\Big)^{\top} {\Vbeta}\MW_{:,i} - \frac{1}{2} \MW_{:,i}^{\top} {\Vbeta} \MW_{:,i}\Bigg). 
 \end{align}
 在这种新的形式中，我们可以将每一步的输入看成$\Vv - \sum_{j\neq i} \MW_{:,j}\hat{h}_j$而不是$\Vv$。
 因此，我们可以把第$i$个单元视作给定其它单元的编码时编码$\Vv$中的剩余误差。
@@ -586,13 +586,12 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 完整正式的\gls{functional_derivative}的推导不在本书的范围之内。
 为了满足我们的目标，讲述可微分函数$f(\Vx)$以及带有连续导数的可微分函数$g(y,\Vx)$就足够了：
 \begin{align}
-	\frac{\delta}{\delta f(\Vx)} \int g(f(\Vx),\Vx)d\Vx = \frac{\partial}{\partial y}g(f(\Vx),\Vx)
+	\frac{\delta}{\delta f(\Vx)} \int g(f(\Vx),\Vx)d\Vx = \frac{\partial}{\partial y}g(f(\Vx),\Vx).
 \end{align}
 为了使上述的关系式更加的形象，我们可以把$f(\Vx)$看做是一个有着无穷多元素的向量。
 在这里（看做是一个不完全的介绍），这种关系式中描述的\gls{functional_derivative}和向量$\Vtheta\in\SetR^n$的导数相同：
 \begin{align}
-	\frac{\partial}{\partial \theta_i}\sum_{j}^{}g(\theta_j,j)
-	= \frac{\partial}{\partial \theta_i}g(\theta_i,i)
+	\frac{\partial}{\partial \theta_i}\sum_{j}^{}g(\theta_j,j) = \frac{\partial}{\partial \theta_i}g(\theta_i,i).
 \end{align}
 在其他\gls{ML}的文献中的许多结果是利用了更为通用的\firstgls{euler_lagrange_eqn}，
 它能够使得$g$不仅依赖于$f$的导数而且也依赖于$f$的值。
@@ -608,11 +607,11 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 下面讲一个这个过程是如何工作的，我们考虑寻找一个定义在$x\in\SetR$的有最大微分熵的概率密度函数。
 我们回过头来看一下一个概率分布$p(x)$的熵，定义如下：
 \begin{align}
-	H[p] = - \SetE_x \log p(x)
+	H[p] = - \SetE_x \log p(x).
 \end{align}
 对于连续的值，这个期望可以看成是一个积分：
 \begin{align}
-	H[p] = - \int p(x) \log p(x) dx
+	H[p] = - \int p(x) \log p(x) dx.
 \end{align}
 % p 638
 
@@ -628,7 +627,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 \begin{align}
 \label{eqn:1950}
 &		\CalL[p] =  \lambda_1 \Big(\int p(x)dx - 1\Big)  + \lambda_2 (\SetE[x] - \mu) +  \lambda_3 (\SetE[(x-\mu)^2] - \sigma^2)  + H[p]\\
-& =  \int \Big(\lambda_1 p(x) + \lambda_2 p(x)x + \lambda_3 p(x)(x-\mu)^2 - p(x)\log p(x) \Big)dx - \lambda_1 - \mu \lambda_2 - \sigma^2\lambda_3
+& =  \int \Big(\lambda_1 p(x) + \lambda_2 p(x)x + \lambda_3 p(x)(x-\mu)^2 - p(x)\log p(x) \Big)dx - \lambda_1 - \mu \lambda_2 - \sigma^2\lambda_3.
 \end{align}
 % p 638   
 
@@ -636,7 +635,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 为了关于$p$最小化拉格朗日乘子，我们令\gls{functional_derivative}等于0：
 \begin{align}
 \label{eqn:1952}
-	\forall x,\ \  \frac{\delta}{\delta p(x)} \CalL = \lambda_1 + \lambda_2 x + \lambda_3(x-\mu)^2 - 1 - \log p(x) = 0 
+	\forall x,\ \  \frac{\delta}{\delta p(x)} \CalL = \lambda_1 + \lambda_2 x + \lambda_3(x-\mu)^2 - 1 - \log p(x) = 0 .
 \end{align}
 % p 638  end 
 
@@ -645,18 +644,18 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 通过代数运算重组上述方程，我们可以得到
 \begin{align}
 \label{eqn:1953}
-	p(x) = \exp\big(\lambda_1 + \lambda_2 x + \lambda_3 (x-\mu)^2  - 1\big)
+	p(x) = \exp\big(\lambda_1 + \lambda_2 x + \lambda_3 (x-\mu)^2  - 1\big).
 \end{align}
 % p 638 end 
 
 我们并没有直接假设$p(x)$取这种形式，而是通过最小化这个\gls{functional}从理论上得到了这个$p(x)$的表达式。
 为了完成这个优化问题，我们需要选择$\lambda$的值来确保所有的约束都能够满足。
 我们有很大的选择$\lambda$的自由。
-因为只要约束满足，拉格朗日关于$\lambda$的梯度为0。
+因为只要约束满足，拉格朗日关于$\lambda$的梯度为$0$。
 为了满足所有的约束，我们可以令$\lambda_1 = 1 - \log \sigma\sqrt{2\pi}$,$\lambda_2 = 0$, $\lambda_3 = - \frac{1}{2\sigma^2}$，从而取到
 \begin{align}
 \label{eqn:1954}
-	p(x) = \CalN(x;\mu,\sigma^2)
+	p(x) = \CalN(x;\mu,\sigma^2).
 \end{align}
 这也是当我们不知道真实的分布的时候总是使用正态分布的原因。
 因为正态分布拥有最大的熵，<bad>我们通过这个假定来保证了最小可能量的结构。
@@ -697,14 +696,12 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 如果我们做了\gls{mean_field}的近似：
 \begin{align}
 \label{eqn:1955}
-	q(\Vh\mid\Vv) = \prod_i q(h_i \mid\Vv)
+	q(\Vh\mid\Vv) = \prod_i q(h_i \mid\Vv),
 \end{align}
-并且对任何的$j\neq i$固定了$q(h_j\mid\Vv)$，那么只需要满足$p$中任何联合分布中的变量不为0,我们就可以通过归一化下面这个未归一的分布
+并且对任何的$j\neq i$固定了$q(h_j\mid\Vv)$，那么只需要满足$p$中任何联合分布中的变量不为$0$,我们就可以通过归一化下面这个未归一的分布
 \begin{align}
 	\label{eqn:1956}
-	\tilde{q}(h_i \mid\Vv) = \exp
-	(\SetE_{h_{-i}\sim q(h_{-i}\mid\Vv)}
-	\log \tilde{p}(\Vv,\Vh))
+	\tilde{q}(h_i \mid\Vv) = \exp (\SetE_{h_{-i}\sim q(h_{-i}\mid\Vv)}	\log \tilde{p}(\Vv,\Vh))
 \end{align}
 来得到最优的$q(h_i\mid\Vv)$。
 在这个方程中计算期望就能得到一个$q(h_i\mid\Vv)$的正确表达式。
@@ -738,7 +735,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
  \propto & p(\Vh, \Vv)\\
  = & p(h_1) p(h_2) p(\Vv\mid\Vh)\\
  \propto & \exp(-\frac{1}{2} [h_1^2 + h_2^2 + (v-h_1w_1 - h_2w_2)^2])\\
- = & \exp(-\frac{1}{2}[h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 - 2vh_2w_2 - 2vh_2w_2 + 2h_1w_1h_2w_2])
+ = & \exp(-\frac{1}{2}[h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 - 2vh_2w_2 - 2vh_2w_2 + 2h_1w_1h_2w_2]).
 \end{align}
 在上式中，我们发现由于带有$h_1,h_2$乘积的项的存在，真实的后验并不能将$h_1,h_2$分开。
 % 641 head 
@@ -750,7 +747,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 \label{eqn:1962}
 & \tilde{q}(h_1\mid\Vv)\\ = & \exp(\SetE_{\RSh_2\sim q(\RSh_2\mid\Vv)} \log \tilde{p}(\Vv,\Vh))\\
 = & \exp\Big( -\frac{1}{2} \SetE_{\RSh_2\sim q(\RSh_2\mid\Vv)} [h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 \\
-& -2vh_1w_1 - 2vh_2w_2 + 2h_1w_1h_2w_2]\Big)	
+& -2vh_1w_1 - 2vh_2w_2 + 2h_1w_1h_2w_2]\Big).
 \end{align}
 % 641 
 
@@ -761,7 +758,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 \begin{align}
 \label{eqn:1966}
 \tilde{q}(h_1\mid\Vv) = & \exp(-\frac{1}{2} [h_1^2 + \langle h_2^2 \rangle  + v^2 + h_1^2w_1^2 + \langle h_2^2 \rangle w_2^2 
-\\ &	-2vh_1w_1 - 2v\langle h_2 \rangle w_2 + 2h_1w_1\langle h_2 \rangle w_2])	
+\\ &	-2vh_1w_1 - 2v\langle h_2 \rangle w_2 + 2h_1w_1\langle h_2 \rangle w_2]).	
 \end{align}
 % 641 
 
@@ -792,7 +789,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 当训练参数时，变分学习增加
 \begin{align}
 \label{eqn:1968}
-	\SetE_{\RVh \sim q}\log p(\Vv,\Vh)
+	\SetE_{\RVh \sim q}\log p(\Vv,\Vh).
 \end{align}
 % 642 
 
@@ -837,7 +834,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 \firstgls{wake_sleep}算法\citep{Hinton95,Frey96}通过从模型分布中抽取$\Vv$和$\Vh$样本来解决这个问题。
 例如，在\gls{directed_model}中，这可以通过执行从$\Vh$开始并在$\Vv$结束的\gls{ancestral_sampling}来高效地完成。
 然后推断网络可以被训练来执行反向的映射：预测哪一个$\Vh$产生了当前的$\Vv$。
-<bad>这种方法的主要缺点是我们将只能够训练推断网络在模型下具有高概率的v值。
+<bad>这种方法的主要缺点是我们将只能够训练推断网络在模型下具有高概率的$\Vv$值。
 在学习早期，模型分布将不像数据分布，因此推断网络将不具有学习类似数据的样本的机会。
 % 643
 
