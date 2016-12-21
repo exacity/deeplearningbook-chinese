@@ -51,7 +51,7 @@
 \else
 	\centerline{\includegraphics{Chapter13/figures/linear_factors}}
 \fi
-	\caption{TODO}
+	\caption{描述\gls{linear_factor}族的\gls{directed_graphical_model}，其中我们假设一个观察到的数据向量$\Vx$是通过独立的隐含因子$\Vh$的线性组合获得的，加上一定的噪音。不同的模型，比如\gls{PPCA}，\gls{FA}或者是\glssymbol{ICA}，都是选择了不同形式的噪音以及先验$p(\Vh)$。}
 	\label{fig:linear_factors}
 \end{figure}
 
@@ -391,7 +391,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 像其他\gls{linear_factor}一样，\gls{sparse_coding}经常产生糟糕的样本，如\figref{fig:s3c_samples}所示。
 即使当模型能够很好地重构数据并为分类器提供有用的特征时，也会发生这种情况。
 <bad>这种现象原因是每个单独的特征可以很好地被学习到，但是隐含结点\gls{factorial}先验会导致模型包括每个生成的样本中的所有特征的随机子集。
-这促使人们在深度模型中的最深层以及一些复杂成熟的浅层模型上施加一个不\gls{factorial}的分布。
+这促使人们在深度模型中的最深层以及一些复杂成熟的浅层模型上施加一个非\gls{factorial}分布。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -399,7 +399,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 \else
 	\centerline{\includegraphics{Chapter13/figures/s3c_samples}}
 \fi
-	\caption{TODO}
+\caption{\gls{ss}\gls{sparse_coding}模型上在MNIST数据集训练的样例和权重。（左）这个模型中的样本和训练样本相差很大。第一眼看来，我们可以认为模型拟合得很差。（右）这个模型的权重向量已经学习到了如何表示笔迹，有时候还能写完整的数字。因此这个模型也学习到了有用的特征。问题在于特征的\gls{factorial}先验会导致特征子集合随机的组合。一些这样的子集能够合成可识别的MNIST集上的数字。这也促进了拥有更强大的隐含编码的\gls{generative_model}的发展。此图是从\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}中拷贝来的，并获得允许。}
 	\label{fig:s3c_samples}
 \end{figure}
 
@@ -425,7 +425,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 \else
 	\centerline{\includegraphics{Chapter13/figures/PPCA_pancake_color}}
 \fi
-	\caption{TODO}
+	\caption{平坦的高斯能够描述一个低维\gls{manifold}附近的概率密度。此图表示了``\gls{manifold}平面''上的``馅饼''的上半部分并且穿过了它的中心。正交于\gls{manifold}方向（指出平面的箭头）的方差非常小，可以被视作是``噪音''，其它方向（平面内的箭头）的方差则很大，对应了``信号''以及低维数据的坐标系统。}
     \label{fig:PPCA_pancake}
 \end{figure}
 

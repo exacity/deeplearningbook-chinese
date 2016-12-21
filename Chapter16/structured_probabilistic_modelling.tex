@@ -100,7 +100,7 @@
 \else
 	\centerline{\includegraphics{Chapter16/figures/fig-ssrbm_samples}}	
 \fi
-	\caption{TODO}
+	\caption{自然图片的概率建模。（上）CIFAR-10数据集\citep{KrizhevskyHinton2009}中的$32\times 32$像素的样例图片。（下）这个数据集上训练的\gls{structured_probabilistic_models}中抽出的样本。每一个样本都出现在与其欧式距离最近的训练样本的格点中。这种比较使得我们发现这个模型确实能够生成新的图片，而不是记住训练样本。为了方便展示，两个集合的图片都经过了微调。图片从\citet{Courville+al-2011-small}中复制，并获得允许。}
 	\label{fig:chap16_fig-ssrbm}
 \end{figure}
 
@@ -230,7 +230,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 \else
 	\centerline{\includegraphics{Chapter16/figures/relay_race_graph}}	
 \fi
-	\caption{TODO}
+	\caption{一个描述接力赛例子的\gls{directed_graphical_model}。Alice的完成时间$t_0$影响了Bob的完成时间$t_1$，因为Bob会在Alice完成比赛后才开始。类似的，Carol也只会在Bob完成之后才开始，所以Bob的完成时间$t_1$直接影响了Carol的完成时间$t_2$。}
 	\label{fig:relay_race_graph}
 \end{figure}
 
