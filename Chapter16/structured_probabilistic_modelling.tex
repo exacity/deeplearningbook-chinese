@@ -175,15 +175,6 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554 head  
 
 
-
-
-
-
-
-
-
-
-
 \section{使用图来描述模型结构}
 \label{sec:using_graphs_to_describe_model_structure}
 % 554
@@ -570,7 +561,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/undirected_paths_inactive}}	
 \fi
-	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。这意味着$\RSa$，$\RSb$之间不是分离的。 (b)}
+	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。这意味着$\RSa$，$\RSb$之间不是\gls{separation}的。 (b)图中$\RSs$用阴影填充，表示了它是可观察的。因为$\RSa$和$\RSb$之间的唯一路径通过$\RSs$，并且这条路径是不活跃的，我们可以得出结论，在给定$\RSs$的条件下$\RSa$和$\RSb$是\gls{separation}的。}
 	\label{fig:undirected_paths_active}
 \end{figure}
 
@@ -580,7 +571,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_sep}}
 \fi
-	\caption{TODO}
+	\caption{一个从无向图中读取\gls{separation}性质的例子。这里$\RSb$用阴影填充，表示它是可观察的。由于$\RSb$挡住了从$\RSa$到$\RSc$的唯一路径，我们说在给定$\RSb$的情况下$\RSa$和$\RSc$是相互\gls{separation}的。观察值$\RSb$同样挡住了从$\RSa$到$\RSd$的一条路径，但是它们之间有另一条路径。因此给定$\RSb$的情况下$\RSa$和$\RSd$是不\gls{separation}的。}
 	\label{fig:example_sep}
 \end{figure}
 
@@ -632,7 +623,17 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_dsep}}	
 \fi
-	\caption{TODO}
+	\caption{从这张图中，我们可以发现一些d-\gls{separation}的性质。这包括了：
+	\begin{itemize}
+		\item 给定空集的情况下$\RSa$和$\RSb$是d-\gls{separation}的。
+		\item 给定$\RSc$的情况下$\RSa$和$\RSe$是d-\gls{separation}的。
+		\item 给定$\RSc$的情况下$\RSd$和$\RSe$是d-\gls{separation}的。
+	\end{\itemize}
+	我们还可以发现当我们观察到一些变量的时候，一些变量不再是d-\gls{separation}的：
+		\begin{itemize}
+			\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是d-\gls{separation}的。
+			\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是d-\gls{separation}的。
+		\end{\itemize}}
 	\label{fig:169}
 \end{figure}
 
@@ -687,7 +688,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/complete}}	
 \fi
-	\caption{TODO}
+	\caption{完全图的例子，完全图能够描述任何的概率分布。这里我们展示了一个带有四个随机变量的例子。（左）完全无向图。在无向图中，完全图是唯一的。（右）一个完全有向图。在有向图中，并不存在唯一的完全图。我们选择一种变量的排序然后对每一个变量画一条指向顺序在其后面的变量的弧。因此存在着关于变量数阶乘数量级的不同种完全图。在这个例子中，我们从左到右从上到下地排序变量。}
 	\label{fig:complete}
 \end{figure}
 
@@ -723,7 +724,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/dm_to_um}}	
 \fi
-	\caption{TODO}
+	\caption{}
 	\label{fig:dm_to_um}
 \end{figure}
 
@@ -1060,7 +1061,7 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
 \else
 	\centerline{\includegraphics{Chapter16/figures/rbm}}	
 \fi
-	\caption{TODO}
+	\caption{一个画成\gls{markov_network}形式的\glssymbol{RBM}}
 	\label{fig:rbm}
 \end{figure}
 

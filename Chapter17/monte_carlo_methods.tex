@@ -390,7 +390,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 \else
 	\centerline{\includegraphics{Chapter17/figures/good_bad_really_bad_mixing_color}}
 \fi
-	\caption{Tmp}
+	\caption{对于三种分布使用\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为峰值。（左）一个带有两个独立变量的\gls{multivariate_normal_distribution}。由于变量是独立的，\gls{gibbs_sampling}\gls{mixing}得很好。（中）变量存在高度相关性的\gls{multivariate_normal_distribution}。变量之间的相关性使得\gls{markov_chain}很难\gls{mixing}。因为每一个变量的更新需要相对其它变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。（右）峰值之间间距很大且不在轴上对齐的混合高斯。\gls{gibbs_sampling}\gls{mixing}得很慢，因为每次更新一个变量很难跨越不同的峰值。}
 	\label{fig:chap17_good_bad_really_bad_mixing_color}
 \end{figure}
 
@@ -431,7 +431,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 	\centerline{\includegraphics{Chapter17/figures/fig-adversarial}}
 	\centerline{\includegraphics{Chapter17/figures/fig-dbm-bad-mixing}}	
 \fi
-	\caption{Tmp}
+	\caption{深度概率模型中一个\gls{mixing}缓慢问题的实例。每张图都是按照从左到右从上到下的顺序的。（左）\gls{gibbs_sampling}从MNIST数据集训练成的\gls{DBM}中采出的连续样本。这些连续的样本之间非常相似。由于\gls{gibbs_sampling}作用于一个深度图模型，相似度更多地是基于语义而非原始视觉特征，但是对于吉布斯链来说从分布的一个峰值转移到另一个仍然是很困难的，比如说改变数字。（右）从\gls{generative_adversarial_networks}中抽出的连续原始样本。因为\gls{ancestral_sampling}生成的样本之间互相独立，所以不存在\gls{mixing}问题。\footnote{译者注：此处左右好像搞反了。}}
 	\label{fig:chap17_fig-dbm-bad-mixing}
 \end{figure}
 
