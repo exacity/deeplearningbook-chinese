@@ -345,7 +345,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \else
 	\centerline{\includegraphics{Chapter16/figures/cold_undirected_graph}}	
 \fi
-	\caption{TODO}
+	\caption{表示你室友健康的$h_r$，你的健康的$h_y$，你同事健康的$h_c$之间如何相互影响的一个无向图。你和你的室友可能会相互传染感冒，你和你的同事之间也是如此，但是假设你室友和同事之间相互不认识，他们只能通过你来间接传染。}
 	\label{fig:cold_undirected_graph}
 \end{figure}
 
@@ -373,7 +373,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
-	\caption{TODO}
+	\caption{这个图说明通过选择适当的$\phi$函数$p(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$\frac{1}{Z}\phi_{\RSa,\RSb}(\RSa,\RSb)\psi_{\RSb,\RSc}(\RSb,\RSc)\phi_{\RSa,\RSd}(\RSa,\RSd)\phi_{\RSb,\RSe}(\RSb,\RSe)\phi_{\RSe,\RSf}(\RSe,\RSf)$。}
 	\label{fig:example_undirected}
 \end{figure}
 
@@ -509,7 +509,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
-	\caption{TODO}
+	\caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function}$E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。值得注意的是，我们可以通过取负能量的指数来获得图\ref{fig:example_undirected}中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
 	\label{fig:example_undirected_2}
 \end{figure}
 
@@ -520,7 +520,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 概率建模的许多研究最初由统计物理学家做出的，其中$E$是指实际的，物理概念的能量，没有任意的符号。
 诸如``能量''和``\gls{partition_function}''这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
 一些\gls{ML}研究者（例如，\citep{Smolensky86}将负能量称为\firstgls{harmony}）发出了不同的声音，但这些都不是标准惯例。
-% 562
+% 562  head
 
 
 许多对概率模型进行操作的算法不需要计算$p_{\text{model}}(\Vx)$，而只需要计算$\log p_{\text{model}}(\Vx)$。
@@ -570,7 +570,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/undirected_paths_inactive}}	
 \fi
-	\caption{TODO}
+	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。这意味着$\RSa$，$\RSb$之间不是分离的。 (b)}
 	\label{fig:undirected_paths_active}
 \end{figure}
 
