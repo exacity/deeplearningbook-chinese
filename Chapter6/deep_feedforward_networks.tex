@@ -62,7 +62,7 @@
 非常通用的特征映射通常只基于局部平滑的原则，并没有将足够的先验信息进行编码来解决高级的问题。
 
 \item 另一种方式是手动地设计$\phi$。
-直到深度学习的出现，这都是主流的方法。
+在深度学习出现以前，这都是主流的方法。
 这种方法对于每个单独的任务都需要数十年人们的努力、不同领域的（如语音识别或计算机视觉）专家以及不同领域间微小的迁移。
 
 \item 深度学习的策略是去学习$\phi$。
@@ -85,7 +85,7 @@
 % -- 165 --
 
 本章我们先从\gls{feedforward_network}的一个简单例子说起。
-接着，我们强调配置一个\gls{feedforward_network}所需的每个设计决策。
+接着，我们讨论部署一个\gls{feedforward_network}所需的每个设计决策。
 首先，训练一个\gls{feedforward_network}至少需要做和线性模型同样多的设计决策：选择一个优化模型，代价函数以及输出单元的形式。
 我们先回顾这些基于梯度学习的基本知识，然后去面对那些只出现在\gls{feedforward_network}中的设计决策。
 \gls{feedforward_network}已经介绍了隐层的概念，这需要我们去选择用于计算隐层值的\firstgls{activation_function}。
@@ -624,7 +624,7 @@ $n$个输出总和必须为1的约束意味着只有$n-1$个参数是必要的�
 
 ``softmax''的名称可能会让人产生困惑。
 这个函数更接近于argmax函数而不是max函数。
-soft''这个术语来源于softmax函数是连续可微的。
+``soft''这个术语来源于softmax函数是连续可微的。
 ``argmax''函数的结果表示为一个独热向量（只有一个元素为1，其余元素都为0的向量），不是连续和可微的。
 softmax函数因此提供了argmax的``软化''版本。max函数相应的软化版本是$\text{softmax}(\bm{z})^\top \bm{z}$。
 可能最好是把softmax函数称为``softargmax''，但当前名称是一个根深蒂固的习惯了。
@@ -1080,7 +1080,7 @@ O \left ( k^{(l-1)+d} \right ).
 
 % -- 196 --
 
-\section{反向传播和其他的微分算法}
+\section{\gls{BP}和其他的微分算法}
 \label{sec:back_propagation_and_other_differentiation_algorithms}
 
 当我们使用\gls{feedforward_neural_network}接收输入$\bm{x}$并产生输出$\hat{\bm{y}}$时，信息通过网络向前流动。
