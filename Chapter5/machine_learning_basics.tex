@@ -351,7 +351,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 \else
 \centerline{\includegraphics{Chapter5/figures/linreg_color}}
 \fi
-\caption{TODO}
+\caption{一个\gls{linear_regression}问题，训练集包括了十个数据点，每个数据点包含了一个特征。因为只有一个特征，权重向量$\Vw$也只有一个要学习的参数$w_1$。（左）我们可以观察到\gls{linear_regression}学习$w_1$，从而使得直线$y=w_1x$能够尽量接近穿过所有的训练点。（右）标注的点表示由\gls{normal_equations}学习到的$w_1$的值，我们发现它可以最小化训练集上的\gls{mean_squared_error}。}
 \label{fig:chap5_linreg}
 \end{figure}
 
@@ -471,7 +471,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/underfit_just_right_overfit_color}}
 \fi
-\caption{TODO}
+\caption{我们用三个模型拟合了这个训练集的样本。训练数据是通过随机抽取$x$然后用二次函数确定性地生成$y$来合成的。（左）用一个线性函数拟合数据会导致\gls{underfitting}－－－它无法捕捉数据中的\gls{curvature}信息。（中）用二次函数拟合数据在未观察到的点上\gls{generalization}得很好。这并不会导致明显的\gls{underfitting}或者\gls{overfitting}。（右）一个$9$阶的多项式拟合数据会导致\gls{overfitting}。在这里我们使用\gls{Moore}来解这个欠定的\gls{normal_equations}。得出的解能够精确的穿过所有的训练点，但不幸的是我们无法提取有效的结构信息。在两个数据点之间它有一个真实的函数所不包含的深谷。在数据的左侧，它也会急剧增长，在这一区域真实的函数却是下降的。}
 \label{fig:chap5_underfit_just_right_overfit}
 \end{figure}
 
@@ -517,7 +517,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/generalization_vs_capacity_color}}
 \fi
-\caption{TODO}
+\caption{\gls{capacity}和误差之间的典型关系。\gls{training_error}和\gls{test_error}表现得非常不同。在图的左端，\gls{training_error}和\gls{generalization_error}都非常高。这是\firstgls{underfit_regime}。当我们增加\gls{capacity}时，\gls{training_error}减小，但是\gls{training_error}和\gls{generalization_error}之间的间距却不断扩大。最终，这个间距的大小超过了\gls{training_error}的下降，我们进入到了\firstgls{overfit_regime}，其中\gls{capacity}过大，超过了\firstgls{optimal_capacity}。}
 \label{fig:chap5_generalization_vs_capacity}
 \end{figure}
 
@@ -1480,7 +1480,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 \else
 \centerline{\includegraphics{Chapter5/figures/pca_color}}
 \fi
-\caption{TODO}
+\caption{\glssymbol{PCA}学习了一种线性投影，<bad>投影的方向对齐了新的空间最大方差的轴。（左）原始数据包含了$\Vx$的样本。在这个空间中，方差的方向与轴的方向并不是对齐的。（右）变换过的数据$\Vz = \Vx^{\top}\MW$在轴$z_1$的方向上有最大的变化。第二大变化方差的方向沿着轴$z_2$。}
 \label{fig:chap5_pca}
 \end{figure}
 

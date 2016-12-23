@@ -752,7 +752,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/um_to_dm}}	
 \fi
-	\caption{TODO}
+	\caption{将一个无向模型转化为一个有向模型。（左）这个无向模型无法转化为有向模型，因为它有一个长度为$4$且不带有\gls{chord}的\gls{loop}。具体说来，这个无向模型包含了两种不同的独立性，并且不存在一个有向模型可以同时描述这两种性质：$\RSa\perp \RSc \mid \{\RSb,\RSd\}$和$\RSb \perp \RSd \mid \{\RSa,\RSc\}$。（中）为了将无向图转化为有向图，我们必须通过保证所有长度大于$3$的\gls{loop}都有\gls{chord}来使得图三角化。为了完成这个，我们可以加一条连接$\RSa$和$\RSc$或者连接$\RSb$和$\RSd$的边。在这个例子中，我们选择添加一条连接$\RSa$和$\RSc$的边。（右）为了完成转化的过程，我们必须给每条边分配一个方向。执行这个任务时，我们必须保证不产生有向环。避免出现有向环的一种方法是赋予节点一定的顺序，然后将每个边从排序较早的节点指向稍后排序的节点。在这个例子中，我们根据变量名的字母进行排序。}
 	\label{fig:um_to_dm}
 \end{figure}
 
@@ -788,7 +788,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/factor_graph}}	
 \fi
-	\caption{TODO}
+	\caption{\gls{factor_graph}如何解决无向网络中的模糊性的一个例子。（左）一个包含三个变量的\gls{clique}组成的无向网络。（中）对应这个无向模型的\gls{factor_graph}。这个\gls{factor_graph}有一个包含三个变量的因子。（右）对应这个无向模型的另一种有效的\gls{factor_graph}。这个\gls{factor_graph}包含了三个因子，每个因子只对应两个变量。这个\gls{factor_graph}上进行的表示，推断和学习相比于中图描述的\gls{factor_graph}都要渐进性地廉价，即使它们表示的是同一个无向模型。}
 	\label{fig:factor_graph}
 \end{figure}
 
