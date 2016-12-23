@@ -35,7 +35,7 @@
 \else
 	\centerline{\includegraphics[width=0.8\textwidth]{Chapter19/figures/intractable_graphs}}
 \fi
-	\caption{TODO}
+	\caption{深度学习中难以处理的推断问题通常是由于结构化图模型中隐含变量的相互作用。<bad>这些相互作用产生于当V-结构的子节点是可观察的时候一个隐含变量与另一个隐含变量或者更长的激活路径相连。（左）一个隐含节点相互连接的\gls{srbm}\citep{Osindero+Hinton-2008}。由于存在大量的隐含变量的\gls{clique}，隐含变量的直接连接使得后验分布难以处理。（中）一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。（右）当可见变量是可以观察时这个有向模型的隐含变量之间存在相互作用，因为每两个隐含变量都是\gls{coparent}。即使拥有上图中的某一种结构，一些概率模型依然能够获得易于处理的后验分布。如果我们选择条件概率分布来引入相对于图结构描述的额外的独立性这种情况也是可能出现的。举个例子，\gls{PPCA}的图结构如右图所示，然而由于其条件分布的特殊性质（带有相互正交的基向量的线性高斯条件分布）依然能够进行简单的推断。}
 	\label{fig:intractable_graphs}
 \end{figure}
 
