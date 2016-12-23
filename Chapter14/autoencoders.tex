@@ -620,6 +620,9 @@ $f$扩展到数据\gls{manifold}的中间或远处是合理的（见\figref{fig:
 
 \begin{figure}[ht]
 \centering
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
 % ?? I do NOT which is correct ...
 \begin{tabular}{p{.1\figwidth}|p{.86\figwidth}}
 Input point & Tangent vectors\\
@@ -632,6 +635,7 @@ Input point & Tangent vectors\\
 \includegraphics[width=\linewidth]{Chapter14/figures/cifar_cae.png}\\
  & Contractive autoencoder\\
 \end{tabular}
+\fi
 \caption{通过局部\glssymbol{PCA}和\gls{CAE}估计的\gls{manifold}切向量的图示。
 \gls{manifold}的位置由来自CIFAR-10数据集中狗的输入图像定义。
 切向量通过输入到代码映射的\gls{jacobian}矩阵$\frac{\partial \Vh}{\partial \Vx}$ 的前导奇异向量估计。
