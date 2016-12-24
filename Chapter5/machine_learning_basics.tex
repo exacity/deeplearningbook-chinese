@@ -561,7 +561,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/training_size_grows}}
 \fi
-\caption{训练集大小对\gls{training_error}，\gls{test_error}以及\gls{optimal_capacity}的影响。通过给一个$5$阶多项式添加适当大小的噪声，我们构造了一个合成的\gls{regression}问题，生成单个测试集，然后生成一些不同尺寸的训练集。为了描述\%95置信区间的\gls{error_bar}，对于每一个尺寸，我们生成了$40$个不同的训练集。（上）两个不同的模型上训练集和测试集的\glssymbol{mean_squared_error}，一个二次模型，另一个模型的阶数通过最小化\gls{test_error}来选择。两个模型都是用闭式解来拟合。对于二次模型来说，当训练集增加时\gls{training_error}也随之增大。这是由于越大的数据集越难以拟合。同时，\gls{test_error}随之减小，因为关于训练数据的不正确的假设越来越少。二次模型的容量并不足以解决这个问题，所以它的\gls{test_error}趋近于一个较高的值。\gls{optimal_capacity}点处的\gls{test_error}趋近于\gls{bayes_error}。\gls{train_error}可以低于\gls{bayes_error}，因为训练算法有能力记住训练集中特定的样本。当训练集趋向于无穷大时，任何固定容量的模型（在这里指的是二次模型）的\gls{training_error}都至少增至\gls{bayes_error}。（下）当训练集大小增大时，\gls{optimal_capacity}（在这里是用最优多项式回归器的阶数衡量的）也会随之增大。\gls{optimal_capacity}在达到足够捕捉模型复杂度之后就不再增长了。}
+\caption{训练集大小对\gls{training_error}，\gls{test_error}以及\gls{optimal_capacity}的影响。通过给一个$5$阶多项式添加适当大小的噪声，我们构造了一个合成的\gls{regression}问题，生成单个测试集，然后生成一些不同尺寸的训练集。为了描述\%95置信区间的\gls{error_bar}，对于每一个尺寸，我们生成了$40$个不同的训练集。（上）两个不同的模型上训练集和测试集的\glssymbol{mean_squared_error}，一个二次模型，另一个模型的阶数通过最小化\gls{test_error}来选择。两个模型都是用闭式解来拟合。对于二次模型来说，当训练集增加时\gls{training_error}也随之增大。这是由于越大的数据集越难以拟合。同时，\gls{test_error}随之减小，因为关于训练数据的不正确的假设越来越少。二次模型的容量并不足以解决这个问题，所以它的\gls{test_error}趋近于一个较高的值。\gls{optimal_capacity}点处的\gls{test_error}趋近于\gls{bayes_error}。\gls{training_error}可以低于\gls{bayes_error}，因为训练算法有能力记住训练集中特定的样本。当训练集趋向于无穷大时，任何固定容量的模型（在这里指的是二次模型）的\gls{training_error}都至少增至\gls{bayes_error}。（下）当训练集大小增大时，\gls{optimal_capacity}（在这里是用最优多项式回归器的阶数衡量的）也会随之增大。\gls{optimal_capacity}在达到足够捕捉模型复杂度之后就不再增长了。}
 \label{fig:chap5_training_size_grows}
 \end{figure}
 
@@ -1743,7 +1743,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
     \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_1d_color} & \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_2d_color} & \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_3d_color}
 \end{tabular}
 \fi
-\caption{}
+\caption{当数据的相关维度增大时（从左向右），我们感兴趣的configuration的数目会随之指数性地增长。（左）在这个一维的例子中，我们用一个变量来区分所感兴趣的仅仅$10$个区域。当每个区域都有足够的样本数时（图中每个样本对应了一个细胞），学习算法能够轻易地\gls{generalization}得很好。\gls{generalization}的一个直接方法是估计目标函数在每个区域的值（<bad>可能是相邻区域的插值）。（中）在二维情况下，对每个变量区分$10$个不同的值更加困难。我们需要追踪$10\times10=100$个区域，至少需要很多样本来覆盖所有的区域。（右）三维情况下，区域数量增加到了$10^3=1000$，至少需要更多的样本。对于需要区分的$d$维以及$v$个值来说，我们需要$O(v^d)$个区域和样本。这就是\gls{curse_of_dimensionality}的一个实例。感谢由Nicolas Chapados提供的图片。}
 \label{fig:chap5_curse}
 \end{figure}
 
@@ -1802,7 +1802,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \else
 \centerline{\includegraphics{Chapter5/figures/non_distributed}}
 \fi
-\caption{TODO}
+\caption{\gls{nearest_neighbor}算法如何将输入空间分区域的一个例子。每个区域内的一个样本（这里用圆圈表示）定义了区域边界（这里用线表示）。每个样本相关的$y$值定义了对应区域内所有数据点的输出。由\gls{nearest_neighbor}定义并且匹配几何模式的区域被叫做Voronoi图。这些连续区域的数量不能比训练样本的数量增加的更快。尽管此图具体说明了\gls{nearest_neighbor}算法的表现，其它的单纯依赖局部光滑先验的机器学习算法也表现出了类似的\gls{generalization}能力：每个训练样本仅仅能告诉学习者如何在其周围的相邻区域\gls{generalization}。}
 \label{fig:chap5_non_distributed}
 \end{figure}
 
@@ -1867,7 +1867,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \else
 \centerline{\includegraphics{Chapter5/figures/one_dim_manifold_and_data_color}}
 \fi
-\caption{TODO}
+\caption{从一个聚集在一维\gls{manifold}的二维空间的分布中抽取的数据样本，像一个缠绕的带子一样。实线代表了学习者想要推断的隐含的\gls{manifold}。}
 \label{fig:chap5_one_dim_manifold_and_data}
 \end{figure}
 
@@ -1897,7 +1897,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \else
 \centerline{\includegraphics[width=0.7\textwidth]{Chapter5/figures/noise}}
 \fi
-\caption{TODO}
+\caption{随机地均匀抽取图像（根据均匀分布随机地选择每一个像素）会得到噪音图像。尽管在人工智能应用中生成一个脸或者其它物体的图像是非零概率的，但是实践中我们从来没有观察到这个现象。这也意味着人工智能应用中遇到的图像在所有图像空间中的占比是忽略不计的。}
 \label{fig:chap5_noise}
 \end{figure}
 
@@ -1929,7 +1929,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \else
 \centerline{\includegraphics{Chapter5/figures/QMUL-facedataset}}
 \fi
-\caption{TODO}
+\caption{QMUL Multiview Face数据集中训练样本\citep{Gong-et-al-2000}，其中的物体是移动的从而覆盖对应两个旋转角度的二维\gls{manifold}。我们希望学习算法能够发现并且解决这些\gls{manifold}坐标。图\ref{fig:chap20_kingma-vae-2d-faces-manifold}提供了这样一个例子。}
 \label{fig:chap5_QMUL-facedataset}
 \end{figure}
 
