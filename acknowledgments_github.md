@@ -81,5 +81,29 @@
 --------------
  - @bengordai ==> "until"和"address"的翻译；双引号
 
+
 2016年12月20日
+-------------
+ - @fairmiracle ==> Chapter8, f 
+
+
+2016年12月20日
+-------------
  - @zdx3578 ==> 错别字"如果"改成"如何"
+
+
+2016年12月21日
+-------------
+ - @huangpingchun ==> Chapter8, vanishing Long-Term Dependencies翻译
+
+
+2016年12月22日
+-------------
+ - @PassStory ==> Chapter2, m -> n
+ - @imwebson ==> Chapter2, m -> n
+
+
+2016年12月23日
+-------------
+ - @zdx3578 ==> Chapter5, one-hot
+ - @wlbksy  ==> 编译问题
