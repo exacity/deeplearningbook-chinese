@@ -131,7 +131,7 @@
 \else
 \centerline{\includegraphics{Chapter18/figures/pos_and_neg_phase_color}}
 \fi
-\caption{TODO}
+\caption{算法\ref{}的角度的``\gls{positive_phase}''和``\gls{negative_phase}''。（左）<bad>在\gls{positive_phase}中，我们从数据分布中采样，然后push up到它们的未经归一化的概率上。这意味着在push on up越多的地方数据点的概率越高。（右）在\gls{negative_phase}中，我们从模型分布中采样，然后push down到它们的未经归一化的概率上。这与\gls{positive_phase}的作用相反，给未经归一化概率处处添加了一个大常数。当数据分布和模型分布相等时，\gls{positive_phase}push up数据点和\gls{negative_phase}push down 数据点的机会相等。此时，不再有任何的梯度（期望上说），训练也必须停止。}
 \label{fig:chap18_pos_and_neg_phase}
 \end{figure}
 
@@ -176,7 +176,7 @@
 \else
 \centerline{\includegraphics{Chapter18/figures/spurious_mode_color}}
 \fi
-\caption{TODO}
+\caption{一个\gls{spurious_modes}。说明\gls{contrastive_divergence}（算法\ref{}）的\gls{negative_phase}为何无法压缩\gls{spurious_modes}的例子。一个\gls{spurious_modes}指的是一个在模型分布中出现数据分布中却不存在的模式。由于\gls{contrastive_divergence}从数据点中初始化它的\gls{markov_chain}然后运行\gls{markov_chain}了仅仅几步，不太可能到达模型中离数据点较远的模式。这意味着从模型中采样时，我们有时候会得到一些与数据并不相似的样本。这也意味着由于在这些模式上浪费了一些概率质量，模型很难把较高的概率质量集中与正确的模式上。出于可视化的目的，这个图使用了某种程度上说更加简单的距离的概念－－－在$\SetR$的数轴上\gls{spurious_modes}与正确的模式有很大的距离。这对应着基于局部移动$\SetR$上的单个变量$x$的\gls{markov_chain}。对于大部分深度概率模型来说，\gls{markov_chain}是基于\gls{gibbs_sampling}的，并且对于单个变量产生非局部的移动但是无法同时移动所有的变量。对于这些问题来说，考虑edit距离比欧式距离通常更好。然而，高维空间的edit距离很难在二维空间作图展示。}
 \label{fig:chap18_spurious_mode}
 \end{figure}
 
