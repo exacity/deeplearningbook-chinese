@@ -28,8 +28,8 @@
 
 我们希望从某个分布中采样存在许多理由。
 当我们需要以较小的代价近似许多项的和或某个积分时采样是一种很灵活的选择。
-有时候，我们使用它加速一些很费时却易于处理的和的估计，就像我们使用\gls{minibatch}对整个训练成本进行subsample的情况。
-在其他情况下，我们需要近似一个难以处理的和或积分，例如估计一个\gls{undirected_model}的\gls{partition_function}的对数的梯度。
+有时候，我们使用它加速一些很费时却易于处理的和的估计，就像我们使用\gls{minibatch}对整个训练代价进行\gls{subsample}的情况。
+在其他情况下，我们需要近似一个难以处理的和或积分，例如估计一个\gls{undirected_model}的\gls{partition_function}的对数的梯度时。
 在许多其他情况下，抽样实际上是我们的目标，就像我们想训练一个可以从训练分布采样的模型。
 % 582 
 
@@ -47,7 +47,7 @@ s = \sum_{\Vx} p(\Vx)f(\Vx) = E_p[f(\RVx)]
 \label{eqn:integra}
 s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \end{align}
-为我们所需要估计的和或者积分，写成期望的形式，$p$是一个关于随机变量$\RVx$的概率分布（求和时）或者概率密度函数（求积分时）。
+为我们所需要估计的和或者积分，写成期望的形式，$p$是一个关于随机变量$\RVx$的概率分布（求和时）或者\gls{PDF}（求积分时）。
 % 582 
 
 我们可以通过从$p$中采集$n$个样本$\Vx^{(1)},\ldots,\Vx^{(n)}$来近似$s$并得到一个经验平均值
@@ -67,21 +67,21 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \end{align}
 只需要满足各个单项的方差，即$\text{Var}[f(\Vx^{(i)})]$有界。
 详细地说，我们考虑当$n$增大时$\hat{s}_n$的方差。
-只要$\text{Var}[f(\Vx^{(i)})]<\infty$，方差$\text{Var}[f(\RVx^{(i)})]$减小并收敛到$0$：
+只要满足$\text{Var}[f(\RVx^{(i)})]<\infty$，方差$\text{Var}[\hat{s}_n]$就会减小并收敛到$0$：
 \begin{align}
 \text{Var}[\hat{s}_n] & = \frac{1}{n^2}\sum_{i=1}^{n}\text{Var}[f(\RVx)]\\
 &  = \frac{\text{Var}[f(\RVx)]}{n}.
 \end{align}
-这个简单的结果启迪我们如果估计\gls{monte_carlo}均值中的不确定性或者说是\gls{monte_carlo}估计的期望误差。
-我们计算了$f(\Vx^{(i)})$的经验均值和方差，\footnote{计算无偏估计的方差时，更倾向于用计算偏差平方和除以$n-1$而非$n$。}
+这个简单的结果启迪我们如何估计\gls{monte_carlo}均值中的不确定性或者等价地说是\gls{monte_carlo}估计的期望误差。
+我们计算了$f(\Vx^{(i)})$的经验均值和方差\footnote{计算无偏估计的方差时，更倾向于用计算偏差平方和除以$n-1$而非$n$。}，
 然后将估计的方差除以样本数$n$来得到$\text{Var}[\hat{s}_n]$的估计。
-\firstgls{central_limit_theorem}告诉我们$\hat{s}_n$的分布收敛到以$s$为均值以$\frac{\text{Var}[f(\RVx)]}{n}$为方差的正态分布。
-这使得我们可以利用正态分布的累积密度函数来估计$\hat{s}_n$的置信区间。
+\firstgls{central_limit_theorem}告诉我们$\hat{s}_n$的分布收敛到以$s$为均值以$\frac{\text{Var}[f(\RVx)]}{n}$为方差的\gls{normal_distribution}。
+这使得我们可以利用\gls{normal_distribution}的累积密度函数来估计$\hat{s}_n$的置信区间。
 % 583
 
 以上的所有结论都依赖于我们可以从基准分布$p(\RVx)$中轻易的采样，但是这个假设并不是一直成立的。
 当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在\secref{sec:importance_sampling_chap17}会讲到。
-一种更加通用的方式是采样一系列的趋近于目标分布的估计。
+一种更加通用的方式是采样一系列趋近于目标分布的估计。
 这就是\gls{mcmc}方法（见\secref{sec:markov_chain_monte_carlo_methods}）。
 % 583
 
@@ -122,13 +122,13 @@ p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 \end{align}
 当$q$取到
 \begin{align}
-q^*(\Vx) = \frac{p(\Vx)\mid f(\Vx)\mid}{Z}
+q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z}
 \end{align}
 时，方差达到最小值。
 % 584
 
 
-在这里$Z$表示归一化常数，$Z$的选择使得$q*(\Vx)$之和或者积分为$1$。
+在这里$Z$表示归一化常数，选择适当的$Z$使得$q^*(\Vx)$之和或者积分为$1$。
 一个好的\gls{importance_sampling}分布会把更多的权重放在被积函数较大的地方。
 事实上，当$f(\Vx)$为一个常数的时候，$\Var[\hat{s}_{q^*}]=0$， 这意味着当使用最优的$q$分布的时候，只需要采一个样本就够了。
 当然，这仅仅是因为计算$q^*$的时候已经解决了所有的问题。
@@ -136,12 +136,12 @@ q^*(\Vx) = \frac{p(\Vx)\mid f(\Vx)\mid}{Z}
 % 584
 
 对于\gls{importance_sampling}来说任意$q$分布都是可行的（从得到一个期望上正确的值的角度来说），$q^*$指的是最优的$q$分布。
-从$q^*$中采样往往是不可行的，所以总是采样其它的选择来降低方差。
+从$q^*$中采样往往是不可行的，但是其它仍然能降低方差的$q$的选择还是可行的。
 % 584
 
 
 
-另一种方法是采用\firstgls{biased_importance_sampling}，这种方法有一个优势并不需要归一化的$p$或$q$分布。
+另一种方法是采用\firstgls{biased_importance_sampling}，这种方法有一个优势，即不需要归一化的$p$或$q$分布。
 在处理离散变量的时候，有偏\gls{importance_sampling}估计可以表示为
 \begin{align}
 \label{eqn:bis}
@@ -154,22 +154,22 @@ q^*(\Vx) = \frac{p(\Vx)\mid f(\Vx)\mid}{Z}
 所以这种估计也被叫做的渐进性无偏的。
 % 585
 
-尽管一个好的$q$分布的选择可以显著的提高\gls{monte_carlo}估计的效率，反之一个糟糕的$q$分布的选择则会使效率更糟糕。
+尽管一个好的$q$分布的选择可以显著地提高\gls{monte_carlo}估计的效率，反之一个糟糕的$q$分布的选择则会使效率更糟糕。
 我们回过头来看看方程~\eqref{eqn:variance_of_is}会发现，如果存在一个$q$使得$\frac{p(\Vx)f(\Vx)}{q(\Vx)}$很大，那么这个估计的方差也会很大。
 当$q(\Vx)$很小，而$f(\Vx)$和$p(\Vx)$都较大并且无法抵消$q$时，这种情况会非常明显。
-$q$分布经常会取一些简单常用的分布使得我们能够从$q$分布中容易的采样。
-当$\Vx$是高维数据的时候，$q$分布的简单性使得它很难于$p$或者$p\mid f\mid$相匹配。
-当$q(x^{(i)})\gg p(x^{(i)}) \mid f(x^{(i)})\mid $的时候，\gls{importance_sampling}采到了很多无用的样本（权值之和很小或趋于零）。
-另一方面，当$q(x^{(i)})\ll p(x^{(i)}) \mid f(x^{(i)})\mid $的时候， 样本会很少被采到，其对应的权值却会非常大。
-正因为后一个事件是很少发生的，这些样本很难被采到，通常使得对$s$的估计出现了估计不足，于之前过度估计相对。
+$q$分布经常会取一些简单常用的分布使得我们能够从$q$分布中容易地采样。
+当$\Vx$是高维数据的时候，$q$分布的简单性使得它很难于$p$或者$p\vert f\vert$相匹配。
+当$q(\Vx^{(i)})\gg p(\Vx^{(i)}) \vert f(\Vx^{(i)})\vert $的时候，\gls{importance_sampling}采到了很多无用的样本（权值之和很小或趋于零）。
+另一方面，当$q(\Vx^{(i)})\ll p(\Vx^{(i)}) \vert f(\Vx^{(i)})\vert $的时候， 样本会很少被采到，其对应的权值却会非常大。
+正因为后一个事件是很少发生的，这些样本很难被采到，通常使得对$s$的估计出现了\gls{underestimation}，很难被整体的\gls{overestimation}抵消。
 这样的不均匀情况在高维数据屡见不鲜，因为在高维度分布中联合分布的动态域通常非常大。
 % 585
 
-尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}中的应用中仍然扮演着重要的角色，包括\gls{DL}问题。
+尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}的应用中仍然扮演着重要的角色，包括\gls{DL}问题。
 比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\secref{sec:importance_sampling_chap12}）或者其它有着大量输出结点的\gls{NN}中。
 此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见\secref{sec:estimating_the_partition_function}）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见\secref{sec:variational_autoencoders}）。
 采用\gls{SGD}训练模型参数的时候\gls{importance_sampling}可以用来改进对\gls{cost_function}的梯度的估计，尤其是针对于分类器模型的训练中一小部分错误分类样本产生的\gls{cost_function}。
-在这种情况下更加频繁的采集这些困难的样本可以降低梯度的估计的方差\citep{Hinton06}。
+在这种情况下更加频繁的采集这些困难的样本可以降低梯度估计的方差\citep{Hinton06}。
 % 586 
 
 
@@ -180,7 +180,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 在深度学习的例子中，分布$p_{\text{model}}(\RVx)$往往表达成一个无向的模型。
 在这种情况下，为了从分布$p_{\text{model}}(\RVx)$中近似采样，我们引入了一种数学工具，它被命名为\firstgls{markov_chain}。
 利用\gls{markov_chain}来进行\gls{monte_carlo}估计的这一类算法被称为\firstgls{mcmc}算法。
-\gls{mcmc}算法在\gls{ML}中的应用在\citep{koller-book2009}中花了大量篇幅描述。
+\gls{mcmc}算法在\gls{ML}中的应用在\citet{koller-book2009}中花了大量篇幅描述。
 \gls{mcmc}算法的最标准的要求是只适用模型分布处处不为0的情况。
 因此，最方便的目标分布的表达是从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
 在\gls{energy_based_model}中每一个状态所对应的概率都不为零。
