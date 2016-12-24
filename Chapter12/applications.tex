@@ -381,6 +381,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 这对于学习算法来说可能是困难的。
 <bad>此外，许多浅层的图模型往往会把多个分离的峰值表示在一条线上。
 \gls{GCN}采用一个样本一个方向\footnote{译者：所有样本相似的距离}而不是不同的方向和距离来避免这些问题。
+% 444 head
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -388,7 +389,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 \else
 	\centerline{\includegraphics{Chapter12/figures/gcn_sphere_color}}
 \fi
-	\caption{TODO}
+	\caption{\glssymbol{GCN}将样本投影到一个球上。（左）原始的输入数据可能拥有任意的范数。（中）$\lambda=0$时候的\glssymbol{GCN}可以完美地将所有的非零样本投影到球上。这里我们令$s=1$，$\epsilon = 10^{-8}$。由于我们使用的\glssymbol{GCN}是基于归一化\gls{standard_deviation}而不是$L^2$范数，所得到的球并不是单位球。（右）$\lambda>0$的\gls{regularization}\glssymbol{GCN}将样本投影到球上，但是并没有完全地丢弃其范数中变化。$s$和$\epsilon$的取值和之间一样。}
 	\label{fig:gcn_sphere_color}
 \end{figure}
 
@@ -422,7 +423,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 	\centerline{\includegraphics{Chapter12/figures/gcn1}}
 	\centerline{\includegraphics{Chapter12/figures/lcn1}}				
 \fi
-	\caption{TODO}
+	\caption{\gls{GCN}和\gls{LCN}的比较。直观上说，\gls{GCN}的效果很巧妙。它使得所有的图片的尺度都差不多，这减轻了学习算法处理多个尺度的负担。\gls{LCN}更多地改变了图像，丢弃了所有相同强度的区域。这使得模型能够只关注于边缘。较好的纹理区域，如第二行的屋子，可能会由于归一化核的过高带宽而丢失一些细节。}
 	\label{fig:122}
 \end{figure}
 

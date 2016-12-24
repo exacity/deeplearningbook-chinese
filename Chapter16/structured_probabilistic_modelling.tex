@@ -100,7 +100,7 @@
 \else
 	\centerline{\includegraphics{Chapter16/figures/fig-ssrbm_samples}}	
 \fi
-	\caption{TODO}
+	\caption{自然图片的概率建模。（上）CIFAR-10数据集\citep{KrizhevskyHinton2009}中的$32\times 32$像素的样例图片。（下）这个数据集上训练的\gls{structured_probabilistic_models}中抽出的样本。每一个样本都出现在与其欧式距离最近的训练样本的格点中。这种比较使得我们发现这个模型确实能够生成新的图片，而不是记住训练样本。为了方便展示，两个集合的图片都经过了微调。图片从\citet{Courville+al-2011-small}中复制，并获得允许。}
 	\label{fig:chap16_fig-ssrbm}
 \end{figure}
 
@@ -175,15 +175,6 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554 head  
 
 
-
-
-
-
-
-
-
-
-
 \section{使用图来描述模型结构}
 \label{sec:using_graphs_to_describe_model_structure}
 % 554
@@ -230,7 +221,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 \else
 	\centerline{\includegraphics{Chapter16/figures/relay_race_graph}}	
 \fi
-	\caption{TODO}
+	\caption{一个描述接力赛例子的\gls{directed_graphical_model}。Alice的完成时间$t_0$影响了Bob的完成时间$t_1$，因为Bob会在Alice完成比赛后才开始。类似的，Carol也只会在Bob完成之后才开始，所以Bob的完成时间$t_1$直接影响了Carol的完成时间$t_2$。}
 	\label{fig:relay_race_graph}
 \end{figure}
 
@@ -345,7 +336,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \else
 	\centerline{\includegraphics{Chapter16/figures/cold_undirected_graph}}	
 \fi
-	\caption{TODO}
+	\caption{表示你室友健康的$h_r$，你的健康的$h_y$，你同事健康的$h_c$之间如何相互影响的一个无向图。你和你的室友可能会相互传染感冒，你和你的同事之间也是如此，但是假设你室友和同事之间相互不认识，他们只能通过你来间接传染。}
 	\label{fig:cold_undirected_graph}
 \end{figure}
 
@@ -373,7 +364,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
-	\caption{TODO}
+	\caption{这个图说明通过选择适当的$\phi$函数$p(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$\frac{1}{Z}\phi_{\RSa,\RSb}(\RSa,\RSb)\psi_{\RSb,\RSc}(\RSb,\RSc)\phi_{\RSa,\RSd}(\RSa,\RSd)\phi_{\RSb,\RSe}(\RSb,\RSe)\phi_{\RSe,\RSf}(\RSe,\RSf)$。}
 	\label{fig:example_undirected}
 \end{figure}
 
@@ -509,7 +500,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
-	\caption{TODO}
+	\caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function}$E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。值得注意的是，我们可以通过取负能量的指数来获得图\ref{fig:example_undirected}中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
 	\label{fig:example_undirected_2}
 \end{figure}
 
@@ -520,7 +511,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 概率建模的许多研究最初由统计物理学家做出的，其中$E$是指实际的，物理概念的能量，没有任意的符号。
 诸如``能量''和``\gls{partition_function}''这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
 一些\gls{ML}研究者（例如，\citep{Smolensky86}将负能量称为\firstgls{harmony}）发出了不同的声音，但这些都不是标准惯例。
-% 562
+% 562  head
 
 
 许多对概率模型进行操作的算法不需要计算$p_{\text{model}}(\Vx)$，而只需要计算$\log p_{\text{model}}(\Vx)$。
@@ -570,7 +561,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/undirected_paths_inactive}}	
 \fi
-	\caption{TODO}
+	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。这意味着$\RSa$，$\RSb$之间不是\gls{separation}的。 (b)图中$\RSs$用阴影填充，表示了它是可观察的。因为$\RSa$和$\RSb$之间的唯一路径通过$\RSs$，并且这条路径是不活跃的，我们可以得出结论，在给定$\RSs$的条件下$\RSa$和$\RSb$是\gls{separation}的。}
 	\label{fig:undirected_paths_active}
 \end{figure}
 
@@ -580,7 +571,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_sep}}
 \fi
-	\caption{TODO}
+	\caption{一个从无向图中读取\gls{separation}性质的例子。这里$\RSb$用阴影填充，表示它是可观察的。由于$\RSb$挡住了从$\RSa$到$\RSc$的唯一路径，我们说在给定$\RSb$的情况下$\RSa$和$\RSc$是相互\gls{separation}的。观察值$\RSb$同样挡住了从$\RSa$到$\RSd$的一条路径，但是它们之间有另一条路径。因此给定$\RSb$的情况下$\RSa$和$\RSd$是不\gls{separation}的。}
 	\label{fig:example_sep}
 \end{figure}
 
@@ -632,7 +623,18 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_dsep}}	
 \fi
-	\caption{TODO}
+	\caption{从这张图中，我们可以发现一些d-\gls{separation}的性质。这包括了：
+%	\begin{itemize}
+%		\item 给定空集的情况下$\RSa$和$\RSb$是d-\gls{separation}的。
+%		\item 给定$\RSc$的情况下$\RSa$和$\RSe$是d-\gls{separation}的。
+%		\item 给定$\RSc$的情况下$\RSd$和$\RSe$是d-\gls{separation}的。
+%	\end{\itemize}
+	我们还可以发现当我们观察到一些变量的时候，一些变量不再是d-\gls{separation}的：
+%		\begin{itemize}
+%			\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是d-\gls{separation}的。
+%			\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是d-\gls{separation}的。
+%		\end{\itemize}
+	}
 	\label{fig:169}
 \end{figure}
 
@@ -687,7 +689,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/complete}}	
 \fi
-	\caption{TODO}
+	\caption{完全图的例子，完全图能够描述任何的概率分布。这里我们展示了一个带有四个随机变量的例子。（左）完全无向图。在无向图中，完全图是唯一的。（右）一个完全有向图。在有向图中，并不存在唯一的完全图。我们选择一种变量的排序然后对每一个变量画一条指向顺序在其后面的变量的弧。因此存在着关于变量数阶乘数量级的不同种完全图。在这个例子中，我们从左到右从上到下地排序变量。}
 	\label{fig:complete}
 \end{figure}
 
@@ -723,7 +725,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/dm_to_um}}	
 \fi
-	\caption{TODO}
+	\caption{}
 	\label{fig:dm_to_um}
 \end{figure}
 
@@ -750,7 +752,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/um_to_dm}}	
 \fi
-	\caption{TODO}
+	\caption{将一个无向模型转化为一个有向模型。（左）这个无向模型无法转化为有向模型，因为它有一个长度为$4$且不带有\gls{chord}的\gls{loop}。具体说来，这个无向模型包含了两种不同的独立性，并且不存在一个有向模型可以同时描述这两种性质：$\RSa\perp \RSc \mid \{\RSb,\RSd\}$和$\RSb \perp \RSd \mid \{\RSa,\RSc\}$。（中）为了将无向图转化为有向图，我们必须通过保证所有长度大于$3$的\gls{loop}都有\gls{chord}来使得图三角化。为了完成这个，我们可以加一条连接$\RSa$和$\RSc$或者连接$\RSb$和$\RSd$的边。在这个例子中，我们选择添加一条连接$\RSa$和$\RSc$的边。（右）为了完成转化的过程，我们必须给每条边分配一个方向。执行这个任务时，我们必须保证不产生有向环。避免出现有向环的一种方法是赋予节点一定的顺序，然后将每个边从排序较早的节点指向稍后排序的节点。在这个例子中，我们根据变量名的字母进行排序。}
 	\label{fig:um_to_dm}
 \end{figure}
 
@@ -786,7 +788,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/factor_graph}}	
 \fi
-	\caption{TODO}
+	\caption{\gls{factor_graph}如何解决无向网络中的模糊性的一个例子。（左）一个包含三个变量的\gls{clique}组成的无向网络。（中）对应这个无向模型的\gls{factor_graph}。这个\gls{factor_graph}有一个包含三个变量的因子。（右）对应这个无向模型的另一种有效的\gls{factor_graph}。这个\gls{factor_graph}包含了三个因子，每个因子只对应两个变量。这个\gls{factor_graph}上进行的表示，推断和学习相比于中图描述的\gls{factor_graph}都要渐进性地廉价，即使它们表示的是同一个无向模型。}
 	\label{fig:factor_graph}
 \end{figure}
 
@@ -803,7 +805,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 其基本思想是将图中的变量$\RSx_i$使用拓扑排序，使得对于所有$i$和$j$，
-如果$\RSx_i$是$\RSx_j$的父亲结点，则j大于i。
+如果$\RSx_i$是$\RSx_j$的父亲结点，则$j$大于$i$。
 然后可以按此顺序对变量进行采样。
 换句话说，我们可以首先采$\RSx_1\sim P(\RSx_1)$，然后采$\RSx_2\sim P(\RSx_2\mid Pa_{\CalG}(\RSx_2))$，以此类推，直到最后我们采$\RSx_n\sim P(\RSx_n\mid Pa_{\CalG}(\RSx_n))$。
 只要每个条件分布$\RSx_i\sim P(\RSx_i\mid Pa_{\CalG}(\RSx_i))$都很容易从中采样，那么很容易从整个模型中抽样。
@@ -841,7 +843,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 假设我们在随机变量$\RVx$（一个$n$维向量）上有一个\gls{graphical_models}。 
 我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \mid \RSx_{-i})$中抽样。
 由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以仅对$\RSx_i$的邻居条件化。
-不幸的是，在我们遍历\gls{graphical_models}一次并采样 所有n个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
+不幸的是，在我们遍历\gls{graphical_models}一次并采样 所有$n$个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
 相反，我们必须重复该过程并使用它们的邻居的更新的值对所有$n$个变量重新取样。
 在多次重复之后，该过程渐近地收敛到目标分布。
 很难确定样本何时达到期望分布的足够精确的近似。
@@ -1060,7 +1062,7 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
 \else
 	\centerline{\includegraphics{Chapter16/figures/rbm}}	
 \fi
-	\caption{TODO}
+	\caption{一个画成\gls{markov_network}形式的\glssymbol{RBM}}
 	\label{fig:rbm}
 \end{figure}
 
@@ -1074,7 +1076,7 @@ p(\RVh\mid\RVv) = \prod_i p(\RSh_i\mid \RVv)
 以及
 \begin{align}
 \label{eqn:1612}
-p(\RVv\mid\RVh) = \prod_i p(\RSv_i\mid \RVh)
+p(\RVv\mid\RVh) = \prod_i p(\RSv_i\mid \RVh).
 \end{align}
 % 578 head
 
@@ -1084,8 +1086,8 @@ p(\RVv\mid\RVh) = \prod_i p(\RSv_i\mid \RVh)
 \begin{align}
 \label{eqn:1613}
 \begin{aligned}
-p(\RSh_i = 1\mid\RVv) = \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
-p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
+p(\RSh_i = 1\mid\RVv) = \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big),\\
+p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 \end{aligned}
 \end{align}
 结合这些属性可以得到有效的\gls{block_gibbs_sampling}，它在同时采样所有$\Vh$和同时采样所有$\Vv$之间交替。
@@ -1098,7 +1100,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
 \else
 	\centerline{\includegraphics{Chapter16/figures/rbm_samples}}	
 \fi
-	\caption{TODO}
+	\caption{训练好的\glssymbol{RBM}及其权重中的样本。（左）用MNIST训练模型。（右）}
 	\label{fig:rbm_sample}
 \end{figure}
 
@@ -1106,7 +1108,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big)\\
 由于\gls{energy_function}本身只是参数的线性函数，很容易获取\gls{energy_function}的导数。 例如，
 \begin{align}
 \label{eqn:1615}
-\frac{\partial}{\partial W_{i,j}} E(\RVv,\RVh) = - \RSv_i \RSh_j
+\frac{\partial}{\partial W_{i,j}} E(\RVv,\RVh) = - \RSv_i \RSh_j.
 \end{align}
 这两个属性，高效的\gls{gibbs_sampling}和导数计算，使训练过程非常方便。
 在\chapref{chap:confronting_the_partition_function}中，我们将看到，可以通过计算应用于来自模型的样本的这种导数来训练\gls{undirected_model}。
