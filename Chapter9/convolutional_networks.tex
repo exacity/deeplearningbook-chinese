@@ -17,8 +17,8 @@
 我们会对神经网络实践中用得比较多的几种卷积函数的变体进行说明。
 我们也会说明如何在多种不同维数的数据上使用卷积运算。
 之后我们讨论使得卷积运算更加高效的一些方法。
-\gls{CNN}是神经科学的原理影响深度学习的典型代表，我们之后也会讨论这些神经科学的原理，并对卷积神经网路在深度学习发展史中的作用作出评价。
-本章没有涉及如何为你的卷积神经网路选择合适的结构，因为本章的目标是说明\gls{CNN}提供的强大工具，第\ref{chap:practical_methodology}章会对在具体环境中使用相应的工具给出一些指导。
+\gls{CNN}是神经科学的原理影响深度学习的典型代表，我们之后也会讨论这些神经科学的原理，并对卷积神经网络在深度学习发展史中的作用作出评价。
+本章没有涉及如何为你的卷积神经网络选择合适的结构，因为本章的目标是说明\gls{CNN}提供的强大工具，第\ref{chap:practical_methodology}章会对在具体环境中使用相应的工具给出一些指导。
 对于\gls{convolutional_network}结构的研究进展得如此迅速，以至于针对特定问题，数月甚至几周就会产生一个新的最优的网络结构，甚至在写这本书时也不好描述究竟哪种结构是最好的。
 然而，最好的结构也是由本章所描述的基本部件一点一点搭建起来的。
 
@@ -214,7 +214,8 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \subfigure{ \label{fig:chap9_efficiency_of_edge_detection_b}     
 \includegraphics[width=0.35\textwidth]{Chapter9/figures/edges.png}}     
 \fi
-\caption{Tmp}     
+\captionsetup{singlelinecheck=off}
+\caption{边缘检测的效率。右边的图像是通过获得原始图像中的每个像素并减去左边相邻像素的值而形成的。这给出了输入图像中所有垂直方向上的边缘的强度，这对目标检测是有用的操作。两个图像都是280像素的高度。输入图像宽320像素，而输出图像宽319像素。这个变换可以通过包含两个元素的卷积核来描述，并且需要$319\times 280\times 3 = 267,960$个浮点运算（每个输出像素需要两次乘法和一次加法）。为了用矩阵乘法描述相同的变换，需要$320\times 280\times 319\times 280$个或者说超过80亿个元素的矩阵，这使得卷积对于表示这种变换更有效40亿倍。直接运行矩阵乘法的算法将执行超过160亿个浮点运算，这使得卷积在计算上大约有60,000倍的效率。当然，矩阵的大多数元素将为零。如果我们只存储矩阵的非零元，则矩阵乘法和卷积都需要相同数量的浮点运算来计算。矩阵仍然需要包含$2\times 319\times 280=178,640$个元素。将小的局部区域上的相同线性变换应用到整个输入上，卷积是描述这种变换的极其有效的方法。照片来源：Paula Goodfellow。}   
 \label{fig:chap9_efficiency_of_edge_detection}     
 \end{figure}
 % -- 328 --
@@ -245,7 +246,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \section{\glsentrytext{pooling}}
 \label{sec:pooling}
 
-卷积神经网路的卷积层通常包含三级（如图\ref{fig:chap9_conv_layer}所示）。
+卷积神经网络的卷积层通常包含三级（如图\ref{fig:chap9_conv_layer}所示）。
 在第一级中，卷积层并行地进行多个卷积运算来产生一组线性激活函数。
 在第二级中，非线性的激活函数如\gls{ReLU}函数等作用在第一级中的每一个线性输出上。
 这一级有时也被称为\firstgls{detector_stage}。
@@ -298,7 +299,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/learned_rotation}}
 \fi
-\caption{Tmp}
+\caption{学习不变性的示例。使用分离的参数学得多个特征，再使用\gls{pooling}单元进行\gls{pooling}，可以学得对输入的某些变换的不变性。这里我们展示了用三个学得的过滤器和一个\gls{max_pooling}单元可以学得对旋转变换的不变性。这三个过滤器都旨在检测手写的数字5。每个过滤器尝试匹配稍微不同方向的5。当输入中出现5时，相应的过滤器会匹配它并且在探测单元中引起大的激活。然后，无论哪个探测单元被激活，\gls{max_pooling}单元都具有大的激活。我们在这里展示网络如何处理两个不同的输入，导致两个不同的探测单元被激活。然而对\gls{pooling}单元的影响大致相同。这个原则在\gls{maxout}网络\citep{Goodfellow-et-al-ICML2013}和其他卷积网络中使用。空间位置上的\gls{max_pooling}对于平移是天然不变的；这种多通道方法只在学习其他变换时是必要的。}
 \label{fig:chap9_learned_rotation}
 \end{figure}
 
@@ -343,7 +344,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/cnn_classifier}}
 \fi
-\caption{Tmp}
+\caption{\gls{convolutional_network}用于分类的架构示例。本图中使用的具体\gls{stride}和深度并不适合实际使用；它们被设计得非常浅以适合页面。实际的\gls{convolutional_network}也常常涉及大量的分支，不同于这里为简单起见所使用的链式结构。\emph{(左)}处理固定大小的图像的\gls{convolutional_network}。在卷积层和\gls{pooling}层几层交替之后，卷积特征映射的张量被重新整形以展平空间维度。网络的其余部分是一个普通的前馈网络分类器，如第\ref{chap:deep_feedforward_networks}章所述。\emph{(中)}处理大小可变的图像的\gls{convolutional_network}，但仍保持全连接的部分。该网络使用具有可变大小但是数量固定的\gls{pool}的\gls{pooling}操作，以便向网络的全连接部分提供576个单位的固定大小的向量。 \emph{(右)}没有任何全连接权重层的\gls{convolutional_network}。相反，最后的卷积层为每个类输出一个特征映射。该模型可能学习每个类在每个空间位置出现的可能性的映射。将特征映射进行平均得到的单个值，提供了顶部softmax分类器的变量。}
 \label{fig:chap9_cnn_classifier}
 \end{figure}
 
@@ -654,7 +655,8 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 \else
 \centerline{\includegraphics{Chapter9/figures/iterative}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{用于像素标记的\gls{recurrent_convolutional_network}的示例。输入是图像张量$\TSX$，它的轴对应图像的行、列和通道（红，绿，蓝）。目标是输出标签张量$\mathit{\hat{Y}}$，它遵循每个像素的标签的概率分布。该张量的轴对应图像的行、列和不同类别。并不是单次输出$\mathit{\hat{Y}}$，\gls{recurrent_network}通过使用$\mathit{\hat{Y}}$的先前估计作为创建新估计的输入，来迭代地改善其估计。相同的参数用于每个更新的估计，并且估计可以如我们所愿地被改善任意多次。每一步使用的卷积核张量$\TSU$，是用来计算给定输入图像的隐藏表示的。核张量$\TSV$用于产生给定隐藏值时标签的估计。除了第一步之外，核$\TSW$都对$\mathit{\hat{Y}}$进行卷积来提供隐藏层的输入。在第一步中，此项由零代替。因为每一步使用相同的参数，所以这是一个\gls{recurrent_network}的例子，如第\ref{chap:sequence_modeling_recurrent_and_recursive_nets}章所述。}
 \label{fig:chap9_iterative}
 \end{figure}
 
@@ -669,23 +671,39 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 \label{sec:data_types}
 
 \gls{convolutional_network}使用的数据通常包含多个通道，每个通道是时间上或空间中某一点的不同观测量。
-参见表|||c|||来了解具有不同维数和通道数的数据类型的例子。
+参见表\ref{table:data_types}来了解具有不同维数和通道数的数据类型的例子。
  
 % -- 348 --
-  
+\begin{table}[htbp!]
+\centering
+ \begin{tabular}[t]{l|p{0.4\textwidth}|p{0.4\textwidth}}
+& 单通道 & 多通道\\ \hline
+1维 & 
+音频波形：卷积的轴对应于时间。我们将时间离散化并且在每个时间点测量一次波形的振幅。 &  
+骨骼动画(skeleton animation)数据：计算机渲染的3维角色动画是通过随时间调整``骨架''的姿势而生成的。 在每个时间点，角色的姿势通过骨架中的每个关节的角度来描述。我们输入到卷积模型的数据的每个通道，表示一个关节的关于一个轴的角度。\\ \hline
+2维 & 
+已经用\gls{Fourier_transform}预处理的音频数据：我们可以将音频波形变换成2维张量，不同的行对应不同的频率，不同的列对应不同的时间点。在时间轴上使用卷积使模型等效于在时间上移动。在频率轴上使用卷积使得模型等效于在频率上移动，这使得在不同八度音阶中播放的相同旋律产生相同的表示，但处于网络输出中的不同高度。 & %Fourier transform这里不是很清楚，在频率上使用卷积是做什么的？
+彩色图像数据：其中一个通道包含红色像素，另一个包含绿色像素，最后一个包含蓝色像素。在图像的水平轴和竖直轴上移动卷积核，赋予了两个方向上平移等变性。\\ \hline
+3维 &
+体积数据：这种数据一般来源于医学成像技术，例如CT扫描等。 & 
+彩色视频数据：其中一个轴对应着时间，另一个轴对应着视频帧的高度，最后一个对应着视频帧的宽度。\\
+\end{tabular}
+\label{table:data_types}
+\caption{用于\gls{convolutional_network}的不同数据格式的示例。}
+\end{table}
 % -- 349 --
  
 \gls{convolutional_network}用于视频的例子，可以参见\cite{Chen-Ting-2010}。
 
 到目前为止，我们仅讨论了训练和测试数据中的每个样例都有相同的空间维度的情况。
-\gls{convolutional_network}的一个优点是它们还可以处理具有变化的空间范围的输入。
+\gls{convolutional_network}的一个优点是它们还可以处理具有变化的空间尺度的输入。
 这些类型的输入不能用传统的基于矩阵乘法的神经网络来表示。
-这提供了使用\gls{convolutional_network}的令人信服的理由，即使当计算成本和过拟合不是主要问题时。
+这提供了使用\gls{convolutional_network}的令人信服的理由，即使当计算成本和过拟合也不是主要问题时。
 
 例如，考虑一组图像的集合，其中每个图像具有不同的高度和宽度。
 目前还不清楚如何用固定大小的权重矩阵对这样的输入进行建模。
 卷积就可以很直观的应用；核依据输入的大小简单地被使用不同次，并且卷积运算的输出也相应地放缩。
-卷积可以被视为矩阵乘法；相同的卷积核为每种大小的输入包含一个不同大小的双重块循环矩阵。
+卷积可以被视为矩阵乘法；相同的卷积核为每种大小的输入引入了一个不同大小的\gls{doubly_block_circulant_matrix}。
 有时，网络的输出允许和输入一样具有可变的大小，例如如果我们想要为输入的每个像素分配一个类标签。
 在这种情况下，不需要进一步的设计工作。
 在其他情况下，网络必须产生一些固定大小的输出，例如，如果我们想要为整个图像指定单个类标签。
@@ -913,7 +931,8 @@ Gabor函数描述在图像中的2维点处的权重。我们可以认为图像�
 \subfigure{ \label{fig:chap9_Gabor_functions_c}     
 \includegraphics[width=0.3\textwidth]{Chapter9/figures/gabor_scale.png}}     
 \fi
-\caption{Tmp}     
+\captionsetup{singlelinecheck=off}
+\caption{具有各种参数设置的\gls{Gabor_function}。白色表示大的正权重，黑色表示大的负权重，背景灰色对应于零权重。\emph{(左)}控制坐标系的参数具有不同值的\gls{Gabor_function}，这些参数包括：$x_0$、$y_0$和$\gamma$。在该网格中的每个\gls{Gabor_function}被赋予和它在网格中的位置成比例的$x_0$和$y_0$的值，并且$\tau$被选择为使得每个Gabor过滤器对从网格中心辐射出的方向非常敏感。对于其他两幅图，$x_0$、$y_0$和$\gamma$固定为零。\emph{(中)}具有不同Gaussian比例参数$\beta_x$和$\beta_y$的\gls{Gabor_function}。当我们从左到右通过网格时，\gls{Gabor_function}被安排为增加宽度（减少$\beta_x$），当我们从上到下通过网格时，\gls{Gabor_function}被安排为增加高度（减少$\beta_y$）。对于其他两幅图，$\beta$值固定为图像宽度的1.5倍。\emph{(右)}具有不同的正弦参数$f$和$\phi$的\gls{Gabor_function}。当我们从上到下移动时，$f$增加；当我们从左到右移动时，$\phi$增加。对于其他两幅图，$\phi$固定为0，$f$固定为图像宽度的5倍。}     
 \label{fig:chap9_Gabor_functions}     
 \end{figure}
 
@@ -963,11 +982,14 @@ Gaussian因子$ \alpha \exp(-\beta_x x'^2 - \beta_y y'^2)$可以被视为阈值�
 \subfigure{ \label{fig:chap9_feature_detectors_b}     
 \includegraphics[width=0.4\textwidth]{Chapter9/figures/s3c_filters.png}}    
 \fi
-\caption{Tmp}     
+\caption{许多机器学习算法在应用于自然图像时，会学习那些用来检测边缘或边缘的特定颜色的特征。
+这些特征检测器使人联想到已知存在于初级视觉皮层中的\gls{Gabor_function}。
+\emph{(左)}通过应用于小图像块的无监督学习算法（\gls{ss}稀疏编码）学得的权重。%这里不是很懂
+\emph{(右)}由完全\gls{supervised}的卷积\gls{maxout}网络的第一层学得的卷积核。 相邻的过滤器对驱动相同的\gls{maxout_unit}。}     
 \label{fig:chap9_feature_detectors}     
 \end{figure}
 
-\section{卷积神经网路与深度学习的历史}
+\section{卷积神经网络与深度学习的历史}
 \label{sec:convolutional_networks_and_the_history_of_deep_learning}
  
 % -- 359 --
