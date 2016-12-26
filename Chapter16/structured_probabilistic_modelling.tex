@@ -479,7 +479,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 正是基于这个原因，我们把许多的\gls{energy_based_model}叫做\firstgls{BM}\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
 关于什么时候叫\gls{energy_based_model}，什么时候叫\gls{BM}不存在一个公认的判别标准。
 一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如均值-方差\gls{RBM}，也涉及到了实值变量。
-虽然\gls{BM}最初的定义既可以包含隐变量也可以不包含隐变量，但是时至今日\gls{BM}这个术语通常用于指拥有隐含变量的模型，而没有隐含变量的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
+虽然\gls{BM}最初的定义既可以包含\gls{latent_variable}也可以不包含\gls{latent_variable}，但是时至今日\gls{BM}这个术语通常用于指拥有\gls{latent_variable}的模型，而没有\gls{latent_variable}的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
 % 561
 
 
@@ -514,7 +514,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 许多对概率模型进行操作的算法不需要计算$p_{\text{model}}(\Vx)$，而只需要计算$\log p_{\text{model}}(\Vx)$。
-对于具有隐含变量$\Vh$的\gls{energy_based_model}，这些算法有时会将该量的负数称为\firstgls{free_energy}：
+对于具有\gls{latent_variable}$\Vh$的\gls{energy_based_model}，这些算法有时会将该量的负数称为\firstgls{free_energy}：
 \begin{align}
 \label{eqn:168}
 \CalF (\Vx) = -\log \sum_{\Vh} \exp(-E(\Vx,\Vh)).
@@ -885,7 +885,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_i$直接依赖)。
 % 572  end 
 
-一个好的不包含任何潜在变量的$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有非常大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
+一个好的不包含任何\gls{latent_variable}的$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有非常大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
 但是代表这些高阶的交互是昂贵的，首先从计算角度上，存储在存储器中的参数的数量是\gls{clique}中的成员的数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
 % 573  head  
 
@@ -901,19 +901,19 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 573
 
 
-使用隐变量而不是自适应结构避免了离散搜索和多轮训练的需要。 
-可见变量和隐变量之间的固定结构可以使用可见单元和隐藏单元之间的直接交互，从而使得可见单元之间间接交互。
+使用\gls{latent_variable}而不是自适应结构避免了离散搜索和多轮训练的需要。 
+可见变量和\gls{latent_variable}之间的固定结构可以使用可见单元和隐藏单元之间的直接交互，从而使得可见单元之间间接交互。
 使用简单的参数学习技术，我们可以学习到一个具有固定结构的模型，在边缘分布$p(\Vv)$上输入正确的结构。
 % 573 
 
 
-隐含变量还有一个额外的优势，即能够高效的描述$p(\RVv)$。
+\gls{latent_variable}还有一个额外的优势，即能够高效的描述$p(\RVv)$。
 新变量$\RVh$还提供了$\RVv$的替代表示。
-例如，如\secref{sec:mixtures_of_distributions}所示，高斯混合模型学习了一个隐含变量，这个隐含变量对应于特征是从哪一个混合体中抽出。
-这意味着高斯混合模型中的隐变量可以用于做分类。
-在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的隐含变量的。
+例如，如\secref{sec:mixtures_of_distributions}所示，高斯混合模型学习了一个\gls{latent_variable}，这个\gls{latent_variable}对应于特征是从哪一个混合体中抽出。
+这意味着高斯混合模型中的\gls{latent_variable}可以用于做分类。
+在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的\gls{latent_variable}的。
 其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
-许多方法通过学习隐含变量来完成特征学习。
+许多方法通过学习\gls{latent_variable}来完成特征学习。
 通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\mid\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
 % 573
 
@@ -924,7 +924,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 我们可以使用概率模型的主要方法之一是提出关于变量如何相互关联的问题。 
 给定一组医学测试，我们可以询问患者可能患有什么疾病。
-在隐含变量模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \mid \RVv]$。
+在\gls{latent_variable}模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \mid \RVv]$。
 有时我们需要解决这些问题来执行其他任务。 
 我们经常使用\gls{MLE}来训练我们的模型。
 由于
@@ -947,9 +947,9 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 \# P中的问题需要计算解决方案的数量。
 要构建最坏情况的\gls{graphical_models}，想象一下我们在3-SAT问题中定义了二进制变量的\gls{graphical_models}。
 我们可以对这些变量施加均匀分布。
-然后我们可以为每个子句添加一个二进制隐变量，来表示每个子句是否得到满足。
-然后，我们可以添加另一个隐含变量，来表示是否满足所有子句。
-这可以通过构造一个隐含变量的缩减树来完成，树中的每个结点表示其它两个变量是否满足，从而不需要构造一个大的\gls{clique}。
+然后我们可以为每个子句添加一个二进制\gls{latent_variable}，来表示每个子句是否得到满足。
+然后，我们可以添加另一个\gls{latent_variable}，来表示是否满足所有子句。
+这可以通过构造一个\gls{latent_variable}的缩减树来完成，树中的每个结点表示其它两个变量是否满足，从而不需要构造一个大的\gls{clique}。
 该树的叶是每个子句的变量。
 树的根报告整个问题是否满足。
 由于literal上的均匀分布，缩减树的跟结点的边缘分布表示多少比例的分配能够使得该问题成立。
@@ -974,31 +974,31 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 \gls{DL}并不总是涉及特别深的\gls{graphical_models}。
 在\gls{graphical_models}中，我们可以根据\gls{graphical_models}的图而不是图计算来定义模型的深度。
-我们可以认为潜在变量$h_j$处于深度$j$，如果从$h_i$到观察到的最短路径变量是$j$步。
+我们可以认为\gls{latent_variable}$h_j$处于深度$j$，如果从$h_i$到观察到的最短路径变量是$j$步。
 我们通常将模型的深度描述为任何这样的$h_j$的最大深度。 
 这种深度不同于由图计算定义的深度。
-用于\gls{DL}的许多生成模型没有隐含变量或只有一层隐含变量，但使用深度计算图来定义模型中的条件分布。
+用于\gls{DL}的许多生成模型没有\gls{latent_variable}或只有一层\gls{latent_variable}，但使用深度计算图来定义模型中的条件分布。
 % 575
 
 
 \gls{DL}基本上总是利用分布式表示的思想。
-即使是用于\gls{DL}目的的浅层模型（例如预训练浅层模型，稍后将形成深层模型），也几乎总是具有单个大的潜在变量层。
-\gls{DL}模型通常具有比观察到的变量更多的潜变量。
-复杂的变量之间的非线性交互通过多个隐含变量的间接连接来实现。
+即使是用于\gls{DL}目的的浅层模型（例如预训练浅层模型，稍后将形成深层模型），也几乎总是具有单个大的\gls{latent_variable}层。
+\gls{DL}模型通常具有比观察到的变量更多的\gls{latent_variable}。
+复杂的变量之间的非线性交互通过多个\gls{latent_variable}的间接连接来实现。
 % 575
 
 
 相比之下，传统的\gls{graphical_models}通常包含偶尔观察到的变量，即使一些训练样本中的许多变量随机丢失。
 传统模型大多使用高阶项和\gls{structure_learning}来捕获变量之间复杂的非线性相互作用。
-如果有潜在变量，它们通常数量很少。
+如果有\gls{latent_variable}，它们通常数量很少。
 % 575
 
 
 
-隐变量的设计方式在\gls{DL}中也有所不同。
-\gls{DL}实践者通常不希望隐含变量提前采用任何特定的含义，从而训练算法可以自由地开发它需要建模的适用于特定的数据集的概念。
-在事后解释潜在变量通常是很困难的，但是可视化技术可以允许它们表示的一些粗略表征。
-当隐含变量在传统\gls{graphical_models}中使用时，它们通常被赋予具有一些特定含义，比如文档的主题，学生的智力，导致患者症状的疾病等。
+\gls{latent_variable}的设计方式在\gls{DL}中也有所不同。
+\gls{DL}实践者通常不希望\gls{latent_variable}提前采用任何特定的含义，从而训练算法可以自由地开发它需要建模的适用于特定的数据集的概念。
+在事后解释\gls{latent_variable}通常是很困难的，但是可视化技术可以允许它们表示的一些粗略表征。
+当\gls{latent_variable}在传统\gls{graphical_models}中使用时，它们通常被赋予具有一些特定含义，比如文档的主题，学生的智力，导致患者症状的疾病等。
 这些模型通常由研究者解释，并且通常具有更多的理论保证，但是不能扩展到复杂的问题，并且不能在与深度模型一样多的不同背景中重复使用。
 % 576
 
@@ -1014,7 +1014,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 分布式表示具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，分布式表示有一个缺点就是对于精确推断和循环信任传播等传统技术来说不能产生足够稀疏的图。
 结果，\gls{graphical_models}和深度图模型的最大的区别之一就是\gls{DL}中从来不会使用\gls{loopy_belief_propagation}。
 相反的，许多\gls{DL}模型可以用来加速\gls{gibbs_sampling}或者变分推断。
-此外，\gls{DL}模型包含了大量的隐含变量，使得高效的数值计算代码显得格外重要。
+此外，\gls{DL}模型包含了大量的\gls{latent_variable}，使得高效的数值计算代码显得格外重要。
 除了选择高级推断算法之外，这提供了另外的动机，用于将结点分组成层，相邻两层之间用一个矩阵来描述相互作用。
 这要求实现算法的各个步骤具有高效的矩阵乘积运算，或者专门适用于稀疏连接的操作，例如块对角矩阵乘积或卷积。
 % 576
@@ -1034,11 +1034,11 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 \label{sec:example_the_restricted_boltzmann_machine}
 \firstgls{RBM}\citep{Smolensky86}或者\\ \firstgls{harmonium}是\gls{graphical_models}如何用于深度学习的典型例子。 
 \glssymbol{RBM}本身不是一个深层模型。 
-相反，它有一层隐含变量，可用于学习输入的表示。 
+相反，它有一层\gls{latent_variable}，可用于学习输入的表示。 
 在\chapref{chap:deep_generative_models}中，我们将看到\glssymbol{RBM}如何被用来构建许多的深层模型。
 在这里，我们举例展示了\glssymbol{RBM}在许多深度图模型中使用的许多实践：
 它的结点被分成层，层之间的连接由矩阵描述，连通性相对密集。
-该模型能够进行高效的\gls{gibbs_sampling}，并且模型设计的重点在于以很高的自由度来学习隐含变量，而不是设计师指定。
+该模型能够进行高效的\gls{gibbs_sampling}，并且模型设计的重点在于以很高的自由度来学习\gls{latent_variable}，而不是设计师指定。
 之后在\secref{sec:restricted_boltzmann_machines}，我们将更详细地再次讨论\glssymbol{RBM}。
 % 577
 
@@ -1119,7 +1119,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 
 
 
-总的来说，\glssymbol{RBM}展示了典型的\gls{graphical_models}的\gls{DL}方法：结合由矩阵参数化的层之间的高效相互作用通过隐含变量层完成\gls{representation_learning}。
+总的来说，\glssymbol{RBM}展示了典型的\gls{graphical_models}的\gls{DL}方法：结合由矩阵参数化的层之间的高效相互作用通过\gls{latent_variable}层完成\gls{representation_learning}。
 % 579
 
 
