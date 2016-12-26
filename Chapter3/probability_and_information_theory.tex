@@ -363,13 +363,15 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 \end{equation}
 
 图\ref{fig:chap3_normal_color}画出了\gls{normal_distribution}的\gls{PDF}。
+% fig 3.1
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter3/figures/normal_color}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{\gls{normal_distribution}。\gls{normal_distribution}$\CalN(x; \mu, \sigma^2)$呈现经典的``钟形曲线''的形状，其中中心峰的$x$坐标由$\mu$给出，峰的宽度受$\sigma$控制。在这个示例中，我们展示的是\firstgls{standard_normal_distribution}，其中$\mu=0, \sigma = 1$。}
 \label{fig:chap3_normal_color}
 \end{figure}
 
@@ -499,13 +501,15 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 \gls{GMM}是概率密度的\firstgls{universal_approximator}，在这种意义上，任何平滑的概率密度都可以用具有足够多组件的\gls{GMM}以任意精度来逼近。
 
 图\ref{fig:chap3_mog_color}演示了某个\gls{GMM}生成的样例。
+% fig 3.2
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter3/figures/mog_color}}
 \fi
-\caption{Tmp}
+\caption{来自\gls{GMM}的样本。在这个示例中，有三个组件。从左到右，第一个组件具有\gls{isotropic}的协方差矩阵，这意味着它在每个方向上具有相同的方差。 第二个组件具有对角的协方差矩阵，这意味着它可以沿着每个轴的对齐方向单独控制方差。
+该示例中，沿着$x_2$轴的方差要比沿着$x_1$轴的方差大。 第三个组件具有满秩的协方差矩阵，使它能够沿着任意基的方向单独地控制方差。}
 \label{fig:chap3_mog_color}
 \end{figure}
 
@@ -524,13 +528,14 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 \gls{logistic_sigmoid}函数通常用来产生\gls{bernoulli_distribution}中的参数$\phi$，因为它的范围是$(0,1)$，处在$\phi$的有效取值范围内。
 图\ref{fig:chap3_sigmoid_color}给出了sigmoid函数的图示。
 sigmoid函数在变量取绝对值非常大的正值或负值时会出现\firstgls{saturate}现象，意味着函数会变得很平，并且对输入的微小改变会变得不敏感。
+% fig 3.3
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter3/figures/sigmoid_color}}
 \fi
-\caption{Tmp}
+\caption{\gls{logistic_sigmoid}函数。}
 \label{fig:chap3_sigmoid_color}
 \end{figure}
 
@@ -545,13 +550,14 @@ sigmoid函数在变量取绝对值非常大的正值或负值时会出现\firstg
 x^+ = \max(0, x).
 \end{equation}
 图\ref{fig:chap3_softplus_color}给出了\gls{softplus_function}的图示。
+% fig 3.4
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter3/figures/softplus_color}}
 \fi
-\caption{Tmp}
+\caption{\gls{softplus_function}。}
 \label{fig:chap3_softplus_color}
 \end{figure}
 
@@ -715,13 +721,21 @@ H(\RSx) = \SetE_{\RSx \sim P}[I(x)] = -\SetE_{\RSx \sim P}[\log P(x)],
 那些接近确定性的分布(输出几乎可以确定)具有较低的熵；那些接近\gls{uniform_distribution}的\gls{PD}具有较高的熵。
 图\ref{fig:chap3_entropy_demo_color}给出了一个说明。
 当$\RSx$是连续的，\gls{Shannon_entropy}被称为\firstgls{differential_entropy}。
+% fig 3.5
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter3/figures/entropy_demo_color}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption{二值型随机变量的\gls{Shannon_entropy}。%此处不翻译为``二元随机变量''，是因为元表示自变量
+该图说明了更接近确定性的分布是如何具有较低的\gls{Shannon_entropy}，而更接近\gls{uniform_distribution}的分布是如何具有较高的\gls{Shannon_entropy}。
+水平轴是$p$，表示二值型随机变量等于1的概率。
+熵由$(p-1)\log(1-p) - p\log p$给出。
+当$p$接近0时，分布几乎是确定的，因为随机变量几乎总是0。
+当$p$接近1时，分布也几乎是确定的，因为随机变量几乎总是1。
+当$p = 0.5$时，熵是最大的，因为分布在两个结果（0和1）上是均匀的。}
 \label{fig:chap3_entropy_demo_color}
 \end{figure}
 
@@ -741,13 +755,29 @@ D_{\text{KL}}(P||Q) = \SetE_{\RSx \sim P} \left [  \log \frac{P(x)}{Q(x)} \right
 然而，它并不是真的距离因为它不是对称的：对于某些$P$和$Q$，$D_\text{KL}(P||Q) \ne D_\text{KL}(Q||P)$。
 这种非对称性意味着选择$D_\text{KL}(P||Q)$还是$D_\text{KL}(Q||P)$影响很大。
 更多细节可以看图\ref{fig:chap3_kl_direction_color}。
+% fig 3.6
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter3/figures/kl_direction_color}}
 \fi
-\caption{Tmp}
+\caption{\gls{KL_divergence}是不对称的。
+假设我们有一个分布$p(x)$，并且希望用另一个分布$q(x)$来近似它。
+我们可以选择最小化$D_\text{KL}(p||q)$或最小化$D_\text{KL}(q||p)$。
+为了说明每种选择的效果，我们令$p$是两个\gls{gaussian_distribution}的混合，令$q$为单个\gls{gaussian_distribution}。
+选择使用\gls{KL_divergence}的哪个方向是取决于问题的。
+一些应用需要这个近似分布$q$在真实分布$p$放置高概率的所有地方都放置高概率，而其他应用需要这个近似分布$q$在真实分布$p$放置低概率的所有地方都很少放置高概率。 
+\gls{KL_divergence}方向的选择反映了对于每种应用，优先考虑哪一种选择。
+\emph{(左)}最小化$D_\text{KL}(p||q)$的效果。
+在这种情况下，我们选择一个$q$使得它在$p$具有高概率的地方具有高概率。
+当$p$具有多个峰时，$q$选择将这些峰模糊到一起，以便将高概率质量放到所有峰上。 
+\emph{(右)}最小化$D_\text{KL}(q||p)$的效果。
+在这种情况下，我们选择一个$q$使得它在$p$具有低概率的地方具有低概率。
+当$p$具有多个峰并且这些峰间隔很宽时，如该图所示，最小化\gls{KL_divergence}会选择单个峰，以避免将概率质量放置在$p$的多个峰之间的低概率区域中。
+这里，我们说明当$q$被选择成强调左边峰时的结果。
+我们也可以通过选择右边峰来得到\gls{KL_divergence}相同的值。
+如果这些峰没有被足够强的低概率区域分离，那么\gls{KL_divergence}的这个方向仍然可能选择模糊这些峰。}
 \label{fig:chap3_kl_direction_color}
 \end{figure}
 
@@ -796,13 +826,20 @@ p(\RSa, \RSb, \RSc) = p(\RSa)p(\RSb\mid \RSa)p(\RSc\mid\RSb).
 p(\RVx) = \prod_i p(\RSx_i \mid Pa_\CalG(\RSx_i)).
 \end{equation}
 图\ref{fig:chap3_directed}给出了一个有向图的例子以及它表示的\gls{PD}的因子分解。
+% fig 3.7
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter3/figures/directed}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{关于随机变量$\RSa, \RSb, \RSc, \RSd$和$\RSe$的有向图模型。这幅图对应的概率分布可以分解为
+\begin{equation}
+p(\RSa, \RSb, \RSc, \RSd, \RSe) = p(\RSa) p(\RSb \mid \RSa) p(\RSc \mid \RSa, \RSb) p(\RSd \mid \RSb) p(\RSe \mid \RSc).
+\end{equation}
+该图模型使我们能够快速看出此分布的一些性质。例如，$\RSa$和$\RSc$直接相互影响，但$\RSa$和$\RSe$只有通过$\RSc$间接相互影响。
+}
 \label{fig:chap3_directed}
 \end{figure}
 
@@ -823,13 +860,20 @@ $\CalG$中任何全部相连的节点构成的集合被称为团。
 p(\RVx) = \frac{1}{Z} \prod_i \phi^{(i)} \left (\CalC^{(i)} \right).
 \end{equation}
 图\ref{fig:chap3_undirected}给出了一个无向图的例子以及它表示的\gls{PD}的因子分解。
+% fig 3.8
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter3/figures/undirected}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{关于随机变量$\RSa, \RSb, \RSc, \RSd$和$\RSe$的无向图模型。这幅图对应的概率分布可以分解为
+\begin{equation}
+p(\RSa, \RSb, \RSc, \RSd, \RSe) = \frac{1}{Z} \phi^{(1)} (\RSa, \RSb, \RSc) \phi^{(2)}(\RSb, \RSd) \phi^{(3)} (\RSc, \RSe).
+\end{equation}
+该图模型使我们能够快速看出此分布的一些性质。例如，$\RSa$和$\RSc$直接相互影响，但$\RSa$和$\RSe$只有通过$\RSc$间接相互影响。
+}
 \label{fig:chap3_undirected}
 \end{figure}
 
