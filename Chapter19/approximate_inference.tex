@@ -6,13 +6,13 @@
 
 
 许多概率模型是很难训练的，其根本原因是很难进行推断。
-在\gls{DL}中，我们通常有一系列的可见变量$\Vv$和一系列的隐含变量$\Vh$。
+在\gls{DL}中，我们通常有一系列的可见变量$\Vv$和一系列的\gls{latent_variable}$\Vh$。
 推断的挑战往往在于计算$P(\Vh\mid\Vv)$或者计算在$P(\Vh\mid\Vv)$下的期望的困难性。
 这样的操作在一些任务比如\gls{MLE}中往往又是必须的。
 % 623
 
 许多诸如\gls{RBM}和\gls{PPCA}这样的仅仅含有一层隐层的简单的\gls{graphical_models}的定义，往往使得推断操作如计算$P(\Vh\mid\Vv)$或者计算$P(\Vh\mid\Vv)$下的期望是非常容易的。
-不幸的是，大多数的具有多层隐藏变量的\gls{graphical_models}的后验分布都很难处理。
+不幸的是，大多数的具有多层\gls{latent_variable}的\gls{graphical_models}的后验分布都很难处理。
 精确的推断算法需要一个指数量级的运行时间。
 即使一些只有单层的模型，如\gls{sparse_coding}，也存在着这样的问题。
 % 623
@@ -23,7 +23,7 @@
 % 623
 
 
-在\gls{DL}中难以处理的推断问题通常源于\gls{structured_probabilistic_models}中的隐含变量之间的相互作用。
+在\gls{DL}中难以处理的推断问题通常源于\gls{structured_probabilistic_models}中的\gls{latent_variable}之间的相互作用。
 详见\figref{fig:intractable_graphs}的几个例子。
 这些相互作用可能是\gls{undirected_model}的直接作用，也可能是\gls{directed_model}中的一个可见变量的共同祖先之间的\gls{explaining_away}作用。
 % 623 end
@@ -35,7 +35,7 @@
 \else
 	\centerline{\includegraphics[width=0.8\textwidth]{Chapter19/figures/intractable_graphs}}
 \fi
-	\caption{深度学习中难以处理的推断问题通常是由于结构化图模型中隐含变量的相互作用。<bad>这些相互作用产生于当V-结构的子节点是可观察的时候一个隐含变量与另一个隐含变量或者更长的激活路径相连。（左）一个隐含节点相互连接的\gls{srbm}\citep{Osindero+Hinton-2008}。由于存在大量的隐含变量的\gls{clique}，隐含变量的直接连接使得后验分布难以处理。（中）一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。（右）当可见变量是可以观察时这个有向模型的隐含变量之间存在相互作用，因为每两个隐含变量都是\gls{coparent}。即使拥有上图中的某一种结构，一些概率模型依然能够获得易于处理的后验分布。如果我们选择条件概率分布来引入相对于图结构描述的额外的独立性这种情况也是可能出现的。举个例子，\gls{PPCA}的图结构如右图所示，然而由于其条件分布的特殊性质（带有相互正交的基向量的线性高斯条件分布）依然能够进行简单的推断。}
+	\caption{深度学习中难以处理的推断问题通常是由于结构化图模型中\gls{latent_variable}的相互作用。<bad>这些相互作用产生于当V-结构的子节点是可观察的时候一个\gls{latent_variable}与另一个\gls{latent_variable}或者更长的激活路径相连。（左）一个隐含节点相互连接的\gls{srbm}\citep{Osindero+Hinton-2008}。由于存在大量的\gls{latent_variable}的\gls{clique}，\gls{latent_variable}的直接连接使得后验分布难以处理。（中）一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。（右）当可见变量是可以观察时这个有向模型的\gls{latent_variable}之间存在相互作用，因为每两个\gls{latent_variable}都是\gls{coparent}。即使拥有上图中的某一种结构，一些概率模型依然能够获得易于处理的后验分布。如果我们选择条件概率分布来引入相对于图结构描述的额外的独立性这种情况也是可能出现的。举个例子，\gls{PPCA}的图结构如右图所示，然而由于其条件分布的特殊性质（带有相互正交的基向量的线性高斯条件分布）依然能够进行简单的推断。}
 	\label{fig:intractable_graphs}
 \end{figure}
 
@@ -49,7 +49,7 @@
 % 624
 
 
-为了构造这样一个优化问题，假设我们有一个包含可见变量$\Vv$和隐含变量$\Vh$的概率模型。
+为了构造这样一个优化问题，假设我们有一个包含可见变量$\Vv$和\gls{latent_variable}$\Vh$的概率模型。
 我们希望计算观察数据的概率的对数$\log p(\Vv;\Vtheta)$。
 有时候如果消去$\Vh$来计算$\Vx$的边缘分布很费时的话，我们通常很难计算$\log p(\Vv;\Vtheta)$。
 作为替代，我们可以计算一个$\log p(\Vv;\Vtheta)$的下界。
@@ -114,7 +114,7 @@
 % 626
 
 我们介绍的第一个最大化下界$\CalL$的算法是\firstall{EM}。
-在隐变量模型中，这是一个非常热门的训练算法。
+在\gls{latent_variable}模型中，这是一个非常热门的训练算法。
 在这里我们描述\citet{emview}所提出的\glssymbol{EM}算法。
 不像大多数我们在本章中介绍的其他算法一样，\glssymbol{EM}并不是一个近似推断算法，但是是一种能够学到近似后验的算法。
 % 626
@@ -139,7 +139,7 @@
 % 626
 
 
-基于隐变量模型的\gls{SGA}可以被看做是一个\glssymbol{EM}算法的特例，其中\gls{m_step}包括了单次梯度的操作。
+基于\gls{latent_variable}模型的\gls{SGA}可以被看做是一个\glssymbol{EM}算法的特例，其中\gls{m_step}包括了单次梯度的操作。
 \glssymbol{EM}算法的其他变种可以实现多次梯度操作。
 对一些模型，\gls{m_step}可以通过推出理论解直接完成，不同于其他方法，在给定当前$q$的情况下直接求出最优解。
 % 626 end
@@ -171,9 +171,9 @@
 
 
 我们通常使用\firstgls{inference}这个术语来指代给定一定条件下计算一系列变量的概率分布的过程。
-当训练带有隐含变量的概率模型的时候，我们通常关注于计算$p(\Vh\mid\Vv)$。
-在推断中另一个选择是计算一个最有可能的隐含变量的值来代替在其完整分布上的抽样。
-在隐含变量模型中，这意味着计算
+当训练带有\gls{latent_variable}的概率模型的时候，我们通常关注于计算$p(\Vh\mid\Vv)$。
+在推断中另一个选择是计算一个最有可能的\gls{latent_variable}的值来代替在其完整分布上的抽样。
+在\gls{latent_variable}模型中，这意味着计算
 \begin{align}
 \Vh^* = \underset{\Vh}{\arg\max} \ \  p(\Vh\mid\Vv).
 \end{align}
@@ -305,11 +305,11 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 变分方法的优点是我们不需要为分布$q$设定一个特定的参数化的形式。
 我们设定它如何分解，而优化问题中决定了在这些分解限制下的最优的概率分布。
-对离散型的隐含变量来说，这意味着我们使用了传统的优化技巧来优化描述$q$分布的有限个数的变量。
+对离散型的\gls{latent_variable}来说，这意味着我们使用了传统的优化技巧来优化描述$q$分布的有限个数的变量。
 对连续性的变量来说，这意味着我们使用了一个叫做\firstgls{calculus_of_variations}的数学分支来解决对一个空间的函数的优化问题。
 然后决定哪一个函数来表示$q$。
-\gls{calculus_of_variations}是``变分学习''或者``变分推断''这些名字的来历，尽管当隐含变量是离散的时候\gls{calculus_of_variations}并没有用武之地。
-当遇到连续的隐含变量的时候，\gls{calculus_of_variations}是一种很有用的工具，只需要设定分布$q$如何分解，而不需要过多的人工选择模型，比如尝试着设计一个特定的能够精确的近似原后验分布的$q$。
+\gls{calculus_of_variations}是``变分学习''或者``变分推断''这些名字的来历，尽管当\gls{latent_variable}是离散的时候\gls{calculus_of_variations}并没有用武之地。
+当遇到连续的\gls{latent_variable}的时候，\gls{calculus_of_variations}是一种很有用的工具，只需要设定分布$q$如何分解，而不需要过多的人工选择模型，比如尝试着设计一个特定的能够精确的近似原后验分布的$q$。
 % 630 
 
 
@@ -329,11 +329,11 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 
 
-\subsection{离散隐含变量}
+\subsection{离散\gls{latent_variable}}
 \label{sec:discrete_latent_variables}
 % 631  19.4.1
 
-关于离散型的隐含变量的变分推断相对来说更为直接。
+关于离散型的\gls{latent_variable}的变分推断相对来说更为直接。
 我们定义一个分布$q$，通常$q$的每个因子都由一些离散状态的表格定义。
 在最简单的情况中，$\Vh$是二元的并且我们做了\gls{mean_field}的假定，$q$可以根据每一个$h_i$分解。
 在这种情况下，我们可以用一个向量$\hat{\Vh}$来参数化$q$分布，$\hat{\Vh}$的每一个元素都代表一个概率，即$q(h_i = 1\mid \Vv) = \hat{h}_i$。
@@ -341,7 +341,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 
 在确定了如何表示$q$以后，我们简单的优化了它的参数。
-在离散型的隐含变量模型中，这是一个标准的优化问题。
+在离散型的\gls{latent_variable}模型中，这是一个标准的优化问题。
 基本上$q$的选择可以通过任何的优化算法解决，比如说\gls{GD}。
 % 631
 
@@ -420,7 +420,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 % 633
 
 
-\gls{binary_sparse_coding}中的隐含变量是二值的，所以为了表示可分解的$q$我们假设模型为$m$个\gls{bernoulli_distribution}$q(h_i\mid\Vv)$。
+\gls{binary_sparse_coding}中的\gls{latent_variable}是二值的，所以为了表示可分解的$q$我们假设模型为$m$个\gls{bernoulli_distribution}$q(h_i\mid\Vv)$。
 表示\gls{bernoulli_distribution}的一种常见的方法是一个概率向量$\hat{\Vh}$，满足$q(h_i\mid\Vv) = \hat{h}_i$。
 为了避免计算中的误差，比如说计算$\log \hat{h}_i$的时候，我们对$\hat{h}_i$添加一个约束，即$\hat{h}_i$不等于0或者1。
 % 633 
@@ -680,12 +680,12 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 
 
 
-\subsection{连续型隐含变量}
+\subsection{连续型\gls{latent_variable}}
 \label{sec:continuous_latent_variables}
 % 639 end            19.4.3 
 
 
-当我们的\gls{graphical_models}包含了连续型隐含变量的时候，我们仍然可以通过最大化$\CalL$进行变分推断和学习。
+当我们的\gls{graphical_models}包含了连续型\gls{latent_variable}的时候，我们仍然可以通过最大化$\CalL$进行变分推断和学习。
 然而，我们需要使用\gls{calculus_of_variations}来实现关于$q(\Vh\mid\Vv)$最大化$\CalL$。
 % 639 end  
 
@@ -720,7 +720,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 
 
 % 640  
-我们拿一个简单的概率模型作为一个例子，其中隐含变量满足$\Vh\in\SetR^2$，可视的变量只有一个$v$。
+我们拿一个简单的概率模型作为一个例子，其中\gls{latent_variable}满足$\Vh\in\SetR^2$，可视的变量只有一个$v$。
 假设$p(\Vh) = \CalN(\Vh;0,\MI)$以及$p(v\mid\Vh) = \CalN(v;\Vw^{\top}\Vh;1)$，我们可以通过把$\Vh$积掉来简化这个模型，结果是关于$v$的高斯分布。
 这个模型本身并不有趣。
 为了说明\gls{calculus_of_variations}如何应用在概率建模，我们构造了这个模型。

@@ -548,7 +548,12 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \else
 \centerline{\includegraphics{Chapter7/figures/multi_factor_output}}
 \fi
-\caption{TODO}
+\caption{\gls{multitask_learning}在深度学习框架中可以以多种方式进行，该图说明了任务共享相同输入但涉及不同目标随机变量的常见情况。
+\gls{deep_network}的较低层（无论是监督前馈的，还是包括向下箭头的生成组件）可以跨这样的任务共享，而任务特定的参数（分别与从$\Vh^{(1)}$和$\Vh^{(2)}$进入和发出的权重）可以在共享表示$\Vh^{(\text{shared})}$之上学习。
+这里的基本假设是存在解释输入$\RVx$变化的共同因素池，而每个任务与这些因素的子集相关联。
+在该示例中，额外假设顶层\gls{hidden_unit}$\Vh^{(1)}$和$\Vh^{(2)}$专用于每个任务（分别预测$\RVy^{(1)}$和$\RVy^{(2)}$），而一些中间层表示$\Vh^{(\text{shared})}$在所有任务之间共享。
+在\gls{unsupervised_learning}情景中，一些顶层因素不与输出任务$(\Vh^{(3)})$的任意一个关联是有意义的：这些因素可以解释一些输入变化但与预测$\RVy^{(1)}$或$\RVy^{(2)}$不相关。
+}
 \label{fig:chap7_multi_factor_output}
 \end{figure}
 
@@ -568,7 +573,8 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 在每次验证集误差有所改善后，我们存储模型参数的副本。
 当训练算法终止时，我们返回这些参数而不是最新的参数。
 当验证集上的误差在事先指定的循环内没有进一步改善时，算法就会终止。
-此过程在算法|||c|||有更正式的说明。
+此过程在\algref{alg:early_stopping}有更正式的说明。
+
 
 % -- 239 --
 
@@ -576,15 +582,39 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 这可能是\gls{DL}中最常用的\gls{regularization}形式。
 它的流行主要是因为有效性和简单性。
 
-\begin{figure}[!htb]
-\ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
-\else
-\centerline{\includegraphics{Chapter7/figures/learning_curve_color}}
-\fi
-\caption{TODO}
-\label{fig:chap7_learning_curve}
-\end{figure}
+\begin{algorithm}[ht]
+\caption{用于确定最佳训练时间量的\gls{early_stopping}元算法。
+这种元算法是一种通用策略，可以很好在各种训练算法和各种量化验证集误差的方法上工作。
+}
+\label{alg:early_stopping}
+\begin{algorithmic}
+\STATE 令 $n$ 为评估间隔的步数。
+\STATE 令 $p$ 为 ``耐心(patience)''，即观察到较坏的验证集表现这么多次后放弃。 
+\STATE 令 $\Vtheta_{o}$ 为初始参数。
+\STATE $\Vtheta \leftarrow \Vtheta_{o}$
+\STATE $i \leftarrow 0$
+\STATE $j \leftarrow 0$
+\STATE $v \leftarrow \infty$
+\STATE $\Vtheta^* \leftarrow \Vtheta$
+\STATE $i^* \leftarrow i$
+\WHILE{$j < p$}
+    \STATE 运行训练算法$n$步，更新 $\Vtheta$ 。
+    \STATE $i \leftarrow i + n$
+    \STATE $v' \leftarrow \text{ValidationSetError}(\Vtheta)$
+    \IF{$v' < v$}
+        \STATE $j \leftarrow 0$
+        \STATE $\Vtheta^* \leftarrow \Vtheta$
+        \STATE $i^* \leftarrow i$
+        \STATE $v \leftarrow v'$
+    \ELSE
+        \STATE $j \leftarrow j + 1$
+    \ENDIF
+\ENDWHILE
+% pdflatex told me \RETURN was not recognized, wtf
+\STATE 最佳参数为 $\Vtheta^*$，最佳训练步数为$i^*$
+\end{algorithmic}
+\end{algorithm}
+
 
 我们可以认为\gls{early_stopping}是非常高效的超参数选择算法。
 按照这种观点，训练步数仅是另一个超参数。
@@ -594,12 +624,25 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 大多数超参数的选择必须使用昂贵的猜测和检查过程，我们需要在训练开始时猜测一个超参数，然后运行几个步骤检查它的训练效果。
 ``训练时间''唯一只要跑一次训练就能尝试很多值的超参数。
 通过\gls{early_stopping}自动选择超参数的唯一显著的代价是训练期间要定期评估验证集。
-理想情况下，这是可以并行在与主训练过程分离的机器，或独立的CPU，或独离的GPU上完成。
+理想情况下，这是可以并行在与主训练过程分离的机器，或独立的CPU，或独立的GPU上完成。
 如果没有这些额外的资源，可以使用比训练集小的验证集或较不频繁地评估验证集来减小评估代价，较粗略地估算取得最佳的训练时间。
 
 另一个\gls{early_stopping}的额外代价是需要保持最佳的参数副本。
 这种代价一般是可忽略的，因为将它储存在较慢的较大的存储器上，（例如，在GPU内存中训练，但将最佳参数存储在主存储器或磁盘驱动器上）。
 由于最佳参数的写入很少发生而且从不在训练过程中读取，这些偶发的慢写入对总训练时间的影响不大。
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter7/figures/learning_curve_color}}
+\fi
+\caption{学习曲线显示负对数似然损失如何随时间变化（表示为遍历数据集的训练迭代数，或\firstgls{epochs}）。
+在这个例子中，我们在MNIST上训练了一个\gls{maxout}网络。
+我们可以观察到训练目标随时间持续减小，但验证集上的平均损失最终会再次增加，形成不对称的U形曲线。
+}
+\label{fig:chap7_learning_curve}
+\end{figure}
 
 % -- 240 --
 
@@ -617,7 +660,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 % -- 241 --
 
-一种策略（算法|||c|||）是再次初始化模型，然后使用所有数据再次训练。
+一种策略（\algref{alg:early_stopping_retrain}）是再次初始化模型，然后使用所有数据再次训练。
 在这个第二轮训练过程，我们使用第一轮\gls{early_stopping}训练确定的最佳步数。
 此过程有一些细微之处。
 例如，我们没有办法知道重新训练时对参数进行相同次数的更新和对数据集进行相同的遍数哪一个更好。
@@ -628,10 +671,41 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 相反，我们可以监控验证集的平均损失函数，并继续训练，直到它低于\gls{early_stopping}过程停止时的目标值。
 此策略避免了重新训练模型的高成本，但表现并没有那么好。
 例如，验证集的目标不一定能达到之前的目标值，所以这种策略甚至不能保证终止。
-这个过程在算法|||c|||中更正式地展示。
+这个过程在\algref{alg:early_stopping_continue}中更正式地展示。
 
 \gls{early_stopping}对减少训练过程的计算成本也是有用的。
 除了由于限制训练的迭代次数而明显减少的计算成本，还带来了\gls{regularization}的益处（不需要添加惩罚项的\gls{cost_function}或计算这种附加项的\gls{gradient}）。
+
+\begin{algorithm}[ht]
+\caption{使用\gls{early_stopping}确定训练步数，然后在所有数据上训练的元算法。
+}
+\label{alg:early_stopping_retrain}
+\begin{algorithmic}
+\STATE 令 $\MX^{(\text{train})}$ 和 $\Vy^{(\text{train})}$ 为训练集。
+\STATE 将 $\MX^{(\text{train})}$ 和 $\Vy^{(\text{train})}$ 分别分割为 $(\MX^{(\text{subtrain})}$, $\MX^{(\text{valid})})$ 和 $(\Vy^{(\text{subtrain})}$, $\Vy^{(\text{valid})})$。
+\STATE 从随机 $\Vtheta$开始，使用$\MX^{(\text{subtrain})}$ 和 $\Vy^{(\text{subtrain})}$作为训练集，$\MX^{(\text{valid})}$ 和 $\Vy^{(\text{valid})}$ 作为验证集，运行 (\algref{alg:early_stopping})。这将返回最佳训练步数$i^*$。
+\STATE 将 $\Vtheta$ 再次设为随机值。
+\STATE 在 $\MX^{(\text{train})}$ 和 $\Vy^{(\text{train})}$ 上训练 $i^*$ 步。  
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[ht]
+\caption{
+使用\gls{early_stopping}确定将会\gls{overfitting}的目标值，然后在所有数据上训练直到再次
+达到该值的元算法。
+}
+\label{alg:early_stopping_continue}
+\begin{algorithmic}
+\STATE 令 $\MX^{(\text{train})}$ 和 $\Vy^{(\text{train})}$ 为训练集。
+\STATE 将 $\MX^{(\text{train})}$ 和 $\Vy^{(\text{train})}$ 分别分割为 $(\MX^{(\text{subtrain})}$, $\MX^{(\text{valid})})$ 和 $(\Vy^{(\text{subtrain})}$, $\Vy^{(\text{valid})})$。
+\STATE 从随机 $\Vtheta$开始，使用$\MX^{(\text{subtrain})}$ 和 $\Vy^{(\text{subtrain})}$作为训练集，$\MX^{(\text{valid})}$ 和 $\Vy^{(\text{valid})}$ 作为验证集，运行 (\algref{alg:early_stopping})。这会更新$\Vtheta$。
+\STATE $\epsilon \leftarrow J(\Vtheta, \MX^{(\text{subtrain})},\Vy^{(\text{subtrain})})$
+\WHILE{$J(\Vtheta, \MX^{(\text{valid})}, \Vy^{(\text{valid})}) > \epsilon$}
+\STATE 在 $\MX^{(\text{train})}$ 和 $\Vy^{(\text{train})}$ 上训练 $n$ 步。  
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 % -- 242 --
 
@@ -650,7 +724,13 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \else
 \centerline{\includegraphics[width=0.8\textwidth]{Chapter7/figures/reg_l1_vs_l2_mistake}}
 \fi
-\caption{TODO}
+\caption{\gls{early_stopping}效果的示意图。
+(左)实线轮廓线表示负对数似然的轮廓。
+虚线表示从原点开始的\glssymbol{SGD}所经过的轨迹。 % ??
+\gls{early_stopping}的轨迹在较早的点$\tilde \Vw$处停止，而不是停止在最小化代价的点$\Vw^*$处。
+(右)为了对比，使用$L^2$\gls{regularization}效果的示意图。
+虚线圆圈表示$L^2$惩罚的轮廓，$L^2$惩罚使得总代价的最小值比非\gls{regularization}代价的最小值更靠近原点。
+}
 \label{fig:chap7_reg_l1_vs_l2_mistake}
 \end{figure}
 
@@ -880,7 +960,16 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 \else
 \centerline{\includegraphics{Chapter7/figures/bagging}}
 \fi
-\caption{TODO}
+\caption{描述\gls{bagging}如何工作的草图。
+假设我们在上述数据集（包含一个8,一个6和一个9）上训练数字8的检测器。
+假设我们做了两个不同的重采样数据集。
+\gls{bagging}训练程序通过替换采样构建这些数据集。
+第一个数据集忽略9并重复8。
+在这个数据集上，检测器得知数字顶部有一个环就对应于一个8。
+第二个数据集中，我们忽略6并重复9。
+在这种情况下，检测器得知数字底部有一个环就对应于一个8。
+这些单独的分类规则中的每一个都是不可靠的，但如果我们平均它们的输出，就能得到鲁棒的检测器，只有当8的两个环都存在时才能实现最大置信度。
+}
 \label{fig:chap7_bagging}
 \end{figure}
 
@@ -919,7 +1008,12 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 \else
 \centerline{\includegraphics{Chapter7/figures/subnetworks}}
 \fi
-\caption{TODO}
+\caption{\gls{dropout}训练由所有子网络组成的\gls{ensemble}，其中子网络通过从基本网络中删除非输出单元构建。
+我们从具有两个可见单元和两个\gls{hidden_unit}的基本网络开始。
+这四个单元有十六个可能的子集。
+右图展示了从原始网络中丢弃不同的单元子集而形成的所有十六个子网络。
+在这个小例子中，所得到的大部分网络没有输入单元或没有从输入连接到输出的路径。
+当层较宽时，丢弃所有从输入到输出的可能路径的概率变小，所以这个问题对于层较宽的网络不是很重要。}
 \label{fig:chap7_subnetworks}
 \end{figure}
 
@@ -941,7 +1035,14 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 \else
 \centerline{\includegraphics{Chapter7/figures/dropout_fprop}}
 \fi
-\caption{TODO}
+\caption{在使用\gls{dropout}的前馈网络中前向传播的示例。
+(顶部)在此示例中，我们使用具有两个输入单元，具有两个\gls{hidden_unit}的\gls{hidden_layer}以及一个输出单元的前馈网络。
+(底部)为了执行具有\gls{dropout}的前向传播，我们随机地对向量$\Vmu$进行采样，其中网络中的每个输入或\gls{hidden_unit}对应一项。
+$\Vmu$中的每项都是二值的且独立于其他项采样。
+每项为$1$的概率是超参数，对于\gls{hidden_layer}通常为$0.5$，对于输入通常为$0.8$。
+网络中的每个单元乘以相应的\gls{mask}，然后正常地继续通过网络的其余部分前向传播。
+这相当于从\figref{fig:chap7_subnetworks}中随机选择一个子网络并通过它前向传播。
+}
 \label{fig:chap7_dropout_fprop}
 \end{figure}
 % -- 252 --
@@ -1175,9 +1276,27 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter7/figures/panda_577}}
+\centering
+\begin{tabular}{>{\centering\arraybackslash}m{.2\figwidth}m{.5in}>{\centering\arraybackslash}m{.2\figwidth}m{.1in}>{\centering\arraybackslash}m{.2\figwidth}}
+    \centering\arraybackslash
+%abs max for panda was 138, eps was 1., so relative eps is approximately .007
+    \includegraphics[width=.2 \figwidth]{Chapter7/figures/panda_577.png} &%
+    \centering\arraybackslash%
+$\ +\ .007\ \times$ &%
+    \includegraphics[width=.2\figwidth]{Chapter7/figures/nematode_082.png} &%
+    $=$ & %
+    \includegraphics[width=.2\figwidth]{Chapter7/figures/gibbon_993.png} \\
+    $\centering \Vx$     &%
+    & $\text{sign} (\nabla_{\Vx} J(\Vtheta, \Vx, y) )$ & & $\Vx + \epsilon \text{sign} (\nabla_{\Vx} J(\Vtheta, \Vx, y) )$ \\
+    $y=$``panda'' &                & ``nematode''     &   & ``gibbon'' \\
+    w/ 57.7\% confidence &        &   w/ 8.2\% confidence & & w/ 99.3 \% confidence
+\end{tabular}    
 \fi
-\caption{TODO}
+\caption[Fast adversarial sample generation]{
+在ImageNet上应用于GoogLeNet~\citep{Szegedy-et-al-arxiv2014}的\gls{adversarial_example}生成的演示。
+通过添加一个不可察觉的小向量（其中元素等于\gls{cost_function}相对于输入的梯度元素的符号），我们可以改变GoogLeNet对此图像的分类结果。
+经\citet{Goodfellow-2015-adversarial}许可转载。
+}
 \label{fig:chap7_panda_577}
 \end{figure}
 
@@ -1214,7 +1333,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %       Hard to translate
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\glsentrytext{tangent_distance}、\glsentrytext{tangent_prop}和流形切分类}
+\section{\glsentrytext{tangent_distance}、\glsentrytext{tangent_prop}和流形正切分类器}
 \label{sec:tangent_distance_tangent_prop_and_manifold_tangent_classifier}
 许多\gls{ML}的目标旨在假设数据位于低维流形附近来克服维数灾难，如\secref{sec:manifold_learning}描述。
 
@@ -1234,14 +1353,22 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 \end{align}
 这个\gls{regularization}项当然可以通过适当的超参数缩放，并且对于大多数\gls{NN}，我们将需要对许多输出求和(此处为描述简单，$f(\Vx)$为唯一输出)。
 与\gls{tangent_distance}算法一样,切向量推导先验，通常是从变换，如平移、旋转和缩放图像的效果获得形式知识。
-\gls{tangent_prop}不仅用于监督学习\citep{Simard92-short}，还在强化学习\citep{Thrun-NIPS1994}中有所应用。
+\gls{tangent_prop}不仅用于\gls{supervised_learning}\citep{Simard92-short}，还在\gls{RL}\citep{Thrun-NIPS1994}中有所应用。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter7/figures/mtc_color}}
 \fi
-\caption{TODO}
+\caption{\gls{tangent_prop}算法\citep{Simard92-short}和\gls{manifold}正切分类器主要思想的示意图\citep{Dauphin-et-al-NIPS2011-small}，它们都\gls{regularization}分类器的输出函数$f(\Vx)$。
+每条曲线表示不同类别的\gls{manifold}，这里表示为嵌入在二维空间中的一维\gls{manifold}。
+在一条曲线上，我们选择单个点并绘制了一个与类别\gls{manifold}（平行并接触\gls{manifold}）相切的向量以及与类别\gls{manifold}（与\gls{manifold}正交）垂直的向量。
+在多维情况下，可以存在许多切线方向和法线方向。
+我们希望分类函数沿垂直于\gls{manifold}方向上的移动而快速改变，并且不随着沿类别\gls{manifold}方向的移动而改变。
+\gls{tangent_prop}和\gls{manifold}正切分类器都\gls{regularization}$f(\Vx)$不随$\Vx$沿\gls{manifold}的移动而大量改变。
+\gls{tangent_prop}需要用户手动指定计算正切方向的函数（例如指定小平移后的图像保留在相同类别的\gls{manifold}中），而\gls{manifold}正切分类器通过训练\gls{AE}拟合训练数据来估计\gls{manifold}的正切方向 。
+我们将在\chapref{chap:autoencoders}中讨论使用\gls{AE}来估计\gls{manifold}。
+}
 \label{fig:chap7_mtc_color}
 \end{figure}
 % -- 263 --
@@ -1267,11 +1394,11 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 \gls{double_backprop}和\gls{adversarial_training}都要求模型对输入所有方向中的变化（只要该变化较小）都应当是不变的。
 正如数据集增强是\gls{tangent_prop}非无限小的版本，\gls{adversarial_training}是\gls{double_backprop}非无限小的版本。
 
-流形切面分类器\citep{Dauphin-et-al-NIPS2011}无需知道切线向量的先验。
+流形正切分类器\citep{Dauphin-et-al-NIPS2011}无需知道切线向量的先验。
 正如我们将在\chapref{chap:autoencoders}看到，\gls{AE}可以估算流形的切向量。
-流形切面分类器使用这种技术来避免用户指定切向量。
+流形正切分类器使用这种技术来避免用户指定切向量。
 如\figref{fig:chap14_cifar_cae}所示，这些估计的切向量超出了图像（如转化、旋转和缩放）几何的经典不变，还必须掌握因为特定对象（如移动身体的部分）的因素。
-因此根据流形切面分类提出的算法是简单：
+因此根据流形正切分类器提出的算法是简单：
 （1）使用\gls{AE}通过无监督学习来学习流形的结构，以及（2）如\gls{tangent_prop}（\eqnref{eq:767}）一样使用这些切面\gls{regularization}\gls{NN}分类器。
 
 在本章中，我们已经描述了大多数用于\gls{regularization}\gls{NN}的通用策略。
