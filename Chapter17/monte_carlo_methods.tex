@@ -330,7 +330,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 \section{\glsentrytext{gibbs_sampling}}
 \label{sec:gibbs_sampling}
 
-截至目前我们已经了解了如何通过反复的更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。
+截至目前我们已经了解了如何通过反复地更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。
 然而我们还没有提到过如何确定一个有效的$q(\Vx)$分布。
 本书中描述了两种基本的方法。
 第一种方法是从已经学习到的分布$p_{\text{model}}$中推导出$T$，就像下文描述的从\gls{energy_based_model}中采样的案例一样。
@@ -345,7 +345,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 % 590
 
 
-\firstgls{gibbs_sampling}是一种概念简单而又有效的方法来构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
+\firstgls{gibbs_sampling}是一种概念简单而又有效的方法，它构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
 给定他们的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。
 正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\gls{RBM}的例子一样，\gls{RBM}所有的隐层结点可以被同时采样，因为在给定可见层结点的条件下他们相互条件独立。
 同样的，所有的可见层结点也可以被同时采样因为在给定隐藏层结点的情况下他们相互条件独立。
