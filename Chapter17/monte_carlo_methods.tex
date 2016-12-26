@@ -177,16 +177,16 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 \label{sec:markov_chain_monte_carlo_methods}
 
 在许多实例中，我们希望采用\gls{monte_carlo}方法，然而往往又不存在一种直接从目标分布$p_{\text{model}}(\RVx)$中精确采样或者一个好的（方差较小的）\gls{importance_sampling}分布$q(\Vx)$。
-在深度学习的例子中，分布$p_{\text{model}}(\RVx)$往往表达成一个无向的模型。
+在深度学习的例子中，分布$p_{\text{model}}(\RVx)$往往表达成一个无向模型。
 在这种情况下，为了从分布$p_{\text{model}}(\RVx)$中近似采样，我们引入了一种数学工具，它被命名为\firstgls{markov_chain}。
 利用\gls{markov_chain}来进行\gls{monte_carlo}估计的这一类算法被称为\firstgls{mcmc}算法。
 \gls{mcmc}算法在\gls{ML}中的应用在\citet{koller-book2009}中花了大量篇幅描述。
-\gls{mcmc}算法的最标准的要求是只适用模型分布处处不为0的情况。
+\gls{mcmc}算法最标准的要求是只适用模型分布处处不为0的情况。
 因此，最方便的目标分布的表达是从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
 在\gls{energy_based_model}中每一个状态所对应的概率都不为零。
-事实上\gls{mcmc}方法可以被广泛的应用在了许多包含概率为0的状态的概率分布中。
+事实上\gls{mcmc}方法可以被广泛地应用在了许多包含概率为0的状态的概率分布中。
 然而，在这种情况下，关于\gls{mcmc}方法性能的理论保证只能依据具体情况具体分析。
-在\gls{DL}中，应用于\gls{energy_based_model}的通用的理论分析是很常见的。
+在\gls{DL}中，应用于\gls{energy_based_model}的通用理论分析是很常见的。
 % 586 end
 
 
@@ -201,10 +201,10 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 
 在\gls{energy_based_model}中，我们通过使用\gls{markov_chain}来采样，从而避免了先有鸡还是先有蛋的问题。
 \gls{markov_chain}的核心思想是以一个任意状态的点$\Vx$作为起始点。
-随着时间的推移，我们随机的反复的更新状态$\Vx$。
+随着时间的推移，我们随机地反复地更新状态$\Vx$。
 最终$\Vx$成为了一个从$p(\Vx)$中抽出的（接近）比较公正的样本。
-在正式的定义中，\gls{markov_chain}由一个随机状态$x$和一个转移分布$T(\Vx'\mid \Vx)$定义而成，$T(\Vx'\mid \Vx)$是一个概率分布，说明了给定状态$\Vx$的情况下随机的转移到$\Vx'$的概率。
-运行一个\gls{markov_chain}意味着根据转移分布$T(\Vx'\mid \Vx)$反复的用状态$\Vx'$来更新状态$\Vx$。
+在正式的定义中，\gls{markov_chain}由一个随机状态$x$和一个转移分布$T(\Vx'\mid \Vx)$定义而成，$T(\Vx'\mid \Vx)$是一个概率分布，说明了给定状态$\Vx$的情况下随机地转移到$\Vx'$的概率。
+运行一个\gls{markov_chain}意味着根据转移分布$T(\Vx'\mid \Vx)$反复地用状态$\Vx'$来更新状态$\Vx$。
 % 587
 
 
@@ -215,8 +215,8 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 587  
 
 
-接下来我们考虑如果并行的运行无穷多个\gls{markov_chain}会发生什么。
-不同\gls{markov_chain}的所有的状态都会被某一个分布$q^{(t)}(x)$采到，在这里$t$表示消耗的时间数。
+接下来我们考虑如果并行地运行无穷多个\gls{markov_chain}会发生什么。
+不同\gls{markov_chain}的所有状态都会被某一个分布$q^{(t)}(x)$采到，在这里$t$表示消耗的时间数。
 开始时，对每个\gls{markov_chain}，我们采用一个分布$q^{{0}}$来任意的初始化$x$。
 之后，$q^{(t)}$与所有之前跑过的\gls{markov_chain}有关。
 我们的目标就是$q^{(t)}(x)$收敛到$p(x)$。
@@ -249,8 +249,8 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 \end{align}
 % 588
 
-重复的使用\gls{markov_chain}来更新就相当于重复的乘上矩阵$\MA$。
-换一句话说，我们可以认为这一过程就是$\MA$的指数变化：
+重复地使用\gls{markov_chain}来更新就相当于重复地乘上矩阵$\MA$。
+换一句话说，我们可以认为这一过程就是关于$\MA$的指数变化：
 \begin{align}
 \Vv^{(t)} = \MA^{t} \Vv^{(0)}.
 \end{align}
@@ -261,7 +261,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 对于任意状态$x$到任意其它状态$x'$存在一个$t$使得转移概率不为$0$，那么Perron-Frobenius定理~\citep{perron1907theorie,frobenius1908matrizen}可以保证这个矩阵的最大特征值是实数且大小为$1$。
 我们可以看到所有的特征值随着时间呈现指数变化：
 \begin{align}
-\Vv^{(t)} = (\MV \text{diag}(\lambda)\MV^{-1})^{t} \Vv^{(0)} = \MV \text{diag}(\lambda)^t \MV^{-1} \Vv^{(0)}.
+\Vv^{(t)} = (\MV \text{diag}(\Vlambda)\MV^{-1})^{t} \Vv^{(0)} = \MV \text{diag}(\Vlambda)^t \MV^{-1} \Vv^{(0)}.
 \end{align}
 % 588
 
@@ -277,11 +277,11 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 这个条件也适用于收敛之后的每一步。
 这就是特征向量方程。
 作为收敛的静止点，$\Vv$一定是特征值为1所对应的特征向量。
-这个条件保证了收敛到了\gls{stationary_distribution}以后，之后的采样过程不会改变不同的\gls{markov_chain}的状态的分布（尽管转移算子不会改变每个单独的状态）。
+这个条件保证了收敛到了\gls{stationary_distribution}以后，之后的采样过程不会改变不同的\gls{markov_chain}的状态的分布（尽管转移算子自然而然地会改变每个单独的状态）。
 % 588
 
-如果我们正确的选择了转移算子$T$，那么最终的\gls{stationary_distribution}$q$将会等于我们所希望采样的分布$p$。
-我们会简要的介绍如何选择$T$，详见\secref{sec:gibbs_sampling}。
+如果我们正确地选择了转移算子$T$，那么最终的\gls{stationary_distribution}$q$将会等于我们所希望采样的分布$p$。
+我们会简要地介绍如何选择$T$，详见\secref{sec:gibbs_sampling}。
 % 588
 
 
@@ -330,7 +330,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 \section{\glsentrytext{gibbs_sampling}}
 \label{sec:gibbs_sampling}
 
-截至目前我们已经了解了如何通过反复的更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。
+截至目前我们已经了解了如何通过反复地更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。
 然而我们还没有提到过如何确定一个有效的$q(\Vx)$分布。
 本书中描述了两种基本的方法。
 第一种方法是从已经学习到的分布$p_{\text{model}}$中推导出$T$，就像下文描述的从\gls{energy_based_model}中采样的案例一样。
@@ -345,7 +345,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 % 590
 
 
-\firstgls{gibbs_sampling}是一种概念简单而又有效的方法来构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
+\firstgls{gibbs_sampling}是一种概念简单而又有效的方法，它构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
 给定他们的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。
 正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\gls{RBM}的例子一样，\gls{RBM}所有的隐层结点可以被同时采样，因为在给定可见层结点的条件下他们相互条件独立。
 同样的，所有的可见层结点也可以被同时采样因为在给定隐藏层结点的情况下他们相互条件独立。
