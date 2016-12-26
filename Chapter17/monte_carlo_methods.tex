@@ -28,8 +28,8 @@
 
 我们希望从某个分布中采样存在许多理由。
 当我们需要以较小的代价近似许多项的和或某个积分时采样是一种很灵活的选择。
-有时候，我们使用它加速一些很费时却易于处理的和的估计，就像我们使用\gls{minibatch}对整个训练成本进行subsample的情况。
-在其他情况下，我们需要近似一个难以处理的和或积分，例如估计一个\gls{undirected_model}的\gls{partition_function}的对数的梯度。
+有时候，我们使用它加速一些很费时却易于处理的和的估计，就像我们使用\gls{minibatch}对整个训练代价进行\gls{subsample}的情况。
+在其他情况下，我们需要近似一个难以处理的和或积分，例如估计一个\gls{undirected_model}的\gls{partition_function}的对数的梯度时。
 在许多其他情况下，抽样实际上是我们的目标，就像我们想训练一个可以从训练分布采样的模型。
 % 582 
 
@@ -47,7 +47,7 @@ s = \sum_{\Vx} p(\Vx)f(\Vx) = E_p[f(\RVx)]
 \label{eqn:integra}
 s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \end{align}
-为我们所需要估计的和或者积分，写成期望的形式，$p$是一个关于随机变量$\RVx$的概率分布（求和时）或者概率密度函数（求积分时）。
+为我们所需要估计的和或者积分，写成期望的形式，$p$是一个关于随机变量$\RVx$的概率分布（求和时）或者\gls{PDF}（求积分时）。
 % 582 
 
 我们可以通过从$p$中采集$n$个样本$\Vx^{(1)},\ldots,\Vx^{(n)}$来近似$s$并得到一个经验平均值
@@ -67,21 +67,21 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \end{align}
 只需要满足各个单项的方差，即$\text{Var}[f(\Vx^{(i)})]$有界。
 详细地说，我们考虑当$n$增大时$\hat{s}_n$的方差。
-只要$\text{Var}[f(\Vx^{(i)})]<\infty$，方差$\text{Var}[f(\RVx^{(i)})]$减小并收敛到$0$：
+只要满足$\text{Var}[f(\RVx^{(i)})]<\infty$，方差$\text{Var}[\hat{s}_n]$就会减小并收敛到$0$：
 \begin{align}
 \text{Var}[\hat{s}_n] & = \frac{1}{n^2}\sum_{i=1}^{n}\text{Var}[f(\RVx)]\\
 &  = \frac{\text{Var}[f(\RVx)]}{n}.
 \end{align}
-这个简单的结果启迪我们如果估计\gls{monte_carlo}均值中的不确定性或者说是\gls{monte_carlo}估计的期望误差。
-我们计算了$f(\Vx^{(i)})$的经验均值和方差，\footnote{计算无偏估计的方差时，更倾向于用计算偏差平方和除以$n-1$而非$n$。}
+这个简单的结果启迪我们如何估计\gls{monte_carlo}均值中的不确定性或者等价地说是\gls{monte_carlo}估计的期望误差。
+我们计算了$f(\Vx^{(i)})$的经验均值和方差\footnote{计算无偏估计的方差时，更倾向于用计算偏差平方和除以$n-1$而非$n$。}，
 然后将估计的方差除以样本数$n$来得到$\text{Var}[\hat{s}_n]$的估计。
-\firstgls{central_limit_theorem}告诉我们$\hat{s}_n$的分布收敛到以$s$为均值以$\frac{\text{Var}[f(\RVx)]}{n}$为方差的正态分布。
-这使得我们可以利用正态分布的累积密度函数来估计$\hat{s}_n$的置信区间。
+\firstgls{central_limit_theorem}告诉我们$\hat{s}_n$的分布收敛到以$s$为均值以$\frac{\text{Var}[f(\RVx)]}{n}$为方差的\gls{normal_distribution}。
+这使得我们可以利用\gls{normal_distribution}的累积密度函数来估计$\hat{s}_n$的置信区间。
 % 583
 
 以上的所有结论都依赖于我们可以从基准分布$p(\RVx)$中轻易的采样，但是这个假设并不是一直成立的。
 当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在\secref{sec:importance_sampling_chap17}会讲到。
-一种更加通用的方式是采样一系列的趋近于目标分布的估计。
+一种更加通用的方式是采样一系列趋近于目标分布的估计。
 这就是\gls{mcmc}方法（见\secref{sec:markov_chain_monte_carlo_methods}）。
 % 583
 
@@ -122,13 +122,13 @@ p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 \end{align}
 当$q$取到
 \begin{align}
-q^*(\Vx) = \frac{p(\Vx)\mid f(\Vx)\mid}{Z}
+q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z}
 \end{align}
 时，方差达到最小值。
 % 584
 
 
-在这里$Z$表示归一化常数，$Z$的选择使得$q*(\Vx)$之和或者积分为$1$。
+在这里$Z$表示归一化常数，选择适当的$Z$使得$q^*(\Vx)$之和或者积分为$1$。
 一个好的\gls{importance_sampling}分布会把更多的权重放在被积函数较大的地方。
 事实上，当$f(\Vx)$为一个常数的时候，$\Var[\hat{s}_{q^*}]=0$， 这意味着当使用最优的$q$分布的时候，只需要采一个样本就够了。
 当然，这仅仅是因为计算$q^*$的时候已经解决了所有的问题。
@@ -136,12 +136,12 @@ q^*(\Vx) = \frac{p(\Vx)\mid f(\Vx)\mid}{Z}
 % 584
 
 对于\gls{importance_sampling}来说任意$q$分布都是可行的（从得到一个期望上正确的值的角度来说），$q^*$指的是最优的$q$分布。
-从$q^*$中采样往往是不可行的，所以总是采样其它的选择来降低方差。
+从$q^*$中采样往往是不可行的，但是其它仍然能降低方差的$q$的选择还是可行的。
 % 584
 
 
 
-另一种方法是采用\firstgls{biased_importance_sampling}，这种方法有一个优势并不需要归一化的$p$或$q$分布。
+另一种方法是采用\firstgls{biased_importance_sampling}，这种方法有一个优势，即不需要归一化的$p$或$q$分布。
 在处理离散变量的时候，有偏\gls{importance_sampling}估计可以表示为
 \begin{align}
 \label{eqn:bis}
@@ -154,22 +154,22 @@ q^*(\Vx) = \frac{p(\Vx)\mid f(\Vx)\mid}{Z}
 所以这种估计也被叫做的渐进性无偏的。
 % 585
 
-尽管一个好的$q$分布的选择可以显著的提高\gls{monte_carlo}估计的效率，反之一个糟糕的$q$分布的选择则会使效率更糟糕。
+尽管一个好的$q$分布的选择可以显著地提高\gls{monte_carlo}估计的效率，反之一个糟糕的$q$分布的选择则会使效率更糟糕。
 我们回过头来看看方程~\eqref{eqn:variance_of_is}会发现，如果存在一个$q$使得$\frac{p(\Vx)f(\Vx)}{q(\Vx)}$很大，那么这个估计的方差也会很大。
 当$q(\Vx)$很小，而$f(\Vx)$和$p(\Vx)$都较大并且无法抵消$q$时，这种情况会非常明显。
-$q$分布经常会取一些简单常用的分布使得我们能够从$q$分布中容易的采样。
-当$\Vx$是高维数据的时候，$q$分布的简单性使得它很难于$p$或者$p\mid f\mid$相匹配。
-当$q(x^{(i)})\gg p(x^{(i)}) \mid f(x^{(i)})\mid $的时候，\gls{importance_sampling}采到了很多无用的样本（权值之和很小或趋于零）。
-另一方面，当$q(x^{(i)})\ll p(x^{(i)}) \mid f(x^{(i)})\mid $的时候， 样本会很少被采到，其对应的权值却会非常大。
-正因为后一个事件是很少发生的，这些样本很难被采到，通常使得对$s$的估计出现了估计不足，于之前过度估计相对。
+$q$分布经常会取一些简单常用的分布使得我们能够从$q$分布中容易地采样。
+当$\Vx$是高维数据的时候，$q$分布的简单性使得它很难于$p$或者$p\vert f\vert$相匹配。
+当$q(\Vx^{(i)})\gg p(\Vx^{(i)}) \vert f(\Vx^{(i)})\vert $的时候，\gls{importance_sampling}采到了很多无用的样本（权值之和很小或趋于零）。
+另一方面，当$q(\Vx^{(i)})\ll p(\Vx^{(i)}) \vert f(\Vx^{(i)})\vert $的时候， 样本会很少被采到，其对应的权值却会非常大。
+正因为后一个事件是很少发生的，这些样本很难被采到，通常使得对$s$的估计出现了\gls{underestimation}，很难被整体的\gls{overestimation}抵消。
 这样的不均匀情况在高维数据屡见不鲜，因为在高维度分布中联合分布的动态域通常非常大。
 % 585
 
-尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}中的应用中仍然扮演着重要的角色，包括\gls{DL}问题。
+尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}的应用中仍然扮演着重要的角色，包括\gls{DL}问题。
 比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\secref{sec:importance_sampling_chap12}）或者其它有着大量输出结点的\gls{NN}中。
 此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见\secref{sec:estimating_the_partition_function}）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见\secref{sec:variational_autoencoders}）。
 采用\gls{SGD}训练模型参数的时候\gls{importance_sampling}可以用来改进对\gls{cost_function}的梯度的估计，尤其是针对于分类器模型的训练中一小部分错误分类样本产生的\gls{cost_function}。
-在这种情况下更加频繁的采集这些困难的样本可以降低梯度的估计的方差\citep{Hinton06}。
+在这种情况下更加频繁的采集这些困难的样本可以降低梯度估计的方差\citep{Hinton06}。
 % 586 
 
 
@@ -177,16 +177,16 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 \label{sec:markov_chain_monte_carlo_methods}
 
 在许多实例中，我们希望采用\gls{monte_carlo}方法，然而往往又不存在一种直接从目标分布$p_{\text{model}}(\RVx)$中精确采样或者一个好的（方差较小的）\gls{importance_sampling}分布$q(\Vx)$。
-在深度学习的例子中，分布$p_{\text{model}}(\RVx)$往往表达成一个无向的模型。
+在深度学习的例子中，分布$p_{\text{model}}(\RVx)$往往表达成一个无向模型。
 在这种情况下，为了从分布$p_{\text{model}}(\RVx)$中近似采样，我们引入了一种数学工具，它被命名为\firstgls{markov_chain}。
 利用\gls{markov_chain}来进行\gls{monte_carlo}估计的这一类算法被称为\firstgls{mcmc}算法。
-\gls{mcmc}算法在\gls{ML}中的应用在\citep{koller-book2009}中花了大量篇幅描述。
-\gls{mcmc}算法的最标准的要求是只适用模型分布处处不为0的情况。
+\gls{mcmc}算法在\gls{ML}中的应用在\citet{koller-book2009}中花了大量篇幅描述。
+\gls{mcmc}算法最标准的要求是只适用模型分布处处不为0的情况。
 因此，最方便的目标分布的表达是从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
 在\gls{energy_based_model}中每一个状态所对应的概率都不为零。
-事实上\gls{mcmc}方法可以被广泛的应用在了许多包含概率为0的状态的概率分布中。
+事实上\gls{mcmc}方法可以被广泛地应用在了许多包含概率为0的状态的概率分布中。
 然而，在这种情况下，关于\gls{mcmc}方法性能的理论保证只能依据具体情况具体分析。
-在\gls{DL}中，应用于\gls{energy_based_model}的通用的理论分析是很常见的。
+在\gls{DL}中，应用于\gls{energy_based_model}的通用理论分析是很常见的。
 % 586 end
 
 
@@ -201,10 +201,10 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 
 在\gls{energy_based_model}中，我们通过使用\gls{markov_chain}来采样，从而避免了先有鸡还是先有蛋的问题。
 \gls{markov_chain}的核心思想是以一个任意状态的点$\Vx$作为起始点。
-随着时间的推移，我们随机的反复的更新状态$\Vx$。
+随着时间的推移，我们随机地反复地更新状态$\Vx$。
 最终$\Vx$成为了一个从$p(\Vx)$中抽出的（接近）比较公正的样本。
-在正式的定义中，\gls{markov_chain}由一个随机状态$x$和一个转移分布$T(\Vx'\mid \Vx)$定义而成，$T(\Vx'\mid \Vx)$是一个概率分布，说明了给定状态$\Vx$的情况下随机的转移到$\Vx'$的概率。
-运行一个\gls{markov_chain}意味着根据转移分布$T(\Vx'\mid \Vx)$反复的用状态$\Vx'$来更新状态$\Vx$。
+在正式的定义中，\gls{markov_chain}由一个随机状态$x$和一个转移分布$T(\Vx'\mid \Vx)$定义而成，$T(\Vx'\mid \Vx)$是一个概率分布，说明了给定状态$\Vx$的情况下随机地转移到$\Vx'$的概率。
+运行一个\gls{markov_chain}意味着根据转移分布$T(\Vx'\mid \Vx)$反复地用状态$\Vx'$来更新状态$\Vx$。
 % 587
 
 
@@ -215,8 +215,8 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 587  
 
 
-接下来我们考虑如果并行的运行无穷多个\gls{markov_chain}会发生什么。
-不同\gls{markov_chain}的所有的状态都会被某一个分布$q^{(t)}(x)$采到，在这里$t$表示消耗的时间数。
+接下来我们考虑如果并行地运行无穷多个\gls{markov_chain}会发生什么。
+不同\gls{markov_chain}的所有状态都会被某一个分布$q^{(t)}(x)$采到，在这里$t$表示消耗的时间数。
 开始时，对每个\gls{markov_chain}，我们采用一个分布$q^{{0}}$来任意的初始化$x$。
 之后，$q^{(t)}$与所有之前跑过的\gls{markov_chain}有关。
 我们的目标就是$q^{(t)}(x)$收敛到$p(x)$。
@@ -249,8 +249,8 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 \end{align}
 % 588
 
-重复的使用\gls{markov_chain}来更新就相当于重复的乘上矩阵$\MA$。
-换一句话说，我们可以认为这一过程就是$\MA$的指数变化：
+重复地使用\gls{markov_chain}来更新就相当于重复地乘上矩阵$\MA$。
+换一句话说，我们可以认为这一过程就是关于$\MA$的指数变化：
 \begin{align}
 \Vv^{(t)} = \MA^{t} \Vv^{(0)}.
 \end{align}
@@ -261,7 +261,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 对于任意状态$x$到任意其它状态$x'$存在一个$t$使得转移概率不为$0$，那么Perron-Frobenius定理~\citep{perron1907theorie,frobenius1908matrizen}可以保证这个矩阵的最大特征值是实数且大小为$1$。
 我们可以看到所有的特征值随着时间呈现指数变化：
 \begin{align}
-\Vv^{(t)} = (\MV \text{diag}(\lambda)\MV^{-1})^{t} \Vv^{(0)} = \MV \text{diag}(\lambda)^t \MV^{-1} \Vv^{(0)}.
+\Vv^{(t)} = (\MV \text{diag}(\Vlambda)\MV^{-1})^{t} \Vv^{(0)} = \MV \text{diag}(\Vlambda)^t \MV^{-1} \Vv^{(0)}.
 \end{align}
 % 588
 
@@ -277,11 +277,11 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 这个条件也适用于收敛之后的每一步。
 这就是特征向量方程。
 作为收敛的静止点，$\Vv$一定是特征值为1所对应的特征向量。
-这个条件保证了收敛到了\gls{stationary_distribution}以后，之后的采样过程不会改变不同的\gls{markov_chain}的状态的分布（尽管转移算子不会改变每个单独的状态）。
+这个条件保证了收敛到了\gls{stationary_distribution}以后，之后的采样过程不会改变不同的\gls{markov_chain}的状态的分布（尽管转移算子自然而然地会改变每个单独的状态）。
 % 588
 
-如果我们正确的选择了转移算子$T$，那么最终的\gls{stationary_distribution}$q$将会等于我们所希望采样的分布$p$。
-我们会简要的介绍如何选择$T$，详见\secref{sec:gibbs_sampling}。
+如果我们正确地选择了转移算子$T$，那么最终的\gls{stationary_distribution}$q$将会等于我们所希望采样的分布$p$。
+我们会简要地介绍如何选择$T$，详见\secref{sec:gibbs_sampling}。
 % 588
 
 
@@ -330,7 +330,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 \section{\glsentrytext{gibbs_sampling}}
 \label{sec:gibbs_sampling}
 
-截至目前我们已经了解了如何通过反复的更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。
+截至目前我们已经了解了如何通过反复地更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。
 然而我们还没有提到过如何确定一个有效的$q(\Vx)$分布。
 本书中描述了两种基本的方法。
 第一种方法是从已经学习到的分布$p_{\text{model}}$中推导出$T$，就像下文描述的从\gls{energy_based_model}中采样的案例一样。
@@ -345,7 +345,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 % 590
 
 
-\firstgls{gibbs_sampling}是一种概念简单而又有效的方法来构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
+\firstgls{gibbs_sampling}是一种概念简单而又有效的方法，它构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
 给定他们的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。
 正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\gls{RBM}的例子一样，\gls{RBM}所有的隐层结点可以被同时采样，因为在给定可见层结点的条件下他们相互条件独立。
 同样的，所有的可见层结点也可以被同时采样因为在给定隐藏层结点的情况下他们相互条件独立。
@@ -359,28 +359,28 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 % 590
 
 
-\section{不同的峰值之间的\glsentrytext{mixing}挑战}
+\section{不同的\gls{mode}之间的\glsentrytext{mixing}挑战}
 \label{sec:the_challenge_of_mixing_between_separated_modes}
 % 591
 
-使用\gls{mcmc}方法的主要难点在于他们经常\gls{mixing}的很慢。
-理想情况下，从\gls{markov_chain}中采出的连续的样本之间是完全独立的，而且在$\Vx$空间中，\gls{markov_chain}以正比于不同区域对应的概率的概率访问不同区域。
+使用\gls{mcmc}方法的主要难点在于他们经常\gls{mixing}得很慢。
+理想情况下，从\gls{markov_chain}中采出的连续样本之间是完全独立的，而且在$\Vx$空间中，\gls{markov_chain}以正比于不同区域对应的概率的概率访问不同区域。
 然而，在高维的情况下，\gls{mcmc}方法采出的样本可能会具有很强的相关性。
 我们把这种现象称为慢\gls{mixing}甚至\gls{mixing}失败。
-<bad>具有缓慢\gls{mixing}的\gls{mcmc}方法可以被视为对\gls{energy_function}无意地执行类似于带噪声的\gls{GD}的事物，或者相对于链的状态（随机变量被采样）对概率进行等效的噪声爬坡。
-从$\Vx^{(t-1)}$到$\Vx^{(t)}$该链倾向于选取了很小的步长（在\gls{markov_chain}的状态空间中），其中能量$E(\Vx^{(t)})$通常低于或者近似等于能量$E(\Vx^{(t-1)})$，倾向于产生较低能量的移动。
-当从可能性较小的状态（比来自$p(\Vx)$的典型样本拥有更高的能量）开始时，链趋向于逐渐减少状态的能量，并且仅仅偶尔移动到另一个峰值。
-一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，则低能量的区域可以是同一对象的图像的相连的流形），我们称之为峰值，链将倾向于围绕着这个峰值游走（以某一种形式的随机游走）。
-有时候，它会远离该峰值，通常返回该峰值或者（如果找到一条离开的路线）移向另一个峰值。
-问题是对于很多有趣的分布来说成功的离开路线很少，所以\gls{markov_chain}将在一个峰值附近抽取远超过需求的样本。
+<bad>具有缓慢\gls{mixing}的\gls{mcmc}方法可以被视为对\gls{energy_function}无意地执行类似于带噪声的\gls{GD}的操作，或者相对于链的状态（随机变量被采样）依据概率进行等效的噪声爬坡。
+（在\gls{markov_chain}的状态空间中）从$\Vx^{(t-1)}$到$\Vx^{(t)}$该链倾向于选取很小的步长，其中能量$E(\Vx^{(t)})$通常低于或者近似等于能量$E(\Vx^{(t-1)})$，倾向于产生较低能量的移动。
+当从可能性较小的状态（比来自$p(\Vx)$的典型样本拥有更高的能量）开始时，链趋向于逐渐减少状态的能量，并且仅仅偶尔移动到另一个\gls{mode}。
+一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，则低能量的区域可以是同一对象的图像的相连的\gls{manifold}），我们称之为\gls{mode}，链将倾向于围绕着这个\gls{mode}游走（以某一种形式的随机游走）。
+有时候，它会远离该\gls{mode}，通常返回该\gls{mode}或者（如果找到一条离开的路线）移向另一个\gls{mode}。
+问题是对于很多有趣的分布来说成功的离开路线很少，所以\gls{markov_chain}将在一个\gls{mode}附近抽取远超过需求的样本。
 % 591 
 
 
 当考虑到\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。
-在这种情况下，我们考虑在一定步数内从一个峰值走向移动到一个临近的峰值的概率。
-决定这个概率的是两个峰值之间的``能量障碍''的形状。
-隔着一个巨大的``能量障碍'' （低概率的区域）的两个峰值之间的转移的概率是（随着能量障碍的高度）指数下降的，如在\figref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
-当目标分布有很多峰值并且以很高的概率被低概率区域所分割，尤其当\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分又严重依赖其它的变量时，这会导致严重的问题。
+在这种情况下，我们考虑在一定步数内从一个\gls{mode}移动到一个临近\gls{mode}的概率。
+决定这个概率的是两个\gls{mode}之间的``能量障碍''的形状。
+隔着一个巨大``能量障碍'' （低概率的区域）的两个\gls{mode}之间的转移概率是（随着能量障碍的高度）指数下降的，如在\figref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
+当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分又严重依赖其它的变量时，这会导致严重的问题。
 % 591
 
 
@@ -390,7 +390,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 \else
 	\centerline{\includegraphics{Chapter17/figures/good_bad_really_bad_mixing_color}}
 \fi
-	\caption{对于三种分布使用\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为峰值。（左）一个带有两个独立变量的\gls{multivariate_normal_distribution}。由于变量是独立的，\gls{gibbs_sampling}\gls{mixing}得很好。（中）变量存在高度相关性的\gls{multivariate_normal_distribution}。变量之间的相关性使得\gls{markov_chain}很难\gls{mixing}。因为每一个变量的更新需要相对其它变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。（右）峰值之间间距很大且不在轴上对齐的混合高斯。\gls{gibbs_sampling}\gls{mixing}得很慢，因为每次更新一个变量很难跨越不同的峰值。}
+	\caption{对于三种分布使用\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为\gls{mode}。（左）一个带有两个独立变量的\gls{multivariate_normal_distribution}。由于变量是独立的，\gls{gibbs_sampling}\gls{mixing}得很好。（中）变量存在高度相关性的\gls{multivariate_normal_distribution}。变量之间的相关性使得\gls{markov_chain}很难\gls{mixing}。因为每一个变量的更新需要相对其它变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。（右）\gls{mode}之间间距很大且不在轴上对齐的混合高斯。\gls{gibbs_sampling}\gls{mixing}得很慢，因为每次更新一个变量很难跨越不同的\gls{mode}。}
 	\label{fig:chap17_good_bad_really_bad_mixing_color}
 \end{figure}
 
@@ -406,8 +406,8 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 这也意味着\gls{gibbs_sampling}很难会改变这些变量的符号。
 % 592
 
-在实际问题中，这种挑战更加的艰巨因为在实际问题中我们不能仅仅关注在两个峰值之间的转移而是在多个峰值之间。
-如果几个这样的转移是很艰难的，那么很难得到一些覆盖大部分峰值的样本集合，同时\gls{markov_chain}收敛到它的\gls{stationary_distribution}的过程也会非常缓慢。
+在实际问题中，这种挑战更加的艰巨因为在实际问题中我们不能仅仅关注在两个\gls{mode}之间的转移而是在多个\gls{mode}之间。
+如果几个这样的转移是很艰难的，那么很难得到一些覆盖大部分\gls{mode}的样本集合，同时\gls{markov_chain}收敛到它的\gls{stationary_distribution}的过程也会非常缓慢。
 % 592
 
 通过寻找一些相互独立的组以及分块同时更新各组的变量，这个问题有时候可以被解决的。
@@ -415,7 +415,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 归根结底，\gls{markov_chain}最初就是被提出来解决这个问题，即从大组的变量中采样的问题。
 % 592
 
-在含有隐含变量的模型中，其中定义来一个联合分布$p_{\text{model}}(\Vx,\Vh)$，我们经常通过交替的从$p_{\text{model}}(\Vx\mid \Vh)$和$p_{\text{model}}(\Vh\mid \Vx)$中采样来达到抽$\Vx$的目的。
+含有\gls{latent_variable}的模型中定义了一个联合分布$p_{\text{model}}(\Vx,\Vh)$，我们经常通过交替地从$p_{\text{model}}(\Vx\mid \Vh)$和$p_{\text{model}}(\Vh\mid \Vx)$中采样来达到抽$\Vx$的目的。
 从快速\gls{mixing}的角度上说，我们更希望$p_{\text{model}}(\Vh\mid \Vx)$有很大的熵。
 然而，从学习一个$\Vh$的有用表示的角度上考虑，我们还是希望$\Vh$能够包含$\Vx$的足够的信息从而能够较完整的重构它，这意味$\Vh$和$\Vx$有着非常高的互信息。
 这两个目标是相互矛盾的。
@@ -431,30 +431,30 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 	\centerline{\includegraphics{Chapter17/figures/fig-adversarial}}
 	\centerline{\includegraphics{Chapter17/figures/fig-dbm-bad-mixing}}	
 \fi
-	\caption{深度概率模型中一个\gls{mixing}缓慢问题的实例。每张图都是按照从左到右从上到下的顺序的。（左）\gls{gibbs_sampling}从MNIST数据集训练成的\gls{DBM}中采出的连续样本。这些连续的样本之间非常相似。由于\gls{gibbs_sampling}作用于一个深度图模型，相似度更多地是基于语义而非原始视觉特征，但是对于吉布斯链来说从分布的一个峰值转移到另一个仍然是很困难的，比如说改变数字。（右）从\gls{generative_adversarial_networks}中抽出的连续原始样本。因为\gls{ancestral_sampling}生成的样本之间互相独立，所以不存在\gls{mixing}问题。{译者注：此处左右好像搞反了。}}
+	\caption{深度概率模型中一个\gls{mixing}缓慢问题的实例。每张图都是按照从左到右从上到下的顺序的。（左）\gls{gibbs_sampling}从MNIST数据集训练成的\gls{DBM}中采出的连续样本。这些连续的样本之间非常相似。由于\gls{gibbs_sampling}作用于一个深度图模型，相似度更多地是基于语义而非原始视觉特征，但是对于吉布斯链来说从分布的一个\gls{mode}转移到另一个仍然是很困难的，比如说改变数字。（右）从\gls{generative_adversarial_networks}中抽出的连续原始样本。因为\gls{ancestral_sampling}生成的样本之间互相独立，所以不存在\gls{mixing}问题。{译者注：此处左右好像搞反了。}}
 	\label{fig:chap17_fig-dbm-bad-mixing}
 \end{figure}
 
 
-当感兴趣的分布具有对于每个类具有单独的流行结构时，所有这些问题可以使MCMC方法不那么有用：分布集中在许多峰值周围，并且这些模式由大量高能量区域分割。
-我们在许多分类问题中遇到的是这种类型的分布，它将使得MCMC方法非常缓慢地收敛，因为峰值之间的\gls{mixing}缓慢。
+当感兴趣的分布具有对于每个类具有单独的\gls{manifold}结构时，所有这些问题可以使\glssymbol{mcmc}方法不那么有用：分布集中在许多\gls{mode}周围，并且这些模式由大量高能量区域分割。
+我们在许多分类问题中遇到的是这种类型的分布，它将使得\glssymbol{mcmc}方法非常缓慢地收敛，因为\gls{mode}之间的\gls{mixing}缓慢。
 % 593
 
 
 
-\subsection{不同峰值之间通过\glsentrytext{tempering}来\glsentrytext{mixing}}
+\subsection{不同\gls{mode}之间通过\glsentrytext{tempering}来\glsentrytext{mixing}}
 \label{sec:tempering_to_mix_between_modes}
 % 594
 
-当一个分布有一些陡峭的峰值并且它们的周围伴随着概率较低的区域时，很难在不同的峰值之间\gls{mixing}。
-一些加速\gls{mixing}的方法是基于构造一个不同的概率分布，这个概率分布的峰值没有那么高，峰值周围的低谷也没有那么低。
+当一个分布有一些陡峭的\gls{mode}并且它们的周围伴随着概率较低的区域时，很难在不同的\gls{mode}之间\gls{mixing}。
+一些加速\gls{mixing}的方法是基于构造一个不同的概率分布，这个概率分布的\gls{mode}没有那么高，\gls{mode}周围的低谷也没有那么低。
 \gls{energy_based_model}为这个想法提供一种简单的做法。
 截止目前，我们已经描述了一个\gls{energy_based_model}的概率分布的定义：
 \begin{align}
 \label{eqn:1725}
 p(\Vx) \propto \exp(-E(\Vx)).
 \end{align}
-\gls{energy_based_model}可以通过添加一个额外的控制峰值尖锐程度的参数$\beta$来加强：
+\gls{energy_based_model}可以通过添加一个额外的控制\gls{mode}尖锐程度的参数$\beta$来加强：
 \begin{align}
 \label{eqn:1726}
 p_{\beta}(\Vx) \propto \exp(-\beta E(\Vx)).
@@ -466,12 +466,12 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 
 通常情况下，在$\beta = 1$的情况下训练一个模型。
 然而，我们利用了其它\gls{temperature}，尤其是$\beta < 1$的情况。
-\firstgls{tempering}是一种通用的策略，通过从$\beta<1$模型中采样来在$p_1$的不同峰值之间快速\gls{mixing}。
+\firstgls{tempering}是一种通用的策略，通过从$\beta<1$模型中采样来在$p_1$的不同\gls{mode}之间快速\gls{mixing}。
 % 594
 
-基于\gls{tempering}转移的\gls{markov_chain}\citep{Neal94b}初始从高\gls{temperature}的分布中采样使得在不同的峰值之间\gls{mixing}，然后从\gls{temperature}为1的分布中采样。
+基于\firstgls{tempering_transition}\citep{Neal94b}的\gls{markov_chain}初始从高\gls{temperature}的分布中采样使得在不同的\gls{mode}之间\gls{mixing}，然后从\gls{temperature}为1的分布中采样。
 这些技巧被应用在\gls{RBM}中\citep{Salakhutdinov-2010}。
-另一种方法是利用\gls{parallel_tempering}\citep{Iba-2001}。
+另一种方法是利用\firstgls{parallel_tempering}\citep{Iba-2001}。
 其中\gls{markov_chain}并行的模拟许多不同\gls{temperature}的不同的状态。
 最高\gls{temperature}的状态\gls{mixing}较慢，相比之下最低\gls{temperature}的状态，即\gls{temperature}为1时，采出了精确的样本。
 转移算子包括了两个\gls{temperature}之间随机的跳转，所以一个高\gls{temperature}状态分布的样本有足够大的概率跳转到低\gls{temperature}的分布中。
@@ -486,11 +486,11 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 \subsection{深度也许会有助于\glsentrytext{mixing}}
 \label{sec:depth_may_help_mixing}
 
-当我们从隐变量模型$p(\Vh,\Vx)$中采样的时候，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码的非常好，那么从$p(\Vx \mid \Vh)$中采样的时候，并不会太大的改变$\Vx$，那么\gls{mixing}结果会很糟糕。
+当我们从\gls{latent_variable}模型$p(\Vh,\Vx)$中采样的时候，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码的非常好，那么从$p(\Vx \mid \Vh)$中采样的时候，并不会太大的改变$\Vx$，那么\gls{mixing}结果会很糟糕。
 解决这个问题的一种方法是使得$\Vh$成为一种将$\Vx$编码为$\Vh$的深度表达，从而使得\gls{markov_chain}在$\Vh$空间中更快的\gls{mixing}。
-在许多表达学习的算法诸如自编码器（autoencoder）和\gls{RBM}中，$\Vh$的边缘分布并不像$\Vx$的原始数据分布，反而通常表现为均匀的单一峰值的分布。
+在许多表达学习的算法诸如\gls{AE}和\gls{RBM}中，$\Vh$的边缘分布并不像$\Vx$的原始数据分布，反而通常表现为均匀的单一\gls{mode}的分布。
 <bad> 值得指出的是，这些方法往往利用所有可用的表达空间并尽量减小重构误差，因为当训练集上的不同样本能够被非常容易的在$\Vh$空间区分的时候，我们也会很容易的最小化重构误差。
-<bad> \citep{Bengio-et-al-ICML2013-small}观察到这样的现象，带有正则项的堆叠越深的自编码器或者\gls{RBM}，顶端$\Vh$空间的边缘分布越趋向于均匀分布，而且不同峰值（比如说实验中的类别）所对应的区域之间的间距也会越模糊。
+<bad> \citep{Bengio-et-al-ICML2013-small}观察到这样的现象，带有正则项的堆叠越深的自编码器或者\gls{RBM}，顶端$\Vh$空间的边缘分布越趋向于均匀分布，而且不同\gls{mode}（比如说实验中的类别）所对应的区域之间的间距也会越模糊。
 在高层次的空间训练\gls{RBM}使得\gls{gibbs_sampling}\gls{mixing}的更快。
 如何利用这种观察到的现象来辅助训练深度生成模型或者从中采样仍然有待探索。
 % 595

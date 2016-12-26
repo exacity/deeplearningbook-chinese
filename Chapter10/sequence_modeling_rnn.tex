@@ -307,15 +307,15 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 我们从序列的末尾开始，反向进行计算。
 在最后的\gls{time_step}$\tau$, $\Vh^{(\tau)}$只有$\Vo^{(\tau)}$作为后续节点，因此这个\gls{gradient}很简单：
 \begin{align}
- \nabla_{\Vh_{(\tau)}} L = \MV^\top \nabla_{\Vo^{(\tau)}} L.
+ \nabla_{\Vh^{(\tau)}} L = \MV^\top \nabla_{\Vo^{(\tau)}} L.
 \end{align}
 然后，我们可以从时刻$t=\tau-1$到$t=1$反向迭代， 通过时间\gls{backward_propagation}\gls{gradient}，注意$\Vh^{(t)}(t < \tau)$同时具有$\Vo^{(t)}$和$\Vh^{(t+1)}$两个后续节点。
 因此，它的\gls{gradient}由下式计算
 \begin{align}
-  \nabla_{\Vh_{(\tau)}} L = \Big( \frac{\partial \Vh^{(t+1)}}{ \Vh^{(t)}}  \Big)^\top(\nabla_{\Vh^{(t+1)}} L) 
+  \nabla_{\Vh^{(t)}} L = \Big( \frac{\partial \Vh^{(t+1)}}{ \Vh^{(t)}}  \Big)^\top(\nabla_{\Vh^{(t+1)}} L) 
   + \Big( \frac{\partial \Vo^{(t)}}{ \Vh^{(t)}}  \Big)^\top (\nabla_{\Vo^{(t)}} L) \\
   = \MW^\top (\nabla_{\Vh^{(t+1)}} L) \text{diag} \Big( 1 - (\Vh^{(t+1)})^2 \Big) 
-  + \MV^\top \nabla_{\Vo^{(\tau)}} L,
+    + \MV^\top ( \nabla_{\Vo^{(t)}} L ),
 \end{align}
 其中$\text{diag} \Big( 1 - (\Vh^{(t+1)})^2 \Big) $ 表示一个包含元素$1 - (h_i^{(t+1)})^2$的对角矩阵。
 这是关于时刻$t+1$与\gls{hidden_unit}$i$关联的双曲正切的\gls{jacobian}。

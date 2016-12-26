@@ -5,9 +5,9 @@
 % 549
 
 
-\gls{DL}为研究者们提供了许多的指导性的建模和设计算法的思路。
+\gls{DL}为研究者们提供了许多指导性的建模和设计算法的思路。
 其中一种形式是\firstgls{structured_probabilistic_models}。
-我们曾经在\secref{sec:structured_probabilistic_models_chap3}中简要讨论过。
+我们曾经在\secref{sec:structured_probabilistic_models_chap3}中简要讨论过\gls{structured_probabilistic_models}。
 那个简单的介绍已经足够使我们充分了解如何使用\gls{structured_probabilistic_models}来描述第二部分中的某些算法。
 现在，在第三部分，\gls{structured_probabilistic_models}是许多\gls{DL}中重要的研究方向的重要组成部分。
 作为讨论这些研究方向的预备知识，本章详细的描述了\gls{structured_probabilistic_models}。
@@ -16,7 +16,7 @@
 % 549
 
 
-\gls{structured_probabilistic_models}通过使用图描述概率分布中的随机变量之间的直接相互作用来描述一个概率分布。
+\gls{structured_probabilistic_models}通过使用图描述概率分布中随机变量之间的直接相互作用来描述一个概率分布。
 在这里我们使用来图论（一系列的结点通过一系列的边来连接）中的图的概念，由于模型的结构是由图来定义的，所以这些模型也通常被叫做\firstgls{graphical_models}。
 % 549
 
@@ -70,9 +70,9 @@
 	% 551  ok
 	
 	
-	\item \gls{denoising}：给定一个受损的或者观察有误的输入数据$\tilde{\Vx}$，\gls{ML}系统返回了一个对于原始的真实的$\Vx$的估计。
+	\item \gls{denoising}：给定一个受损的或者观察有误的输入数据$\tilde{\Vx}$，\gls{ML}系统返回了一个对原始的真实$\Vx$的估计。
 	举个例子，有时候\gls{ML}系统需要从一张老相片中去除污渍或者抓痕。
-	这个系统会产生多个输出（对应着估计的干净的样本$\Vx$的每一个元素），并且需要我们有一个对输入的整体理解（因为即使一个严重损害的区域也需要在最后的输出中恢复）。
+	这个系统会产生多个输出（对应着估计的干净样本$\Vx$的每一个元素），并且需要我们有一个对输入的整体理解（因为即使一个严重损害的区域也需要在最后的输出中恢复）。
 	% 551 ok
 	
 	\item 缺失值的填补：给定$\Vx$的某些元素作为观察值，模型被要求返回一个$\Vx$的一些或者全部未观察值的概率分布。
@@ -82,8 +82,8 @@
 	
 	\item 采样： 模型从分布$p(\Vx)$中抽取新的样本。
 	应用包含了语音合成，即产生一个听起来很像人说话的声音。
-	这个模型也需要多个输出以及对整体输入的良好建模。
-	即使样本只有一个从错误分布中产生的元素，那么采样的过程肯定是错误的。 
+	这个模型也需要多个输出以及对输入整体的良好建模。
+	即使样本只有一个从错误分布中产生的元素，那么采样的过程也是错误的。 
 \end{itemize}
 
 \figref{fig:chap16_fig-ssrbm}中描述了一个使用较小的自然图片的采样任务。
@@ -118,31 +118,30 @@
 这种方式是不可行的，基于下述几个原因：
 \begin{itemize}
 	\item 内存： 存储开销。
-	对于除了极小的$n$和$k$以外的值来说，表示用表格的形式来这样一个分布需要太多的存储空间。
+	除了极小的$n$和$k$的值，用表格的形式来表示这样一个分布需要太多的存储空间。
 	% 551 
 	
-	
 	\item  统计的高效性： 当模型中的参数个数增加的时候，使用随机估计时训练数据的量也需要相应的增加。
-	因为基于查表的模型拥有天文数字级别的参数，为了准确的拟合，相应的训练集的大小也是相同级别的。
+	因为基于查表的模型拥有天文数字级别的参数，为了准确地拟合，相应的训练集的大小也是相同级别的。
 	任何这样的模型都会导致严重的过拟合，除非我们添加一些额外的假设来联系表格中的不同元素（正如\secref{sec:n_grams}中所举的back-off或者平滑过的\gls{n_gram}模型）。
 	% 552  end
 	
 	\item 运行时间：推断的开销。
-	假设我们需要完成一个推断的任务，其中我们通过对联合分布$P(\Vx)$来计算某些其它的分布，比如说边缘分布$P(x_1)$或者是条件分布$P(x_2\mid x_1)$。
-	计算这样的分布需要对整个表格的某些项进行求和操作，因此这样的操作的运行时间和上述的高昂的内存开销是一个级别的。
+	假设我们需要完成一个推断的任务，其中我们需要使用联合分布$P(\Vx)$来计算某些其它的分布，比如说边缘分布$P(x_1)$或者是条件分布$P(x_2\mid x_1)$。
+	计算这样的分布需要对整个表格的某些项进行求和操作，因此这样的操作的运行时间和上述高昂的内存开销是一个级别的。
 	% 553 head
 	
 	
 	\item 运行时间： 采样的开销。
 	类似的，假设我们想要从这样的模型中采样。
 	最简单的方法就是从均匀分布中采样，$u\sim \text{U}(0,1)$，然后把表格中的元素累加起来，直到和大于$u$，然后返回最后一个加上的元素。
-	最差情况下，这个操作需要读取整个表格，所以相比于其它操作，它需要指数性的时间。
+	最差情况下，这个操作需要读取整个表格，所以相比于其它操作，它需要指数级别的时间。
 \end{itemize}
 % 553 
 
 
 
-基于表格操作的方法的主要问题是我们显示的表示出了每一种可能的变量的取值可能以及每一种相互作用方式。
+基于表格操作的方法的主要问题是我们显式地对每一种可能的变量的子集所产生的每一种可能类型的相互作用建模。
 在实际问题中我们遇到的概率分布远比这个简单。
 通常，许多变量只是间接的相互作用。
 % 553
@@ -157,15 +156,15 @@
 因为Alice第一个跑，所以她的完成时间并不依赖于其它的人。
 Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完以后才能开始跑。
 如果Alice跑的更快，那么Bob也会完成的更快。
-所有的其它关系都可以被类似的推出。
+所有的其它关系都可以被类似地推出。
 最后，Carol的完成时间依赖于她的两个队友。
-如果Alice跑的很慢，那么Bob也会完成的更慢。
+如果Alice跑得很慢，那么Bob也会完成的更慢。
 结果，Carol将会更晚开始跑步，因此她的完成时间也更有可能更晚。
 然而，在给定Bob的完成时间的时候Carol的完成时间只是间接的依赖于Alice的完成时间。
 如果我们已经知道了Bob的完成时间，知道Alice的完成时间对估计Carol的完成时间并无任何帮助。
 这意味着可以通过仅仅两个相互作用来建模这个接力赛。
 这两个相互作用分别是Alice的完成时间对Bob的完成时间的影响和Bob的完成时间对Carol的完成时间的影响。
-在这个模型中，我们可以忽略第三种，间接的相互作用，即Alice的完成时间对Carol的完成时间的影响。
+在这个模型中，我们可以忽略第三种间接的相互作用，即Alice的完成时间对Carol的完成时间的影响。
 % 553
 
 
@@ -480,7 +479,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 正是基于这个原因，我们把许多的\gls{energy_based_model}叫做\firstgls{BM}\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
 关于什么时候叫\gls{energy_based_model}，什么时候叫\gls{BM}不存在一个公认的判别标准。
 一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如均值-方差\gls{RBM}，也涉及到了实值变量。
-虽然\gls{BM}最初的定义既可以包含隐变量也可以不包含隐变量，但是时至今日\gls{BM}这个术语通常用于指拥有隐含变量的模型，而没有隐含变量的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
+虽然\gls{BM}最初的定义既可以包含\gls{latent_variable}也可以不包含\gls{latent_variable}，但是时至今日\gls{BM}这个术语通常用于指拥有\gls{latent_variable}的模型，而没有\gls{latent_variable}的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
 % 561
 
 
@@ -515,7 +514,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 许多对概率模型进行操作的算法不需要计算$p_{\text{model}}(\Vx)$，而只需要计算$\log p_{\text{model}}(\Vx)$。
-对于具有隐含变量$\Vh$的\gls{energy_based_model}，这些算法有时会将该量的负数称为\firstgls{free_energy}：
+对于具有\gls{latent_variable}$\Vh$的\gls{energy_based_model}，这些算法有时会将该量的负数称为\firstgls{free_energy}：
 \begin{align}
 \label{eqn:168}
 \CalF (\Vx) = -\log \sum_{\Vh} \exp(-E(\Vx,\Vh)).
@@ -613,7 +612,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/directed_paths_v}}		
 \fi
-	\caption{TODO}
+	\caption{两个随机变量$\RSa$，$\RSb$之间存在的所有种类的长度为$2$的活跃路径。（a）箭头方向从$\RSa$指向$\RSb$的任何路径，反之也成立。如果$\RSs$可以被观察到，这种路径就是阻塞的。在接力赛的例子中，我们已经看到过这种类型的路径。（b）变量$\RSa$和$\RSb$通过\gls{common_cause}$\RSs$相连。举个例子，假设$\RSs$是一个表示是否存在飓风的变量，$\RSa$和$\RSb$表示两个相邻的气象监控区域的风速。如果我们观察到在$\RSa$处有很高的风速，我们可以期望在$b$处也观察到高速的分。如果观察到$\RSs$那么这条路径就被阻塞了。如果我们已经知道存在飓风，那么无论$\RSa$处观察到什么，我们都能期望$\RSb$处有较高的风速。在$\RSa$处观察到一个低于预期的风速并不会改变我们对$\RSb$处风速的期望（已知有飓风的情况下）。然而，如果$\RSs$不被观测到，那么$\RSa$和$\RSb$是依赖的，即路径是活跃的。（c）变量$\RSa$和$\RSb$都是$\RSs$的父节点。这叫做\firstgls{vstructure}或者\firstgls{collider}。根据\firstgls{explaining_away_effect}，\gls{vstructure}导致$\RSa$和$\RSb$是相关的。在这种情况下，当$\RSs$被观测到时路径是活跃的。举个例子，假设$\RSs$是一个表示你的同事不在工作的变量。变量$\RSa$表示他生病了，而变量$\RSb$表示她在休假，但是这两件事同时发生是不太可能的。如果你发现她在休假，那么这个事实足够解释她的缺席了。你可以推断她很可能没有生病。（d）即使$\RSs$的任意后代都被观察到，\gls{explaining_away_effect}也会起作用。举个例子，假设$\RSc$是一个表示你是否收到你同事的报告的一个变量。如果你注意到你还没有收到这个报告，这会增加你估计的她今天不在工作的概率，这反过来又会增加她今天生病或者度假的概率。阻塞\gls{vstructure}中的路径的唯一方法就是共享子节点的后代一个都观察不到。}
 	\label{fig:168}
 \end{figure}
 
@@ -725,7 +724,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/dm_to_um}}	
 \fi
-	\caption{}
+	\caption{通过构造\gls{moralized_graph}将有向模型（上一行）转化为无向模型（下一行）的例子。（左）只需要把有向边替换成无向边就可以把这个简单的链转化为一个\gls{moralized_graph}。得到的无向模型包含了完全相同的独立关系和条件独立关系。（中）这个图是不丢失独立性的情况下无法转化为无向模型的最简单的有向模型。这个图包含了一个完整的\gls{immorality}结构。因为$\RSa$和$\RSb$都是$\RSc$的父节点，当$\RSc$被观察到时它们之间通过活跃路径相连。为了捕捉这个相关性，无向模型必须包含一个包含所有三个变量的\gls{clique}。这个\gls{clique}无法编码$\RSa \perp \RSb$这个信息。（右）通常讲，\gls{moralization}的过程会给图添加许多边，因此丢失了一些独立性。举个例子，这个\gls{sparse_coding}图需要在每一对隐含单元之间添加\gls{moralization}的边，因此也引入了二次数量级的新的直接依赖关系。}
 	\label{fig:dm_to_um}
 \end{figure}
 
@@ -886,7 +885,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_i$直接依赖)。
 % 572  end 
 
-一个好的不包含任何潜在变量的$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有非常大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
+一个好的不包含任何\gls{latent_variable}的$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有非常大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
 但是代表这些高阶的交互是昂贵的，首先从计算角度上，存储在存储器中的参数的数量是\gls{clique}中的成员的数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
 % 573  head  
 
@@ -902,19 +901,19 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 573
 
 
-使用隐变量而不是自适应结构避免了离散搜索和多轮训练的需要。 
-可见变量和隐变量之间的固定结构可以使用可见单元和隐藏单元之间的直接交互，从而使得可见单元之间间接交互。
+使用\gls{latent_variable}而不是自适应结构避免了离散搜索和多轮训练的需要。 
+可见变量和\gls{latent_variable}之间的固定结构可以使用可见单元和隐藏单元之间的直接交互，从而使得可见单元之间间接交互。
 使用简单的参数学习技术，我们可以学习到一个具有固定结构的模型，在边缘分布$p(\Vv)$上输入正确的结构。
 % 573 
 
 
-隐含变量还有一个额外的优势，即能够高效的描述$p(\RVv)$。
+\gls{latent_variable}还有一个额外的优势，即能够高效的描述$p(\RVv)$。
 新变量$\RVh$还提供了$\RVv$的替代表示。
-例如，如\secref{sec:mixtures_of_distributions}所示，高斯混合模型学习了一个隐含变量，这个隐含变量对应于特征是从哪一个混合体中抽出。
-这意味着高斯混合模型中的隐变量可以用于做分类。
-在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的隐含变量的。
+例如，如\secref{sec:mixtures_of_distributions}所示，高斯混合模型学习了一个\gls{latent_variable}，这个\gls{latent_variable}对应于特征是从哪一个混合体中抽出。
+这意味着高斯混合模型中的\gls{latent_variable}可以用于做分类。
+在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的\gls{latent_variable}的。
 其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
-许多方法通过学习隐含变量来完成特征学习。
+许多方法通过学习\gls{latent_variable}来完成特征学习。
 通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\mid\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
 % 573
 
@@ -925,7 +924,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 我们可以使用概率模型的主要方法之一是提出关于变量如何相互关联的问题。 
 给定一组医学测试，我们可以询问患者可能患有什么疾病。
-在隐含变量模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \mid \RVv]$。
+在\gls{latent_variable}模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \mid \RVv]$。
 有时我们需要解决这些问题来执行其他任务。 
 我们经常使用\gls{MLE}来训练我们的模型。
 由于
@@ -948,9 +947,9 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 \# P中的问题需要计算解决方案的数量。
 要构建最坏情况的\gls{graphical_models}，想象一下我们在3-SAT问题中定义了二进制变量的\gls{graphical_models}。
 我们可以对这些变量施加均匀分布。
-然后我们可以为每个子句添加一个二进制隐变量，来表示每个子句是否得到满足。
-然后，我们可以添加另一个隐含变量，来表示是否满足所有子句。
-这可以通过构造一个隐含变量的缩减树来完成，树中的每个结点表示其它两个变量是否满足，从而不需要构造一个大的\gls{clique}。
+然后我们可以为每个子句添加一个二进制\gls{latent_variable}，来表示每个子句是否得到满足。
+然后，我们可以添加另一个\gls{latent_variable}，来表示是否满足所有子句。
+这可以通过构造一个\gls{latent_variable}的缩减树来完成，树中的每个结点表示其它两个变量是否满足，从而不需要构造一个大的\gls{clique}。
 该树的叶是每个子句的变量。
 树的根报告整个问题是否满足。
 由于literal上的均匀分布，缩减树的跟结点的边缘分布表示多少比例的分配能够使得该问题成立。
@@ -975,31 +974,31 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 \gls{DL}并不总是涉及特别深的\gls{graphical_models}。
 在\gls{graphical_models}中，我们可以根据\gls{graphical_models}的图而不是图计算来定义模型的深度。
-我们可以认为潜在变量$h_j$处于深度$j$，如果从$h_i$到观察到的最短路径变量是$j$步。
+我们可以认为\gls{latent_variable}$h_j$处于深度$j$，如果从$h_i$到观察到的最短路径变量是$j$步。
 我们通常将模型的深度描述为任何这样的$h_j$的最大深度。 
 这种深度不同于由图计算定义的深度。
-用于\gls{DL}的许多生成模型没有隐含变量或只有一层隐含变量，但使用深度计算图来定义模型中的条件分布。
+用于\gls{DL}的许多生成模型没有\gls{latent_variable}或只有一层\gls{latent_variable}，但使用深度计算图来定义模型中的条件分布。
 % 575
 
 
 \gls{DL}基本上总是利用分布式表示的思想。
-即使是用于\gls{DL}目的的浅层模型（例如预训练浅层模型，稍后将形成深层模型），也几乎总是具有单个大的潜在变量层。
-\gls{DL}模型通常具有比观察到的变量更多的潜变量。
-复杂的变量之间的非线性交互通过多个隐含变量的间接连接来实现。
+即使是用于\gls{DL}目的的浅层模型（例如预训练浅层模型，稍后将形成深层模型），也几乎总是具有单个大的\gls{latent_variable}层。
+\gls{DL}模型通常具有比观察到的变量更多的\gls{latent_variable}。
+复杂的变量之间的非线性交互通过多个\gls{latent_variable}的间接连接来实现。
 % 575
 
 
 相比之下，传统的\gls{graphical_models}通常包含偶尔观察到的变量，即使一些训练样本中的许多变量随机丢失。
 传统模型大多使用高阶项和\gls{structure_learning}来捕获变量之间复杂的非线性相互作用。
-如果有潜在变量，它们通常数量很少。
+如果有\gls{latent_variable}，它们通常数量很少。
 % 575
 
 
 
-隐变量的设计方式在\gls{DL}中也有所不同。
-\gls{DL}实践者通常不希望隐含变量提前采用任何特定的含义，从而训练算法可以自由地开发它需要建模的适用于特定的数据集的概念。
-在事后解释潜在变量通常是很困难的，但是可视化技术可以允许它们表示的一些粗略表征。
-当隐含变量在传统\gls{graphical_models}中使用时，它们通常被赋予具有一些特定含义，比如文档的主题，学生的智力，导致患者症状的疾病等。
+\gls{latent_variable}的设计方式在\gls{DL}中也有所不同。
+\gls{DL}实践者通常不希望\gls{latent_variable}提前采用任何特定的含义，从而训练算法可以自由地开发它需要建模的适用于特定的数据集的概念。
+在事后解释\gls{latent_variable}通常是很困难的，但是可视化技术可以允许它们表示的一些粗略表征。
+当\gls{latent_variable}在传统\gls{graphical_models}中使用时，它们通常被赋予具有一些特定含义，比如文档的主题，学生的智力，导致患者症状的疾病等。
 这些模型通常由研究者解释，并且通常具有更多的理论保证，但是不能扩展到复杂的问题，并且不能在与深度模型一样多的不同背景中重复使用。
 % 576
 
@@ -1015,7 +1014,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 分布式表示具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，分布式表示有一个缺点就是对于精确推断和循环信任传播等传统技术来说不能产生足够稀疏的图。
 结果，\gls{graphical_models}和深度图模型的最大的区别之一就是\gls{DL}中从来不会使用\gls{loopy_belief_propagation}。
 相反的，许多\gls{DL}模型可以用来加速\gls{gibbs_sampling}或者变分推断。
-此外，\gls{DL}模型包含了大量的隐含变量，使得高效的数值计算代码显得格外重要。
+此外，\gls{DL}模型包含了大量的\gls{latent_variable}，使得高效的数值计算代码显得格外重要。
 除了选择高级推断算法之外，这提供了另外的动机，用于将结点分组成层，相邻两层之间用一个矩阵来描述相互作用。
 这要求实现算法的各个步骤具有高效的矩阵乘积运算，或者专门适用于稀疏连接的操作，例如块对角矩阵乘积或卷积。
 % 576
@@ -1035,11 +1034,11 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 \label{sec:example_the_restricted_boltzmann_machine}
 \firstgls{RBM}\citep{Smolensky86}或者\\ \firstgls{harmonium}是\gls{graphical_models}如何用于深度学习的典型例子。 
 \glssymbol{RBM}本身不是一个深层模型。 
-相反，它有一层隐含变量，可用于学习输入的表示。 
+相反，它有一层\gls{latent_variable}，可用于学习输入的表示。 
 在\chapref{chap:deep_generative_models}中，我们将看到\glssymbol{RBM}如何被用来构建许多的深层模型。
 在这里，我们举例展示了\glssymbol{RBM}在许多深度图模型中使用的许多实践：
 它的结点被分成层，层之间的连接由矩阵描述，连通性相对密集。
-该模型能够进行高效的\gls{gibbs_sampling}，并且模型设计的重点在于以很高的自由度来学习隐含变量，而不是设计师指定。
+该模型能够进行高效的\gls{gibbs_sampling}，并且模型设计的重点在于以很高的自由度来学习\gls{latent_variable}，而不是设计师指定。
 之后在\secref{sec:restricted_boltzmann_machines}，我们将更详细地再次讨论\glssymbol{RBM}。
 % 577
 
@@ -1062,7 +1061,7 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
 \else
 	\centerline{\includegraphics{Chapter16/figures/rbm}}	
 \fi
-	\caption{一个画成\gls{markov_network}形式的\glssymbol{RBM}}
+	\caption{一个画成\gls{markov_network}形式的\glssymbol{RBM}。}
 	\label{fig:rbm}
 \end{figure}
 
@@ -1100,7 +1099,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 \else
 	\centerline{\includegraphics{Chapter16/figures/rbm_samples}}	
 \fi
-	\caption{训练好的\glssymbol{RBM}及其权重中的样本。（左）用MNIST训练模型。（右）}
+	\caption{<bad>训练好的\glssymbol{RBM}及其权重中的样本。（左）用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。每一列是一个单独的\gls{gibbs_sampling}过程。没遗憾表示另一个$1000$步\gls{gibbs_sampling}的输出。连续的样本之间彼此高度相关。（右）对应的权重向量。将本图结果与图\ref{fig:s3c_samples}中描述的样本和权重相比。由于\glssymbol{RBM}的先验$p(\Vh)$没有限制为\gls{factorial}，这里的样本表现得更好。采样时\glssymbol{RBM}能够学习到哪些特征需要一起出现。另一方面说，\glssymbol{RBM}后验$p(\Vh \mid \Vv)$是\gls{factorial}的，而\gls{sparse_coding}的后验并不是，所以在特征提取上\gls{sparse_coding}模型表现得更好。其它的模型可以使用非\gls{factorial}的$p(\Vh)$和非\gls{factorial}的$p(\Vh \mid \Vh)$。图片的复制经过\citet{lisa_tutorial_rbm}的允许。}
 	\label{fig:rbm_sample}
 \end{figure}
 
@@ -1120,7 +1119,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 
 
 
-总的来说，\glssymbol{RBM}展示了典型的\gls{graphical_models}的\gls{DL}方法：结合由矩阵参数化的层之间的高效相互作用通过隐含变量层完成\gls{representation_learning}。
+总的来说，\glssymbol{RBM}展示了典型的\gls{graphical_models}的\gls{DL}方法：结合由矩阵参数化的层之间的高效相互作用通过\gls{latent_variable}层完成\gls{representation_learning}。
 % 579
 
 
