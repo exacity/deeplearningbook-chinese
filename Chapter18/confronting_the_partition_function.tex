@@ -113,11 +113,32 @@
 \label{sec:stochastic_maximum_likelihood_and_contrastive_divergence}
 实现\eqnref{eq:18.15}最简单的方法是，每次需要计算梯度时，\gls{burn_in}随机初始化的一组\gls{markov_chain}。
 当使用\gls{SGD}进行学习时，这意味着\gls{markov_chain}必须在每次梯度步骤中被\gls{burn_in}。
-这种方法引导下的训练过程如算法18.1所示。
+这种方法引导下的训练过程如\algref{alg:naive_cd}所示。
 内循环中\gls{burn_in}\gls{markov_chain}的计算成果过高，导致这个过程在计算上是不可行的，
 但是该过程是其他更实际的近似算法的起点。
 
 % -- 599 --
+\begin{algorithm}[ht]
+\caption{一种朴素的\glssymbol{mcmc}算法，使用梯度上升最大化具有难解\gls{partition_function}的对数似然。}
+\label{alg:naive_cd}
+\begin{algorithmic}
+\STATE 设步长 $\epsilon$ 为一个小正数。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以允许\gls{burn_in}。在小图像集上训练一个\glssymbol{RBM}大致设为100 。
+\WHILE{不收敛}
+\STATE 从训练集中采包含 $m$ 个样本$\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$的\gls{minibatch}。
+\STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta)$.
+\STATE 初始化$m$ 个样本 $\{ \tilde{\RVx}^{(1)}, \dots, \tilde{\RVx}^{(m)} \}$ 为随机值（例如，从均匀或正态分布中采，或大致与模型边缘分布匹配的分布）。
+\FOR{$i=1$ to $k$}
+    \FOR{$j=1$ to $m$}
+        \STATE $\tilde{\RVx}^{(j)} \leftarrow \text{gibbs\_update}(\tilde{\RVx}^{(j)}).$
+    \ENDFOR
+\ENDFOR
+\STATE $\RVg \leftarrow \RVg - \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}( \tilde{\RVx}^{(i)} ; \Vtheta ).$
+\STATE $\Vtheta \leftarrow \Vtheta + \epsilon \RVg.$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 我们可以将\glssymbol{mcmc}方法视为在两种力之间平衡最大似然，一种力增大数据发生的模型分布，另一种力减小模型样本发生的模型分布。
 \figref{fig:chap18_pos_and_neg_phase}展示了这个过程。
@@ -131,7 +152,7 @@
 \else
 \centerline{\includegraphics{Chapter18/figures/pos_and_neg_phase_color}}
 \fi
-\caption{算法\ref{}的角度的``\gls{positive_phase}''和``\gls{negative_phase}''。（左）<bad>在\gls{positive_phase}中，我们从数据分布中采样，然后push up到它们的未经归一化的概率上。这意味着在push on up越多的地方数据点的概率越高。（右）在\gls{negative_phase}中，我们从模型分布中采样，然后push down到它们的未经归一化的概率上。这与\gls{positive_phase}的作用相反，给未经归一化概率处处添加了一个大常数。当数据分布和模型分布相等时，\gls{positive_phase}push up数据点和\gls{negative_phase}push down 数据点的机会相等。此时，不再有任何的梯度（期望上说），训练也必须停止。}
+\caption{\algref{alg:naive_cd}角度的``\gls{positive_phase}''和``\gls{negative_phase}''。（左）<bad>在\gls{positive_phase}中，我们从数据分布中采样，然后push up到它们的未经归一化的概率上。这意味着在push on up越多的地方数据点的概率越高。（右）在\gls{negative_phase}中，我们从模型分布中采样，然后push down到它们的未经归一化的概率上。这与\gls{positive_phase}的作用相反，给未经归一化概率处处添加了一个大常数。当数据分布和模型分布相等时，\gls{positive_phase}push up数据点和\gls{negative_phase}push down 数据点的机会相等。此时，不再有任何的梯度（期望上说），训练也必须停止。}
 \label{fig:chap18_pos_and_neg_phase}
 \end{figure}
 
@@ -147,14 +168,37 @@
 正如我们将在\secref{sec:learned_approximate_inference}中看到的，其他\gls{ML}由于其他原因从模型分布中抽取样本，这些算法也能提供睡觉做梦的解释。
 
 
-在这种理解学习\gls{positive_phase}和\gls{negative_phase}的作用之后，我们尝试设计一个比算法18.1计算代价更低的替代算法。
+在这种理解学习\gls{positive_phase}和\gls{negative_phase}的作用之后，我们尝试设计一个比\algref{alg:naive_cd}计算代价更低的替代算法。
 简单的\glssymbol{mcmc}算法的主要计算成本是每一步的随机初始化\gls{burn_in}\gls{markov_chain}的成本。
 一个自然的解决方法是初始化\gls{markov_chain}为一个非常接近模型分布的分布，从而操作中的\gls{burn_in}步骤不会很多。
 
 % -- 601 --
+\begin{algorithm}[ht]
+\caption{\gls{contrastive_divergence}算法，使用梯度上升作为优化程序。}
+\label{alg:cd}
+\begin{algorithmic}
+\STATE 设步长 $\epsilon$ 为一个小正数。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以让从 $p_\text{data}$初始化并从 $p(\RVx; \Vtheta)$采样的\gls{markov_chain}混合 。在小图像集上训练一个\glssymbol{RBM}大致设为1-20。
+\WHILE{不收敛}
+\STATE 从训练集中采包含 $m$ 个样本 $\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$ 的\gls{minibatch}。
+\STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta).$
+    \FOR{$i=1$ to $m$}
+        \STATE $\tilde{\RVx}^{(i)} \leftarrow \RVx^{(i)}.$
+    \ENDFOR
+\FOR{$i=1$ to $k$}
+    \FOR{$j=1$ to $m$}
+        \STATE $\tilde{\RVx}^{(j)} \leftarrow \text{gibbs\_update}(\tilde{\RVx}^{(j)}).$
+    \ENDFOR
+\ENDFOR
+\STATE $\RVg \leftarrow \RVg - \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}( \tilde{\RVx}^{(i)} ; \Vtheta ) .$
+\STATE $\Vtheta \leftarrow \Vtheta + \epsilon \RVg.$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
 
-\textbf{\gls{contrastive_divergence}}（\glssymbol{contrastive_divergence}，或者是具有$k$个Gibbs步的\glssymbol{contrastive_divergence}-k）算法在每个步骤中初始化\gls{markov_chain}为抽取自数据分布中的样本\citep{Hinton-PoE-2000,Hinton-RBMguide-small}。
-这个算法展示在算法18.2中。
+
+\textbf{\gls{contrastive_divergence}}（\glssymbol{contrastive_divergence}，或者是具有$k$个Gibbs步的\glssymbol{contrastive_divergence}-$k$）算法在每个步骤中初始化\gls{markov_chain}为抽取自数据分布中的样本\citep{Hinton-PoE-2000,Hinton-RBMguide-small}。
+这个算法展示在\algref{alg:cd}中。
 从数据分布中获取样本是计算代价最小的，因为它们已经在数据集中了。
 初始时，数据分布并不接近模型分布，因此\gls{negative_phase}不是非常准确。
 幸运的是，\gls{positive_phase}仍然可以准确地增加数据的模型概率。
@@ -176,7 +220,7 @@
 \else
 \centerline{\includegraphics{Chapter18/figures/spurious_mode_color}}
 \fi
-\caption{一个\gls{spurious_modes}。说明\gls{contrastive_divergence}（算法\ref{}）的\gls{negative_phase}为何无法压缩\gls{spurious_modes}的例子。一个\gls{spurious_modes}指的是一个在模型分布中出现数据分布中却不存在的模式。由于\gls{contrastive_divergence}从数据点中初始化它的\gls{markov_chain}然后运行\gls{markov_chain}了仅仅几步，不太可能到达模型中离数据点较远的模式。这意味着从模型中采样时，我们有时候会得到一些与数据并不相似的样本。这也意味着由于在这些模式上浪费了一些概率质量，模型很难把较高的概率质量集中与正确的模式上。出于可视化的目的，这个图使用了某种程度上说更加简单的距离的概念－－－在$\SetR$的数轴上\gls{spurious_modes}与正确的模式有很大的距离。这对应着基于局部移动$\SetR$上的单个变量$x$的\gls{markov_chain}。对于大部分深度概率模型来说，\gls{markov_chain}是基于\gls{gibbs_sampling}的，并且对于单个变量产生非局部的移动但是无法同时移动所有的变量。对于这些问题来说，考虑edit距离比欧式距离通常更好。然而，高维空间的edit距离很难在二维空间作图展示。}
+\caption{一个\gls{spurious_modes}。说明\gls{contrastive_divergence}（\algref{alg:cd}）的\gls{negative_phase}为何无法压缩\gls{spurious_modes}的例子。一个\gls{spurious_modes}指的是一个在模型分布中出现数据分布中却不存在的模式。由于\gls{contrastive_divergence}从数据点中初始化它的\gls{markov_chain}然后运行\gls{markov_chain}了仅仅几步，不太可能到达模型中离数据点较远的模式。这意味着从模型中采样时，我们有时候会得到一些与数据并不相似的样本。这也意味着由于在这些模式上浪费了一些概率质量，模型很难把较高的概率质量集中与正确的模式上。出于可视化的目的，这个图使用了某种程度上说更加简单的距离的概念－－－在$\SetR$的数轴上\gls{spurious_modes}与正确的模式有很大的距离。这对应着基于局部移动$\SetR$上的单个变量$x$的\gls{markov_chain}。对于大部分深度概率模型来说，\gls{markov_chain}是基于\gls{gibbs_sampling}的，并且对于单个变量产生非局部的移动但是无法同时移动所有的变量。对于这些问题来说，考虑edit距离比欧式距离通常更好。然而，高维空间的edit距离很难在二维空间作图展示。}
 \label{fig:chap18_spurious_mode}
 \end{figure}
 
@@ -208,7 +252,7 @@
 
 解决\glssymbol{contrastive_divergence}许多问题的一个不同策略是，在每个梯度步骤中初始化\gls{markov_chain}为先前梯度步骤的状态值。
 这个方法首先在应用数学和统计学社群被发现命名为\textbf{\gls{SML}}（\glssymbol{SML}）\citep{Younes98onthe}，后来又在\gls{DL}社区中以名称\textbf{\gls{persistent_contrastive_divergence}}（\glssymbol{persistent_contrastive_divergence}，或者每个更新中具有$k$个Gibbs步骤的\glssymbol{persistent_contrastive_divergence}-k）独立地被重新发现\citep{Tieleman08-small}。
-具体请看算法18.3。
+具体请看\algref{alg:sml}。
 这种方法的基本思想是，只要随机梯度算法得到的步长很小，那么前一步骤的模型将相似于当前步骤的模型。
 因此，来自先前模型分布的样本将非常接近于来自当前模型分布的样本，因此用这些样本初始化的\gls{markov_chain}将不需要花费很多时间来混合。
 
@@ -222,6 +266,28 @@
 他们发现，\glssymbol{SML}在\glssymbol{RBM}上得到了最佳的测试集对数似然，并且如果\glssymbol{RBM}的\gls{hidden_unit}被用作\glssymbol{SVM}分类器的特征，那么\glssymbol{SML}会得到最好的分类精度。
 
 % -- 604 --
+\begin{algorithm}[ht]
+\caption{\gls{SML}/\gls{persistent_contrastive_divergence}算法，使用梯度上升作为优化程序。}
+\label{alg:sml}
+\begin{algorithmic}
+\STATE 设步长 $\epsilon$ 为一个小正数。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以让从 $p(\RVx; \Vtheta + \epsilon \RVg)$ 采样的\gls{markov_chain}\gls{burn_in}（从采自$p(\RVx; \Vtheta)$的样本开始）。
+在小图像集上训练一个\glssymbol{RBM}大致设为1，对于更复杂的模型如\gls{DBM}可能要设为5-50。
+\STATE  初始化$m$ 个样本 $\{ \tilde{\RVx}^{(1)}, \dots, \tilde{\RVx}^{(m)} \}$ 为随机值（例如，从均匀或正态分布中采，或大致与模型边缘分布匹配的分布）。
+\WHILE{不收敛}
+\STATE 从训练集中采包含 $m$ 个样本 $\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$ 的\gls{minibatch}。
+\STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta).$
+\FOR{$i=1$ to $k$}
+    \FOR{$j=1$ to $m$}
+        \STATE $\tilde{\RVx}^{(j)} \leftarrow \text{gibbs\_update}(\tilde{\RVx}^{(j)}).$
+    \ENDFOR
+\ENDFOR
+\STATE $\RVg \leftarrow \RVg - \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}( \tilde{\RVx}^{(i)} ; \Vtheta ).$
+\STATE $\Vtheta \leftarrow \Vtheta + \epsilon \RVg.$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 如果随机梯度算法移动模型可以比\gls{markov_chain}在迭代步中混合更快，那么\glssymbol{SML}容易变得不准确。
 如果$k$太小或$\epsilon$太大的时候，这有可能发生。
