@@ -25,7 +25,7 @@
 \item 搭建好系统以确定性能的瓶颈。
 诊断哪个部分的性能差于预期，以及是否因为过拟合，欠拟合，或者数据或软件中的缺陷造成的。
 
-\item 根据系统上的具体观察反复进行逐步变动，如收集新数据，调整超参数，或改变算法。
+\item 根据系统上的具体观察反复进行逐步变动，如收集新数据，调整\gls{hyperparameter}，或改变算法。
 \end{itemize}
 
 我们将使用街景地址号码\gls{transcription_system}\citep{Goodfellow+et+al-ICLR2014a}作为一个正在运行的示例。
@@ -49,19 +49,19 @@
 训练数据的数量可以因为各种原因受到限制。
 当你的目标是打造现实世界中最好的产品或服务时，通常可能需要收集更多的数据，但必须确定误差进一步减少的价值，并与收集更多数据的成本做权衡。
 数据收集可能耗费时间，金钱，或带来人类痛苦（例如，你的数据收集过程涉及侵入体内的医疗测试）。
-当你的目标是要回答一个关于在一个固定基准上哪个算法效果更好的科学问题时，该基准规范通常确定了训练集，不能收集更多的数据。
+当你的目标是要回答一个关于在一个固定\gls{benchmarks}上哪个算法效果更好的科学问题时，该\gls{benchmarks}规范通常确定了训练集，不能收集更多的数据。
 
 % -- 410 --
 
 如何确定合理的性能期望？
-在学术界，通常我们可以根据先前公布的基准结果来获取一些\gls{error_rate}的估计。
+在学术界，通常我们可以根据先前公布的\gls{benchmarks}结果来获取一些\gls{error_rate}的估计。
 在现实世界中，我们知道一个应用的\gls{error_rate}有必要是安全的，具有成本效益的，或吸引消费者的。
 一旦确定了你想要的现实\gls{error_rate}，你的设计将由如何达到这个\gls{error_rate}来指导。
 
 除了\gls{performance_metrics}这个目标值之外，另一个重要的考虑是度量的选择。
 几种不同的\gls{performance_metrics}可以被用来度量一个包括\gls{ML}成分的完整应用的效能。
 这些\gls{performance_metrics}通常不同于训练模型的损失函数。 
-如\secref{sec:the_performance_measure_p}所述，通常会度量一个系统的准确率，或等价的\gls{error_rate}。
+如\secref{sec:the_performance_measure_p}所述，通常会度量一个系统的\gls{accuracy}，或等价的\gls{error_rate}。
 
 然而，许多应用需要更高级的度量。
 
@@ -79,13 +79,13 @@
 \gls{precision}是模型报告的检测是正确的比例，而\gls{recall}则是真实事件被检测到的比例。
 检测器总是说没人患这种病，可能会有一个很高的\gls{precision}，但\gls{recall}为零。
 报告每个人都患病的检测器可能有很高的\gls{recall}，但是\gls{precision}等于患病人群的百分比（在我们的例子是$0.0001\%$，每一百万人只有一人患病）。
-当使用\gls{precision}和\gls{recall}时，通常会画\textbf{PR曲线}，y轴表示精度，x轴表示\gls{recall}。
+当使用\gls{precision}和\gls{recall}时，通常会画\textbf{PR曲线}，y轴表示\gls{precision}，x轴表示\gls{recall}。
 如果检测到的事件发生了，那么分类器会生成一个更高的值。
 例如，\gls{feedforward_network}设计为检测一种疾病，估计一个医疗结果由特征$\Vx$表示的人患病的概率为$\hat{y} = P(y=1\mid\Vx)$。
 每当这个值超过某个阈值时，我们报告检测结果。
 通过调整阈值，我们能以\gls{precision}换\gls{recall}。
 在很多情况下，我们希望用一个数而不是曲线来概括分类器的性能。
-要做到这一点，我们可以转换精度$p$和\gls{recall}$r$为\textbf{F-score}
+要做到这一点，我们可以转换\gls{precision}$p$和\gls{recall}$r$为\textbf{F-score}
 \begin{equation}
 	F = \frac{2pr}{p+r}.
 \end{equation}
@@ -117,10 +117,10 @@
 
 % -- 412 --
 
-\section{默认的基准模型}
+\section{默认的\glsentrytext{baseline}模型}
 \label{sec:default_baseline_models}
 确定\gls{performance_metrics}和目标后，任何实际应用的下一步是尽快建立一个合理的\gls{end_to_end}系统。
-在本节中，我们提供了关于不同情况下使用哪种算法作为第一基准方法的建议。
+在本节中，我们提供了关于不同情况下使用哪种算法作为第一\gls{baseline}方法的建议。
 值得注意的是，\gls{DL}研究进展迅速，所以本书出版后很快可能会有更好的默认算法。
 
 根据您问题的复杂性，开始时可能无需使用\gls{DL}。
@@ -138,7 +138,7 @@
 （在不同问题上表现得更好或更坏的流行衰减方案包括线性衰减到一个固定的最低学习率，指数衰减，或每次发生验证错误高原时降低学习率$2-10$倍）。
 另一个非常合理的选择是Adam。
 \gls{batch_normalization}对优化性能有着显著的影响，特别是对卷积网络和具有S型非线性的网络。
-虽然在最初的基准中忽略\gls{batch_normalization}是合理的，然而当优化似乎出现问题时，应该迅速使用\gls{batch_normalization}。
+虽然在最初的\gls{baseline}中忽略\gls{batch_normalization}是合理的，然而当优化似乎出现问题时，应该迅速使用\gls{batch_normalization}。
 
 除非您的训练集包含数千万或更多的样本，您应该在一开始就包含一些轻微形式的正则化。 
 \gls{early_stopping}应该被普遍采用。
@@ -155,9 +155,9 @@
 这有些是针对特定领域的。
 某些领域，比如自然语言处理，被认为能够很大程度上受益于\gls{unsupervised_learning}技术，如学习无监督\gls{word_embeddings}。
 在其他领域，如计算机视觉，除非是半监督的设定下（有标签的样本数量很少）\citep{Kingma-et-al-NIPS2014,Rasmus-et-al-arxiv2015}，目前\gls{unsupervised_learning}并没有带来益处。
-如果您的应用所在环境中，\gls{unsupervised_learning}被认为是很重要的，那么将其包含在您的第一个\gls{end_to_end}基准中。
+如果您的应用所在环境中，\gls{unsupervised_learning}被认为是很重要的，那么将其包含在您的第一个\gls{end_to_end}\gls{baseline}中。
 否则，只有在您想解决无监督问题时，第一次尝试才使用\gls{unsupervised_learning}。
-您总能在之后发现您的初始基准过拟合的时候，加入\gls{unsupervised_learning}。
+您总能在之后发现您的初始\gls{baseline}过拟合的时候，加入\gls{unsupervised_learning}。
 
 \section{决定是否收集更多数据}
 \label{sec:determining_whether_to_gather_more_data}
@@ -169,8 +169,8 @@
 首先，确定训练集上的性能是否可接受。
 如果训练集上的性能差，学习算法没能学习已经可用的训练数据，因此没有理由收集更多的数据。
 相反，可以尝试添加更多的层或每层增加更多的隐藏单元以增加模型的规模。
-此外，也可以尝试调整学习率超参数等方法改进学习算法。
-如果大的模型和仔细调试的优化算法没有效果，那么问题可能是训练数据的\textbf{质量}。
+此外，也可以尝试调整学习率\gls{hyperparameter}等方法改进学习算法。
+如果大的模型和仔细调试的优化算法没有效果，那么问题可能是训练数据的\emph{质量}。
 该数据可能含太多\gls{noise}，或是可能不包含需要预测期望输出的正确输入。
 这意味着需要重新开始，收集更干净的数据或是收集特征更丰富的数据集。
 
@@ -183,8 +183,8 @@
 在拥有百万级甚至上亿用户的大型网络公司，收集大型数据集是可行的，并且这样做的成本可能比其他方法要少很多，所以答案几乎总是收集更多的训练数据。
 例如，大型标记数据集的发展是解决物体识别最重要原因之一。
 在其他情况下，如医疗应用中，收集更多的数据可能代价很高或者不可行。
-一个收集更多数据的简单替代方法是通过调整超参数，如权重衰减系数，或是通过加入正则化策略，如\gls{dropout}，以降低模型的规模或是改进正则化。
-如果您发现即使调整正规化超参数后，训练集性能和测试集性能之间的差距仍然不可接受，那么收集更多的数据是可取的。
+一个收集更多数据的简单替代方法是通过调整\gls{hyperparameter}，如权重衰减系数，或是通过加入正则化策略，如\gls{dropout}，以降低模型的规模或是改进正则化。
+如果您发现即使调整正规化\gls{hyperparameter}后，训练集性能和测试集性能之间的差距仍然不可接受，那么收集更多的数据是可取的。
 
 在决定是否收集更多的数据时，也有必要确定下收集多少。
 如\figref{fig:chap5_training_size_grows}所示，绘制曲线显示训练集规模和\gls{generalization_error}之间的关系是很有帮助的。
@@ -195,57 +195,57 @@
 如果收集更多的数据是不可行的，那么改进\gls{generalization_error}的唯一方法是改进学习算法本身。
 这将归为研究领域，而不是给应用实践者的建议。
 
-\section{选择超参数}
+\section{选择\glsentrytext{hyperparameter}}
 \label{sec:selecting_hyperparameters}
-大部分\gls{DL}算法都有许多超参数控制算法效果的诸多方面。
-有些超参数会影响算法运行的时间和存储成本。
-有些超参数会影响训练过程得到的模型质量，以及在新的输入上推断正确结果的能力。
+大部分\gls{DL}算法都有许多\gls{hyperparameter}控制算法效果的诸多方面。
+有些\gls{hyperparameter}会影响算法运行的时间和存储成本。
+有些\gls{hyperparameter}会影响训练过程得到的模型质量，以及在新的输入上推断正确结果的能力。
 
 % -- 415 --
 
-有两种选择超参数的基本方法：手动选择和自动选择。
-手动选择超参数需要了解超参数做了些什么，以及\gls{ML}模型如何取得良好的泛化。
-自动选择超参数算法大大减少了解这些想法的需要，但它们往往需要更高的计算成本。
+有两种选择\gls{hyperparameter}的基本方法：手动选择和自动选择。
+手动选择\gls{hyperparameter}需要了解\gls{hyperparameter}做了些什么，以及\gls{ML}模型如何取得良好的泛化。
+自动选择\gls{hyperparameter}算法大大减少了解这些想法的需要，但它们往往需要更高的计算成本。
 
-\subsection{手动调整超参数}
+\subsection{手动调整\glsentrytext{hyperparameter}}
 \label{sec:manual_hyperparameter_tuning}
-要手动设置超参数，我们必须了解超参数，训练误差，\gls{generalization_error}和计算资源（内存和运行时间）之间的关系。
+要手动设置\gls{hyperparameter}，我们必须了解\gls{hyperparameter}，训练误差，\gls{generalization_error}和计算资源（内存和运行时间）之间的关系。
 这意味着建立\chapref{chap:machine_learning_basics}关于学习算法有效容量基本思想的坚实基础。
 
-手动搜索超参数的目标通常是找到受制于运行时间和内存预算的最低\gls{generalization_error}。
-我们不去探讨如何确定各种超参数对运行时间和内存的影响，因为这高度依赖于平台。
+手动搜索\gls{hyperparameter}的目标通常是找到受制于运行时间和内存预算的最低\gls{generalization_error}。
+我们不去探讨如何确定各种\gls{hyperparameter}对运行时间和内存的影响，因为这高度依赖于平台。
 
-手动搜索超参数的主要目的是调整模型的有效容量以匹配任务的复杂性。
+手动搜索\gls{hyperparameter}的主要目的是调整模型的有效容量以匹配任务的复杂性。
 有效容量受限于三个因素：模型的表示容量，学习算法成功最小化用于训练模型的成本函数的能力，以及\gls{cost_function}和训练过程正规化模型的程度。
 具有更多层，每层有更多隐单元的模型具有较高的表达能力——能够表示更复杂的函数。
 然而，如果训练算法不能找到合适的最小化训练代价的函数，或是如果正则化项，如权重衰减，排除了这些函数，那么就不能学习所有这些函数。
 
-当\gls{generalization_error}作为某个超参数的函数绘制出来时，通常会表现为U型曲线，如\figref{fig:chap5_generalization_vs_capacity}所示。
-在某个极端情况下，超参数对应着低容量，并且\gls{generalization_error}由于训练误差较大而很高。
+当\gls{generalization_error}作为某个\gls{hyperparameter}的函数绘制出来时，通常会表现为U型曲线，如\figref{fig:chap5_generalization_vs_capacity}所示。
+在某个极端情况下，\gls{hyperparameter}对应着低容量，并且\gls{generalization_error}由于训练误差较大而很高。
 这便是欠拟合的情况。
-另一种极端情况，超参数对应着高容量，并且\gls{generalization_error}由于训练误差和测试误差之间的差距较大而很高。
+另一种极端情况，\gls{hyperparameter}对应着高容量，并且\gls{generalization_error}由于训练误差和测试误差之间的差距较大而很高。
 通过增加一个中等的泛化差距到中等数量的训练误差，最优的模型容量位于中间的某个位置，能够达到最低可能的\gls{generalization_error}。
 
 % -- 416 --
 
-对于某些超参数而言，超参数的值太大时会发生过拟合。
+对于某些\gls{hyperparameter}而言，\gls{hyperparameter}的值太大时会发生过拟合。
 中间层中隐单元的数量便一个这样的例子，因为增加隐单元的数量增强了模型的能力。
-对于某些超参数而言，超参数的值太小时也会发生过拟合。
+对于某些\gls{hyperparameter}而言，\gls{hyperparameter}的值太小时也会发生过拟合。
 例如，最小的可允许权重衰减系数零对应着学习算法最大的有效容量。
 
-并非每一个超参数都能够探索整个U形曲线。
-很多超参数是离散的，如一层中单元的数目或是\gls{maxout_unit}中线性元件的数目，这些情况只能沿曲线探索几个点。
-有些超参数是二值的。
-通常这些超参数用来指定是否使用学习算法中的一些可选部分，如预处理步骤减去均值除以标准差以标准化输入特征。
-这些超参数只能探索曲线上的两点。
-其他一些超参数可能有阻止其探索曲线某部分的最大值或最小值限制。
+并非每一个\gls{hyperparameter}都能够探索整个U形曲线。
+很多\gls{hyperparameter}是离散的，如一层中单元的数目或是\gls{maxout_unit}中线性元件的数目，这些情况只能沿曲线探索几个点。
+有些\gls{hyperparameter}是二值的。
+通常这些\gls{hyperparameter}用来指定是否使用学习算法中的一些可选部分，如预处理步骤减去均值除以标准差以标准化输入特征。
+这些\gls{hyperparameter}只能探索曲线上的两点。
+其他一些\gls{hyperparameter}可能有阻止其探索曲线某部分的最大值或最小值限制。
 例如，权重衰减系数最小是零。
 这意味着，如果权重衰减系数为零时模型欠拟合，那么我们将无法通过修改权重衰减系数探索过拟合区域。
-换言之，有些超参数只能减少模型容量。
+换言之，有些\gls{hyperparameter}只能减少模型容量。
 
-学习率可能是最重要的超参数。
-如果你只有时间调整一个超参数，那就调整学习率。
-相比其他超参数，它以一种更复杂的方式控制模型的有效容量——当学习率适合优化问题时，模型的有效容量最高，此时学习率既不是特别大也不是特别小。
+学习率可能是最重要的\gls{hyperparameter}。
+如果你只有时间调整一个\gls{hyperparameter}，那就调整学习率。
+相比其他\gls{hyperparameter}，它以一种更复杂的方式控制模型的有效容量——当学习率适合优化问题时，模型的有效容量最高，此时学习率既不是特别大也不是特别小。
 学习率关于训练误差具有U形曲线，在\figref{fig:chap11_lr}所示。
 当学习率过大时，梯度下降可能会不经意地增加而非减少训练误差。
 在理想化的二次情况下，如果学习率是最佳值至少两倍时，会发生这种情况\citep{LeCun+98backprop-small}。
@@ -275,12 +275,12 @@
 寻找最佳的测试误差需要权衡这些数值。
 当训练误差很小（因此容量较大），测试误差主要取决于训练误差和测试误差之间的差距时，通常神经网络效果最好。
 你的目标是缩小这一差距，而不是训练误差的增速比差距减小得更快。
-要减少差距，我们可以改变正则化超参数，以减少有效的模型容量，如添加\gls{dropout}或是权重衰减。
+要减少差距，我们可以改变正则化\gls{hyperparameter}，以减少有效的模型容量，如添加\gls{dropout}或是权重衰减。
 通常，最佳性能来自正则化比较好的大型模型，比如使用\gls{dropout}。
 
-大部分超参数可以通过推理其是否增加或减少模型容量来设置。如表11.1所示部分实例。
+大部分\gls{hyperparameter}可以通过推理其是否增加或减少模型容量来设置。如表11.1所示部分实例。
 
-手动调整超参数时，不要忘记最终目标：测试集上的优异性能。
+手动调整\gls{hyperparameter}时，不要忘记最终目标：测试集上的优异性能。
 加入正则化只是实现这个目标的一种方法。
 只要训练误差低，随时都可以通过收集更多的训练数据来减少\gls{generalization_error}。
 实践中保证成功的暴力方法就是不断提高模型模型和训练集的大小，直到解决问题。
@@ -289,28 +289,28 @@
 
 % -- 418 --
 
-\subsection{自动超参数优化算法}
+\subsection{自动\glsentrytext{hyperparameter}优化算法}
 \label{sec:automatic_hyperparameter_optimization_algorithms}
-理想的学习算法应该是只需要一个数据集，然后输出学习出的函数，而并不需要手动调整超参数。
-一些流行的学习算法，如逻辑回归和支持向量机，流行的部分原因是只有一到两个需要调整的超参数，它们也能表现出不错的性能。
-有时神经网络可以在只有少数需要调整的超参数时表现良好，但往往调整几十或者更多超参数会受益更明显。
-当用户有一个很好的起点，例如由已经在相同类型的应用和架构上工作的其他人确定起点，或是用户已经在相似问题上探索了几个月甚至几年的神经网络超参数，那么手动调整超参数能有很好的效果。
+理想的学习算法应该是只需要一个数据集，然后输出学习出的函数，而并不需要手动调整\gls{hyperparameter}。
+一些流行的学习算法，如逻辑回归和支持向量机，流行的部分原因是只有一到两个需要调整的\gls{hyperparameter}，它们也能表现出不错的性能。
+有时神经网络可以在只有少数需要调整的\gls{hyperparameter}时表现良好，但往往调整几十或者更多\gls{hyperparameter}会受益更明显。
+当用户有一个很好的起点，例如由已经在相同类型的应用和架构上工作的其他人确定起点，或是用户已经在相似问题上探索了几个月甚至几年的神经网络\gls{hyperparameter}，那么手动调整\gls{hyperparameter}能有很好的效果。
 然而，对于很多应用而言，这些起点都不可用。
-在这些情况下，自动算法可以找到合适的超参数。
+在这些情况下，自动算法可以找到合适的\gls{hyperparameter}。
 
-如果我们思考用户搜索学习算法合适超参数的方式，我们会意识到这其实是一种优化：
-我们在试图寻找超参数来优化目标函数，例如验证误差，有时还会有一些约束（如训练时间，内存或识别时间的预算）。
-因此，原则上有可能开发出封装学习算法的\firstgls{hyperparameter_optimization}算法，并选择其超参数，从而为用户隐藏学习算法的超参数。
-令人遗憾的是，超参数优化算法往往有自己的超参数，如学习算法的每个超参数的值应该被探索的范围。
-然而，这些次级超参数通常很容易选择，这是说，同一次级超参数能够很多问题上实现良好的性能。
+如果我们思考用户搜索学习算法合适\gls{hyperparameter}的方式，我们会意识到这其实是一种优化：
+我们在试图寻找\gls{hyperparameter}来优化目标函数，例如验证误差，有时还会有一些约束（如训练时间，内存或识别时间的预算）。
+因此，原则上有可能开发出封装学习算法的\firstgls{hyperparameter_optimization}算法，并选择其\gls{hyperparameter}，从而为用户隐藏学习算法的\gls{hyperparameter}。
+令人遗憾的是，\gls{hyperparameter}优化算法往往有自己的\gls{hyperparameter}，如学习算法的每个\gls{hyperparameter}的值应该被探索的范围。
+然而，这些次级\gls{hyperparameter}通常很容易选择，这是说，同一次级\gls{hyperparameter}能够很多问题上实现良好的性能。
 
-\subsection{格点搜索}
+\subsection{\glsentrytext{grid_search}}
 \label{sec:grid_search}
-当有三个或更少的超参数时，常见的超参数搜索方法是\firstgls{grid_search}。
-对于每个超参数，用户选择一个较小的有限值集去探索。
-然后，格点搜索算法训练为超参数笛卡尔乘积后的每个特定联合值训练模型。
-挑选最好的验证集误差对应的超参数。
-如\figref{fig:chap11_grid_vs_random}所示超参数值的网络。
+当有三个或更少的\gls{hyperparameter}时，常见的\gls{hyperparameter}搜索方法是\firstgls{grid_search}。
+对于每个\gls{hyperparameter}，用户选择一个较小的有限值集去探索。
+然后，\gls{grid_search}算法训练为\gls{hyperparameter}笛卡尔乘积后的每个特定联合值训练模型。
+挑选最好的验证集误差对应的\gls{hyperparameter}。
+如\figref{fig:chap11_grid_vs_random}所示\gls{hyperparameter}值的网络。
 
 % -- 420 --
 
@@ -328,28 +328,28 @@
 \end{figure}
 
 应该如何选择搜索集合的值呢？
-在超参数是数值（有序）的情况下，每个列表的最小和最大的元素可以基于先前相似实验的经验保守地挑选出来，以确保最优解非常可能在所选范围内。
-通常，格点搜索大约会在\textbf{对数刻度}下挑选合适的值，例如，一个学习率的取值集合$\{0.1,0.01,10^{-3},10^{-4},10^{-5}\}$，或者隐单元数目的取值集合$\{50,100,200,500,1000,2000\}$。
+在\gls{hyperparameter}是数值（有序）的情况下，每个列表的最小和最大的元素可以基于先前相似实验的经验保守地挑选出来，以确保最优解非常可能在所选范围内。
+通常，\gls{grid_search}大约会在\firstgls{logarithmic_scale}下挑选合适的值，例如，一个学习率的取值集合$\{0.1,0.01,10^{-3},10^{-4},10^{-5}\}$，或者隐单元数目的取值集合$\{50,100,200,500,1000,2000\}$。
 
-通常重复进行格点搜索时，效果会最好。
-例如，假设我们在集合$\{-1,0,1\}$上格点搜索超参数$\alpha$。
+通常重复进行\gls{grid_search}时，效果会最好。
+例如，假设我们在集合$\{-1,0,1\}$上\gls{grid_search}\gls{hyperparameter}$\alpha$。
 如果找到的最佳值是$1$，那么说明我们低估最优$\alpha$所在的范围，我们应该搜索范围，再次搜索$\alpha$，例如在集合$\{1,2,3\}$中搜索。
-如果找到的最佳值是$0$，那么我们不妨通过细化搜索范围以改进估计，在集合$\{-0.1,0,1\}$上进行格点搜索。
+如果找到的最佳值是$0$，那么我们不妨通过细化搜索范围以改进估计，在集合$\{-0.1,0,1\}$上进行\gls{grid_search}。
 
 % -- 421 --
 
-格点搜索带来的一个明显问题是，计算代价会随着超参数数量呈指数级增长。
-如果有$m$个超参数，每个至多取$n$个值，那么训练和估计所需的试验数将是$O(n^m)$。
+\gls{grid_search}带来的一个明显问题是，计算代价会随着\gls{hyperparameter}数量呈指数级增长。
+如果有$m$个\gls{hyperparameter}，每个至多取$n$个值，那么训练和估计所需的试验数将是$O(n^m)$。
 可以并行地进行实验，并且利用宽松的并行要求（不同搜索的机器之间几乎没有必要进行通信）。
-令人遗憾的是，由于格点搜索指数级增长计算代价，即使并行也无法提供令人满意的计算能力。
+令人遗憾的是，由于\gls{grid_search}指数级增长计算代价，即使并行也无法提供令人满意的计算能力。
 
 
-\subsection{随机搜索}
+\subsection{\glsentrytext{random_search}}
 \label{sec:random_search}
-幸运的是，有一个格点搜索的替代方法，并且其编程简单，使用更方便，能更快地收敛到超参数的良好值：随机搜索\citep{Bergstra+Bengio-2012-small}。
+幸运的是，有一个\gls{grid_search}的替代方法，并且其编程简单，使用更方便，能更快地收敛到\gls{hyperparameter}的良好值：\gls{random_search}\citep{Bergstra+Bengio-2012-small}。
 
-随机搜索过程如下。
-首先，我们定义每个超参数定义一个边缘分布，例如，伯努利分布或分类分布（对应着二元超参数或离散超参数），或者对数尺度上的均匀分布（对应着正实值超参数）。
+\gls{random_search}过程如下。
+首先，我们定义每个\gls{hyperparameter}定义一个边缘分布，例如，伯努利分布或分类分布（对应着二元\gls{hyperparameter}或离散\gls{hyperparameter}），或者\gls{logarithmic_scale}上的均匀分布（对应着正实值\gls{hyperparameter}）。
 例如，
 \begin{align}
 	\texttt{log\_learning\_rate} &\sim u(-1, -5), \\
@@ -358,42 +358,42 @@
 其中，$u(a,b)$表示区间$(a,b)$上均匀采样的样本。
 类似地，$\texttt{log\_number\_of\_hidden\_units}$可能表示采样自$u(\log(50), \log(2000))$。
 
-和格点搜索的情况不同，我们\emph{不应该离散化}超参数的值，从而我们可以去探索一个更大集合的值，而不产生额外的计算代价。
-实际上，如\figref{fig:chap11_grid_vs_random}所示，当有几个超参数对\gls{performance_metrics}没有很强的影响时，随机搜索指数级高效于格点搜索。
-\cite{Bergstra+Bengio-2012-small}进行了详细的研究，发现随机搜索减小验证集误差比格点搜索要快得多（就每个模型运行的试验数而言）。
+和\gls{grid_search}的情况不同，我们\emph{不应该离散化}\gls{hyperparameter}的值，从而我们可以去探索一个更大集合的值，而不产生额外的计算代价。
+实际上，如\figref{fig:chap11_grid_vs_random}所示，当有几个\gls{hyperparameter}对\gls{performance_metrics}没有很强的影响时，\gls{random_search}指数级高效于\gls{grid_search}。
+\cite{Bergstra+Bengio-2012-small}进行了详细的研究，发现\gls{random_search}减小验证集误差比\gls{grid_search}要快得多（就每个模型运行的试验数而言）。
 
-与格点搜索一样，可以经常重复运行不同版本的随机搜索，以基于前一次运行的结果改进下一次搜索。
+与\gls{grid_search}一样，可以经常重复运行不同版本的\gls{random_search}，以基于前一次运行的结果改进下一次搜索。
 
-随机搜索能比格点搜索更快地找到好解的原因是，没有浪费的实验，不像格点搜索有时会遇到一个超参数的两个值（给定其他超参数值不变）会给出相同结果的情况。
-在格点搜索中，其他超参数将在这两次实验中拥有相同的值，而在随机搜索中，它们通常会具有不同的值。
-因此，如果这两个值的变化不能勉强使验证集误差有明显区别的话，格点搜索没有必要重复两个等价的实验，而随机搜索仍然会对其他超参数进行两次独立地探索。
+\gls{random_search}能比\gls{grid_search}更快地找到好解的原因是，没有浪费的实验，不像\gls{grid_search}有时会遇到一个\gls{hyperparameter}的两个值（给定其他\gls{hyperparameter}值不变）会给出相同结果的情况。
+在\gls{grid_search}中，其他\gls{hyperparameter}将在这两次实验中拥有相同的值，而在\gls{random_search}中，它们通常会具有不同的值。
+因此，如果这两个值的变化不能勉强使验证集误差有明显区别的话，\gls{grid_search}没有必要重复两个等价的实验，而\gls{random_search}仍然会对其他\gls{hyperparameter}进行两次独立地探索。
 
 % -- 422 --
 
-\subsection{基于模型的超参数优化}
+\subsection{基于模型的\glsentrytext{hyperparameter}优化}
 \label{sec:model_based_hyperparameter_optimization}
-良好超参数的搜索可以转换为一个优化问题。
-决策变量是超参数。
-优化的目标是使用这些超参数训练结果的验证集误差。
-在简化的设定下，可以计算验证集上可导误差关于超参数的导数，然后我们遵循这个导数更新\citep{bengio:1999:snowbird,bengio-hyper-NC00,maclaurin2015gradient}。
-令人遗憾的是，在大多数实际设定中，这个梯度是不可用的。这要么是因为其高计算代价和存储成本，要么是因为验证集误差在超参数上具有本质的不可导，例如超参数是离散值的情况。
+良好\gls{hyperparameter}的搜索可以转换为一个优化问题。
+决策变量是\gls{hyperparameter}。
+优化的目标是使用这些\gls{hyperparameter}训练结果的验证集误差。
+在简化的设定下，可以计算验证集上可导误差关于\gls{hyperparameter}的导数，然后我们遵循这个导数更新\citep{bengio:1999:snowbird,bengio-hyper-NC00,maclaurin2015gradient}。
+令人遗憾的是，在大多数实际设定中，这个梯度是不可用的。这要么是因为其高计算代价和存储成本，要么是因为验证集误差在\gls{hyperparameter}上具有本质的不可导，例如\gls{hyperparameter}是离散值的情况。
 
-为了弥补导数这一不足，我们可以对验证集误差建模，然后通过优化该模型来提出新的超参数猜想。
-大部分基于模型的超参数搜索算法都使用贝叶斯回归模型来估计每个超参数的验证集误差期望，和该期望的不确定性。
-因此，优化涉及到探索（探索高度不确定的超参数，可能有重大效果提升，也可能效果很差）和使用（使用已经确信效果不错的超参数——通常是先前非常熟悉的超参数）之间的权衡。
-关于超参数优化，现在的方法还有Spearmint\citep{Snoek+al-NIPS2012-small}，TPE\citep{Bergstra+al-NIPS2011}和SMAC\citep{hutter+hoos+leyton+brown:2011}。
+为了弥补导数这一不足，我们可以对验证集误差建模，然后通过优化该模型来提出新的\gls{hyperparameter}猜想。
+大部分基于模型的\gls{hyperparameter}搜索算法都使用贝叶斯回归模型来估计每个\gls{hyperparameter}的验证集误差期望，和该期望的不确定性。
+因此，优化涉及到探索（探索高度不确定的\gls{hyperparameter}，可能有重大效果提升，也可能效果很差）和使用（使用已经确信效果不错的\gls{hyperparameter}——通常是先前非常熟悉的\gls{hyperparameter}）之间的权衡。
+关于\gls{hyperparameter}优化，现在的方法还有Spearmint\citep{Snoek+al-NIPS2012-small}，TPE\citep{Bergstra+al-NIPS2011}和SMAC\citep{hutter+hoos+leyton+brown:2011}。
 
-目前，我们无法明确建议贝叶斯超参数优化是一个能够实现更好\gls{DL}结果或是能够事半功倍的工具。
-贝叶斯超参数优化有时表现得像人类专家，有时还能更好，但在有些问题上又会发生灾难性的故障。
+目前，我们无法明确建议贝叶斯\gls{hyperparameter}优化是一个能够实现更好\gls{DL}结果或是能够事半功倍的工具。
+贝叶斯\gls{hyperparameter}优化有时表现得像人类专家，有时还能更好，但在有些问题上又会发生灾难性的故障。
 看看它是否适用于一个特定的问题是值得尝试的，但目前该方法还不够成熟或可靠。
-就像所说的那样，超参数优化是一个重要的研究领域，通常主要受\gls{DL}所需驱动，但是它不仅能贡献于整个\gls{ML}领域，还能有益于一般的工程学。
+就像所说的那样，\gls{hyperparameter}优化是一个重要的研究领域，通常主要受\gls{DL}所需驱动，但是它不仅能贡献于整个\gls{ML}领域，还能有益于一般的工程学。
 
 % -- 423 --
 
-比随机搜索更复杂的大部分超参数优化算法的一个共同缺点是在它们能够从实验中提取任何信息之前，它们需要运行完整的训练实验。
-相比于人类实践者手动搜索，对于实验早期可以收集多少信息，这是相当低效的，因为手动搜索收集通常可以很早判断出某组超参数是否是完全病态的。
+比\gls{random_search}更复杂的大部分\gls{hyperparameter}优化算法的一个共同缺点是在它们能够从实验中提取任何信息之前，它们需要运行完整的训练实验。
+相比于人类实践者手动搜索，对于实验早期可以收集多少信息，这是相当低效的，因为手动搜索收集通常可以很早判断出某组\gls{hyperparameter}是否是完全病态的。
 \cite{swersky2014freeze}提出了一个可以维护多个实验的早期版本算法。
-在不同的时间点，超参数优化算法可以选择开启一个新实验，``冻结''正在运行但希望不大的实验，或是``解冻''并恢复早期被冻结的，但现在根据更多信息后又有希望的实验。
+在不同的时间点，\gls{hyperparameter}优化算法可以选择开启一个新实验，``冻结''正在运行但希望不大的实验，或是``解冻''并恢复早期被冻结的，但现在根据更多信息后又有希望的实验。
 
 \section{调试技巧}
 \label{sec:debugging_strategies}
@@ -428,7 +428,7 @@
 \emph{可视化模型的行为}：
 当训练模型来检测图像中的物体时，查看一些模型检测到部分重叠的图像。
 在训练语音生成模型时，试听一些生成的语音样本。
-这似乎是显而易见的，但在实际中很容易只注意量化\gls{performance_metrics}，如精度或对数似然。
+这似乎是显而易见的，但在实际中很容易只注意量化\gls{performance_metrics}，如\gls{accuracy}或对数似然。
 直接观察\gls{ML}模型运行任务，有助于确定其达到的量化性能数据是否看上去合理。
 评估错误可能是最具破坏性的错误之一，因为它们会使你在系统出问题时误以为系统运行良好。
 
@@ -472,11 +472,11 @@
 \begin{equation}
 	f'(x) \approx \frac{f(x+\epsilon) - f(x)}{\epsilon}.
 \end{equation}
-我们可以使用\firstgls{centered_difference}提高近似的精度：
+我们可以使用\firstgls{centered_difference}提高近似的\gls{accuracy}：
 \begin{equation}
 	f'(x) \approx \frac{ f(x+\frac{1}{2}\epsilon) - f(x-\frac{1}{2}\epsilon) }{\epsilon}.
 \end{equation}
-扰动大小$\epsilon$必须足够大，以确保该扰动不会由于数值计算的有限精度问题向下近似太多。
+扰动大小$\epsilon$必须足够大，以确保该扰动不会由于数值计算的有限\gls{precision}问题向下近似太多。
 
 % -- 426 --
 
@@ -484,7 +484,7 @@
 令人遗憾的是，\gls{finite_difference}只允许我们每次计算一个导数。
 我们既可以运行\gls{finite_difference}$mn$次评估$g$的所有偏导数，又可以将该测试应用于一个输入输出都是$g$的随机投影的新函数。
 例如，我们可以应用导数实现的测试于函数$f(x) = \Vu^T g(\Vv x)$，其中$\Vu$和$\Vv$是随机向量。
-正确计算$f'(x)$要求能够正确地通过$g$反向传播，但是使用有限差分能够很有效地计算，因为$f$只有一个输入和一个输出。
+正确计算$f'(x)$要求能够正确地通过$g$反向传播，但是使用\gls{finite_difference}能够很有效地计算，因为$f$只有一个输入和一个输出。
 在多个$\Vu$值和$\Vv$值上重复这个测试通常是个好主意，可以减少测试忽略了垂直于随机投影的几率。
 
 
@@ -529,24 +529,24 @@
 
 转录项目开始于\gls{performance_metrics}的选择，及这些度量的期望。
 一个重要的总原则是度量的选择要符合项目的业务目标。
-因为地图只有是高精度时才有用，所以为这个项目设置高精度的要求非常重要。
-具体地，目标是达到人类水平，$98\%$的准确率。
-这种程度的精度并不是总能达到。
-为了达到这个级别的准确性，街景\gls{transcription_system}牺牲了\gls{coverage}。
-因此在保持精度$98\%$的情况下，\gls{coverage}成了这个项目优化的主要\gls{performance_metrics}。
+因为地图只有是高\gls{accuracy}时才有用，所以为这个项目设置高\gls{accuracy}的要求非常重要。
+具体地，目标是达到人类水平，$98\%$的\gls{accuracy}。
+这种程度的\gls{accuracy}并不是总能达到。
+为了达到这个级别的\gls{accuracy}，街景\gls{transcription_system}牺牲了\gls{coverage}。
+因此在保持\gls{accuracy}$98\%$的情况下，\gls{coverage}成了这个项目优化的主要\gls{performance_metrics}。
 随着卷积网络的改进，能够降低网络拒绝转录输入的置信度阈值，最终超出了\gls{coverage}$95\%$的目标。
 
 % -- 428 --
 
-在选择量化目标后，我们推荐方法的下一步是要快速建立一个合理的基准系统。
+在选择量化目标后，我们推荐方法的下一步是要快速建立一个合理的\gls{baseline}系统。
 对于视觉任务而言，这意味着带有\gls{ReLU}的卷积网络。
 转录项目开始于这样一个模型。
 当时，使用卷积网络输出预测序列并不常见。
-开始于一个尽可能简单的基准，该模型输出层的第一个实现包含$n$个不同的\gls{softmax_unit}来预测$n$个字符的序列。
+开始于一个尽可能简单的\gls{baseline}，该模型输出层的第一个实现包含$n$个不同的\gls{softmax_unit}来预测$n$个字符的序列。
 这些\gls{softmax_unit}和分类任务时的训练完全一样，每个\gls{softmax_unit}被单独训练。
 
 
-我们推荐的方法是反复细化这些基准，并测试每个变化是否都有改进。
+我们推荐的方法是反复细化这些\gls{baseline}，并测试每个变化是否都有改进。
 街景\gls{transcription_system}的第一个变化受激励于\gls{coverage}指标的理论理解和数据的结构。
 具体地，当输出序列的概率低于某个值$t$，$p(\Vy\mid\Vx) < t$时，网络拒绝为输入$\Vx$分类。
 最初，$p(\Vy\mid\Vx)$的定义是临时的，简单地将所有\gls{softmax}输出乘在一起。
@@ -563,13 +563,13 @@
 在这种情况下，这意味着可视化不正确而模型给了最高置信度的训练集转录。
 结果显示，主要是输入图像裁剪得太紧，有些和地址相关的数字被裁剪操作除去了。
 例如，地址``1849''的图片可能裁切得太紧，只剩下``849''是可见的。
-花费几周改进负责确定裁剪区域的地址号码检测系统的精度，或许可以解决这个问题。
+花费几周改进负责确定裁剪区域的地址号码检测系统的\gls{accuracy}，或许可以解决这个问题。
 与之不同，该项目团队采取了更实际的决定，简单地系统性扩大裁剪区域的宽度大于地址号码检测系统预测的区域。
 这种单一改变给\gls{transcription_system}的\gls{coverage}增加了$10$个百分点。
 
 % -- 429 --
 
-最后，性能提升的最后几个百分点来自调整超参数。
+最后，性能提升的最后几个百分点来自调整\gls{hyperparameter}。
 这主要包括在保持一些计算代价限制的同时加大模型的规模。
 因为训练和测试误差几乎保持相等，所以明确表明性能不足是由于欠拟合造成的，和数据集本身也存在一些问题。
 
