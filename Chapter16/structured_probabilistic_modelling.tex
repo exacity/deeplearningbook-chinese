@@ -93,12 +93,8 @@
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-	\centerline{\includegraphics{Chapter16/figures/fig-ssrbm_nearest_train}}
-\fi
-\ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
-\else
-	\centerline{\includegraphics{Chapter16/figures/fig-ssrbm_samples}}	
+	\centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/fig-ssrbm_nearest_train}}\ \\
+     \centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/fig-ssrbm_samples}}
 \fi
 	\caption{自然图片的概率建模。（上）CIFAR-10数据集\citep{KrizhevskyHinton2009}中的$32\times 32$像素的样例图片。（下）这个数据集上训练的\gls{structured_probabilistic_models}中抽出的样本。每一个样本都出现在与其欧式距离最近的训练样本的格点中。这种比较使得我们发现这个模型确实能够生成新的图片，而不是记住训练样本。为了方便展示，两个集合的图片都经过了微调。图片从\citet{Courville+al-2011-small}中复制，并获得允许。}
 	\label{fig:chap16_fig-ssrbm}
@@ -1097,7 +1093,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-	\centerline{\includegraphics{Chapter16/figures/rbm_samples}}	
+	\centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/rbm_samples}}	
 \fi
 	\caption{<bad>训练好的\glssymbol{RBM}及其权重中的样本。（左）用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。每一列是一个单独的\gls{gibbs_sampling}过程。没遗憾表示另一个$1000$步\gls{gibbs_sampling}的输出。连续的样本之间彼此高度相关。（右）对应的权重向量。将本图结果与图\ref{fig:s3c_samples}中描述的样本和权重相比。由于\glssymbol{RBM}的先验$p(\Vh)$没有限制为\gls{factorial}，这里的样本表现得更好。采样时\glssymbol{RBM}能够学习到哪些特征需要一起出现。另一方面说，\glssymbol{RBM}后验$p(\Vh \mid \Vv)$是\gls{factorial}的，而\gls{sparse_coding}的后验并不是，所以在特征提取上\gls{sparse_coding}模型表现得更好。其它的模型可以使用非\gls{factorial}的$p(\Vh)$和非\gls{factorial}的$p(\Vh \mid \Vh)$。图片的复制经过\citet{lisa_tutorial_rbm}的允许。}
 	\label{fig:rbm_sample}
