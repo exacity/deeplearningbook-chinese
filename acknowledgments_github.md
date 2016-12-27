@@ -79,7 +79,7 @@
 
 2016年12月18日
 --------------
- - @bengordai ==> "until"和"address"的翻译；双引号
+ - @bengordai ==> Chapter6, "until"和"address"的翻译；双引号
 
 
 2016年12月20日
@@ -101,17 +101,22 @@
 -------------
  - @PassStory ==> Chapter2, m -> n
  - @imwebson ==> Chapter2, m -> n
+ - @HC-2016 ==> Chapter6, 语句问题；错别字"相应"改成"响应"
+ - @Elvinczp ==> Chapter6, 错别字"网路"改成"网络"
+ - @imwebson ==> Chapter6, "winner-take-all"翻译成"赢者通吃"
 
 
 2016年12月23日
 -------------
  - @zdx3578 ==> Chapter5, one-hot
  - @wlbksy  ==> Chapter14, 编译问题
+ - @zdx3578 ==> Chapter6, 错别字"有"改成"由", "难么"改成"那么""
 
 
 2016年12月25日
 ---------------
  - @roachsinai ==> Chapter10, 第315行公式错误
+ - @minoriwww ==> Chapter6, "loosely"翻译为"或多或少地"；"funciton"翻译为"功能"
 
 
 2016年12月26日
