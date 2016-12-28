@@ -282,7 +282,7 @@
 要减少差距，我们可以改变正则化\gls{hyperparameter}，以减少有效的模型容量，如添加\gls{dropout}或是权重衰减。
 通常，最佳性能来自正则化比较好的大型模型，比如使用\gls{dropout}。
 
-大部分\gls{hyperparameter}可以通过推理其是否增加或减少模型容量来设置。如表11.1所示部分实例。
+大部分\gls{hyperparameter}可以通过推理其是否增加或减少模型容量来设置。如表\ref{tab:hyperparameter_effect}所示部分实例。
 
 手动调整\gls{hyperparameter}时，不要忘记最终目标：测试集上的优异性能。
 加入正则化只是实现这个目标的一种方法。
@@ -290,6 +290,38 @@
 实践中保证成功的暴力方法就是不断提高模型模型和训练集的大小，直到解决问题。
 这种做法当然增加了训练和推断的计算代价，所以只有在拥有适当资源的情况下才是可行的。
 原则上，这种做法可能会因为优化难度提高而失败，但对于许多问题而言，优化似乎并没有成为一个显著的障碍，当然，前提是选择了合适的模型。
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{p{2.5cm}|p{1.5cm}|p{4.0cm}|p{4.0cm}}
+\gls{hyperparameter} & \gls{capacity}何时增加 & 原因  & 注意事项 \\
+\hline
+\gls{hidden_unit}数量 &  增加          & 增加\gls{hidden_unit}数量会增加模型的\gls{representation}能力。 & 几乎模型每个操作所需的时间和内存代价都会随\gls{hidden_unit}数量的增加而增加。\\
+\hline
+\gls{learning_rate} & 调至最优 & 不正确的学习速率，不管是太高还是太低都会由于优化失败而导致低有效\gls{capacity}的模型。
+ & \\
+\hline
+卷积核宽度 & 增加 & 增加卷积核宽度会增加模型的参数数量。&
+较宽的卷积核导致较窄的输出尺寸，除非使用隐式零填充减少此影响，否则会降低模型容量。 
+较宽的卷积核需要更多的内存存储参数，并会增加运行时间，但较窄的输出会降低内存代价。
+\\
+\hline
+隐式零填充 & 增加 & 在卷积之前隐式添加零能保持较大尺寸的\gls{representation}。&
+大多数操作的时间和内存代价会增加。\\
+\hline
+\gls{weight_decay}系数 & 降低 & 降低\gls{weight_decay}系数使得模型参数可以变得更大。
+ & \\
+\hline
+\gls{dropout}比率 & 降低 & 较少地丢弃单元可以更多地让单元彼此``协力''来适应训练集。
+ & \\
+\end{tabular}
+\caption{各种\gls{hyperparameter}对模型\gls{capacity}的影响。}
+\label{tab:hyperparameter_effect}
+\index{Dropout}
+\index{Weight decay}
+\end{table}
+
 
 % -- 418 --
 
