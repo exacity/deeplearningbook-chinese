@@ -1260,10 +1260,10 @@ $\TSX$的索引现在有多个坐标——例如，一个3维的张量由三个�
 在复杂图中，可能存在指数多的这种计算上的浪费，使得简单的链式法则不可实现。
 在其他情况下，计算两次相同的子表达式可能是以较高的运行时间为代价来减少内存开销的有效手段。
 
-我们首先给出一个版本的反向传播算法，它指明了梯度的直接计算方式（算法|||c|||以及相关的正向计算的算法|||c|||），按照它实际完成的顺序并且递归地使用链式法则。
+我们首先给出一个版本的反向传播算法，它指明了梯度的直接计算方式（算法\ref{alg:bprop}以及相关的正向计算的算法\ref{alg:fprop}），按照它实际完成的顺序并且递归地使用链式法则。
 可以直接执行这些计算或者将算法的描述视为用于计算反向传播的计算图的符号表示。
 然而，这些公式并没有明确地操作和构造用于计算梯度的符号图。
-这些公式在后面的\ref{sec:general_back_propagation}节和算法|||c|||中给出，其中我们还推广到了包含任意张量的节点。
+这些公式在后面的\ref{sec:general_back_propagation}节和算法\ref{alg:backprop}中给出，其中我们还推广到了包含任意张量的节点。
 
 首先考虑描述如何计算单个标量$u^{(n)}$（例如训练样例上的损失函数）的计算图。
 我们想要计算这个标量对$n_i$个输入节点$u^{(1)}$到$u^{(n_i)}$的梯度。
@@ -1273,32 +1273,16 @@ $\TSX$的索引现在有多个坐标——例如，一个3维的张量由三个�
 % -- 201 --
 
 我们将假设图的节点已经以一种特殊的方式被排序，使得我们可以一个接一个地计算他们的输出，从$u^{(n_i+1)}$开始，一直上升到$u^{(n)}$。
-如算法|||c|||中所定义的，每个节点$u^{(i)}$与操作$f^{(i)}$相关联，并且通过对该函数求值来得到
+如算法\ref{alg:fprop}中所定义的，每个节点$u^{(i)}$与操作$f^{(i)}$相关联，并且通过对该函数求值来得到
 \begin{equation}
   u^{(i)} = f(\SetA^{(i)}),
 \end{equation}
 其中$\SetA^{(i)}$是$u^{(i)}$所有双亲节点的集合。
-
-% -- 202 --
-
-该算法详细说明了前向传播的计算，我们可以将其放入图$\CalG$中。
-为了执行反向传播，我们可以构造一个依赖于$\CalG$并添加额外一组节点的计算图。
-这形成了一个子图$\CalB$，它的每个节点都是$\CalG$的节点。
-$\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中的每个节点计算导数$\frac{\partial u^{(n)}}{\partial u^{(i)}}$与前向图中的节点$u^{(i)}$相关联。
-这通过对标量输出$u^{(n)}$使用链式法则来完成
-\begin{equation}
-  \frac{\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i:j \in Pa(u^{(i)})} \frac{\partial u^{(n)} }{ \partial u^{(i)} } \frac{ \partial u^{(i)} }{ \partial u^{(j)} }
-  \label{eq:6.49}
-\end{equation}
-在算法|||c|||中详细说明。
+% alg 6.1
 \begin{algorithm}[htbp]
-  \caption{A procedure that performs the computations
-    mapping $n_i$ inputs $u^{(1)}$ to $u^{(n_i)}$ to an output $u^{(n)}$.
-    This defines a computational graph where each node computes numerical
-value $u^{(i)}$ by applying a function $f^{(i)}$ to the set of arguments $\SetA^{(i)}$ that comprises the values
-of previous nodes $u^{(j)}$, $j<i$, with $j \in Pa(u^{(i)})$.
-The input to the computational graph is the vector $\Vx$, and is set into the first $n_i$ nodes $u^{(1)}$ to $u^{(n_i)}$.
-The output of the computational graph is read off the last (output) node $u^{(n)}$.}
+\caption{计算将$n_i$个输入$u^{(1)}$到$u^{(n_i)}$映射到一个输出$u^{(n)}$的程序。
+这定义了一个计算图，其中每个节点通过将函数$f^{(i)}$应用到变量集合$\SetA^{(i)}$上来计算$u^{(i)}$的值，$\SetA^{(i)}$包含先前节点$u^{(j)}$的值满足$j<i$且$j \in Pa(u^{(i)})$。
+计算图的输入是向量$\bm{x}$，并且被分配给前$n_i$个节点$u^{(1)}$到$u^{(n_i)}$。计算图的输出可以从最后一个节点$u^{(n)}$读出。}
 \label{alg:fprop}
 \begin{algorithmic}
 \FOR {$i=1, \ldots, n_i$}
@@ -1311,6 +1295,19 @@ The output of the computational graph is read off the last (output) node $u^{(n)
 \STATE {\bf return} $u^{(n)}$
 \end{algorithmic}
 \end{algorithm}
+
+% -- 202 --
+
+该算法详细说明了前向传播的计算，我们可以将其放入图$\CalG$中。
+为了执行反向传播，我们可以构造一个依赖于$\CalG$并添加额外一组节点的计算图。
+这形成了一个子图$\CalB$，它的每个节点都是$\CalG$的节点。
+$\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中的每个节点计算导数$\frac{\partial u^{(n)}}{\partial u^{(i)}}$与前向图中的节点$u^{(i)}$相关联。
+这通过对标量输出$u^{(n)}$使用链式法则来完成
+\begin{equation}
+  \frac{\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i:j \in Pa(u^{(i)})} \frac{\partial u^{(n)} }{ \partial u^{(i)} } \frac{ \partial u^{(i)} }{ \partial u^{(j)} }
+  \label{eq:6.49}
+\end{equation}
+在算法\ref{alg:bprop}中详细说明。
 子图$\CalB$恰好包含每一条对应着$\CalG$中从节点$u^{(j)}$到节点$u^{(i)}$的边。
 从$u^{(j)}$到$u^{(i)}$的边对应着计算$\frac{\partial u^{(i)}}{\partial u^{(j)}}$。
 另外，对于每个节点都要执行一个内积，内积的一个因子是对于$u^{j}$孩子节点$u^{(i)}$的已经计算的梯度，另一个因子是对于相同孩子节点$u^{(i)}$ 的偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$组成的向量。
@@ -1334,14 +1331,15 @@ The output of the computational graph is read off the last (output) node $u^{(n)
 =& \frac{\partial z}{\partial y} \frac{\partial y}{\partial x} \frac{\partial x}{\partial w}\\
 \label{eq:6.52}
 =& f'(y)f'(x)f'(w)\\ 
+\label{eq:6.53}
 =& f'(f(f(w))) f'(f(w)) f'(w). 
 \end{align}
 公式\ref{eq:6.52}建议我们采用的实现方式是，仅计算$f(w)$的值一次并将它存储在变量$x$中。
 这是\gls{BP}算法所采用的方法。
-公式6.53提出了一种替代方法，其中子表达式$f(w)$出现了不止一次。 %这里不知道怎么弄多个label的公式，会报错
+公式\ref{eq:6.53}提出了一种替代方法，其中子表达式$f(w)$出现了不止一次。 %这里不知道怎么弄多个label的公式，会报错
 在替代方法中，每次只在需要时重新计算$f(w)$。
 当存储这些表达式的值所需的存储较少时，公式\ref{eq:6.52}的\gls{BP}方法显然是较优的，因为它减少了运行时间。
-然而，公式6.53也是链式法则的有效实现，并且当存储受限时它是有用的。}
+然而，公式\ref{eq:6.53}也是链式法则的有效实现，并且当存储受限时它是有用的。}
 \label{fig:chap6_repeated_subexpression}
 \end{figure}
 
@@ -1349,29 +1347,21 @@ The output of the computational graph is read off the last (output) node $u^{(n)
 
 反向传播算法被设计为减少公共子表达式的数量而不考虑存储的开销。
 具体来说，它执行了图中每个节点一个Jacobi乘积的数量的计算。
-这可以从算法|||c|||中看出，反向传播算法访问了图中的节点$u^{(j)}$到节点$u^{(i)}$的每条边一次，以获得相关的偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$。
+这可以从算法\ref{alg:bprop}中看出，反向传播算法访问了图中的节点$u^{(j)}$到节点$u^{(i)}$的每条边一次，以获得相关的偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$。
 反向传播因此避免了重复子表达式的指数爆炸。
 然而，其他算法可能通过对计算图进行简化来避免更多的子表达式，或者也可能通过重新计算而不是存储这些子表达式来节省内存。
 我们将在描述完反向传播算法本身后再重新审视这些想法。
-
-\begin{algorithm}[ht]
-  \caption{Simplified version of the back-propagation algorithm for computing
-  the derivatives of $u^{(n)}$ with respect to the variables in the graph.
-  This example is intended to further understanding by showing a simplified
-  case where all variables are scalars, and we wish to compute the derivatives
-  with respect to $u^{(1)}, \dots, u^{(n_i)}$.
-  This simplified version computes the derivatives of all nodes in the graph.
-The computational cost of this algorithm
-is proportional to the number of edges in the graph, assuming that the
-partial derivative associated with each edge requires a constant time. This
-is of the same order as the number of computations for the forward propagation.
-Each $\frac{\partial u^{(i)}}{\partial u^{(j)}}$ is a function of the parents $u^{(j)}$
-of $u^{(i)}$, thus linking the nodes of the forward graph to those added for
-the back-propagation graph.
-}
+% alg 6.2
+\begin{algorithm}[htb!]
+\caption{\gls{BP}算法的简化版本，用于计算$u^{(n)}$对图中变量的导数。
+这个示例旨在通过演示所有变量都是标量的简化情况来进一步理解\gls{BP}算法，这里我们希望计算关于$u^{(1)},\ldots,u^{(n)}$的导数。
+这个简化版本计算了关于图中所有节点的导数。
+假定与每条边相关联的偏导数计算需要恒定的时间的话，该算法的计算成本与图中边的数量成比例。
+这与\gls{forward_propagation}的计算次数具有相同的阶。
+每个$\frac{\partial u^{(i)}}{\partial u^{(j)}}$是$u^{(i)}$的父节点$u^{(j)}$的函数，从而将前向图的节点链接到\gls{BP}图中添加的节点。}
 \label{alg:bprop}
 \begin{algorithmic}
-\STATE Run forward propagation (\algref{alg:fprop} for this example) to obtain
+\STATE Run forward propagation (algorithm \ref{alg:fprop} for this example) to obtain
 the activations of the network
 \STATE Initialize {\tt grad\_table}, a data structure that will store the derivatives
 that have been computed. The entry ${\tt grad\_table}[u^{(i)}]$ will store the computed
@@ -1396,28 +1386,15 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 
 为了阐明反向传播的上述定义，让我们考虑一个与全连接的多层MLP相关联的特定图。
 
-算法|||c|||首先给出了前向传播，它将参数映射到与单个训练样例（输入，目标）$(\bm{x},\bm{y})$相关联的有监督损失函数$L(\hat{\bm{y}}, \bm{y})$，其中$\hat{\bm{y}}$是当$\bm{x}$提供输入时神经网络的输出。
-
-算法|||c|||随后说明了将反向传播应用于改图所需的相关计算。
-
-算法|||c|||和算法|||c|||是简单而直观的演示。
-然而，它们专门针对特定的问题。
-
-现在的软件实现基于之后\ref{sec:general_back_propagation}节中描述的一般形式的反向传播，它可以通过明确地操作用于表示符号计算的数据结构，来适应任何计算图。
-
+算法\ref{alg:mlp-fprop}首先给出了前向传播，它将参数映射到与单个训练样例（输入，目标）$(\bm{x},\bm{y})$相关联的有监督损失函数$L(\hat{\bm{y}}, \bm{y})$，其中$\hat{\bm{y}}$是当$\bm{x}$提供输入时神经网络的输出。
+% alg 6.3
 \begin{algorithm}[ht]
-\caption{Forward propagation through a typical deep neural network
-and the computation of the cost function.
-The loss $L(\hat{\Vy},\Vy)$ depends on the
-output $\hat{\Vy}$ and on the target $\Vy$ (see \secref{sec:loss-as-nll} for examples of
-loss functions). To obtain the total cost $J$,
-the loss may be added to a regularizer $\Omega(\theta)$, where $\theta$
-contains all the parameters (weights and biases). \algref{alg:mlp-bprop} shows
-how to compute gradients of $J$ with respect to parameters $\MW$ and $\Vb$. 
-For simplicity, this demonstration uses only a single input example $\Vx$.
-Practical applications should use a minibatch. See \secref{sec:real_backprop}
-for a more realistic demonstration.
-}
+\caption{典型深度神经网络中的\gls{forward_propagation}和代价函数的计算。
+损失函数$L(\hat{\Vy}，\Vy)$取决于输出$\hat{\Vy}$和目标$\Vy$（参见\ref{sec:learning_conditional_distributions_with_maximum_likelihood}节中损失函数的示例）。
+为了获得总代价$J$，损失函数可以加上正则项$\Omega(\theta)$，其中$\theta$包含所有参数（权重和偏置）。
+算法\ref{alg:mlp-bprop}说明了如何计算$J$对参数$\bm{W}$和$\bm{b}$的梯度。 为简单起见，该演示仅使用单个输入样例$\Vx$。
+实际应用应该使用\gls{minibatch}。
+请参见\ref{sec:example_back_propagation_for_mlp_training}以获得更加真实的演示。}
 \label{alg:mlp-fprop}
 \begin{algorithmic}
 \REQUIRE Network depth, $l$
@@ -1435,19 +1412,13 @@ for a more realistic demonstration.
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[htpb]
-\caption{Backward computation for the deep neural network
-of \algref{alg:mlp-fprop}, which uses in addition to the
-input $\Vx$ a target $\Vy$. This computation yields the
-gradients on the activations $\Va^{(k)}$ for each layer $k$,
-starting from the output layer and going backwards to the first
-hidden layer. From these gradients, which can be interpreted as
-an indication of how each layer's output should change to reduce
-error, one can obtain the gradient on the parameters of each layer.
-The gradients on weights and biases can be immediately used
-as part of a stochastic gradient update (performing the
-update right after the gradients have been computed) or used with other
-gradient-based optimization methods.
+算法\ref{alg:mlp-bprop}随后说明了将反向传播应用于改图所需的相关计算。
+% alg 6.4
+\begin{algorithm}[htbp]
+\caption{深度神经网络中算法\ref{alg:mlp-fprop}的反向计算，它使用了不止输入$\Vx $和目标$\bm{y}$。
+该计算对于每一层$k$都产生了对激活$\Va^{(k)}$的梯度，从输出层开始向后计算一直到第一个\gls{hidden_layer}。
+这些梯度可以看作是对每层的输出应如何调整以减小误差的指导，根据这些梯度可以获得对每层参数的梯度。
+权重和偏置上的梯度可以立即用作随机梯度更新的一部分（梯度算出后即可执行更新），或者与其他基于梯度的优化方法一起使用。
 }
 \label{alg:mlp-bprop}
 \begin{algorithmic}
@@ -1465,6 +1436,11 @@ gradient-based optimization methods.
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
+
+算法\ref{alg:mlp-fprop}和算法\ref{alg:mlp-bprop}是简单而直观的演示。
+然而，它们专门针对特定的问题。
+
+现在的软件实现基于之后\ref{sec:general_back_propagation}节中描述的一般形式的反向传播，它可以通过明确地操作用于表示符号计算的数据结构，来适应任何计算图。
 
 
 % -- 205 --
@@ -1570,15 +1546,15 @@ gradient-based optimization methods.
 反向传播算法的软件实现通常提供操作和其\verb|bprop|两种方法，所以深度学习软件库的用户能够对使用诸如矩阵乘法、指数运算、对数运算等等常用操作构建的图进行反向传播。
 构建反向传播新实现的软件工程师或者需要向现有库添加自己的操作的高级用户通常必须手动为新操作推导\verb|op.bprop|方法。
 
-反向传播算法的正式描述参见算法|||c|||。
+反向传播算法的正式描述参见算法\ref{alg:backprop}。
 
 % -- 209 --
-
+% alg 6.5
 \begin{algorithm}[ht]
-\caption{The outermost skeleton of the back-propagation algorithm.
-This portion does simple setup and cleanup work.
-Most of the important work happens in the {\tt build\_grad} subroutine
-of \algref{alg:build_grad}}. 
+\caption{\gls{BP}算法最外围的骨架。
+这部分做简单的设置和清理工作。
+大多数重要的工作在发生在算法\ref{alg:build_grad}的子程序{\tt build\_grad}中。
+}
 \label{alg:backprop}
 \begin{algorithmic}
 \REQUIRE $\SetT$, the target set of variables whose gradients must be computed.
@@ -1597,10 +1573,8 @@ to their gradients
 \end{algorithm}
 
 \begin{algorithm}[ht]
-\caption{The inner loop subroutine
-${\tt build\_grad}(\TSV, \CalG, \CalG', {\tt grad\_table})$
-of the back-propagation algorithm, called by
-the back-propagation algorithm defined in \algref{alg:backprop}.
+\caption{\gls{BP}算法的内循环子程序${\tt build\_grad}(\TSV, \CalG, \CalG', {\tt grad\_table})$，
+被在算法\ref{alg:backprop}中定义的\gls{BP}算法调用。
 }
 \label{alg:build_grad}
 \begin{algorithmic}
@@ -1661,7 +1635,7 @@ gradients
 % -- 211 --
   
 \subsection{实例：用于MLP训练的BP}
-\label{sec:example_back_propagation_for_mlp_Training}
+\label{sec:example_back_propagation_for_mlp_training}
 
 作为一个例子，我们利用反向传播算法来训练多层感知器。
 
@@ -1769,7 +1743,7 @@ gradients
   
 % -- 215 --
   
-当前向图$\CalG$具有单个输出节点，并且每个偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$都可以用恒定的计算量来计算时，反向传播保证梯度计算的计算数目和前向计算的计算数目是同一个量级：这可以在算法|||c|||中看出，因为每个局部偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$以及递归链式公式（公式\ref{eq:6.49}）中相关的乘和加都只需计算一次。
+当前向图$\CalG$具有单个输出节点，并且每个偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$都可以用恒定的计算量来计算时，反向传播保证梯度计算的计算数目和前向计算的计算数目是同一个量级：这可以在算法\ref{alg:bprop}中看出，因为每个局部偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$以及递归链式公式（公式\ref{eq:6.49}）中相关的乘和加都只需计算一次。
 因此，总的计算量是$O(\#\text{edges})$。
 然而，可能通过对反向传播算法构建的计算图进行简化来减少这些计算量，并且这是NP完全问题。
 诸如Theano和TensorFlow的实现使用基于匹配已知简化模式的试探法，以便重复地尝试去简化图。
