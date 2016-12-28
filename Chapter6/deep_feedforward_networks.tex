@@ -139,7 +139,20 @@ f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 \else
 \centerline{\includegraphics{Chapter6/figures/xor_space_gray}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption{通过学习一个表示来解决XOR问题。
+图上的粗体数字标明了学得的函数必须在每个点输出的值。
+\emph{(左)}直接应用于原始输入的线性模型不能实现XOR函数。
+当$x_1 = 0$时，模型的输出必须随着$x_2$的增大而增大。
+当$x_1 = 1$时，模型的输出必须随着$x_2$的增大而减小。
+线性模型必须对$x_2$使用固定的系数$w_2$。
+因此，线性模型不能使用$x_1$的值来改变$x_2$的系数，从而不能解决这个问题。 
+\emph{(右)}在由神经网络提取的特征表示的变换空间中，线性模型现在可以解决这个问题了。
+在我们的示例解决方案中，输出必须为1的两个点折叠到了特征空间中的单个点。
+换句话说，非线性特征将$\bm{x} = [1, 0]^\top$和$\bm{x} = [0, 1]^\top$都映射到了特征空间中的单个点$\bm{h} = [1, 0]^\top$。
+线性模型现在可以将函数描述为$h_1$增大和$h_2$减小。
+在该示例中，学习特征空间的动机仅仅是使得模型的能力更大，使得它可以拟合训练集。
+在更现实的应用中，学习的表示也可以帮助模型泛化。}
 \label{fig:chap6_xor_space_gray}
 \end{figure}
 
@@ -158,7 +171,17 @@ f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 \else
 \centerline{\includegraphics{Chapter6/figures/example_mlp}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption{使用两种不同样式绘制的\gls{feedforward_network}的示例。
+具体来说，这是我们用来解决XOR问题的\gls{feedforward_network}。
+它有单个\gls{hidden_layer}，包含两个单元。
+\emph{(左)}在这种样式中，我们将每个单元绘制为图中的一个节点。
+这种风格是清楚而明确的，但对于比这个例子更大的网络，它可能会消耗太多的空间。
+\emph{(右)}在这种样式中，我们将表示每一层激活的整个向量绘制为图中的一个节点。
+这种样式更加紧凑。
+有时，我们对图中的边使用参数名进行注释，这些参数是用来描述两层之间的关系的。
+这里，我们用矩阵$\bm{W}$描述从$\bm{x}$到$\bm{h}$的映射，用向量$\bm{w}$描述从$\bm{h}$到$y$的映射。
+当标记这种图时，我们通常省略与每个层相关联的截距参数。}
 \label{fig:chap6_example_mlp}
 \end{figure}
 
@@ -184,7 +207,11 @@ $f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，�
 \else
 \centerline{\includegraphics{Chapter6/figures/relu_color}}
 \fi
-\caption{Tmp}
+\caption{\gls{rectified_linear}激活函数。
+该激活函数是被推荐用于大多数\gls{feedforward_neural_network}的默认激活函数。
+将此函数用于线性变换的输出将产生非线性变换。 然而，函数仍然非常接近线性，在这种意义上它是具有两个线性部分的分段线性函数。
+由于\gls{ReLU}几乎是线性的，因此它们保留了许多使得线性模型易于使用基于梯度的方法进行优化的属性。 它们还保留了许多使得线性模型能够泛化良好的属性。 计算机科学的一个公共原则是，我们可以从最小的组件构建复杂的系统。
+就像图灵机的内存只需要能够存储0或1的状态，我们可以从\gls{rectified_linear}函数构建一个\gls{universal_function_approximator}。}
 \label{fig:chap6_relu_color}
 \end{figure}
 
@@ -722,7 +749,10 @@ Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理
 \else
 \centerline{\includegraphics{Chapter6/figures/mdn_color}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption{从具有混合密度输出层的神经网络中抽取的样本。
+输入$x$从\gls{uniform_distribution}中采样，输出$y$从$p_{\text{model}}(y\mid x)$中采样。 神经网络能够学习从输入到输出分布的参数的非线性映射。 这些参数包括控制三个组件中的哪一个将产生输出的概率，以及每个组件各自的参数。
+每个混合组件都是\gls{gaussian_distribution}，具有预测的均值和方差。 输出分布的这些方面都能够相对输入$x$变化，并且以非线性的方式改变。}
 \label{fig:chap6_mdn_color}
 \end{figure}
 
@@ -1004,7 +1034,13 @@ Borel可测的概念超出了本书的范畴；对于我们想要实现的目标
 \else
 \centerline{\includegraphics[width=\textwidth]{Chapter6/figures/space_folding.jpg}}
 \fi
-\caption{Tmp: This is a screenshot.}
+\caption{% This is a screenshot.
+关于更深的整流网络具有指数优势的一个直观的几何解释，来自\cite{Montufar-et-al-NIPS2014}。 
+\emph{(左)}\gls{absolute_value_rectification}单元对其输入中的每对镜像点有相同的输出。
+镜像的对称轴由单元的权重和偏置定义的超平面给出。 在该单元顶部计算的函数（绿色决策面）将是横跨该对称轴的更简单模式的一个镜像。 
+\emph{(中)}该函数可以通过折叠对称轴周围的空间来得到。
+\emph{(右)}另一个重复模式可以在第一个的顶部折叠（由另一个下游单元）以获得另外的对称性（现在重复四次，使用了两个\gls{hidden_layer}）。 
+图重置得到了\cite{Montufar-et-al-NIPS2014}的许可。}
 \label{fig:chap6_space_folding}
 \end{figure}
 
@@ -1030,7 +1066,7 @@ O \left ( k^{(l-1)+d} \right ).
 或者，我们可以将深度结构的使用解释为另一种信念，那就是我们想要学得的函数是包含多个步骤的计算机程序，其中每个步骤使用前一步骤的输出。
 这些中间输出不一定是变化的因素，而是可以类似于网络用来组织其内部处理的计数器或指针。
 根据经验，更深的模型似乎确实会更适用于广泛的任务\citep{Bengio-NIPS2007,Erhan2009,Bengio-2009-book,UTLC+LISA-2011-small,Ciresan-et-al-2012,Krizhevsky-2012-small,sermanet-cvpr-13,Farabet-et-al-2013,couprie-iclr-13,LISA-EmotiW2013,Goodfellow+et+al-ICLR2014a,Szegedy-et-al-arxiv2014}。
-图\ref{fig:chap6_depth_color}和图\ref{fig:chap6_model_size_color}展示了一些经验结果的例子。
+图\ref{fig:chap6_depth_color}和图\ref{fig:chap6_model_size_color}展示了一些实验结果的例子。
 这表明使用深层结构确实在模型学习的函数空间上表示了一个有用的先验。
 % fig 6.6
 \begin{figure}[!htb]
@@ -1039,7 +1075,11 @@ O \left ( k^{(l-1)+d} \right ).
 \else
 \centerline{\includegraphics{Chapter6/figures/depth_color}}
 \fi
-\caption{Tmp}
+\caption{深度的影响。
+实验结果表明，当从地址照片转录多位数字时，更深层的网络能够更好地泛化。
+数据来自\cite{Goodfellow+et+al-ICLR2014a}。
+测试集上的准确率随着深度的增加而不断增加。
+图\ref{fig:chap6_model_size_color}给出了一个对照实验，它说明了对模型尺寸其他方面的增加并不能产生相同的效果。}
 \label{fig:chap6_depth_color}
 \end{figure}
 
@@ -1050,7 +1090,15 @@ O \left ( k^{(l-1)+d} \right ).
 \else
 \centerline{\includegraphics{Chapter6/figures/model_size_color}}
 \fi
-\caption{Tmp}
+\caption{参数数量的影响。
+更深的模型往往表现更好。
+这不仅仅是因为模型更大。
+\cite{Goodfellow+et+al-ICLR2014a}的这项实验表明，增加\gls{convolutional_network}层中参数的数量，但是不增加它们的深度，在提升测试集性能方面几乎没有效果，如此图所示。
+图例标明了用于画出每条曲线的网络深度，以及曲线表示的是卷积层还是全连接层的大小变化。
+我们可以观察到，在这种情况下，浅层模型在参数数量达到2000万时就过拟合，而深层模型在参数数量超过6000万时仍然表现良好。
+这表明，使用深层模型表达出了对模型可以学习的函数空间的有用偏好。
+具体来说，它表达了一种信念，即该函数应该由许多更简单的函数复合在一起而得到。
+这可能导致学习由更简单的表示所组成的表示（例如，由边所定义的角）或者学习具有顺序依赖步骤的程序（例如，首先定位一组对象，然后分割它们，之后识别它们）。}
 \label{fig:chap6_model_size_color}
 \end{figure}
 
@@ -1137,7 +1185,14 @@ O \left ( k^{(l-1)+d} \right ).
 \else
 \centerline{\includegraphics{Chapter6/figures/computational_graph}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption{一些计算图的示例。
+\emph{(a)}使用$\times$操作计算$z = xy$的图。 
+\emph{(b)}用于\gls{logistic_regression}预测$\hat{y} = \sigma(\bm{x}^\top \bm{w} + b)$的图。 一些中间表达式在代数表达式中没有名称，但在图形中却需要。
+我们简单地将第$i$个这样的变量命名为$u^{(i)}$。
+\emph{(c)}表达式$\bm{H} = \max \{ 0, \bm{X}\bm{W}+ \bm{b} \}$的计算图，在给定包含小批量输入数据的设计矩阵$\bm{X}$时，它计算\gls{ReLU}激活的设计矩阵$\bm{H}$。
+\emph{(d)}示例a-c对每个变量最多只实施一个操作，但是对变量实施多个操作也是可能的。 这里我们展示一个计算图，它对线性回归模型的权重$\bm{w}$实施多个操作。
+这个权重不仅用于预测$\hat{y}$，也用于权重衰减罚项$\lambda \sum_i w_i^2$。}
 \label{fig:chap6_computational_graph}
 \end{figure}
 
@@ -1152,6 +1207,7 @@ O \left ( k^{(l-1)+d} \right ).
 那么链式法则是说
 \begin{equation}
 \frac{dz}{dx}=\frac{dz}{dy} \frac{dy}{dx}.
+\label{eq:6.44}
 \end{equation}
 
 我们可以将这种标量情况进行扩展。
@@ -1269,14 +1325,23 @@ The output of the computational graph is read off the last (output) node $u^{(n)
 \fi
 \captionsetup{singlelinecheck=off}
 \caption[.]{
-TODO.
+计算梯度时导致重复子表达式的计算图。
+令$w \in \SetR$为图的输入。
+我们对链中的每一步使用相同的操作函数$f: \SetR \to \SetR$，这样$x=f(w), y=f(x), z=f(y)$。
+为了计算$\frac{\partial z}{\partial w}$，我们应用公式\ref{eq:6.44}得到：
 \begin{align}
 & \frac{\partial z}{\partial w}\\
 =& \frac{\partial z}{\partial y} \frac{\partial y}{\partial x} \frac{\partial x}{\partial w}\\
-=& f'(y)f'(x)f'(w)\\
-=& f'(f(f(w))) f'(f(w)) f'(w).
+\label{eq:6.52}
+=& f'(y)f'(x)f'(w)\\ 
+=& f'(f(f(w))) f'(f(w)) f'(w). 
 \end{align}
-TODO.}
+公式\ref{eq:6.52}建议我们采用的实现方式是，仅计算$f(w)$的值一次并将它存储在变量$x$中。
+这是\gls{BP}算法所采用的方法。
+公式6.53提出了一种替代方法，其中子表达式$f(w)$出现了不止一次。 %这里不知道怎么弄多个label的公式，会报错
+在替代方法中，每次只在需要时重新计算$f(w)$。
+当存储这些表达式的值所需的存储较少时，公式\ref{eq:6.52}的\gls{BP}方法显然是较优的，因为它减少了运行时间。
+然而，公式6.53也是链式法则的有效实现，并且当存储受限时它是有用的。}
 \label{fig:chap6_repeated_subexpression}
 \end{figure}
 
@@ -1431,7 +1496,14 @@ gradient-based optimization methods.
 \else
 \centerline{\includegraphics{Chapter6/figures/symbol_to_symbol}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption{使用符号到符号的方法计算导数的示例。
+在这种方法中，\gls{BP}算法不需要访问任何实际的特定数值。
+相反，它将节点添加到计算图中来描述如何计算这些导数。
+通用图形求值引擎可以在随后计算任何特定数值的导数。
+\emph{(左)}在这个例子中，我们从表示$z=f(f(f(w)))$的图开始。
+\emph{(右)}我们运行\gls{BP}算法，指导它构造表达式$\frac{dz}{dw}$对应的图。 在这个例子中，我们不解释\gls{BP}算法如何工作。
+我们的目的只是说明想要的结果是什么：具有导数的符号描述的计算图。}
 \label{fig:chap6_symbol_to_symbol}
 \end{figure}
 
@@ -1617,7 +1689,7 @@ gradients
 \else
 \centerline{\includegraphics{Chapter6/figures/mlp_example}}
 \fi
-\caption{Tmp}
+\caption{用于计算代价函数的计算图，这个代价函数是使用\gls{cross_entropy}损失以及权重衰减训练我们的单层\glssymbol{MLP}示例所产生的。}
 \label{fig:chap6_mlp_example}
 \end{figure}
 
