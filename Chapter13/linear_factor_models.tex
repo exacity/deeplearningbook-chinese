@@ -51,7 +51,8 @@
 \else
 	\centerline{\includegraphics{Chapter13/figures/linear_factors}}
 \fi
-	\caption{描述\gls{linear_factor}族的\gls{directed_graphical_model}，其中我们假设一个观察到的数据向量$\Vx$是通过独立的隐含因子$\Vh$的线性组合获得的，加上一定的噪音。不同的模型，比如\gls{PPCA}，\gls{FA}或者是\glssymbol{ICA}，都是选择了不同形式的噪音以及先验$p(\Vh)$。}
+	\caption{描述\gls{linear_factor}族的\gls{directed_graphical_model}，其中我们假设一个观察到的数据向量$\Vx$是通过独立的隐含因子$\Vh$的线性组合获得的，加上一定的噪音。
+		不同的模型，比如\gls{PPCA}，\gls{FA}或者是\glssymbol{ICA}，都是选择了不同形式的噪音以及先验$p(\Vh)$。}
 	\label{fig:linear_factors}
 \end{figure}
 
@@ -198,7 +199,7 @@
 
 
 \glssymbol{SFA}的想法源于所谓的\firstgls{slow_principle}。
-基本思想是，与场景中的描述作用的物体相比，场景的重要特性通常变化得非常缓慢。
+其基本思想是，与场景中的描述作用的物体相比，场景的重要特性通常变化得非常缓慢。
 例如，在\gls{CV}中，单个像素值可以非常快速地改变。
 如果斑马从左到右移动穿过图像并且它的条纹穿过对应的像素时，该像素将迅速从黑色变为白色，并再次恢复。
 通过比较，指示斑马是否在图像中的特征将根本不改变，并且描述斑马的位置的特征将缓慢地改变。
@@ -219,7 +220,7 @@ $L$的一个常见选择是平均误差平方。
 
 
 \glssymbol{SFA}是\gls{slow_principle}中特别有效的应用。
-由于它被应用于线性特征提取器，并且可以以通过闭式解训练，所以他是高效的。
+由于它被应用于线性特征提取器，并且可以通过\gls{closed_form_solution}训练，所以它是高效的。
 像\glssymbol{ICA}的一些变体一样，\glssymbol{SFA}本身不是\gls{generative_model}，只是在输入空间和特征空间之间定义了线性映射，但是没有定义特征空间的先验，因此输入空间中不存在$p(\Vx)$分布。
 % 484
 
@@ -255,14 +256,14 @@ $L$的一个常见选择是平均误差平方。
 没有这个约束，所有学习的特征将简单地捕获一个最慢的信号。
 可以想象使用其他机制，如最小化\gls{reconstruction_error}，迫使特征多样化。
 但是由于\glssymbol{SFA}特征的线性，这种去相关机制只能得到一种简单的解。 
-\glssymbol{SFA}问题可以通过线性代数软件获得闭式解。
+\glssymbol{SFA}问题可以通过线性代数软件获得\gls{closed_form_solution}。
 % 485
 
 
 
 在运行\glssymbol{SFA}之前，\glssymbol{SFA}通常通过对$\Vx$使用非线性的基扩充来学习非线性特征。
 例如，通常用$\Vx$的二次基扩充来代替原来的$\Vx$，得到一个包含所有$x_ix_j$的向量。
-然后可以通过重复学习线性\glssymbol{SFA}特征提取器，对其输出应用非线性基扩展，然后在该扩展之上学习另一个线性SFA特征提取器，来组合线性\glssymbol{SFA}模块以学习深非线性慢特征提取器。
+然后可以通过重复学习线性\glssymbol{SFA}\gls{feature_extractor}，对其输出应用非线性基扩展，然后在该扩展之上学习另一个线性\glssymbol{SFA}\gls{feature_extractor}，来组合线性\glssymbol{SFA}模块以学习深非线性慢\gls{feature_extractor}。
 Linear SFA modules may then be composed to learn deep nonlinear slow feature extractors by repeatedly learning a linear SFA feature extractor, applying a nonlinear basis expansion to its output, and then learning another linear SFA feature extractor on top of that expansion.
 % 485
 
@@ -278,15 +279,15 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 为了做出这样的理论预测，必须知道关于配置空间的环境的动态（例如，在3D渲染环境中的随机运动的情况下，理论分析出位置，相机的速度的概率分布）。
 已知潜在因子如何改变的情况下，我们能够理论分析解决表达这些因子的最佳函数。
 在实践中，基于模拟数据的实验上，使用深度\glssymbol{SFA}似乎能够恢复了理论预测的函数。
-相比之下其他学习算法中的成本函数高度依赖于特定像素值，使得更难以确定模型将学习什么特征。
+相比之下其他学习算法中的\gls{cost_function}高度依赖于特定像素值，使得更难以确定模型将学习什么特征。
 % 486
 
 
 深度\glssymbol{SFA}也已经被用于学习用在对象识别和姿态估计的特征\citep{Franzius2008}。
 到目前为止，\gls{slow_principle}尚未成为任何最先进的技术应用的基础。
-什么因素限制了其性能也有待研究。
+究竟是什么因素限制了其性能也有待研究。
 我们推测，或许慢度先验是太过强势，并且，最好添加这样一个先验使得当前步骤到下一步的预测更加容易，而不是加一个先验使得特征应该近似为一个常数。
-对象的位置是一个有用的特征，无论对象的速度是高还是低。 但慢度原则鼓励模型忽略具有高速度的对象的位置。
+对象的位置是一个有用的特征，无论对象的速度是高还是低。 但\gls{slow_principle}鼓励模型忽略具有高速度的对象的位置。
 % 486
 
 
@@ -399,7 +400,15 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 \else
 	\centerline{\includegraphics{Chapter13/figures/s3c_samples}}
 \fi
-\caption{\gls{ss}\gls{sparse_coding}模型上在MNIST数据集训练的样例和权重。（左）这个模型中的样本和训练样本相差很大。第一眼看来，我们可以认为模型拟合得很差。（右）这个模型的权重向量已经学习到了如何表示笔迹，有时候还能写完整的数字。因此这个模型也学习到了有用的特征。问题在于特征的\gls{factorial}先验会导致特征子集合随机的组合。一些这样的子集能够合成可识别的MNIST集上的数字。这也促进了拥有更强大的隐含编码的\gls{generative_model}的发展。此图是从\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}中拷贝来的，并获得允许。}
+\caption{\gls{ss}\gls{sparse_coding}模型上在MNIST数据集训练的样例和权重。
+	（左）这个模型中的样本和训练样本相差很大。
+	第一眼看来，我们可以认为模型拟合得很差。
+	（右）这个模型的权重向量已经学习到了如何表示笔迹，有时候还能写完整的数字。
+	因此这个模型也学习到了有用的特征。
+	问题在于特征的\gls{factorial}先验会导致特征子集合随机的组合。
+	一些这样的子集能够合成可识别的MNIST集上的数字。
+	这也促进了拥有更强大的隐含编码的\gls{generative_model}的发展。
+	此图是从\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}中拷贝来的，并获得允许。}
 	\label{fig:s3c_samples}
 \end{figure}
 
@@ -425,7 +434,9 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 \else
 	\centerline{\includegraphics{Chapter13/figures/PPCA_pancake_color}}
 \fi
-	\caption{平坦的高斯能够描述一个低维\gls{manifold}附近的概率密度。此图表示了``\gls{manifold}平面''上的``馅饼''的上半部分并且穿过了它的中心。正交于\gls{manifold}方向（指出平面的箭头）的方差非常小，可以被视作是``噪音''，其它方向（平面内的箭头）的方差则很大，对应了``信号''以及低维数据的坐标系统。}
+	\caption{平坦的高斯能够描述一个低维\gls{manifold}附近的概率密度。
+		此图表示了``\gls{manifold}平面''上的``馅饼''的上半部分并且穿过了它的中心。
+		正交于\gls{manifold}方向（指出平面的箭头）的方差非常小，可以被视作是``噪音''，其它方向（平面内的箭头）的方差则很大，对应了``信号''以及低维数据的坐标系统。}
     \label{fig:PPCA_pancake}
 \end{figure}
 
