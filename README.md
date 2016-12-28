@@ -23,7 +23,7 @@
 面向的读者
 --------------------
 
-请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.2-alpha/dlbook_cn_v0.2-alpha.pdf)阅读。
+请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.3-alpha/dlbook_cn_v0.3-alpha.pdf)阅读。
 这一版读起来肯定费劲，我们建议英文好的或者研究者直接读原版。
 这一版面向的读者是英语不好，急于想入门深度学习的同学。或者希望帮忙校对的各路大哥也可以读读，只要不嫌弃。
 
@@ -36,7 +36,7 @@
  - 由于版权问题，我们不能将图片和bib上传，请见谅。
  - Due to copyright issues, we would not upload figures and the bib file.
  - 可用于学习研究目的，不得用于任何商业行为。谢谢！
- - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.2-alpha/dlbook_cn_v0.2-alpha.pdf)文件每天更新。
+ - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.3-alpha/dlbook_cn_v0.3-alpha.pdf)文件每天更新。
  - 大家不要watch啊，邮箱可能会炸。
  - **先不要打印，这一版不值得打印，浪费钱，** 给我们一个月时间，我们给出我们自己满意的版本。打印版仅供学习参考和找茬纠错，正式出版后，希望大家多多支持纸质正版书籍。
 
@@ -45,7 +45,7 @@
 TODO
 ---------
 
- 1. 翻译图片描述，表格和算法
+ 1. ~~翻译图片描述，表格和算法~~，12月28日完成。
  2. ~~链接补全~~，12月14日已ok，大家可以帮忙检查文献引用是否正确，图片、章节和公式引用是否正确。
  3. 语句通顺
  4. ~~第20章正在校对，这章比较难估计还需2周~~，12月14日完成校对
