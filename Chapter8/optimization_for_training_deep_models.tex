@@ -1561,7 +1561,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 这个计算平均值的方法被用于大量数值应用中。最近的例子请参看\cite{Szegedy-et-al-2015}。
 
-\subsection{监督提前训练}
+\subsection{监督\glsentrytext{pretraining}}
 \label{sec:supervised_pretraining}
 有时，如果模型太复杂难以优化，或是如果任务非常困难，直接训练模型来解决特定任务可能太过挑战。
 有时训练一个较简单的模型来求解问题，然后使模型更复杂会更有效。
@@ -1575,15 +1575,15 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 贪心算法也可以后跟一个\firstgls{fine_tuning}阶段，联合优化算法搜索全问题的最优解。
 使用贪心解初始化联合优化算法，可以极大地加速算法，并提高寻找到的解的质量。
 
-提前训练算法，特别是贪心提前训练，在深度学习中是普遍存在的。
-在本节中，我们会具体描述这些将监督学习问题分解成其他简化的监督学习问题的提前训练算法。
+\gls{pretraining}算法，特别是贪心\gls{pretraining}，在深度学习中是普遍存在的。
+在本节中，我们会具体描述这些将监督学习问题分解成其他简化的监督学习问题的\gls{pretraining}算法。
 这种方法被称为\firstgls{greedy_supervised_pretraining}。
 
 % -- 314 --
 
 在\gls{greedy_supervised_pretraining}的原始版本\citep{Bengio-nips-2006-short}中，每个阶段包括一个仅涉及最终神经网络的子集层的监督学习训练任务。
-\gls{greedy_supervised_pretraining}的一个例子如\figref{fig:chap8_deep_sup}所示，其中每个附加的\gls{hidden_layer}作为浅监督MLP的一部分提前训练，以先前训练的\gls{hidden_layer}输出作为输入。
-并非一次提前训练一层，\cite{Simonyan2015}提前训练深度卷积网络（11层权重），然后使用该网络前四层和最后三层初始化更深的网络（多达19层权重）。
+\gls{greedy_supervised_pretraining}的一个例子如\figref{fig:chap8_deep_sup}所示，其中每个附加的\gls{hidden_layer}作为浅监督MLP的一部分\gls{pretraining}，以先前训练的\gls{hidden_layer}输出作为输入。
+并非一次\gls{pretraining}一层，\cite{Simonyan2015}\gls{pretraining}深度卷积网络（11层权重），然后使用该网络前四层和最后三层初始化更深的网络（多达19层权重）。
 非常深的新网络的中间层是随机初始化的。
 然后联合训练新网络。
 还有一种选择，由\cite{Yu+al-2010}提出，将先前训练MLP的\emph{输出}，以及原始输入，作为每个附加阶段的输入。
@@ -1609,9 +1609,9 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 为什么\gls{greedy_supervised_pretraining}会有帮助呢？
 最初由\cite{Bengio-nips-2006}提出的假说是，其有助于更好地指导深层结构的中间层的学习。
-一般情况下，提前训练在优化和泛化两边面都是有帮助的。
+一般情况下，\gls{pretraining}在优化和泛化两边面都是有帮助的。
 
-另一个与监督提前训练有关的方法扩展了迁移学习的想法：\cite{yosinski-nips2014}在一组任务上提前训练了$8$层权重的深度卷积网络（1000个ImageNet对象类的子集），然而用该网络的前$k$层初始化同样规模的网络。
+另一个与监督\gls{pretraining}有关的方法扩展了迁移学习的想法：\cite{yosinski-nips2014}在一组任务上\gls{pretraining}了$8$层权重的深度卷积网络（1000个ImageNet对象类的子集），然而用该网络的前$k$层初始化同样规模的网络。
 然后第二个网络的所有层（上层随机初始化）联合训练以执行不同的任务（1000个ImageNet对象类的另一个子集），但训练样本少于第一个任务。
 神经网络中另一个和迁移学习相关的方法将在\secref{sec:transfer_learning_and_domain_adaptation}讨论。
 
@@ -1653,7 +1653,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 一个和跳过连接相关的想法是添加和网络中间\gls{hidden_layer}相连的输出的额外副本，如GoogLeNet\citep{Szegedy-et-al-arxiv2014}和深度监督网络\citep{Lee-et-al-2014}。
 这些``辅助头''被训练来执行和网络顶层主要输出相同的任务，以确保底层网络能够接受较大的梯度。
 当训练完成时，辅助头可能被丢弃。
-这是之前小节介绍到的提前训练技巧的替代方法。
+这是之前小节介绍到的\gls{pretraining}技巧的替代方法。
 以这种方式，我们可以在一个阶段联合训练所有层，而不改变架构，使得中间层（特别是低层）能够通过更短的路径得到一些有些如何更新的有用信息。
 这些信息为底层提供了误差信号。
 
@@ -1680,7 +1680,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 % -- 318 --
 
-传统上，\gls{continuation_method}主要用来客服局部极小值的问题。
+传统上，\gls{continuation_method}主要用来克服局部极小值的问题。
 具体地，它被设计来在有很多局部极小值的情况下，求解一个全局极小值。
 这些连续方法会通过``模糊''原来的损失函数来构建更容易的损失函数。
 这些模糊操作可以是用采样来近似
@@ -1690,11 +1690,11 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 这个方法的直觉是有些非凸函数在模糊后会近似凸的。
 在许多情况下，这种模糊保留了关于全局极小值的足够信息，我们可以通过逐步求解更少模糊的问题来求解全局极小值。
 这种方法有三种可能失败的方式。
-首先，它可能成功定义了一系列的损失函数，其中第一个是凸的，最优解会沿着一个接一个的函数到达全局极小值，但它可能需要非常多的逐步损失函数，整个过程的成本仍然很高。
+首先，它可能成功地定义了一连串损失函数，并从开始的一个凸函数起（逐一地）沿着函数链最佳轨迹逼近全局最小值，但可能需要非常多的逐步损失函数，整个过程的成本仍然很高。
 另外，即使\gls{continuation_method}可以适用，NP难的优化问题仍然是NP难的。
 其他两种\gls{continuation_method}失败的原因是不实用。
 其一，不管如何模糊，可能函数没法变成凸的，比如函数$J(\Vtheta) = -\Vtheta^\top \Vtheta$。
-其二，函数可能在模糊后是凸的，但模糊函数的极小值可能会逐步到一个局部值，而非原始损失函数的全局极小值。
+其二，函数可能在模糊后是凸的，但模糊函数的最小值可能会逐步到一个局部值，而非原始损失函数的全局最小值。
 尽管\gls{continuation_method}最初用来解决局部最小值的问题，局部最小值已不再是神经网络优化中的主要问题了。
 幸运的是，\gls{continuation_method}仍然有所帮助。
 \gls{continuation_method}引入的简化目标函数能够消除平坦区域，减少梯度估计的方差，提高\gls{hessian}矩阵的条件数，使局部更新更容易计算，或是改进局部更新方向和朝向全局解方向之间的对应关系。
