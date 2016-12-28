@@ -698,7 +698,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 当\gls{dataset}有十万计或者更多的\gls{example:chap5}时，这不会是一个严重的问题。
 当\gls{dataset}太小时，也有替代方法允许我们使用所有的\gls{example:chap5}估计平均测试误差，代价是增加了计算量。
 这些过程是基于在原始数据上随机采样或分离出的不同\gls{dataset}上重复训练和测试的想法。
-最常见的是$k$-折交叉验证过程，如算法5.1所示，将\gls{dataset}分成$k$个不重合的子集。
+最常见的是$k$-折交叉验证过程，如\algref{alg:xv}所示，将\gls{dataset}分成$k$个不重合的子集。
 测试误差可以估计为$k$次计算后的平均测试误差。
 在第$i$次测试时，数据的第$i$个子集用于\gls{test_set}，其他的数据用于训练集。
 带来的一个问题是不存在平均误差方差的无偏估计\citep{Bengio-Grandvalet-JMLR-04}，但是我们通常会使用近似来解决。
@@ -725,6 +725,32 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 虽然几乎所有的函数都可以称为\gls{estimator:chap5}，但是一个好的\gls{estimator:chap5}的输出会接近生成训练数据的真实参数$\Vtheta$。
 
 % -- 119 --
+
+\begin{algorithm}
+  \caption{$k$-折交叉验证算法。
+当给定数据集$\SetD$ 对于简单的训练/测试或训练/验证分割而言太小难以产生泛化误差的准确估计时（因为在小的测试集上，$L$可能具有过高的方差），$k$-折交叉验证算法可以用于估计学习算法$A$的泛化误差。
+数据集$\SetD$ 包含的元素是抽象的样本 $\Vz^{(i)}$ （对于第$i$个样本）， 在\gls{supervised_learning}的情况代表（输入，目标）对$\Vz^{(i)} = (\Vx^{(i)}, y^{(i)})$ ，或者\gls{unsupervised_learning}的情况下仅用于输入$\Vz^{(i)} = \Vx^{(i)}$。
+该算法返回$\SetD$中每个示例的误差向量$\Ve$，其均值是估计的泛化误差。
+单个样本上的误差可用于计算平均值周围的置信区间（\eqnref{eq:confidence_interval}）。
+虽然这些置信区间在使用交叉验证之后不能很好地证明，但是通常的做法是只有当算法$A$误差的置信区间低于并且不与算法$B$的置信区间相交时，我们采声明算法$A$比算法$B$更好。}
+\label{alg:xv}
+\begin{algorithmic}
+\item[] \hspace*{-4.2mm}{\bf Define} {\tt KFoldXV}($\SetD,A,L,k$):
+\REQUIRE $\SetD$为给定数据集，其中元素为 $\Vz^{(i)}$
+\REQUIRE $A$ 为学习算法，可视为一个函数（使用数据集作为输入，输出一个学好的函数）
+\REQUIRE $L$ 为\gls{loss_function}，可视为来自学好的函数$f$，将样本 $\Vz^{(i)} \in \SetD$ 映射到标量$\in \SetR$的函数
+\REQUIRE $k$为折数
+\STATE 将 $\SetD$ 分为 $k$个互斥子集 $\SetD_i$，它们的并为$\SetD$
+\FOR{$i$ from $1$ to $k$}
+  \STATE $f_i = A(\SetD \backslash \SetD_i)$ 
+  \FOR{$\Vz^{(j)}$ in $\SetD_i$}
+    \STATE $e_j = L(f_i, \Vz^{(j)})$
+  \ENDFOR
+\ENDFOR
+\STATE {\bf Return} $\Ve$
+\end{algorithmic}
+\end{algorithm}
+
 
 现在，我们采取频率派在统计上的观点。
 换言之，我们假设真实参数$\Vtheta$是固定但未知的，而点估计$\hat{\Vtheta}$是数据的函数。
@@ -883,6 +909,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 中心极限定理告诉我们均值会接近一个高斯分布，我们可以用\gls{standard_error}计算出真实期望落在选定区间的概率。
 例如，以均值$\hat{\mu}_m$为中心的$95\%$置信区间是
 \begin{equation}
+\label{eq:confidence_interval}
     ( \hat{\mu}_m - 1.96\text{SE}(\hat{\mu}_m), \hat{\mu}_m + 1.96 \text{SE}(\hat{\mu}_m) ),
 \end{equation}
 以上区间是基于均值$\hat{\mu}_m$和方差$\text{SE}(\hat{\mu}_m)^2$的高斯分布。

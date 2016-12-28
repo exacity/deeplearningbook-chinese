@@ -69,7 +69,29 @@
 
 \gls{greedy_layer_wise_unsupervised_pretraining}依赖于单层\gls{representation_learning}算法，例如\glssymbol{RBM}，单层\gls{AE}，\gls{sparse_coding}模型，或其他学习隐表示的模型。
 每一层使用\gls{unsupervised_learning}\gls{pretraining}，输入前一层的输出，并产生输出数据的新型表示，其分布（或者是和其他变量，如要预测的类别，的关系）有希望是简单的。
-参看算法15.1了解正式的表述。
+查看\algref{alg:pretraining}了解正式的表述。
+
+\begin{algorithm}
+\caption{{\em \gls{greedy_layer_wise_unsupervised_pretraining}的协定}\\
+给定如下：无监督特征学习算法$\CalL$，$\CalL$使用训练集样本并返回\gls{encoder}或特征函数$f$。
+原始输入数据是$\MX$，每行一个样本，并且$f^{(1)}(\MX)$是第一阶段\gls{encoder}关于$\MX$的输出。
+在执行\gls{fine_tune}的情况下，我们使用学习者$\CalT$，并使用初始函数$f$，输入样本$\MX$（以及在监督\gls{fine_tune}情况下关联的目标$\MY$），并返回细调好函数。 阶段数为$m$。
+}
+\label{alg:pretraining}
+\begin{algorithmic}
+\STATE $f \leftarrow$ 恒等函数
+\STATE $\tilde{\MX} = \MX$
+\FOR {$k=1, \ldots, m$}
+  \STATE $f^{(k)} = {\CalL}(\tilde{\MX})$
+  \STATE $f \leftarrow f^{(k)} \circ f$
+  \STATE $\tilde{\MX} \leftarrow f^{(k)}(\tilde{\MX})$
+\ENDFOR
+\IF {\em fine-tuning}
+  \STATE $f \leftarrow {\CalT}(f,\MX,\MY)$
+\ENDIF
+\STATE {\bf Return} $f$
+\end{algorithmic}
+\end{algorithm}
 
 
 基于无监督标准的贪心逐层训练过程早已被用来规避监督问题中深度网络联合训练多层的问题。

@@ -86,7 +86,19 @@
 \else
 \centerline{\includegraphics{Chapter20/figures/dbn}}
 \fi
-\caption{TODO}
+\caption{可以用\gls{RBM}构建的模型示例。
+(a)\gls{RBM}本身是基于二分图的无向\gls{graphical_model}，在图的一部分具有可见单元，另一部分具有\gls{hidden_unit}。可见单元之间没有连接，\gls{hidden_unit}之间也没有任何连接。通常每个可见单元连接到每个\gls{hidden_unit}，但也可以构造稀疏连接的\glssymbol{RBM}，如卷积\glssymbol{RBM}。
+(b)\gls{DBN}是涉及有向和无向连接的混合\gls{graphical_model}。
+与\glssymbol{RBM}一样，它也没有层内连接。
+然而，\glssymbol{DBN}具有多个\gls{hidden_layer}，因此\gls{hidden_unit}之间的连接在分开的层中。
+\gls{DBN}所需的所有局部条件概率分布都直接复制\glssymbol{RBM}的局部条件概率分布。
+或者，我们也可以用完全无向图表示\gls{DBN}，但是它需要层内连接来捕获父节点间的依赖关系。
+(c)\gls{DBM}是具有几层\gls{latent_variable}的无向\gls{graphical_model}。
+与\glssymbol{RBM}和\glssymbol{DBN}一样，\glssymbol{DBM}也缺少层内连接。
+\glssymbol{DBM}与\glssymbol{RBM}的联系不如\glssymbol{DBN}紧密。
+当从\glssymbol{RBM}堆栈初始化\glssymbol{DBM}时，有必要对\glssymbol{RBM}的参数稍作修改。
+某些种类的\glssymbol{DBM}可以直接训练，而不用先训练一组\glssymbol{RBM}。
+}
 \label{fig:chap20_dbn}
 \end{figure}
 
@@ -276,7 +288,9 @@ P(v_i^{(k)} = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\t
 \else
 \centerline{\includegraphics{Chapter20/figures/dbm_simple}}
 \fi
-\caption{TODO}
+\caption{具有一个可见层（底部）和两个\gls{hidden_layer}的\gls{DBM}的\gls{graphical_model}。
+仅在相邻层的单元之间存在连接。
+没有层内连接。}
 \label{fig:chap20_dbm_simple}
 \end{figure}
 
@@ -306,7 +320,7 @@ P(v_i^{(k)} = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\t
 \else
 \centerline{\includegraphics{Chapter20/figures/dbm_bipartite}}
 \fi
-\caption{TODO}
+\caption{\gls{DBM}，重新排列后显示为二分图结构。}
 \label{fig:chap20_dbm_bipartite}
 \end{figure}
 
@@ -472,8 +486,51 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 
 非变分版本的\gls{SML}算法已经在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}讨论过。
-算法|||c|||给出了应用于\glssymbol{DBM}的变分\gls{SML}算法。
+\algref{alg:sml_dbm}给出了应用于\glssymbol{DBM}的变分\gls{SML}算法。
 回想一下，我们描述的是\glssymbol{DBM}的简化变体（缺少\gls{bias_aff}参数）; 包括\gls{bias_aff}参数是简单的。
+
+\begin{algorithm}%[!ht]
+\caption{用于训练具有两个\gls{hidden_layer}的\glssymbol{DBM}的变分\gls{SML}算法} 
+\label{alg:sml_dbm}
+\begin{algorithmic}
+\STATE 设步长 $\epsilon$ 为一个小正数
+\STATE 设定\gls{gibbs_steps} $k$，大到足以让$p(\Vv,\Vh^{(1)},\Vh^{(2)}; \Vtheta + \epsilon \Delta_{\Vtheta})$的\gls{markov_chain}能\gls{burn_in} （从来自 $p(\Vv,\Vh^{(1)},\Vh^{(2)}; \Vtheta)$ 的样本开始）。 
+\STATE 初始化三个矩阵，$\tilde{\MV}$, $\tilde{\MH}^{(1)}$ 和 $\tilde{\MH}^{(2)}$ 每个都将 $m$行设为随机值（例如，来自\gls{bernoulli_distribution}，边缘分布大致与模型匹配）。  
+\WHILE{没有收敛（学习循环）} 
+\STATE 从训练数据采包含$m$个样本的\gls{minibatch}，并将它们排列为设计矩阵$\MV$的行。
+\STATE 初始化矩阵 $\hat{\MH}^{(1)}$ 和 $\hat{\MH}^{(2)}$，大致符合模型的边缘分布。 % ??
+\WHILE{没有收敛（\gls{meanfield}\gls{inference}循环）}
+        \STATE $\hat{\MH}^{(1)} \leftarrow \sigmoid \left(
+          \MV \MW^{(1)} + \hat{\MH}^{(2)} \MW^{(2) \top} \right)$.
+        \STATE $\hat{\MH}^{(2)} \leftarrow \sigmoid \left(
+          \hat{\MH}^{(1)} \MW^{(2)} \right)$.
+\ENDWHILE
+\STATE $\Delta_{\MW^{(1)}} \leftarrow \frac{1}{m} \MV^\top \hat{\MH}^{(1)}$
+\STATE $\Delta_{\MW^{(2)}} \leftarrow \frac{1}{m} \hat{\MH}^{(1)\ \top} \hat{\MH}^{(2)}$
+
+\FOR{$l=1$ to $k$ （\gls{gibbs_sampling}）}
+\STATE Gibbs block 1:
+   \STATE $\forall i, j, \tilde{V}_{i,j} \text{ 采自 } P(\tilde{V}_{i,j} = 1) =
+    \sigmoid \left( 
+     \MW_{j,:}^{(1)} 
+     \left( \tilde{\MH}_{i,:}^{(1)} \right)^\top
+     \right)$.
+   \STATE $\forall i, j, \tilde{H}^{(2)}_{i,j} \text{ 采自 } P(\tilde{H}^{(2)}_{i,j} = 1) = 
+   \sigmoid \left(\tilde{\MH}_{i,:}^{(1)} \MW_{:,j}^{(2)} 
+    \right)$.
+\STATE Gibbs block 2:
+   \STATE $\forall i, j, \tilde{H}^{(1)}_{i,j} \text{ 采自 } P(\tilde{H}^{(1)}_{i,j} = 1) = \sigmoid \left( \tilde{\MV}_{i,:}
+     \MW_{:,j}^{(1)} + \tilde{\MH}_{i,:}^{(2)} \MW_{j,:}^{(2) \top} \
+   \right)$.
+\ENDFOR
+\STATE $\Delta_{\MW^{(1)}} \leftarrow \Delta_{\MW^{(1)}} - \frac{1}{m} \MV^\top \tilde{\MH}^{(1)}$
+\STATE $\Delta_{\MW^{(2)}} \leftarrow \Delta_{\MW^{(2)}} - \frac{1}{m} \tilde{\MH}^{(1) \top} \tilde{\MH}^{(2)}$
+\STATE $\MW^{(1)} \leftarrow \MW^{(1)} + \epsilon \Delta_{\MW^{(1)}}$
+（这是大概的描述，实践中使用的算法更高效，如具有衰减\gls{learning_rate}的动量）
+\STATE $\MW^{(2)} \leftarrow \MW^{(2)} + \epsilon \Delta_{\MW^{(2)}}$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
 
 
 \subsection{\glsentrytext{layer_wise_pretraining}}
@@ -500,7 +557,18 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \else
 \centerline{\includegraphics{Chapter20/figures/standard_dbm_color}}
 \fi
-\caption{TODO}
+\caption{用于分类MNIST数据集的\gls{DBM}训练过程~\citep{SalHinton09,Srivastava14}。
+(a)使用\glssymbol{contrastive_divergence}近似最大化$\log P(\Vv)$来训练\glssymbol{RBM}。
+(b)训练第二个\glssymbol{RBM}，使用\glssymbol{contrastive_divergence}-$k$近似最大化$\log P(\Vh^{(1)}, \RSy)$来建模$\Vh^{(1)}$和目标类$\RSy$，其中$\Vh^{(1)}$采自第一个\glssymbol{RBM}条件于数据的后验。 在学习期间将$k$从$1$增加到$20$。
+(c)将两个\glssymbol{RBM}组合为\glssymbol{DBM}。
+使用$k = 5$的\gls{SML}训练，近似最大化$\log P(\RVv, \RSy)$。
+(d)将$\RSy$从模型中删除。
+定义新的一组特征$\Vh^{(1)}$和$\Vh^{(2)}$，可在缺少$\RSy$的模型中运行\gls{meanfield}\gls{inference}后获得。% ??
+使用这些特征作为\glssymbol{MLP}的输入，其结构与\gls{meanfield}的额外轮相同，并且具有用于估计$\RSy$的额外输出层。
+初始化\glssymbol{MLP}的权重与\glssymbol{DBM}的权重相同。
+使用\gls{SGD}和\gls{dropout}训练\glssymbol{MLP}近似最大化$\log P(\RSy \mid \RVv)$。
+图来自~\citet{Goodfellow-et-al-NIPS2013}。
+}
 \label{fig:chap20_standard_dbm_color}
 \end{figure}
 
@@ -577,7 +645,21 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \else
 \centerline{\includegraphics{Chapter20/figures/multi_prediction_training}}
 \fi
-\caption{TODO}
+\caption{\gls{DBM}多预测训练过程的示意图。
+每一行指示相同训练步骤内\gls{minibatch}中的不同样本。
+每列表示\gls{meanfield}\gls{inference}过程中的\gls{time_step}。
+对于每个样本，我们对数据变量的子集进行采样，作为\gls{inference}过程的输入。
+这些变量以黑色阴影表示条件。
+然后我们运行\gls{meanfield}\gls{inference}过程，箭头指示过程中的哪些变量会影响其他变量。
+在实际应用中，我们将\gls{meanfield}展开为几个步骤。
+在此示意图中，我们只展开为两个步骤。
+虚线箭头表示获得更多步骤需要如何展开该过程。
+未用作\gls{inference}过程输入的数据变量成为目标，以灰色阴影表示。
+我们可以将每个样本的\gls{inference}过程视为\gls{recurrent_network}。
+为了使其在给定输入后能产生正确的目标，我们使用\gls{GD}和\gls{back_propagation}训练这些\gls{recurrent_network}。
+这可以训练\glssymbol{MPDBM}\gls{meanfield}过程产生准确的估计。
+图改编自\citet{Goodfellow-et-al-NIPS2013}。
+}
 \label{fig:chap20_multi_prediction_training}
 \end{figure}
 
@@ -1309,9 +1391,17 @@ DRAW模型的生成过程包括顺序访问不同的小图像块并绘制这些�
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter20/figures/kingma-vae-2d-faces-manifold}}
+\centerline{
+\includegraphics[width=0.44\figwidth]{Chapter20/figures/kingma-vae-2d-faces-manifold.pdf}
+\includegraphics[width=0.55\figwidth]{Chapter20/figures/kingma-vae-2d-mnist-manifold.pdf}
+}
 \fi
-\caption{TODO}
+\caption{由\gls{VAE}学习的高维\gls{manifold}在2维坐标系中的示例\citep{Kingma+Welling-ICLR2014}。
+我们可以在纸上直接绘制两个可视化的维度，因此可以使用2维隐编码训练模型来了解模型的工作原理（即使我们认为数据\gls{manifold}的固有维度要高得多）。
+所示的图像不是来自训练集的样本，而是仅仅通过改变2维``编码''$\Vz$，由模型$p(\Vx \mid \Vz)$实际生成的图像$\Vx$（每个图像对应于``编码''$\Vz$位于2维均匀网格的不同选择）。
+(左)\ENNAME{Frey}人脸\gls{manifold}的2维映射。 其中一个维度（水平）已发现大致对应于面部的旋转，而另一个（垂直）对应于情绪表达。
+(右)MNIST\gls{manifold}的2维映射。
+}
 \label{fig:chap20_kingma-vae-2d-faces-manifold}
 \end{figure}
 
@@ -1380,9 +1470,18 @@ $v$的默认选择为
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter20/figures/lsun_small}}
+\centering
+$\vcenter{\hbox{
+\includegraphics[width=0.45\figwidth]{Chapter20/figures/lsun_bedrooms_small.png}
+}}
+\vcenter{\hbox{
+\includegraphics[width=0.45\figwidth]{Chapter20/figures/lsun_small.png}
+}}$
 \fi
-\caption{TODO}
+\caption{在LSUN数据集上训练后，由\glssymbol{GAN}生成的图像。
+(左)由DCGAN模型生成的卧室图像，经\citet{radford2015unsupervised}许可重制。
+(右)由LAPGAN模型生成的教堂图像，经 \citet{denton2015deep}许可重制。
+}
 \label{fig:chap20_lsun_small}
 \end{figure}
 
@@ -1511,7 +1610,10 @@ $v$的默认选择为
 \else
 \centerline{\includegraphics{Chapter20/figures/fvbn}}
 \fi
-\caption{TODO}
+\caption{完全可见的\gls{BN}从前$i-1$个变量预测第$i$个变量。
+(上)FVBN的\gls{directed_graphical_model}。
+(下)对数FVBN相应的计算图，其中每个预测由线性预测器作出。
+}
 \label{fig:chap20_fvbn}
 \end{figure}
 
@@ -1551,7 +1653,8 @@ $v$的默认选择为
 \else
 \centerline{\includegraphics{Chapter20/figures/neural_autoregressive}}
 \fi
-\caption{TODO}
+\caption{\gls{neural_auto_regressive_network}从前$i-1$个变量预测第$i$个变量$x_i$，但经参数化后，作为$x_1,\dots,x_i$函数的特征（表示为$h_i$的\gls{hidden_unit}的组）可以在预测所有后续变量$x_{i+1},x_{i+2},\dots,x_{d}$时重用。
+}
 \label{fig:chap20_neural_autoregressive}
 \end{figure}
 
@@ -1581,7 +1684,11 @@ $v$的默认选择为
 \else
 \centerline{\includegraphics{Chapter20/figures/NADE}}
 \fi
-\caption{TODO}
+\caption{\gls{NADE}(\glssymbol{NADE})的示意图。
+\gls{hidden_unit}被组织在组$\Vh^{(j)}$中，使得只有输入$x_1,\dots,x_i$参与计算$\Vh^{(i)}$和预测$P(x_j \mid x_{j-1},\dots,x_1)$（对于$j> i$）。
+\glssymbol{NADE}使用特定的权重共享模式区别于早期的\gls{neural_auto_regressive_network}：$W_{j,k,i}^{'} = W_{k,i}$被共享于所有从$x_i$到任何$j \geq i$组中第$k$个单元的权重（在图中使用相同的线型表示复制权重的每个实例）。 
+注意向量$(W_{1,i}, W_{2,i},\dots,W_{n,i})$记为$\MW_{:,i}$。
+}
 \label{fig:chap20_NADE}
 \end{figure}
 
@@ -1661,7 +1768,12 @@ $v$的默认选择为
 \else
 \centerline{\includegraphics{Chapter20/figures/dae_markov_chain}}
 \fi
-\caption{TODO}
+\caption{\gls{markov_chain}的每个步骤与训练好的\gls{DAE}相关联，根据由去噪对数似然\gls{criterion}隐式训练的概率模型生成样本。
+每个步骤包括：(a)通过损坏过程$C$向状态$\Vx$注入噪声产生$\tilde{\Vx}$，(b)用函数$f$对其编码，产生$\Vh = f(\tilde{\Vx})$，(c)用函数$g$解码结果， 产生用于\gls{reconstruction}分布的参数$\Vomega$，(d)给定$\Vomega$，从\gls{reconstruction}分布$p(\RVx \mid \Vomega = g(f(\tilde{\Vx})))$采样新状态。
+在典型的平方\gls{reconstruction_error}情况下，$g(\Vh) = \hat{\Vx}$，并估计$\SetE [ \Vx \mid \tilde{\Vx}]$，损坏包括添加高斯噪声，并且从$p(\RVx | \Vomega)$的采样包括第二次向\gls{reconstruction}$\hat{\Vx}$添加高斯噪声。
+后者的噪声水平应对应于\gls{reconstruction}的\gls{mean_squared_error}，而注入的噪声是控制混合速度以及估计器平滑经验分布程度的超参数\citep{Vincent-NC-2011-small}。
+在这所示的例子中，只有$C$和$p$条件是随机步骤（$f$和$g$是确定性计算），我们也可以在\gls{AE}内部注入噪声，如\gls{GSN}\citep{Bengio-et-al-ICML-2014}。
+}
 \label{fig:chap20_dae_markov_chain}
 \end{figure}
 
@@ -1683,7 +1795,9 @@ $v$的默认选择为
 \else
 \centerline{\includegraphics[width=0.8\textwidth]{Chapter20/figures/inpainting1500-half_croppedhalf__with_nearest}}
 \fi
-\caption{TODO}
+\caption{在每步仅重采样左半部分，夹合图像的右半部分并运行\gls{markov_chain}的示意图。
+这些样本来自\gls{reconstruction}MNIST数字的\glssymbol{GSN}（每个\gls{time_step}使用回退过程）。
+}
 \label{fig:chap20_inpainting1500-half_croppedhalf__with_nearest}
 \end{figure}
 

@@ -368,7 +368,8 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 然而，在高维的情况下，\gls{mcmc}方法采出的样本可能会具有很强的相关性。
 我们把这种现象称为慢\gls{mixing}甚至\gls{mixing}失败。
 <bad>具有缓慢\gls{mixing}的\gls{mcmc}方法可以被视为对\gls{energy_function}无意地执行类似于带噪声的\gls{GD}的操作，或者相对于链的状态（随机变量被采样）依据概率进行等效的噪声爬坡。
-（在\gls{markov_chain}的状态空间中）从$\Vx^{(t-1)}$到$\Vx^{(t)}$该链倾向于选取很小的步长，其中能量$E(\Vx^{(t)})$通常低于或者近似等于能量$E(\Vx^{(t-1)})$，倾向于产生较低能量的移动。
+（在\gls{markov_chain}的状态空间中）从$\Vx^{(t-1)}$到$\Vx^{(t)}$该链倾向于选取很小的步长，其中能量$E(\Vx^{(t)})$通常低于或者近似等于能量$E(\Vx^{(t-1)})$，
+倾向于向较低能量的区域移动。
 当从可能性较小的状态（比来自$p(\Vx)$的典型样本拥有更高的能量）开始时，链趋向于逐渐减少状态的能量，并且仅仅偶尔移动到另一个\gls{mode}。
 一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，则低能量的区域可以是同一对象的图像的相连的\gls{manifold}），我们称之为\gls{mode}，链将倾向于围绕着这个\gls{mode}游走（以某一种形式的随机游走）。
 有时候，它会远离该\gls{mode}，通常返回该\gls{mode}或者（如果找到一条离开的路线）移向另一个\gls{mode}。
@@ -390,7 +391,13 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 \else
 	\centerline{\includegraphics{Chapter17/figures/good_bad_really_bad_mixing_color}}
 \fi
-	\caption{对于三种分布使用\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为\gls{mode}。（左）一个带有两个独立变量的\gls{multivariate_normal_distribution}。由于变量是独立的，\gls{gibbs_sampling}\gls{mixing}得很好。（中）变量存在高度相关性的\gls{multivariate_normal_distribution}。变量之间的相关性使得\gls{markov_chain}很难\gls{mixing}。因为每一个变量的更新需要相对其它变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。（右）\gls{mode}之间间距很大且不在轴上对齐的混合高斯。\gls{gibbs_sampling}\gls{mixing}得很慢，因为每次更新一个变量很难跨越不同的\gls{mode}。}
+	\caption{对于三种分布使用\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为\gls{mode}。
+	（左）一个带有两个独立变量的\gls{multivariate_normal_distribution}。由于变量是独立的，\gls{gibbs_sampling}\gls{mixing}得很好。
+	（中）变量存在高度相关性的\gls{multivariate_normal_distribution}。
+	变量之间的相关性使得\gls{markov_chain}很难\gls{mixing}。
+	因为每一个变量的更新需要相对其它变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。
+	（右）\gls{mode}之间间距很大且不在轴上对齐的混合高斯。
+	\gls{gibbs_sampling}\gls{mixing}得很慢，因为每次更新一个变量很难跨越不同的\gls{mode}。}
 	\label{fig:chap17_good_bad_really_bad_mixing_color}
 \end{figure}
 
@@ -431,7 +438,14 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 	\centerline{\includegraphics{Chapter17/figures/fig-adversarial}}
 	\centerline{\includegraphics{Chapter17/figures/fig-dbm-bad-mixing}}	
 \fi
-	\caption{深度概率模型中一个\gls{mixing}缓慢问题的实例。每张图都是按照从左到右从上到下的顺序的。（左）\gls{gibbs_sampling}从MNIST数据集训练成的\gls{DBM}中采出的连续样本。这些连续的样本之间非常相似。由于\gls{gibbs_sampling}作用于一个深度图模型，相似度更多地是基于语义而非原始视觉特征，但是对于吉布斯链来说从分布的一个\gls{mode}转移到另一个仍然是很困难的，比如说改变数字。（右）从\gls{generative_adversarial_networks}中抽出的连续原始样本。因为\gls{ancestral_sampling}生成的样本之间互相独立，所以不存在\gls{mixing}问题。{译者注：此处左右好像搞反了。}}
+	\caption{深度概率模型中一个\gls{mixing}缓慢问题的实例。
+	每张图都是按照从左到右从上到下的顺序的。
+	（左）\gls{gibbs_sampling}从MNIST数据集训练成的\gls{DBM}中采出的连续样本。
+	这些连续的样本之间非常相似。由于\gls{gibbs_sampling}作用于一个深度图模型，相似度更多地是基于语义而非原始视觉特征。
+	但是对于吉布斯链来说从分布的一个\gls{mode}转移到另一个仍然是很困难的，比如说改变数字。
+	（右）从\gls{generative_adversarial_networks}中抽出的连续原始样本。
+	因为\gls{ancestral_sampling}生成的样本之间互相独立，所以不存在\gls{mixing}问题。
+	{译者注：此处左右好像搞反了。}}
 	\label{fig:chap17_fig-dbm-bad-mixing}
 \end{figure}
 
@@ -486,11 +500,12 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 \subsection{深度也许会有助于\glsentrytext{mixing}}
 \label{sec:depth_may_help_mixing}
 
-当我们从\gls{latent_variable}模型$p(\Vh,\Vx)$中采样的时候，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码的非常好，那么从$p(\Vx \mid \Vh)$中采样的时候，并不会太大的改变$\Vx$，那么\gls{mixing}结果会很糟糕。
+当我们从\gls{latent_variable}模型$p(\Vh,\Vx)$中采样的时候，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码得非常好，那么从$p(\Vx \mid \Vh)$中采样的时候，并不会太大的改变$\Vx$，那么\gls{mixing}结果会很糟糕。
 解决这个问题的一种方法是使得$\Vh$成为一种将$\Vx$编码为$\Vh$的深度表达，从而使得\gls{markov_chain}在$\Vh$空间中更快的\gls{mixing}。
 在许多表达学习的算法诸如\gls{AE}和\gls{RBM}中，$\Vh$的边缘分布并不像$\Vx$的原始数据分布，反而通常表现为均匀的单一\gls{mode}的分布。
-<bad> 值得指出的是，这些方法往往利用所有可用的表达空间并尽量减小重构误差，因为当训练集上的不同样本能够被非常容易的在$\Vh$空间区分的时候，我们也会很容易的最小化重构误差。
-<bad> \citep{Bengio-et-al-ICML2013-small}观察到这样的现象，带有正则项的堆叠越深的自编码器或者\gls{RBM}，顶端$\Vh$空间的边缘分布越趋向于均匀分布，而且不同\gls{mode}（比如说实验中的类别）所对应的区域之间的间距也会越模糊。
+<bad> 值得指出的是，这些方法往往利用所有可用的表达空间并尽量减小\gls{reconstruction_error}。
+因为当训练集上的不同样本能够被非常容易的在$\Vh$空间区分的时候，我们也会很容易的最小化\gls{reconstruction_error}。
+<bad> \citep{Bengio-et-al-ICML2013-small}观察到这样的现象，带有正则项的堆叠越深的\gls{AE}或者\gls{RBM}，顶端$\Vh$空间的边缘分布越趋向于均匀分布，而且不同\gls{mode}（比如说实验中的类别）所对应的区域之间的间距也会越模糊。
 在高层次的空间训练\gls{RBM}使得\gls{gibbs_sampling}\gls{mixing}的更快。
 如何利用这种观察到的现象来辅助训练深度生成模型或者从中采样仍然有待探索。
 % 595
