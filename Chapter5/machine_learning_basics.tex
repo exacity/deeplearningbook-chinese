@@ -68,7 +68,7 @@
     有效地定义这样一个大集合函数的方法是学习所有相关变量的概率分布，然后通过边缘化缺失变量来解决分类任务。 
     使用$n$个输入变量，我们现在可以获得每个可能的缺失输入集合所需的所有$2^n$个不同的分类函数，但是计算机程序仅需要学习一个描述联合概率分布的函数。
     参见\cite{Goodfellow-et-al-NIPS2013}了解以这种方式将深度概率模型应用于这样任务的示例。 
-    本节中描述的许多其他任务也可以推广到缺失输入的情况; 缺失输入分类只是\gls{ML}可以做的一个示例。
+    本节中描述的许多其他任务也可以推广到缺失输入的情况; 缺失输入分类只是\gls{ML}能够解决的问题的一个示例。
     
 % -- 97 --
 
@@ -81,7 +81,7 @@
     \item \textbf{\gls{transcribe}}：
     这类任务中，\gls{ML}系统观测一些相对非结构化表示的数据，并\gls{transcribe}信息为离散的文本形式。
     例如，光学字符识别要求计算机程序根据文本图片返回文字序列（ASCII码或者Unicode码）。
-    谷歌街景使用\gls{DL}以这种方式处理街道编号\citep{Goodfellow+et+al-ICLR2014a}。
+    谷歌街景以这种方式使用\gls{DL}处理街道编号\citep{Goodfellow+et+al-ICLR2014a}。
     另一个例子是语音识别，计算机程序输入一段音频波形，输出一序列音频记录中所说的字符或单词ID的编码。
     \gls{DL}是现代语音识别系统的重要组成部分，广泛用于各大公司，包括微软，IBM和谷歌\citep{Hinton-et-al-2012}。
 
@@ -188,11 +188,11 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 每个\gls{example:chap5}的\gls{feature}是该植物不同部分的测量结果：萼片长度，萼片宽度，花瓣长度和花瓣宽度。
 这个\gls{dataset}记录了每个植物属于什么品种，其中共有三个不同的品种。
 
-\firstgls{unsuper_learn_algo}训练含有很多\gls{feature}的\gls{dataset}，然后学习出这个\gls{dataset}上有用的结构性质。
+\firstgls{unsupervised_learning_algorithm}训练含有很多\gls{feature}的\gls{dataset}，然后学习出这个\gls{dataset}上有用的结构性质。
 在\gls{DL}中，我们通常要学习生成\gls{dataset}的整个概率分布，显式地，比如密度估计，或是隐式地，比如合成或\gls{denoising}。
 还有一些其他类型的\gls{unsupervised_learning}任务，例如聚类，将\gls{dataset}分成相似\gls{example:chap5}的集合。
 
-\firstgls{super_learn_algo}训练含有很多\gls{feature}的\gls{dataset}，不过\gls{dataset}中的\gls{example:chap5}都有一个\firstgls{label}或\firstgls{target}。
+\firstgls{supervised_learning_algorithm}训练含有很多\gls{feature}的\gls{dataset}，不过\gls{dataset}中的\gls{example:chap5}都有一个\firstgls{label}或\firstgls{target}。
 例如，Iris\gls{dataset}注明了每个鸢尾花卉\gls{example:chap5}属于什么品种。
 \gls{supervised_learning}算法通过研究Iris\gls{dataset}，学习如何根据测量结果将\gls{example:chap5}划分到三个不同品种。
 
