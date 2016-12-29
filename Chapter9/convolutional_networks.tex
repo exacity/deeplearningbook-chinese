@@ -753,7 +753,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 第\ref{part:deep_learning_research}部分描述了更多的无监督学习方法。
 使用无监督标准学习特征，允许它们的确定与位于网络结构顶层的分类层相分离。
 然后只需提取一次全部训练集的特征，构造用于最后一层的新训练集。
-假设最后一层类似logistic回归或者SVM，那么学习最后一层通常是凸优化问题。
+假设最后一层类似\gls{logistic_regression}或者\glssymbol{SVM}，那么学习最后一层通常是凸优化问题。
  
 % -- 351 --
  
@@ -836,11 +836,11 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
  
 这些内侧颞叶神经元比现代\gls{convolutional_network}更通用，它们在读取名称时不会自动推广到识别人或对象。
 与\gls{convolutional_network}的最后一层特征上最接近的类比是称为颞下皮质（IT）的脑区。
-当查看一个物体时，信息从视网膜经LGN流到V1，然后到V2，V4，然后是IT。
-这发生在瞥见物体的前100ms内。
-如果允许一个人继续观察物体更多的时间，那么信息将开始向后流动，因为大脑使用自上而下的反馈来更新较低级脑区中的激活。
+当查看一个对象时，信息从视网膜经LGN流到V1，然后到V2，V4，然后是IT。
+这发生在瞥见对象的前100ms内。
+如果允许一个人继续观察对象更多的时间，那么信息将开始向后流动，因为大脑使用自上而下的反馈来更新较低级脑区中的激活。
 然而，如果我们打断人的注视，并且只观察前100ms内的大多数前向激活导致的放电率，那么IT被证明与\gls{convolutional_network}非常相似。
-\gls{convolutional_network}可以预测IT放电率，并且在执行物体识别任务时与人类（时间有限的情况）非常类似\citep{dicarlo-tutorial-2013}。
+\gls{convolutional_network}可以预测IT放电率，并且在执行对象识别任务时与人类（时间有限的情况）非常类似\citep{dicarlo-tutorial-2013}。
 
 话虽如此，\gls{convolutional_network}和哺乳动物的视觉系统之间还是有许多区别。
 这些区别有一些是计算神经科学家所熟知的，但超出了本书的范围。
@@ -860,7 +860,7 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
   \gls{convolutional_network}迄今为止纯粹是视觉的。
   
   \item 人类视觉系统不仅仅用于识别对象。
-  它能够理解整个场景，包括许多物体和物体之间的关系，以及处理我们的身体与世界交互所需的丰富的三维几何信息。
+  它能够理解整个场景，包括许多对象和对象之间的关系，以及处理我们的身体与世界交互所需的丰富的三维几何信息。
   \gls{convolutional_network}已经应用于这些问题中的一些，但是这些应用还处于起步阶段。
   
   \item 即使像V1这样简单的大脑区域也受到来自较高级别的反馈的严重影响。
@@ -1005,7 +1005,7 @@ Gaussian因子$ \alpha \exp(-\beta_x x'^2 - \beta_y y'^2)$可以被视为阈值�
 到2010年以前的更为深入的\gls{convolutional_network}历史可以参见\citep{Lecun_convolutionalnetworks}。
 
 \gls{convolutional_network}也被用来赢得许多比赛。
-当前对深度学习的商业兴趣的热度始于\cite{Krizhevsky-2012-small}赢得了ImageNet物体识别挑战，但是\gls{convolutional_network}已经被用于赢得其他机器学习和计算机视觉竞赛了，这些比赛在几年前影响较小。
+当前对深度学习的商业兴趣的热度始于\cite{Krizhevsky-2012-small}赢得了ImageNet对象识别挑战，但是\gls{convolutional_network}已经被用于赢得其他机器学习和计算机视觉竞赛了，这些比赛在几年前影响较小。
  
 % -- 360 --
  
