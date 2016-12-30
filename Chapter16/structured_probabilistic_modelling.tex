@@ -361,7 +361,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 
 只要所有的\gls{clique}中的结点数都不大，那么我们就能够高效地处理这些\gls{unnormalized_probability_function}。
 它包含了这样的思想，越高密切度的状态有越大的概率。
-然而，不像\gls{bayesian_network}，几乎不存在\gls{clique}的定义的结构，所以不能保证把它们乘在一起能够得到一个有效的概率分布。
+然而，不像\gls{bayesian_network}，几乎不存在\gls{clique}定义的结构，所以不能保证把它们乘在一起能够得到一个有效的概率分布。
 \figref{fig:example_undirected}展示了一个从\gls{undirected_model}中读取分解信息的例子。
 % 558
 
@@ -371,23 +371,28 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
-	\caption{这个图说明通过选择适当的$\phi$函数$p(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$\frac{1}{Z}\phi_{\RSa,\RSb}(\RSa,\RSb)\psi_{\RSb,\RSc}(\RSb,\RSc)\phi_{\RSa,\RSd}(\RSa,\RSd)\phi_{\RSb,\RSe}(\RSb,\RSe)\phi_{\RSe,\RSf}(\RSe,\RSf)$。}
+	\caption{这个图说明通过选择适当的$\phi$函数
+		$p(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作
+		$\frac{1}{Z}\phi_{\RSa,\RSb}(\RSa,\RSb)\phi_{\RSb,\RSc}(\RSb,\RSc)\phi_{\RSa,\RSd}(\RSa,\RSd)\phi_{\RSb,\RSe}(\RSb,\RSe)\phi_{\RSe,\RSf}(\RSe,\RSf)$。}
 	\label{fig:example_undirected}
 \end{figure}
 
 
 
-在你，你的室友和同事之间的感冒传染的例子中包含了两个\gls{clique}。
+在你，你的室友和同事之间感冒传染的例子中包含了两个\gls{clique}。
 一个\gls{clique}包含了$\RSh_y$和$\RSh_c$。
 这个\gls{clique}的\gls{factor}可以通过一个表来定义，可能取到下面的值：
 
 % \begin{table*}[!hbp]
 	% \centering
+\begin{table}
+	\centering
 \begin{tabular}{c|cc}
 		& $\RSh_y = 0$ & $\RSh_y = 1$ \\ \hline
 		$\RSh_c = 0$ & 2 & 1 \\
 		$\RSh_c = 1$  & 1 & 10 \\
 \end{tabular}
+\end{table}
 % \end{table*}
 % 558
 
@@ -425,8 +430,8 @@ Z = \int \tilde{p}(\RVx)d\RVx.
 % 559 
 
 
-由于$Z$通常是由对所有的可能的$\RVx$的状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。
-为了获得一个\gls{undirected_model}的归一化的概率分布，模型的结构和函数$\phi$的定义通常需要特殊的设计从而使得能够高效的计算$Z$。
+由于$Z$通常是由对所有可能的$\RVx$的状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。
+为了获得一个\gls{undirected_model}的归一化的概率分布，模型的结构和函数$\phi$的定义通常需要特殊的设计从而使得能够高效地计算$Z$。
 在\gls{DL}中，$Z$通常是难以处理的。
 由于$Z$难以精确的计算出，我们只能使用一些近似的方法。
 这样的近似方法是\chapref{chap:confronting_the_partition_function}的主要内容。
@@ -434,30 +439,32 @@ Z = \int \tilde{p}(\RVx)d\RVx.
 
 
 
-在设计\gls{undirected_model}时我们必须牢记在心的一个要点是设置一些\gls{factor}使得$Z$不存在这样的方法也是有可能的。
-当模型中的一些变量是连续的，且对$\tilde{p}$上的积分无法收敛的时候这种情况就会发生。
-比如说， 当我们需要对一个单独的标量变量$x\in\SetR$建模，并且这个包含一个点的\gls{clique_potential}定义为$\phi(x) = x^2$时。
+%在设计\gls{undirected_model}时我们必须牢记在心的一个要点是设置一些\gls{factor}使得$Z$不存在这样的方法也是有可能的。
+在设计\gls{undirected_model}时我们必须牢记在心的一个要点是一些使得$Z$不存在的\gls{factor}也是有可能的。
+当模型中的一些变量是连续的，且在$\tilde{p}$在其定义域上的积分无法收敛的时候这种情况就会发生。
+比如说， 当我们需要对一个单独的标量变量$\RSx\in\SetR$建模，并且这个包含一个点的\gls{clique_potential}定义为$\phi(x) = x^2$时。
 在这种情况下，
 \begin{align}
 Z = \int x^2 dx.
 \end{align}
 由于这个积分是发散的，所以不存在一个对应着这个势能函数的概率分布。
-有时候$\phi$函数的某些参数的选择可以决定相应的概率分布能否存在。
+有时候$\phi$函数某些参数的选择可以决定相应的概率分布能否存在。
 比如说，对$\phi$函数$\phi(x;\beta) = \text{exp}(-\beta x^2)$来说，参数$\beta$决定了归一化常数$Z$是否存在。
-一个正的$\beta$使得$\phi$函数是一个关于$\RSx$的高斯分布，但是一个非正的参数$\beta$则使得$\phi$不可能归一化。
+一个正的$\beta$使得$\phi$函数是一个关于$\RSx$的高斯分布，但是一个非正的参数$\beta$则使得$\phi$不可能被归一化。
 
 
 % P560   
 \gls{directed_model}和\gls{undirected_model}之间的一个重要的区别就是\gls{directed_model}是通过从起始点的概率分布直接定义的，反之\gls{undirected_model}的定义显得更加宽松，通过$\phi$函数转化为概率分布而定义。
 这和我们处理这些建模问题的直觉相反。
 当我们处理\gls{undirected_model}时需要牢记一点，每一个变量的定义域对于$\phi$函数所对应的概率分布有着重要的影响。
-举个例子，我们考虑一个$n$维的向量$\RVx$以及一个由偏置向量$\Vb$参数化的\gls{undirected_model}。
+举个例子，我们考虑一个$n$维向量的随机变量$\RVx$以及一个由偏置向量$\Vb$参数化的\gls{undirected_model}。
 假设$\RVx$的每一个元素对应着一个\gls{clique}，并且满足$\phi^{(i)}(\RSx_i) = \exp(b_i\RSx_i)$。
 在这种情况下概率分布是怎么样的呢？
 答案是我们无法确定，因为我们并没有指定$\RVx$的定义域。
 如果$\RVx$满足$\RVx \in \SetR^n$，那么对于归一化常数$Z$的积分是发散的，这导致了对应的概率分布是不存在的。
 如果$\RVx\in\{0,1\}^n$，那么$p(\RVx)$可以被分解成$n$个独立的分布，并且满足$p(\RSx_i=1) = \text{sigmoid}(b_i)$。
-如果$\RVx$的定义域是基本单位向量的集合$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$，那么$p(\RSx) = \text{softmax}(\Vb)$，因此一个较大的$b_i$的值会降低所有的$p(\RSx_j = 1)$的概率（其中$j\neq i$）。
+如果$\RVx$的定义域是\gls{ebv}$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$的集合，
+那么$p(\RSx) = \text{softmax}(\Vb)$，因此对于$j\neq i$一个较大的$b_i$的值会降低所有的$p(\RSx_j = 1)$的概率。
 通常情况下，通过特殊设计变量的定义域，能够使得一个相对简单的$\phi$函数可以获得一个相对复杂的表达。
 我们会在\secref{sec:convolutional_boltzmann_machines}中讨论这个想法的实际应用。
 % P560   
@@ -484,9 +491,9 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 服从\eqnref{eqn:167}形式的任意分布都是\firstgls{boltzmann_distribution}的一个实例。
-正是基于这个原因，我们把许多的\gls{energy_based_model}叫做\firstgls{BM}\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
+正是基于这个原因，我们把许多\gls{energy_based_model}叫做\firstgls{BM}\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
 关于什么时候叫\gls{energy_based_model}，什么时候叫\gls{BM}不存在一个公认的判别标准。
-一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如均值-方差\gls{RBM}，也涉及到了实值变量。
+一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如\gls{mcrbm2}，也涉及到了实值变量。
 虽然\gls{BM}最初的定义既可以包含\gls{latent_variable}也可以不包含\gls{latent_variable}，但是时至今日\gls{BM}这个术语通常用于指拥有\gls{latent_variable}的模型，而没有\gls{latent_variable}的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
 % 561
 
@@ -495,11 +502,12 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \gls{undirected_model}中的\gls{clique}对应于\gls{unnormalized_probability_function}的\gls{factor}。 
 通过$\exp(a+b) = \exp(a) \exp(b)$，我们发现\gls{undirected_model}中的不同\gls{clique}对应于\gls{energy_function}的不同项。
 换句话说，\gls{energy_based_model}只是一种特殊的\gls{markov_network}：求幂使\gls{energy_function}中的每个项对应于不同\gls{clique}的\gls{factor}。
-关于如何从\gls{undirected_model}结构获得\gls{energy_function}的形式的示例参见\figref{fig:example_undirected_2}。
+关于如何从\gls{undirected_model}结构中获得\gls{energy_function}形式的示例参见\figref{fig:example_undirected_2}。
 人们可以将\gls{energy_function}带有多个项的\gls{energy_based_model}视作是\firstgls{product_of_expert}\citep{Hinton99}。
 \gls{energy_function}中的每一项对应的是概率分布中的一个\gls{factor}。
 \gls{energy_function}中的每一项都可以看作决定一个软约束是否能够满足的``专家''。
-每个专家可以仅执行仅涉及随机变量的低维投影的一个约束，但是结合概率的乘法时，专家们合理构造了复杂的高维约束。
+%每个专家只执行仅涉及一个随机变量低维投影的约束，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。
+每个专家只执行一个约束，而这个约束仅仅涉及一个随机变量的低维投影，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。
 % 561
 \begin{figure}[!htb]
 \ifOpenSource
@@ -513,11 +521,11 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 
-\gls{energy_based_model}的定义的一部分无法用\gls{ML}观点来解释：即\eqnref{eqn:167}中的负号。
+\gls{energy_based_model}定义的一部分无法用\gls{ML}观点来解释：即\eqnref{eqn:167}中的负号。
 这个负号的存在主要是为了保持\gls{ML}文献和物理学文献之间的兼容性。
 概率建模的许多研究最初由统计物理学家做出的，其中$E$是指实际的，物理概念的能量，没有任意的符号。
 诸如``能量''和``\gls{partition_function}''这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
-一些\gls{ML}研究者（例如，\citep{Smolensky86}将负能量称为\firstgls{harmony}）发出了不同的声音，但这些都不是标准惯例。
+一些\gls{ML}研究者（例如，\citet{Smolensky86}将负能量称为\firstgls{harmony}）发出了不同的声音，但这些都不是标准惯例。
 % 562  head
 
 
