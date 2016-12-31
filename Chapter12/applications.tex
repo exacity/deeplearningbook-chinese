@@ -207,7 +207,8 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 总的来说，这允许我们使用高\gls{capacity}模型以较高的置信度验证对象的存在，而不是强制我们为每个样本付出完全推断的成本。
 有两种不同的方式可以使得\gls{cascade}实现高\gls{capacity}。
 一种方法是使\gls{cascade}中较后的成员单独具有高\gls{capacity}。
-在这种情况下，系统作为一个整体显然具有高\gls{capacity}，因为它的一些个体成员。 还可以进行\gls{cascade}，其中每个单独的模型具有低\gls{capacity}，但是由于许多小型模型的组合，整个系统具有高\gls{capacity}。
+在这种情况下，系统作为一个整体显然具有高\gls{capacity}，因为它的一些个体成员是高\gls{capacity}的。 
+还可以进行\gls{cascade}，其中每个单独的模型具有低\gls{capacity}，但是由于许多小型模型的组合，整个系统具有高\gls{capacity}。
 \citet{Viola01}使用\gls{cascade}的增强\gls{decision_tree}来实现适合在手持数字相机中使用的快速并且鲁棒的面部检测器。
 它们的分类器使用滑动窗口方法来定位面部，许多窗口被检查，如果它们不包含面部则被拒绝。
 \gls{cascade}的另一个版本使用早期的模型来实现一种强制\gls{attention_mechanism}：\gls{cascade}的早期成员局部化定位对象，并且\gls{cascade}的后续成员在给定对象的位置的情况下执行进一步处理。

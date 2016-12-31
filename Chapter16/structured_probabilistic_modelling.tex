@@ -212,7 +212,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 
 
 我们继续\secref{sec:the_challenge_of_unstructured_modelling}所讲的接力赛的例子，我们假设Alice的完成时间为$\RSt_0$，Bob的完成时间为$\RSt_1$，Carol的完成时间为$\RSt_2$。
-就像我们之前看到的一样，$\RSt_1$的估计是依赖于$\RSt_0$的，$\RSt_2$的估计是依赖于$\RSt_1$的，但是仅仅间接的依赖于$\RSt_0$。
+就像我们之前看到的一样，$\RSt_1$的估计是依赖于$\RSt_0$的，$\RSt_2$的估计是依赖于$\RSt_1$的，但是仅仅间接地依赖于$\RSt_0$。
 我们用一个\gls{directed_graphical_model}来建模这种关系，就如在\figref{fig:relay_race_graph}中看到的一样。
 % 554 end
 
@@ -254,9 +254,9 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 
 假设我们采用从第$0$分钟到第$10$分钟每$6$秒一块的方式离散化地表示时间。
 这使得$\RSt_0$，$\RSt_1$和$\RSt_2$都是一个有$100$个取值可能的离散变量。
-如果我们尝试着用一个表来表示$(\RSt_0,\RSt_1,\RSt_2)$，那么我们需要存储$999,999$个值
+如果我们尝试着用一个表来表示$p(\RSt_0,\RSt_1,\RSt_2)$，那么我们需要存储$999,999$个值
 （$\RSt_0$的取值100 $\times$ $\RSt_1$的取值100 $\times$ $\RSt_2$的取值100 减去1，所有的概率的和为1，所以其中有1个值的存储是多余的）。
-反之，如果我们用一个表来记录条件概率分布，那么记录$\RSt_0$的分布需要存储$99$个值，给定$\RSt_0$情况下$\RSt_1$的分布需要存储9900个值，给定$\RSt_1$情况下$\RSt_2$的分布也需要存储$9900$个值。
+反之，如果我们用一个表来记录每一种条件概率分布，那么记录$\RSt_0$的分布需要存储$99$个值，给定$\RSt_0$情况下$\RSt_1$的分布需要存储9900个值，给定$\RSt_1$情况下$\RSt_2$的分布也需要存储$9900$个值。
 加起来总共需要存储$19, 899$个值。
 这意味着使用\gls{directed_graphical_model}将需要存储的参数的个数减少了超过$50$倍！
 % 555 
@@ -285,9 +285,9 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 这个假设使得我们所需要的参数量从$O(k^2)$降到了$O(k)$。
 然而，值得注意的是在这个假设下$\RSt_0$和$\RSt_1$仍然是直接相关的，因为$\RSt_1$表示的是Bob完成的时间，并不是他跑的时间。
 这也意味着\gls{graphical_models}中会有一个从$\RSt_0$指向$\RSt_1$的箭头。
-``Bob的个人跑步时间相对于其它因素是独立的''这个假设无法在$\RSt_0，\RSt_1，\RSt_2$的\gls{graphical_models}中被表示出来。
+``Bob的个人跑步时间相对于其它因素是独立的''这个假设无法在$\RSt_0$，$\RSt_1$，$\RSt_2$的\gls{graphical_models}中被表示出来。
 我们只能将这个关系表示在条件分布中。
-这个条件分布不再是一个大小为$k\times k-1$的分别对应着$\RSt_0，  \RSt_1$的表格，而是一个包含了$k-1$个参数的略复杂的公式。
+这个条件分布不再是一个大小为$k\times k-1$的分别对应着$\RSt_0$，  $\RSt_1$的表格，而是一个包含了$k-1$个参数的略复杂的公式。
 \gls{directed_graphical_model}并不能对我们如何定义条件分布做出任何限制。
 它只能定义哪些变量之间存在着\gls{dependency}关系。
 % 556  16.2 to 
@@ -305,14 +305,14 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 % 556 end
 
 
-\gls{directed_model}适用于这种情况，当存在一个很明显的理由来描述每一个箭头的时候。
+\gls{directed_model}适用于当存在一个很明显的理由来描述每一个箭头的时候。
 \gls{directed_model}中，经常存在我们理解的具有因果关系以及因果关系有明确的方向的情况下。
 接力赛的例子就是一个这样的例子。
 之前的运动员的表现影响了后面的运动员，而后面的运动员却不会影响前面的运动员。
 % 557 head 
 
 
-然而并不是所有的情况的相互影响中都有一个明确的方向关系。
+然而并不是所有情况的相互影响中都有一个明确的方向关系。
 当相互的作用并没有本质的方向，或者是明确的有相互影响的时候，使用\gls{undirected_model}更加合适。
 % 557 
 
@@ -342,7 +342,8 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \else
 	\centerline{\includegraphics{Chapter16/figures/cold_undirected_graph}}	
 \fi
-	\caption{表示你室友健康的$h_r$，你的健康的$h_y$，你同事健康的$h_c$之间如何相互影响的一个无向图。你和你的室友可能会相互传染感冒，你和你的同事之间也是如此，但是假设你室友和同事之间相互不认识，他们只能通过你来间接传染。}
+	\caption{表示你室友健康的$h_r$，你的健康的$h_y$，你同事健康的$h_c$之间如何相互影响的一个无向图。
+		你和你的室友可能会相互传染感冒，你和你的同事之间也是如此，但是假设你室友和同事之间相互不认识，他们只能通过你来间接传染。}
 	\label{fig:cold_undirected_graph}
 \end{figure}
 
@@ -358,9 +359,9 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 % 558 head
 
 
-只要所有的\gls{clique}中的结点数都不大，那么我们就能够高效的处理这些\gls{unnormalized_probability_function}。
+只要所有的\gls{clique}中的结点数都不大，那么我们就能够高效地处理这些\gls{unnormalized_probability_function}。
 它包含了这样的思想，越高密切度的状态有越大的概率。
-然而，不像\gls{bayesian_network}，几乎不存在\gls{clique}的定义的结构，所以不能保证把它们乘在一起能够得到一个有效的概率分布。
+然而，不像\gls{bayesian_network}，几乎不存在\gls{clique}定义的结构，所以不能保证把它们乘在一起能够得到一个有效的概率分布。
 \figref{fig:example_undirected}展示了一个从\gls{undirected_model}中读取分解信息的例子。
 % 558
 
@@ -370,28 +371,33 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
-	\caption{这个图说明通过选择适当的$\phi$函数$p(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$\frac{1}{Z}\phi_{\RSa,\RSb}(\RSa,\RSb)\psi_{\RSb,\RSc}(\RSb,\RSc)\phi_{\RSa,\RSd}(\RSa,\RSd)\phi_{\RSb,\RSe}(\RSb,\RSe)\phi_{\RSe,\RSf}(\RSe,\RSf)$。}
+	\caption{这个图说明通过选择适当的$\phi$函数
+		$p(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作
+		$\frac{1}{Z}\phi_{\RSa,\RSb}(\RSa,\RSb)\phi_{\RSb,\RSc}(\RSb,\RSc)\phi_{\RSa,\RSd}(\RSa,\RSd)\phi_{\RSb,\RSe}(\RSb,\RSe)\phi_{\RSe,\RSf}(\RSe,\RSf)$。}
 	\label{fig:example_undirected}
 \end{figure}
 
 
 
-在你，你的室友和同事之间的感冒传染的例子中包含了两个\gls{clique}。
+在你，你的室友和同事之间感冒传染的例子中包含了两个\gls{clique}。
 一个\gls{clique}包含了$\RSh_y$和$\RSh_c$。
 这个\gls{clique}的\gls{factor}可以通过一个表来定义，可能取到下面的值：
 
 % \begin{table*}[!hbp]
 	% \centering
+\begin{table}
+	\centering
 \begin{tabular}{c|cc}
 		& $\RSh_y = 0$ & $\RSh_y = 1$ \\ \hline
 		$\RSh_c = 0$ & 2 & 1 \\
 		$\RSh_c = 1$  & 1 & 10 \\
 \end{tabular}
+\end{table}
 % \end{table*}
 % 558
 
 
-状态为1代表了健康的状态，相对的状态为0则表示不好的健康状态（即被感冒传染）。
+状态为$1$代表了健康的状态，相对的状态为$0$则表示不好的健康状态（即被感冒传染）。
 你们两个通常都是健康的，所以对应的状态拥有最高的密切程度。
 两个人中只有一个人是生病的密切程度是最低的，因为这是一个很少见的状态。
 两个人都生病的状态（通过一个人来传染给了另一个人）有一个稍高的密切程度，尽管仍然不及两个人都健康的密切程度。
@@ -424,8 +430,8 @@ Z = \int \tilde{p}(\RVx)d\RVx.
 % 559 
 
 
-由于$Z$通常是由对所有的可能的$\RVx$的状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。
-为了获得一个\gls{undirected_model}的归一化的概率分布，模型的结构和函数$\phi$的定义通常需要特殊的设计从而使得能够高效的计算$Z$。
+由于$Z$通常是由对所有可能的$\RVx$的状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。
+为了获得一个\gls{undirected_model}的归一化的概率分布，模型的结构和函数$\phi$的定义通常需要特殊的设计从而使得能够高效地计算$Z$。
 在\gls{DL}中，$Z$通常是难以处理的。
 由于$Z$难以精确的计算出，我们只能使用一些近似的方法。
 这样的近似方法是\chapref{chap:confronting_the_partition_function}的主要内容。
@@ -433,30 +439,32 @@ Z = \int \tilde{p}(\RVx)d\RVx.
 
 
 
-在设计\gls{undirected_model}时我们必须牢记在心的一个要点是设置一些\gls{factor}使得$Z$不存在这样的方法也是有可能的。
-当模型中的一些变量是连续的，且对$\tilde{p}$上的积分无法收敛的时候这种情况就会发生。
-比如说， 当我们需要对一个单独的标量变量$x\in\SetR$建模，并且这个包含一个点的\gls{clique_potential}定义为$\phi(x) = x^2$时。
+%在设计\gls{undirected_model}时我们必须牢记在心的一个要点是设置一些\gls{factor}使得$Z$不存在这样的方法也是有可能的。
+在设计\gls{undirected_model}时我们必须牢记在心的一个要点是一些使得$Z$不存在的\gls{factor}也是有可能的。
+当模型中的一些变量是连续的，且在$\tilde{p}$在其定义域上的积分无法收敛的时候这种情况就会发生。
+比如说， 当我们需要对一个单独的标量变量$\RSx\in\SetR$建模，并且这个包含一个点的\gls{clique_potential}定义为$\phi(x) = x^2$时。
 在这种情况下，
 \begin{align}
 Z = \int x^2 dx.
 \end{align}
 由于这个积分是发散的，所以不存在一个对应着这个势能函数的概率分布。
-有时候$\phi$函数的某些参数的选择可以决定相应的概率分布能否存在。
+有时候$\phi$函数某些参数的选择可以决定相应的概率分布能否存在。
 比如说，对$\phi$函数$\phi(x;\beta) = \text{exp}(-\beta x^2)$来说，参数$\beta$决定了归一化常数$Z$是否存在。
-一个正的$\beta$使得$\phi$函数是一个关于$\RSx$的高斯分布，但是一个非正的参数$\beta$则使得$\phi$不可能归一化。
+一个正的$\beta$使得$\phi$函数是一个关于$\RSx$的高斯分布，但是一个非正的参数$\beta$则使得$\phi$不可能被归一化。
 
 
 % P560   
 \gls{directed_model}和\gls{undirected_model}之间的一个重要的区别就是\gls{directed_model}是通过从起始点的概率分布直接定义的，反之\gls{undirected_model}的定义显得更加宽松，通过$\phi$函数转化为概率分布而定义。
 这和我们处理这些建模问题的直觉相反。
 当我们处理\gls{undirected_model}时需要牢记一点，每一个变量的定义域对于$\phi$函数所对应的概率分布有着重要的影响。
-举个例子，我们考虑一个$n$维的向量$\RVx$以及一个由偏置向量$\Vb$参数化的\gls{undirected_model}。
+举个例子，我们考虑一个$n$维向量的随机变量$\RVx$以及一个由偏置向量$\Vb$参数化的\gls{undirected_model}。
 假设$\RVx$的每一个元素对应着一个\gls{clique}，并且满足$\phi^{(i)}(\RSx_i) = \exp(b_i\RSx_i)$。
 在这种情况下概率分布是怎么样的呢？
 答案是我们无法确定，因为我们并没有指定$\RVx$的定义域。
 如果$\RVx$满足$\RVx \in \SetR^n$，那么对于归一化常数$Z$的积分是发散的，这导致了对应的概率分布是不存在的。
 如果$\RVx\in\{0,1\}^n$，那么$p(\RVx)$可以被分解成$n$个独立的分布，并且满足$p(\RSx_i=1) = \text{sigmoid}(b_i)$。
-如果$\RVx$的定义域是基本单位向量的集合$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$，那么$p(\RSx) = \text{softmax}(\Vb)$，因此一个较大的$b_i$的值会降低所有的$p(\RSx_j = 1)$的概率（其中$j\neq i$）。
+如果$\RVx$的定义域是\gls{ebv}$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$的集合，
+那么$p(\RSx) = \text{softmax}(\Vb)$，因此对于$j\neq i$一个较大的$b_i$的值会降低所有的$p(\RSx_j = 1)$的概率。
 通常情况下，通过特殊设计变量的定义域，能够使得一个相对简单的$\phi$函数可以获得一个相对复杂的表达。
 我们会在\secref{sec:convolutional_boltzmann_machines}中讨论这个想法的实际应用。
 % P560   
@@ -483,9 +491,9 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 服从\eqnref{eqn:167}形式的任意分布都是\firstgls{boltzmann_distribution}的一个实例。
-正是基于这个原因，我们把许多的\gls{energy_based_model}叫做\firstgls{BM}\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
+正是基于这个原因，我们把许多\gls{energy_based_model}叫做\firstgls{BM}\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
 关于什么时候叫\gls{energy_based_model}，什么时候叫\gls{BM}不存在一个公认的判别标准。
-一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如均值-方差\gls{RBM}，也涉及到了实值变量。
+一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如\gls{mcrbm2}，也涉及到了实值变量。
 虽然\gls{BM}最初的定义既可以包含\gls{latent_variable}也可以不包含\gls{latent_variable}，但是时至今日\gls{BM}这个术语通常用于指拥有\gls{latent_variable}的模型，而没有\gls{latent_variable}的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
 % 561
 
@@ -494,11 +502,12 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \gls{undirected_model}中的\gls{clique}对应于\gls{unnormalized_probability_function}的\gls{factor}。 
 通过$\exp(a+b) = \exp(a) \exp(b)$，我们发现\gls{undirected_model}中的不同\gls{clique}对应于\gls{energy_function}的不同项。
 换句话说，\gls{energy_based_model}只是一种特殊的\gls{markov_network}：求幂使\gls{energy_function}中的每个项对应于不同\gls{clique}的\gls{factor}。
-关于如何从\gls{undirected_model}结构获得\gls{energy_function}的形式的示例参见\figref{fig:example_undirected_2}。
+关于如何从\gls{undirected_model}结构中获得\gls{energy_function}形式的示例参见\figref{fig:example_undirected_2}。
 人们可以将\gls{energy_function}带有多个项的\gls{energy_based_model}视作是\firstgls{product_of_expert}\citep{Hinton99}。
 \gls{energy_function}中的每一项对应的是概率分布中的一个\gls{factor}。
 \gls{energy_function}中的每一项都可以看作决定一个软约束是否能够满足的``专家''。
-每个专家可以仅执行仅涉及随机变量的低维投影的一个约束，但是结合概率的乘法时，专家们合理构造了复杂的高维约束。
+%每个专家只执行仅涉及一个随机变量低维投影的约束，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。
+每个专家只执行一个约束，而这个约束仅仅涉及一个随机变量的低维投影，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。
 % 561
 \begin{figure}[!htb]
 \ifOpenSource
@@ -512,11 +521,11 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 
-\gls{energy_based_model}的定义的一部分无法用\gls{ML}观点来解释：即\eqnref{eqn:167}中的负号。
+\gls{energy_based_model}定义的一部分无法用\gls{ML}观点来解释：即\eqnref{eqn:167}中的负号。
 这个负号的存在主要是为了保持\gls{ML}文献和物理学文献之间的兼容性。
 概率建模的许多研究最初由统计物理学家做出的，其中$E$是指实际的，物理概念的能量，没有任意的符号。
 诸如``能量''和``\gls{partition_function}''这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
-一些\gls{ML}研究者（例如，\citep{Smolensky86}将负能量称为\firstgls{harmony}）发出了不同的声音，但这些都不是标准惯例。
+一些\gls{ML}研究者（例如，\citet{Smolensky86}将负能量称为\firstgls{harmony}）发出了不同的声音，但这些都不是标准惯例。
 % 562  head
 
 
@@ -530,7 +539,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 562
 
 
-\subsection{\glsentrytext{separation}和d-\glsentrytext{separation}}
+\subsection{\glsentrytext{separation}和\glsentrytext{dseparation}}
 \label{sec:separation_and_d_separation}
 
 \gls{graphical_models}中的边告诉我们哪些变量直接相互作用。
@@ -543,8 +552,9 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 在\gls{undirected_model}的情况下，识别图中的条件独立性是非常简单的。 
 在这种情况下，图中隐含的条件独立性称为\firstgls{separation}。
 如果图结构显示给定变量$\SetS$的情况下变量$\SetA$与变量$\SetB$无关，
-那么我们声称给定变量$\SetS$时，变量$\SetA$与另一组变量$\SetB$\gls{separation}。
-如果两个变量$\RSa$和$\RSb$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
+那么我们声称给定变量$\SetS$时，变量$\SetA$与另一组变量$\SetB$是\gls{separation}的。
+%如果两个变量$\RSa$和$\RSb$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
+如果连接两个变量$\RSa$和$\RSb$的路径仅涉及未观察变量，那么这些变量不是\gls{separation}的。
 如果它们之间没有路径，或者所有路径都包含可观测的变量，那么它们是\gls{separation}的。
 我们认为仅涉及到未观察到的变量的路径是``活跃''的，将包括观察到的变量的路径称为``非活跃''的。
 % 563
@@ -552,7 +562,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 当我们画图时，我们可以通过加阴影来表示观察到的变量。
 \figref{fig:undirected_paths_active}用于描述当以这种方式绘制时\gls{undirected_model}中的活跃和非活跃路径的样子。
-\figref{fig:example_sep}描述了一个从一个\gls{undirected_model}中读取\gls{separation}的例子。
+\figref{fig:example_sep}描述了一个从一个\gls{undirected_model}中读取\gls{separation}信息的例子。
 % 563
 
 
@@ -567,7 +577,10 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/undirected_paths_inactive}}	
 \fi
-	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。这意味着$\RSa$，$\RSb$之间不是\gls{separation}的。 (b)图中$\RSs$用阴影填充，表示了它是可观察的。因为$\RSa$和$\RSb$之间的唯一路径通过$\RSs$，并且这条路径是不活跃的，我们可以得出结论，在给定$\RSs$的条件下$\RSa$和$\RSb$是\gls{separation}的。}
+	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。
+	这意味着$\RSa$，$\RSb$之间不是\gls{separation}的。
+	 (b)图中$\RSs$用阴影填充，表示了它是可观察的。
+	 因为$\RSa$和$\RSb$之间的唯一路径通过$\RSs$，并且这条路径是不活跃的，我们可以得出结论，在给定$\RSs$的条件下$\RSa$和$\RSb$是\gls{separation}的。}
 	\label{fig:undirected_paths_active}
 \end{figure}
 
@@ -577,21 +590,25 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_sep}}
 \fi
-	\caption{一个从无向图中读取\gls{separation}性质的例子。这里$\RSb$用阴影填充，表示它是可观察的。由于$\RSb$挡住了从$\RSa$到$\RSc$的唯一路径，我们说在给定$\RSb$的情况下$\RSa$和$\RSc$是相互\gls{separation}的。观察值$\RSb$同样挡住了从$\RSa$到$\RSd$的一条路径，但是它们之间有另一条路径。因此给定$\RSb$的情况下$\RSa$和$\RSd$是不\gls{separation}的。}
+	\caption{一个从无向图中读取\gls{separation}性质的例子。
+		这里$\RSb$用阴影填充，表示它是可观察的。
+		由于$\RSb$挡住了从$\RSa$到$\RSc$的唯一路径，我们说在给定$\RSb$的情况下$\RSa$和$\RSc$是相互\gls{separation}的。
+		观察值$\RSb$同样挡住了从$\RSa$到$\RSd$的一条路径，但是它们之间有另一条路径。
+		因此给定$\RSb$的情况下$\RSa$和$\RSd$不是\gls{separation}的。}
 	\label{fig:example_sep}
 \end{figure}
 
 
 
-类似的概念适用于\gls{directed_model}，除了在\gls{directed_model}中，这些概念被称为d-\gls{separation}。
+类似的概念适用于\gls{directed_model}，除了在\gls{directed_model}中，这些概念被称为\firstgls{dseparation}。
 ``d''代表``\gls{dependency}''程度。
-有向图的d-\gls{separation}的定义与\gls{undirected_model}的相同：我们认为如果图结构中给定$\SetS$时 $\SetA$与变量集$\SetB$无关，
-那么给定变量集$\SetS$时，变量集$\SetA$d-\gls{separation}于变量集$\SetB$。
+有向图中\gls{dseparation}的定义与\gls{undirected_model}的相同：我们认为如果图结构中给定$\SetS$时 $\SetA$与变量集$\SetB$无关，
+那么给定变量集$\SetS$时，变量集$\SetA$\gls{dseparation}于变量集$\SetB$。
 % 563
 
 
 与\gls{undirected_model}一样，我们可以通过查看图中存在的活跃路径来检查图中隐含的独立性。
-如前所述，如果两个变量之间存在活跃路径，则两个变量是相关的，如果没有活跃路径，则为d-\gls{separation}。
+如前所述，如果两个变量之间存在活跃路径，则两个变量是相关的，如果没有活跃路径，则为\gls{dseparation}。
 在有向网络中，确定路径是否活跃有点复杂。
 关于在\gls{directed_model}中识别活跃路径的方法可以参见\figref{fig:168}。 
 \figref{fig:169}是从一个图中读取一些属性的例子。
@@ -619,7 +636,29 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/directed_paths_v}}		
 \fi
-	\caption{两个随机变量$\RSa$，$\RSb$之间存在的所有种类的长度为$2$的活跃路径。（a）箭头方向从$\RSa$指向$\RSb$的任何路径，反之也成立。如果$\RSs$可以被观察到，这种路径就是阻塞的。在接力赛的例子中，我们已经看到过这种类型的路径。（b）变量$\RSa$和$\RSb$通过\gls{common_cause}$\RSs$相连。举个例子，假设$\RSs$是一个表示是否存在飓风的变量，$\RSa$和$\RSb$表示两个相邻的气象监控区域的风速。如果我们观察到在$\RSa$处有很高的风速，我们可以期望在$b$处也观察到高速的分。如果观察到$\RSs$那么这条路径就被阻塞了。如果我们已经知道存在飓风，那么无论$\RSa$处观察到什么，我们都能期望$\RSb$处有较高的风速。在$\RSa$处观察到一个低于预期的风速并不会改变我们对$\RSb$处风速的期望（已知有飓风的情况下）。然而，如果$\RSs$不被观测到，那么$\RSa$和$\RSb$是依赖的，即路径是活跃的。（c）变量$\RSa$和$\RSb$都是$\RSs$的父节点。这叫做\firstgls{vstructure}或者\firstgls{collider}。根据\firstgls{explaining_away_effect}，\gls{vstructure}导致$\RSa$和$\RSb$是相关的。在这种情况下，当$\RSs$被观测到时路径是活跃的。举个例子，假设$\RSs$是一个表示你的同事不在工作的变量。变量$\RSa$表示他生病了，而变量$\RSb$表示她在休假，但是这两件事同时发生是不太可能的。如果你发现她在休假，那么这个事实足够解释她的缺席了。你可以推断她很可能没有生病。（d）即使$\RSs$的任意后代都被观察到，\gls{explaining_away_effect}也会起作用。举个例子，假设$\RSc$是一个表示你是否收到你同事的报告的一个变量。如果你注意到你还没有收到这个报告，这会增加你估计的她今天不在工作的概率，这反过来又会增加她今天生病或者度假的概率。阻塞\gls{vstructure}中的路径的唯一方法就是共享子节点的后代一个都观察不到。}
+	\caption{两个随机变量$\RSa$，$\RSb$之间存在的所有种类的长度为$2$的活跃路径。
+		（a）箭头方向从$\RSa$指向$\RSb$的任何路径，反之也成立。
+		如果$\RSs$可以被观察到，这种路径就是阻塞的。
+		在接力赛的例子中，我们已经看到过这种类型的路径。
+		（b）变量$\RSa$和$\RSb$通过\gls{common_cause}$\RSs$相连。
+		举个例子，假设$\RSs$是一个表示是否存在飓风的变量，$\RSa$和$\RSb$表示两个相邻的气象监控区域的风速。
+		如果我们观察到在$\RSa$处有很高的风速，我们可以期望在$b$处也观察到高速的风。
+		如果观察到$\RSs$那么这条路径就被阻塞了。
+		如果我们已经知道存在飓风，那么无论$\RSa$处观察到什么，我们都能期望$\RSb$处有较高的风速。
+		在$\RSa$处观察到一个低于预期的风速并不会改变我们对$\RSb$处风速的期望（已知有飓风的情况下）。
+		然而，如果$\RSs$不被观测到，那么$\RSa$和$\RSb$是依赖的，即路径是活跃的。
+		（c）变量$\RSa$和$\RSb$都是$\RSs$的父节点。
+		这叫做\firstgls{vstructure}或者\firstgls{collider}。
+		根据\firstgls{explaining_away_effect}，\gls{vstructure}导致$\RSa$和$\RSb$是相关的。
+		在这种情况下，当$\RSs$被观测到时路径是活跃的。
+		举个例子，假设$\RSs$是一个表示你的同事不在工作的变量。
+		变量$\RSa$表示他生病了，而变量$\RSb$表示她在休假，但是这两件事同时发生是不太可能的。
+		如果你发现她在休假，那么这个事实足够解释她的缺席了。
+		你可以推断她很可能没有生病。
+		（d）即使$\RSs$的任意后代都被观察到，\gls{explaining_away_effect}也会起作用。
+		举个例子，假设$\RSc$是一个表示你是否收到你同事的报告的一个变量。
+		如果你注意到你还没有收到这个报告，这会增加你估计的她今天不在工作的概率，这反过来又会增加她今天生病或者度假的概率。
+		阻塞\gls{vstructure}中的路径的唯一方法就是共享子节点的后代一个都观察不到。}
 	\label{fig:168}
 \end{figure}
 
@@ -629,28 +668,28 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_dsep}}	
 \fi
-	\caption{从这张图中，我们可以发现一些d-\gls{separation}的性质。这包括了：
+	\caption{从这张图中，我们可以发现一些\gls{dseparation}的性质。这包括了：
 %	\begin{itemize}
-%		\item 给定空集的情况下$\RSa$和$\RSb$是d-\gls{separation}的。
-%		\item 给定$\RSc$的情况下$\RSa$和$\RSe$是d-\gls{separation}的。
-%		\item 给定$\RSc$的情况下$\RSd$和$\RSe$是d-\gls{separation}的。
+%		\item 给定空集的情况下$\RSa$和$\RSb$是\gls{dseparation}的。
+%		\item 给定$\RSc$的情况下$\RSa$和$\RSe$是\gls{dseparation}的。
+%		\item 给定$\RSc$的情况下$\RSd$和$\RSe$是\gls{dseparation}的。
 %	\end{\itemize}
-	我们还可以发现当我们观察到一些变量的时候，一些变量不再是d-\gls{separation}的：
+	我们还可以发现当我们观察到一些变量的时候，一些变量不再是\gls{dseparation}的：
 %		\begin{itemize}
-%			\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是d-\gls{separation}的。
-%			\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是d-\gls{separation}的。
+%			\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
+%			\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
 %		\end{\itemize}
 	}
 	\label{fig:169}
 \end{figure}
 
 
-重要的是要记住\gls{separation}和d-\gls{separation}只能告诉我们图中隐含的条件独立性。
+重要的是要记住\gls{separation}和\gls{dseparation}只能告诉我们图中隐含的条件独立性。
 不需要表示存在的所有独立性的图。 
 进一步的，使用完全图（具有所有可能的边的图）来表示任何分布总是合法的。
 事实上，一些分布包含不可能用现有图形符号表示的独立性。
 \firstgls{context_specific_independence}指的是取决于网络中一些变量的值的独立性。
-例如，考虑一个三个二进制变量的模型：$\RSa，\RSb $和$\RSc$。
+例如，考虑一个三个二进制变量的模型：$\RSa$，$\RSb $和$\RSc$。
 假设当$\RSa$是0时，$\RSb$和$\RSc$是独立的， 但是当$\RSa$是1时，$\RSb$确定地等于$\RSc$。
 当$\RSa = 1$时\gls{graphical_models}需要连接$\RSb$和$\RSc$的边。
 当$\RSa = 0$时$\RSb$和$\RSc$不是独立的。
@@ -677,7 +716,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 还有其他因素可以影响我们决定使用哪种建模方式。 
 即使在使用单个概率分布时，我们有时可以在不同的建模方式之间切换。
 有时，如果我们观察到变量的某个子集，或者如果我们希望执行不同的计算任务，换一种建模方式可能更合适。
-例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\secref{sec:sampling_from_graphical_models}中描述）的直接的方法。
+例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\secref{sec:sampling_from_graphical_models}中描述）的直接方法。
 而\gls{undirected_model}公式通常用于近似推断过程（我们将在\chapref{chap:approximate_inference}中看到，\eqnref{eqn:1956}强调了\gls{undirected_model}的作用）。
 % 566
 
@@ -695,12 +734,19 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/complete}}	
 \fi
-	\caption{完全图的例子，完全图能够描述任何的概率分布。这里我们展示了一个带有四个随机变量的例子。（左）完全无向图。在无向图中，完全图是唯一的。（右）一个完全有向图。在有向图中，并不存在唯一的完全图。我们选择一种变量的排序然后对每一个变量画一条指向顺序在其后面的变量的弧。因此存在着关于变量数阶乘数量级的不同种完全图。在这个例子中，我们从左到右从上到下地排序变量。}
+	\caption{完全图的例子，完全图能够描述任何的概率分布。
+		这里我们展示了一个带有四个随机变量的例子。
+		（左）完全无向图。在无向图中，完全图是唯一的。
+		（右）一个完全有向图。
+		在有向图中，并不存在唯一的完全图。
+		我们选择一种变量的排序然后对每一个变量画一条指向顺序在其后面的变量的弧。
+		因此存在着关于变量数阶乘数量级的不同种完全图。
+		在这个例子中，我们从左到右从上到下地排序变量。}
 	\label{fig:complete}
 \end{figure}
 
 
-当然，\gls{graphical_models}的主要意味着一些变量不直接交互。 
+当然，\gls{graphical_models}的优势在于图能够包含一些变量不直接相互作用的信息。 
 完全图并不是很有用，因为它并不包含任何独立性。
 % 566
 
@@ -711,15 +757,15 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 从这个角度来看，一些分布可以使用\gls{directed_model}更高效地表示，而其他分布可以使用\gls{undirected_model}更高效地表示。
 换句话说，\gls{directed_model}可以编码一些\gls{undirected_model}所不能编码的独立性，反之亦然。
-% 567
+% 567 head
 
 
-\gls{directed_model}能够使用一种\gls{undirected_model}不能完美地表示的特定类型的子结构。
+\gls{directed_model}能够使用一种\gls{undirected_model}无法完美表示的特定类型的子结构。
 这个子结构被称为\firstgls{immorality}。
-这种结构出现在当两个随机变量$\RSa$和$\RSb$都是第三个随机变量$\RSc$的父结点，并且不存在任一方向上直接连接a和b的边的时候。
+这种结构出现在当两个随机变量$\RSa$和$\RSb$都是第三个随机变量$\RSc$的父结点，并且不存在任一方向上直接连接$\RSa$和$\RSb$的边的时候。
 （``\gls{immorality}''的名字可能看起来很奇怪; 它在\gls{graphical_models}文献中被创造为一个关于未婚父母的笑话。）
 为了将\gls{directed_model}图$\CalD$转换为\gls{undirected_model}，我们需要创建一个新图$\CalU$。
-对于每对变量$\RSx$和$\RSy$，如果存在连接$\RSx$中的$\RSx$和$\RSy$的有向边（在任一方向上），或者如果$\RSx$和$\RSy$都是图$\CalD$中另一个变量$\RSz$的父节点，则添加将$\RSx$和$\RSy$连接到$\CalU$的无向边。 
+对于每对变量$\RSx$和$\RSy$，如果存在连接$\CalD$中的$\RSx$和$\RSy$的有向边（在任一方向上），或者如果$\RSx$和$\RSy$都是图$\CalD$中另一个变量$\RSz$的父节点，则添加将$\RSx$和$\RSy$连接到$\CalU$的无向边。 
 得到的图$\CalU$被称为是\firstgls{moralized_graph}。
 关于一个将\gls{directed_graphical_model}转化为\gls{undirected_model}的例子可以参见\figref{fig:dm_to_um}。
 % 567
@@ -731,7 +777,16 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/dm_to_um}}	
 \fi
-	\caption{通过构造\gls{moralized_graph}将有向模型（上一行）转化为无向模型（下一行）的例子。（左）只需要把有向边替换成无向边就可以把这个简单的链转化为一个\gls{moralized_graph}。得到的无向模型包含了完全相同的独立关系和条件独立关系。（中）这个图是不丢失独立性的情况下无法转化为无向模型的最简单的有向模型。这个图包含了一个完整的\gls{immorality}结构。因为$\RSa$和$\RSb$都是$\RSc$的父节点，当$\RSc$被观察到时它们之间通过活跃路径相连。为了捕捉这个相关性，无向模型必须包含一个包含所有三个变量的\gls{clique}。这个\gls{clique}无法编码$\RSa \perp \RSb$这个信息。（右）通常讲，\gls{moralization}的过程会给图添加许多边，因此丢失了一些独立性。举个例子，这个\gls{sparse_coding}图需要在每一对隐含单元之间添加\gls{moralization}的边，因此也引入了二次数量级的新的直接依赖关系。}
+	\caption{通过构造\gls{moralized_graph}将有向模型（上一行）转化为无向模型（下一行）的例子。
+		（左）只需要把有向边替换成无向边就可以把这个简单的链转化为一个\gls{moralized_graph}。
+		得到的无向模型包含了完全相同的独立关系和条件独立关系。
+		（中）这个图是不丢失独立性的情况下无法转化为无向模型的最简单的有向模型。
+		这个图包含了一个完整的\gls{immorality}结构。
+		因为$\RSa$和$\RSb$都是$\RSc$的父节点，当$\RSc$被观察到时它们之间通过活跃路径相连。
+		为了捕捉这个相关性，无向模型必须包含一个包含所有三个变量的\gls{clique}。
+		这个\gls{clique}无法编码$\RSa \perp \RSb$这个信息。
+		（右）通常讲，\gls{moralization}的过程会给图添加许多边，因此丢失了一些独立性。
+		举个例子，这个\gls{sparse_coding}图需要在每一对隐含单元之间添加\gls{moralization}的边，因此也引入了二次数量级的新的直接依赖关系。}
 	\label{fig:dm_to_um}
 \end{figure}
 
@@ -758,7 +813,15 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/um_to_dm}}	
 \fi
-	\caption{将一个无向模型转化为一个有向模型。（左）这个无向模型无法转化为有向模型，因为它有一个长度为$4$且不带有\gls{chord}的\gls{loop}。具体说来，这个无向模型包含了两种不同的独立性，并且不存在一个有向模型可以同时描述这两种性质：$\RSa\perp \RSc \mid \{\RSb,\RSd\}$和$\RSb \perp \RSd \mid \{\RSa,\RSc\}$。（中）为了将无向图转化为有向图，我们必须通过保证所有长度大于$3$的\gls{loop}都有\gls{chord}来使得图三角化。为了完成这个，我们可以加一条连接$\RSa$和$\RSc$或者连接$\RSb$和$\RSd$的边。在这个例子中，我们选择添加一条连接$\RSa$和$\RSc$的边。（右）为了完成转化的过程，我们必须给每条边分配一个方向。执行这个任务时，我们必须保证不产生有向环。避免出现有向环的一种方法是赋予节点一定的顺序，然后将每个边从排序较早的节点指向稍后排序的节点。在这个例子中，我们根据变量名的字母进行排序。}
+	\caption{将一个无向模型转化为一个有向模型。
+		（左）这个无向模型无法转化为有向模型，因为它有一个长度为$4$且不带有\gls{chord}的\gls{loop}。
+		具体说来，这个无向模型包含了两种不同的独立性，并且不存在一个有向模型可以同时描述这两种性质：$\RSa\perp \RSc \mid \{\RSb,\RSd\}$和$\RSb \perp \RSd \mid \{\RSa,\RSc\}$。
+		（中）为了将无向图转化为有向图，我们必须通过保证所有长度大于$3$的\gls{loop}都有\gls{chord}来使得图三角化。
+		为了完成这个，我们可以加一条连接$\RSa$和$\RSc$或者连接$\RSb$和$\RSd$的边。
+		在这个例子中，我们选择添加一条连接$\RSa$和$\RSc$的边。
+		（右）为了完成转化的过程，我们必须给每条边分配一个方向。
+		执行这个任务时，我们必须保证不产生有向环。
+		避免出现有向环的一种方法是赋予节点一定的顺序，然后将每个边从排序较早的节点指向稍后排序的节点。在这个例子中，我们根据变量名的字母进行排序。}
 	\label{fig:um_to_dm}
 \end{figure}
 
@@ -773,7 +836,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \firstgls{factor_graph}是从\gls{undirected_model}中抽样的另一种方法，可以解决\gls{undirected_model}图中表达的模糊性。
 在\gls{undirected_model}中，每个$\phi$函数的范围必须是图中某个\gls{clique}的子集。
 我们无法确定每一个\gls{clique}是否含有一个作用域包含整个\gls{clique}的\gls{factor}－－－比如说一个包含三个结点的\gls{clique}可能对应的是一个有三个结点的\gls{factor}，也可能对应的是三个\gls{factor}并且每个\gls{factor}包含了一对结点，这通常会导致模糊性。
-通过显式地表示每一个$\phi$函数的作用领域，\gls{factor_graph}解决了这种模糊性。
+通过显式地表示每一个$\phi$函数的作用域，\gls{factor_graph}解决了这种模糊性。
 %然而，$\phi$没有必要包含每个\gls{clique}的全部。
 %\gls{factor_graph}明确表示每个$\phi$函数的范围。
 具体来说，\gls{factor_graph}是由包含无向二分图的\gls{undirected_model}的图形表示。
