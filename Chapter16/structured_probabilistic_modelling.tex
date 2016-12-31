@@ -944,7 +944,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 我们可以设计，分析和评估适用于更广范围的学习算法和推断算法。
 并且我们可以设计能够捕捉到我们认为重要的关系的模型。
 然后，我们可以组合这些不同的算法和结构，并获得不同可能性的笛卡尔乘积。
-为每种可能的情况设计端到端算法是困难的。
+为每种可能的情况设计\gls{end_to_end}算法是困难的。
 % 572
 
 
@@ -959,8 +959,8 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_i$直接依赖)。
 % 572  end 
 
-一个好的不包含任何\gls{latent_variable}的$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有非常大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
-但是代表这些高阶的交互是昂贵的，首先从计算角度上，存储在存储器中的参数的数量是\gls{clique}中的成员的数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
+一个好的不包含任何\gls{latent_variable}$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
+但是代表这些高阶的相互作用是昂贵的，首先从计算角度上，存储在存储器中的参数的数量是\gls{clique}中的成员的数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
 % 573  head  
 
 
@@ -976,16 +976,16 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 使用\gls{latent_variable}而不是自适应结构避免了离散搜索和多轮训练的需要。 
-可见变量和\gls{latent_variable}之间的固定结构可以使用可见单元和隐藏单元之间的直接交互，从而使得可见单元之间间接交互。
+可见变量和\gls{latent_variable}之间的固定结构可以使用可见单元和隐藏单元之间的直接作用，从而使得可见单元之间间接作用。
 使用简单的参数学习技术，我们可以学习到一个具有固定结构的模型，在边缘分布$p(\Vv)$上输入正确的结构。
 % 573 
 
 
 \gls{latent_variable}还有一个额外的优势，即能够高效的描述$p(\RVv)$。
 新变量$\RVh$还提供了$\RVv$的替代表示。
-例如，如\secref{sec:mixtures_of_distributions}所示，高斯混合模型学习了一个\gls{latent_variable}，这个\gls{latent_variable}对应于特征是从哪一个混合体中抽出。
-这意味着高斯混合模型中的\gls{latent_variable}可以用于做分类。
-在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为流形上坐标的\gls{latent_variable}的。
+例如，如\secref{sec:mixtures_of_distributions}所示，\glssymbol{GMM}学习了一个\gls{latent_variable}，这个\gls{latent_variable}对应于特征是从哪一个混合体中抽出。
+这意味着\glssymbol{GMM}中的\gls{latent_variable}可以用于做分类。
+在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为\gls{manifold}上坐标的\gls{latent_variable}的。
 其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
 许多方法通过学习\gls{latent_variable}来完成特征学习。
 通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\mid\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
@@ -1058,7 +1058,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 \gls{DL}基本上总是利用分布式表示的思想。
 即使是用于\gls{DL}目的的浅层模型（例如预训练浅层模型，稍后将形成深层模型），也几乎总是具有单个大的\gls{latent_variable}层。
 \gls{DL}模型通常具有比观察到的变量更多的\gls{latent_variable}。
-复杂的变量之间的非线性交互通过多个\gls{latent_variable}的间接连接来实现。
+复杂的变量之间的非线性相互作用通过多个\gls{latent_variable}的间接连接来实现。
 % 575
 
 
@@ -1078,7 +1078,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 
 另一个明显的区别是\gls{DL}方法中经常使用的连接类型。
-深度图模型通常具有大的与其它单元组全连接的单元组，使得两个组之间的交互可以由单个矩阵描述。
+深度图模型通常具有大的与其它单元组全连接的单元组，使得两个组之间的相互作用可以由单个矩阵描述。
 传统的\gls{graphical_models}具有非常少的连接，并且每个变量的连接的选择可以单独设计。
 模型结构的设计与推断算法的选择紧密相关。
 \gls{graphical_models}的传统方法通常旨在保持精确推断的可追踪性。
