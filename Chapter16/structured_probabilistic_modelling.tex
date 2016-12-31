@@ -857,7 +857,11 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/factor_graph}}	
 \fi
-	\caption{\gls{factor_graph}如何解决无向网络中的模糊性的一个例子。（左）一个包含三个变量的\gls{clique}组成的无向网络。（中）对应这个无向模型的\gls{factor_graph}。这个\gls{factor_graph}有一个包含三个变量的因子。（右）对应这个无向模型的另一种有效的\gls{factor_graph}。这个\gls{factor_graph}包含了三个因子，每个因子只对应两个变量。这个\gls{factor_graph}上进行的表示，推断和学习相比于中图描述的\gls{factor_graph}都要渐进性地廉价，即使它们表示的是同一个无向模型。}
+	\caption{\gls{factor_graph}如何解决无向网络中的模糊性的一个例子。
+		（左）一个包含三个变量的\gls{clique}组成的无向网络。
+		（中）对应这个无向模型的\gls{factor_graph}。这个\gls{factor_graph}有一个包含三个变量的因子。
+		（右）对应这个无向模型的另一种有效的\gls{factor_graph}。这个\gls{factor_graph}包含了三个因子，每个因子只对应两个变量。
+		这个\gls{factor_graph}上进行的表示，推断和学习相比于中图描述的\gls{factor_graph}都要渐进性地廉价，即使它们表示的是同一个无向模型。}
 	\label{fig:factor_graph}
 \end{figure}
 
@@ -869,7 +873,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \gls{graphical_models}大大简化了从模型中的采样过程。
 
 
-\gls{directed_graphical_model}的一个优点是，可以通过一个简单高效的被称作是\gls{ancestral_sampling}的过程从由模型表示的联合分布中抽取样本。
+\gls{directed_graphical_model}的一个优点是，可以通过一个简单高效的被称作是\firstgls{ancestral_sampling}的过程从由模型表示的联合分布中抽取样本。
 % 570  
 
 
@@ -878,7 +882,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 然后可以按此顺序对变量进行采样。
 换句话说，我们可以首先采$\RSx_1\sim P(\RSx_1)$，然后采$\RSx_2\sim P(\RSx_2\mid Pa_{\CalG}(\RSx_2))$，以此类推，直到最后我们采$\RSx_n\sim P(\RSx_n\mid Pa_{\CalG}(\RSx_n))$。
 只要每个条件分布$\RSx_i\sim P(\RSx_i\mid Pa_{\CalG}(\RSx_i))$都很容易从中采样，那么很容易从整个模型中抽样。
-拓扑排序操作保证我们可以按照\eqnref{eqn:161}中的条件分布的顺序依次采样。
+拓扑排序操作保证我们可以按照\eqnref{eqn:161}中条件分布的顺序依次采样。
 如果没有拓扑排序，我们可能会尝试在其父节点可用之前对该变量进行抽样。
 % 571  
 
@@ -892,12 +896,12 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 \gls{ancestral_sampling}的一个缺点是其仅适用于\gls{directed_graphical_model}。 
-另一个缺点是它每次采样并不都是条件采样操作。
-当我们希望从\gls{directed_graphical_model}中的变量的子集中抽样时，给定一些其他变量，我们经常要求所有的给定的条件变量比要抽样的变量的顺序要早。
+另一个缺点是它并不是每次采样都是条件采样操作。
+当我们希望从\gls{directed_graphical_model}中变量的子集中抽样时，给定一些其他变量，我们经常要求所有给定的条件变量比要抽样的变量的顺序要早。
 在这种情况下，我们可以从模型分布指定的局部条件概率分布进行抽样。 
 否则，我们需要采样的条件分布是给定观测变量的后验分布。
 这些后验分布在模型中通常没有明确指定和参数化。 
-推断这些后验分布可能是昂贵的。 
+推断这些后验分布的代价可能是昂贵的。 
 在这种情况下的模型中，\gls{ancestral_sampling}不再有效。
 % 571   
 
@@ -908,12 +912,12 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 从\gls{undirected_model}抽样，而不首先将其转换为\gls{directed_model}的做法似乎需要解决循环依赖的问题。 
 每个变量与每个其他变量相互作用，因此对于抽样过程没有明确的起点。
 不幸的是，从\gls{undirected_model}模型中抽取样本是一个昂贵的过程。
-理论上最简单的方法是\gls{gibbs_sampling}。
-假设我们在随机变量$\RVx$（一个$n$维向量）上有一个\gls{graphical_models}。 
+理论上最简单的方法是\firstgls{gibbs_sampling}。
+假设我们在一个$n$维向量的随机变量$\RVx$上有一个\gls{graphical_models}。 
 我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \mid \RSx_{-i})$中抽样。
 由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以仅对$\RSx_i$的邻居条件化。
-不幸的是，在我们遍历\gls{graphical_models}一次并采样 所有$n$个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
-相反，我们必须重复该过程并使用它们的邻居的更新的值对所有$n$个变量重新取样。
+不幸的是，在我们遍历\gls{graphical_models}一次并采样所有$n$个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
+相反，我们必须重复该过程并使用它们邻居的更新值对所有$n$个变量重新取样。
 在多次重复之后，该过程渐近地收敛到目标分布。
 很难确定样本何时达到期望分布的足够精确的近似。
 \gls{undirected_model}的抽样技术是一个值得深入的研究方向，\chapref{chap:monte_carlo_methods}将对此进行更详细的讨论。
