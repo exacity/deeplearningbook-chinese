@@ -539,7 +539,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 562
 
 
-\subsection{\glsentrytext{separation}和d-\glsentrytext{separation}}
+\subsection{\glsentrytext{separation}和\glsentrytext{dseparation}}
 \label{sec:separation_and_d_separation}
 
 \gls{graphical_models}中的边告诉我们哪些变量直接相互作用。
@@ -552,8 +552,9 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 在\gls{undirected_model}的情况下，识别图中的条件独立性是非常简单的。 
 在这种情况下，图中隐含的条件独立性称为\firstgls{separation}。
 如果图结构显示给定变量$\SetS$的情况下变量$\SetA$与变量$\SetB$无关，
-那么我们声称给定变量$\SetS$时，变量$\SetA$与另一组变量$\SetB$\gls{separation}。
-如果两个变量$\RSa$和$\RSb$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
+那么我们声称给定变量$\SetS$时，变量$\SetA$与另一组变量$\SetB$是\gls{separation}的。
+%如果两个变量$\RSa$和$\RSb$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
+如果连接两个变量$\RSa$和$\RSb$的路径仅涉及未观察变量，那么这些变量不是\gls{separation}的。
 如果它们之间没有路径，或者所有路径都包含可观测的变量，那么它们是\gls{separation}的。
 我们认为仅涉及到未观察到的变量的路径是``活跃''的，将包括观察到的变量的路径称为``非活跃''的。
 % 563
@@ -561,7 +562,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 当我们画图时，我们可以通过加阴影来表示观察到的变量。
 \figref{fig:undirected_paths_active}用于描述当以这种方式绘制时\gls{undirected_model}中的活跃和非活跃路径的样子。
-\figref{fig:example_sep}描述了一个从一个\gls{undirected_model}中读取\gls{separation}的例子。
+\figref{fig:example_sep}描述了一个从一个\gls{undirected_model}中读取\gls{separation}信息的例子。
 % 563
 
 
@@ -576,7 +577,10 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/undirected_paths_inactive}}	
 \fi
-	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。这意味着$\RSa$，$\RSb$之间不是\gls{separation}的。 (b)图中$\RSs$用阴影填充，表示了它是可观察的。因为$\RSa$和$\RSb$之间的唯一路径通过$\RSs$，并且这条路径是不活跃的，我们可以得出结论，在给定$\RSs$的条件下$\RSa$和$\RSb$是\gls{separation}的。}
+	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。
+	这意味着$\RSa$，$\RSb$之间不是\gls{separation}的。
+	 (b)图中$\RSs$用阴影填充，表示了它是可观察的。
+	 因为$\RSa$和$\RSb$之间的唯一路径通过$\RSs$，并且这条路径是不活跃的，我们可以得出结论，在给定$\RSs$的条件下$\RSa$和$\RSb$是\gls{separation}的。}
 	\label{fig:undirected_paths_active}
 \end{figure}
 
@@ -586,21 +590,25 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_sep}}
 \fi
-	\caption{一个从无向图中读取\gls{separation}性质的例子。这里$\RSb$用阴影填充，表示它是可观察的。由于$\RSb$挡住了从$\RSa$到$\RSc$的唯一路径，我们说在给定$\RSb$的情况下$\RSa$和$\RSc$是相互\gls{separation}的。观察值$\RSb$同样挡住了从$\RSa$到$\RSd$的一条路径，但是它们之间有另一条路径。因此给定$\RSb$的情况下$\RSa$和$\RSd$是不\gls{separation}的。}
+	\caption{一个从无向图中读取\gls{separation}性质的例子。
+		这里$\RSb$用阴影填充，表示它是可观察的。
+		由于$\RSb$挡住了从$\RSa$到$\RSc$的唯一路径，我们说在给定$\RSb$的情况下$\RSa$和$\RSc$是相互\gls{separation}的。
+		观察值$\RSb$同样挡住了从$\RSa$到$\RSd$的一条路径，但是它们之间有另一条路径。
+		因此给定$\RSb$的情况下$\RSa$和$\RSd$不是\gls{separation}的。}
 	\label{fig:example_sep}
 \end{figure}
 
 
 
-类似的概念适用于\gls{directed_model}，除了在\gls{directed_model}中，这些概念被称为d-\gls{separation}。
+类似的概念适用于\gls{directed_model}，除了在\gls{directed_model}中，这些概念被称为\firstgls{dseparation}。
 ``d''代表``\gls{dependency}''程度。
-有向图的d-\gls{separation}的定义与\gls{undirected_model}的相同：我们认为如果图结构中给定$\SetS$时 $\SetA$与变量集$\SetB$无关，
-那么给定变量集$\SetS$时，变量集$\SetA$d-\gls{separation}于变量集$\SetB$。
+有向图中\gls{dseparation}的定义与\gls{undirected_model}的相同：我们认为如果图结构中给定$\SetS$时 $\SetA$与变量集$\SetB$无关，
+那么给定变量集$\SetS$时，变量集$\SetA$\gls{dseparation}于变量集$\SetB$。
 % 563
 
 
 与\gls{undirected_model}一样，我们可以通过查看图中存在的活跃路径来检查图中隐含的独立性。
-如前所述，如果两个变量之间存在活跃路径，则两个变量是相关的，如果没有活跃路径，则为d-\gls{separation}。
+如前所述，如果两个变量之间存在活跃路径，则两个变量是相关的，如果没有活跃路径，则为\gls{dseparation}。
 在有向网络中，确定路径是否活跃有点复杂。
 关于在\gls{directed_model}中识别活跃路径的方法可以参见\figref{fig:168}。 
 \figref{fig:169}是从一个图中读取一些属性的例子。
@@ -628,7 +636,29 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/directed_paths_v}}		
 \fi
-	\caption{两个随机变量$\RSa$，$\RSb$之间存在的所有种类的长度为$2$的活跃路径。（a）箭头方向从$\RSa$指向$\RSb$的任何路径，反之也成立。如果$\RSs$可以被观察到，这种路径就是阻塞的。在接力赛的例子中，我们已经看到过这种类型的路径。（b）变量$\RSa$和$\RSb$通过\gls{common_cause}$\RSs$相连。举个例子，假设$\RSs$是一个表示是否存在飓风的变量，$\RSa$和$\RSb$表示两个相邻的气象监控区域的风速。如果我们观察到在$\RSa$处有很高的风速，我们可以期望在$b$处也观察到高速的分。如果观察到$\RSs$那么这条路径就被阻塞了。如果我们已经知道存在飓风，那么无论$\RSa$处观察到什么，我们都能期望$\RSb$处有较高的风速。在$\RSa$处观察到一个低于预期的风速并不会改变我们对$\RSb$处风速的期望（已知有飓风的情况下）。然而，如果$\RSs$不被观测到，那么$\RSa$和$\RSb$是依赖的，即路径是活跃的。（c）变量$\RSa$和$\RSb$都是$\RSs$的父节点。这叫做\firstgls{vstructure}或者\firstgls{collider}。根据\firstgls{explaining_away_effect}，\gls{vstructure}导致$\RSa$和$\RSb$是相关的。在这种情况下，当$\RSs$被观测到时路径是活跃的。举个例子，假设$\RSs$是一个表示你的同事不在工作的变量。变量$\RSa$表示他生病了，而变量$\RSb$表示她在休假，但是这两件事同时发生是不太可能的。如果你发现她在休假，那么这个事实足够解释她的缺席了。你可以推断她很可能没有生病。（d）即使$\RSs$的任意后代都被观察到，\gls{explaining_away_effect}也会起作用。举个例子，假设$\RSc$是一个表示你是否收到你同事的报告的一个变量。如果你注意到你还没有收到这个报告，这会增加你估计的她今天不在工作的概率，这反过来又会增加她今天生病或者度假的概率。阻塞\gls{vstructure}中的路径的唯一方法就是共享子节点的后代一个都观察不到。}
+	\caption{两个随机变量$\RSa$，$\RSb$之间存在的所有种类的长度为$2$的活跃路径。
+		（a）箭头方向从$\RSa$指向$\RSb$的任何路径，反之也成立。
+		如果$\RSs$可以被观察到，这种路径就是阻塞的。
+		在接力赛的例子中，我们已经看到过这种类型的路径。
+		（b）变量$\RSa$和$\RSb$通过\gls{common_cause}$\RSs$相连。
+		举个例子，假设$\RSs$是一个表示是否存在飓风的变量，$\RSa$和$\RSb$表示两个相邻的气象监控区域的风速。
+		如果我们观察到在$\RSa$处有很高的风速，我们可以期望在$b$处也观察到高速的风。
+		如果观察到$\RSs$那么这条路径就被阻塞了。
+		如果我们已经知道存在飓风，那么无论$\RSa$处观察到什么，我们都能期望$\RSb$处有较高的风速。
+		在$\RSa$处观察到一个低于预期的风速并不会改变我们对$\RSb$处风速的期望（已知有飓风的情况下）。
+		然而，如果$\RSs$不被观测到，那么$\RSa$和$\RSb$是依赖的，即路径是活跃的。
+		（c）变量$\RSa$和$\RSb$都是$\RSs$的父节点。
+		这叫做\firstgls{vstructure}或者\firstgls{collider}。
+		根据\firstgls{explaining_away_effect}，\gls{vstructure}导致$\RSa$和$\RSb$是相关的。
+		在这种情况下，当$\RSs$被观测到时路径是活跃的。
+		举个例子，假设$\RSs$是一个表示你的同事不在工作的变量。
+		变量$\RSa$表示他生病了，而变量$\RSb$表示她在休假，但是这两件事同时发生是不太可能的。
+		如果你发现她在休假，那么这个事实足够解释她的缺席了。
+		你可以推断她很可能没有生病。
+		（d）即使$\RSs$的任意后代都被观察到，\gls{explaining_away_effect}也会起作用。
+		举个例子，假设$\RSc$是一个表示你是否收到你同事的报告的一个变量。
+		如果你注意到你还没有收到这个报告，这会增加你估计的她今天不在工作的概率，这反过来又会增加她今天生病或者度假的概率。
+		阻塞\gls{vstructure}中的路径的唯一方法就是共享子节点的后代一个都观察不到。}
 	\label{fig:168}
 \end{figure}
 
@@ -638,28 +668,28 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_dsep}}	
 \fi
-	\caption{从这张图中，我们可以发现一些d-\gls{separation}的性质。这包括了：
+	\caption{从这张图中，我们可以发现一些\gls{dseparation}的性质。这包括了：
 %	\begin{itemize}
-%		\item 给定空集的情况下$\RSa$和$\RSb$是d-\gls{separation}的。
-%		\item 给定$\RSc$的情况下$\RSa$和$\RSe$是d-\gls{separation}的。
-%		\item 给定$\RSc$的情况下$\RSd$和$\RSe$是d-\gls{separation}的。
+%		\item 给定空集的情况下$\RSa$和$\RSb$是\gls{dseparation}的。
+%		\item 给定$\RSc$的情况下$\RSa$和$\RSe$是\gls{dseparation}的。
+%		\item 给定$\RSc$的情况下$\RSd$和$\RSe$是\gls{dseparation}的。
 %	\end{\itemize}
-	我们还可以发现当我们观察到一些变量的时候，一些变量不再是d-\gls{separation}的：
+	我们还可以发现当我们观察到一些变量的时候，一些变量不再是\gls{dseparation}的：
 %		\begin{itemize}
-%			\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是d-\gls{separation}的。
-%			\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是d-\gls{separation}的。
+%			\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
+%			\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
 %		\end{\itemize}
 	}
 	\label{fig:169}
 \end{figure}
 
 
-重要的是要记住\gls{separation}和d-\gls{separation}只能告诉我们图中隐含的条件独立性。
+重要的是要记住\gls{separation}和\gls{dseparation}只能告诉我们图中隐含的条件独立性。
 不需要表示存在的所有独立性的图。 
 进一步的，使用完全图（具有所有可能的边的图）来表示任何分布总是合法的。
 事实上，一些分布包含不可能用现有图形符号表示的独立性。
 \firstgls{context_specific_independence}指的是取决于网络中一些变量的值的独立性。
-例如，考虑一个三个二进制变量的模型：$\RSa，\RSb $和$\RSc$。
+例如，考虑一个三个二进制变量的模型：$\RSa$，$\RSb $和$\RSc$。
 假设当$\RSa$是0时，$\RSb$和$\RSc$是独立的， 但是当$\RSa$是1时，$\RSb$确定地等于$\RSc$。
 当$\RSa = 1$时\gls{graphical_models}需要连接$\RSb$和$\RSc$的边。
 当$\RSa = 0$时$\RSb$和$\RSc$不是独立的。
@@ -686,7 +716,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 还有其他因素可以影响我们决定使用哪种建模方式。 
 即使在使用单个概率分布时，我们有时可以在不同的建模方式之间切换。
 有时，如果我们观察到变量的某个子集，或者如果我们希望执行不同的计算任务，换一种建模方式可能更合适。
-例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\secref{sec:sampling_from_graphical_models}中描述）的直接的方法。
+例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\secref{sec:sampling_from_graphical_models}中描述）的直接方法。
 而\gls{undirected_model}公式通常用于近似推断过程（我们将在\chapref{chap:approximate_inference}中看到，\eqnref{eqn:1956}强调了\gls{undirected_model}的作用）。
 % 566
 
@@ -704,12 +734,19 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/complete}}	
 \fi
-	\caption{完全图的例子，完全图能够描述任何的概率分布。这里我们展示了一个带有四个随机变量的例子。（左）完全无向图。在无向图中，完全图是唯一的。（右）一个完全有向图。在有向图中，并不存在唯一的完全图。我们选择一种变量的排序然后对每一个变量画一条指向顺序在其后面的变量的弧。因此存在着关于变量数阶乘数量级的不同种完全图。在这个例子中，我们从左到右从上到下地排序变量。}
+	\caption{完全图的例子，完全图能够描述任何的概率分布。
+		这里我们展示了一个带有四个随机变量的例子。
+		（左）完全无向图。在无向图中，完全图是唯一的。
+		（右）一个完全有向图。
+		在有向图中，并不存在唯一的完全图。
+		我们选择一种变量的排序然后对每一个变量画一条指向顺序在其后面的变量的弧。
+		因此存在着关于变量数阶乘数量级的不同种完全图。
+		在这个例子中，我们从左到右从上到下地排序变量。}
 	\label{fig:complete}
 \end{figure}
 
 
-当然，\gls{graphical_models}的主要意味着一些变量不直接交互。 
+当然，\gls{graphical_models}的优势在于图能够包含一些变量不直接相互作用的信息。 
 完全图并不是很有用，因为它并不包含任何独立性。
 % 566
 
@@ -720,15 +757,15 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 从这个角度来看，一些分布可以使用\gls{directed_model}更高效地表示，而其他分布可以使用\gls{undirected_model}更高效地表示。
 换句话说，\gls{directed_model}可以编码一些\gls{undirected_model}所不能编码的独立性，反之亦然。
-% 567
+% 567 head
 
 
-\gls{directed_model}能够使用一种\gls{undirected_model}不能完美地表示的特定类型的子结构。
+\gls{directed_model}能够使用一种\gls{undirected_model}无法完美表示的特定类型的子结构。
 这个子结构被称为\firstgls{immorality}。
-这种结构出现在当两个随机变量$\RSa$和$\RSb$都是第三个随机变量$\RSc$的父结点，并且不存在任一方向上直接连接a和b的边的时候。
+这种结构出现在当两个随机变量$\RSa$和$\RSb$都是第三个随机变量$\RSc$的父结点，并且不存在任一方向上直接连接$\RSa$和$\RSb$的边的时候。
 （``\gls{immorality}''的名字可能看起来很奇怪; 它在\gls{graphical_models}文献中被创造为一个关于未婚父母的笑话。）
 为了将\gls{directed_model}图$\CalD$转换为\gls{undirected_model}，我们需要创建一个新图$\CalU$。
-对于每对变量$\RSx$和$\RSy$，如果存在连接$\RSx$中的$\RSx$和$\RSy$的有向边（在任一方向上），或者如果$\RSx$和$\RSy$都是图$\CalD$中另一个变量$\RSz$的父节点，则添加将$\RSx$和$\RSy$连接到$\CalU$的无向边。 
+对于每对变量$\RSx$和$\RSy$，如果存在连接$\CalD$中的$\RSx$和$\RSy$的有向边（在任一方向上），或者如果$\RSx$和$\RSy$都是图$\CalD$中另一个变量$\RSz$的父节点，则添加将$\RSx$和$\RSy$连接到$\CalU$的无向边。 
 得到的图$\CalU$被称为是\firstgls{moralized_graph}。
 关于一个将\gls{directed_graphical_model}转化为\gls{undirected_model}的例子可以参见\figref{fig:dm_to_um}。
 % 567
@@ -740,7 +777,16 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/dm_to_um}}	
 \fi
-	\caption{通过构造\gls{moralized_graph}将有向模型（上一行）转化为无向模型（下一行）的例子。（左）只需要把有向边替换成无向边就可以把这个简单的链转化为一个\gls{moralized_graph}。得到的无向模型包含了完全相同的独立关系和条件独立关系。（中）这个图是不丢失独立性的情况下无法转化为无向模型的最简单的有向模型。这个图包含了一个完整的\gls{immorality}结构。因为$\RSa$和$\RSb$都是$\RSc$的父节点，当$\RSc$被观察到时它们之间通过活跃路径相连。为了捕捉这个相关性，无向模型必须包含一个包含所有三个变量的\gls{clique}。这个\gls{clique}无法编码$\RSa \perp \RSb$这个信息。（右）通常讲，\gls{moralization}的过程会给图添加许多边，因此丢失了一些独立性。举个例子，这个\gls{sparse_coding}图需要在每一对隐含单元之间添加\gls{moralization}的边，因此也引入了二次数量级的新的直接依赖关系。}
+	\caption{通过构造\gls{moralized_graph}将有向模型（上一行）转化为无向模型（下一行）的例子。
+		（左）只需要把有向边替换成无向边就可以把这个简单的链转化为一个\gls{moralized_graph}。
+		得到的无向模型包含了完全相同的独立关系和条件独立关系。
+		（中）这个图是不丢失独立性的情况下无法转化为无向模型的最简单的有向模型。
+		这个图包含了一个完整的\gls{immorality}结构。
+		因为$\RSa$和$\RSb$都是$\RSc$的父节点，当$\RSc$被观察到时它们之间通过活跃路径相连。
+		为了捕捉这个相关性，无向模型必须包含一个包含所有三个变量的\gls{clique}。
+		这个\gls{clique}无法编码$\RSa \perp \RSb$这个信息。
+		（右）通常讲，\gls{moralization}的过程会给图添加许多边，因此丢失了一些独立性。
+		举个例子，这个\gls{sparse_coding}图需要在每一对隐含单元之间添加\gls{moralization}的边，因此也引入了二次数量级的新的直接依赖关系。}
 	\label{fig:dm_to_um}
 \end{figure}
 
@@ -767,7 +813,15 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/um_to_dm}}	
 \fi
-	\caption{将一个无向模型转化为一个有向模型。（左）这个无向模型无法转化为有向模型，因为它有一个长度为$4$且不带有\gls{chord}的\gls{loop}。具体说来，这个无向模型包含了两种不同的独立性，并且不存在一个有向模型可以同时描述这两种性质：$\RSa\perp \RSc \mid \{\RSb,\RSd\}$和$\RSb \perp \RSd \mid \{\RSa,\RSc\}$。（中）为了将无向图转化为有向图，我们必须通过保证所有长度大于$3$的\gls{loop}都有\gls{chord}来使得图三角化。为了完成这个，我们可以加一条连接$\RSa$和$\RSc$或者连接$\RSb$和$\RSd$的边。在这个例子中，我们选择添加一条连接$\RSa$和$\RSc$的边。（右）为了完成转化的过程，我们必须给每条边分配一个方向。执行这个任务时，我们必须保证不产生有向环。避免出现有向环的一种方法是赋予节点一定的顺序，然后将每个边从排序较早的节点指向稍后排序的节点。在这个例子中，我们根据变量名的字母进行排序。}
+	\caption{将一个无向模型转化为一个有向模型。
+		（左）这个无向模型无法转化为有向模型，因为它有一个长度为$4$且不带有\gls{chord}的\gls{loop}。
+		具体说来，这个无向模型包含了两种不同的独立性，并且不存在一个有向模型可以同时描述这两种性质：$\RSa\perp \RSc \mid \{\RSb,\RSd\}$和$\RSb \perp \RSd \mid \{\RSa,\RSc\}$。
+		（中）为了将无向图转化为有向图，我们必须通过保证所有长度大于$3$的\gls{loop}都有\gls{chord}来使得图三角化。
+		为了完成这个，我们可以加一条连接$\RSa$和$\RSc$或者连接$\RSb$和$\RSd$的边。
+		在这个例子中，我们选择添加一条连接$\RSa$和$\RSc$的边。
+		（右）为了完成转化的过程，我们必须给每条边分配一个方向。
+		执行这个任务时，我们必须保证不产生有向环。
+		避免出现有向环的一种方法是赋予节点一定的顺序，然后将每个边从排序较早的节点指向稍后排序的节点。在这个例子中，我们根据变量名的字母进行排序。}
 	\label{fig:um_to_dm}
 \end{figure}
 
@@ -782,7 +836,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \firstgls{factor_graph}是从\gls{undirected_model}中抽样的另一种方法，可以解决\gls{undirected_model}图中表达的模糊性。
 在\gls{undirected_model}中，每个$\phi$函数的范围必须是图中某个\gls{clique}的子集。
 我们无法确定每一个\gls{clique}是否含有一个作用域包含整个\gls{clique}的\gls{factor}－－－比如说一个包含三个结点的\gls{clique}可能对应的是一个有三个结点的\gls{factor}，也可能对应的是三个\gls{factor}并且每个\gls{factor}包含了一对结点，这通常会导致模糊性。
-通过显式地表示每一个$\phi$函数的作用领域，\gls{factor_graph}解决了这种模糊性。
+通过显式地表示每一个$\phi$函数的作用域，\gls{factor_graph}解决了这种模糊性。
 %然而，$\phi$没有必要包含每个\gls{clique}的全部。
 %\gls{factor_graph}明确表示每个$\phi$函数的范围。
 具体来说，\gls{factor_graph}是由包含无向二分图的\gls{undirected_model}的图形表示。
