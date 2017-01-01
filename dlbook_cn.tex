@@ -43,6 +43,9 @@
 \usepackage{algorithmic}
 % Include chapter number in algorithm number
 \renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
+\makeatletter
+\renewcommand*{\ALG@name}{算法}
+\makeatother
 
 \usepackage[pdfpagelabels=true,
 pdffitwindow=false,
@@ -52,8 +55,8 @@ pagebackref=true,
 breaklinks=true,
 colorlinks=false,
 bookmarks=true,
-%hidelinks=true,
-plainpages=false]{hyperref}
+hidelinks=true,
+plainpages=true]{hyperref}
 
 \usepackage{zref-abspage}
 \setcounter{secnumdepth}{3}
@@ -67,12 +70,14 @@ plainpages=false]{hyperref}
 % my command
 \newcommand{\firstgls}[1]{\textbf{\gls{#1}}(\glsdesc{#1})}
 \newcommand{\firstacr}[1]{\textbf{\gls{#1}}~(\glssymbol{#1})}
+\newcommand{\glsacr}[1]{\gls{#1}~(\glssymbol{#1})}
 \newcommand{\firstall}[1]{\textbf{\gls{#1}}~(\glsdesc{#1}, \glssymbol{#1})}
 \newcommand{\ENNAME}[1]{\text{#1}}
 \newcommand{\NUMTEXT}[1]{\text{#1}}
 \newcommand{\figref}[1]{图\ref{#1}}
 \newcommand{\chapref}[1]{第\ref{#1}章}
 \newcommand{\secref}[1]{第\ref{#1}节}
+\newcommand{\algref}[1]{算法\ref{#1}}
 \newcommand{\eqnref}[1]{式\eqref{#1}}
 
 

@@ -17,8 +17,8 @@
 我们会对神经网络实践中用得比较多的几种卷积函数的变体进行说明。
 我们也会说明如何在多种不同维数的数据上使用卷积运算。
 之后我们讨论使得卷积运算更加高效的一些方法。
-\gls{CNN}是神经科学的原理影响深度学习的典型代表，我们之后也会讨论这些神经科学的原理，并对卷积神经网路在深度学习发展史中的作用作出评价。
-本章没有涉及如何为你的卷积神经网路选择合适的结构，因为本章的目标是说明\gls{CNN}提供的强大工具，第\ref{chap:practical_methodology}章会对在具体环境中使用相应的工具给出一些指导。
+\gls{CNN}是神经科学的原理影响深度学习的典型代表，我们之后也会讨论这些神经科学的原理，并对卷积神经网络在深度学习发展史中的作用作出评价。
+本章没有涉及如何为你的卷积神经网络选择合适的结构，因为本章的目标是说明\gls{CNN}提供的强大工具，第\ref{chap:practical_methodology}章会对在具体环境中使用相应的工具给出一些指导。
 对于\gls{convolutional_network}结构的研究进展得如此迅速，以至于针对特定问题，数月甚至几周就会产生一个新的最优的网络结构，甚至在写这本书时也不好描述究竟哪种结构是最好的。
 然而，最好的结构也是由本章所描述的基本部件一点一点搭建起来的。
 
@@ -99,7 +99,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 在机器学习中，学习算法会在核合适的位置学得恰当的值， 所以一个基于核翻转的卷积运算的学习算法所学得的核，是对未进行翻转的算法学得的核的翻转。
 单独使用卷积运算在机器学习中是很少见的，卷积经常和其他的函数一起使用，无论卷积运算是否翻转了它的核，这些函数的组合通常是不可交换的。
 
-图\ref{fig:chap9_conv_2d}演示了一个在二维张量上的卷积运算（核没有翻转）的例子。
+图\ref{fig:chap9_conv_2d}演示了一个在2维张量上的卷积运算（核没有翻转）的例子。
 % fig 9.1
 \begin{figure}[!htb]
 \ifOpenSource
@@ -107,7 +107,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/conv_2d}}
 \fi
-\caption{Tmp}
+\caption{一个2维卷积的例子（核没有翻转）。我们限制只对核完全处在图像中的位置输出，在一些上下文中称为``\gls{valid}''卷积。我们用画有箭头的盒子来说明输出张量的左上角元素是如何通过对输入张量相应的左上角区域使用核进行卷积得到的。}
 \label{fig:chap9_conv_2d}
 \end{figure}
 
@@ -150,9 +150,11 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/area_of_effect}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[Caption for LOF]{\gls{sparse_connectivity}，对每幅图从下往上看。我们强调了一个输入单元$x_3$以及在$\bm{s}$中受该单元影响的输出单元。\emph{(上)}当$\bm{s}$是由核宽度为3的卷积产生时，只有三个输出受到$\bm{x}$的影响\protect\footnotemark。\emph{(下)}当$\bm{s}$是由矩阵乘法产生时，连接不再是稀疏的，所以所有的输出都会受到$x_3$的影响。}
 \label{fig:chap9_area_of_effect}
 \end{figure}
+ \footnotetext{译者注：译者认为此处应当是$x_3$。}
 % fig 9.3
 \begin{figure}[!htb]
 \ifOpenSource
@@ -160,7 +162,8 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/receptive_field}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{\gls{sparse_connectivity}，对每幅图从上往下看。我们强调了一个输出单元$s_3$以及$\bm{x}$中影响该单元的输入单元。这些单元被称为$s_3$的\gls{receptive_field}。\emph{(上)}当$\bm{s}$是由核宽度为3的卷积产生时，只有三个输入影响$s_3$。\emph{(下)}当$\bm{s}$是由矩阵乘法产生时，连接不再是稀疏的，所以所有的输入都会影响$s_3$。}
 \label{fig:chap9_receptive_field}
 \end{figure}
 % fig 9.4
@@ -170,7 +173,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/deep_receptive_field}}
 \fi
-\caption{Tmp}
+\caption{处于\gls{convolutional_network}更深的层中的单元，它们的\gls{receptive_field}要比处在浅层的单元的\gls{receptive_field}更大。如果网络还包含类似\gls{stride}卷积（图\ref{fig:chap9_stride_conv}）或者\gls{pooling}（\ref{sec:pooling}节）之类的结构特征，这种效应会加强。这意味着在\gls{convolutional_network}中即使是\emph{直接}连接都是很稀疏的，处在更深的层中的单元可以\emph{间接地}连接到全部或者大部分输入图像。}
 \label{fig:chap9_deep_receptive_field}
 \end{figure}
 
@@ -192,7 +195,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/parameter_sharing}}
 \fi
-\caption{Tmp}
+\caption{\gls{parameter_sharing}。黑色箭头表示在两个不同的模型中使用了特殊参数的连接。\emph{(上)}黑色箭头表示在卷积模型中3元素核的中间元素的使用。因为\gls{parameter_sharing}，这单个参数被用于所有的输入位置。\emph{(下)}这单个黑色箭头表示在全连接模型中权重矩阵的中间元素的使用。这个模型没有使用\gls{parameter_sharing}，所以参数只使用了一次。}
 \label{fig:chap9_parameter_sharing}
 \end{figure}
 % -- 326 --
@@ -211,7 +214,8 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \subfigure{ \label{fig:chap9_efficiency_of_edge_detection_b}     
 \includegraphics[width=0.35\textwidth]{Chapter9/figures/edges.png}}     
 \fi
-\caption{Tmp}     
+\captionsetup{singlelinecheck=off}
+\caption{边缘检测的效率。右边的图像是通过获得原始图像中的每个像素并减去左边相邻像素的值而形成的。这给出了输入图像中所有垂直方向上的边缘的强度，这对目标检测是有用的操作。两个图像都是280像素的高度。输入图像宽320像素，而输出图像宽319像素。这个变换可以通过包含两个元素的卷积核来描述，并且需要$319\times 280\times 3 = 267,960$个浮点运算（每个输出像素需要两次乘法和一次加法）。为了用矩阵乘法描述相同的变换，需要$320\times 280\times 319\times 280$个或者说超过80亿个元素的矩阵，这使得卷积对于表示这种变换更有效40亿倍。直接运行矩阵乘法的算法将执行超过160亿个浮点运算，这使得卷积在计算上大约有60,000倍的效率。当然，矩阵的大多数元素将为零。如果我们只存储矩阵的非零元，则矩阵乘法和卷积都需要相同数量的浮点运算来计算。矩阵仍然需要包含$2\times 319\times 280=178,640$个元素。将小的局部区域上的相同线性变换应用到整个输入上，卷积是描述这种变换的极其有效的方法。照片来源：Paula Goodfellow。}   
 \label{fig:chap9_efficiency_of_edge_detection}     
 \end{figure}
 % -- 328 --
@@ -242,7 +246,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \section{\glsentrytext{pooling}}
 \label{sec:pooling}
 
-卷积神经网路的卷积层通常包含三级（如图\ref{fig:chap9_conv_layer}所示）。
+卷积神经网络的卷积层通常包含三级（如图\ref{fig:chap9_conv_layer}所示）。
 在第一级中，卷积层并行地进行多个卷积运算来产生一组线性激活函数。
 在第二级中，非线性的激活函数如\gls{ReLU}函数等作用在第一级中的每一个线性输出上。
 这一级有时也被称为\firstgls{detector_stage}。
@@ -254,7 +258,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/conv_layer}}
 \fi
-\caption{Tmp}
+\caption{典型\gls{CNN}层的组件。有两组常用的术语用于描述这些层。\emph{(左)}在这组术语中，\gls{convolutional_network}被视为少量相对复杂的层，每层具有许多``级''。在这组术语中，核张量与网络层之间存在一一对应关系。在本书中，我们通常使用这组术语。\emph{(右)}在这组术语中，\gls{convolutional_network}被视为更大数量的简单层；每一个处理步骤都被认为是一个独立的层。这意味着不是每个``层''都有参数。}
 \label{fig:chap9_conv_layer}
 \end{figure}
 
@@ -278,7 +282,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/max_pool_invariance}}
 \fi
-\caption{Tmp}
+\caption{\gls{max_pooling}引入不变性。\emph{(上)}卷积层中间输出的视图。下面一行显示非线性的输出。上面一行显示\gls{max_pooling}的输出，每个\gls{pool}的宽度为三个像素并且\gls{pooling}区域的\gls{stride}为一个像素。\emph{(下)}相同网络的视图，不过对输入右移了一个像素。下面一行的所有值都发生了改变，但上面一行只有一半的值发生了改变，这是因为\gls{max_pooling}单元只对周围的最大值比较敏感，而不是对精确的位置。}
 \label{fig:chap9_max_pool_invariance}
 \end{figure}
 
@@ -295,7 +299,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/learned_rotation}}
 \fi
-\caption{Tmp}
+\caption{学习不变性的示例。使用分离的参数学得多个特征，再使用\gls{pooling}单元进行\gls{pooling}，可以学得对输入的某些变换的不变性。这里我们展示了用三个学得的过滤器和一个\gls{max_pooling}单元可以学得对旋转变换的不变性。这三个过滤器都旨在检测手写的数字5。每个过滤器尝试匹配稍微不同方向的5。当输入中出现5时，相应的过滤器会匹配它并且在探测单元中引起大的激活。然后，无论哪个探测单元被激活，\gls{max_pooling}单元都具有大的激活。我们在这里展示网络如何处理两个不同的输入，导致两个不同的探测单元被激活。然而对\gls{pooling}单元的影响大致相同。这个原则在\gls{maxout}网络\citep{Goodfellow-et-al-ICML2013}和其他卷积网络中使用。空间位置上的\gls{max_pooling}对于平移是天然不变的；这种多通道方法只在学习其他变换时是必要的。}
 \label{fig:chap9_learned_rotation}
 \end{figure}
 
@@ -312,7 +316,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/pool_downsample}}
 \fi
-\caption{Tmp}
+\caption{带有\gls{downsampling}的\gls{pooling}。这里我们使用\gls{max_pooling}，\gls{pool}的宽度为三并且\gls{pool}之间的\gls{stride}为二。这使得表示的大小减少了一半，减轻了下一层的计算和统计负担。注意到最右边的\gls{pooling}区域尺寸较小，但如果我们不想忽略一些探测单元的话就必须包含这个区域。}
 \label{fig:chap9_pool_downsample}
 \end{figure}
 
@@ -340,7 +344,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/cnn_classifier}}
 \fi
-\caption{Tmp}
+\caption{\gls{convolutional_network}用于分类的架构示例。本图中使用的具体\gls{stride}和深度并不适合实际使用；它们被设计得非常浅以适合页面。实际的\gls{convolutional_network}也常常涉及大量的分支，不同于这里为简单起见所使用的链式结构。\emph{(左)}处理固定大小的图像的\gls{convolutional_network}。在卷积层和\gls{pooling}层几层交替之后，卷积特征映射的张量被重新整形以展平空间维度。网络的其余部分是一个普通的前馈网络分类器，如第\ref{chap:deep_feedforward_networks}章所述。\emph{(中)}处理大小可变的图像的\gls{convolutional_network}，但仍保持全连接的部分。该网络使用具有可变大小但是数量固定的\gls{pool}的\gls{pooling}操作，以便向网络的全连接部分提供576个单位的固定大小的向量。 \emph{(右)}没有任何全连接权重层的\gls{convolutional_network}。相反，最后的卷积层为每个类输出一个特征映射。该模型可能学习每个类在每个空间位置出现的可能性的映射。将特征映射进行平均得到的单个值，提供了顶部softmax分类器的变量。}
 \label{fig:chap9_cnn_classifier}
 \end{figure}
 
@@ -383,46 +387,46 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \section{基本卷积函数的变体}
 \label{sec:variants_of_the_basic_convolution_function}
 
-当在神经网络的上下文中讨论卷积时，我们通常不会像数学文献中那样特指标准的离散卷积运算。
+当在神经网络的上下文中讨论卷积时，我们通常不是特指数学文献中使用的那种标准的离散卷积运算。
 实际应用中的函数略微有些不同。
 这里我们详细讨论一下这些差异，并且对神经网络中用到的函数的一些重要性质进行重点说明。
 
-首先，当我们提到神经网络中的卷积时，我们通常是指一次特定的运算，而这种运算包含了多个卷积应用的并行处理。
+首先，当我们提到神经网络中的卷积时，我们通常是指一次特定的运算，而这种运算包含了并行地使用多个卷积。
 这是因为带有单个核的卷积只能提取一种类型的特征，尽管它作用在多个空间位置上。
 我们通常希望神经网络的一层能够在多个位置提取多种类型的特征。
 
-另外，输入通常也不仅仅是实值的方格，而是由一系列向量值的观测数据构成的方格。
+另外，输入通常也不仅仅是实值的网格，而是由一系列向量值的观测数据构成的网格。
 例如，一幅彩色图像在每一个像素点都会有红绿蓝三种颜色的亮度。
-在多层的\gls{CNN}中，第二层的输入是第一层的输出，通常包含多个卷积作用后的输出。
-当用于图像时，我们通常把卷积的输入输出都看作是3维的张量，其中一个索引用于标明不同的通道（红绿蓝），另外两个索引标明在这个通道上的空间坐标。
+在多层的\gls{CNN}中，第二层的输入是第一层的输出，通常在每个位置包含多个卷积的输出。
+当用于图像时，我们通常把卷积的输入输出都看作是3维的张量，其中一个索引用于标明不同的通道（例如红绿蓝），另外两个索引标明在每个通道上的空间坐标。
 软件实现通常使用批处理模式，所以它们会使用4维的张量，第四维索引用于标明批处理中不同的实例，但我们为简明起见这里忽略批处理索引。
 
 因为\gls{CNN}通常使用多通道的卷积，它们基于的线性运算并不保证一定是可交换的，即使使用了核翻转也是如此。
 这些多通道的运算只有当其中的每个运算的输出和输入具有相同的通道数时才是可交换的。
 
-假定我们有一个4维的核张量$\TSK$，它的每一个元素是$\TEK_{i,j,k,l}$，表示输出的在通道$i$中的一个单元和输入的在通道$j$中的一个单元的连接强度，并且在输出单元和输入单元之间有一个$k$ 行$l$ 列的偏置。
-假定我们的输入是观测数据$\TSV$，它的每一个元素是$\TEV_{i,j,k}$，表示在通道$i$中第$j$行第$k$列的值。
+假定我们有一个4维的核张量$\TSK$，它的每一个元素是$\TEK_{i,j,k,l}$，表示输出的处于通道$i$中的一个单元和输入的处于通道$j$中的一个单元的连接强度，并且在输出单元和输入单元之间有一个$k$行$l$列的偏置。
+假定我们的输入由观测数据$\TSV$组成，它的每一个元素是$\TEV_{i,j,k}$，表示处在通道$i$中第$j$行第$k$列的值。
 假定我们的输出$\TSZ$和输入$\TSV$具有相同的形式。
 如果输出$\TSZ$是通过对$\TSK$和$\TSV$进行卷积而不涉及翻转$\TSK$得到的，那么
 \begin{equation}
-\TEZ_{i,j,k} = \sum_{l,m,n} \TEV_{l, j+m-1, k+n-1} \TEK_{i,l,m,n}
+\TEZ_{i,j,k} = \sum_{l,m,n} \TEV_{l, j+m-1, k+n-1} \TEK_{i,l,m,n},
 \end{equation}
-这里对所有的$l$，$m$和$n$进行求和也是对所有有效的张量索引的值进行求和。
-在线性代数中，向量中的索引通常从1开始，这就是上述公式中$-1$的由来。
+这里对所有的$l$，$m$和$n$进行求和是对所有（在求和式中）有效的张量索引的值进行求和。
+在线性代数中，向量的索引通常从1开始，这就是上述公式中$-1$的由来。
 但是像C或Python这类编程语言索引通常从0开始，这使得上述公式可以更加简洁。
 
 % -- 337 --
  
 我们有时会希望跳过核中的一些位置来降低计算的开销（相应的代价是提取特征没有先前那么好了）。
-我们可以把这一过程看作是对卷积函数输出的下采样。
+我们可以把这一过程看作是对卷积函数输出的下采样(downsampling)。
 如果我们只想对输出的每个方向上的$s$个像素进行采样，那么我们可以定义一个下采样卷积函数$c$使得
 \begin{equation}
 \TEZ_{i,j,k} = c(\TSK, \TSV, s)_{i,j,k} = \sum_{l,m,n} [\TEV_{l,(j-1)\times s+m, (k-1)\times s +n,}
  \TEK_{i,l,m,n}].
- \label{eq: 9.8}
+ \label{eq:9.8}
 \end{equation}
 我们把$s$称为下采样卷积的\firstgls{stride}。
-当然也可以对每个方向定义不同的步幅。
+当然也可以对每个移动方向定义不同的步幅。
 图\ref{fig:chap9_stride_conv}演示了一个实例。
 % fig 9.12
 \begin{figure}[!htb]
@@ -431,14 +435,14 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/stride_conv}}
 \fi
-\caption{Tmp}
+\caption{带有\gls{stride}的卷积。在这个例子中，我们的\gls{stride}为二。\emph{(上)}在单个操作中实现的\gls{stride}为二的卷积。\emph{(下)}\gls{stride}大于一个像素的卷积在数学上等价于单位\gls{stride}的卷积随后\gls{downsampling}。显然，涉及\gls{downsampling}的两步法在计算上是浪费的，因为它计算了许多将被丢弃的值。}
 \label{fig:chap9_stride_conv}
 \end{figure}
 
-在任何\gls{CNN}的应用中都有一个重要性质，那就是能够隐含地对输入$\TSV$用零进行填充使得它加宽。
+在任何\gls{CNN}的应用中都有一个重要性质，那就是能够隐含地对输入$\TSV$用零进行填充(pad)使得它加宽。
 如果没有这个性质，表示的宽度在每一层就会缩减，缩减的幅度是比核少一个像素这么多。
 对输入进行零填充允许我们对核的宽度和输出的大小进行独立的控制。
-如果没有零填充，我们就被迫面临网络空间长度的快速缩减和选择一个小型的核的两难的局面——这两种情境都会极大得限制网络的表示能力。
+如果没有零填充，我们就被迫面临二选一的局面，要么选择网络空间宽度的快速缩减，要么选择一个小型的核——这两种情境都会极大得限制网络的表示能力。
 图\ref{fig:chap9_zero_pad_shrink}给出了一个例子。
 % fig 9.13
 \begin{figure}[!htb]
@@ -447,7 +451,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \else
 \centerline{\includegraphics{Chapter9/figures/zero_pad_shrink}}
 \fi
-\caption{Tmp}
+\caption{零填充对网络大小的影响。考虑一个\gls{convolutional_network}，每层有一个宽度为六的核。 在这个例子中，我们不使用任何\gls{pooling}，所以只有卷积操作本身缩小网络的大小。\emph{(上)}在这个卷积网络中，我们不使用任何隐含的零填充。这使得表示在每层缩小五个像素。从十六个像素的输入开始，我们只能有三个卷积层，并且最后一层不能移动核，所以可以说只有两层是真正的卷积层。可以通过使用较小的核来减缓收缩速率，但是较小的核表示能力不足，并且在这种结构中一些收缩是不可避免的。\emph{(下)}通过向每层添加五个隐含的零，我们防止了表示随深度收缩。这允许我们设计一个任意深的卷积网络。}
 \label{fig:chap9_zero_pad_shrink}
 \end{figure}
 
@@ -458,29 +462,29 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 然而，输出的大小在每一层都会缩减。
 如果输入的图像宽度是$m$，核的宽度是$k$，那么输出的宽度就会变成$m-k+1$。
 如果卷积核非常大的话缩减率会非常显著。
-因为缩减数大于0，这限制了网络中的卷积层的层数。
-当层数增加时，网络的空间维度最终会缩减到$1\times 1$，这种情况下其他的层就不可能进行有意义的卷积了。
+因为缩减数大于0，这限制了网络中能够包含的卷积层的层数。
+当层数增加时，网络的空间维度最终会缩减到$1\times 1$，这种情况下另外的层就不可能进行有意义的卷积了。
 第二种特殊的情况是只进行足够的零填充来保持输出和输入具有相同的大小。
 在MATLAB中，这称为\firstgls{same}卷积。
-在这种情况下，网络能够包含足够多的卷积层，只要硬件可以支持，这是因为卷积运算并没有改变相关的结构。
+在这种情况下，网络能够包含任意多的卷积层，只要硬件可以支持，这是因为卷积运算并没有改变相关的结构。
 然而，输入像素中靠近边界的部分相比于中间部分对于输出像素的影响更小。
 这可能会导致边界像素存在一定程度的欠表示。
 这使得第三种极端情况产生了，在MATLAB中称为\firstgls{full}卷积。
-它进行了足够多的零填充使得每个像素在每个方向上恰好被访问了$k$次\footnote{译者注：图\ref{fig:chap9_zero_pad_shrink}给出了\gls{valid}卷积和\gls{same}卷积的例子，这里对\gls{full}卷积略作说明：我们可以认为\gls{full}卷积是在输入的两端各填充$k-1$个零，使得输入的每个像素都恰好被核访问$k$次，最终得到的输出的宽度为$[m+2(k-1)]-k+1=m+k-1$}，最终输出的图像的宽度为$m+k-1$。%译者注
+它进行了足够多的零填充使得每个像素在每个方向上恰好被访问了$k$次\footnote{译者注：图\ref{fig:chap9_zero_pad_shrink}给出了\gls{valid}卷积和\gls{same}卷积的例子，这里对\gls{full}卷积略作说明：我们可以认为\gls{full}卷积是在输入的两端各填充$k-1$个零，使得输入的每个像素都恰好被核访问$k$次，最终得到的输出的宽度为$[m+2(k-1)]-k+1=m+k-1$}，最终输出图像的宽度为$m+k-1$。%译者注
 在这种情况下，输出像素中靠近边界的部分相比于中间部分是更少像素的函数。
-这将导致学得一个在卷积特征图的所有位置都表现不错的单核更为困难。
-通常零填充的最优数量（对于测试集的分类正确率）处于``有效卷积''和``相同卷积''之间的某个位置。
+这将导致学得一个在卷积特征映射的所有位置都表现不错的单核更为困难。
+通常零填充的最优数量（对于测试集的分类正确率）处于``\gls{valid}卷积''和``\gls{same}卷积''之间的某个位置。
 
 % -- 338 --
  
 % -- 339 --
 
 在一些情况下，我们并不一定真正想用卷积，而只是用一些局部连接的网络层\citep{LeCun86,LeCun89a}。
-在这种情况下，我们的多重感知机对应的邻接矩阵是相同的，但每一个连接都有它自己的权重，用一个6维的张量$\TSW$来表示。
+在这种情况下，我们的\gls{MLP}对应的邻接矩阵是相同的，但每一个连接都有它自己的权重，用一个6维的张量$\TSW$来表示。
 $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输入的通道$l$，输入的行偏置$m$和列偏置$n$。
 局部连接层的线性部分可以表示为
 \begin{equation}
-\TEZ_{i,j,k} = \sum_{l,m,n} [\TEV_{l, j+m-1, k+n-1} w_{i, j, k, l, m, n}].
+\TEZ_{i,j,k} = \sum_{l,m,n} [\TEV_{l, j+m-1, k+n-1} w_{i, j, k, l, m, n}]. %这里应该是$\TEW$?
 \end{equation}
 这有时也被称为\firstgls{unshared_convolution}，因为它和带有一个小核的离散卷积运算很像，但并不横跨位置来共享参数。
 图\ref{fig:chap9_local}比较了局部连接、卷积和全连接的区别。
@@ -491,20 +495,20 @@ $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输�
 \else
 \centerline{\includegraphics{Chapter9/figures/local}}
 \fi
-\caption{Tmp}
+\caption{局部连接，卷积和全连接的比较。\emph{(上)}每一小片（接受域）有两个像素的局部连接层。每条边用唯一的字母标记，来显示每条边都有自身的权重参数。\emph{(中)}核宽度为两个像素的卷积层。该模型与局部连接层具有完全相同的连接。区别不在于哪些单元相互交互，而在于如何共享参数。局部连接层没有\gls{parameter_sharing}。卷积层在整个输入上重复使用相同的两个权重，正如用于标记每条边的字母重复出现所指示的那样。\emph{(下)}全连接层类似于局部连接层，它的每条边都有其自身的参数（在该图中用字母明确标记的话就太多了）。 然而，它不具有局部连接层的连接受限的特征。}
 \label{fig:chap9_local}
 \end{figure}
  
 % -- 340 --
  
 当我们知道每一个特征都是一小部分空间的函数而不是整个空间的特征时，局部连接层是很有用的。
-例如，如果我们想要辨别一张图片是否是人脸图像时，我们只需要去寻找嘴是否在图像的下部的居中部分即可。
+例如，如果我们想要辨别一张图片是否是人脸图像时，我们只需要去寻找嘴是否在图像的下部中央部分即可。
 
-在连接被更进一步限制时，使用一些新版本的卷积或者局部连接层是有用的，例如，当每一个输出的通道$i$被限制成仅仅是输入的一部分通道$l$的函数时。
-处理这种情况的一种通用方法是使输出的前$m$个通道仅仅连接到输入的前$n$个通道，输出的接下来的$m$个通道仅仅连接到输入的接下来的$n$个通道，以此类推。
-如图\ref{fig:chap9_conv_groups}所示。
-对少量通道的连接进行建模允许网络使用更少的参数来降低存储的消耗以及提高统计效率，并且减少了前向和后向传播所需要的计算量。
-这些目标的实现并没有减少隐藏单元的数目。
+使用那些连接被更进一步限制的卷积或者局部连接层也是有用的，例如，限制每一个输出的通道$i$仅仅是输入通道$l$的一部分的函数时。
+实现这种情况的一种通用方法是使输出的前$m$个通道仅仅连接到输入的前$n$个通道，输出的接下来的$m$个通道仅仅连接到输入的接下来的$n$个通道，以此类推。
+图\ref{fig:chap9_conv_groups}给出了一个例子。
+对少量通道间的连接进行建模允许网络使用更少的参数，这降低了存储的消耗以及提高了统计效率，并且减少了前向和反向传播所需要的计算量。
+这些目标的实现并没有减少\gls{hidden_unit}的数目。
 % fig 9.15
 \begin{figure}[!htb]
 \ifOpenSource
@@ -512,14 +516,14 @@ $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输�
 \else
 \centerline{\includegraphics{Chapter9/figures/conv_groups}}
 \fi
-\caption{Tmp}
+\caption{\gls{convolutional_network}的前两个输出通道只和前两个输入通道相连，随后的两个输出通道只和随后的两个输入通道相连。}
 \label{fig:chap9_conv_groups}
 \end{figure}
 
-\firstgls{tiled_convolution}\citep{Gregor+LeCun-2010,Le2010}对卷积层和局部连接层进行了折衷。
-这里并不是对\emph{每一个}空间位置的权重进行学习，我们学习一些核使得当我们在空间移动时它们可以循环利用。
-这意味着在最近邻的位置拥有不同的过滤器，就像局部连接层一样，但是对于这些参数的存储需求仅仅会随着核的集合的大小成常数倍增长，而不是整个输出的特征图的大小。
-图\ref{fig:chap9_tiled}对局部连接层、尾卷积和标准卷积进行了比较。
+\firstgls{tiled_convolution}\citep{Gregor+LeCun-2010,Le2010}对卷积层和局部连接层进行了折衷。%这里翻译成啥？瓷砖？平铺？
+这里并不是对\emph{每一个}空间位置的权重集合进行学习，我们学习一组核使得当我们在空间移动时它们可以循环利用。
+这意味着在近邻的位置上拥有不同的过滤器，就像局部连接层一样，但是对于这些参数的存储需求仅仅会增长常数倍，这个常数就是核的集合的大小，而不是整个输出的特征映射的大小。
+图\ref{fig:chap9_tiled}对局部连接层、\gls{tiled_convolution}和标准卷积进行了比较。
 % fig 9.16
 \begin{figure}[!htb]
 \ifOpenSource
@@ -527,68 +531,69 @@ $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输�
 \else
 \centerline{\includegraphics{Chapter9/figures/tiled}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{局部连接层、\gls{tiled_convolution}和标准卷积的比较。当使用大小相同的核时，这三种方法的单元之间具有相同的连接。此图是对使用两个像素宽的核的说明。这三种方法之间的区别在于它们如何共享参数。\emph{(上)}局部连接层根本没有共享参数。我们对每个连接使用唯一的字母标记，来表明每个连接都有它自身的权重。\emph{(中)}\gls{tiled_convolution}有$t$个不同的核。这里我们说明$t=2$的情况。其中一个核具有标记为``a''和``b''的边，而另一个具有标记为``c''和``d''的边。我们每次在输出中向右移动一个像素，移动后使用不同的核。这意味着，与局部连接层类似，输出中的相邻单元具有不同的参数。与局部连接层不同的是，在我们遍历所有可用的$t$个核之后，我们循环回到了第一个核。如果两个输出单元间隔$t$个步长的倍数，则它们共享参数。\emph{(下)}传统卷积等效于$t=1$的\gls{tiled_convolution}。它只有一个核，并且被应用到各个地方，我们在图中表示为在各处使用具有标记为``a''和``b''的边的核。}
 \label{fig:chap9_tiled}
 \end{figure}
  
 % -- 341 --
  
-为了代数化地定义尾卷积，令$\TSK$是一个6维的张量\footnote{译者注：原文将$\TSK$误写成了$k$。}，其中的两维对应着输出图中的不同位置。%译者注
-我们这里并不是使用离散的索引来表示输出图中的每一个位置，输出的位置在每个方向上在$t$个不同的核的栈组成的集合中进行循环。
-如果$t$等于输出的宽度，这就和局部连接层等价了。
+为了代数地定义\gls{tiled_convolution}，令$\TSK$是一个6维的张量\footnote{译者注：原文将$\TSK$误写成了$k$。}，其中的两维对应着输出映射中的不同位置。%译者注
+我们这里并不是使用分别的索引来表示输出映射中的每一个位置，输出的位置在每个方向上在$t$个不同的核的组成的集合中进行循环。
+如果$t$等于输出的宽度，这就是局部连接层了。
 \begin{equation}
 \TEZ_{i, j, k} = \sum_{l, m, n} \TEV_{l, j+m-1, k+n-1} \TEK_{i, l, m, n, j\% t +1, k\% t+1},
 \end{equation}
-这里$\%$是模运算，并且$t\% t =0, (t+1)\% t = 1$等等。
-在每一维上使用不同的$t$可以很直观的对这个方程进行扩展。%这里需要重新理解一下
+这里百分号是取模运算，其中$t\% t =0, (t+1)\% t = 1$等等。
+在每一维上使用不同的$t$可以很直观地对这个方程进行扩展。%这里需要重新理解一下
  
 % -- 342 --
   
 % -- 343 --
  
-局部连接层和尾卷积层都和最大\gls{pooling}有一些有趣的关联：这些层的探测单元都是由不同的过滤器驱动的。
-如果这些过滤器能够学会对相同隐藏特征的不同变换形式进行探测，那么最大\gls{pooling}的单元对于学得的变换就具有不变性（如图\ref{fig:chap9_learned_rotation}所示）。
+局部连接层与\gls{tiled_convolution}层都和\gls{max_pooling}有一些有趣的关联：这些层的探测单元都是由不同的过滤器驱动的。
+如果这些过滤器能够学会探测相同隐含特征的不同变换形式，那么\gls{max_pooling}的单元对于学得的变换就具有不变性（如图\ref{fig:chap9_learned_rotation}所示）。
 卷积层对于平移具有内置的不变性。
  
 % -- 344 --
  
-使用\gls{CNN}时，采用除卷积以外的其他一些运算通常也是必须的。
+实现\gls{CNN}时，采用除卷积以外的其他一些运算通常也是必须的。
 为了实现学习，必须在给定输出的梯度时能够计算核的梯度。
-在一些情况下，这种运算可以通过卷积来实现，但在很多我们感兴趣的情况下，包括步幅大于1的情况，并不具有这样的性质。
+在一些简单情况下，这种运算可以通过卷积来实现，但在很多我们感兴趣的情况下，包括\gls{stride}大于1的情况，并不具有这样的性质。
 
-回忆一下卷积是一种线性运算，所以可以表示成矩阵乘法的形式（如果我们首先把输入张量变形为一个单纯的向量）。
+回忆一下卷积是一种线性运算，所以可以表示成矩阵乘法的形式（如果我们首先把输入张量变形为一个扁平的向量）。
 涉及到的矩阵是卷积核的函数。
 这个矩阵是稀疏的并且核的每个元素都复制给矩阵的很多个元素。
 这种观点能够帮助我们导出\gls{CNN}需要的很多其他运算。
 
 通过卷积定义的矩阵转置的乘法就是这样一种运算。
-这种运算用于在卷积层中后向传播误差的导数，所以可以用来训练多于一个隐含层的\gls{CNN}。
-如果我们想要从隐藏层单元来重构可视化单元时，同样的运算也是需要的\citep{Simard92-short}。
-重构可视化单元是本书第|||c|||部分的模型广泛用到的一种运算，这些模型包括自动编码器、RBM和稀疏编码等等。
+这种运算用于通过卷积层反向传播误差的导数，所以它在训练多于一个隐藏层的\gls{CNN}时是必要的。
+如果我们想要从隐藏层单元重构可视化单元时，同样的运算也是需要的\citep{Simard92-short}。
+重构可视化单元是本书第\ref{part:deep_learning_research}部分的模型广泛用到的一种运算，这些模型包括\gls{AE}、\glssymbol{RBM}和稀疏编码等等。
 构建这些模型的卷积化的版本都要用到转置化卷积。
-就像核梯度的运算，这种输入梯度运算在某些情况下可以用卷积来实现，但在一般情况下需要用到第三种运算来实现。
+就像核梯度的运算，这种输入梯度运算在某些情况下可以用卷积来实现，但在一般情况下需要用到第三种运算来实现。%这里不是很懂
 必须非常小心地来使这种转置运算和前向传播过程相协调。
-转置运算返回的输出的大小取决于三个方面：零填充的策略、前向传播运算的步幅和前向传播的输出映射的大小。
+转置运算返回的输出的大小取决于三个方面：零填充的策略、前向传播运算的\gls{stride}和前向传播的输出映射的大小。
 在一些情况下，不同大小的输入通过前向传播过程能够得到相同大小的输出映射，所以必须明确地告知转置运算原始输入的大小。
 
-这三个运算——卷积、从输出到权值的后向传播和从输出到输入的后向传播——足以计算任何深度的前馈\gls{convolutional_network}训练所需的梯度，也可以计算带有基于转置化卷积的重构函数的\gls{convolutional_network}训练所需的梯度。
-对于完全一般的多维、多样例情况下的公式的完整推导可以参见\cite{Goodfellow-TR2010}。 
-为了直观说明这些公式是如何起作用的，我们这里给出一个二维单样例的版本。
+这三种运算——卷积、从输出到权重的反向传播和从输出到输入的反向传播——对于训练任意深度的前馈\gls{convolutional_network}，以及训练带有（基于卷积的转置的）重构函数的\gls{convolutional_network}，这三种运算都足以计算它们所需的所有梯度。
+对于完全一般的多维、多样例情况下的公式，完整的推导可以参见\cite{Goodfellow-TR2010}。 
+为了直观说明这些公式是如何起作用的，我们这里给出一个二维单个样例的版本。
  
 % -- 345 --
  
-假设我们想要训练这样一个\gls{CNN}，它包含带有步幅的卷积并且步幅为$s$，该卷积的核$\TSK$作用于多通道的图像$\TSV$，表示为$c(\TSK, \TSV, s)$就像公式\ref{eq: 9.8}中一样。
+假设我们想要训练这样一个\gls{CNN}，它包含\gls{stride}为$s$的\gls{stride}卷积，该卷积的核为$\TSK$，作用于多通道的图像$\TSV$，表示为$c(\TSK, \TSV, s)$，就像公式\ref{eq:9.8}中一样。
 假设我们想要最小化某个损失函数$J(\TSV, \TSK)$。
 在前向传播过程中，我们需要用$c$本身来输出$\TSZ$，然后$\TSZ$传递到网络的其余部分并且被用来计算损失函数$J$。
-在后向传播过程中，我们会收到一个张量$\TSG$表示为$\TEG_{i, j, k} = \frac{\partial}{\partial \TEZ_{i, j, k}} J(\TSV, \TSK)$。
+在反向传播过程中，我们会收到一个张量$\TSG$表示为$\TEG_{i, j, k} = \frac{\partial}{\partial \TEZ_{i, j, k}} J(\TSV, \TSK)$。
 
-为了训练网络，我们需要对核中的权值分别求导。
+为了训练网络，我们需要对核中的权重求导。
 为了实现这个目的，我们可以使用一个函数
 \begin{equation}
 g(\TSG, \TSV, s)_{i, j, k, l} = \frac{\partial}{\partial \TEK_{i, j, k, l}} J(\TSV, \TSK) = \sum_{m, n} \TEG_{i, m, n} \TEV_{j, (m-1)\times s+k, (n-1)\times s+l}.
 \end{equation}
 
-如果这一层不是网络的底层，我们需要对$\TSV$求梯度来使得误差后向传播。
+如果这一层不是网络的底层，我们需要对$\TSV$求梯度来使得误差进一步反向传播。
 我们可以使用如下的函数
 \begin{eqnarray}
 h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV, \TSK)\\
@@ -600,48 +605,48 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
             \sum_q \TEK_{q,i,m,p} \TEG_{q, l, n}.
 \end{eqnarray}
 
-第\ref{chap:autoencoders}章描述的自动编码器网络，是一些训练成把输入拷贝到输出的前馈网络。
-一个简单的例子是PCA算法，将输入$\bm{x}$拷贝到一个近似的重构值$\bm{r}$，通过函数$\bm{W}^\top \bm{Wx}$来实现。
-使用带有矩阵转置的乘法，就像PCA算法这种，在一般的自动编码器中是很常见的。
+第\ref{chap:autoencoders}章描述的\gls{AE}网络，是一些训练成把输入拷贝到输出的前馈网络。
+一个简单的例子是\glssymbol{PCA}算法，将输入$\bm{x}$拷贝到一个近似的重构值$\bm{r}$，通过函数$\bm{W}^\top \bm{Wx}$来实现。
+使用权重矩阵转置的乘法，就像\glssymbol{PCA}算法这种，在一般的\gls{AE}中是很常见的。
 为了使这些模型卷积化，我们可以用函数$h$来实现卷积运算的转置。
 假定我们有和$\TSZ$相同格式的隐藏单元$\TSH$，并且我们定义一种重构运算
 \begin{equation}
 \TSR = h(\TSK, \TSH, s).
 \end{equation}
 
-为了训练自动编码器，我们会收到关于$\TSR$的梯度表示为一个张量$\TSE$。
+为了训练\gls{AE}，我们会收到关于$\TSR$的梯度，表示为一个张量$\TSE$。
 为了训练解码器，我们需要获得对于$\TSK$的梯度，通过$g(\TSH, \TSE, s)$来得到。
 为了训练编码器，我们需要获得对于$\TSH$的梯度，通过$c(\TSK, \TSE, s)$来得到。
-也可能通过用$c$和$h$对$g$求微分得到，但这些运算对于任何标准神经网络上的后向传播算法来说都是不需要的。
+也可能通过用$c$和$h$对$g$求微分得到，但这些运算对于任何标准神经网络上的反向传播算法来说都是不需要的。
  
 % -- 346 --
  
 一般来说，在卷积层从输入到输出的变换中我们不仅仅只用线性运算。
-我们一般也会在进行非线性运算前对每个输出加入一些偏置项。
+我们一般也会在进行非线性运算前，对每个输出加入一些偏置项。
 这样就产生了如何在偏置项中共享参数的问题。
-对于局部连接层，对于每个单元都给定它特有的偏置是很自然的，对于尾卷积，用与核一样的方式来共享参数也是很自然的。
-对于卷积层来说，典型的做法是在输出的每一个通道上都设置一个偏置，这个偏置在每个卷积映射中的所有位置进行共享。
+对于局部连接层，很自然地对每个单元都给定它特有的偏置，对于\gls{tiled_convolution}，也很自然地用与核一样的拼贴模式来共享参数。
+对于卷积层来说，通常的做法是在输出的每一个通道上都设置一个偏置，这个偏置在每个卷积映射的所有位置上共享。
 然而，如果输入是已知的固定大小，也可以在输出映射的每个位置学习一个单独的偏置。
 分离这些偏置可能会稍稍降低模型的统计效率，但同时也允许模型来校正图像中不同位置的统计差异。
-例如，当使用零填充时，图像边缘的探测单元接收到较少的输入，因此需要较大的偏置。
+例如，当使用隐含的零填充时，图像边缘的探测单元接收到较少的输入，因此需要较大的偏置。
 
 \section{结构化输出}
 \label{sec:structured_outputs}
 
-\gls{CNN}可以用于输出高维的结构化对象，而不仅仅是预测分类任务的类标签或回归任务的实际值。
+\gls{CNN}可以用于输出高维的结构化对象，而不仅仅是预测分类任务的类标签或回归任务的实数值。
 通常这个对象只是一个张量，由标准卷积层产生。
 例如，模型可以产生张量$\TSS$，其中$\TES_{i,j,k}$是网络的输入像素$(j, k)$属于类$i$的概率。
-这允许模型标记图像中的每个像素，并绘制遵循单个对象轮廓的精确掩模。
+这允许模型标记图像中的每个像素，并绘制沿着单个对象轮廓的精确掩模。
 
 经常出现的一个问题是输出平面可能比输入平面要小，如图\ref{fig:chap9_zero_pad_shrink}所示。
-在通常用于图像中单个对象分类的各种结构中，网络空间维数的最大减少来源于使用具有大步幅的\gls{pooling}层。
-为了产生与输入大小相似的输出映射，可以避免完全的\gls{pooling}\citep{jain2007supervised}。
-另一种策略是简单地产生低分辨率的标签网格\citep{Pinheiro+Collobert-ICML2014,Pinheiro+Collobert-CVPR2015}。
-最后，原则上，可以使用具有单位步长的\gls{pooling}操作。
+用于对图像中单个对象分类的常用结构中，网络空间维数的最大减少来源于使用大\gls{stride}的\gls{pooling}层。
+为了产生与输入大小相似的输出映射，我们可以避免把\gls{pooling}放在一起\citep{jain2007supervised}。
+另一种策略是单纯地产生一张低分辨率的标签网格\citep{Pinheiro+Collobert-ICML2014,Pinheiro+Collobert-CVPR2015}。
+最后，原则上可以使用具有单位\gls{stride}的\gls{pooling}操作。
 
-用于图像中逐个像素标记的一种策略是先产生图像标签的原始猜测，然后使用相邻像素之间的交互来修正该原始猜测。
-重复这个修正步骤几次对应于在每一步使用相同的卷积，在深层网络的最后几层之间共享权重\citep{jain2007supervised}。
-这使得在层之间共享参数的连续\gls{convolutional_network}执行的一系列运算，形成了一种特殊的循环神经网络\citep{Pinheiro+Collobert-ICML2014,Pinheiro+Collobert-CVPR2015}。
+对图像逐个像素标记的一种策略是先产生图像标签的原始猜测，然后使用相邻像素之间的交互来修正该原始猜测。
+重复这个修正步骤数次对应于在每一步使用相同的卷积，该卷积在深层网络的最后几层之间共享权重\citep{jain2007supervised}。
+这使得在层之间共享参数的连续的卷积层所执行的一系列运算，形成了一种特殊的\gls{RNN}\citep{Pinheiro+Collobert-ICML2014,Pinheiro+Collobert-CVPR2015}。
 图\ref{fig:chap9_iterative}给出了这样一个循环\gls{convolutional_network}的结构。
 % fig 9.17
 \begin{figure}[!htb]
@@ -650,38 +655,55 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 \else
 \centerline{\includegraphics{Chapter9/figures/iterative}}
 \fi
-\caption{Tmp}
+\captionsetup{singlelinecheck=off}
+\caption[.]{用于像素标记的\gls{recurrent_convolutional_network}的示例。输入是图像张量$\TSX$，它的轴对应图像的行、列和通道（红，绿，蓝）。目标是输出标签张量$\mathit{\hat{Y}}$，它遵循每个像素的标签的概率分布。该张量的轴对应图像的行、列和不同类别。并不是单次输出$\mathit{\hat{Y}}$，\gls{recurrent_network}通过使用$\mathit{\hat{Y}}$的先前估计作为创建新估计的输入，来迭代地改善其估计。相同的参数用于每个更新的估计，并且估计可以如我们所愿地被改善任意多次。每一步使用的卷积核张量$\TSU$，是用来计算给定输入图像的隐藏表示的。核张量$\TSV$用于产生给定隐藏值时标签的估计。除了第一步之外，核$\TSW$都对$\mathit{\hat{Y}}$进行卷积来提供隐藏层的输入。在第一步中，此项由零代替。因为每一步使用相同的参数，所以这是一个\gls{recurrent_network}的例子，如第\ref{chap:sequence_modeling_recurrent_and_recursive_nets}章所述。}
 \label{fig:chap9_iterative}
 \end{figure}
 
 % -- 347 --
  
-一旦对每个像素都进行了预测，可以使用各种方法来进一步处理这些预测，以便获得图像区域上的分割\citep{Briggman-et-al-NIPS2009,Turaga2010,Farabet-et-al-2013}。
-一般的想法是假设大组连续的像素倾向于对应着相同的标签。
-图模型可以描述相邻像素之间的概率关系。
-或者，\gls{convolutional_network}可以被训练来最大化地近似图模型训练的目标\citep{Ning-et-al-2005,Thompson-et-al-NIPS2014}。
+一旦对每个像素都进行了预测，可以使用各种方法来进一步处理这些预测，以便获得图像在区域上的分割\citep{Briggman-et-al-NIPS2009,Turaga2010,Farabet-et-al-2013}。
+一般的想法是假设大片相连的像素倾向于对应着相同的标签。
+图模型可以描述相邻像素间的概率关系。
+或者，\gls{convolutional_network}可以被训练来最大化地近似图模型的训练目标\citep{Ning-et-al-2005,Thompson-et-al-NIPS2014}。
 
 \section{数据类型}
 \label{sec:data_types}
 
-\gls{convolutional_network}使用的数据通常包含多个通道，每个通道是在时间或空间中的某一点观测到的一个不同的量。
-参见表|||c|||来了解具有不同维数和通道数的数据类型的例子。
+\gls{convolutional_network}使用的数据通常包含多个通道，每个通道是时间上或空间中某一点的不同观测量。
+参见表\ref{table:data_types}来了解具有不同维数和通道数的数据类型的例子。
  
 % -- 348 --
-  
+\begin{table}[htbp!]
+\centering
+ \begin{tabular}[t]{l|p{0.4\textwidth}|p{0.4\textwidth}}
+& 单通道 & 多通道\\ \hline
+1维 & 
+音频波形：卷积的轴对应于时间。我们将时间离散化并且在每个时间点测量一次波形的振幅。 &  
+骨架动画(skeleton animation)数据：计算机渲染的3D角色动画是通过随时间调整``骨架''的姿势而生成的。 在每个时间点，角色的姿势通过骨架中的每个关节的角度来描述。我们输入到卷积模型的数据的每个通道，表示一个关节的关于一个轴的角度。\\ \hline
+2维 & 
+已经用\gls{Fourier_transform}预处理的音频数据：我们可以将音频波形变换成2维张量，不同的行对应不同的频率，不同的列对应不同的时间点。在时间轴上使用卷积使模型等效于在时间上移动。在频率轴上使用卷积使得模型等效于在频率上移动，这使得在不同八度音阶中播放的相同旋律产生相同的表示，但处于网络输出中的不同高度。 & %Fourier transform这里不是很清楚，在频率上使用卷积是做什么的？
+彩色图像数据：其中一个通道包含红色像素，另一个包含绿色像素，最后一个包含蓝色像素。在图像的水平轴和竖直轴上移动卷积核，赋予了两个方向上平移等变性。\\ \hline
+3维 &
+体积数据：这种数据一般来源于医学成像技术，例如CT扫描等。 & 
+彩色视频数据：其中一个轴对应着时间，另一个轴对应着视频帧的高度，最后一个对应着视频帧的宽度。\\
+\end{tabular}
+\label{table:data_types}
+\caption{用于\gls{convolutional_network}的不同数据格式的示例。}
+\end{table}
 % -- 349 --
  
 \gls{convolutional_network}用于视频的例子，可以参见\cite{Chen-Ting-2010}。
 
 到目前为止，我们仅讨论了训练和测试数据中的每个样例都有相同的空间维度的情况。
-\gls{convolutional_network}的一个优点是它们还可以处理具有变化的空间范围的输入。
+\gls{convolutional_network}的一个优点是它们还可以处理具有变化的空间尺度的输入。
 这些类型的输入不能用传统的基于矩阵乘法的神经网络来表示。
-这提供了使用\gls{convolutional_network}的令人信服的理由，即使当计算成本和过拟合不是主要问题时。
+这提供了使用\gls{convolutional_network}的令人信服的理由，即使当计算成本和过拟合也不是主要问题时。
 
 例如，考虑一组图像的集合，其中每个图像具有不同的高度和宽度。
 目前还不清楚如何用固定大小的权重矩阵对这样的输入进行建模。
 卷积就可以很直观的应用；核依据输入的大小简单地被使用不同次，并且卷积运算的输出也相应地放缩。
-卷积可以被视为矩阵乘法；相同的卷积核为每种大小的输入包含一个不同大小的双重块循环矩阵。
+卷积可以被视为矩阵乘法；相同的卷积核为每种大小的输入引入了一个不同大小的\gls{doubly_block_circulant_matrix}。
 有时，网络的输出允许和输入一样具有可变的大小，例如如果我们想要为输入的每个像素分配一个类标签。
 在这种情况下，不需要进一步的设计工作。
 在其他情况下，网络必须产生一些固定大小的输出，例如，如果我们想要为整个图像指定单个类标签。
@@ -720,7 +742,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 
 通常，\gls{convolutional_network}训练中最昂贵的部分是学习特征。 
 输出层通常相对便宜，因为在通过若干层\gls{pooling}之后作为该层输入的特征的数量较少。
-当使用梯度下降执行有监督训练时，每个梯度步骤需要完整的运行前向传播和后向传播通过整个网络。
+当使用梯度下降执行有监督训练时，每个梯度步骤需要完整的运行前向传播和反向传播通过整个网络。
 减少\gls{convolutional_network}训练成本的一种方式是使用那些不是通过有监督方式训练的特征。
 
 有三种基本策略不通过有监督训练而得到卷积核。
@@ -728,10 +750,10 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 另一个是手动设计它们，例如设置每个核在一个特定的方向或尺度来检测边缘。
 最后，可以使用无监督的标准来学习核。
 例如，\cite{Coates2011}将$k$均值聚类算法应用于小图像块，然后使用每个学得的中心作为卷积核。
-第|||c|||部分描述了更多的无监督学习方法。
+第\ref{part:deep_learning_research}部分描述了更多的无监督学习方法。
 使用无监督标准学习特征，允许它们的确定与位于网络结构顶层的分类层相分离。
 然后只需提取一次全部训练集的特征，构造用于最后一层的新训练集。
-假设最后一层类似logistic回归或者SVM，那么学习最后一层通常是凸优化问题。
+假设最后一层类似\gls{logistic_regression}或者\glssymbol{SVM}，那么学习最后一层通常是凸优化问题。
  
 % -- 351 --
  
@@ -739,9 +761,9 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 \cite{Saxe-ICML2011}说明，由卷积和随后的\gls{pooling}组成的层，当赋予随机权值时，自然地变得具有频率选择和平移不变性。
 他们认为这提供了一种廉价的方法来选择\gls{convolutional_network}的结构：首先通过仅训练最后一层来评估几个\gls{convolutional_network}结构的性能，然后选择最好的结构并使用更昂贵的方法来训练整个网络。
 
-一个中间方法是学习特征，但是使用一些特殊的方法，这些方法不需要在每个梯度步骤中都进行完整的前向和后向传播。
+一个中间方法是学习特征，但是使用一些特殊的方法，这些方法不需要在每个梯度步骤中都进行完整的前向和反向传播。
 与多层感知机一样，我们使用贪心逐层式预训练，独立地训练第一层，然后从第一层提取所有特征一次，然后用那些特征隔离训练第二层，以此类推。
-第\ref{chap:optimization_for_training_deep_models}章描述了如何实现有监督的贪心逐层预训练，第|||c|||部分将此扩展到了无监督的范畴。
+第\ref{chap:optimization_for_training_deep_models}章描述了如何实现有监督的贪心逐层预训练，第\ref{part:deep_learning_research}部分将此扩展到了无监督的范畴。
 卷积模型的贪心逐层预训练的经典模型是卷积深度信念网络\citep{HonglakL2009}。
 \gls{convolutional_network}为我们提供了相对于多层感知机更进一步采用预训练策略的机会。
 不是一次训练整个卷积层，我们可以训练一小块模型，就像\cite{Coates2011}使用$k$均值做的那样。
@@ -814,11 +836,11 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
  
 这些内侧颞叶神经元比现代\gls{convolutional_network}更通用，它们在读取名称时不会自动推广到识别人或对象。
 与\gls{convolutional_network}的最后一层特征上最接近的类比是称为颞下皮质（IT）的脑区。
-当查看一个物体时，信息从视网膜经LGN流到V1，然后到V2，V4，然后是IT。
-这发生在瞥见物体的前100ms内。
-如果允许一个人继续观察物体更多的时间，那么信息将开始向后流动，因为大脑使用自上而下的反馈来更新较低级脑区中的激活。
+当查看一个对象时，信息从视网膜经LGN流到V1，然后到V2，V4，然后是IT。
+这发生在瞥见对象的前100ms内。
+如果允许一个人继续观察对象更多的时间，那么信息将开始向后流动，因为大脑使用自上而下的反馈来更新较低级脑区中的激活。
 然而，如果我们打断人的注视，并且只观察前100ms内的大多数前向激活导致的放电率，那么IT被证明与\gls{convolutional_network}非常相似。
-\gls{convolutional_network}可以预测IT放电率，并且在执行物体识别任务时与人类（时间有限的情况）非常类似\citep{dicarlo-tutorial-2013}。
+\gls{convolutional_network}可以预测IT放电率，并且在执行对象识别任务时与人类（时间有限的情况）非常类似\citep{dicarlo-tutorial-2013}。
 
 话虽如此，\gls{convolutional_network}和哺乳动物的视觉系统之间还是有许多区别。
 这些区别有一些是计算神经科学家所熟知的，但超出了本书的范围。
@@ -838,7 +860,7 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
   \gls{convolutional_network}迄今为止纯粹是视觉的。
   
   \item 人类视觉系统不仅仅用于识别对象。
-  它能够理解整个场景，包括许多物体和物体之间的关系，以及处理我们的身体与世界交互所需的丰富的三维几何信息。
+  它能够理解整个场景，包括许多对象和对象之间的关系，以及处理我们的身体与世界交互所需的丰富的三维几何信息。
   \gls{convolutional_network}已经应用于这些问题中的一些，但是这些应用还处于起步阶段。
   
   \item 即使像V1这样简单的大脑区域也受到来自较高级别的反馈的严重影响。
@@ -909,7 +931,8 @@ Gabor函数描述在图像中的2维点处的权重。我们可以认为图像�
 \subfigure{ \label{fig:chap9_Gabor_functions_c}     
 \includegraphics[width=0.3\textwidth]{Chapter9/figures/gabor_scale.png}}     
 \fi
-\caption{Tmp}     
+\captionsetup{singlelinecheck=off}
+\caption{具有各种参数设置的\gls{Gabor_function}。白色表示大的正权重，黑色表示大的负权重，背景灰色对应于零权重。\emph{(左)}控制坐标系的参数具有不同值的\gls{Gabor_function}，这些参数包括：$x_0$、$y_0$和$\gamma$。在该网格中的每个\gls{Gabor_function}被赋予和它在网格中的位置成比例的$x_0$和$y_0$的值，并且$\tau$被选择为使得每个Gabor过滤器对从网格中心辐射出的方向非常敏感。对于其他两幅图，$x_0$、$y_0$和$\gamma$固定为零。\emph{(中)}具有不同Gaussian比例参数$\beta_x$和$\beta_y$的\gls{Gabor_function}。当我们从左到右通过网格时，\gls{Gabor_function}被安排为增加宽度（减少$\beta_x$），当我们从上到下通过网格时，\gls{Gabor_function}被安排为增加高度（减少$\beta_y$）。对于其他两幅图，$\beta$值固定为图像宽度的1.5倍。\emph{(右)}具有不同的正弦参数$f$和$\phi$的\gls{Gabor_function}。当我们从上到下移动时，$f$增加；当我们从左到右移动时，$\phi$增加。对于其他两幅图，$\phi$固定为0，$f$固定为图像宽度的5倍。}     
 \label{fig:chap9_Gabor_functions}     
 \end{figure}
 
@@ -959,11 +982,14 @@ Gaussian因子$ \alpha \exp(-\beta_x x'^2 - \beta_y y'^2)$可以被视为阈值�
 \subfigure{ \label{fig:chap9_feature_detectors_b}     
 \includegraphics[width=0.4\textwidth]{Chapter9/figures/s3c_filters.png}}    
 \fi
-\caption{Tmp}     
+\caption{许多机器学习算法在应用于自然图像时，会学习那些用来检测边缘或边缘的特定颜色的特征。
+这些特征检测器使人联想到已知存在于初级视觉皮层中的\gls{Gabor_function}。
+\emph{(左)}通过应用于小图像块的无监督学习算法（\gls{ss}稀疏编码）学得的权重。%这里不是很懂
+\emph{(右)}由完全\gls{supervised}的卷积\gls{maxout}网络的第一层学得的卷积核。 相邻的过滤器对驱动相同的\gls{maxout_unit}。}     
 \label{fig:chap9_feature_detectors}     
 \end{figure}
 
-\section{卷积神经网路与深度学习的历史}
+\section{卷积神经网络与深度学习的历史}
 \label{sec:convolutional_networks_and_the_history_of_deep_learning}
  
 % -- 359 --
@@ -979,7 +1005,7 @@ Gaussian因子$ \alpha \exp(-\beta_x x'^2 - \beta_y y'^2)$可以被视为阈值�
 到2010年以前的更为深入的\gls{convolutional_network}历史可以参见\citep{Lecun_convolutionalnetworks}。
 
 \gls{convolutional_network}也被用来赢得许多比赛。
-当前对深度学习的商业兴趣的热度始于\cite{Krizhevsky-2012-small}赢得了ImageNet物体识别挑战，但是\gls{convolutional_network}已经被用于赢得其他机器学习和计算机视觉竞赛了，这些比赛在几年前影响较小。
+当前对深度学习的商业兴趣的热度始于\cite{Krizhevsky-2012-small}赢得了ImageNet对象识别挑战，但是\gls{convolutional_network}已经被用于赢得其他机器学习和计算机视觉竞赛了，这些比赛在几年前影响较小。
  
 % -- 360 --
  

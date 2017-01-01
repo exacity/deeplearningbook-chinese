@@ -20,7 +20,7 @@
 对于很多有趣的模型而言，这个计算是难处理的。
 
 
-正如我们将在第二十章看到的，有些\gls{DL}模型设计成具有易于处理的归一化常数，或是设计成能够在不涉及计算$p(\RVx)$的情况下使用。
+正如我们将在\chapref{chap:deep_generative_models}看到的，有些\gls{DL}模型设计成具有易于处理的归一化常数，或是设计成能够在不涉及计算$p(\RVx)$的情况下使用。
 然而，其他模型会直接面对难处理的\gls{partition_function}的挑战。
 在本章中，我们会介绍用于训练和估计具有难以处理\gls{partition_function}的模型的技术。
 
@@ -113,11 +113,32 @@
 \label{sec:stochastic_maximum_likelihood_and_contrastive_divergence}
 实现\eqnref{eq:18.15}最简单的方法是，每次需要计算梯度时，\gls{burn_in}随机初始化的一组\gls{markov_chain}。
 当使用\gls{SGD}进行学习时，这意味着\gls{markov_chain}必须在每次梯度步骤中被\gls{burn_in}。
-这种方法引导下的训练过程如算法18.1所示。
+这种方法引导下的训练过程如\algref{alg:naive_cd}所示。
 内循环中\gls{burn_in}\gls{markov_chain}的计算成果过高，导致这个过程在计算上是不可行的，
 但是该过程是其他更实际的近似算法的起点。
 
 % -- 599 --
+\begin{algorithm}[ht]
+\caption{一种朴素的\glssymbol{mcmc}算法，使用梯度上升最大化具有难解\gls{partition_function}的对数似然。}
+\label{alg:naive_cd}
+\begin{algorithmic}
+\STATE 设步长 $\epsilon$ 为一个小正数。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以允许\gls{burn_in}。在小图像集上训练一个\glssymbol{RBM}大致设为100 。
+\WHILE{不收敛}
+\STATE 从训练集中采包含 $m$ 个样本$\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$的\gls{minibatch}。
+\STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta)$.
+\STATE 初始化$m$ 个样本 $\{ \tilde{\RVx}^{(1)}, \dots, \tilde{\RVx}^{(m)} \}$ 为随机值（例如，从均匀或正态分布中采，或大致与模型边缘分布匹配的分布）。
+\FOR{$i=1$ to $k$}
+    \FOR{$j=1$ to $m$}
+        \STATE $\tilde{\RVx}^{(j)} \leftarrow \text{gibbs\_update}(\tilde{\RVx}^{(j)}).$
+    \ENDFOR
+\ENDFOR
+\STATE $\RVg \leftarrow \RVg - \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}( \tilde{\RVx}^{(i)} ; \Vtheta ).$
+\STATE $\Vtheta \leftarrow \Vtheta + \epsilon \RVg.$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 我们可以将\glssymbol{mcmc}方法视为在两种力之间平衡最大似然，一种力增大数据发生的模型分布，另一种力减小模型样本发生的模型分布。
 \figref{fig:chap18_pos_and_neg_phase}展示了这个过程。
@@ -131,7 +152,7 @@
 \else
 \centerline{\includegraphics{Chapter18/figures/pos_and_neg_phase_color}}
 \fi
-\caption{TODO}
+\caption{\algref{alg:naive_cd}角度的``\gls{positive_phase}''和``\gls{negative_phase}''。（左）<bad>在\gls{positive_phase}中，我们从数据分布中采样，然后push up到它们的未经归一化的概率上。这意味着在push on up越多的地方数据点的概率越高。（右）在\gls{negative_phase}中，我们从模型分布中采样，然后push down到它们的未经归一化的概率上。这与\gls{positive_phase}的作用相反，给未经归一化概率处处添加了一个大常数。当数据分布和模型分布相等时，\gls{positive_phase}push up数据点和\gls{negative_phase}push down 数据点的机会相等。此时，不再有任何的梯度（期望上说），训练也必须停止。}
 \label{fig:chap18_pos_and_neg_phase}
 \end{figure}
 
@@ -147,14 +168,37 @@
 正如我们将在\secref{sec:learned_approximate_inference}中看到的，其他\gls{ML}由于其他原因从模型分布中抽取样本，这些算法也能提供睡觉做梦的解释。
 
 
-在这种理解学习\gls{positive_phase}和\gls{negative_phase}的作用之后，我们尝试设计一个比算法18.1计算代价更低的替代算法。
+在这种理解学习\gls{positive_phase}和\gls{negative_phase}的作用之后，我们尝试设计一个比\algref{alg:naive_cd}计算代价更低的替代算法。
 简单的\glssymbol{mcmc}算法的主要计算成本是每一步的随机初始化\gls{burn_in}\gls{markov_chain}的成本。
 一个自然的解决方法是初始化\gls{markov_chain}为一个非常接近模型分布的分布，从而操作中的\gls{burn_in}步骤不会很多。
 
 % -- 601 --
+\begin{algorithm}[ht]
+\caption{\gls{contrastive_divergence}算法，使用梯度上升作为优化程序。}
+\label{alg:cd}
+\begin{algorithmic}
+\STATE 设步长 $\epsilon$ 为一个小正数。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以让从 $p_\text{data}$初始化并从 $p(\RVx; \Vtheta)$采样的\gls{markov_chain}混合 。在小图像集上训练一个\glssymbol{RBM}大致设为1-20。
+\WHILE{不收敛}
+\STATE 从训练集中采包含 $m$ 个样本 $\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$ 的\gls{minibatch}。
+\STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta).$
+    \FOR{$i=1$ to $m$}
+        \STATE $\tilde{\RVx}^{(i)} \leftarrow \RVx^{(i)}.$
+    \ENDFOR
+\FOR{$i=1$ to $k$}
+    \FOR{$j=1$ to $m$}
+        \STATE $\tilde{\RVx}^{(j)} \leftarrow \text{gibbs\_update}(\tilde{\RVx}^{(j)}).$
+    \ENDFOR
+\ENDFOR
+\STATE $\RVg \leftarrow \RVg - \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}( \tilde{\RVx}^{(i)} ; \Vtheta ) .$
+\STATE $\Vtheta \leftarrow \Vtheta + \epsilon \RVg.$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
 
-\textbf{\gls{contrastive_divergence}}（\glssymbol{contrastive_divergence}，或者是具有$k$个Gibbs步的\glssymbol{contrastive_divergence}-k）算法在每个步骤中初始化\gls{markov_chain}为抽取自数据分布中的样本\citep{Hinton-PoE-2000,Hinton-RBMguide-small}。
-这个算法展示在算法18.2中。
+
+\textbf{\gls{contrastive_divergence}}（\glssymbol{contrastive_divergence}，或者是具有$k$个Gibbs步的\glssymbol{contrastive_divergence}-$k$）算法在每个步骤中初始化\gls{markov_chain}为抽取自数据分布中的样本\citep{Hinton-PoE-2000,Hinton-RBMguide-small}。
+这个算法展示在\algref{alg:cd}中。
 从数据分布中获取样本是计算代价最小的，因为它们已经在数据集中了。
 初始时，数据分布并不接近模型分布，因此\gls{negative_phase}不是非常准确。
 幸运的是，\gls{positive_phase}仍然可以准确地增加数据的模型概率。
@@ -176,7 +220,7 @@
 \else
 \centerline{\includegraphics{Chapter18/figures/spurious_mode_color}}
 \fi
-\caption{TODO}
+\caption{一个\gls{spurious_modes}。说明\gls{contrastive_divergence}（\algref{alg:cd}）的\gls{negative_phase}为何无法压缩\gls{spurious_modes}的例子。一个\gls{spurious_modes}指的是一个在模型分布中出现数据分布中却不存在的模式。由于\gls{contrastive_divergence}从数据点中初始化它的\gls{markov_chain}然后运行\gls{markov_chain}了仅仅几步，不太可能到达模型中离数据点较远的模式。这意味着从模型中采样时，我们有时候会得到一些与数据并不相似的样本。这也意味着由于在这些模式上浪费了一些概率质量，模型很难把较高的概率质量集中与正确的模式上。出于可视化的目的，这个图使用了某种程度上说更加简单的距离的概念－－－在$\SetR$的数轴上\gls{spurious_modes}与正确的模式有很大的距离。这对应着基于局部移动$\SetR$上的单个变量$x$的\gls{markov_chain}。对于大部分深度概率模型来说，\gls{markov_chain}是基于\gls{gibbs_sampling}的，并且对于单个变量产生非局部的移动但是无法同时移动所有的变量。对于这些问题来说，考虑edit距离比欧式距离通常更好。然而，高维空间的edit距离很难在二维空间作图展示。}
 \label{fig:chap18_spurious_mode}
 \end{figure}
 
@@ -208,7 +252,7 @@
 
 解决\glssymbol{contrastive_divergence}许多问题的一个不同策略是，在每个梯度步骤中初始化\gls{markov_chain}为先前梯度步骤的状态值。
 这个方法首先在应用数学和统计学社群被发现命名为\textbf{\gls{SML}}（\glssymbol{SML}）\citep{Younes98onthe}，后来又在\gls{DL}社区中以名称\textbf{\gls{persistent_contrastive_divergence}}（\glssymbol{persistent_contrastive_divergence}，或者每个更新中具有$k$个Gibbs步骤的\glssymbol{persistent_contrastive_divergence}-k）独立地被重新发现\citep{Tieleman08-small}。
-具体请看算法18.3。
+具体请看\algref{alg:sml}。
 这种方法的基本思想是，只要随机梯度算法得到的步长很小，那么前一步骤的模型将相似于当前步骤的模型。
 因此，来自先前模型分布的样本将非常接近于来自当前模型分布的样本，因此用这些样本初始化的\gls{markov_chain}将不需要花费很多时间来混合。
 
@@ -216,12 +260,34 @@
 因为每个\gls{markov_chain}在整个学习过程中不断更新，而不是在每个梯度步骤中重新开始，\gls{markov_chain}可以自由探索很远，以找到所有模型的模式。
 因此，对于形成具有\gls{spurious_modes}的模型，\glssymbol{SML}比\glssymbol{contrastive_divergence}具有更大的抵抗力。
 此外，因为有可能存储所有采样变量的状态，无论是可见的还是潜在的，\glssymbol{SML}为\gls{hidden_unit}和可见单元都提供了初始值。
-\glssymbol{contrastive_divergence}只能为可见单元提供初始化，因此需要深度模型中进行\gls{burn_in}操作。
-\glssymbol{SML}能够有效地训练深层模型。
+\glssymbol{contrastive_divergence}只能为可见单元提供初始化，因此需要\gls{deep_model}中进行\gls{burn_in}操作。
+\glssymbol{SML}能够有效地训练\gls{deep_model}。
 \cite{Marlin10Inductive-small}将\glssymbol{SML}与本章中提出的许多其他标准进行比较。
 他们发现，\glssymbol{SML}在\glssymbol{RBM}上得到了最佳的测试集对数似然，并且如果\glssymbol{RBM}的\gls{hidden_unit}被用作\glssymbol{SVM}分类器的特征，那么\glssymbol{SML}会得到最好的分类精度。
 
 % -- 604 --
+\begin{algorithm}[ht]
+\caption{\gls{SML}/\gls{persistent_contrastive_divergence}算法，使用梯度上升作为优化程序。}
+\label{alg:sml}
+\begin{algorithmic}
+\STATE 设步长 $\epsilon$ 为一个小正数。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以让从 $p(\RVx; \Vtheta + \epsilon \RVg)$ 采样的\gls{markov_chain}\gls{burn_in}（从采自$p(\RVx; \Vtheta)$的样本开始）。
+在小图像集上训练一个\glssymbol{RBM}大致设为1，对于更复杂的模型如\gls{DBM}可能要设为5-50。
+\STATE  初始化$m$ 个样本 $\{ \tilde{\RVx}^{(1)}, \dots, \tilde{\RVx}^{(m)} \}$ 为随机值（例如，从均匀或正态分布中采，或大致与模型边缘分布匹配的分布）。
+\WHILE{不收敛}
+\STATE 从训练集中采包含 $m$ 个样本 $\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$ 的\gls{minibatch}。
+\STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta).$
+\FOR{$i=1$ to $k$}
+    \FOR{$j=1$ to $m$}
+        \STATE $\tilde{\RVx}^{(j)} \leftarrow \text{gibbs\_update}(\tilde{\RVx}^{(j)}).$
+    \ENDFOR
+\ENDFOR
+\STATE $\RVg \leftarrow \RVg - \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}( \tilde{\RVx}^{(i)} ; \Vtheta ).$
+\STATE $\Vtheta \leftarrow \Vtheta + \epsilon \RVg.$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 如果随机梯度算法移动模型可以比\gls{markov_chain}在迭代步中混合更快，那么\glssymbol{SML}容易变得不准确。
 如果$k$太小或$\epsilon$太大的时候，这有可能发生。
@@ -329,10 +395,10 @@
 例如，在自然图像中，在空间中相隔很远的像素也具有弱相关性，因此广义伪似然可以应用于每个$\SetS$集是小的空间定位窗口的情况。
 
 
-伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中讨论的变分推理。这是因为$\tilde{p}$出现在了分母中。
+伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中讨论的变分推断。这是因为$\tilde{p}$出现在了分母中。
 分母的下限只提供了整个表达式的上界，然而我们并不关心最大化上界。
-这使得难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的深度模型，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
-尽管如此，\gls{pseudolikelihood}仍然对\gls{DL}有用，因为它可以用于单层模型或是使用不基于下限的近似推理方法的深度模型。
+这使得难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的\gls{deep_model}，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
+尽管如此，\gls{pseudolikelihood}仍然对\gls{DL}有用，因为它可以用于单层模型或是使用不基于下限的近似推断方法的\gls{deep_model}。
 
 % -- 608 --
 
@@ -406,7 +472,7 @@
 \end{equation}
 其中$f(\Vx, j)$返回$\RVx$在位置$j$处被翻转的位。
 \gls{ratio_matching}避免\gls{partition_function}，使用了与\gls{pseudolikelihood}估计相同的技巧：在两个概率的比率中，\gls{partition_function}会抵消掉。
-\cite{Marlin10Inductive-small}发现，在使用\gls{ratio_matching}训练的模型给测试集图像去噪的能力方面，\gls{ratio_matching}要优于\glssymbol{SML}，\gls{pseudolikelihood}和\glssymbol{GSM}。
+\cite{Marlin10Inductive-small}发现，在使用\gls{ratio_matching}训练的模型给测试集图像\gls{denoising}的能力方面，\gls{ratio_matching}要优于\glssymbol{SML}，\gls{pseudolikelihood}和\glssymbol{GSM}。
 
 % -- 610 --
 
@@ -433,13 +499,13 @@
 	p_{\text{smoothed}}(\Vx) = \int p_{\text{data}} (\Vy) q( \Vx \mid \Vy) \mathrm{d} \Vy
 \end{equation}
 而不是拟合真实的分布$p_{\text{data}}$。
-分布$q(\Vx \mid \Vy)$是一个损坏过程，通常是向$\Vy$添加少量噪扰来形成$\Vx$的过程。
+分布$q(\Vx \mid \Vy)$是一个损坏过程，通常是向$\Vy$添加少量\gls{noise}来形成$\Vx$的过程。
 
 
 \gls{denoising_score_matching}是特别有用的，因为在实践中，我们通常不能访问真实的$p_{data}$，而只能访问由其样本所定义的\gls{empirical_distribution}。
 给定足够的容量，任何一致估计都会使得$p_{model}$成为一组以训练点为中心的\gls{dirac_distribution}。
 通过$q$平滑有助于减少这个问题在\secref{sec:consistency}描述的渐近一致性上的损失。
-\cite{Kingma+LeCun-2010}介绍了使用正态分布噪扰的平滑分布$q$正则化\gls{score_matching}的过程。
+\cite{Kingma+LeCun-2010}介绍了使用正态分布\gls{noise}的平滑分布$q$正则化\gls{score_matching}的过程。
 
 
 回顾\secref{sec:estimating_the_score}，有几个\gls{AE}训练算法等价于\gls{score_matching}或是\gls{denoising_score_matching}。
@@ -491,7 +557,7 @@
 % -- 612 --
 
 我们可以在训练数据上构造一个类似的联合模型。
-在这种情况下，开关变量决定是从\textbf{数据}还是从噪扰分布中抽取$\RVx$。
+在这种情况下，开关变量决定是从\textbf{数据}还是从\gls{noise}分布中抽取$\RVx$。
 形式地，$p_{\text{train}}(y = 1) = \frac{1}{2}$，$p_{\text{train}}( \RVx \mid y = 1) = p_{\text{data}}( \RVx)$，和
 $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
@@ -532,9 +598,9 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 % -- 613 --
 
 当\glssymbol{NCE}应用于具有许多\gls{RV}的问题时，其效率会变得较低。
-\gls{logistic_regression}分类器可以通过识别任何一个取值不大可能的变量来拒绝噪扰样本。
+\gls{logistic_regression}分类器可以通过识别任何一个取值不大可能的变量来拒绝\gls{noise}样本。
 这意味着在$p_{\text{model}}$学习了基本的边缘统计之后，学习会大大减慢。
-想象一个使用非结构化高斯噪扰作为$p_{\text{noise}}$来学习面部图像的模型。
+想象一个使用非结构化高斯\gls{noise}作为$p_{\text{noise}}$来学习面部图像的模型。
 如果$p_{\text{model}}$学习了眼睛，而没有学习任何其他面部特征，如嘴， 它会拒绝几乎所有的非结构化\gls{noise}样本。
 
 
@@ -548,7 +614,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 
 
 当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}定义了一个被称为\gls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望\citep{Goodfellow-ICLR2015}。
-\glssymbol{NCE}的特殊情况（噪扰采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分开的过程，而\gls{NCE}通过让模型区分现实和固定的基准（噪扰模型），实现了计算成本的降低。
+\glssymbol{NCE}的特殊情况（\gls{noise}采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分开的过程，而\gls{NCE}通过让模型区分现实和固定的基准（\gls{noise}模型），实现了计算成本的降低。
 
 
 在训练样本和生成样本（使用模型能量函数定义分类器）之间进行分类以得到模型的梯度的方法，已经在更早的时候以各种形式提出来\citep{Welling2003b,Bengio-2009-book}。

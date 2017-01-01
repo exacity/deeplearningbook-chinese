@@ -1,6 +1,6 @@
 % !Mode:: "TeX:UTF-8"
 % Translator: Yujun Li 
-\chapter{深度模型中的优化}
+\chapter{\glsentrytext{deep_model}中的优化}
 \label{chap:optimization_for_training_deep_models}
 深度学习算法在许多情况下都涉及到优化。
 例如，模型中的推断（如\glssymbol{PCA}）涉及到求解优化问题。
@@ -25,13 +25,13 @@
 
 \section{学习和优化有什么不同}
 \label{sec:how_learning_differs_from_pure_optimization}
-用于深模型训练的优化算法与传统的优化算法在几个方面有所不同。
+用于\gls{deep_model}训练的优化算法与传统的优化算法在几个方面有所不同。
 机器学习通常是间接的。
 在大多数机器学习问题中，我们关注定义于测试集上的，也可能是不可解的性能度量$P$.
 因此，我们只是间接地优化$P$。
 我们希望通过降低损失函数$J(\Vtheta)$来提高$P$。
 这一点不同于纯优化最小化$J$本身。
-训练深度模型的优化算法通常也会包括一些用于机器学习目标函数特定结构上的特殊优化。
+训练\gls{deep_model}的优化算法通常也会包括一些用于机器学习目标函数特定结构上的特殊优化。
 
 通常，损失函数可写为训练集上的平均，如
 \begin{equation}
@@ -82,7 +82,7 @@
 这两个问题说明，在深度学习中我们很少使用经验风险最小化。
 反之，我们会使用一个稍稍不同的方法，我们真正优化的目标会更加不同于我们希望优化的目标。
 
-\subsection{替代损失函数和提前终止}
+\subsection{替代损失函数和\glsentrytext{early_stopping}}
 \label{sec:surrogate_loss_functions_and_early_stopping}
 有时，我们真正关心的损失函数（比如分类误差）并不能有效地优化。
 例如，即使对于线性分类器而言，精确地最小化$0-1$损失通常是不可解的（复杂度几何级数增长于输入维数）\citep{Marcotte-92}。
@@ -99,14 +99,14 @@
 因而，相较于简单地最小化训练集上的平均$0-1$损失，从训练数据中抽取了更多信息。
 
 一般的优化和我们用于训练算法的优化的一个重要不同之处在于，训练算法通常不会停在一个局部最小处。
-反之，机器学习通常会优化一个替代损失函数，并停止在基于提前终止（\secref{sec:early_stopping}）的收敛条件满足的情况。
-通常，提前终止是基于真实损失函数，如验证集上的$0-1$损失，并被设计用于将算法终止于过拟合发生之前。
+反之，机器学习通常会优化一个替代损失函数，并停止在基于\gls{early_stopping}（\secref{sec:early_stopping}）的收敛条件满足的情况。
+通常，\gls{early_stopping}是基于真实损失函数，如验证集上的$0-1$损失，并被设计用于将算法终止于过拟合发生之前。
 训练过程通常终止于替代损失函数仍有较大的导数时，这和纯优化非常不同。
 纯优化通常会考虑算法收敛到梯度很小的时候。
 
-\subsection{（小）批算法}
+\subsection{批算法和\gls{minibatch}算法}
 \label{sec:batch_and_minibatch_algorithms}
-机器学习算法区别于一般优化算法的一方面是其目标函数通常可以分解为关于训练样本的总和。
+机器学习算法和一般优化算法不同的一点是，机器学习算法的目标函数通常可以分解为训练样本上的求和。
 机器学习优化算法通常使用整个损失函数中的一部分项去更新其参数。
 
 例如，最大似然估计问题可以在对数空间中分解成每个样本的总和：
@@ -147,13 +147,13 @@
 基于采样的梯度估计可以使用单个样本计算出正确的梯度，而比原来的做法少花了$m$倍时间。
 实践中，我们不太可能真的遇到这种最坏情况，但我们可能会发现大量样本都对梯度做出了非常相似的贡献。
 
-使用整个训练集的优化算法被称为\firstgls{batch}或\firstgls{deterministic}梯度算法，因为它们会同时大批量地处理所有的样本。
-这个术语可能有点令人困惑，因为这个词``\gls{batch}''也经常被用来描述小批量随机梯度下降算法中用到的小批量样本。
+使用整个训练集的优化算法被称为\firstgls{batch}或\firstgls{deterministic}梯度算法，因为它们会同时大\gls{batch}地处理所有的样本。
+这个术语可能有点令人困惑，因为这个词``\gls{batch}''也经常被用来描述\gls{minibatch}随机梯度下降算法中用到的\gls{minibatch}样本。
 通常，术语``\gls{batch}梯度下降''指使用全部训练集，而术语"\gls{batch}"单独出现时指一组样本。
-例如，我们普遍使用术语``批量大小''表示小批量的大小。
+例如，我们普遍使用术语``\gls{batch}大小''表示\gls{minibatch}的大小。
 
-每次只使用一个单一样本的优化算法有时被称为\firstgls{stochastic}或者\firstgls{online}算法。
-术语``在线''通常是指从连续产生样本的数据流中抽取样本的情况，而不是从一个固定大小的训练集中遍历多次采样的情况。
+每次只使用单个样本的优化算法有时被称为\firstgls{stochastic}或者\firstgls{online}算法。
+术语``\gls{online}''通常是指从连续产生样本的数据流中抽取样本的情况，而不是从一个固定大小的训练集中遍历多次采样的情况。
 
 % -- 271 --
 
@@ -164,31 +164,31 @@
 
 \gls{minibatch}大小通常由以下原因驱动：
 \begin{itemize}
-    \item 更大的批量会计算更精确的梯度估计，但是回报却是小于线性的。
+    \item 更大的\gls{batch}会计算更精确的梯度估计，但是回报却是小于线性的。
     
-    \item 多核架构通常未充分利用极小批量。
-    这促使我们使用一些绝对最小批量，低于这个值的小批量处理不会减少计算时间。
+    \item 多核架构通常未充分利用极小\gls{batch}。
+    这促使我们使用一些绝对最小\gls{batch}，低于这个值的小\gls{batch}处理不会减少计算时间。
     
-    \item 如果批量处理中的所有样本可以并行地预处理（通常确是如此），那么内存消耗和批量大小会成比增长。
-    对于很多硬件设施，这是批量大小的限制因素。
+    \item 如果\gls{batch}处理中的所有样本可以并行地预处理（通常确是如此），那么内存消耗和\gls{batch}大小会成比增长。
+    对于很多硬件设施，这是\gls{batch}大小的限制因素。
     
     \item 有些硬件在特定大小的数列上效果更好。
-    尤其是在使用GPU时，通常使用$2$的幂数作为批量大小来获得更少的运行时间。
+    尤其是在使用GPU时，通常使用$2$的幂数作为\gls{batch}大小来获得更少的运行时间。
     一般，$2$的幂数的取值范围是$32$到$256$，$16$有时用于尝试大的模型。
     
     \item 
-    可能是由于小批量处理在学习过程中加入了噪音，它们会有一些正则化效果\citep{Wilson-2003}。
-    泛化误差通常在批量大小为$1$时最好。
-    因为梯度估计的高方差，小批量训练需要较小的学习速率以维持稳定性。
+    可能是由于小\gls{batch}处理在学习过程中加入了\gls{noise}，它们会有一些正则化效果\citep{Wilson-2003}。
+    泛化误差通常在\gls{batch}大小为$1$时最好。
+    因为梯度估计的高方差，小\gls{batch}训练需要较小的学习速率以维持稳定性。
     由于降低的学习速率和消耗更多步骤来观察整个训练集而产生更多的步骤，会导致总的运行时间非常大。
 \end{itemize}
 
-不同的算法使用不同的方法从小批量中获取不同的信息。
+不同的算法使用不同的方法从\gls{minibatch}中获取不同的信息。
 有些算法对采样误差比其他算法更敏感，有两个可能原因。
 一个是它们使用了很难在少量样本上精确估计的信息，另一个是它们以放大采样误差的方式使用了信息。
-仅基于梯度$\Vg$的更新方法通常相对鲁棒，并能处理更小的批量，如$100$。
-使用\gls{hessian}矩阵$\MH$，计算如$\MH^{-1}\Vg$的梯度的二阶方法通常需要更大的批量，如$10,000$。
-这些大批量需要最小化估计$\MH^{-1}\Vg$的波动。
+仅基于梯度$\Vg$的更新方法通常相对鲁棒，并能处理更小的\gls{batch}，如$100$。
+使用\gls{hessian}矩阵$\MH$，计算如$\MH^{-1}\Vg$的梯度的二阶方法通常需要更大的\gls{batch}，如$10,000$。
+这些大\gls{batch}需要最小化估计$\MH^{-1}\Vg$的波动。
 假设$\MH$被精确估计，但是有一个很差的条件数。
 乘以$\MH$或是其逆会放大之前存在的误差（这个示例中是指$\Vg$的估计误差）。
 即使$\MH$被精确估计，$\Vg$中非常小的变化也会导致更新$\MH^{-1}\Vg$中非常大的变化。
@@ -196,34 +196,34 @@
 
 % -- 272 --
 
-小批量是随机抽取的这点也很重要。
+\gls{minibatch}是随机抽取的这点也很重要。
 从一组样本中计算出梯度期望的无偏估计需要这些样本是独立的。
-我们也希望两个连续的梯度估计是互相独立的，因此两个连续的小批量样本也应该是彼此独立的。
+我们也希望两个连续的梯度估计是互相独立的，因此两个连续的\gls{minibatch}样本也应该是彼此独立的。
 很多现实的数据集中，连续的样本之间具有高度相关性。
 例如，假设我们得到了一个长长的血液样本测试结果清单。
 清单上的数据有可能是这样获取的，头五个血液样本于不同时间段取自第一个病人，接下来三个血液样本取自第二个病人，再随后的血液样本取自第三个病人，等等。
-如果我们从这个清单上顺序抽取样本，那么我们的每个小批量数据都极为有偏，因为这个小批量很可能只代表着数据集上众多患者中的某一个患者。
-在这种数据集中的顺序有很大影响的情况下，很有必要在抽取小批量样本前打乱样本顺序。
-对于非常大的数据集，如数据中心含有几十亿样本的数据集，我们每次构建小批量样本时都将样本完全均匀地抽取出来是不太现实的。
+如果我们从这个清单上顺序抽取样本，那么我们的每个\gls{minibatch}数据都极为有偏，因为这个\gls{minibatch}很可能只代表着数据集上众多患者中的某一个患者。
+在这种数据集中的顺序有很大影响的情况下，很有必要在抽取\gls{minibatch}样本前打乱样本顺序。
+对于非常大的数据集，如数据中心含有几十亿样本的数据集，我们每次构建\gls{minibatch}样本时都将样本完全均匀地抽取出来是不太现实的。
 幸运的是，实践中通常将样本顺序打乱一次之后存储起来就足够了。
-这将会固定以后训练模型时会用到的一组组小批量连续样本，每个独立的模型每次遍历训练数据时都会重复使用这个顺序。
+这将会固定以后训练模型时会用到的一组组\gls{minibatch}连续样本，每个独立的模型每次遍历训练数据时都会重复使用这个顺序。
 然而，这种偏离真实随机采样的方法并非具有很严重的有害影响。
 不曾打乱样本顺序的方法才会极大地降低算法的性能。
 
 很多机器学习上的优化问题都可以分解成并行地计算不同样本上单独的更新。
-换言之，我们在计算小批量样本$\MX$上的最小化$J(\MX)$的更新时，同时可以计算其他小批量样本上的更新。
+换言之，我们在计算\gls{minibatch}样本$\MX$上的最小化$J(\MX)$的更新时，同时可以计算其他\gls{minibatch}样本上的更新。
 这类异步并行分布式方法将在\secref{sec:large_scale_distributed_implementations}中进一步讨论。
 
-小批量随机梯度下降的一个有趣动机是，只要没有重复使用样本，
+\gls{minibatch}随机梯度下降的一个有趣动机是，只要没有重复使用样本，
 它将遵循着真实\emph{\gls{generalization_error}}（\eqnref{eq:8.2}）的梯度。
-很多小批量随机梯度下降方法的实现会打乱数据顺序一次，然后多次遍历数据更新参数。
-第一次遍历时，每个小批量样本都用来计算真实泛化误差的无偏估计。
+很多\gls{minibatch}随机梯度下降方法的实现会打乱数据顺序一次，然后多次遍历数据更新参数。
+第一次遍历时，每个\gls{minibatch}样本都用来计算真实泛化误差的无偏估计。
 第二次遍历时，估计将会是有偏的，因为它重新抽取了已经用过的样本，而不是从和原先样本相同的数据生成分布中获取新的样本。
 
 % -- 273 --
 
 随机梯度下降最小化泛化误差的原因很容易从在线学习的情况中看出来，
-这时样本或者小批量都是从数据\firstgls{stream}中抽取出来的。
+这时样本或者\gls{minibatch}都是从数据\firstgls{stream}中抽取出来的。
 换言之，并非获取固定大小的训练集，学习器好像是一个每次看到新样本的人，
 每个样本$(\Vx,y)$都来自数据生成分布$p_{\text{data}}(\Vx,y)$。
 这种情况下，样本从来不会重复；每次更新也是公平地从分布$p_\text{data}$中采样获得。
@@ -243,7 +243,7 @@
 在\eqnref{eq:8.5}和\eqnref{eq:8.6}中，我们已经在对数似然中看到了相同的结果；现在我们发现这一点在包括似然的其他函数$f$上也是成立的。
 在$p_\text{data}$和$L$上有一些温和的假设时，类似的结果在$\Vx$和$y$是连续时也能得到。
 
-因此，泛化误差的准确梯度的无偏估计可以通过从数据生成分布$p_\text{data}$抽取小批量样本$\{ \Vx^{(1)}, \dots,\Vx^{(m)} \}$以及对应的标签$y^{(i)}$，然后计算该批量上损失函数对应的参数的梯度
+因此，泛化误差的准确梯度的无偏估计可以通过从数据生成分布$p_\text{data}$抽取\gls{minibatch}样本$\{ \Vx^{(1)}, \dots,\Vx^{(m)} \}$以及对应的标签$y^{(i)}$，然后计算该\gls{minibatch}上损失函数对应参数的梯度
 \begin{equation}
 \label{eq:8.9}
     \hat{\Vg} = \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),y^{(i)} ).
@@ -251,7 +251,7 @@
 在泛化误差上执行SGD方法使用方向$\hat{\Vg}$更新$\Vtheta$。
 
 当然，这个解释只能用于样本没有重复使用的情况。
-然而，除非训练集特别大，通常最好是多次遍历使用训练集。
+然而，除非训练集特别大，通常最好是多次遍历训练集。
 当多次遍历数据集更新时，只有第一遍满足泛化误差的梯度无偏估计。
 但是，额外的遍历更新会由于减小训练误差而得到足够的好处，以抵消其带来的训练误差和测试误差间差距的增加。
 
@@ -269,7 +269,7 @@
 从而避免一般优化问题的复杂度。
 在训练神经网络时，我们肯定会遇到一般的非凸情况。
 即使是凸优化，也并非没有任何问题。
-在这一节中，我们会总结几个训练深度模型时会涉及到的主要挑战。
+在这一节中，我们会总结几个训练\gls{deep_model}时会涉及到的主要挑战。
 
 \subsection{病态}
 \label{sec:ill_conditioning}
@@ -297,7 +297,15 @@
 \else
 \centerline{\includegraphics{Chapter8/figures/grad_norm_increases_color}}
 \fi
-\caption{TODO}
+\caption{\gls{GD}通常不会到达任何类型的\gls{critical_points}。
+此示例中，在用于对象检测的卷积网络的整个训练期间， 梯度范数持续增加。
+(左)各个梯度计算的范数如何随时间分布的散点图。
+为了提高可读性，每\gls{epoch}仅绘制一个梯度范数。 
+我们将所有梯度范数的移动平均绘制为实曲线。
+梯度范数明显随时间增加，而不是如我们所期望的那样随训练过程收敛到\gls{critical_points}而减小。
+(右)尽管梯度递增，训练过程却相当成功。 
+验证集上的分类误差可以降低到较低水平。
+}
 \label{fig:chap8_grad_norm_increases}
 \end{figure}
 
@@ -318,27 +326,27 @@
 % -- 276 --
 
 对于非凸函数时，如神经网络，有可能会存在多个局部极小值。
-事实上，几乎所有的深度模型基本上都会有非常多的局部极小值。
+事实上，几乎所有的\gls{deep_model}基本上都会有非常多的局部极小值。
 然而，我们会发现这并不是一个严重的问题。
 
-由于\firstgls{model_identifiability}问题，神经网络和任意具有多个等效参数化隐变量的模型都会具有多个局部极小值。
+由于\firstgls{model_identifiability}问题，神经网络和任意具有多个等效参数化\gls{latent_variable}的模型都会具有多个局部极小值。
 如果一个足够大的训练集可以唯一确定一组模型参数，那么该模型被称为可辨认的。
-带有隐变量的模型通常是不可辨认的，因为通过批次交换隐变量我们能得到等价的模型。
+带有\gls{latent_variable}的模型通常是不可辨认的，因为通过批次交换\gls{latent_variable}我们能得到等价的模型。
 例如，考虑神经网络的第一层，我们可以交换单元$i$和单元$j$的传入权重向量，传出权重向量而得到等价的模型。
-如果神经网络有$m$层，每层有$n$个单元，那么会有$n!^m$方式重新排布隐单元。
+如果神经网络有$m$层，每层有$n$个单元，那么会有$n!^m$方式重新排布\gls{hidden_unit}。
 这种不可辨认性被称为\firstgls{weight_space_symmetry}。
 
 包括权重空间对称性，很多神经网络还有其他导致不可辨认的原因。
-例如，在任意整流线性或者最大化输出的网络中，
-我们可以放大传入权重和\gls{bias_aff}$\alpha$，然后缩小传出权重$\frac{1}{\alpha}$倍，而保持模型等价。
-这意味着，如果损失函数不包括如权重衰减这种直接依赖于权重而非模型输出的项，那么整流线性或者最大化网络的每一个局部极小解都在等价局部极小解的$(m\times n)$维双曲线上。
+例如，在任意\gls{rectified_linear}网络或者\gls{maxout}网络中，
+我们可以放大传入权重和\gls{bias_aff}$\alpha$倍，然后缩小传出权重$\frac{1}{\alpha}$倍，而保持模型等价。
+这意味着，如果损失函数不包括如权重衰减这种直接依赖于权重而非模型输出的项，那么\gls{rectified_linear}网络或者\gls{maxout}网络的每一个局部极小解都在等价局部极小解的$(m\times n)$维双曲线上。
 
-这些\gls{model_identifiability}问题意味着神经网络损失函数具有非常多，甚至无穷的局部极小解。
+这些\gls{model_identifiability}问题意味着神经网络损失函数具有非常多，甚至无限多的局部极小解。
 然而，所有这些由于不可辨识性问题产生的局部极小解都有相同的损失函数值。
 因此，这些局部极小解并非是非凸所带来的问题。
 
 如果局部极小解和全局极小解相差很大时，那么此时多个局部极小解会带来很大的隐患。
-我们可以构建没有隐变量的小规模神经网络，其局部极小值和全局极小值相差很远\citep{Sontag-cs89,Brady89,Gori-pami91}。
+我们可以构建没有\gls{hidden_unit}的小规模神经网络，其局部极小值和全局极小值相差很远\citep{Sontag-cs89,Brady89,Gori-pami91}。
 如果偏差严重的局部极小值是常见的，那么这将给基于梯度的优化算法带来极大的问题。
 
 % -- 277 --
@@ -390,7 +398,7 @@
 他们还发现这些结果能够扩展到不具非线性的更深层网络上，不过没有证明。
 这类网络的输出是其输入的线性函数，但它们仍然有助于分析非线性神经网络模型，因为它们的损失函数是关于参数的非凸函数。
 这类网络本质上是多个矩阵组合在一起。
-\cite{Saxe-et-al-ICLR13}精确解析了这类网络中的完整学习动态，表明这些模型的学习能够捕捉训练非线性激励函数深度模型中的许多定性特征。
+\cite{Saxe-et-al-ICLR13}精确解析了这类网络中的完整学习动态，表明这些模型的学习能够捕捉，训练具有非线性激励函数的\gls{deep_model}中的许多定性特征。
 \cite{Dauphin-et-al-NIPS2014-small}实验表明，真实的网络也会有包含很多高损失\gls{saddle_points}的损失函数。
 \cite{Choromanska-et-al-AISTATS2015}理论证明了另一类和神经网络相关的高维随机函数也满足这种情况。
 
@@ -409,7 +417,14 @@
 \else
 \centerline{\includegraphics{Chapter8/figures/plot_atmu_relu_5}}
 \fi
-\caption{TODO}
+\caption{神经网络\gls{cost_function}的可视化。
+这些可视化对应用于真实对象识别和自然语言处理任务的前馈神经网络、卷积网络和\gls{recurrent_network}而言是类似的。
+令人惊讶的是，这些可视化通常不会显示出很多明显的障碍。
+大约2012年，在\gls{SGD}开始成功训练非常大的模型之前，神经网络\gls{cost_function}的表面通常被认为有更多的非凸结构（相比这些投影所显示的）。
+该投影所显示的主要障碍是初始参数附近的高代价\gls{saddle_points}，但如由蓝色路径所示，\glssymbol{SGD}训练轨迹能轻易地逃脱该鞍点。
+大多数训练时间花费在横穿\gls{cost_function}的相对平坦峡谷，可能由于梯度中的高噪声、或该区域中\gls{hessian}矩阵的不良条件数，或者简单地需要经过间接的弧路径环绕图中可见的高``山'' 。
+图经\citet{GoodfellowOptimization15}许可改编。
+}
 \label{fig:chap8_plot_atmu_relu_5}
 \end{figure}
 
@@ -423,11 +438,11 @@
 
 % -- 279 --
 
-包括极小值和\gls{saddle_points}，还有其他类梯度为零的点。
-例如极大点，从优化的角度看和\gls{saddle_points}很相似，很多算法不会收敛到它，然而未修改的牛顿法会。
-和极小点一样，极大点在高维空间中也是指数级稀少。
+除了极小点和\gls{saddle_points}，还存在其他梯度为零的点。
+例如从优化的角度看与\gls{saddle_points}很相似的极大点，很多算法不会收敛到极大点，然而未修改的牛顿法会。
+和极小点一样，许多类的随机函数的极大点在高维空间中也是指数级稀少。
 
-也可能会有恒值的宽而平坦区间。
+也可能会有恒值的宽而平坦的区域。
 在这些区间，梯度和\gls{hessian}矩阵都是零。
 这种退化的情形是所有数值优化算法的主要问题。
 在凸问题中，一个宽而平的区间肯定包含全局极小值，但是对于一般的优化问题而言，
@@ -447,18 +462,21 @@
 \else
 \centerline{\includegraphics{Chapter8/figures/cliff_color}}
 \fi
-\caption{TODO}
+\caption{高度非线性的\gls{DNN}或\gls{RNN}的\gls{objective_function}通常包含由几个参数连乘导致的参数空间中尖锐非线性。
+这些非线性在某些区域会产生非常大的导数。
+当参数接近这样的悬崖区域时，梯度下降更新可以使参数弹射得非常远，可能会无效化已经完成的大量优化工作。
+图经 \citet{Pascanu+al-ICML2013-small}许可改编。}
 \label{fig:chap8_cliff}
 \end{figure}
 
 
 不管我们是从上还是从下接近悬崖，情况都很糟糕，但幸运的是可以用使用\secref{sec:clipping_gradients}介绍的启发式\firstgls{gradient_clipping}来避免其主要缺点。
-基本想法源自考虑到梯度并没有指明最佳步长，只是说明在无穷小区域内的最佳方向。
+基本想法源自考虑到梯度并没有指明最佳步长，只是说明在无限小区域内的最佳方向。
 当传统的梯度下降算法提议更新很大一步时，启发式\gls{gradient_clipping}会干涉去减小步长，从而使其不太可能走出梯度很大的悬崖区域。
 悬崖结构在\gls{RNN}的损失函数中很常见，因为这类模型会涉及到多个时间步长因素的相乘。
 因此，长期时间序列会产生大量相乘。
 
-\subsection{长期相关性}
+\subsection{\glsentrytext{long_term_dependency}}
 \label{sec:long_term_dependencies}
 当计算图变得非常之深时，神经网络优化算法必须克服的另一个难题出现了。
 多层前馈网络会有这么深的计算图。
@@ -474,23 +492,23 @@
 \begin{equation}
   \MW^t = (\MV \text{diag}(\Vlambda) \MV^{-1})^t = \MV\text{diag}(\Vlambda)^t  \MV^{-1}.
 \end{equation}
-当特征值$\lambda_i$不在$1$附近时，若在量级上大于$1$则会膨胀到很大；若小于$1$时则会收缩到很小。
-\textbf{收缩和膨胀的梯度问题}（\textbf{vanishing and exploding gradient problem}）是指该计算图上的梯度也会因为$\text{diag}(\Vlambda)^t$大幅度变化。
-收缩的梯度使得难以知道参数朝哪个方向移动能够改进损失函数，而膨胀梯度会使得学习不稳定。
-之前描述的诱发梯度截断的悬崖结构便是膨胀梯度现象的一个例子。
+当特征值$\lambda_i$不在$1$附近时，若在量级上大于$1$则会爆炸；若小于$1$时则会消失。
+\textbf{梯度消失（或弥散）问题}（\textbf{vanishing gradient problem}）和\textbf{梯度爆炸问题}（\textbf{exploding gradient problem}）是指该计算图上的梯度也会因为$\text{diag}(\Vlambda)^t$大幅度变化。
+消失的梯度使得难以知道参数朝哪个方向移动能够改进损失函数，而爆炸梯度会使得学习不稳定。
+之前描述的诱发梯度截断的悬崖结构便是爆炸梯度现象的一个例子。
 
 此处描述的每个时间点重复与$\MW$相乘非常类似于寻求矩阵$\MW$的最大特征值及对应的特征向量的\firstgls{power_method}。
 从这个观点来看，$\Vx^\top\MW^t$最终会丢弃$\Vx$中所有与$\MW$的主特征向量垂直的成分。
 
 循环网络在每个时间步上使用相同的矩阵$\MW$，而前馈网络并没有。
-因而即使是很深层的前馈网络也能很大程度上避免梯度收缩和膨胀问题\citep{Sussillo14}。
+因而即使是非常深层的前馈网络也能很大程度上避免梯度消失和爆炸问题\citep{Sussillo14}。
 
 在循环网络已经被更详细地描述了之后，我们将会在\secref{sec:the_challenge_of_long_term_dependencies}进一步讨论循环网络训练中的挑战。
 
 \subsection{非精确梯度}
 \label{sec:inexact_gradients}
 大多数优化算法的出发点都是我们知道精确的梯度或是\gls{hessian}矩阵。
-在实践中，通常这些量会有噪音，甚至是有偏的估计。
+在实践中，通常这些量会有\gls{noise}，甚至是有偏的估计。
 几乎每一个深度学习算法都需要基于采样的估计，至少使用了小批训练样本计算梯度。
 
 % -- 282 --
@@ -518,7 +536,7 @@
 甚至，这些临界点不是必然存在的。
 例如，损失函数$-\log p(y\mid\Vx;\Vtheta)$没有全局极小点，而是当模型更自信时会逐渐趋向某个值。    
 对于具有离散标签$y$和softmax分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类训练集上的每个样本，则负对数似然可以任意地趋近于零，但是不可能实际达到零值。
-同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无穷——如果$f(\Vtheta)$能够正确预测所有的训练集目标$y$，学习算法会无边界地增加$\beta$。
+同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无限大——如果$f(\Vtheta)$能够正确预测所有的训练集目标$y$，学习算法会无边界地增加$\beta$。
 如\figref{fig:chap8_bad_global}所示，即使没有局部极小值和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的损失函数值。
 
 \begin{figure}[!htb]
@@ -527,7 +545,12 @@
 \else
 \centerline{\includegraphics{Chapter8/figures/bad_global_color}}
 \fi
-\caption{TODO}
+\caption{如果局部表面没有指向全局解，基于局部下坡移动的优化可能就会失败。
+这里我们提供一个例子，说明即使在没有\gls{saddle_points}或\gls{local_minima}的情况下，会如何失败。
+此例中的\gls{cost_function}仅包含朝向低值而不是极小值的渐近线。
+在这种情况下，困难的主要原因是初始化在``山''的错误一侧，并且无法遍历。
+在高维空间中，学习算法通常可以环绕这样的高山，但是与之关联的轨迹可能会很长，并且导致过长的训练时间，如\figref{fig:chap8_plot_atmu_relu_5}所示。
+}
 \label{fig:chap8_bad_global}
 \end{figure}
 
@@ -538,7 +561,7 @@
 
 许多现有研究方法在求解局部结构复杂的问题时，旨在寻求良好的初始点，而不是开发非局部范围更新的算法。
 
-梯度下降和基本上所有的学习算法都有效于训练基于局部较小更新的神经网络。
+梯度下降和基本上所有有效训练神经网络的学习算法，都是基于局部较小更新。
 先前的小节主要集中于为何这些局部范围更新的正确方向难以计算。
 我们也许能计算目标函数的一些性质，如近似的有偏梯度或正确方向估计的方差。
 在这些情况下，局部下降或许能或许不能定义到达有效解的短路径，我们并不能真的遵循局部下降的路径。
@@ -574,21 +597,36 @@
 \section{基本算法}
 \label{sec:basic_algorithms}
 之前我们已经介绍了梯度下降（\secref{sec:gradient_based_optimization}），即沿着整个训练集梯度下降的方向。
-这可以使用随机梯度下降很大程度地加速，沿着随机挑选的小批量数据的梯度下降方向，请参看\secref{sec:stochastic_gradient_descent_chap5}和\secref{sec:batch_and_minibatch_algorithms}。
+这可以使用随机梯度下降很大程度地加速，沿着随机挑选的\gls{minibatch}数据的梯度下降方向，请参看\secref{sec:stochastic_gradient_descent_chap5}和\secref{sec:batch_and_minibatch_algorithms}。
 
 \subsection{随机梯度下降}
 \label{sec:stochastic_gradient_descent_chap8}
 \gls{SGD}（SGD）及其变种很可能是一般机器学习中用得最多的优化算法，特别是在深度学习中。
-如\secref{sec:batch_and_minibatch_algorithms}讨论，通过计算独立同分布地从数据生成分布中抽取的$m$个小批量样本的梯度均值，我们可以得到梯度的无偏估计。
+如\secref{sec:batch_and_minibatch_algorithms}讨论，通过计算独立同分布地从数据生成分布中抽取的$m$个\gls{minibatch}样本的梯度均值，我们可以得到梯度的无偏估计。
 
-算法8.1展示了如何使用这个下降梯度的估计。
+\algref{alg:sgd}展示了如何使用这个下降梯度的估计。
+\begin{algorithm}[ht]
+\caption{\gls{SGD}(\glssymbol{SGD})在第$k$个训练迭代的更新}
+\label{alg:sgd}
+\begin{algorithmic}
+\REQUIRE \gls{learning_rate} $\epsilon_k$
+\REQUIRE 初始参数$\Vtheta$
+\WHILE{没有达到停止\gls{criterion}}
+    \STATE 从训练集中采包含$m$个样本$\{ \Vx^{(1)},\dots, \Vx^{(m)}\}$ 的\gls{minibatch}，对应目标为$\Vy^{(i)}$。
+    \STATE 计算梯度估计： $\hat{\Vg} \leftarrow + 
+         \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$
+    \STATE 应用更新：$\Vtheta \leftarrow \Vtheta - \epsilon \hat{\Vg}$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 \glssymbol{SGD}算法中的一个关键参数是学习速率。
 之前，我们介绍的\glssymbol{SGD}使用固定的学习速率。
 在实践中，有必要随着时间的推移逐渐降低学习速率，因此我们将第$k$步迭代的学习速率记作$\epsilon_k$。
 
 这是因为\glssymbol{SGD}梯度估计引入的噪源（$m$个训练样本的随机采样）并不会在极小值处消失。
-相比之下，当我们使用批量梯度下降到达极小值时，整个损失函数的真实梯度会变得很小，甚至为$\mathbf{0}$，因此批量梯度下降可以使用固定的学习速率。
+相比之下，当我们使用\gls{batch}梯度下降到达极小值时，整个损失函数的真实梯度会变得很小，甚至为$\mathbf{0}$，因此\gls{batch}梯度下降可以使用固定的学习速率。
 保证\glssymbol{SGD}收敛的一个充分条件是
 \begin{equation}
 \label{eq:8.12}
@@ -623,20 +661,20 @@
 通常，就总训练时间和最终损失值而言，最优初始学习速率会高于大约迭代100步后输出最好效果的学习速率。
 因此，通常最好是检测最早的几轮迭代，使用一个高于此时效果最佳学习速率的学习速率，但又不能太高以致严重的不稳定性。  
 
-\glssymbol{SGD}和相关的小批量或在线基于梯度的优化的最重要的性质是每一步更新的计算时间不会随着训练样本数目而增加。
+\glssymbol{SGD}和相关的\gls{minibatch}或在线基于梯度的优化的最重要的性质是每一步更新的计算时间不会随着训练样本数目而增加。
 即使训练样本数目非常大时，这也能收敛。
 对于足够大的数据集，\glssymbol{SGD}可能会在处理整个训练集之前就收敛到最终测试集误差的某个固定容差范围内。
 
-研究优化算法的收敛率，一般会衡量\firstgls{excess_error} 额外误差$J(\Vtheta) - \min_{\Vtheta} J(\Vtheta)$，即当前损失函数超出最低可能损失的量。
+研究优化算法的收敛率，一般会衡量\firstgls{excess_error}$J(\Vtheta) - \min_{\Vtheta} J(\Vtheta)$，即当前损失函数超出最低可能损失的量。
 \glssymbol{SGD}应用于凸问题时，$k$步迭代后的额外误差量级是$O(\frac{1}{\sqrt{k}})$，在强凸情况下是$O(\frac{1}{k})$。
 除非假定额外的条件，否则这些界限不能进一步改进。
-批量梯度下降在理论上比随机梯度下降有更好的收敛率。
+\gls{batch}梯度下降在理论上比随机梯度下降有更好的收敛率。
 然而，Cram\'er-Rao界限\citep{Cramer-1946,Rao-1945}指出，泛化误差的下降速度不会快于$O(\frac{1}{k})$。
 \cite{bottou-bousquet-2008-small}由此认为对于机器学习任务，不值得探寻收敛快于$O(\frac{1}{k})$的优化算法——更快的收敛可能对应着过拟合。
 此外，渐近分析掩盖了随机梯度下降在少量更新步之后的很多优点。
 对于大数据集，SGD初始快速更新只需非常少量样本计算梯度的能力远远超过了其缓慢的渐近收敛。
 本章剩余部分介绍的大多数算法都实现了实践中有用的好处，但是丢失了常数倍$O(\frac{1}{k})$的渐近分析。
-我们也可以权衡批量梯度下降和随机梯度下降两者的优点，在学习过程中逐渐增大\gls{minibatch}的大小。
+我们也可以权衡\gls{batch}梯度下降和\gls{SGD}两者的优点，在学习过程中逐渐增大\gls{minibatch}的大小。
 
 % -- 287 --
 
@@ -645,7 +683,7 @@
 \subsection{动量}
 \label{sec:momentum}
 虽然随机梯度下降仍然是非常受欢迎的优化方法，但学习速率有时会很慢。
-动量方法\citep{polyak1964some}旨在加速学习，特别是处理高曲率，小但一致的梯度，或是带噪音的梯度。
+动量方法\citep{polyak1964some}旨在加速学习，特别是处理高曲率，小但一致的梯度，或是带\gls{noise}的梯度。
 动量算法积累了之前梯度指数级衰减的移动平均，并且继续沿该方向移动。
 动量的效果如\figref{fig:chap8_momentum}所示。
 
@@ -655,7 +693,15 @@
 \else
 \centerline{\includegraphics{Chapter8/figures/momentum_color}}
 \fi
-\caption{TODO}
+\caption{\gls{momentum}的主要目的是解决两个问题：\gls{hessian}矩阵的不良条件数和随机梯度的方差。 
+我们通过此图说明\gls{momentum}如何克服这两个问题的第一个。
+轮廓线描绘了一个二次\gls{loss_function}（具有不良条件数的\gls{hessian}矩阵）。
+横跨轮廓的红色路径表示\gls{momentum}学习规则所遵循的路径，它使该函数最小化。
+我们在每个步骤画一个箭头，指示梯度下降将在该点采取的步骤。
+我们可以看到，一个条件数较差的二次\gls{objective_function}看起来像一个长而窄的山谷或陡峭的峡谷。
+\gls{momentum}正确地纵向穿过峡谷，而梯度步骤则会浪费时间在峡谷的窄轴上来回移动。
+比较\figref{fig:chap4_poor_conditioning_color}，它也显示了没有\gls{momentum}的梯度下降的行为。
+}
 \label{fig:chap8_momentum}
 \end{figure}
 
@@ -674,7 +720,25 @@
 \end{equation}
 速度$\Vv$累积了梯度元素$\nabla_{\Vtheta}( \frac{1}{m} \sum_{i=1}^m L( \Vf(\Vx^{(i)}; \Vtheta), \Vy^{(i)} )  )$。
 相对于$\epsilon$的$\alpha$越大，之前梯度对现在方向的影响也越大。
-带动量的\glssymbol{SGD}算法如算法8.2所示。
+带动量的\glssymbol{SGD}算法如\algref{alg:momentum}所示。
+
+\begin{algorithm}[ht]
+\caption{使用\gls{momentum}的\gls{SGD}(\glssymbol{SGD})}
+\label{alg:momentum}
+\begin{algorithmic}
+\REQUIRE \gls{learning_rate} $\epsilon$， \gls{momentum}参数 $\alpha$
+\REQUIRE 初始参数 $\Vtheta$，初始速度 $\Vv$
+\WHILE{没有达到停止\gls{criterion}}
+    \STATE 从训练集中采包含$m$个样本$\{ \Vx^{(1)},\dots, \Vx^{(m)}\}$ 的\gls{minibatch}，对应目标为$\Vy^{(i)}$。
+    \STATE 计算梯度估计：$\Vg \leftarrow 
+         \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$
+    \STATE  计算速度更新：$\Vv \leftarrow \alpha \Vv - 
+    \epsilon \Vg$
+    \STATE 应用更新：$\Vtheta \leftarrow \Vtheta + \Vv$ 
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 % -- 288 --
 
@@ -759,11 +823,32 @@
 Nesterov动量和标准动量之间的区别体现在梯度计算上。
 Nesterov动量中，梯度计算在施加当前速度之后。
 因此，Nesterov动量可以解释为往标准动量方法中添加了一个\emph{校正因子}。
-完整的Nesterov动量算法如算法8.3所示。
+完整的Nesterov动量算法如\algref{alg:nesterov}所示。
+
+
+\begin{algorithm}[ht]
+\caption{使用Nesterov\gls{momentum}的\gls{SGD}(\glssymbol{SGD})}
+\label{alg:nesterov}
+\begin{algorithmic}
+\REQUIRE  \gls{learning_rate} $\epsilon$， \gls{momentum}参数 $\alpha$
+\REQUIRE 初始参数 $\Vtheta$，初始速度 $\Vv$
+\WHILE{没有达到停止\gls{criterion}}
+    \STATE 从训练集中采包含$m$个样本$\{ \Vx^{(1)},\dots, \Vx^{(m)}\}$ 的\gls{minibatch}，对应目标为$\Vy^{(i)}$。
+    \STATE 应用临时更新： $\tilde{\Vtheta} \leftarrow \Vtheta  + \alpha \Vv$
+         \STATE 计算梯度（在临时点）：$\Vg \leftarrow 
+         \frac{1}{m} \nabla_{\tilde{\Vtheta}} \sum_i L(f(\Vx^{(i)};\tilde{\Vtheta}),\Vy^{(i)})$
+    \STATE 计算速度更新：$\Vv \leftarrow \alpha \Vv - 
+    \epsilon \Vg$
+    \STATE 应用更新：$\Vtheta \leftarrow \Vtheta + \Vv$ 
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
 
 % -- 291 --
 
-在凸批量梯度的情况下，Nesterov动量将额外误差收敛率从$O(1/k)$（$k$步后）改进到$O(1/k^2)$，如\cite{Nesterov83b}f所示。
+在凸\gls{batch}梯度的情况下，Nesterov动量将额外误差收敛率从$O(1/k)$（$k$步后）改进到$O(1/k^2)$，如\cite{Nesterov83b}所示。
 不幸的是，在随机梯度的情况下，Nesterov动量没有改进收敛率。
 
 \section{参数初始化策略}
@@ -772,7 +857,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 其他有些优化算法本质上是迭代的，但是应用于这一类的优化问题时，能和初始值无关地在可接受的时间内收敛到可接受的解。
 深度学习训练算法通常没有这两种奢侈的性质。
 深度学习模型的训练算法通常是迭代的，因此要求使用者指定一些开始迭代的初始点。
-此外，训练深度模型是一个足够困难的问题，以至于大多数算法都很大程度地受到初始化选择的影响。
+此外，训练\gls{deep_model}是一个足够困难的问题，以至于大多数算法都很大程度地受到初始化选择的影响。
 初始点能够决定算法是否收敛，有些初始点十分不稳定，使得该算法会遭遇数值困难，并完全失败。
 当学习收敛时，初始点可以决定学习收敛得多块，以及是否收敛到一个损失高或低的点。
 此外，差不多损失的点可以具有区别极大的泛化误差，初始点也可以影响泛化。
@@ -787,7 +872,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 我们对于初始点如何影响泛化的理解是相当原始的，几乎没有提供如何选择初始点的任何指导。
 
 也许完全确知的唯一特性是初始参数需要在不同单元间``破坏对称性''。
-如果具有相同激励函数的两个隐藏单元连接到相同的输入，那么这些单元必须具有不同的初始参数。
+如果具有相同激励函数的两个\gls{hidden_unit}连接到相同的输入，那么这些单元必须具有不同的初始参数。
 如果它们具有相同的初始参数，然后应用到确定性损失和模型的确定性学习算法将一直以相同的方式更新这两个单元。
 即使模型或训练算法能够使用随机性为不同的单元计算不同的更新（例如具备信息丢失的训练），通常来说，最好还是初始化每个单元使其和其他单元计算不同的函数。
 这或许有助于确保没有输入模式丢失在前向传播的零空间中，没有梯度模式丢失在反向传播的零空间中。
@@ -807,9 +892,9 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 
 更大的初始权重具有更强的破坏对称性的作用，有助于避免冗余的单元。
 它们也有助于避免在每层线性成分的前向或反向传播中丢失信号——矩阵中更大的值在矩阵乘法中有更大的输出。
-如果初始权重太大，那么会在前向传播或反向传播中产生迅速膨胀的值。
+如果初始权重太大，那么会在前向传播或反向传播中产生爆炸的值。
 在循环网络中，很大的权重也可能导致\firstgls{chaos}（对于输入中很小的扰动非常敏感，导致确定性前向传播过程表现随机）。
-在一定程度上，膨胀式的梯度问题可以通过梯度截断来缓解（执行梯度下降步骤之前设置梯度的阈值）。
+在一定程度上，梯度爆炸问题可以通过梯度截断来缓解（执行梯度下降步骤之前设置梯度的阈值）。
 较大的权重也会产生使得激励函数饱和的值，导致饱和单元的梯度完全丢失。
 这些竞争因素决定了权重的理想初始大小。
 
@@ -838,14 +923,14 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 
 \cite{Saxe-et-al-ICLR13}建议初始化随机正交矩阵，仔细挑选负责每一层非线性缩放或\textbf{增益}（\textbf{gain}）因子$g$。
 他们得到了用于不同类型非线性激励函数的特定缩放因子。
-这种初始化方案也是受启发于不含非线性的矩阵相乘序列的深度网络。
+这种初始化方案也是受启发于不含非线性的矩阵相乘序列的\gls{deep_network}。
 在该模型下，这个初始化方案保证了达到收敛所需的训练迭代总数独立于深度。
 
 增加缩放因子$g$将网络推向网络前向传播时激励范数增加，反向传播时梯度范数增加的区域。
 \cite{Sussillo14}表明，正确设置缩放因子足以训练深达$1000$层的网络，不需要使用正交初始化。
 这种方法的一个重要观点是，在前馈网络中，激励和梯度会在每一步前向或反向传播中增加或缩小，遵循随机游动行为。
 这是因为前馈网络在每一层使用了不同的权重矩阵。
-如果该随机游动调整到保持范数，那么前馈网络能够很大程度地避免相同权重矩阵用于每层的梯度消失和膨胀问题，如\secref{sec:long_term_dependencies}所述。
+如果该随机游动调整到保持范数，那么前馈网络能够很大程度地避免相同权重矩阵用于每层的梯度消失和爆炸问题，如\secref{sec:long_term_dependencies}所述。
 
 不幸的是，这些初始权权重的最佳准则往往不会带来最佳效果。
 这可能有三种不同的原因。
@@ -861,13 +946,13 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 这个想法保持该单元输入的总数量独立于输入数目$m$，而不使单一权重元素的大小随$m$缩小。
 稀疏初始化有助于实现单元之间在初始化时更具多样性。
 但是，它也非常偏好于具有很大高斯值的权重。
-因为梯度下降需要很长时间缩小``不正确''的大值，这个初始化方案可能会导致单元问题，例如最大化输出单元有几个过滤器，必须互相之间仔细调整。
+因为梯度下降需要很长时间缩小``不正确''的大值，这个初始化方案可能会导致单元问题，例如\gls{maxout}单元有几个过滤器，必须互相之间仔细调整。
 
 计算资源允许的话，将每层权重的初始数值范围设为超参数通常是个好主意，使用\secref{sec:automatic_hyperparameter_optimization_algorithms}介绍的超参数搜索算法，如随机搜索，挑选这些数值范围。
 是否选择使用密集或稀疏初始化也可以设为一个超参数。
 替代地，我们可以手动搜索最优初始范围。
-一个好的挑选初始数值范围的经验法则是观测单个小批量数据上的激励或梯度的范围或标准差。
-如果权重太小，那么当激励值在小批量上前向传播于网络时，激励值的范围会缩小。
+一个好的挑选初始数值范围的经验法则是观测单个\gls{minibatch}数据上的激励或梯度的范围或标准差。
+如果权重太小，那么当激励值在\gls{minibatch}上前向传播于网络时，激励值的范围会缩小。
 通过重复识别具有不可接受的激励小值的第一层，并提高其权重，最终有可能得到一个全部都是合理初始激励的网络。
 如果学习在这点上仍然很慢，观测下梯度的范围或标准差可能也会有所帮助。
 这个过程原则上是自动的，且通常计算量低于基于验证集误差的超参数优化，因为它是基于初始模型在单批数据上的行为反馈，而不是在验证集上训练模型的反馈。
@@ -890,7 +975,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 这些模型拥有输出类似于输入数据$\Vx$的网络层，非常有助于初始化这些层的偏置以匹配$\Vx$上的边缘分布。
 
 \item 有时，我们可能想要选择\gls{bias_aff}以避免初始化引起太大饱和。
-例如，我们可能会将ReLU的隐层单元设为$0.1$而非$0$，以避免ReLU在初始化时饱和。
+例如，我们可能会将ReLU的\gls{hidden_unit}设为$0.1$而非$0$，以避免ReLU在初始化时饱和。
 尽管这种方法不符合不希望偏置具有很强输入的权重初始化准则。
 例如，不建议使用随机游走初始化\citep{Sussillo14}。
 
@@ -929,7 +1014,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 
 \textbf{delta-bar-delta}算法\citep{jacobs1988}是一个早期的在训练时适应模型参数单独学习速率的启发式方法。
 该方法基于一个很简单的想法，如果损失对于某个给定模型参数的偏导保持相同的符号，那么学习速率应该增加。如果对于该参数的偏导变化了符号，那么学习率应减小。
-当然，这种方法只能应用于全批量优化中。
+当然，这种方法只能应用于全\gls{batch}优化中。
 
 最近，一些增量（或者基于\gls{minibatch}）的算法被提出适应模型参数的学习率。
 这节将简要回顾一些这种算法。
@@ -938,7 +1023,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 
 \subsection{AdaGrad}
 \label{sec:adagrad}
-\textbf{AdaGrad}算法，如算法8.4所示，独立地适应所有模型参数的学习速率，放缩每个参数反比于其所有梯度历史平方值总和的平方根\citep{Duchi+al-2011}。
+\textbf{AdaGrad}算法，如\algref{alg:ada_grad}所示，独立地适应所有模型参数的学习速率，放缩每个参数反比于其所有梯度历史平方值总和的平方根\citep{Duchi+al-2011}。
 具有损失最大偏导的参数相应地有一个快速下降的学习速率，而具有小偏导的参数在学习速率上有相对较小的下降。
 净效果是在参数空间中更为平缓的倾斜方向会取得更大的进步。
 
@@ -946,18 +1031,40 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 然而，经验上已经发现，对于训练\gls{DNN}模型而言，\emph{从训练开始时}积累梯度平方会导致有效学习速率过早和过量的减小。
 AdaGrad在某些深度学习模型上效果不错，但不是全部。
 
+
+\begin{algorithm}[ht]
+\caption{AdaGrad算法}
+\label{alg:ada_grad}
+\begin{algorithmic}
+\REQUIRE 全局\gls{learning_rate} $\epsilon$
+\REQUIRE 初始参数$\Vtheta$
+\REQUIRE 小常数$\delta$，为了数值稳定大约设为$10^{-7}$
+\STATE 初始化梯度累积变量$\Vr = 0$
+\WHILE{没有达到停止\gls{criterion}}
+    \STATE 从训练集中采包含$m$个样本$\{ \Vx^{(1)},\dots, \Vx^{(m)}\}$ 的\gls{minibatch}，对应目标为$\Vy^{(i)}$。
+    \STATE 计算梯度： $\Vg \leftarrow  
+         \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE 累积平方梯度：$\Vr \leftarrow \Vr + \Vg \odot \Vg$
+    \STATE 计算更新：$\Delta \Vtheta \leftarrow -
+    \frac{\epsilon}{\delta+ \sqrt{\Vr}} \odot\Vg$  \ \  （逐元素地应用除和求平方根）
+    \STATE 应用更新：$\Vtheta \leftarrow \Vtheta + \Delta \Vtheta$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
 \subsection{RMSProp}
 \label{sec:rmsprop}
 \textbf{RMSProp}算法\citep{Hinton-ipam2012}修改AdaGrad以在非凸设定下效果更好，改变梯度积累为指数加权的移动均值。
 AdaGrad旨在应用于凸问题时快速收敛。
 当应用于非凸函数训练神经网络时，学习轨迹可能穿过了很多不同的结构，最终到达一个局部是凸碗的区域。
 AdaGrad根据平方梯度的整个历史收缩学习率，可能使得学习率在达到这样的凸结构前就变得太小了。
-RMSProp使用指数衰减平均以丢弃遥远过去的历史，使其能够在找到凸碗结构后快速收敛，
-好像它是一个初始化于该碗的AdaGrad算法实例。
+RMSProp使用指数衰减平均以丢弃遥远过去的历史，使其能够在找到凸碗状结构后快速收敛，
+它就像一个初始化于该碗状结构的AdaGrad算法实例。
 
 % -- 299 --
 
-RMSProp的标准形式如算法8.5所示，结合Nesterov动量的形式如算法8.6所示。
+RMSProp的标准形式如\algref{alg:rms_prop}所示，结合Nesterov动量的形式如\algref{alg:rms_nesterov}所示。
 相比于AdaGrad，使用移动均值引入了一个新的超参数$\rho$，控制移动平均的长度范围。
 
 % -- 300 --
@@ -965,24 +1072,94 @@ RMSProp的标准形式如算法8.5所示，结合Nesterov动量的形式如算�
 经验上，RMSProp已被证明是一种有效且实用的\gls{DNN}优化算法。
 目前它是深度学习从业者经常采用的优化方法之一。
 
+
+\begin{algorithm}[ht]
+\caption{RMSProp算法}
+\label{alg:rms_prop}
+\begin{algorithmic}
+\REQUIRE 全局\gls{learning_rate} $\epsilon$，衰减速率$\rho$
+\REQUIRE  初始参数$\Vtheta$
+\REQUIRE 小常数$\delta$，通常设为$10^{-6}$（用于被小数除时的数值稳定）
+\STATE 初始化累积变量 $\Vr = 0$
+\WHILE{没有达到停止\gls{criterion}}
+    \STATE 从训练集中采包含$m$个样本$\{ \Vx^{(1)},\dots, \Vx^{(m)}\}$ 的\gls{minibatch}，对应目标为$\Vy^{(i)}$。
+    \STATE 计算梯度：$\Vg \leftarrow  
+         \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE 累积平方梯度：$\Vr \leftarrow \rho
+    \Vr + (1-\rho) \Vg \odot \Vg$
+    \STATE 计算参数更新：$\Delta \Vtheta =
+    -\frac{\epsilon}{\sqrt{\delta + \Vr}} \odot \Vg$  \ \  ($\frac{1}{\sqrt{\delta + \Vr}}$ 逐元素应用)
+    \STATE 应用更新：$\Vtheta \leftarrow \Vtheta + \Delta \Vtheta$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[ht]
+\caption{使用Nesterov\gls{momentum}的RMSProp算法}
+\label{alg:rms_nesterov}
+\begin{algorithmic}
+\REQUIRE 全局\gls{learning_rate} $\epsilon$，衰减速率$\rho$， \gls{momentum}系数$\alpha$
+\REQUIRE 初始参数$\Vtheta$，初始参数$\Vv$
+\STATE 初始化累积变量 $\Vr = 0$
+\WHILE{没有达到停止\gls{criterion}} % NOTE: do not capitalize the condition
+    \STATE 从训练集中采包含$m$个样本$\{ \Vx^{(1)},\dots, \Vx^{(m)}\}$ 的\gls{minibatch}，对应目标为$\Vy^{(i)}$。
+    \STATE 计算临时更新：$\tilde{\Vtheta} \leftarrow \Vtheta + \alpha \Vv$
+    \STATE 计算梯度：$\Vg \leftarrow  
+         \frac{1}{m} \nabla_{\tilde{\Vtheta}} \sum_i L(f(\Vx^{(i)};\tilde{\Vtheta}),\Vy^{(i)})$ 
+    \STATE  累积梯度：$\Vr \leftarrow \rho
+    \Vr + (1-\rho) \Vg \odot \Vg$
+    \STATE  计算速度更新：$\Vv \leftarrow \alpha \Vv
+    -\frac{\epsilon}{\sqrt{\Vr}} \odot \Vg$ \ \  ($\frac{1}{\sqrt{\Vr}}$ 逐元素应用)
+    \STATE 应用更新：$\Vtheta \leftarrow \Vtheta + \Vv$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
 \subsection{Adam}
 \label{sec:adam}
-\textbf{Adam}\citep{kingma2014adam}是另一种学习率自适应的优化算法，如算法8.7所示。
+\textbf{Adam}\citep{kingma2014adam}是另一种学习率自适应的优化算法，如\algref{alg:adam}所示。
 ``Adam''这个名字派生自短语``Adaptive moments''。
 早期算法背景下，它也许最好被看作结合RMSProp和具有一些重要区别的动量的变种。
 首先，在Adam中，动量直接并入了梯度一阶矩（带指数加权）的估计。
 将动量加入RMSProp最直观的方法是应用动量于缩放后的梯度。
 结合重放缩的动量使用没有明确的理论动机。
-其次，Adam包括负责原点初始化的一阶矩（动量项）和（非中心的）二阶矩的估计修正偏置（参看算法8.7）。
+其次，Adam包括负责原点初始化的一阶矩（动量项）和（非中心的）二阶矩的估计修正偏置（\algref{alg:adam}）。
 RMSProp也采用了（非中心的）二阶矩估计，然而缺失了修正因子。
 因此，不像Adam，RMSProp二阶矩估计可能在训练初期有很高的偏置。
 Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时需要从建议的默认修改。
+
+\begin{algorithm}[ht]
+\caption{Adam算法}
+\label{alg:adam}
+\begin{algorithmic}
+\REQUIRE 步长 $\epsilon$ （建议默认为： $0.001$）
+\REQUIRE 矩估计的指数衰减速率， $\rho_1$ 和 $\rho_2$ 在区间 $[0, 1)$内。
+（建议默认为：分别为$0.9$ 和 $0.999$）
+\REQUIRE 用于数值稳定的小常数 $\delta$  （建议默认为： $10^{-8}$）
+\REQUIRE 初始参数 $\Vtheta$
+\STATE 初始化一阶和二阶矩变量 $\Vs = 0 $, $\Vr = 0$
+\STATE 初始化\gls{time_step} $t=0$ 
+\WHILE{没有达到停止\gls{criterion}}
+    \STATE 从训练集中采包含$m$个样本$\{ \Vx^{(1)},\dots, \Vx^{(m)}\}$ 的\gls{minibatch}，对应目标为$\Vy^{(i)}$。
+    \STATE 计算梯度：$\Vg \leftarrow \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE $t \leftarrow t + 1$
+    \STATE 更新有偏一阶矩估计： $\Vs \leftarrow \rho_1 \Vs + (1-\rho_1) \Vg$
+    \STATE 更新有偏二阶矩估计：$\Vr \leftarrow \rho_2 \Vr + (1-\rho_2) \Vg \odot \Vg$
+    \STATE 修正一阶矩的\gls{bias_sta}：$\hat{\Vs} \leftarrow \frac{\Vs}{1-\rho_1^t}$
+    \STATE 修正二阶矩的\gls{bias_sta}：$\hat{\Vr} \leftarrow \frac{\Vr}{1-\rho_2^t}$
+    \STATE 计算更新：$\Delta \Vtheta = - \epsilon \frac{\hat{\Vs}}{\sqrt{\hat{\Vr}} + \delta}$ \ \  （逐元素应用操作）
+    \STATE 应用更新：$\Vtheta \leftarrow \Vtheta + \Delta \Vtheta$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 % -- 301 --
 
 \subsection{选择正确的优化算法}
 \label{sec:choosing_the_right_optimization_algorithms}
-在本节中，我们讨论了一系列算法，通过自适应每个模型参数的学习速率以解决优化深度模型中的难题。
+在本节中，我们讨论了一系列算法，通过自适应每个模型参数的学习速率以解决优化\gls{deep_model}中的难题。
 此时，一个自然的问题是：该选择哪种算法呢？
 
 遗憾的是，目前在这一点上没有达成共识。
@@ -1024,7 +1201,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
     \Vtheta^* = \Vtheta_0 - \MH^{-1}\nabla_{\Vtheta} J(\Vtheta_0).
 \end{equation}
 因此，对于局部的二次函数（具有正定的$\MH$），用$\MH^{-1}$重新调整梯度，牛顿法会直接跳到极小值。
-如果目标函数是凸的但非二次的（有高阶项），该更新会是迭代的，得到和牛顿法相关的算法，如算法8.8所示。
+如果目标函数是凸的但非二次的（有高阶项），该更新会是迭代的，得到和牛顿法相关的算法，如\algref{alg:newton}所示。
 
 对于非二次的表面，只要\gls{hessian}保持正定，牛顿法能够迭代地使用。
 这意味着一个两步迭代过程。
@@ -1048,6 +1225,25 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 然而，如果$\alpha$持续增加，\gls{hessian}矩阵会变得由对角矩阵$\alpha \MI$主导，通过牛顿法所选择的方向会收敛到普通梯度除以$\alpha$。
 当很强的负曲率存在时，$\alpha$可能需要特别大，以至于牛顿法比选择合适学习率的梯度下降的步长更小。
 
+\begin{algorithm}[ht]
+\caption{目标为$J(\Vtheta)= \frac{1}{m} \sum_{i=1}^m L(f(\Vx^{(i)};\Vtheta), y^{(i)})$的牛顿法}
+\label{alg:newton}
+\begin{algorithmic}
+\REQUIRE 初始参数$\Vtheta_{0}$
+\REQUIRE 包含 $m$个样本的训练集
+\WHILE{没有达到停止\gls{criterion}} 
+      \STATE 计算梯度： $\Vg \leftarrow 
+     \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+      \STATE 计算\gls{hessian}：$\MH \leftarrow  
+     \frac{1}{m} \nabla_{\Vtheta}^2 \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE 计算\gls{hessian}逆：$\MH^{-1}$
+    \STATE 计算更新： $\Delta \Vtheta = - \MH^{-1} \Vg$
+    \STATE 应用更新：$\Vtheta = \Vtheta+\Delta \Vtheta$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
 除了目标函数的某些特征带来的挑战，如\gls{saddle_points}，牛顿法用于训练大型神经网络还受限于其显著的计算负担。
 \gls{hessian}矩阵中元素树木是参数数量的平方，因此，如果参数数目为$k$（甚至是在非常小的神经网络中$k$也可能是百万级别），牛顿法需要计算$k\times k$矩阵的逆，计算复杂度为$O(k^3)$。
 另外，由于参数将每次更新都会改变，每次训练迭代都需要计算\gls{hessian}矩阵的逆。
@@ -1067,7 +1263,11 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 \else
 \centerline{\includegraphics{Chapter8/figures/steepest_descent_quadratic_color}}
 \fi
-\caption{TODO}
+\caption{将最速下降法应用于二次代价表面。
+在每个步骤，最速下降法沿着由初始点处的梯度定义的线跳到最低代价的点。
+这解决了\figref{chap4_poor_conditioning_color}中使用固定学习速率所遇到的一些问题，但即使使用最佳步长，算法仍然朝最优方向曲折前进。
+根据定义，在沿着给定方向的目标最小值处，最终点处的梯度与该方向正交。
+}
 \label{fig:chap8_steepest_descent_quadratic}
 \end{figure}
 
@@ -1109,7 +1309,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 { \nabla_{\Vtheta} J(\Vtheta_{t-1})^\top \nabla_{\Vtheta} J(\Vtheta_{t-1}) }
 \end{equation}
 
-\item Polak-Ribiere:
+\item Polak-Ribi\`{e}re:
 \begin{equation}
     \beta_t = \frac{ (\nabla_{\Vtheta} J(\Vtheta_t) - \nabla_{\Vtheta} J(\Vtheta_{t-1}))^\top \nabla_{\Vtheta} J(\Vtheta_t) }
 { \nabla_{\Vtheta} J(\Vtheta_{t-1})^\top \nabla_{\Vtheta} J(\Vtheta_{t-1}) }
@@ -1118,7 +1318,34 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 对于二次曲面而言，共轭方向确保梯度沿着前一方向大小不变。
 因此，我们在前一方向上仍然是极小值。
 其结果是，在$k$-维参数空间中，\gls{CG}只需要至多$k$次线性搜索就能达到极小值。
-\gls{CG}算法如算法8.9所示。
+\gls{CG}算法如\algref{alg:cg}所示。
+
+\begin{algorithm}[ht]
+\caption{\gls{CG}方法}
+\label{alg:cg}
+\begin{algorithmic}
+\REQUIRE 初始参数 $\Vtheta_{0}$
+\REQUIRE 包含$m$个样本的训练集
+\STATE 初始化 $\Vrho_{0} = 0$
+\STATE 初始化 $g_0 = 0$
+\STATE 初始化 $t = 1$
+\WHILE{没有达到停止\gls{criterion}}
+    \STATE 初始化梯度 $\Vg_{t} = 0$
+    \STATE 计算梯度：$\Vg_{t} \leftarrow
+         \frac{1}{m}\nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
+    \STATE 计算 $\beta_{t} = \frac{(\Vg_{t}-\Vg_{t-1})^\top \Vg_{t}}{\Vg_{t-1}^\top \Vg_{t-1}}$  (Polak-Ribi\`{e}re)
+    \STATE (非线性\gls{CG}：视情况可重置$\beta_{t}$为零，
+           例如  $t$是常数$k$的倍数时，如 $k=5$)
+    \STATE 计算搜索方向： $\Vrho_{t} = -\Vg_{t} + \beta_{t} \Vrho_{t-1}$ 
+    \STATE 执行\gls{line_search}寻找：$\epsilon^{*} = \arg\!\min_{\epsilon}
+    \frac{1}{m} \sum_{i=1}^{m}L(f(\Vx^{(i)};\Vtheta_t + \epsilon \Vrho_t),\Vy^{(i)})$ 
+    \STATE （对于真正二次的\gls{cost_function}，存在$\epsilon^*$的解析解，而无需显式地搜索）
+    \STATE 应用更新：$\Vtheta_{t+1} = \Vtheta_{t}+ \epsilon^{*} \Vrho_{t}$
+    \STATE $t \leftarrow t + 1$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
 
 \textbf{\gls{nonlinear_CG}：}
 目前，我们已经讨论了\gls{CG}法用于二次目标函数。
@@ -1130,7 +1357,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 % -- 306 --
 
 实践者报告在实践中使用\gls{nonlinear_CG}算法训练神经网络是合理的，尽管在开始\gls{nonlinear_CG}前使用随机梯度下降迭代若干步来初始化效果更好。
-另外，尽管（非线性）\gls{CG}算法传统上作为批方法，小批量版本已经成功用于训练神经网络\citep{LeRoux-chapter-2011}。
+另外，尽管（非线性）\gls{CG}算法传统上作为批方法，\gls{minibatch}版本已经成功用于训练神经网络\citep{LeRoux-chapter-2011}。
 针对神经网路的\gls{CG}应用早已被提出，例如放缩的\gls{CG}算法\citep{Moller}。
 
 \subsection{\glsentrytext{BFGS}}
@@ -1183,7 +1410,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 在其他层不改变的假设下，梯度用于如何更新每一个参数。
 在实践中，我们同时更新所有层。
 当我们进行更新时，可能会发生一些意想不到的结果，这是因为许多组合在一起的函数同时改变时，计算更新的假设是其他函数保持不变。
-举一个简单的例子，假设我们有一个\gls{DNN}，每一层只有一个单元，并且在每个隐层不使用激励函数：$\hat{y} = xw_1 w_2 w_3 \dots w_l$。
+举一个简单的例子，假设我们有一个\gls{DNN}，每一层只有一个单元，并且在每个\gls{hidden_layer}不使用激励函数：$\hat{y} = xw_1 w_2 w_3 \dots w_l$。
 这里，$w_i$表示用于层$i$的权重。层$i$的输出是$h_i = h_{i-1} w_i$。
 输出$\hat{y}$是输入$x$的线性函数，但是权重$w_i$的非线性函数。
 假设我们的损失函数$\hat{y}$上的梯度为$1$，所以我们希望稍稍降低$\hat{y}$。
@@ -1206,9 +1433,9 @@ $\hat{y}$的更新值为
 
 % -- 309 --
 
-\gls{batch_normalization}提出了一种几乎可以重新参数化所有深层网络的优雅方法。
+\gls{batch_normalization}提出了一种几乎可以重新参数化所有\gls{deep_network}的优雅方法。
 重新参数化显著减少了多层之间协调更新的问题。
-\gls{batch_normalization}可应用于网络的任何输入层或隐层。
+\gls{batch_normalization}可应用于网络的任何输入层或\gls{hidden_layer}。
 设$\MH$是需要标准化的某层的\gls{minibatch}激励函数，布置为设计矩阵，每个样本的激励出现在矩阵的每一行中。
 标准化$\MH$，我们替代它为
 \begin{equation}
@@ -1238,7 +1465,7 @@ $\hat{y}$的更新值为
 % -- 310 --
 
 在测试阶段，$\Vmu$和$\Vsigma$可以被替换为训练阶段收集的运行均值。
-这使得模型可以对单一样本评估，而无需使用定义于整个小批量的$\Vmu$和$\Vsigma$。
+这使得模型可以对单一样本评估，而无需使用定义于整个\gls{minibatch}的$\Vmu$和$\Vsigma$。
 
 回顾例子$\hat{y} = x w_1 w_2 \dots w_l$，我们看到，我们可以通过标准化$h_{l-1}$很大程度地解决学习这个模型的问题。
 假设$x$采样自一个单位高斯。
@@ -1260,13 +1487,13 @@ $\hat{y}$的更新值为
 \gls{batch_normalization}仅标准化每个单元的均值和方差，以稳定化学习，但允许单元和单个单元的非线性统计量之间的关系发生变化。
 
 由于网络的最后一层能够学习线性变换，实际上我们可能希望移除一层内单元之间的所有线性关系。
-事实上，这是\cite{Desjardins2015}中采用的方法，为批量规范化提供了灵感。
+事实上，这是\cite{Desjardins2015}中采用的方法，为\gls{batch_normalization}提供了灵感。
 令人遗憾的是，消除所有的线性关联比标准化各个独立单元的均值和\gls{standard_deviation}代价更高，因此迄今\gls{batch_normalization}仍是最实用的方法。
 
 % -- 311 --
 
 标准化一个单元的均值和标准差会降低包含该单元的神经网络的表达能力。
-为了保持网络的表现力，通常会取代批量\gls{hidden_unit}激励$\MH$为$\gamma \MH' + \Vbeta$，而不是简单地使用标准化的$\MH'$。
+为了保持网络的表现力，通常会取代\gls{batch}\gls{hidden_unit}激励$\MH$为$\gamma \MH' + \Vbeta$，而不是简单地使用标准化的$\MH'$。
 变量$\Vgamma$和$\Vbeta$是允许新变量有任意均值和\gls{standard_deviation}的学习参数。
 乍一看，这似乎是无用的——为什么我们将均值设为$0$，然后又引入参数允许它被重设为任意值$\Vbeta$？
 答案是，新的参数可以表示旧参数作为输入的同一族函数，但是新参数有不同的学习动态。
@@ -1279,7 +1506,7 @@ $\hat{y}$的更新值为
 \cite{Ioffe+Szegedy-2015}推荐后者。
 更具体地，$\MX\MW+\Vb$应替换为$\MX\MW$的标准化形式。
 偏置项应被忽略，因为参数$\Vbeta$会加入\gls{batch_normalization}重新参数化，它是冗余的。
-一层的输入通常是前一层的非线性激励函数，如整\gls{rectified_linear}函数，的输出。
+一层的输入通常是前一层的非线性激励函数，如\gls{rectified_linear}函数，的输出。
 因此，输入的统计量更符合非高斯，而更不服从线性操作的标准化。
 
 \chapref{chap:convolutional_networks}所述的卷积网络，在特征映射中每个空间位置同样地标准化$\Vmu$和$\Vsigma$是很重要的，能使特征映射的统计量不因空间位置而保持相同。
@@ -1334,7 +1561,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 这个计算平均值的方法被用于大量数值应用中。最近的例子请参看\cite{Szegedy-et-al-2015}。
 
-\subsection{监督提前训练}
+\subsection{监督\glsentrytext{pretraining}}
 \label{sec:supervised_pretraining}
 有时，如果模型太复杂难以优化，或是如果任务非常困难，直接训练模型来解决特定任务可能太过挑战。
 有时训练一个较简单的模型来求解问题，然后使模型更复杂会更有效。
@@ -1348,15 +1575,15 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 贪心算法也可以后跟一个\firstgls{fine_tuning}阶段，联合优化算法搜索全问题的最优解。
 使用贪心解初始化联合优化算法，可以极大地加速算法，并提高寻找到的解的质量。
 
-提前训练算法，特别是贪心提前训练，在深度学习中是普遍存在的。
-在本节中，我们会具体描述这些将监督学习问题分解成其他简化的监督学习问题的提前训练算法。
+\gls{pretraining}算法，特别是贪心\gls{pretraining}，在深度学习中是普遍存在的。
+在本节中，我们会具体描述这些将监督学习问题分解成其他简化的监督学习问题的\gls{pretraining}算法。
 这种方法被称为\firstgls{greedy_supervised_pretraining}。
 
 % -- 314 --
 
 在\gls{greedy_supervised_pretraining}的原始版本\citep{Bengio-nips-2006-short}中，每个阶段包括一个仅涉及最终神经网络的子集层的监督学习训练任务。
-\gls{greedy_supervised_pretraining}的一个例子如\figref{fig:chap8_deep_sup}所示，其中每个附加的\gls{hidden_layer}作为浅监督MLP的一部分提前训练，以先前训练的\gls{hidden_layer}输出作为输入。
-并非一次提前训练一层，\cite{Simonyan2015}提前训练深度卷积网络（11层权重），然后使用该网络前四层和最后三层初始化更深的网络（多达19层权重）。
+\gls{greedy_supervised_pretraining}的一个例子如\figref{fig:chap8_deep_sup}所示，其中每个附加的\gls{hidden_layer}作为浅监督MLP的一部分\gls{pretraining}，以先前训练的\gls{hidden_layer}输出作为输入。
+并非一次\gls{pretraining}一层，\cite{Simonyan2015}\gls{pretraining}深度卷积网络（11层权重），然后使用该网络前四层和最后三层初始化更深的网络（多达19层权重）。
 非常深的新网络的中间层是随机初始化的。
 然后联合训练新网络。
 还有一种选择，由\cite{Yu+al-2010}提出，将先前训练MLP的\emph{输出}，以及原始输入，作为每个附加阶段的输入。
@@ -1367,16 +1594,24 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 \else
 \centerline{\includegraphics{Chapter8/figures/deep_sup}}
 \fi
-\caption{TODO}
+\caption{一种形式的\gls{greedy_supervised_pretraining}的示意图~\citep{Bengio-nips-2006-small}。
+(a)我们从训练一个足够浅的架构开始。
+(b)同一个架构的另一描绘。
+(c)我们只保留原始网络的输入到隐藏层，并丢弃隐藏到输出层。 
+我们将第一层\gls{hidden_layer}的输出作为输入发送到另一监督单隐层\glssymbol{MLP}（使用与第一个网络相同的目标训练），从而可以添加第二层\gls{hidden_layer}。 
+这可以根据需要重复多层。
+(d)所得架构的另一种描绘，可视为前馈网络。 
+为了进一步改进优化，我们可以联合地\gls{fine_tuning}所有层（仅在该过程的结束或者该过程的每个阶段）。
+}
 \label{fig:chap8_deep_sup}
 \end{figure}
 
 
 为什么\gls{greedy_supervised_pretraining}会有帮助呢？
-最初由\cite{Bengio-nips-2006}提出的假说是，其有助于更好地知道深层次中间阶段的学习。
-一般情况下，提前训练在优化和泛化两边面都是有帮助的。
+最初由\cite{Bengio-nips-2006}提出的假说是，其有助于更好地指导深层结构的中间层的学习。
+一般情况下，\gls{pretraining}在优化和泛化两边面都是有帮助的。
 
-另一个与监督提前训练有关的方法扩展了迁移学习的想法：\cite{yosinski-nips2014}在一组任务上提前训练了$8$层权重的深度卷积网络（1000个ImageNet对象类的子集），然而用该网络的前$k$层初始化同样规模的网络。
+另一个与监督\gls{pretraining}有关的方法扩展了迁移学习的想法：\cite{yosinski-nips2014}在一组任务上\gls{pretraining}了$8$层权重的深度卷积网络（1000个ImageNet对象类的子集），然而用该网络的前$k$层初始化同样规模的网络。
 然后第二个网络的所有层（上层随机初始化）联合训练以执行不同的任务（1000个ImageNet对象类的另一个子集），但训练样本少于第一个任务。
 神经网络中另一个和迁移学习相关的方法将在\secref{sec:transfer_learning_and_domain_adaptation}讨论。
 
@@ -1385,13 +1620,13 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 然后，这个网络成为第二个网络（被指定为\textbf{学生}）的\textbf{老师}。
 学生网络更深更窄（11至19层），且在正常情况下很难用SGD训练。
 训练学生网络不仅需要预测原任务的输出，还需要预测教师网络中间层的值，这样使得训练学生网络变得更容易。
-这个额外的任务说明了隐层应如何使用，能够简化优化问题。
+这个额外的任务说明了\gls{hidden_layer}应如何使用，能够简化优化问题。
 附加参数被引入来从更深的学生网络中间层去回归$5$层教师网络的中间层。
-然而，并非预测最终分类目标，该目标是预测教师网络的中间隐层。
+然而，并非预测最终分类目标，该目标是预测教师网络的中间\gls{hidden_layer}。
 学生网络的低层因而具有两个目标：学生网络的输出完成其目标，和预测教师网络的中间层。
 尽管一个窄而深的网络似乎比宽而浅的网络更难训练，但窄而深网络的泛化能力可能更好，
 并且如果其足够窄，参数足够少，那么其计算代价更小。
-没有隐层的提示，学生网络在训练集和测试集上的实验表现都很差。
+没有\gls{hidden_layer}的提示，学生网络在训练集和测试集上的实验表现都很差。
 因而中间层的提示是有助于训练很难训练的网络的方法之一，但是其他优化技术或是架构上的变化也可能解决这个问题。
 
 % -- 316 --
@@ -1399,7 +1634,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 \subsection{设计有助于优化的模型}
 \label{sec:designing_models_to_aid_optimization}
 改进优化的最好方法并不总是改进优化算法。
-相反，深度模型中优化的许多改进来自于设计易于优化的模型。
+相反，\gls{deep_model}中优化的许多改进来自于设计易于优化的模型。
 
 原则上，我们可以使用呈锯齿非单调模式上上下下的激励函数，但是，这将使优化极为困难。
 在实践中，\emph{选择一族容易优化的模型比使用一个强大的优化算法更重要}。
@@ -1407,7 +1642,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 1980年代用于训练神经网络的带动量的随机梯度下降，仍然是现代神经网络应用中的前沿算法。
 
 具体来说，现代神经网络的\emph{设计选择}体现在层之间的线性变换，几乎处处可导的激励函数，和大部分定义域都有明显的梯度。
-特别地，创新的模型，如LSTM，\gls{ReLU}和最大输出单元都比先前的模型（如基于sigmoid单元的深度网络）使用更多的线性函数。
+特别地，创新的模型，如\glssymbol{LSTM}，\gls{ReLU}和\gls{maxout}单元都比先前的模型（如基于\gls{sigmoid}单元的\gls{deep_network}）使用更多的线性函数。
 这些模型都具有简化优化的性质。
 如果线性变换的雅可比具有相对合理的奇异值，那么梯度能够流经很多层。
 此外，线性函数在一个方向上一致增加，所以即使模型的输出远离正确值，也可以简单清晰地计算梯度，使其输出方向朝降低损失函数的方向移动。
@@ -1418,7 +1653,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 一个和跳过连接相关的想法是添加和网络中间\gls{hidden_layer}相连的输出的额外副本，如GoogLeNet\citep{Szegedy-et-al-arxiv2014}和深度监督网络\citep{Lee-et-al-2014}。
 这些``辅助头''被训练来执行和网络顶层主要输出相同的任务，以确保底层网络能够接受较大的梯度。
 当训练完成时，辅助头可能被丢弃。
-这是之前小节介绍到的提前训练技巧的替代方法。
+这是之前小节介绍到的\gls{pretraining}技巧的替代方法。
 以这种方式，我们可以在一个阶段联合训练所有层，而不改变架构，使得中间层（特别是低层）能够通过更短的路径得到一些有些如何更新的有用信息。
 这些信息为底层提供了误差信号。
 
@@ -1439,13 +1674,13 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 传统的\gls{continuation_method}（用于神经网络训练之前的连续方法）通常是基于平滑的目标函数。
 参看\cite{Wu-97}了解这类方法的示例，以及一些相关方法的综述。
-\gls{continuation_method}也和参数中加入噪音的模拟退火紧密相关\citep{Kirkpatrick83}。
+\gls{continuation_method}也和参数中加入\gls{noise}的模拟退火紧密相关\citep{Kirkpatrick83}。
 \gls{continuation_method}在最近几年非常成功。
 参看\cite{Mobahi+Fisher-AAAI2015}了解其近期文献的概述，特别是在\glssymbol{AI}方面的应用。
 
 % -- 318 --
 
-传统上，\gls{continuation_method}主要用来客服局部极小值的问题。
+传统上，\gls{continuation_method}主要用来克服局部极小值的问题。
 具体地，它被设计来在有很多局部极小值的情况下，求解一个全局极小值。
 这些连续方法会通过``模糊''原来的损失函数来构建更容易的损失函数。
 这些模糊操作可以是用采样来近似
@@ -1455,11 +1690,11 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 这个方法的直觉是有些非凸函数在模糊后会近似凸的。
 在许多情况下，这种模糊保留了关于全局极小值的足够信息，我们可以通过逐步求解更少模糊的问题来求解全局极小值。
 这种方法有三种可能失败的方式。
-首先，它可能成功定义了一系列的损失函数，其中第一个是凸的，最优解会沿着一个接一个的函数到达全局极小值，但它可能需要非常多的逐步损失函数，整个过程的成本仍然很高。
+首先，它可能成功地定义了一连串损失函数，并从开始的一个凸函数起（逐一地）沿着函数链最佳轨迹逼近全局最小值，但可能需要非常多的逐步损失函数，整个过程的成本仍然很高。
 另外，即使\gls{continuation_method}可以适用，NP难的优化问题仍然是NP难的。
 其他两种\gls{continuation_method}失败的原因是不实用。
 其一，不管如何模糊，可能函数没法变成凸的，比如函数$J(\Vtheta) = -\Vtheta^\top \Vtheta$。
-其二，函数可能在模糊后是凸的，但模糊函数的极小值可能会逐步到一个局部值，而非原始损失函数的全局极小值。
+其二，函数可能在模糊后是凸的，但模糊函数的最小值可能会逐步到一个局部值，而非原始损失函数的全局最小值。
 尽管\gls{continuation_method}最初用来解决局部最小值的问题，局部最小值已不再是神经网络优化中的主要问题了。
 幸运的是，\gls{continuation_method}仍然有所帮助。
 \gls{continuation_method}引入的简化目标函数能够消除平坦区域，减少梯度估计的方差，提高\gls{hessian}矩阵的条件数，使局部更新更容易计算，或是改进局部更新方向和朝向全局解方向之间的对应关系。

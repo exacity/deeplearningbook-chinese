@@ -69,7 +69,29 @@
 
 \gls{greedy_layer_wise_unsupervised_pretraining}依赖于单层\gls{representation_learning}算法，例如\glssymbol{RBM}，单层\gls{AE}，\gls{sparse_coding}模型，或其他学习隐表示的模型。
 每一层使用\gls{unsupervised_learning}\gls{pretraining}，输入前一层的输出，并产生输出数据的新型表示，其分布（或者是和其他变量，如要预测的类别，的关系）有希望是简单的。
-参看算法15.1了解正式的表述。
+查看\algref{alg:pretraining}了解正式的表述。
+
+\begin{algorithm}
+\caption{{\em \gls{greedy_layer_wise_unsupervised_pretraining}的协定}\\
+给定如下：无监督特征学习算法$\CalL$，$\CalL$使用训练集样本并返回\gls{encoder}或特征函数$f$。
+原始输入数据是$\MX$，每行一个样本，并且$f^{(1)}(\MX)$是第一阶段\gls{encoder}关于$\MX$的输出。
+在执行\gls{fine_tune}的情况下，我们使用学习者$\CalT$，并使用初始函数$f$，输入样本$\MX$（以及在监督\gls{fine_tune}情况下关联的目标$\MY$），并返回细调好函数。 阶段数为$m$。
+}
+\label{alg:pretraining}
+\begin{algorithmic}
+\STATE $f \leftarrow$ 恒等函数
+\STATE $\tilde{\MX} = \MX$
+\FOR {$k=1, \ldots, m$}
+  \STATE $f^{(k)} = {\CalL}(\tilde{\MX})$
+  \STATE $f \leftarrow f^{(k)} \circ f$
+  \STATE $\tilde{\MX} \leftarrow f^{(k)}(\tilde{\MX})$
+\ENDFOR
+\IF {\em fine-tuning}
+  \STATE $f \leftarrow {\CalT}(f,\MX,\MY)$
+\ENDIF
+\STATE {\bf Return} $f$
+\end{algorithmic}
+\end{algorithm}
 
 
 基于无监督标准的贪心逐层训练过程早已被用来规避监督问题中深度网络联合训练多层的问题。
@@ -98,11 +120,11 @@
 
 \gls{greedy_layer_wise_unsupervised_pretraining}也能用作其他\gls{unsupervised_learning}算法的初始化，比如深度\gls{AE}\citep{Hinton-Science2006}和具有很多\gls{latent_variable}层的概率模型。
 这些\gls{model}包括\gls{DBN}\citep{Hinton06-small}和\gls{DBM}\citep{Salakhutdinov+Hinton-2009-small}。
-这些\gls{DGM}会在第二十章讨论。
+这些\gls{DGM}会在\chapref{chap:deep_generative_models}讨论。
 
 
 正如\secref{sec:supervised_pretraining}所探讨的，也可能进行贪心逐层\emph{监督}\gls{pretraining}。
-这建立在训练浅层模型比深层模型更容易的前提下，而该前提似乎在一些情况下已被证实\citep{Erhan+al-2010-small}。
+这建立在训练浅层模型比\gls{deep_model}更容易的前提下，而该前提似乎在一些情况下已被证实\citep{Erhan+al-2010-small}。
 
 
 \subsection{何时以及为何\glsentrytext{unsupervised_pretraining}有效？}
@@ -135,7 +157,7 @@
 在\gls{pretraining}变得流行时，在一个位置初始化模型被认为会使其接近某一个\gls{local_minimum}，而不是另一个最小值。
 今天，\gls{local_minima}不再被认为是\gls{NN}优化中的严重问题。
 现在我们知道标准的\gls{NN}训练过程通常不会到达任何类型的极值点。
-仍然可能的是，\gls{pretraining}会初始化模型在一个可能不会被访问的位置——例如，某种区域，其中成本函数从一个样本点到另一个样本点变化很大，\gls{minibatch}只能提供噪音严重的梯度估计，或由该种区域中的海森矩阵条件数很差，梯度下降法必须使用非常小的步长。
+仍然可能的是，\gls{pretraining}会初始化模型在一个可能不会被访问的位置——例如，某种区域，其中成本函数从一个样本点到另一个样本点变化很大，\gls{minibatch}只能提供\gls{noise}严重的梯度估计，或由该种区域中的海森矩阵条件数很差，梯度下降法必须使用非常小的步长。
 然而，我们精确判断\gls{supervised_learning}期间\gls{pretraining}参数的哪些部分应该保留的能力是有限的。
 这是现代方法通常同时使用\gls{unsupervised_learning}和\gls{supervised_learning}而不是连续使用两个阶段的原因之一。
 我们也可以简单地固定特征提取器的参数，仅仅将\gls{supervised_learning}作为分类器学习上层特征，从而避免让\gls{supervised_learning}阶段保持\gls{unsupervised_learning}阶段所提取信息的复杂方法。
@@ -588,7 +610,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 
 对于为什么基于\gls{distributed_representation}的模型泛化能力更好的另一个说法是，尽管能够明确地编码这么多不同的区域，但它们的容量仍然是很有限的。
-例如，线性阀值单位的\gls{NN}的VC纬度仅为$O(w\log w)$，其中$w$是权重的数目\citep{sontag1998vc}。
+例如，线性阀值单位的\gls{NN}的\glssymbol{VC}维仅为$O(w\log w)$，其中$w$是权重的数目\citep{sontag1998vc}。
 这种限制出现的原因是，虽然我们可以为表示空间分配非常多的唯一码，但是我们不能完全使用所有的码空间，也不能使用\gls{linear_classifier}学习出从表示空间$\Vh$到输出$\Vy$的任意函数映射。
 因此使用与\gls{linear_classifier}相结合的\gls{distributed_representation}传达了一种先验信念，待识别的类在$\Vh$代表的潜在因素的函数下是线性可分的。
 我们通常想要学习类别，例如所有绿色对象的所有图像集合，或是汽车的所有图像集合，但不会是需要非线性XOR逻辑的类别。
@@ -629,7 +651,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 \section{得益于深度的指数增益}
 \label{sec:exponential_gains_from_depth}
-我们已经在\secref{sec:universal_approximation_properties_and_depth}中看到，\gls{MLP}是通用的近似器，一些函数能够用指数级小的深层网络（相比于浅层网络）表示。
+我们已经在\secref{sec:universal_approximation_properties_and_depth}中看到，\gls{MLP}是通用的近似器，一些函数能够用指数级小的\gls{deep_network}（相比于浅层网络）表示。
 模型大小的减小能够提高统计效率。
 在本节中，我们描述了如何将类似结果更一般地应用于其他种类的具有分布式隐藏表示的模型。
 
