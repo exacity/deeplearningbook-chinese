@@ -722,7 +722,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 即使在使用单个概率分布时，我们有时可以在不同的建模方式之间切换。
 有时，如果我们观察到变量的某个子集，或者如果我们希望执行不同的计算任务，换一种建模方式可能更合适。
 例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\secref{sec:sampling_from_graphical_models}中描述）的直接方法。
-而\gls{undirected_model}公式通常用于近似推断过程（我们将在\chapref{chap:approximate_inference}中看到，\eqnref{eqn:1956}强调了\gls{undirected_model}的作用）。
+而\gls{undirected_model}公式通常用于\gls{approximate_inference}过程（我们将在\chapref{chap:approximate_inference}中看到，\eqnref{eqn:1956}强调了\gls{undirected_model}的作用）。
 % 566
 
 
@@ -996,16 +996,17 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\mid\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
 % 573
 
-\section{推断和近似推断}
+\section{推断和\glsentrytext{approximate_inference}}
 \label{sec:inference_and_approximate_inference}
 % 573 end
 
 
-我们可以使用概率模型的主要方法之一是提出关于变量如何相互关联的问题。 
+%我们可以使用概率模型的主要方法之一是提出关于变量如何相互关联的问题。 
+解决变量之间如何相互关联的问题是我们使用概率模型的一个主要方式。 
 给定一组医学测试，我们可以询问患者可能患有什么疾病。
 在\gls{latent_variable}模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \mid \RVv]$。
 有时我们需要解决这些问题来执行其他任务。 
-我们经常使用\gls{MLE}来训练我们的模型。
+我们经常使用最大似然的准则来训练我们的模型。
 由于
 \begin{align}
 \label{eqn:169}
@@ -1032,12 +1033,12 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 该树的叶是每个子句的变量。
 树的根报告整个问题是否满足。
 由于literal上的均匀分布，缩减树的跟结点的边缘分布表示多少比例的分配能够使得该问题成立。
-虽然这是一个设计的最坏情况的例子，NP-hard图通常出现在实际现实世界的场景。
+虽然这是一个设计的最坏情况的例子，NP-hard图通常出现在现实世界的场景中。
 % 574
 
 
-这促使我们使用近似推断。
-在\gls{DL}中，这通常涉及变分推断，其中通过寻求尽可能接近真实分布的近似分布$q(\RVh\mid\RVv)$来逼近真实分布$p(\RVh\mid\Vv)$。
+这促使我们使用\gls{approximate_inference}。
+在\gls{DL}中，这通常涉及\gls{variational_inference}，其中通过寻求尽可能接近真实分布的近似分布$q(\RVh\mid\RVv)$来逼近真实分布$p(\RVh\mid\Vv)$。
 这个技术在\chapref{chap:approximate_inference}中有深入的描述。
 % 574 end
 
@@ -1087,12 +1088,12 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 传统的\gls{graphical_models}具有非常少的连接，并且每个变量的连接选择可以单独设计。
 模型结构的设计与推断算法的选择紧密相关。
 \gls{graphical_models}的传统方法通常旨在保持精确推断的可追踪性。
-当这个约束太强的时候，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的近似推断算法。
+当这个约束太强的时候，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的\gls{approximate_inference}算法。
 这两种方法通常在连接非常稀疏的图上有很好的效果。
 相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$\RSv_i$连接到非常多的隐藏单元$\RSh_j$上，从而使得$\RVh$可以获得一个$\RSv_i$的分布式表示（也可能是其他几个可观察变量）。
 分布式表示具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，分布式表示有一个缺点就是对于精确推断和循环信任传播等传统技术来说不能产生足够稀疏的图。
 结果，\gls{graphical_models}和深度图模型最大的区别之一就是\gls{DL}中从来不会使用\gls{loopy_belief_propagation}。
-相反的，许多\gls{DL}模型可以用来加速\gls{gibbs_sampling}或者变分推断。
+相反的，许多\gls{DL}模型可以用来加速\gls{gibbs_sampling}或者\gls{variational_inference}。
 此外，\gls{DL}模型包含了大量的\gls{latent_variable}，使得高效的数值计算代码显得格外重要。
 除了选择高级推断算法之外，这提供了另外的动机，用于将结点分组成层，相邻两层之间用一个矩阵来描述相互作用。
 这要求实现算法的各个步骤具有高效的矩阵乘积运算，或者专门适用于稀疏连接的操作，例如块对角矩阵乘积或卷积。
