@@ -101,7 +101,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh),
 
 \gls{sparse}\gls{AE}通常用于学习特征，以便用于其他任务如分类。
 \gls{sparse}\gls{regularization}的\gls{AE}必须反映训练数据集的独特统计特征，而不是简单地充当恒等函数。
-以这种方式训练，执行附带\gls{sparse}罚的复制任务可以得到能学习有用特征的模型。
+以这种方式训练，执行附带\gls{sparse}惩罚的复制任务可以得到能学习有用特征的模型。
 
 
 我们可以简单地将惩罚项$\Omega(\Vh)$视为加到\gls{feedforward_network}的正则项，这个\gls{feedforward_network}的主要任务是将输入复制到输出（\gls{unsupervised_learning}的目标），并尽可能地根据这些\gls{sparse}特征执行一些\gls{supervised_learning}任务（根据\gls{supervised_learning}的目标）。
@@ -269,7 +269,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 \else
 \centerline{\includegraphics{Chapter14/figures/stochastic-autoencoder}}
 \fi
-\caption{随机\gls{AE}的结构，其中\gls{encoder}和\gls{decoder}包括一些噪声注入，而不是简单的函。
+\caption{随机\gls{AE}的结构，其中\gls{encoder}和\gls{decoder}包括一些噪声注入，而不是简单的函数。
 这意味着可以将它们的输出视为来自分布的采样（对于\gls{encoder}是$p_{\text{encoder}}(\Vh \mid \Vx)$，对于\gls{decoder}是$p_{\text{decoder}}(\Vx\mid \Vh)$）。}
 \label{fig:chap14_stochastic-autoencoder}
 \end{figure}
