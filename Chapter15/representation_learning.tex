@@ -4,14 +4,14 @@
 \label{chap:representation_learning}
 在本章中，首先我们会讨论学习表示是什么意思，以及表示的概念如何有助于深度框架的设计。
 我们探讨学习算法如何在不同任务中共享统计信息，包括使用无监督任务中的信息进行监督任务。
-共享表示有助于处理多模式或多领域，或是将已学到的知识转移到样本很少或没有的任务上，但任务表示存在。
+共享表示有助于处理多模式或多领域，或是将已学到的知识转移到样本很少或没有，但任务表示存在的任务上。
 最后，我们回溯去探讨\gls{representation_learning}成功的原因，从\gls{distributed_representation}\citep{Hinton-et-al-PDP1986}和深度表示的理论优势，到数据生成过程基本假设的更一般概念，特别是观测数据的基本成因。
 
 
-很多信息处理任务会非常容易，或非常难，这取决于信息是如何表示的。
-这是一个普适于日常生活，计算机科学的基本原则，也适用于机器学习。
+很多信息处理任务，非常容易或者非常困难取决于信息是如何表示的。
+这是一个普适于日常生活，普适于计算机科学的基本原则，也普适于机器学习。
 例如，对于人而言，使用长除法计算210除以6非常直观。
-如果使用罗马数字表示，这个问题就没那么直观了。
+但如果使用罗马数字表示，这个问题就没那么直观了。
 大部分现代人在计算CCX除以VI时，都会将其转化成阿拉伯数字，从而使用位值系统的长除法。
 更具体地，我们可以量化使用合适或不合适表示时，不同操作的渐近运行时间。
 例如，插入一个数字到有序表中的正确位置，如果该数列表示为链表，那么所需时间是$O(n)$；如果该数列表示为红黑树，那么只需要$O(\log n)$的时间。
@@ -19,57 +19,56 @@
 % -- 517 --
 
 在机器学习中，如何判断一种表示比另一种表示更好呢？
-一般来说，一个好的表示可以使随后的学习任务更容易。
-表示的选择通常取决于随后的学习任务。
+一般而言，一个好的表示可以使随后的学习任务更容易。
+选择什么表示通常取决于随后的学习任务。
 
 
 我们可以将\gls{supervised_learning}训练的\gls{feedforward_network}视为一种\gls{representation_learning}。
-具体地，该网络的最后一层通常是\gls{linear_classifier}，如\gls{softmax_chap15}回归分类器。
-该网络的其余部分学习提供该分类器的表示。
-监督准则下的训练自然会使得每个\gls{hidden_layer}（比较接近上面的\gls{hidden_layer}）的表示趋向于具有使训练任务更容易的性质。
+具体地，网络的最后一层通常是\gls{linear_classifier}，如\gls{softmax_chap15}回归分类器。
+网络的其余部分学习出分类器输入的表示。
+监督准则下的训练自然会使得每个\gls{hidden_layer}（比较接近顶层的\gls{hidden_layer}）的表示趋向于具有使训练任务更容易的性质。
 例如，输入特征线性不可分的类别可能在最后一个\gls{hidden_layer}变成线性可分的。
-原则上，最后一层可以是另一种模型，如最近邻分类\citep{SalakhutdinovR2007-small}。
+原则上，最后一层可以是另一种模型，如\gls{nearest_neighbor}分类\citep{SalakhutdinovR2007-small}。
 倒数第二层的特征应该根据最后一层的类型学习不同的性质。
 
 
 \gls{feedforward_network}的监督训练没有明确强加任何条件给学习的中间特征。
 其他的\gls{representation_learning}算法往往会以某种特定的方式明确设计的表示。
-例如，假设我们想要学习使密度估计更容易的表示。
+例如，我们想要学习更容易估计密度的表示。
 具有更多独立元素的分布会更容易建模，因此，我们可以设计鼓励表示向量$\Vh$中元素独立的目标函数。
 就像监督网络，无监督深度学习算法有一个主要的训练目标，但也额外地学习出了表示。
 不论该表示是如何得到的，它都可以运用于其他任务。
 另外，很多任务（有些是\gls{supervised}的，有些是\gls{unsupervised}的）可以通过共享的内部表示一起学习。
 
 
-大多数\gls{representation_learning}问题都面临保留尽可能多和输入相关的信息和获得不错性能（如独立性）之间的权衡。
+大多数\gls{representation_learning}算法都会权衡，保留尽可能多和输入相关的信息，还是追求良好的性质（如独立性）。
 
 
 \gls{representation_learning}特别有趣，因为它提供了一种方法来进行\gls{unsupervised_learning}和\gls{semi_supervised_learning}。
 我们通常会有非常大量的未标记的训练数据和相对较少的有标记的训练数据。
-使用\gls{supervised_learning}技巧于有标记的训练子集上通常会导致过拟合。
+在非常有限的标记数据集上\gls{supervised_learning}通常会导致过拟合。
 \gls{semi_supervised_learning}通过进一步学习未标记的数据，来解决过拟合的问题。
 具体地，我们可以从未标记的数据上学习出很好的表示，然后用这些表示来解决\gls{supervised_learning}问题。
 
 
 人类和动物能够从非常少的标记样本中学习。
 我们至今仍不知道这是如何做到的。
-许多因素可以解释人类的卓越性能——例如，大脑可能使用了大量的分类器或者贝叶斯推断技术。
-一种流行的假说是，大脑能够利用\gls{unsupervised_learning}和\gls{semi_supervised_learning}。
-有许多方法来利用无标记的数据。
-在本章中，我们专注于未标记的数据可以用来学习更好表示的假设。
+有许多假说解释人类的卓越学习能力——例如，大脑可能使用了大量的分类器或者贝叶斯推断技术。
+一种流行的假说是，大脑能够利用\gls{unsupervised_learning}和\gls{semi_supervised_learning}，使用很多方法来利用无标记的数据。
+在本章中，我们主要探讨未标记的数据可以学习出更好的表示。
 
 % -- 518 --
 
 \section{贪心地逐层\glsentrytext{unsupervised_pretraining}}
 \label{sec:greedy_layer_wise_unsupervised_pretraining}
-\gls{unsupervised_learning}在\gls{DNN}的复兴上起到了关键的历史作用，使研究者首次可以训练没有像卷积或者循环这样特殊结构的深度监督网络。
+\gls{unsupervised_learning}在\gls{DNN}的复兴历史上起到了关键作用，使研究者首次可以训练不含诸如\gls{convolution}或者\gls{recurrence}这类特殊结构的深度监督网络。
 我们将这一过程称为\firstgls{unsupervised_pretraining}，或者更精确地，\firstgls{greedy_layer_wise_unsupervised_pretraining}。
-此过程是一个任务的表示是如何学习的典范样例（\gls{unsupervised_learning}，尝试抓住输入分布的形状），有时可能会有助于另一任务（具有相同输入域的\gls{supervised_learning}）。
+此过程时一个任务（\gls{unsupervised_learning}，尝试抓住输入分布的形状）的表示如何有助于另一个任务（具有相同输入域的\gls{supervised_learning}）的典型示例。
 
 
 \gls{greedy_layer_wise_unsupervised_pretraining}依赖于单层\gls{representation_learning}算法，例如\glssymbol{RBM}，单层\gls{AE}，\gls{sparse_coding}模型，或其他学习隐表示的模型。
-每一层使用\gls{unsupervised_learning}\gls{pretraining}，输入前一层的输出，并产生输出数据的新型表示，其分布（或者是和其他变量，如要预测的类别，的关系）有希望是简单的。
-查看\algref{alg:pretraining}了解正式的表述。
+每一层使用\gls{unsupervised_learning}\gls{pretraining}，输入前一层的输出，输出数据的新型表示，新型表示的分布（或者是和其他变量，如要预测的类别，的关系）有可能是很简单的。
+如\algref{alg:pretraining}所示正式的表述。
 
 \begin{algorithm}
 \caption{{\em \gls{greedy_layer_wise_unsupervised_pretraining}的协定}\\
@@ -94,25 +93,25 @@
 \end{algorithm}
 
 
-基于无监督标准的贪心逐层训练过程早已被用来规避监督问题中深度网络联合训练多层的问题。
+基于无监督标准的贪心逐层训练过程，早已被用来规避监督问题中深度网络难以联合训练多层的问题。
 这种方法至少可以追溯神经认知机\citep{Fukushima75}。
-2006年深度学习的复兴始于发现，这种贪心学习的过程能够为多层联合训练过程找到一个好的初始值，甚至可以成功训练全连接的结构\citep{Hinton06-small,Hinton-Science2006,HintonG2006,Bengio-nips-2006,ranzato-07-small}。
-在此发现之前，只有卷积深度网络，或是深度来自循环结构的网络被认为是有可能训练的。
-如今，我们现在知道\gls{greedy_layer_wise_unsupervised_pretraining}不需要训练全连接的深度结构，但是无监督提前训练是第一个成功的方法。
+深度学习的复兴始于2006年发现，这种贪心学习的过程能够为多层联合训练过程找到一个好的初始值，甚至可以成功训练全连接的结构\citep{Hinton06-small,Hinton-Science2006,HintonG2006,Bengio-nips-2006,ranzato-07-small}。
+在此发现之前，只有深度卷积网络或深度循环网络这类特殊结构的深度网络被认为是有可能训练的。
+现在我们知道训练全连接的深度结构，\gls{greedy_layer_wise_unsupervised_pretraining}不是唯一的方法，但无监督提前训练是第一个成功的方法。
 
 
 \gls{greedy_layer_wise_unsupervised_pretraining}被称为\firstgls{greedy}的，是因为它是一个\firstgls{greedy_algorithm}，
-这意味着它每次独立地优化一块解决方案，而不是联合优化所有的块。
-它被称为\firstgls{layer_wise}，是因为这些独立块是网络层。
+这意味着它每次独立地优化一个解决方案，而不是联合优化所有的解决方案。
+它被称为\firstgls{layer_wise}，是因为这些独立的解决方案是网络层。
 具体地，\gls{greedy_layer_wise_unsupervised_pretraining}每次处理一层网络，训练第$k$层时保持前面的网络层不变。
 特别地，低层网络（最先训练的）不会在引入高层网络后进行调整。
 它被称为\firstgls{unsupervised}的，是因为每一层用\gls{unsupervised}\gls{representation_learning}算法训练。
-然而，它也被称为\firstgls{pretraining}，是因为它只是在联合训练算法\gls{fine_tune}所有层之前的第一步。
-在\gls{supervised_learning}任务中，它可以被看作是正则项（在一些实验中，\gls{pretraining}能降低测试误差而不能降低训练误差）和参数初始化的一种形式。
+然而，它也被称为\firstgls{pretraining}，是因为它只是在联合训练算法\textbf{\gls{fine_tune}}所有层之前的第一步。
+在\gls{supervised_learning}任务中，它可以被看作是正则项（在一些实验中，\gls{pretraining}不能降低训练误差，但能降低测试误差）和参数初始化的一种形式。
 
 % -- 519 --
 
-通常而言，``\gls{pretraining}''不仅单指\gls{pretraining}阶段，也指结合\gls{pretraining}和\gls{supervised_learning}的整个两阶段协议。
+通常而言，``\gls{pretraining}''不仅单指\gls{pretraining}阶段，也指结合\gls{pretraining}和\gls{supervised_learning}的整个两阶段学习过程。
 \gls{supervised_learning}阶段可能会使用\gls{pretraining}阶段得到的顶层特征训练一个简单分类器，或者可能会监督\gls{fine_tune}\gls{pretraining}阶段得到的整个网络。
 不管采用什么类型的\gls{supervised_learning}算法和模型，在大多数情况下，整个训练过程几乎是相同的。
 虽然\gls{unsupervised_learning}算法的选择将明显影响到细节，但是大多数\gls{unsupervised}\gls{pretraining}应用都遵循这一基本方法。
@@ -123,7 +122,7 @@
 这些\gls{DGM}会在\chapref{chap:deep_generative_models}讨论。
 
 
-正如\secref{sec:supervised_pretraining}所探讨的，也可能进行贪心逐层\emph{监督}\gls{pretraining}。
+正如\secref{sec:supervised_pretraining}所探讨的，也可以进行贪心逐层\emph{监督}\gls{pretraining}。
 这建立在训练浅层模型比\gls{deep_model}更容易的前提下，而该前提似乎在一些情况下已被证实\citep{Erhan+al-2010-small}。
 
 
@@ -138,55 +137,54 @@
 
 % -- 520 --
 
-首先，要注意的是这个讨论大部分都是针对\gls{greedy_unsupervised_pretraining}的。
+首先，要注意的是这个讨论大部分都是针对\gls{greedy_unsupervised_pretraining}而言。
 还有很多其他完全不同的方法用于训练\gls{semi_supervised_learning}\gls{NN}，比如\secref{sec:adversarial_training}介绍的\gls{virtual_adversarial_training}。
-还可以在训练\gls{supervised_model}的同时训练\gls{AE}或\gls{generative_model}。
-这种单阶段方法的例子包括\gls{discriminative_RBM}\citep{Larochelle+Bengio-2008}和梯形网络\citep{Rasmus-et-al-arxiv2015}，总体目标明确的是两项之和（一个使用标签，另一个使用输入）。
+我们还可以在训练\gls{supervised_model}的同时训练\gls{AE}或\gls{generative_model}。
+这种单阶段方法的例子包括\gls{discriminative_RBM}\citep{Larochelle+Bengio-2008}和梯形网络\citep{Rasmus-et-al-arxiv2015}，整体目标是两项之和（一个使用标签，另一个使用输入）。
 
 
 \gls{unsupervised_pretraining}结合了两种不同的想法。
-第一，它利用了\gls{DNN}初始参数选择可以对模型有着显著正则化效果（在较小程度上，可以改进优化）的想法。
+第一，它利用了\gls{DNN}对初始参数的选择，可以对模型有着显著的\gls{regularization}效果（在较小程度上，可以改进优化）的想法。
 第二，它利用了更一般的想法，学习\gls{input_distribution}有助于学习从\gls{input}到\gls{output}的映射。
 
 % -- 521 --
 
-这两个想法都涉及到多个未能完全理解的机器学习算法间的许多相互作用。
+这两个想法都涉及到多个未能完全理解的机器学习算法之间的相互作用。
 
 
-第一个想法，\gls{DNN}初始参数的选择对其性能具有很强的\gls{regularization}应，是最不容易理解的。
-在\gls{pretraining}变得流行时，在一个位置初始化模型被认为会使其接近某一个\gls{local_minimum}，而不是另一个最小值。
-今天，\gls{local_minima}不再被认为是\gls{NN}优化中的严重问题。
+第一个想法，\gls{DNN}初始参数的选择对其性能具有很强的\gls{regularization}效果，是最不容易理解的。
+在\gls{pretraining}变得流行时，在一个位置初始化模型被认为会使其接近某一个\gls{local_minimum}，而不是另一个\gls{local_minimum}。
+如今，\gls{local_minima}不再被认为是\gls{NN}优化中的严重问题。
 现在我们知道标准的\gls{NN}训练过程通常不会到达任何类型的极值点。
-仍然可能的是，\gls{pretraining}会初始化模型在一个可能不会被访问的位置——例如，某种区域，其中成本函数从一个样本点到另一个样本点变化很大，\gls{minibatch}只能提供\gls{noise}严重的梯度估计，或由该种区域中的海森矩阵条件数很差，梯度下降法必须使用非常小的步长。
-然而，我们精确判断\gls{supervised_learning}期间\gls{pretraining}参数的哪些部分应该保留的能力是有限的。
-这是现代方法通常同时使用\gls{unsupervised_learning}和\gls{supervised_learning}而不是连续使用两个阶段的原因之一。
-我们也可以简单地固定特征提取器的参数，仅仅将\gls{supervised_learning}作为分类器学习上层特征，从而避免让\gls{supervised_learning}阶段保持\gls{unsupervised_learning}阶段所提取信息的复杂方法。
+仍然可能的是，\gls{pretraining}会初始化模型到一个可能不会探索的位置——例如，某种区域，其中\gls{cost_function}从一个样本点到另一个样本点变化很大，\gls{minibatch}只能提供\gls{noise}严重的梯度估计，或是某种区域中的\gls{hessian}矩阵条件数是病态的，梯度下降法必须使用非常小的步长。
+然而，我们很难准确判断\gls{supervised_learning}期间\gls{pretraining}参数的哪些部分应该保留。
+这是现代方法通常同时使用\gls{unsupervised_learning}和\gls{supervised_learning}，而不是依序使用两个学习阶段的原因之一。
+除去让\gls{supervised_learning}阶段保持\gls{unsupervised_learning}阶段所提取信息的复杂方法，我们还可以简单地固定特征提取器的参数，仅仅将\gls{supervised_learning}作为顶层特征的分类器。
 
-
-另一个想法，学习算法可以使用在\gls{unsupervised}阶段学习的信息，更好地执行\gls{supervised_learning}阶段，已经被很好地理解了。
+另一个想法，学习算法可以使用\gls{unsupervised}阶段学习的信息，更好地执行\gls{supervised_learning}阶段，已经被很好地理解了。
 基本想法是对于\gls{unsupervised}任务有用的一些特征对于\gls{supervised_learning}任务也可能是有用的。
-例如，如果我们训练汽车和摩托车图像的生成模型，它将需要知道轮子，以及一张图中应该有多少个轮子。
+例如，如果我们训练汽车和摩托车图像的生成模型，它需要知道轮子的概念，以及一张图中应该有多少个轮子。
 如果我们幸运，已经知道轮子采取一种易于被\gls{supervised_learning}获取的表示形式，那么这个任务会变得容易。
-目前这还未从数学，理论层面上被证明，因此并不总是能够预测哪种任务能以这种形式从\gls{unsupervised_learning}中受益。
-这种方法的许多方面都高度依赖于具体使用的模型。
-例如，如果我们希望在\gls{pretraining}的特征之上添加\gls{linear_classifier}，那么特征必须使底层类别线性可分。
+然而还未能从理论层面上证明，因此并不总是能够预测哪种任务能以这种形式从\gls{unsupervised_learning}中受益。
+这种方法高度依赖于具体使用的模型。
+例如，如果我们希望为\gls{pretraining}的特征添加\gls{linear_classifier}，那么学习到的特征必须使底层类别线性可分。
 这些性质通常自然地发生，但并非总是这样。
-这是另一个\gls{supervised}和\gls{unsupervised_learning}同时训练更可取的原因——输出层施加的约束自然从一开始就包括在内。
+这是另一个\gls{supervised}和\gls{unsupervised_learning}同时训练更可取的原因——输出层施加的约束很自然地从一开始就包括在内。
 
 % -- 522 --
 
 从\gls{unsupervised_pretraining}作为学习表示的角度来看，我们可以期望\gls{unsupervised_pretraining}在初始表示较差的情况下更有效。
 一个重要的例子是\gls{word_embeddings}。
 使用\gls{one_hot}向量表示的词不是具有很多信息，因为任意两个不同的\gls{one_hot}向量之间的距离（平方$L^2$距离都是$2$ )都是相同的。
-学习到的\gls{word_embeddings}自然地会用它们彼此之间的距离来编码词之间的相似性。
+学习到的\gls{word_embeddings}自然会用它们彼此之间的距离来编码词之间的相似性。
 因此，\gls{unsupervised_pretraining}在处理单词时特别有用。
 然而在处理图像时是不太有用的，可能是因为图像已经在一个很丰富的向量空间中，其中的距离只能提供低质量的相似性度量。
 
 
-从\gls{unsupervised_pretraining}作为正则项的角度来看，我们可以期望\gls{unsupervised_pretraining}在标记样本的数量非常小时很有帮助。
+从\gls{unsupervised_pretraining}作为正则项的角度来看，我们可以期望\gls{unsupervised_pretraining}在标记样本数量非常小时很有帮助。
 因为\gls{unsupervised_pretraining}添加的信息来源于未标记的数据，所以当未标记样本的数量非常大时，我们也可以期望\gls{unsupervised_pretraining}的效果最好。
 \gls{unsupervised_pretraining}的大量未标记样本和少量标记样本构成的\gls{semi_supervised_learning}的优势在2011年特别明显。
-\gls{unsupervised_pretraining}赢得了两个国际转移学习比赛\citep{UTLC+LISA-2011-small,goodfellow+all-NIPS2011}，在该设定中，目标任务中标记样本的数目很少（每类几个到几十个）。
+\gls{unsupervised_pretraining}赢得了两个国际\gls{transfer_learning}比赛\citep{UTLC+LISA-2011-small,goodfellow+all-NIPS2011}，在该设定中，目标任务中标记样本的数目很少（每类几个到几十个）。
 这些效果也出现在被\citep{paine2014analysis}仔细控制的实验中。
 
 
@@ -197,24 +195,24 @@
 
 
 除了这些注意事项外，我们现在分析一些\gls{unsupervised_pretraining}改善性能的成功示例，并解释这种改进发生的已知原因。
-\gls{unsupervised_pretraining}通常用来改进分类器，并且从减少测试误差的观点看是有意思的。
-然而，\gls{unsupervised_pretraining}还可以帮助除分类之外的任务，并且可以用于改进优化，而不仅仅只是作为正规化项。
-例如，它可以提高\gls{DAE}的训练和测试重构误差\citep{Hinton-Science2006}。
+\gls{unsupervised_pretraining}通常用来改进分类器，并且从减少测试误差的观点来看是很有意思的。
+然而，\gls{unsupervised_pretraining}还有助于分类以外的任务，并且可以用于改进优化，而不仅仅只是作为正规化项。
+例如，它可以提高\gls{DAE}的训练和测试\gls{reconstruction_error}\citep{Hinton-Science2006}。
 
 % -- 523 --
 
 \cite{Erhan+al-2010-small}进行了许多实验来解释\gls{unsupervised_pretraining}的几个成功点。
-对训练误差和测试误差的改进都可以解释为，\gls{unsupervised_pretraining}将参数引入到了否则不会访问到的区域。
-\gls{NN}训练是非确定性的，并且每次运行时会收敛到不同的函数。
-训练可以在梯度变小的点停止，也可以\gls{early_stopping}结束训练以防止过拟合，还可以在梯度很大但由于诸如随机性或海森矩阵\gls{poor_conditioning}等问题难以找到下坡方向的点停止。
+对训练误差和测试误差的改进都可以解释为，\gls{unsupervised_pretraining}将参数引入到了可能不会探索的区域。
+\gls{NN}训练是非确定性的，并且每次运行都会收敛到不同的函数。
+训练可以停止在梯度变小的点；也可以\gls{early_stopping}结束训练，以防过拟合；还可以停止在梯度很大，但由于诸如随机性或海森矩阵\gls{poor_conditioning}等问题难以找到合适下降方向的点。
 经过\gls{unsupervised_pretraining}的神经网络会一致地停止在一片相同的区域，但未经过\gls{pretraining}的\gls{NN}会一致地停在另一个区域。
 参看\figref{fig:chap15_isomap}了解这种现象。
-经过\gls{pretraining}的网络到达的区域是较小的，这表明\gls{pretraining}减少了估计过程的方差，这转而又可以降低严重过拟合的风险。
-换言之，\gls{unsupervised_pretraining}将\gls{NN}参数初始化到它们不易逃逸的区域，并且遵循这种初始化的结果更加一致，和没有这种初始化的相比，结果很差的可能性更低。
+经过\gls{pretraining}的网络到达的区域是较小的，这表明\gls{pretraining}减少了估计过程的方差，这进而又可以降低严重过拟合的风险。
+换言之，\gls{unsupervised_pretraining}将\gls{NN}参数初始化到它们不易逃逸的区域，并且遵循这种初始化的结果更加一致，和没有这种初始化相比，结果很差的可能性更低。
 
 
-\cite{Erhan+al-2010-small}也提供了一些关于何时\gls{pretraining}效果最好的回答——\gls{test_error}的均值和方差在更深的\gls{pretraining}的网络中下降得最多。
-值得注意的是，这些实验是在训练非常深网络的现代方法发明和流行（\gls{ReLU}，\gls{dropout}和\gls{batch_normalization}）之前进行的，因此对于\gls{unsupervised_pretraining}与当前方法的结合，我们所知甚少。
+\cite{Erhan+al-2010-small}也回答了\emph{何时}\gls{pretraining}效果最好——预训练的网络越深，\gls{test_error}的均值和方差下降得越多。
+值得注意的是，这些实验是在训练非常深层网络的现代方法发明和流行（\gls{ReLU}，\gls{dropout}和\gls{batch_normalization}）之前进行的，因此对于\gls{unsupervised_pretraining}与当前方法的结合，我们所知甚少。
 
 
 一个重要的问题是\gls{unsupervised_pretraining}是如何作为\gls{regularizer}的。
@@ -223,10 +221,11 @@
 
 
 与\gls{unsupervised_learning}的其它形式相比，\gls{unsupervised_pretraining}的缺点是其使用了两个单独的训练阶段。
-两个训练阶段不好的原因之一是，没有单个超参数可预测地减少或增加\gls{unsupervised_pretraining}带来的\gls{regularization}的强度。
-相反，会有许多超参数，但其效果只能事后测量，通常难以提前预测。
-当我们同时执行\gls{unsupervised}和\gls{supervised_learning}而不使用\gls{pretraining}策略时，会有单个超参数（通常是附加到无监督损失的系数）确定无监督目标正则化监督模型的强度。
-减少该系数，总是可以可预测地获得较少\gls{regularization}。
+很多\gls{regularization}技术都具有一个优点，允许用户调整单一\gls{hyperparameter}控制\gls{regularization}的强度。
+\gls{unsupervised_pretraining}没有一种明确的方法，调整\gls{unsupervised}阶段\gls{regularization}的强度。
+相反，\gls{unsupervised_pretraining}有许多超参数，但其效果只能之后度量，通常难以提前预测。
+当我们同时执行\gls{unsupervised}和\gls{supervised_learning}而不使用\gls{pretraining}策略时，会有单个超参数（通常是附加到无监督损失的系数）控制无监督目标正则化监督模型的强度。
+减少该系数，总是能够可预测地获得较少\gls{regularization}强度。
 在\gls{unsupervised_pretraining}的情况下，没有一种灵活适应\gls{regularization}强度的方式——要么监督模型初始化为\gls{pretraining}的参数，要么不是。
 
 % -- 524 --
@@ -243,41 +242,41 @@
 
 
 具有两个单独的训练阶段的另一个缺点是每个阶段都具有自己的超参数。
-第二阶段的性能通常不能在第一阶段期间预测，因此在提出第一阶段的超参数和使用第二阶段的反馈来更新之间存在较长的延迟。
+第二阶段的性能通常不能在第一阶段期间预测，因此在第一阶段提出超参数和第二阶段根据反馈来更新之间存在较长的延迟。
 最主要的方法是使用监督阶段验证集的误差来挑选\gls{pretraining}阶段的超参数，如\cite{Larochelle-jmlr-2009}中讨论的。
 在实际中，有些超参数，如\gls{pretraining}迭代的次数，很方便在\gls{pretraining}阶段设定，在\gls{unsupervised}目标上使用提前停止。这个方法并不理想，但是计算上比使用监督目标代价小得多。
 
 % -- 525 --
 
-今天，\gls{unsupervised_pretraining}已经大部分被抛弃了，除了在自然语言处理领域，其中单词作为\gls{one_hot}矢量的自然表示不能传达相似性信息，并且有非常多的未标记集可用。
-在这种情况下，\gls{pretraining}的优点是可以对一个巨大的未标记集合（例如用包含数十亿单词的语料库）进行\gls{pretraining}，学习良好的表示（通常是单词，但也可以是句子），然后使用该表示或\gls{fine_tune}表示，用于训练集中包含很少样本的监督任务。
+如今，大部分算法已经不使用\gls{unsupervised_pretraining}了，除了在自然语言处理领域，其中单词作为\gls{one_hot}矢量的自然表示不能传达相似性信息，并且有非常多的未标记集可用。
+在这种情况下，\gls{pretraining}的优点是可以对一个巨大的未标记集合（例如用包含数十亿单词的语料库）进行\gls{pretraining}，学习良好的表示（通常是单词，但也可以是句子），然后使用该表示或\gls{fine_tune}表示，用于训练集样本很少的监督任务。
 这种方法由\cite{CollobertR2008-small}，\cite{Turian+Ratinov+Bengio-2010-small}和\cite{collobert2011natural}开创，至今仍在使用。
 
 
-基于\gls{supervised_learning}的\gls{DL}技术，通过\gls{dropout}或\gls{batch_normalization}来正则化，能够在很多任务上实现人类级别的性能，但必须使用极大的标记数据集。
-在中等大小的数据集（例如CIFAR-10和MNIST，每个类大约有5,000个标记的样本）上，这些相同技术的效果比\gls{unsupervised_pretraining}要好。
-在极小的数据集，例如交替拼接数据集，贝叶斯方法要优于基于\gls{unsupervised_pretraining}的方法\citep{Srivastava-master-small}。
-由于这些原因，\gls{unsupervised_pretraining}的流行度已经减小。
+基于\gls{supervised_learning}的\gls{DL}技术，通过\gls{dropout}或\gls{batch_normalization}来\gls{regularization}，能够在很多任务上达到人类级别的性能，但必须使用极大的标记数据集。
+在中等大小的数据集（例如CIFAR-10和MNIST，每个类大约有5,000个标记的样本）上，这些技术的效果比\gls{unsupervised_pretraining}更好。
+在极小的数据集，例如\gls{alternative_splicing_dataset}，贝叶斯方法要优于基于\gls{unsupervised_pretraining}的方法\citep{Srivastava-master-small}。
+由于这些原因，\gls{unsupervised_pretraining}已经不如以前流行。
 然而，\gls{unsupervised_pretraining}仍然是深度学习研究历史上的一个重要里程碑，并继续影响当代方法。
 \gls{pretraining}的想法已经推广到\secref{sec:supervised_pretraining}中讨论的\firstgls{supervised_pretraining}，这是\gls{transfer_learning}中非常常用的方法。
 \gls{transfer_learning}中的\gls{supervised_pretraining}流行\citep{Oquab-et-al-CVPR2014,yosinski-nips2014}于在ImageNet数据集上使用\gls{convolutional_network}\gls{pretraining}。
-为了这个目的，实践者们公布了这些训练的网络的参数，就像自然语言任务公布\gls{pretraining}的单词向量一样\citep{collobert2011natural,Mikolov-et-al-ICLR2013}。
+由于这个原因，实践者们公布了这些网络训练出的参数，就像自然语言任务公布\gls{pretraining}的单词向量一样\citep{collobert2011natural,Mikolov-et-al-ICLR2013}。
 
 % -- 526 --
 
 \section{\glsentrytext{transfer_learning}和\glsentrytext{domain_adaption}}
 \label{sec:transfer_learning_and_domain_adaptation}
 \gls{transfer_learning}和\gls{domain_adaption}指的是利用一个设定（分布$P_1$）中已经学到的内容去改善另一个设定（比如分布$P_2$）中的泛化情况。
-这点概括了上一节中提出的想法，我们在\gls{unsupervised_learning}和\gls{supervised_learning}之间转移表示。
+这点概括了上一节提出的想法，在\gls{unsupervised_learning}和\gls{supervised_learning}之间转移表示。
 
 
 在\firstgls{transfer_learning}中，\gls{learner}必须执行两个或更多个不同的任务，但是我们假设能够解释$P_1$变化的许多因素和学习$P_2$需要抓住的变化相关。
-这通常能够在\gls{supervised_learning}背景中理解，输入是相同的，但是输出具有不同的性质。
+这通常能够在\gls{supervised_learning}的情况中理解，输入是相同的，但是输出具有不同的性质。
 例如，我们可能在第一种设定中学习了一组视觉类别，比如猫和狗，然后在第二种设定中学习一组不同的视觉类别。
-如果第一种设定（从$P_1$采样）中存在明显更多的数据，那么这有助于在从$P_2$抽取到的非常少的样本中快速泛化。
-许多视觉类别共享一些低级概念，比如边缘，视觉形状，几何变化，照明变化的影响等。
-一般而言，当存在对不同设定或任务有用，且对应于多个设定的潜在因素的特征时，\gls{transfer_learning}，\gls{multitask_learning}（\secref{sec:multitask_learning}）和\gls{domain_adaption}可以使用\gls{representation_learning}来完成。
-如\figref{fig:chap7_multi_factor_output}所示，共享的底层和任务相关的上层。
+如果第一种设定（从$P_1$采样）中具有非常多的数据，那么这有助于在$P_2$抽取到的非常少的样本中快速泛化。
+许多视觉类别\emph{共享}一些低级概念，比如边缘，视觉形状，几何变化，照明变化的影响等。
+一般而言，当存在对不同设定或任务有用，且对应多个设定的潜在因素的特征时，\gls{transfer_learning}，\gls{multitask_learning}（\secref{sec:multitask_learning}）和\gls{domain_adaption}可以使用\gls{representation_learning}来实现。
+如\figref{fig:chap7_multi_factor_output}所示，具有共享底层和任务相关上层的学习框架。
 
 
 然而，有时不同任务之间共享的不是输入的语义，而是输出的语义。
@@ -295,9 +294,9 @@
 \end{figure}
 
 在\firstgls{domain_adaption}的相关情况下，任务（和最优的输入输出映射）在每个设定之间保持相同，但是\gls{input_distribution}稍有不同。 
-例如，考虑情感分析的任务，其包括确定评论是否表达积极或消极情绪。 
-发表在网上的评论会来自许多的类别。
-在书，视频和音乐等媒体内容上的训练的顾客评论情感预测器，被用于分析诸如电视机或智能电话的消费电子产品的评论时，\gls{domain_adaption}情景可能会出现。
+例如，考虑情感分析的任务，包括判断评论是否表达积极或消极情绪。 
+网上的评论来自许多类别。
+在书，视频和音乐等媒体内容上训练的顾客评论情感预测器，被用于分析诸如电视机或智能电话的消费电子产品的评论时，\gls{domain_adaption}情景可能会出现。
 可以想象，存在一个潜在的函数可以判断任何语句是正面的，中性的还是负面的，但是词汇和风格可能会因领域而有差异，使得跨域的泛化训练变得更加困难。
 简单的\gls{unsupervised_pretraining}（\gls{DAE}）已经能够非常成功地用于\gls{domain_adaption}的情感分析\citep{Glorot+al-ICML-2011}。
 
@@ -305,19 +304,19 @@
 
 一个相关的问题是\firstgls{concept_drift}，我们可以将其视为一种\gls{transfer_learning}，因为数据分布随时间而逐渐变化。
 \gls{concept_drift}和\gls{transfer_learning}都可以被视为\gls{multitask_learning}的特定形式。
-短语``\gls{multitask_learning}''通常指\gls{supervised_learning}任务，而\gls{transfer_learning}中更一般的概念也适用于\gls{unsupervised_learning}和\gls{RL}
+短语``\gls{multitask_learning}''通常指\gls{supervised_learning}任务，而\gls{transfer_learning}中更一般的概念也适用于\gls{unsupervised_learning}和\gls{RL}。
 
 在所有这些情况下，目标是利用第一个设定下的数据优势，提取在第二种设定中学习时或直接进行预测时可能有用的信息。
 \gls{representation_learning}的核心思想是相同的表示可能在两种设定中都是有用的。
-两个设定中使用相同的表示使得表示可以受益于用于两个任务的训练数据。
+两个设定使用相同的表示，使得表示可以受益于两个任务的训练数据。
 
 
 如前所述，\gls{unsupervised}\gls{DL}用于\gls{transfer_learning}已经在一些机器学习比赛中取得了成功\citep{UTLC+LISA-2011-small,goodfellow+all-NIPS2011}。
 这些比赛中的某一个实验设定如下。
-首先每个参与者获得一个来自第一种设定（来自分布$P_1$）的数据集，其中含有一些类别的样本。
-参与者必须用这个来学习一个良好的特征空间（将原始输入映射到某种表示），这样当我们将这个学习到的变换用于来自迁移设定（分布$P_2$）的输入时，\gls{linear_classifier}可以被训练并泛化于很少的有标记样本。
-这个竞争中发现的最引人注目的结果之一是，当网络架构使用越深的表示（在第一个设定$P_1$中的数据使用纯无监督的方式学习），第二个设定（迁移）$P_2$的新类别上学习到的曲线会变得更好。
-对于深度表示而言，迁移任务中只需要较少的标记样本就能明显地渐近泛化性能。
+首先每个参与者获得一个第一种设定（来自分布$P_1$）的数据集，其中含有一些类别的样本。
+参与者必须用这个来学习一个良好的特征空间（将原始输入映射到某种表示），这样当我们将这个学习到的变换用于来自迁移设定（分布$P_2$）的输入时，\gls{linear_classifier}可以在有标记样本很少的训练集上训练，泛化。
+这个比赛中最引人注目的结果之一是，学习表示的网络架构越深（在第一个设定$P_1$中的数据使用纯无监督的方式学习），在第二个设定（迁移）$P_2$的新类别上学习到的曲线就越好。
+对于深度表示而言，迁移任务只需要较少的标记样本就能明显地渐近泛化性能。
 
 % -- 528 --
 
@@ -327,10 +326,10 @@
 
 因为第一阶段学习出的表示就可以清楚地分离类别，所以\gls{one_shot_learning}\citep{Fei-Fei+al-2006}是可能的。
 在\gls{transfer_learning}阶段，仅需要一个标记样本来推断表示空间中聚集在相同点周围的许多可能的测试样本的标签。
-这种作用的程度使得在学习的表示空间中，对应于这些不变性的变化因子已经与其它因子完全分离，在区分某些类别的对象时，我们以哪种方式学习到哪些因素是有决定意义的。
+这使得在学习到的表示空间中，对应于不变性的变化因子已经与其它因子完全分离，在区分某些类别的对象时，我们以哪种方式学习到哪些因素具有决定意义。
 
 
-关于\gls{zero_shot_learning}设定的例子，考虑\gls{learner}已经读取了大量文本，然后要解决对象识别的问题。
+考虑一个\gls{zero_shot_learning}设定的例子，\gls{learner}已经读取了大量文本，然后要解决对象识别的问题。
 如果文本足够好地描述了对象，那么即使没有看到某对象的图像，也能识别该对象。
 例如，已知猫有四条腿和尖尖的耳朵，那么\gls{learner}可以在没有见过猫的情况下猜测该图像是猫。
 
@@ -340,24 +339,24 @@
 该模型被训练来估计条件分布$p(\Vy \mid \Vx, T)$，其中$T$是我们希望执行的任务的描述。
 在我们的例子中，读取猫的文本信息然后识别猫，输出是二元变量$y$，$y=1$表示``是''，$y=0$表示``不是''。
 任务变量$T$表示要回答的问题，例如``这个图像中是否有猫？''
-如果训练集包含和$T$在相同空间的无监督对象样本，我们也许能够推断未知的$T$实例的含义。
-在我们的例子中，没有提前看到猫的图像而去识别猫，拥有一些未标记的文本数据包含句子诸如``猫有四条腿''或``猫有尖耳朵''是很重要的。
+如果训练集包含和$T$在相同空间的\gls{unsupervised}对象样本，我们也许能够推断未知的$T$实例的含义。
+在我们的例子中，没有提前看到猫的图像而去识别猫，拥有一些未标记的文本数据包含句子诸如``猫有四条腿''或``猫有尖耳朵''，对于学习非常有帮助。
 
 % -- 529 --
 
 \gls{zero_shot_learning}要求$T$被表示为某种泛化的形式。
 例如，$T$不能仅是指示对象类别的\gls{one_hot}。
-通过使用相关于每个类别的词学习到的\gls{word_embeddings}表示，\cite{Socher-2013}提出了对象类别的\gls{distributed_representation}。
+通过使用每个类别词的\gls{word_embeddings}表示，\cite{Socher-2013}提出了对象类别的\gls{distributed_representation}。
 
 
-一种类似的现象出现在机器翻译中\citep{Klementiev-et-al-COLING2012,Mikolov-et-al-arxiv2013,Gouws-et-al-arxiv2014}：我们已经知道一种语言中的单词，和从非语言语料库中学到的关系；另一方面，我们已经翻译了一种语言中的单词与另一种语言中的单词相关的句子。
-即使我们可能没有将语言$X$中的单词$A$翻译成语言$Y$中的单词$B$的标记样本，那么我们也可以泛化并猜出单词$A$的翻译，这是由于我们已经学习了语言$X$和$Y$的\gls{distributed_representation}，并且通过两种语言相匹配句子组成的训练样本，产生了关联于两个空间的链接（可能是双向的）。
-如果所有的三种成分（两种表示形式和它们之间的关系）是联合学习的，那么这种迁移将是最成功的。
+一种类似的现象出现在\gls{machine_translation}中\citep{Klementiev-et-al-COLING2012,Mikolov-et-al-arxiv2013,Gouws-et-al-arxiv2014}：我们已经知道一种语言中的单词，和非语言语料库中学到的词与词之间的关系；另一方面，我们已经翻译了一种语言中的单词与另一种语言中的单词相关的句子。
+即使我们可能没有将语言$X$中的单词$A$翻译成语言$Y$中的单词$B$的标记样本，我们也可以泛化并猜出单词$A$的翻译，这是由于我们已经学习了语言$X$和$Y$的\gls{distributed_representation}，并且通过两种语言相匹配句子组成的训练样本，产生了关联于两个空间的连接（可能是双向的）。
+如果联合学习三种所有成分（两种表示形式和它们之间的关系），那么这种迁移将会非常成功。
 
 
-\gls{zero_shot_learning}是一种特殊形式的\gls{transfer_learning}。
-同样的原理可以解释如何能执行\firstgls{multimodal_learning}，学习两种模态的表示，和一种模态中的观察$\Vx$和另一种模态中的观察$\Vy$组成的对$(\Vx, \Vy)$之间的关系（通常是一个联合分布）\citep{Srivastava+Salakhutdinov-NIPS2012-small}。
-通过学习所有的三组参数（从$\Vx$到它的表示，从$\Vy$到它的表示，以及两个表示之间的关系），一个表示中的概念被锚定在另一个表示中，反之亦然，从而可以有意义地推广到新的对组。
+\gls{zero_shot_learning}是\gls{transfer_learning}的一种特殊形式。
+同样的原理可以解释如何能执行\firstgls{multimodal_learning}，学习两种模态的表示，和一种模态中的观察结果$\Vx$与另一种模态中的观察结果$\Vy$组成的对$(\Vx, \Vy)$之间的关系（通常是一个联合分布）\citep{Srivastava+Salakhutdinov-NIPS2012-small}。
+通过学习所有的三组参数（从$\Vx$到它的表示，从$\Vy$到它的表示，以及两个表示之间的关系），一个表示中的概念被锚定在另一个表示中，反之亦然，从而可以有效地推广到新的对组。
 这个过程如\figref{fig:chap15_maps_between_representations}所示。
 
 \begin{figure}[!htb]
