@@ -28,7 +28,7 @@ share: false
 + 根据具体观察重复逐步改动，如收集新数据，调整\gls{hyperparameter}，或改进算法。
 
 
-我们将使用街景地址号码\gls{transcription_system}作为一个正在运行的示例。
+我们将使用街景地址号码\gls{transcription_system}{cite?}作为一个正在运行的示例。
 该应用的目标是添加建筑物到谷歌地图。
 街景车拍摄建筑物，并记录与每张建筑照片相关的GPS坐标。
 \gls{CNN}识别每张照片上的地址号码，由谷歌地图数据库在正确的位置添加该地址。
@@ -62,7 +62,7 @@ share: false
 除了需要考虑\gls{performance_metrics}之外，另一个需要考虑的是度量的选择。
 我们有几种不同的\gls{performance_metrics}，可以用来度量含有\gls{ML}的应用的性能。
 这些\gls{performance_metrics}通常不同于训练模型的损失函数。 
-如\sec?。
+如\sec?所述，我们通常会度量一个系统的\gls{accuracy}，或等价的\gls{error_rate}。
 
 然而，许多应用需要更高级的度量。
 
@@ -154,12 +154,12 @@ share: false
 
 如果我们的任务和另一个被广泛研究的任务很相似，那么通过复制先前研究中已知性能良好的模型和算法，可能会得到很好的效果。
 甚至可以从该任务中复制一个训练好的模型。
-例如，通常会使用ImageNet上训练好的\gls{convolutional_network}的特征来解决其他计算机视觉问题。
+例如，通常会使用ImageNet上训练好的\gls{convolutional_network}的特征来解决其他计算机视觉问题{cite?}。
 
 一个常见问题是项目开始时是否使用\gls{unsupervised_learning}，我们将在第三部分进一步探讨这个问题。
  这个问题和特定领域有关。
 在某些领域，比如自然语言处理，能够在很大程度上受益于\gls{unsupervised_learning}技术，如学习无监督\gls{word_embeddings}。
-在其他领域，如计算机视觉，除非是在\gls{semi_supervised}的设定下（有标签的样本数量很少）并没有带来益处。
+在其他领域，如计算机视觉，除非是在\gls{semi_supervised}的设定下（有标签的样本数量很少）{cite?}，目前\gls{unsupervised_learning}并没有带来益处。
 如果应用所在环境中，\gls{unsupervised_learning}被认为是很重要的，那么将其包含在第一个\gls{end_to_end}\gls{baseline}中。
 否则，只有在解决无监督问题时，才第一次尝试就使用\gls{unsupervised_learning}。
 我们总能在之后发现初始\gls{baseline}过拟合的时候，加入\gls{unsupervised_learning}。
@@ -194,7 +194,7 @@ share: false
 如果调整\gls{regularization}\gls{hyperparameter}后，训练集性能和测试集性能之间的差距还是不可接受，那么收集更多的数据是可取的。
 
 在决定是否收集更多的数据时，也需要确定收集多少数据。
-如\fig?之间的关系是很有帮助的。
+如\fig?所示，绘制曲线显示训练集规模和\gls{generalization_error}之间的关系是很有帮助的。
 根据走势延伸曲线，可以预测还需要多少训练数据来达到一定的性能。
 通常，加入总数目一小部分的样本不会对\gls{generalization_error}产生显著的影响。
 因此，建议在对数尺度上考虑训练集的大小，例如在新的实验上倍增样本数目。
@@ -259,7 +259,7 @@ share: false
 相比其他\gls{hyperparameter}，它以一种更复杂的方式控制模型的有效容量——当学习率适合优化问题时，模型的有效容量最高，此时学习率既不是特别大也不是特别小。
 学习率关于训练误差具有U形曲线，在\fig?所示。
 当学习率过大时，梯度下降可能会不经意地增加而非减少训练误差。
-在理想化的二次情况下，如果学习率是最佳值的两倍大时，会发生这种情况。
+在理想化的二次情况下，如果学习率是最佳值的两倍大时，会发生这种情况{cite?}。
 当学习率太小，训练不仅慢，还有可能永久停留在一个很高的训练误差。
 关于这种情况，我们知之甚少（不会发生于一个凸损失函数中）。
 
@@ -357,7 +357,7 @@ share: false
 对于每个\gls{hyperparameter}，用户选择一个较小的有限值集去探索。
 然后，这些\gls{hyperparameter}笛卡尔乘积为一组组\gls{hyperparameter}，\gls{grid_search}使用每组\gls{hyperparameter}训练模型。
 挑选验证集误差最小的\gls{hyperparameter}。
-如\fig?值的网络。
+如\fig?所示\gls{hyperparameter}值的网络。
 
 <!-- % -- 420 -- -->
 
@@ -405,7 +405,7 @@ share: false
 
 ## \glsentrytext{random_search}
 
-幸运的是，有一个替代\gls{grid_search}的方法，并且编程简单，使用更方便，能更快地收敛到\gls{hyperparameter}的良好取值：\gls{random_search}。
+幸运的是，有一个替代\gls{grid_search}的方法，并且编程简单，使用更方便，能更快地收敛到\gls{hyperparameter}的良好取值：\gls{random_search}{cite?}。
 
 \gls{random_search}过程如下。
 首先，我们为每个\gls{hyperparameter}定义一个边缘分布，例如，\gls{bernoulli_distribution}或\gls{categorical_distribution}（对应着二元\gls{hyperparameter}或离散\gls{hyperparameter}），或者\gls{logarithmic_scale}上的均匀分布（对应着正实值\gls{hyperparameter}）。
@@ -418,7 +418,7 @@ share: false
 类似地，$\texttt{log\_number\_of\_hidden\_units}$可能表示在$u(\log(50), \log(2000))$上采样。
 
 和\gls{grid_search}不同，我们\emph{不需要离散化}\gls{hyperparameter}的值，我们可以在一个更大的集合上进行搜索，而不产生额外的计算代价。
-实际上，如\fig?。
+实际上，如\fig?所示，当有几个\gls{hyperparameter}对\gls{performance_metrics}没有很强的影响时，\gls{random_search}指数级高效于\gls{grid_search}。
 {Bergstra+Bengio-2012-small}进行了详细的研究，发现\gls{random_search}比\gls{grid_search}要快得多地减小验证集误差（就每个模型运行的试验数而言）。
 
 与\gls{grid_search}一样，可以经常重复运行不同版本的\gls{random_search}，以基于前一次运行的结果改进下一次搜索。
@@ -435,14 +435,14 @@ share: false
 \gls{hyperparameter}搜索问题可以转化为一个优化问题。
 决策变量是\gls{hyperparameter}。
 优化的目标是最小化\gls{hyperparameter}训练出来的模型在\gls{validation_set}上的误差。
-在简化的设定下，可以计算\gls{validation_set}上可导误差函数关于\gls{hyperparameter}的导数，然后我们遵循这个导数更新。
+在简化的设定下，可以计算\gls{validation_set}上可导误差函数关于\gls{hyperparameter}的导数，然后我们遵循这个导数更新{cite?}。
 令人遗憾的是，在大多数实际设定中，这个梯度是不可用的。
 这可能是因为其高额的计算代价和存储成本，也可能是因为验证集误差在\gls{hyperparameter}上本质不可导，例如\gls{hyperparameter}是离散值的情况。
 
 为了弥补导数这一不足，我们可以对验证集误差建模，然后通过优化该模型来提出新的\gls{hyperparameter}猜想。
 大部分基于模型的\gls{hyperparameter}搜索算法，都是使用贝叶斯回归模型来估计每个\gls{hyperparameter}的验证集误差期望，和该期望的不确定性。
 因此，优化涉及到探索（探索高度不确定的\gls{hyperparameter}，可能有重大效果提升，也可能效果很差）和使用（使用已经确信效果不错的\gls{hyperparameter}——通常是先前非常熟悉的\gls{hyperparameter}）之间的权衡。
-关于\gls{hyperparameter}优化，现在的方法还有Spearmint。
+关于\gls{hyperparameter}优化，现在的方法还有Spearmint{cite?}，TPE{cite?}和SMAC{cite?}。
 
 目前，我们无法明确确定，贝叶斯\gls{hyperparameter}优化是否是一个能够实现更好\gls{DL}结果或是能够事半功倍的工具。
 贝叶斯\gls{hyperparameter}优化有时表现得像人类专家，能够在有些问题上取得很好的效果，但有时又会在某些问题上发生灾难性的失误。
@@ -550,7 +550,7 @@ share: false
 在多个$\Vu$值和$\Vv$值上重复这个测试通常是个好主意，可以减少测试忽略了垂直于随机投影的几率。
 
 
-如果可以在复数上进行数值计算，那么使用复数作为函数的输入能有非常高效的数值方法估算梯度。
+如果可以在复数上进行数值计算，那么使用复数作为函数的输入能有非常高效的数值方法估算梯度{cite?}。
 该方法基于如下观察
 \begin{align}
 	f(x + i\epsilon) &= f(x) + i\epsilon f'(x) + O(\epsilon^2) ,\\
@@ -568,7 +568,7 @@ share: false
 对于双曲正切单元而言，预激励绝对值的平均值可以告诉我们该单元的饱和程度。
 在深度网络中，传播的梯度可以快速增长或快速消失，优化可能会受到阻碍。
 最后，比较参数梯度和参数的量值也是有帮助的。
-正如更新中变化的幅度是参数量值$1\%$这样的级别，而不是$50\%$或者$0.001\%$（这会导致参数移动得太慢）。
+正如{cite?}的建议，我们希望参数在一个\gls{minibatch}更新中变化的幅度是参数量值$1\%$这样的级别，而不是$50\%$或者$0.001\%$（这会导致参数移动得太慢）。
 也有可能是某些参数以良好的步长移动，而另一些停滞。
 如果数据是稀疏的（比如自然语言），有些参数可能很少更新，检测它们变化时应该记住这一点。
 

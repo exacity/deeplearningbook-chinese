@@ -17,7 +17,7 @@ share: false
 
 概率论使我们能够作出不确定的\gls{statement}以及在不确定性存在的情况下推理，而信息论使我们能够量化\gls{PD}中的不确定性总量。
 
-如果你已经对概率论和信息论很熟悉了，那么你可能会希望跳过除了\?的图。
+如果你已经对概率论和信息论很熟悉了，那么你可能会希望跳过除了\?节以外的整章内容，而在这一节中我们会介绍用来描述机器学习中\gls{structured_probabilistic_models}的图。
 如果你对这些主题完全没有任何的先验知识，本章对于完成深度学习的研究项目来说已经足够，但我们还是建议你能够参考一些额外的资料，例如{Jaynes03}。
 
 <!-- % -- 51 -- -->
@@ -232,7 +232,7 @@ P(\RSx^{(1)}, \ldots, \RSx^{(n)}) = P(\RSx^{(1)}) \Pi_{i=2}^n P(\RSx^{(i)} \mid 
 <!-- % -- 57 -- -->
 
 这个规则被称为概率的\firstgls{chain_rule}或者\firstgls{product_rule}。
-它可以直接从公式\?的定义中得到。
+它可以直接从公式\?\gls{conditional_probability}的定义中得到。
 例如，使用两次定义可以得到
 \begin{eqnarray*}
 P(\RSa, \RSb, \RSc) &=& P(\RSa \mid \RSb, \RSc) P(\RSb, \RSc)\\
@@ -375,7 +375,7 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 \CalN(x; \mu, \sigma^2) = \sqrt{\frac{1}{2\pi \sigma^2}} \exp \left ( -\frac{1}{2\sigma^2} (x-\mu)^2 \right ).
 \end{equation}
 
-图\?。
+图\?画出了\gls{normal_distribution}的\gls{PDF}。
 <!-- % fig 3.1 -->
 \begin{figure}[!htb]
 \ifOpenSource
@@ -492,7 +492,7 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 <!-- % -- 64 -- -->
 
 混合模型是组合简单\gls{PD}来生成更丰富的分布的一种简单策略。
-在第\?构建复杂模型的更详细的技术。
+在第\?章中，我们探讨从简单\gls{PD}构建复杂模型的更详细的技术。
 
 混合模型使我们能够一瞥以后会用到的一个非常重要的概念——\firstgls{latent_variable}。
 \gls{latent_variable}是我们不能直接观测到的\gls{RV}。
@@ -512,7 +512,7 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 作为对比，$P(\RSc \mid \bm{x})$是\firstgls{posterior_probability}，因为它是在观测到$\RSx$\emph{之后}进行计算的。
 \gls{GMM}是概率密度的\firstgls{universal_approximator}，在这种意义上，任何平滑的概率密度都可以用具有足够多组件的\gls{GMM}以任意精度来逼近。
 
-图\?生成的样例。
+图\?演示了某个\gls{GMM}生成的样例。
 <!-- % fig 3.2 -->
 \begin{figure}[!htb]
 \ifOpenSource
@@ -550,7 +550,7 @@ sigmoid函数在变量取绝对值非常大的正值或负值时会出现\firstg
 \caption{\gls{logistic_sigmoid}函数。}
 \end{figure}
 
-另外一个经常遇到的函数是\firstgls{softplus_function}：
+另外一个经常遇到的函数是\firstgls{softplus_function}{cite?}：
 \begin{equation}
 \zeta(x) = \log(1+\exp(x)).
 \end{equation}
@@ -560,7 +560,7 @@ sigmoid函数在变量取绝对值非常大的正值或负值时会出现\firstg
 \begin{equation}
 x^+ = \max(0, x).
 \end{equation}
-图\?的图示。
+图\?给出了\gls{softplus_function}的图示。
 <!-- % fig 3.4 -->
 \begin{figure}[!htb]
 \ifOpenSource
@@ -618,7 +618,7 @@ P(\RSx \mid \RSy) = \frac{P(\RSx) P(\RSy \mid \RSx)}{P(\RSy)}.
 连续型\gls{RV}和\gls{PDF}的深入理解需要用到数学分支\firstgls{measure_theory}的相关内容来扩展概率论。
 \gls{measure_theory}超出了本书的范畴，但我们可以简要勾勒一些\gls{measure_theory}用来解决的问题。
 
-在\?)$对集合$\SetS$积分得到的。
+在\?节中，我们已经看到连续型向量值\gls{RV}$\RVx$落在某个集合$\SetS$ 中的概率是通过$p(\bm{x})$对集合$\SetS$积分得到的。
 对于集合$\SetS$的一些选择可能会引起悖论。
 例如，构造两个集合$\SetS_1$和$\SetS_2$使得$p(\bm{x}\in \SetS_1) + p(\bm{x}\in \SetS_2)>1$并且$\SetS_1 \cap \SetS_2 = \emptyset$是可能的。
 这些集合通常是大量使用了实数的无限精度来构造的，例如通过构造分形形状(fractal-shaped)的集合或者是通过有理数相关集合的平移来定义的集合。
@@ -835,7 +835,7 @@ p(\RSa, \RSb, \RSc) = p(\RSa)p(\RSb\mid \RSa)p(\RSc\mid\RSb).
 \begin{equation}
 p(\RVx) = \prod_i p(\RSx_i \mid Pa_\CalG(\RSx_i)).
 \end{equation}
-图\?的因子分解。
+图\?给出了一个有向图的例子以及它表示的\gls{PD}的因子分解。
 <!-- % fig 3.7 -->
 \begin{figure}[!htb]
 \ifOpenSource
@@ -868,7 +868,7 @@ $\CalG$中任何全部相连的节点构成的集合被称为团。
 \begin{equation}
 p(\RVx) = \frac{1}{Z} \prod_i \phi^{(i)} \left (\CalC^{(i)} \right).
 \end{equation}
-图\?的因子分解。
+图\?给出了一个无向图的例子以及它表示的\gls{PD}的因子分解。
 <!-- % fig 3.8 -->
 \begin{figure}[!htb]
 \ifOpenSource
@@ -892,9 +892,9 @@ p(\RSa, \RSb, \RSc, \RSd, \RSe) = \frac{1}{Z} \phi^{(1)} (\RSa, \RSb, \RSc) \phi
 它们不是互相排斥的\gls{PD}族。
 有向或者无向不是\gls{PD}的特性；它是\gls{PD}的一种特殊\firstgls{description}所具有的特性，但是任何的\gls{PD}都可以用两种方式进行描述。
 
-在本书第\?仅仅是作为一门语言，来描述不同的机器学习算法选择表示的直接的概率关系。
+在本书第\?部分和第\?部分中， 我们使用\gls{structured_probabilistic_models}仅仅是作为一门语言，来描述不同的机器学习算法选择表示的直接的概率关系。
 一直到研究课题的讨论之前，不会需要用到\gls{structured_probabilistic_models}的深入理解。
-在第\?。
+在第\?部分的研究课题中，我们会更为详尽地探讨\gls{structured_probabilistic_models}。
 
 本章复习了概率论中与深度学习最为相关的一些基本概念。
 还剩下一些基本的数学工具需要讨论：数值方法。

@@ -6,7 +6,7 @@ share: false
 在本章中，首先我们会讨论学习表示是什么意思，以及表示的概念如何有助于深度框架的设计。
 我们探讨学习算法如何在不同任务中共享统计信息，包括使用无监督任务中的信息进行监督任务。
 共享表示有助于处理多模式或多领域，或是将已学到的知识转移到样本很少或没有，但任务表示存在的任务上。
-最后，我们回溯去探讨\gls{representation_learning}成功的原因，从\gls{distributed_representation}和深度表示的理论优势，到数据生成过程基本假设的更一般概念，特别是观测数据的基本成因。
+最后，我们回溯去探讨\gls{representation_learning}成功的原因，从\gls{distributed_representation}{cite?}和深度表示的理论优势，到数据生成过程基本假设的更一般概念，特别是观测数据的基本成因。
 
 
 很多信息处理任务，非常容易或者非常困难取决于信息是如何表示的。
@@ -29,7 +29,7 @@ share: false
 网络的其余部分学习出分类器输入的表示。
 监督准则下的训练自然会使得每个\gls{hidden_layer}（比较接近顶层的\gls{hidden_layer}）的表示趋向于具有使训练任务更容易的性质。
 例如，输入特征线性不可分的类别可能在最后一个\gls{hidden_layer}变成线性可分的。
-原则上，最后一层可以是另一种模型，如\gls{nearest_neighbor}分类。
+原则上，最后一层可以是另一种模型，如\gls{nearest_neighbor}分类{cite?}。
 倒数第二层的特征应该根据最后一层的类型学习不同的性质。
 
 
@@ -95,8 +95,8 @@ share: false
 
 
 基于无监督标准的贪心逐层训练过程，早已被用来规避监督问题中深度网络难以联合训练多层的问题。
-这种方法至少可以追溯神经认知机。
-深度学习的复兴始于2006年发现，这种贪心学习的过程能够为多层联合训练过程找到一个好的初始值，甚至可以成功训练全连接的结构。
+这种方法至少可以追溯神经认知机{cite?}。
+深度学习的复兴始于2006年发现，这种贪心学习的过程能够为多层联合训练过程找到一个好的初始值，甚至可以成功训练全连接的结构{cite?}。
 在此发现之前，只有深度卷积网络或深度循环网络这类特殊结构的深度网络被认为是有可能训练的。
 现在我们知道训练全连接的深度结构，\gls{greedy_layer_wise_unsupervised_pretraining}不是唯一的方法，但无监督提前训练是第一个成功的方法。
 
@@ -118,20 +118,20 @@ share: false
 虽然\gls{unsupervised_learning}算法的选择将明显影响到细节，但是大多数\gls{unsupervised}\gls{pretraining}应用都遵循这一基本方法。
 
 
-\gls{greedy_layer_wise_unsupervised_pretraining}也能用作其他\gls{unsupervised_learning}算法的初始化，比如深度\gls{AE}层的概率模型。
-这些\gls{model}包括\gls{DBN}。
+\gls{greedy_layer_wise_unsupervised_pretraining}也能用作其他\gls{unsupervised_learning}算法的初始化，比如深度\gls{AE}{cite?}和具有很多\gls{latent_variable}层的概率模型。
+这些\gls{model}包括\gls{DBN}{cite?}和\gls{DBM}{cite?}。
 这些\gls{DGM}会在\chap?讨论。
 
 
-正如\sec?。
-这建立在训练浅层模型比\gls{deep_model}更容易的前提下，而该前提似乎在一些情况下已被证实。
+正如\sec?所探讨的，也可以进行贪心逐层\emph{监督}\gls{pretraining}。
+这建立在训练浅层模型比\gls{deep_model}更容易的前提下，而该前提似乎在一些情况下已被证实{cite?}。
 
 
 
 ## 何时以及为何\glsentrytext{unsupervised_pretraining}有效？
 
 在很多分类任务中，\gls{greedy_layer_wise_unsupervised_pretraining}能够在\gls{test_error}上获得重大提升。
-这一观察结果始于2006年对\gls{DNN}的重新关注。
+这一观察结果始于2006年对\gls{DNN}的重新关注{cite?}。
 然而，在很多其他问题上，\gls{unsupervised_learning}不能带来改善，甚至还会带来明显的负面影响。
 {Ma-et-al-2015}研究了\gls{pretraining}对\gls{ML_model}在化学活性预测上的影响。
 结果发现，平均而言\gls{pretraining}是有轻微负面影响的，但在有些问题上会有显著帮助。
@@ -140,9 +140,9 @@ share: false
 <!-- % -- 520 -- -->
 
 首先，要注意的是这个讨论大部分都是针对\gls{greedy_unsupervised_pretraining}而言。
-还有很多其他完全不同的方法用于训练\gls{semi_supervised_learning}\gls{NN}，比如\sec?。
+还有很多其他完全不同的方法用于训练\gls{semi_supervised_learning}\gls{NN}，比如\sec?介绍的\gls{virtual_adversarial_training}。
 我们还可以在训练\gls{supervised_model}的同时训练\gls{AE}或\gls{generative_model}。
-这种单阶段方法的例子包括\gls{discriminative_RBM}，整体目标是两项之和（一个使用标签，另一个使用输入）。
+这种单阶段方法的例子包括\gls{discriminative_RBM}{cite?}和梯形网络{cite?}，整体目标是两项之和（一个使用标签，另一个使用输入）。
 
 
 \gls{unsupervised_pretraining}结合了两种不同的想法。
@@ -186,8 +186,8 @@ share: false
 从\gls{unsupervised_pretraining}作为正则项的角度来看，我们可以期望\gls{unsupervised_pretraining}在标记样本数量非常小时很有帮助。
 因为\gls{unsupervised_pretraining}添加的信息来源于未标记的数据，所以当未标记样本的数量非常大时，我们也可以期望\gls{unsupervised_pretraining}的效果最好。
 \gls{unsupervised_pretraining}的大量未标记样本和少量标记样本构成的\gls{semi_supervised_learning}的优势在2011年特别明显。
-\gls{unsupervised_pretraining}赢得了两个国际\gls{transfer_learning}比赛，在该设定中，目标任务中标记样本的数目很少（每类几个到几十个）。
-这些效果也出现在被仔细控制的实验中。
+\gls{unsupervised_pretraining}赢得了两个国际\gls{transfer_learning}比赛{cite?}，在该设定中，目标任务中标记样本的数目很少（每类几个到几十个）。
+这些效果也出现在被{cite?}仔细控制的实验中。
 
 
 还有一些其他的因素可能会涉及。
@@ -199,7 +199,7 @@ share: false
 除了这些注意事项外，我们现在分析一些\gls{unsupervised_pretraining}改善性能的成功示例，并解释这种改进发生的已知原因。
 \gls{unsupervised_pretraining}通常用来改进分类器，并且从减少测试误差的观点来看是很有意思的。
 然而，\gls{unsupervised_pretraining}还有助于分类以外的任务，并且可以用于改进优化，而不仅仅只是作为正规化项。
-例如，它可以提高\gls{DAE}的训练和测试\gls{reconstruction_error}。
+例如，它可以提高\gls{DAE}的训练和测试\gls{reconstruction_error}{cite?}。
 
 <!-- % -- 523 -- -->
 
@@ -256,12 +256,12 @@ share: false
 
 基于\gls{supervised_learning}的\gls{DL}技术，通过\gls{dropout}或\gls{batch_normalization}来\gls{regularization}，能够在很多任务上达到人类级别的性能，但必须使用极大的标记数据集。
 在中等大小的数据集（例如CIFAR-10和MNIST，每个类大约有5,000个标记的样本）上，这些技术的效果比\gls{unsupervised_pretraining}更好。
-在极小的数据集，例如\gls{alternative_splicing_dataset}，贝叶斯方法要优于基于\gls{unsupervised_pretraining}的方法。
+在极小的数据集，例如\gls{alternative_splicing_dataset}，贝叶斯方法要优于基于\gls{unsupervised_pretraining}的方法{cite?}。
 由于这些原因，\gls{unsupervised_pretraining}已经不如以前流行。
 然而，\gls{unsupervised_pretraining}仍然是深度学习研究历史上的一个重要里程碑，并继续影响当代方法。
-\gls{pretraining}的想法已经推广到\sec?中非常常用的方法。
-\gls{transfer_learning}中的\gls{supervised_pretraining}流行。
-由于这个原因，实践者们公布了这些网络训练出的参数，就像自然语言任务公布\gls{pretraining}的单词向量一样。
+\gls{pretraining}的想法已经推广到\sec?中讨论的\firstgls{supervised_pretraining}，这是\gls{transfer_learning}中非常常用的方法。
+\gls{transfer_learning}中的\gls{supervised_pretraining}流行{cite?}于在ImageNet数据集上使用\gls{convolutional_network}\gls{pretraining}。
+由于这个原因，实践者们公布了这些网络训练出的参数，就像自然语言任务公布\gls{pretraining}的单词向量一样{cite?}。
 
 <!-- % -- 526 -- -->
 
@@ -277,7 +277,7 @@ share: false
 例如，我们可能在第一种设定中学习了一组视觉类别，比如猫和狗，然后在第二种设定中学习一组不同的视觉类别。
 如果第一种设定（从$P_1$采样）中具有非常多的数据，那么这有助于在$P_2$抽取到的非常少的样本中快速泛化。
 许多视觉类别\emph{共享}一些低级概念，比如边缘，视觉形状，几何变化，照明变化的影响等。
-一般而言，当存在对不同设定或任务有用，且对应多个设定的潜在因素的特征时，\gls{transfer_learning}，\gls{multitask_learning}（\sec?来实现。
+一般而言，当存在对不同设定或任务有用，且对应多个设定的潜在因素的特征时，\gls{transfer_learning}，\gls{multitask_learning}（\sec?）和\gls{domain_adaption}可以使用\gls{representation_learning}来实现。
 如\fig?所示，具有共享底层和任务相关上层的学习框架。
 
 
@@ -299,7 +299,7 @@ share: false
 网上的评论来自许多类别。
 在书，视频和音乐等媒体内容上训练的顾客评论情感预测器，被用于分析诸如电视机或智能电话的消费电子产品的评论时，\gls{domain_adaption}情景可能会出现。
 可以想象，存在一个潜在的函数可以判断任何语句是正面的，中性的还是负面的，但是词汇和风格可能会因领域而有差异，使得跨域的泛化训练变得更加困难。
-简单的\gls{unsupervised_pretraining}（\gls{DAE}）已经能够非常成功地用于\gls{domain_adaption}的情感分析。
+简单的\gls{unsupervised_pretraining}（\gls{DAE}）已经能够非常成功地用于\gls{domain_adaption}的情感分析{cite?}。
 
 <!-- % -- 527 -- -->
 
@@ -312,7 +312,7 @@ share: false
 两个设定使用相同的表示，使得表示可以受益于两个任务的训练数据。
 
 
-如前所述，\gls{unsupervised}\gls{DL}用于\gls{transfer_learning}已经在一些机器学习比赛中取得了成功。
+如前所述，\gls{unsupervised}\gls{DL}用于\gls{transfer_learning}已经在一些机器学习比赛中取得了成功{cite?}。
 这些比赛中的某一个实验设定如下。
 首先每个参与者获得一个第一种设定（来自分布$P_1$）的数据集，其中含有一些类别的样本。
 参与者必须用这个来学习一个良好的特征空间（将原始输入映射到某种表示），这样当我们将这个学习到的变换用于来自迁移设定（分布$P_2$）的输入时，\gls{linear_classifier}可以在有标记样本很少的训练集上训练，泛化。
@@ -325,7 +325,7 @@ share: false
 只有一个标记样本的迁移任务被称为\gls{one_shot_learning}；没有标记样本的迁移任务被称为\gls{zero_shot_learning}。
 
 
-因为第一阶段学习出的表示就可以清楚地分离类别，所以\gls{one_shot_learning}是可能的。
+因为第一阶段学习出的表示就可以清楚地分离类别，所以\gls{one_shot_learning}{cite?}是可能的。
 在\gls{transfer_learning}阶段，仅需要一个标记样本来推断表示空间中聚集在相同点周围的许多可能的测试样本的标签。
 这使得在学习到的表示空间中，对应于不变性的变化因子已经与其它因子完全分离，在区分某些类别的对象时，我们以哪种方式学习到哪些因素具有决定意义。
 
@@ -335,7 +335,7 @@ share: false
 例如，已知猫有四条腿和尖尖的耳朵，那么\gls{learner}可以在没有见过猫的情况下猜测该图像是猫。
 
 
-只有在训练时使用了额外信息，\gls{zero_data_learning}才是有可能的。
+只有在训练时使用了额外信息，\gls{zero_data_learning}{cite?}和\gls{zero_shot_learning}{cite?}才是有可能的。
 我们可以认为\gls{zero_data_learning}场景包含三个随机变量：传统输入$\Vx$，传统输出或目标$\Vy$，以及描述任务的附加随机变量，$T$。
 该模型被训练来估计条件分布$p(\Vy \mid \Vx, T)$，其中$T$是我们希望执行的任务的描述。
 在我们的例子中，读取猫的文本信息然后识别猫，输出是二元变量$y$，$y=1$表示"是"，$y=0$表示"不是"。
@@ -350,13 +350,13 @@ share: false
 通过使用每个类别词的\gls{word_embeddings}表示，{Socher-2013}提出了对象类别的\gls{distributed_representation}。
 
 
-一种类似的现象出现在\gls{machine_translation}中：我们已经知道一种语言中的单词，和非语言语料库中学到的词与词之间的关系；另一方面，我们已经翻译了一种语言中的单词与另一种语言中的单词相关的句子。
+一种类似的现象出现在\gls{machine_translation}中{cite?}：我们已经知道一种语言中的单词，和非语言语料库中学到的词与词之间的关系；另一方面，我们已经翻译了一种语言中的单词与另一种语言中的单词相关的句子。
 即使我们可能没有将语言$X$中的单词$A$翻译成语言$Y$中的单词$B$的标记样本，我们也可以泛化并猜出单词$A$的翻译，这是由于我们已经学习了语言$X$和$Y$的\gls{distributed_representation}，并且通过两种语言相匹配句子组成的训练样本，产生了关联于两个空间的连接（可能是双向的）。
 如果联合学习三种所有成分（两种表示形式和它们之间的关系），那么这种迁移将会非常成功。
 
 
 \gls{zero_shot_learning}是\gls{transfer_learning}的一种特殊形式。
-同样的原理可以解释如何能执行\firstgls{multimodal_learning}，学习两种模态的表示，和一种模态中的观察结果$\Vx$与另一种模态中的观察结果$\Vy$组成的对$(\Vx, \Vy)$之间的关系（通常是一个联合分布）。
+同样的原理可以解释如何能执行\firstgls{multimodal_learning}，学习两种模态的表示，和一种模态中的观察结果$\Vx$与另一种模态中的观察结果$\Vy$组成的对$(\Vx, \Vy)$之间的关系（通常是一个联合分布）{cite?}。
 通过学习所有的三组参数（从$\Vx$到它的表示，从$\Vy$到它的表示，以及两个表示之间的关系），一个表示中的概念被锚定在另一个表示中，反之亦然，从而可以有效地推广到新的对组。
 这个过程如\fig?所示。
 
@@ -378,7 +378,7 @@ share: false
 一种假设是，理想表示中的特征对应到观测数据的根本原因，特征空间中不同的特征或方向对应着不同的原因，从而表示能够将这些原因区分开。
 这个假设激励我们去寻找比较好地表示$p(\Vx)$的方法。
 如果$\Vy$是产生$\Vx$的重要原因之一，那么这种表示也可能是计算$p(\Vy \mid \Vx)$的一种良好表示。
-至少从20世纪90年代以来，这个想法已经指导了大量的\gls{DL}研究工作。
+至少从20世纪90年代以来，这个想法已经指导了大量的\gls{DL}研究工作{cite?}。
 关于\gls{semi_supervised_learning}可以超过纯\gls{supervised_learning}的其他论点，请读者{Chapelle-2006}的\sec?。
 
 
@@ -439,7 +439,7 @@ share: false
 
 在实践中，暴力解是不可行的，因为不可能捕获影响观察的所有或大多数变化。
 例如，在视觉场景中，表示应该一直对背景中的所有最小对象进行编码么？
-有一个有据可查的心理学现象，人们不会察觉到环境中和他们所在进行的任务并不紧紧相关的变化——具体例子可参考。
+有一个有据可查的心理学现象，人们不会察觉到环境中和他们所在进行的任务并不紧紧相关的变化——具体例子可参考{cite?}。
 \gls{semi_supervised_learning}的一个重要研究前沿是确定每种情况下要编码的对象。
 目前，处理大量潜在原因的两个主要策略是，使用\gls{unsupervised_learning}信号的同时使用\gls{supervised_learning}信号，从而使模型捕获最相关的变动因素，或是在使用纯\gls{unsupervised_learning}的情况下学习更大的表示。
 
@@ -449,7 +449,7 @@ share: false
 这些固定标准确定了哪些原因是突出的。
 例如，应用于图像像素的\gls{mean_squared_error}隐式地指定，一个潜在因素只有在其显著地改变大量像素的亮度时，它才是重要的影响因素。
 如果我们希望解决的问题涉及到小对象的交互，那么这可能是有问题的。
-如\fig?未能学习到编码小乒乓球。
+如\fig?，在机器人任务中，\gls{AE}未能学习到编码小乒乓球。
 同样是这个机器人，它可以成功地与更大的对象进行交互（例如棒球，这种情况根据\gls{mean_squared_error}是很突出的）。
 
 \begin{figure}[!htb]
@@ -467,7 +467,7 @@ share: false
 
 也有一些其他的关于突出性的定义。
 例如，如果一组像素具有高度可识别的模式，那么即使该模式不涉及到极端的亮度或暗度，该模式还是被认为非常突出的。
-实现这样一种突出性定义的方法是使用最近开发的\firstgls{generative_adversarial_networks}。
+实现这样一种突出性定义的方法是使用最近开发的\firstgls{generative_adversarial_networks}{cite?}。
 在这种方法中，\gls{generative_model}被训练来愚弄\gls{feedforward_classifier}。
 \gls{feedforward_classifier}尝试将来自生成模型的所有样本识别为假的，并将来自训练集合的所有样本识别为真的。
 在这个框架中，\gls{feedforward_network}能够识别出的任何结构化模式都是非常突出的。
@@ -568,7 +568,7 @@ share: false
 作为纯符号，"猫"和"狗"之间的距离和任意其他两种符号一样。
 然而，如果将它们与有意义的\gls{distributed_representation}相关联，那么关于猫的很多特点可以推广到狗，反之亦然。
 例如，我们的\gls{distributed_representation}可能会包含诸如"是否具有皮毛"或是"腿的数目"这类用于"猫"和"狗"的嵌入具有相同值的项。
-正如\sec?表示进行操作的模型泛化得更好。
+正如\sec?所讨论的，作用于单词\gls{distributed_representation}的神经语言模型比其他直接对单词\gls{one_hot}表示进行操作的模型泛化得更好。
 \gls{distributed_representation}具有丰富的\emph{相似性空间}，语义上相近的概念（或输入）在距离上接近，这是纯粹的符号表示所缺少的属性。
 
 <!-- % -- 539 -- -->
@@ -590,7 +590,7 @@ share: false
 该表示中的每个二元特征将$\SetR^d$分成一对半空间，如\fig?所示。
 $n$个半空间的指数级数量的交集确定了该\gls{distributed_representation}学习能够区分多少区域。
 空间$\SetR^d$中的$n$个超平面的排列组合能够生成多少区间？
-通过应用关于超平面交集的一般结果这个二元特征表示能够区分的空间是
+通过应用关于超平面交集的一般结果{cite?}，我们可以展示{cite?}这个二元特征表示能够区分的空间是
 \begin{equation}
 	\sum_{j=0}^d \binom{n}{j} = O(n^d)。
 \end{equation}
@@ -606,7 +606,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 
 对于为什么基于\gls{distributed_representation}的模型泛化能力更好的另一个说法是，尽管能够明确地编码这么多不同的区域，但它们的容量仍然是很有限的。
-例如，线性阀值单位的\gls{NN}的\glssymbol{VC}维仅为$O(w\log w)$，其中$w$是权重的数目。
+例如，线性阀值单位的\gls{NN}的\glssymbol{VC}维仅为$O(w\log w)$，其中$w$是权重的数目{cite?}。
 这种限制出现的原因是，虽然我们可以为表示空间分配非常多的唯一码，但是我们不能完全使用所有的码空间，也不能使用\gls{linear_classifier}学习出从表示空间$\Vh$到输出$\Vy$的任意函数映射。
 因此使用与\gls{linear_classifier}相结合的\gls{distributed_representation}传达了一种先验信念，待识别的类在$\Vh$代表的潜在因素的函数下是线性可分的。
 我们通常想要学习类别，例如所有绿色对象的所有图像集合，或是汽车的所有图像集合，但不会是需要非线性XOR逻辑的类别。
@@ -647,12 +647,12 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 # 得益于深度的指数增益
 
-我们已经在\sec?（相比于浅层网络）表示。
+我们已经在\sec?中看到，\gls{MLP}是通用的近似器，一些函数能够用指数级小的\gls{deep_network}（相比于浅层网络）表示。
 模型大小的减小能够提高统计效率。
 在本节中，我们描述了如何将类似结果更一般地应用于其他种类的具有分布式隐藏表示的模型。
 
 
-在\sec?的例子，能够学习脸部图像的解释性因素，包括人的性别以及他们是否佩戴眼镜。
+在\sec?中，我们看到了一个\gls{generative_model}的例子，能够学习脸部图像的解释性因素，包括人的性别以及他们是否佩戴眼镜。
 完成这个任务的\gls{generative_model}是基于一个\gls{DNN}的。
 浅层网络（例如线性网络）是不能学习出这些抽象解释因素和图像像素之间的复杂关系的。
 在这个以及其他\glssymbol{AI}任务中，几乎彼此独立但仍然对应有意义输入的因素很有可能是非常高度抽象的，并且以高度非线性的方式和输入相关。
@@ -667,19 +667,19 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 <!-- % -- 543 -- -->
 
-在\sec?。
-许多具有\gls{latent_variable}的单个\gls{hidden_layer}的\gls{structured_probabilistic_models}（包括\gls{RBM}，\gls{DBN}）是概率分布的\gls{universal_approximator}。
+在\sec?中，我们看到确定性\gls{feedforward_network}是函数的\gls{universal_approximator}。
+许多具有\gls{latent_variable}的单个\gls{hidden_layer}的\gls{structured_probabilistic_models}（包括\gls{RBM}，\gls{DBN}）是概率分布的\gls{universal_approximator}{cite?}。
 
 
-在\sec?能比太浅的网络具有指数级优势。
+在\sec?中，我们看到足够深的\gls{feedforward_network}能比太浅的网络具有指数级优势。
 这样的结果也能从诸如概率模型的其他模型中获得。
-一种这样的概率模型是\firstgls{sum_product_network}，或\glssymbol{sum_product_network}。
+一种这样的概率模型是\firstgls{sum_product_network}，或\glssymbol{sum_product_network}{cite?}。
 这些模型使用多项式电路来计算一组\gls{RV}的\gls{PD}。
 {Delalleau+Bengio-2011-small}表明存在一种\gls{PD}，对\glssymbol{sum_product_network}的最小深度有要求，以避免模型规模呈指数级大小。
 后来，{Martens+Medabalimi-arxiv2014}表明，每两个有限深度的\glssymbol{sum_product_network}之间都会存在显著差异，并且用于让\glssymbol{sum_product_network}易于处理的一些约束可能会限制其表示能力。
 
 
-另一个有趣的结果是一套和卷积网络相关的\gls{deep_circuit}族的表达能力的理论结果，即使让\gls{shadow_circuit}只去近似\gls{deep_circuit}计算的函数，也能突出反映\gls{deep_circuit}的指数级优势。
+另一个有趣的结果是一套和卷积网络相关的\gls{deep_circuit}族的表达能力的理论结果，即使让\gls{shadow_circuit}只去近似\gls{deep_circuit}计算的函数，也能突出反映\gls{deep_circuit}的指数级优势{cite?}。
 相比之下，以前的理论工作只研究了\gls{shadow_circuit}必须精确复制特定函数的这种情况。
 
 
@@ -715,13 +715,13 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 
 + \emph{多个解释因素}：许多\gls{representation_learning}算法受激励于这样的假设，数据是由多个潜在解释性因素生成的，并且给定这些因素每一个的状态，大多数任务都能轻易解决。
-	\sec?的。
+	\sec?描述了这种观点如何通过\gls{representation_learning}促进\gls{semi_supervised_learning}的。
 	学习$p(\Vx)$的结构要求学习出一些对建模$p(\Vy\mid\Vx)$同样有用的特征，因为它们都涉及到相同的潜在解释因素。
-	\sec?的使用的，表示空间中不同的方向对应着不同的变化因素。
+	\sec?介绍了这种观点是如何激发\gls{distributed_representation}的使用的，表示空间中不同的方向对应着不同的变化因素。
 
 
 + \emph{因果因素}：该模型认为学习到的表示所描述的变量是观察数据$\Vx$的原因，而并非反过来的。
-	正如\sec?是有利的，使得在潜在原因上的分布发生改变或是我们应用模型到一个新的任务上时，学习到的模型都更加鲁棒。
+	正如\sec?中讨论的，这对于\gls{semi_supervised_learning}是有利的，使得在潜在原因上的分布发生改变或是我们应用模型到一个新的任务上时，学习到的模型都更加鲁棒。
 
 <!-- % -- 545 -- -->
 
@@ -736,7 +736,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 
 + \emph{\gls{manifold}}：概率质量集中，并且其集中的区域是局部连通的，且占据很小的体积。
 	在连续情况下，这些区域可以用比数据所在原始空间低很多维的低维\gls{manifold}来近似。
-	很多\gls{ML}算法只在这些\gls{manifold}上有效。
+	很多\gls{ML}算法只在这些\gls{manifold}上有效{cite?}。
 	一些\gls{ML}算法，特别是\gls{AE}，会试图明确地学习\gls{manifold}的结构。
 
 

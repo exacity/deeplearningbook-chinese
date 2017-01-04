@@ -92,7 +92,7 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 # \glsentrytext{importance_sampling}
 
 
-如方程~\eq?方法求积分（或者求和）的过程中，确定积分的哪一部分作为概率分布$p(\Vx)$，哪一部分作为被积的函数$f(\Vx)$（我们感兴趣的是估计$f(\Vx)$在概率分布$p(\Vx)$下的期望）是很关键的一步。
+如方程~\eq?所示，在\gls{monte_carlo}方法求积分（或者求和）的过程中，确定积分的哪一部分作为概率分布$p(\Vx)$，哪一部分作为被积的函数$f(\Vx)$（我们感兴趣的是估计$f(\Vx)$在概率分布$p(\Vx)$下的期望）是很关键的一步。
 $p(\Vx)f(\Vx)$存在不唯一的分解因为它通常可以被写成
 \begin{align}
 p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
@@ -105,7 +105,7 @@ p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 <!-- % 584 -->
 
 
-从\eqn?估计
+从\eqn?中所示的关系中可以发现，任意\gls{monte_carlo}估计
 \begin{align}
 \hat{s}_p = \frac{1}{n}\sum_{i=1,\Vx^{(i)}\sim p}^{n}f(\Vx^{(i)})
 \end{align}
@@ -156,7 +156,7 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z}
 <!-- % 585 -->
 
 尽管一个好的$q$分布的选择可以显著地提高\gls{monte_carlo}估计的效率，反之一个糟糕的$q$分布的选择则会使效率更糟糕。
-我们回过头来看看方程~\eq?$很大，那么这个估计的方差也会很大。
+我们回过头来看看方程~\eq?会发现，如果存在一个$q$使得$\frac{p(\Vx)f(\Vx)}{q(\Vx)}$很大，那么这个估计的方差也会很大。
 当$q(\Vx)$很小，而$f(\Vx)$和$p(\Vx)$都较大并且无法抵消$q$时，这种情况会非常明显。
 $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布中容易地采样。
 当$\Vx$是高维数据的时候，$q$分布的简单性使得它很难于$p$或者$p\vert f\vert$相匹配。
@@ -167,10 +167,10 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 <!-- % 585 -->
 
 尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}的应用中仍然扮演着重要的角色，包括\gls{DL}问题。
-比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\sec?中。
-此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见\sec?）。
+比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\sec?）或者其它有着大量输出结点的\gls{NN}中。
+此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见\sec?）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见\sec?）。
 采用\gls{SGD}训练模型参数的时候\gls{importance_sampling}可以用来改进对\gls{cost_function}的梯度的估计，尤其是针对于分类器模型的训练中一小部分错误分类样本产生的\gls{cost_function}。
-在这种情况下更加频繁的采集这些困难的样本可以降低梯度估计的方差。
+在这种情况下更加频繁的采集这些困难的样本可以降低梯度估计的方差{cite?}。
 <!-- % 586  -->
 
 
@@ -259,7 +259,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 
 矩阵$\MA$有一种特殊的结构，因为它的每一列都代表了一个概率分布。
 这样的矩阵被称作是\firstgls{stochastic_matrix}。
-对于任意状态$x$到任意其它状态$x'$存在一个$t$使得转移概率不为$0$，那么Perron-Frobenius定理~可以保证这个矩阵的最大特征值是实数且大小为$1$。
+对于任意状态$x$到任意其它状态$x'$存在一个$t$使得转移概率不为$0$，那么Perron-Frobenius定理~{cite?}可以保证这个矩阵的最大特征值是实数且大小为$1$。
 我们可以看到所有的特征值随着时间呈现指数变化：
 \begin{align}
 \Vv^{(t)} = (\MV \text{diag}(\Vlambda)\MV^{-1})^{t} \Vv^{(0)} = \MV \text{diag}(\Vlambda)^t \MV^{-1} \Vv^{(0)}.
@@ -336,7 +336,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 本书中描述了两种基本的方法。
 第一种方法是从已经学习到的分布$p_{\text{model}}$中推导出$T$，就像下文描述的从\gls{energy_based_model}中采样的案例一样。
 第二种方法是直接用参数描述$T$，然后学习这些参数，其\gls{stationary_distribution}隐式地定义了我们所感兴趣的模型$p_{\text{model}}$。
-我们将在\sec?中讨论第二种方法的例子。
+我们将在\sec?和\sec?中讨论第二种方法的例子。
 <!-- % 590 -->
 
 
@@ -348,7 +348,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 
 \firstgls{gibbs_sampling}是一种概念简单而又有效的方法，它构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$然后从$p_{\text{model}}$中的该点在无向图$G$中邻接点的条件分布中抽样。
 给定他们的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。
-正如在\sec?所有的隐层结点可以被同时采样，因为在给定可见层结点的条件下他们相互条件独立。
+正如在\sec?中看到的\gls{RBM}的例子一样，\gls{RBM}所有的隐层结点可以被同时采样，因为在给定可见层结点的条件下他们相互条件独立。
 同样的，所有的可见层结点也可以被同时采样因为在给定隐藏层结点的情况下他们相互条件独立。
 像这样的同时更新许多变量的\gls{gibbs_sampling}通常被叫做\firstgls{block_gibbs_sampling}。
 <!-- % 590 -->
@@ -482,13 +482,13 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 \firstgls{tempering}是一种通用的策略，通过从$\beta<1$模型中采样来在$p_1$的不同\gls{mode}之间快速\gls{mixing}。
 <!-- % 594 -->
 
-基于\firstgls{tempering_transition}为1的分布中采样。
-这些技巧被应用在\gls{RBM}中。
-另一种方法是利用\firstgls{parallel_tempering}。
+基于\firstgls{tempering_transition}{cite?}的\gls{markov_chain}初始从高\gls{temperature}的分布中采样使得在不同的\gls{mode}之间\gls{mixing}，然后从\gls{temperature}为1的分布中采样。
+这些技巧被应用在\gls{RBM}中{cite?}。
+另一种方法是利用\firstgls{parallel_tempering}{cite?}。
 其中\gls{markov_chain}并行的模拟许多不同\gls{temperature}的不同的状态。
 最高\gls{temperature}的状态\gls{mixing}较慢，相比之下最低\gls{temperature}的状态，即\gls{temperature}为1时，采出了精确的样本。
 转移算子包括了两个\gls{temperature}之间随机的跳转，所以一个高\gls{temperature}状态分布的样本有足够大的概率跳转到低\gls{temperature}的分布中。
-这个方法也被应用到了\gls{RBM}中。
+这个方法也被应用到了\gls{RBM}中{cite?}。
 尽管\gls{tempering}这种方法前景可期，现今它仍然无法让我们在采样复杂的\gls{energy_based_model}中更进一步。
 一个可能的原因是在\firstgls{critical_temperatures}时\gls{temperature}转移算子必须设置的非常小（因为\gls{temperature}需要逐渐的下降）来确保\gls{tempering}的有效性。
 <!-- % 594 -->
@@ -505,7 +505,7 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 在许多表达学习的算法诸如\gls{AE}和\gls{RBM}中，$\Vh$的边缘分布并不像$\Vx$的原始数据分布，反而通常表现为均匀的单一\gls{mode}的分布。
  值得指出的是，这些方法往往利用所有可用的表达空间并尽量减小\gls{reconstruction_error}。
 因为当训练集上的不同样本能够被非常容易的在$\Vh$空间区分的时候，我们也会很容易的最小化\gls{reconstruction_error}。
- （比如说实验中的类别）所对应的区域之间的间距也会越模糊。
+ {cite?}观察到这样的现象，带有正则项的堆叠越深的\gls{AE}或者\gls{RBM}，顶端$\Vh$空间的边缘分布越趋向于均匀分布，而且不同\gls{mode}（比如说实验中的类别）所对应的区域之间的间距也会越模糊。
 在高层次的空间训练\gls{RBM}使得\gls{gibbs_sampling}\gls{mixing}的更快。
 如何利用这种观察到的现象来辅助训练深度生成模型或者从中采样仍然有待探索。
 <!-- % 595 -->

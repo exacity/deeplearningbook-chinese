@@ -8,7 +8,7 @@ share: false
 
 \gls{DL}为研究者们提供了许多指导性的建模和设计算法的思路。
 其中一种形式是\firstgls{structured_probabilistic_models}。
-我们曾经在\sec?。
+我们曾经在\sec?中简要讨论过\gls{structured_probabilistic_models}。
 那个简单的介绍已经足够使我们充分了解如何使用\gls{structured_probabilistic_models}来描述第二部分中的某些算法。
 现在在第三部分，\gls{structured_probabilistic_models}是许多\gls{DL}中重要的研究方向的重要组成部分。
 作为讨论这些研究方向的预备知识，本章详细地描述了\gls{structured_probabilistic_models}。
@@ -25,7 +25,7 @@ share: false
 \gls{graphical_models}的研究领域是巨大的，曾提出过大量的模型，训练算法和推断算法。
 在本章中，我们介绍了\gls{graphical_models}中几个核心方法的基本背景，并且强调了在\gls{DL}领域中\gls{graphical_models}已经被公认为是有效的。
 如果你已经对\gls{graphical_models}已经了解很多，那么你可以跳过本章的绝大部分。
-然而，我们相信即使是资深的\gls{graphical_models}方向的研究者也会从本章的最后一节中获益匪浅，详见\sec?特有的算法。
+然而，我们相信即使是资深的\gls{graphical_models}方向的研究者也会从本章的最后一节中获益匪浅，详见\sec?，其中我们强调了在\gls{DL}算法中一些\gls{graphical_models}特有的算法。
 相比于普通的\gls{graphical_models}研究者，\gls{DL}的研究者们通常会使用完全不同的模型结构，学习算法和推断过程。
 在本章中，我们讨论了这种区别并且解释了其中的原因。
 <!-- % 550 head -->
@@ -35,8 +35,8 @@ share: false
 之后，我们介绍了如何使用一个图来描述概率分布的结构。
 尽管这个方法能够帮助我们解决许多挑战和问题，它本身也有很多缺陷。
 \gls{graphical_models}中的一个主要难点就是判断哪些变量之间存在直接的相互作用关系，也就是对于给定的问题哪一种图结构是最适合的。
-在\sec?，我们简要概括了解决这个难点的两种基本方法。
-最后，在\sec?中的一些独特之处和一些特有的方法，作为本章的收尾。
+在\sec?中，通过了解\firstgls{dependency}，我们简要概括了解决这个难点的两种基本方法。
+最后，在\sec?中，我们讨论并强调了\gls{graphical_models}在\gls{DL}中的一些独特之处和一些特有的方法，作为本章的收尾。
 <!-- % 550  ok -->
 
 
@@ -104,7 +104,7 @@ share: false
      \centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/fig-ssrbm_samples}}
 \fi
 	\caption{自然图片的概率建模。
-（上）CIFAR-10数据集中的$32\times 32$像素的样例图片。
+（上）CIFAR-10数据集{cite?}中的$32\times 32$像素的样例图片。
 （下）这个数据集上训练的\gls{structured_probabilistic_models}中抽出的样本。
 每一个样本都出现在与其欧式距离最近的训练样本的格点中。
 这种比较使得我们发现这个模型确实能够生成新的图片，而不是记住训练样本。
@@ -131,7 +131,7 @@ share: false
 	
 +  \emph{统计的高效性}： 当模型中的参数个数增加的时候，使用随机估计时训练数据的量也需要相应的增加。
 	因为基于查表的模型拥有天文数字级别的参数，为了准确地拟合，相应的训练集的大小也是相同级别的。
-	任何这样的模型都会导致严重的\gls{overfitting}，除非我们添加一些额外的假设来联系表格中的不同元素（正如\sec?模型）。
+	任何这样的模型都会导致严重的\gls{overfitting}，除非我们添加一些额外的假设来联系表格中的不同元素（正如\sec?中所举的\gls{backoff}或者平滑过的\gls{n_gram}模型）。
 	% 552  end
 	
 + \emph{运行时间}：推断的开销。
@@ -207,7 +207,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 <!-- % 554 -->
 
 
-有一种\gls{structured_probabilistic_models}是\firstgls{directed_graphical_model}，也被叫做\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望强调从网络中计算出的值的推断本质，尤其是强调这些值代表的是置信的程度大小时，Judea Pearl建议使用\gls{bayesian_network}这个术语。} 。
+有一种\gls{structured_probabilistic_models}是\firstgls{directed_graphical_model}，也被叫做\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望强调从网络中计算出的值的推断本质，尤其是强调这些值代表的是置信的程度大小时，Judea Pearl建议使用\gls{bayesian_network}这个术语。} {cite?}。
 <!-- % 554 -->
 
 
@@ -306,7 +306,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 
 
 \gls{directed_graphical_model}为我们提供了一个描述\gls{structured_probabilistic_models}的语言。
-而另一种常见的语言则是\firstgls{undirected_model}，也叫做\firstall{MRF}或者是\firstgls{markov_network} 。
+而另一种常见的语言则是\firstgls{undirected_model}，也叫做\firstall{MRF}或者是\firstgls{markov_network} {cite?}。
 就像它们的名字所说的那样，\gls{undirected_model}中所有的边都是没有方向的。
 <!-- % 556 end -->
 
@@ -366,7 +366,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 只要所有的\gls{clique}中的结点数都不大，那么我们就能够高效地处理这些\gls{unnormalized_probability_function}。
 它包含了这样的思想，越高密切度的状态有越大的概率。
 然而，不像\gls{bayesian_network}，几乎不存在\gls{clique}定义的结构，所以不能保证把它们乘在一起能够得到一个有效的概率分布。
-\fig?中读取分解信息的例子。
+\fig?展示了一个从\gls{undirected_model}中读取分解信息的例子。
 <!-- % 558 -->
 
 \begin{figure}[!htb]
@@ -494,8 +494,8 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 <!-- % p 561  head -->
 
 
-服从\eqn?的一个实例。
-正是基于这个原因，我们把许多\gls{energy_based_model}叫做\firstgls{BM}。
+服从\eqn?形式的任意分布都是\firstgls{boltzmann_distribution}的一个实例。
+正是基于这个原因，我们把许多\gls{energy_based_model}叫做\firstgls{BM}{cite?}。
 关于什么时候叫\gls{energy_based_model}，什么时候叫\gls{BM}不存在一个公认的判别标准。
 一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如\gls{mcrbm2}，也涉及到了实值变量。
 虽然\gls{BM}最初的定义既可以包含\gls{latent_variable}也可以不包含\gls{latent_variable}，但是时至今日\gls{BM}这个术语通常用于指拥有\gls{latent_variable}的模型，而没有\gls{latent_variable}的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
@@ -507,7 +507,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 通过$\exp(a+b) = \exp(a) \exp(b)$，我们发现\gls{undirected_model}中的不同\gls{clique}对应于\gls{energy_function}的不同项。
 换句话说，\gls{energy_based_model}只是一种特殊的\gls{markov_network}：求幂使\gls{energy_function}中的每个项对应于不同\gls{clique}的\gls{factor}。
 关于如何从\gls{undirected_model}结构中获得\gls{energy_function}形式的示例参见\fig?。
-人们可以将\gls{energy_function}带有多个项的\gls{energy_based_model}视作是\firstgls{product_of_expert}。
+人们可以将\gls{energy_function}带有多个项的\gls{energy_based_model}视作是\firstgls{product_of_expert}{cite?}。
 \gls{energy_function}中的每一项对应的是概率分布中的一个\gls{factor}。
 \gls{energy_function}中的每一项都可以看作决定一个软约束是否能够满足的"专家"。
 <!-- %每个专家只执行仅涉及一个随机变量低维投影的约束，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。 -->
@@ -519,7 +519,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
-	\caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function}$E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。值得注意的是，我们可以通过取负能量的指数来获得图\?
+	\caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function}$E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。值得注意的是，我们可以通过取负能量的指数来获得图\?中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
 \end{figure}
 
 
@@ -564,8 +564,8 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 当我们画图时，我们可以通过加阴影来表示观察到的变量。
-\fig?中的活跃和非活跃路径的样子。
-\fig?信息的例子。
+\fig?用于描述当以这种方式绘制时\gls{undirected_model}中的活跃和非活跃路径的样子。
+\fig?描述了一个从一个\gls{undirected_model}中读取\gls{separation}信息的例子。
 <!-- % 563 -->
 
 
@@ -717,7 +717,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 即使在使用单个概率分布时，我们有时可以在不同的建模方式之间切换。
 有时，如果我们观察到变量的某个子集，或者如果我们希望执行不同的计算任务，换一种建模方式可能更合适。
 例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\sec?中描述）的直接方法。
-而\gls{undirected_model}公式通常用于\gls{approximate_inference}过程（我们将在\chap?的作用）。
+而\gls{undirected_model}公式通常用于\gls{approximate_inference}过程（我们将在\chap?中看到，\eqn?强调了\gls{undirected_model}的作用）。
 <!-- % 566 -->
 
 
@@ -845,7 +845,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 变量和\gls{factor}通过无向边连接。
 当且仅当变量包含在\gls{unnormalized_probability_function}的\gls{factor}中时，变量和\gls{factor}在图中连接。
 没有\gls{factor}可以连接到图中的另一个\gls{factor}，也不能将变量连接到变量。
-\fig?如何解决无向网络中的模糊性。
+\fig?给出了一个例子来说明\gls{factor_graph}如何解决无向网络中的模糊性。
 <!-- % 570   -->
 
 
@@ -983,9 +983,9 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 \gls{latent_variable}还有一个额外的优势，即能够高效的描述$p(\RVv)$。
 新变量$\RVh$还提供了$\RVv$的替代表示。
-例如，如\sec?对应于特征是从哪一个混合体中抽出。
+例如，如\sec?所示，\glssymbol{GMM}学习了一个\gls{latent_variable}，这个\gls{latent_variable}对应于特征是从哪一个混合体中抽出。
 这意味着\glssymbol{GMM}中的\gls{latent_variable}可以用于做分类。
-在\chap?的。
+在\chap?中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为\gls{manifold}上坐标的\gls{latent_variable}的。
 其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
 许多方法通过学习\gls{latent_variable}来完成特征学习。
 通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\mid\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
@@ -1109,14 +1109,14 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 ## 实例：\glsentrytext{RBM}
 
-\firstgls{RBM}如何用于深度学习的典型例子。 
+\firstgls{RBM}{cite?}或者\\ \firstgls{harmonium}是\gls{graphical_models}如何用于深度学习的典型例子。 
 \glssymbol{RBM}本身不是一个深层模型。 
 相反，它有一层\gls{latent_variable}，可用于学习输入的表示。 
-在\chap?如何被用来构建许多的深层模型。
+在\chap?中，我们将看到\glssymbol{RBM}如何被用来构建许多的深层模型。
 在这里，我们举例展示了\glssymbol{RBM}在许多深度图模型中使用的许多实践：
 它的结点被分成层，层之间的连接由矩阵描述，连通性相对密集。
 该模型能够进行高效的\gls{gibbs_sampling}，并且模型设计的重点在于以很高的自由度来学习\gls{latent_variable}，而不是设计师指定。
-之后在\sec?。
+之后在\sec?，我们将更详细地再次讨论\glssymbol{RBM}。
 <!-- % 577 -->
 
 规范的\glssymbol{RBM}是具有二进制的可见和隐藏单元的\gls{energy_based_model}。 其\gls{energy_function}为
@@ -1171,7 +1171,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 \else
 	\centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/rbm_samples}}	
 \fi
-	\caption{训练好的\glssymbol{RBM}及其权重中的样本。（左）用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。每一列是一个单独的\gls{gibbs_sampling}过程。没遗憾表示另一个$1000$步\gls{gibbs_sampling}的输出。连续的样本之间彼此高度相关。（右）对应的权重向量。将本图结果与图\?
+	\caption{训练好的\glssymbol{RBM}及其权重中的样本。（左）用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。每一列是一个单独的\gls{gibbs_sampling}过程。没遗憾表示另一个$1000$步\gls{gibbs_sampling}的输出。连续的样本之间彼此高度相关。（右）对应的权重向量。将本图结果与图\?中描述的样本和权重相比。由于\glssymbol{RBM}的先验$p(\Vh)$没有限制为\gls{factorial}，这里的样本表现得更好。采样时\glssymbol{RBM}能够学习到哪些特征需要一起出现。另一方面说，\glssymbol{RBM}后验$p(\Vh \mid \Vv)$是\gls{factorial}的，而\gls{sparse_coding}的后验并不是，所以在特征提取上\gls{sparse_coding}模型表现得更好。其它的模型可以使用非\gls{factorial}的$p(\Vh)$和非\gls{factorial}的$p(\Vh \mid \Vh)$。图片的复制经过{lisa_tutorial_rbm}的允许。}
 \end{figure}
 
 
@@ -1180,7 +1180,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 \frac{\partial}{\partial W_{i,j}} E(\RVv,\RVh) = - \RSv_i \RSh_j.
 \end{align}
 这两个属性，高效的\gls{gibbs_sampling}和导数计算，使训练过程非常方便。
-在\chap?。
+在\chap?中，我们将看到，可以通过计算应用于来自模型的样本的这种导数来训练\gls{undirected_model}。
 <!-- % 579 -->
 
 训练模型可以得到数据$\Vv$的表示$\Vh$。

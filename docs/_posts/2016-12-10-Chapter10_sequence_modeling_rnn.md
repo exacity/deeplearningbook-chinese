@@ -3,7 +3,7 @@ title: 序列建模：循环和递归网络
 layout: post
 share: false
 ---
-\firstgls{RNN}或\glssymbol{RNN}。
+\firstgls{RNN}或\glssymbol{RNN}{cite?}是一类用于处理序列数据的\gls{NN}。
 就像\gls{convolutional_network}是专门用于处理网格化数据$\TSX$（如一个图像）的\gls{NN}，\gls{RNN}是专门用于处理序列$\Vx^{(1)}, \dots, \Vx^{(\tau)}$的\gls{NN}。
 正如\gls{convolutional_network}可以很容易地扩展到具有很大宽度和高度的图像，以及处理大小可变的图像，\gls{recurrent_network}可以扩展到更长的序列（比不基于序列的特化网络长得多）。
 大多数\gls{recurrent_network}也能处理可变长度的序列。 
@@ -21,7 +21,7 @@ share: false
 <!-- % -- 363 -- -->
 
 一个相关的想法是跨越1维时间序列的卷积。
-这种卷积方法是\gls{TDNNs}的基础。
+这种卷积方法是\gls{TDNNs}的基础{cite?}。
 卷积操作允许网络跨越时间共享参数，但是浅层的。
 卷积的输出是一个序列，其中输出中的每一项是相邻几项的函数。
 \gls{parameter_sharing}的概念体现在每个\gls{time_step}中使用的相同卷积核。
@@ -71,7 +71,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 以这种方式重复应用定义，\gls{unfolding}等式，就能得到不涉及循环的表达。
 现在可以通过一个传统的有向无环\gls{computational_graph}来表示这样的表达。
 
-式\eq?所示。
+式\eq?和式\eq?的\gls{unfolding}\gls{computational_graph}如\fig?所示。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -95,12 +95,12 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 \gls{RNN}可以通过许多不同的方式建立。
 就像几乎所有函数都可以被认为是\gls{feedforward_network}，基本上任何涉及循环的函数可以被认为是一个\gls{RNN}。
 
-很多\gls{RNN}使用式\eq?的值。
+很多\gls{RNN}使用式\eq?或类似的公式定义\gls{hidden_unit}的值。
 为了表明状态是网络的\gls{hidden_unit}，我们使用变量$h$代表状态来重写式\eq?：
 \begin{align}
  \Vh^{(t)} = f(\Vh^{(t-1)}, \Vx^{(t)} ; \Vtheta),
 \end{align}
-如\fig?会增加额外的架构，如读取状态信息$\Vh$进行预测的输出层。
+如\fig?所示，典型\glssymbol{RNN}会增加额外的架构，如读取状态信息$\Vh$进行预测的输出层。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -155,7 +155,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 
 # \glsentrytext{RNN}
 
-基于\sec?。
+基于\sec?中的图展开和\gls{parameter_sharing}的思想，我们可以设计各种\gls{RNN}。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -190,7 +190,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 (左)电路原理图。
 (右)展开的计算图。
 这样的\glssymbol{RNN}没有\fig?表示的RNN那样强大（只能表示更小的函数集合）。
-\fig?可以选择将其想要的关于过去的任何信息放入隐藏表示$\Vh$中并且将$\Vh$传播到未来。
+\fig?中的\glssymbol{RNN}可以选择将其想要的关于过去的任何信息放入隐藏表示$\Vh$中并且将$\Vh$传播到未来。
 该图中的\glssymbol{RNN}被训练为将特定输出值放入$\Vo$中，并且$\Vo$是允许传播到未来的唯一信息。
 此处没有从$\Vh$前向传播的直接连接。
 之前的$\Vh$仅通过产生的预测间接地连接到当前。
@@ -211,8 +211,8 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 }
 \end{figure}
 
-任何图灵可计算的函数都可以通过这样一个有限维的\gls{recurrent_network}计算，在这个意义上\fig?是万能的。
-\glssymbol{RNN}经过若干\gls{time_step}后读取输出，这与由图灵机所用\gls{time_step}是渐近线性的，与输入长度也是渐近线性的。
+任何图灵可计算的函数都可以通过这样一个有限维的\gls{recurrent_network}计算，在这个意义上\fig?和式\eq?的\gls{RNN}是万能的。
+\glssymbol{RNN}经过若干\gls{time_step}后读取输出，这与由图灵机所用\gls{time_step}是渐近线性的，与输入长度也是渐近线性的{cite?}。
 由图灵机计算的函数是离散的，所以这些结果都是函数的具体实现，而不是近似。
 \glssymbol{RNN}作为图灵机使用时，需要一个二进制序列作为输入，其输出必须离散化以提供二进制输出。
 有可能利用单个有限大小的特定\glssymbol{RNN}来计算在此设置下的所有函数（{Siegelmann+Sontag-1995}用了886个单元）。
@@ -221,7 +221,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 
 <!-- % -- 368 -- -->
 
-现在我们研究\fig?公式。
+现在我们研究\fig?中\glssymbol{RNN}的\gls{forward_propagation}公式。
 这个图没有指定\gls{hidden_unit}的激活函数。
 我们假设使用双曲正切激活函数。
 此外，图中没有明确指定何种形式的输出和\gls{loss_function}。
@@ -246,7 +246,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 \end{align}
 其中$p_{\text{model}} \big(  y^{(t)} \mid  \{ \Vx^{(1)}, \dots, \Vx^{(t)} \} \big) $需要读取模型输出向量$\hat \Vy^{(t)}$中对应于$y^{(t)}$的项。
 关于各个参数计算这个\gls{loss_function}的\gls{gradient}是昂贵的操作。
-\gls{gradient}计算涉及执行一次\gls{forward_propagation}（如在\fig?。
+\gls{gradient}计算涉及执行一次\gls{forward_propagation}（如在\fig?\gls{unfolded_graph}中从左到右的传播），接着是由右到左的\gls{backward_propagation}。
 运行时间是$\CalO(\tau)$，并且不能通过并行化来降低，因为\gls{forward_propagation}图顺序是固有的;每个\gls{time_step}只能一前一后地计算。
 在\gls{forward_propagation}中各个状态必须保存，直到它们被\gls{backward_propagation}中再次使用，因此内存代价也是$\CalO(\tau)$。
 应用于\gls{unfolded_graph}且代价为$\CalO(\tau)$的\gls{backward_propagation}算法称为\firstgls{BPTT}或\glssymbol{BPTT}，并会在\sec?中进一步讨论。
@@ -305,18 +305,18 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 在这种情况下，训练期间该网络看到的输入与测试时看到的会有很大的不同。
 减轻此问题的一种方法是同时使用\gls{teacher_forcing}和自由运行的输入进行训练，比如在展开循环的输出到输入路径预测几个步骤的正确目标值。
 通过这种方式，网络可以学会考虑在训练时没有接触到的输入条件（如自由运行模式下，自身生成自身），以及将状态映射回使网络几步之后生成正确输出的状态。
-另外一种方式是通过随意选择生成值或真实的数据值作为输入以减小训练时和测试时看到的输入之间的差别。
+另外一种方式{cite?}是通过随意选择生成值或真实的数据值作为输入以减小训练时和测试时看到的输入之间的差别。
 这种方法利用了\gls{curriculum_learning}策略，逐步使用更多生成值作为输入。
 
 
 ## 计算\glsentrytext{RNN}的\glsentrytext{gradient}
 
 计算\gls{RNN}的\gls{gradient}是容易的。
-可以简单地将\sec?。
+可以简单地将\sec?中的推广\gls{backward_propagation}算法应用于展开的\gls{computational_graph}。
 不需要特殊化的算法。
 由\gls{backward_propagation}计算得到的\gls{gradient}，并结合任何通用的基于\gls{gradient}的技术就可以训练\glssymbol{RNN}。
 
-为了获得\glssymbol{BPTT}算法行为的一些直观理解，我们举例说明如何通过\glssymbol{BPTT}计算上述\glssymbol{RNN}公式（式\eq?。
+为了获得\glssymbol{BPTT}算法行为的一些直观理解，我们举例说明如何通过\glssymbol{BPTT}计算上述\glssymbol{RNN}公式（式\eq?和式\eq?）的\gls{gradient}。
 \gls{computational_graph}的节点包括参数$\MU,\MV,\MW, \Vb$和$\Vc$，以及以$t$索引的顺序节点$\Vx^{(t)}, \Vh^{(t)},\Vo^{(t)}$和$L^{(t)}$。
 对于每一个节点$\TSN$，我们需要基于它后面节点的\gls{gradient}，递归地计算\gls{gradient}$\nabla_{\TSN} L$。
 我们从紧接着最终损失的节点开始递归：
@@ -351,7 +351,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 
 一旦获得了\gls{computational_graph}内部节点的\gls{gradient}，我们就可以得到关于参数节点的\gls{gradient}。
 因为参数在许多\gls{time_step}共享，必须在表示这些变量的微积分操作时谨慎对待。
-我们希望实现的等式使用\sec?贡献。
+我们希望实现的等式使用\sec?中的{\tt bprop}方法计算\gls{computational_graph}中单一边对\gls{gradient}贡献。
 然而微积分中的$\nabla_{\MW} f$算子，计算$\MW$对于$f$的贡献时将\gls{computational_graph}中\emph{所有}边都考虑进去了。
 为了消除这种歧义，我们定义只在$t$时刻使用的虚拟变量$\MW^{(t)}$作为$\MW$的副本。
 然后，我们可以使用$\nabla_{\MW^{(t)}}$来表示权重在\gls{time_step}$t$对\gls{gradient}的贡献。
@@ -384,7 +384,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 如\gls{feedforward_network}，我们通常希望将\glssymbol{RNN}的输出解释为一个概率分布，并且我们通常使用与分布相关联的\gls{cross_entropy}来定义损失。
 均方误差是与单位高斯分布的输出相关联的\gls{cross_entropy}损失，例如\gls{feedforward_network}中所使用的。
 
-当我们使用一个预测性对数似然的训练目标，如式\eq?$的条件分布。
+当我们使用一个预测性对数似然的训练目标，如式\eq?，我们将\glssymbol{RNN}训练为能够根据之前的输入估计下一个序列元素$\Vy^{(t)}$的条件分布。
 这可能意味着，我们最大化对数似然
 \begin{align}
  \log p(\Vy^{(t)} \mid \Vx^{(1)},\dots, \Vx^{(t)}),
@@ -447,7 +447,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 当我们认为$\RSy^{(t)}$的分布可能取决于遥远过去(在某种程度)的$y^{(i)}$的值，且无法通过$y^{(t-1)}$捕获$y^{(i)}$的影响时，\glssymbol{RNN}将会很有用。
 
 解释\glssymbol{RNN}作为\gls{graphical_model}的一种方法是将\glssymbol{RNN}视为定义一个结构为完全图，能够表示任何一对的$y$值之间直接相关性的\gls{graphical_model}。
-\fig?。
+\fig?是关于$y$值且具有完全图结构的\gls{graphical_model}。
 该\glssymbol{RNN}完全图的解释基于排除并忽略模型中的\gls{hidden_unit}$\Vh^{(t)}$。
 
 <!-- % -- 377 -- -->
@@ -459,8 +459,8 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 如果$y$可以取$k$个不同的值，表格表示法将有$\CalO(k^\tau)$个参数。
 比较\glssymbol{RNN}，由于\gls{parameter_sharing}，\glssymbol{RNN}的参数数目为$\CalO(1)$且是序列长度的函数。
 可以调节\glssymbol{RNN}的参数数量来控制模型容量，但不用被迫与序列长度成比例。
-式\eq?的相同参数$\Vtheta$，有效地参数化的变量之间的长期联系。
-\fig?的解释。
+式\eq?展示了所述\glssymbol{RNN}通过循环应用相同的函数$f$以及在每个\gls{time_step}的相同参数$\Vtheta$，有效地参数化的变量之间的长期联系。
+\fig?说明了这个\gls{graphical_model}的解释。
 在\gls{graphical_model}中结合$\Vh^{(t)}$节点可以用作过去和未来之间的中间量，从而将它们解耦。
 遥远过去的变量$y^{(i)}$可以通过其对$\Vh$的影响来影响变量$y^{(t)}$。
 该图的结构表明可以在\gls{time_step}使用相同的条件概率分布来有效地参数化模型，并且当观察到全部变量时，可以有效地评估联合地分配给所有变量的概率。
@@ -483,7 +483,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 \glssymbol{RNN}必须有某种机制来确定序列的长度。
 这可以通过多种方式实现。
 
-在当输出是从词汇表获取的符号的情况下，我们可以添加一个对应于序列末端的特殊符号。
+在当输出是从词汇表获取的符号的情况下，我们可以添加一个对应于序列末端的特殊符号{cite?}。
 当产生该符号时，采样过程停止。
 在训练集中，我们将该符号作为序列的一个额外成员，即紧跟每个训练样本$\Vx^{(\tau)}$之后。
 
@@ -510,9 +510,9 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 ## 基于上下文的\glssymbol{RNN}序列建模
 
 上一节描述了没有输入$\Vx$时，关于随机变量序列$y^{(t)}$的\glssymbol{RNN}如何对应于\gls{directed_graphical_model}。
-当然，如式\eq?$。
+当然，如式\eq?所示的\glssymbol{RNN}包含一个输入序列$\Vx^{(1)},\Vx^{(2)},\dots,\Vx^{(\tau)}$。
 一般情况下，\glssymbol{RNN}允许将\gls{graphical_model}的观点扩展到不仅代表$y$变量的联合分布也能表示给定$\Vx$后$y$条件分布。
-如在\sec?情形中所讨论的，任何代表变量$P(\Vy;\Vtheta)$的模型都能被解释为代表条件分布$P(\Vy \mid \Vomega)$的模型，其中$\Vomega=\Vtheta$。
+如在\sec?的\gls{feedforward_network}情形中所讨论的，任何代表变量$P(\Vy;\Vtheta)$的模型都能被解释为代表条件分布$P(\Vy \mid \Vomega)$的模型，其中$\Vomega=\Vtheta$。
 我们能像之前一样使用$P(\Vy \mid \Vomega)$代表分布$P(\Vy \mid \Vx)$来扩展这样的模型，但要令$\Vomega$是关于$\Vx$的函数。
 在\glssymbol{RNN}的情况，这可以通过不同的方式来实现。
 此处，我们回顾最常见和最明显的选择。
@@ -551,7 +551,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 <!-- % -- 381 -- -->
 
 \glssymbol{RNN}可以接收向量序列$\Vx^{(t)}$作为输入，而不是仅接收单个向量$\Vx$作为输入。
-式\eq?)$，并在条件独立的假设下这个分布分解为
+式\eq?描述的\glssymbol{RNN}对应条件分布$P(\Vy^{(1)}, \dots, \Vy^{(\tau)} \mid \Vx^{(1)}, \dots, \Vx^{(\tau)})$，并在条件独立的假设下这个分布分解为
 \begin{align}
  \prod_t P(\Vy^{(t)} \mid \Vx^{(1)}, \dots, \Vx^{(t)}).
 \end{align}
@@ -563,9 +563,9 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 \centerline{\includegraphics{Chapter10/figures/causal_rnn}}
 \fi
 \caption{将可变长度的$\Vx$值序列映射到相同长度的$\Vy$值序列上分布的条件\gls{RNN}。
-对比\fig?包含从前一个输出到当前状态的连接。
+对比\fig?，此\glssymbol{RNN}包含从前一个输出到当前状态的连接。
 这些连接允许此\glssymbol{RNN}对给定$\Vx$的序列后相同长度的$\Vy$序列上的任意分布建模。
-\fig?仅能表示在给定$\Vx$值的情况下，$\Vy$值彼此条件独立的分布。
+\fig?的\glssymbol{RNN}仅能表示在给定$\Vx$值的情况下，$\Vy$值彼此条件独立的分布。
 }
 \end{figure}
 该模型就可以代表关于$\Vy$序列的任意概率分布。
@@ -584,11 +584,11 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 例如，在语音识别中，由于协同发音，当前声音作为音素的正确解释可能取决于未来几个音素，甚至潜在的可能取决于未来的几个词，因为词与附近的词之间的存在语义依赖：如果当前的词有两种声学上合理的解释，我们可能要在更远的未来（和过去）来寻找信息区分它们。
 这在手写识别和许多其他序列到序列学习的任务中也是如此，将会在下一节中描述。
 
-双向\gls{RNN}（或双向\glssymbol{RNN}）为满足这种需要而被发明。
-他们在需要双向信息的应用中非常成功。
+双向\gls{RNN}（或双向\glssymbol{RNN}）为满足这种需要而被发明{cite?}。
+他们在需要双向信息的应用中非常成功{cite?}，如手写识别{cite?}，语音识别{cite?}以及生物信息学{cite?}。
 
 顾名思义，双向\glssymbol{RNN}结合时间上从序列起点开始移动的\glssymbol{RNN}和另一个时间上从序列末尾开始移动的\glssymbol{RNN}。
-\fig?的状态。
+\fig?展示了典型的双向\glssymbol{RNN}，其中$\Vh^{(t)}$代表通过时间向前移动的子\glssymbol{RNN}的状态，$\Vg^{(t)}$代表通过时间向后移动的子\glssymbol{RNN}的状态。
 这允许输出单元$\Vo^{(t)}$能够计算同时依赖于过去和未来且对时刻$t$的输入值最敏感的表示，而不必指定$t$周围固定大小的窗口（这是\gls{feedforward_network}、\gls{convolutional_network}或具有固定大小的先行缓存器的\glssymbol{RNN}必须要做的）。
 
 <!-- % -- 383 -- -->
@@ -607,7 +607,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 
 这个想法可以自然扩展到2维输入，如图像，由\emph{四个}\glssymbol{RNN}组成，每一个沿着四个方向中的一个计算：上、下、左、右。
 如果\glssymbol{RNN}能够学习到承载长期信息，那在2维网格每个点$(i, j)$的输出$O_{i,j}$就能计算一个能捕捉到大多局部信息并且依赖于长期输入的表示。
-相比\gls{convolutional_network}，应用于图像的\glssymbol{RNN}通常更昂贵，但允许同一特征图的特征之间存在长期横向的相互作用。
+相比\gls{convolutional_network}，应用于图像的\glssymbol{RNN}通常更昂贵，但允许同一特征图的特征之间存在长期横向的相互作用{cite?}。
 实际上，对于这样的\glssymbol{RNN}，\gls{forward_propagation}公式可以写成表示使用卷积的形式，计算自底向上到每一层的输入（在整合横向相互作用的特征图的循环传播之前）。
 
 <!-- % -- 384 -- -->
@@ -615,7 +615,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 
 # 基于编码-解码的序列到序列架构
 
-我们已经在\fig?如何将一个输入序列映射到等长的输出序列。
+我们已经在\fig?看到\glssymbol{RNN}如何将输入序列映射成固定大小的向量，在\fig?中看到\glssymbol{RNN}如何将固定大小的向量映射成一个序列，在\fig?、\fig?、\fig?和\fig?中看到\glssymbol{RNN}如何将一个输入序列映射到等长的输出序列。
 
 本节我们讨论如何训练\glssymbol{RNN}，使其将输入序列映射到不一定等长的输出序列。
 这在许多场景中都有应用，如语音识别、机器翻译或问答，其中训练集的输入和输出序列的长度通常不相同（虽然它们的长度可能相关）。
@@ -629,7 +629,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 这些作者分别将该架构称为编码-解码或序列到序列架构，如\fig?所示。
 这个想法非常简单：（1）\firstgls{encoder}或\textbf{读取器}(reader)或\textbf{输入}(input)\glssymbol{RNN}处理输入序列。
 \gls{encoder}输出上下文$C$（通常是最终隐藏状态的简单函数）。
-(2)\firstgls{decoder}或\textbf{写入器}(writer)或\textbf{输出}(output)\glssymbol{RNN}则以固定长度的向量（如\fig?)$。
+(2)\firstgls{decoder}或\textbf{写入器}(writer)或\textbf{输出}(output)\glssymbol{RNN}则以固定长度的向量（如\fig?）为条件产生输出序列$\MY=(\Vy^{(1)}, \dots, \Vy^{(n_y)})$。
 这种架构对比本章前几节提出的架构的创新之处在于长度$n_x$和$n_y$可以彼此不同，而之前的架构约束$n_x = n_y = \tau$。
 在一个序列到序列的架构中，两个\glssymbol{RNN}共同训练以最大化$\log P( \Vy^{(1)}, \dots, \Vy^{(n_y)} \mid \Vx^{(1)},\dots,\Vx^{(n_x)} )$(关于训练集中所有$\Vx$和$\Vy$对的平均)。
 \gls{encoder}\glssymbol{RNN}的最后一个状态$\Vh_{n_x}$通常被当作输入的表示$C$并作为\gls{decoder}\glssymbol{RNN}的输入。
@@ -647,7 +647,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 }
 \end{figure}
 
-如果上下文$C$是一个向量，则\gls{encoder}\glssymbol{RNN}只是在\sec?。
+如果上下文$C$是一个向量，则\gls{encoder}\glssymbol{RNN}只是在\sec?描述的向量到序列\glssymbol{RNN}。
 正如我们所见，向量到序列\glssymbol{RNN}至少有两种接受输入的方法。
 输入可以被提供为\glssymbol{RNN}的初始状态，或连接到每个\gls{time_step}中的\gls{hidden_unit}。
 这两种方式也可以结合。
@@ -671,13 +671,13 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 + 从前一隐藏状态到下一隐藏状态，以及
 + 从隐藏状态到输出。
 \end{enumerate}
-根据\fig?架构，这三个块都与单个权重矩阵相关联。
+根据\fig?中的\glssymbol{RNN}架构，这三个块都与单个权重矩阵相关联。
 换句话说，当网络被\gls{unfolding}时，每个块对应一个浅的变换。
 能通过深度\glssymbol{MLP}内单个层来表示的变换称为浅变换。
 通常，这是由学好的仿射变换和一个固定非线性表示的转换。
 
 在这些操作中引入深度会有利的吗？
-实验证据强烈暗示理应如此。
+实验证据{cite?}强烈暗示理应如此。
 实验证据与我们需要足够的深度以执行所需映射的想法一致。
 可以参考{Schmidhuber96,ElHihi+Bengio-nips8}或{Jaeger2007}了解更早的关于深度\glssymbol{RNN}的研究。
 
@@ -685,8 +685,8 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 我们可以认为，在\fig?(a)所示层次结构中较低的层起到了将原始输入转化为对更高层的隐藏状态更合适表示的作用。
 {Pascanu-et-al-ICLR2014}更进一步提出在上述三个块中各使用一个单独的\glssymbol{MLP}（可能是深度的），如\fig?(b)所示。
 考虑表示容量，我们建议在这三个步中都分配足够的容量，但增加深度可能会因为优化困难而损害学习效果。
-在一般情况下，更容易优化较浅的架构，加入\fig?$t+1$的最短路径变得更长。
-例如，如果具有单个隐藏层的\glssymbol{MLP}被用于状态到状态的转换，那么与\fig?变量之间最短路径的长度。
+在一般情况下，更容易优化较浅的架构，加入\fig?(b)的额外深度导致从\gls{time_step}$t$的变量到\gls{time_step}$t+1$的最短路径变得更长。
+例如，如果具有单个隐藏层的\glssymbol{MLP}被用于状态到状态的转换，那么与\fig?相比，我们就会加倍任何两个不同\gls{time_step}变量之间最短路径的长度。
 然而{Pascanu-et-al-ICLR2014}认为，在隐藏到隐藏的路径中引入\gls{skip_connection}可以缓和这个问题，如\fig?(c)所示。
 
 <!-- % -- 387 -- -->
@@ -697,7 +697,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 \else
 \centerline{\includegraphics{Chapter10/figures/deep}}
 \fi
-\caption{\gls{RNN}可以通过许多方式变得更深。
+\caption{\gls{RNN}可以通过许多方式变得更深{cite?}。
 (a)隐藏循环状态可以被分解为具有层次的组。
 (b)可以向输入到隐藏，隐藏到隐藏以及隐藏到输出的部分引入更深的计算(如\glssymbol{MLP})。
 这可以延长链接不同\gls{time_step}的最短路径。
@@ -711,7 +711,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 递归神经网络\footnote{我们建议不要将"递归神经网络"缩写为"\glssymbol{RNN}"，以免与"\gls{RNN}"混淆。}代表\gls{recurrent_network}的另一个扩展，它被构造为深的树状结构而不是\glssymbol{RNN}的链状结构，因此是不同类型的\gls{computational_graph}。
 对于递归网络的典型的\gls{computational_graph}如\fig?所示。
 递归神经网络由{Pollack90}引入，而{tr-bottou-2011}描述了这类网络的潜在用途——学习推论。
-递归网络已成功地应用于输入是\emph{数据结构}的\gls{NN}。
+递归网络已成功地应用于输入是\emph{数据结构}的\gls{NN}{cite?}，如自然语言处理{cite?}和计算机视觉{cite?}。
 
 <!-- % -- 388 -- -->
 
@@ -719,8 +719,8 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 一个悬而未决的问题是如何以最佳的方式构造树。
 一种选择是使用不依赖于数据的树结构，如平衡二叉树。
 在某些应用领域，外部方法可以为选择适当的树结构提供借鉴。
-例如，处理自然语言的句子时，用于递归网络的树结构可以被固定为句子语法分析树的结构（可以由自然语言语法分析程序提供）。
-理想的情况下，人们希望学习器自行发现和推断适合于任意给定输入的树结构，如所建议。
+例如，处理自然语言的句子时，用于递归网络的树结构可以被固定为句子语法分析树的结构（可以由自然语言语法分析程序提供）{cite?}。
+理想的情况下，人们希望学习器自行发现和推断适合于任意给定输入的树结构，如{cite?}所建议。
 
 <!-- % -- 389 -- -->
 
@@ -739,7 +739,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 许多递归网络想法的变种是可能的。
 例如，{Frasconi97}和{Frasconi-1998}将数据与树结构相关联，并将输入和目标与树的单独节点相关联。
 由每个节点执行的计算无须是传统的人工神经计算（所有输入的仿射变换后跟一个单调非线性）。
-例如，{Socher-et-al-EMNLP2013}提出用张量运算和双线性形式，在这之前人们已经发现当概念是由连续向量（嵌入）表示时，这种方式有利于建模概念之间的关系。
+例如，{Socher-et-al-EMNLP2013}提出用张量运算和双线性形式，在这之前人们已经发现当概念是由连续向量（嵌入）表示时，这种方式有利于建模概念之间的关系{cite?}。
 
 
 # \glsentrytext{long_term_dependency}的挑战
@@ -747,7 +747,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 学习\gls{recurrent_network}\gls{long_term_dependency}的数学挑战在\sec?中引入。
 根本问题是，经过许多阶段传播后的\gls{gradient}倾向于消失（大部分时间）或爆炸（很少，但对优化过程影响很大）。
 即使我们假设\gls{recurrent_network}是参数稳定的（可存储记忆，且\gls{gradient}不爆炸），但\gls{long_term_dependency}的困难来自比短期相互作用指数小的权重（涉及许多\gls{jacobian}相乘）。
-许多资料提供了更深层次的讨论。
+许多资料提供了更深层次的讨论{cite?}。
 在这一节中，我们会更详细地描述该问题。
 其余几节介绍克服这个问题的方法。
 
@@ -805,9 +805,9 @@ $x$轴是100维空间中沿着随机方向的初始状态的坐标。
 
 <!-- % -- 391 -- -->
 
-\glssymbol{RNN}\gls{gradient}消失和爆炸问题是由不同研究人员独立发现。
+\glssymbol{RNN}\gls{gradient}消失和爆炸问题是由不同研究人员独立发现{cite?}。
 有人可能会希望通过简单地停留在\gls{gradient}不消失或爆炸的参数空间来避免这个问题。
-不幸的是，为了储存记忆并对小扰动的鲁棒，\glssymbol{RNN}必须进入参数空间中的\gls{gradient}消失区域。
+不幸的是，为了储存记忆并对小扰动的鲁棒，\glssymbol{RNN}必须进入参数空间中的\gls{gradient}消失区域{cite?}。
 具体来说，每当模型能够表示\gls{long_term_dependency}，长期相互作用的\gls{gradient}幅值就会变得指数小（相比短期相互作用的\gls{gradient}幅值）。
 这并不意味着这是不可能学习的，由于\gls{long_term_dependency}关系的信号很容易被短期相关性产生的最小波动隐藏，因而可能需要很长的时间去学习\gls{long_term_dependency}。
 实践中，{Bengio1994ITNN}的实验表明，当我们增加了需要捕获的依赖关系的跨度，基于\gls{gradient}的优化变得越来越困难，\glssymbol{SGD}在长度仅为10或20的序列上成功训练传统\glssymbol{RNN}的概率迅速变为0。
@@ -821,22 +821,22 @@ $x$轴是100维空间中沿着随机方向的初始状态的坐标。
 # \glsentrytext{ESN}
 
 从$\Vh^{(t-1)}$到$\Vh^{(t)}$的循环权重映射以及从$\Vx^{(t)}$到$\Vh^{(t)}$的输入权重映射是一个\gls{recurrent_network}中最难学习的参数。
-研究者。
-\firstgls{ESN}或\glssymbol{ESN}分别独立地提出了这种想法。
+研究者{cite?}提出避免这种困难的方法是设定循环\gls{hidden_unit}，使其能很好地捕捉过去输入历史，并且\emph{只学习输出权重}。
+\firstgls{ESN}或\glssymbol{ESN}{cite?}，以及\firstgls{liquid_state_machines}{cite?}分别独立地提出了这种想法。
 后者是类似的，只不过它使用脉冲神经元（二进制输出）而不是\glssymbol{ESN}中的连续\gls{hidden_unit}。
-\glssymbol{ESN}和\gls{liquid_state_machines}都被称为\firstgls{reservoir_computing}形成了可能捕获输入历史不同方面的临时特征池。
+\glssymbol{ESN}和\gls{liquid_state_machines}都被称为\firstgls{reservoir_computing}{cite?}，因为\gls{hidden_unit}形成了可能捕获输入历史不同方面的临时特征池。
 
 <!-- % -- 392 -- -->
 
 \gls{reservoir_computing}\gls{recurrent_network}类似于\gls{kernel_machines}，这是思考它们的一种方式：它们将任意长度的序列（到时刻$t$的输入历史）映射为一个长度固定的向量（循环状态$\Vh^{(t)}$），之后可以施加一个线性预测算子（通常是一个\gls{linear_regression}）以解决感兴趣的问题。
 训练\gls{criterion}就可以很容易地设计为输出权重的凸函数。
-例如，如果输出是从\gls{hidden_unit}到输出目标的\gls{linear_regression}，训练\gls{criterion}就是\gls{mean_squared_error}，由于是凸的就可以用简单的学习算法可靠地解决。
+例如，如果输出是从\gls{hidden_unit}到输出目标的\gls{linear_regression}，训练\gls{criterion}就是\gls{mean_squared_error}，由于是凸的就可以用简单的学习算法可靠地解决{cite?}。
 
 因此，重要的问题是：我们如何设置输入和循环权重才能让一组丰富的历史可以在\gls{RNN}的状态中表示？
 \gls{reservoir_computing}研究所给出的答案是将\gls{recurrent_network}视为动态系统，并设定让动态系统接近稳定边缘的输入和循环权重。
 
 最初的想法是使状态到状态转换函数的\gls{jacobian}的特征值接近1。
-如\sec?$。
+如\sec?解释，\gls{recurrent_network}的一个重要特征就是\gls{jacobian}的特征值谱$\MJ^{(t)} = \frac{\partial s^{(t)}}{\partial s^{(t-1)}}$。
 特别重要的是$\MJ^{(t)}$的\firstgls{spectral_radius}，定义为特征值的最大绝对值。
 
 为了解\gls{spectral_radius}的影响，可以考虑\gls{backward_propagation}中\gls{jacobian}矩阵$\MJ$不随$t$改变的简单情况。
@@ -859,7 +859,7 @@ $n$步之后，我们将得到$\MJ^n(\Vg + \delta \Vv)$。
 
 当然，这个例子假定\gls{jacobian}在每个\gls{time_step}是相同的，即对应于没有非线性\gls{recurrent_network}。
 当非线性存在时，非线性的导数将在许多\gls{time_step}后接近零，并有助于防止因过大的\gls{spectral_radius}而导致的爆炸。
-事实上，关于\gls{ESN}的最近工作提倡使用远大于1的\gls{spectral_radius}。
+事实上，关于\gls{ESN}的最近工作提倡使用远大于1的\gls{spectral_radius}{cite?}。
 
 我们已经说过多次，通过反复矩阵乘法的\gls{backward_propagation}同样适用于没有非线性的正向传播的网络，其状态为$\Vh^{(t+1)} = \Vh^{(t)\top} \MW $。
 
@@ -884,8 +884,8 @@ $n$步之后，我们将得到$\MJ^n(\Vg + \delta \Vv)$。
 
 \gls{ESN}的策略是简单地固定权重使其具有一定的\gls{spectral_radius}如3，其中信息通过时间向前传播，但会由于饱和非线性单元（如$\tanh$）的稳定作用而不会爆炸。
 
-最近，已经有研究表明，用于设置\glssymbol{ESN}权重的技术可以用来\emph{初始化}完全可训练的\gls{recurrent_network}的权重（通过时间\gls{backward_propagation}来训练隐藏到隐藏的循环权重），帮助学习\gls{long_term_dependency}。
-在这种设定下，结合\sec?表现不错。
+最近，已经有研究表明，用于设置\glssymbol{ESN}权重的技术可以用来\emph{初始化}完全可训练的\gls{recurrent_network}的权重（通过时间\gls{backward_propagation}来训练隐藏到隐藏的循环权重），帮助学习\gls{long_term_dependency}{cite?}。
+在这种设定下，结合\sec?中稀疏初始化的方案，设置$1.2$的初始\gls{spectral_radius}表现不错。
 
 
 # \glsentrytext{leaky_unit}和其他多时间尺度的策略
@@ -898,12 +898,12 @@ $n$步之后，我们将得到$\MJ^n(\Vg + \delta \Vv)$。
 ## 时间维度的\glsentrytext{skip_connection}
 
 增加从遥远过去的变量到目前变量的直接连接是得到粗时间尺度的一种方法。
-使用这样\gls{skip_connection}的想法可以追溯到{Lin-ieeetnn96}，紧接是向\gls{feedforward_network}引入延迟的想法。
+使用这样\gls{skip_connection}的想法可以追溯到{Lin-ieeetnn96}，紧接是向\gls{feedforward_network}引入延迟的想法{cite?}。
 在普通的\gls{recurrent_network}中，循环从时刻$t$的单元连接到时刻$t+1$单元。
-可以构造较长的延迟\gls{recurrent_network}。
+可以构造较长的延迟\gls{recurrent_network}{cite?}。
 
-正如我们在\sec?。
-引入了$d$延时的循环连接以减轻这个问题。
+正如我们在\sec?看到，\gls{gradient}可能\emph{关于时间步数数消失或成倍爆炸}。
+{cite?}引入了$d$延时的循环连接以减轻这个问题。
 现在导数指数减小的速度与$\frac{\tau}{d}$相关而不是$\tau$。
 既然同时存在延迟和单步连接，\gls{gradient}仍可能成$t$指数爆炸。
 这允许学习算法捕获更长的依赖性，但不是所有的\gls{long_term_dependency}都能在这种方式下良好地表示。
@@ -925,17 +925,17 @@ $d$\gls{time_step}的\gls{skip_connection}是确保单元总能被之前$d$个\g
 线性自连接通过调节实值$\alpha$更平滑灵活地调整这种效果，而不是调整整数值的跳跃长度。
 
 这个想法由{Mozer-nips92}和{ElHihi+Bengio-nips8}提出。
-在\gls{ESN}中，\gls{leaky_unit}也被发现很有用。
+在\gls{ESN}中，\gls{leaky_unit}也被发现很有用{cite?}。
 
 两个基本策略可以设置\gls{leaky_unit}使用的时间常数。
 一种策略是手工将其固定为常数，例如在初始化时从某些分布进行采样它们的值。
 另一种策略是使时间常数成为自由变量，并学习出来。
-在不同时间尺度使用这样的\gls{leaky_unit}似乎能帮助学习\gls{long_term_dependency}。
+在不同时间尺度使用这样的\gls{leaky_unit}似乎能帮助学习\gls{long_term_dependency}{cite?}。
 
 
 ## 删除连接
 
-处理\gls{long_term_dependency}另一种方法是在多个时间尺度组织\glssymbol{RNN}状态的想法，信息在较慢的时间尺度上更容易长距离流动。
+处理\gls{long_term_dependency}另一种方法是在多个时间尺度组织\glssymbol{RNN}状态的想法{cite?}，信息在较慢的时间尺度上更容易长距离流动。
 
 这个想法与之前讨论的时间维度上的\gls{skip_connection}不同，因为它涉及主动\emph{删除}长度为一的连接并用更长的连接替换它们。
 以这种方式修改的单元被迫在长时间尺度上运作。
@@ -970,11 +970,11 @@ $d$\gls{time_step}的\gls{skip_connection}是确保单元总能被之前$d$个\g
 
 ## \glssymbol{LSTM}
 
-引入自循环的巧妙构思，以产生\gls{gradient}长时间持续流动的路径是初始\firstall{LSTM}的核心贡献。
-其中一个关键扩展是使自循环的权重视上下文而定，而不是固定的。
+引入自循环的巧妙构思，以产生\gls{gradient}长时间持续流动的路径是初始\firstall{LSTM}的核心贡献{cite?}。
+其中一个关键扩展是使自循环的权重视上下文而定，而不是固定的{cite?}。
 门限此自循环（由另一个\gls{hidden_unit}控制）的权重，累积的时间尺度可以动态地改变。
 在这种情况下，即使是具有固定参数的\glssymbol{LSTM}，累积的时间尺度也可以因输入序列而改变，因为时间常数是模型本身的输出。
-\glssymbol{LSTM}已经在许多应用中取得重大成功，如无约束手写识别。
+\glssymbol{LSTM}已经在许多应用中取得重大成功，如无约束手写识别{cite?}、语音识别{cite?}、手写识别{cite?}、机器翻译{cite?}，为图像生成标题{cite?}和解析{cite?}。
 
 <!-- % -- 397 -- -->
 
@@ -998,7 +998,7 @@ $d$\gls{time_step}的\gls{skip_connection}是确保单元总能被之前$d$个\g
 
 \glssymbol{LSTM}块如\fig?所示。
 在浅\gls{recurrent_network}的架构下，相应的\gls{forward_propagation}公式如下。
-更深的架构也成功地应用于。
+更深的架构也成功地应用于{cite?}。
 \glssymbol{LSTM}\gls{recurrent_network}除了外部\glssymbol{RNN}的循环外，还具有内部的循环（自环）的"\glssymbol{LSTM}细胞"，因此不是简单地向输入和循环单元的仿射变换之后施加一个逐元素的非线性。
 与普通的\gls{recurrent_network}类似，每个单元有相同的输入和输出，但也有更多的参数和控制信息流动的门限单元系统。
 最重要的组成部分是状态单元$s_i^{(t)}$，与前一节讨论的\gls{leaky_unit}有类似的线性自环。
@@ -1029,7 +1029,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 
 <!-- % -- 399 -- -->
 
-\glssymbol{LSTM}网络比简单的循环架构更易于学习\gls{long_term_dependency}，先是用于测试\gls{long_term_dependency}学习能力的人工数据集）。
+\glssymbol{LSTM}网络比简单的循环架构更易于学习\gls{long_term_dependency}，先是用于测试\gls{long_term_dependency}学习能力的人工数据集{cite?}，然后是在具有挑战性的序列处理任务上获得最先进的表现（{cite?}）。
 \glssymbol{LSTM}的变体和替代也已经被研究和使用，会在下文进行讨论。
 
 
@@ -1038,7 +1038,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 \glssymbol{LSTM}架构中哪些部分是真正必须的？
 还可以设计哪些其他成功架构允许网络动态地控制的时间尺度和不同单元的遗忘行为？
 
-最近关于\gls{gated_rnn}的工作给出了这些问题的某些答案，其单元也被称为门限循环单元或GRU。
+最近关于\gls{gated_rnn}的工作给出了这些问题的某些答案，其单元也被称为门限循环单元或GRU{cite?}。
 与\glssymbol{LSTM}的主要区别是，单个门限单元同时控制遗忘因子和更新状态单元的决定。
 更新公式如下：
 \begin{align}
@@ -1063,14 +1063,14 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 围绕这一主题可以设计更多的变种。
 例如复位门（或\gls{forget_gate}）的输出可以在多个\gls{hidden_unit}间共享。
 或者，全局门的乘积（覆盖一整组的单元，例如整一层）和一个局部门（每单元）可用于结合全局控制和局部控制。
-然而，一些调查发现没有\glssymbol{LSTM}和GRU架构的变种能明显在广泛的任务中同时击败这两个。
+然而，一些调查发现没有\glssymbol{LSTM}和GRU架构的变种能明显在广泛的任务中同时击败这两个{cite?}。
 {Greff-et-al-arxiv2015}发现其中的关键因素是
 \gls{forget_gate}，而{Jozefowicz-et-al-ICML2015}发现向\glssymbol{LSTM}\gls{forget_gate}加入1的\gls{bias_aff}(由{Gers-et-al-2000}提倡)能让\glssymbol{LSTM}变得与已探索的最佳变种一样健壮。
 
 
 # 优化\glsentrytext{long_term_dependency}
 
-\sec?消失和爆炸的问题。
+\sec?和\sec?已经描述过在许多\gls{time_step}上优化\glssymbol{RNN}时发生的\gls{gradient}消失和爆炸的问题。
 
 由{Martens+Sutskever-ICML2011}提出了一个有趣的想法是，二阶导数可能在一阶导数消失的同时消失。
 二阶优化算法可以大致被理解为将一阶导数除以二阶导数（在更高维数，由\gls{gradient}乘以\gls{hessian}的逆）。
@@ -1087,8 +1087,8 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 
 ## \glsentrytext{clipping_gradient}
 
-如\sec?。
-如\fig?变化快的小区域隔开，形成了一种悬崖。
+如\sec?讨论，强非线性函数如由许多\gls{time_step}计算的\gls{recurrent_network}往往倾向于非常大或非常小幅度的\gls{gradient}。
+如\fig?和\fig?所示，我们可以看到，\gls{objective_function}（作为参数的函数）有一个"地形"伴随一个"悬崖"：宽且相当平坦区域被\gls{objective_function}变化快的小区域隔开，形成了一种悬崖。
 
 这导致的困难是，当参数\gls{gradient}非常大时，\gls{gradient}下降的参数更新可以将参数抛出很远，进入\gls{objective_function}较大的区域，到达当前解所作的努力变成了无用功。
 \gls{gradient}告诉我们，围绕当前参数的无穷小区域内最速下降的方向。
@@ -1118,9 +1118,9 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 <!-- % -- 402 -- -->
 
 一个简单的解决方案已被从业者使用多年：\firstgls{clipping_gradient}。
-此想法有不同实例。
-一种选择是在参数更新之前，\emph{逐元素}地截断\gls{minibatch}产生的参数\gls{gradient}。
-另一种是在参数更新之前\emph{截断\gls{gradient}$\Vg$的范数$\norm{ \Vg }$}：
+此想法有不同实例{cite?}。
+一种选择是在参数更新之前，\emph{逐元素}地截断\gls{minibatch}产生的参数\gls{gradient}{cite?}。
+另一种是在参数更新之前\emph{截断\gls{gradient}$\Vg$的范数$\norm{ \Vg }$}{cite?}：
 \begin{align}
  \text{if}~ \norm{\Vg} &> v \\
  \Vg &\gets \frac{\Vg v}{\norm{g}},
@@ -1137,7 +1137,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 不像传统\gls{minibatch}\gls{gradient}下降，其中真实\gls{gradient}的方向是等于所有\gls{minibatch}\gls{gradient}的平均。
 换句话说，传统的\gls{SGD}使用\gls{gradient}的无偏估计，而与使用范数截断的\gls{gradient}下降引入了经验上是有用的启发式\gls{bias_aff}。
 通过逐元素截断，更新的方向与真实\gls{gradient}或\gls{minibatch}的\gls{gradient}不再对齐，但是它仍然是一个下降方向。
-还有提出，但与这些变种之间没有发布比较; 我们推测，所有这些方法表现类似。
+还有提出{cite?}（相对于隐藏单元）截断\gls{backward_propagation}\gls{gradient}，但与这些变种之间没有发布比较; 我们推测，所有这些方法表现类似。
 
 <!-- % -- 403 -- -->
 
@@ -1146,7 +1146,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 
 \gls{gradient_clipping}有助于处理爆炸的\gls{gradient}，但它无助于消失的\gls{gradient}。
 为了解决消失的\gls{gradient}和更好地捕获\gls{long_term_dependency}，我们讨论了在展开循环架构的\gls{computational_graph}，沿着与弧度相关联的\gls{gradient}乘积接近1的部分创建路径的想法。
-在\sec?以及其他自循环和门限机制。
+在\sec?中已经讨论过，实现这一点的一种方法是使用\glssymbol{LSTM}以及其他自循环和门限机制。
 另一个想法是\gls{regularization}或约束参数，以引导"信息流"。
 特别是，我们希望\gls{gradient}向量$\nabla_{\Vh^{(t)}} L$在\gls{backward_propagation}时能维持其幅度，即使\gls{loss_function}只对序列未部的输出作惩罚。
 形式的，我们要使
@@ -1158,13 +1158,13 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 \nabla_{\Vh^{(t)}} L 
 \end{align}
 一样大。
-在这个目标下，提出以下正则项：
+在这个目标下，{cite?}提出以下正则项：
 \begin{align}
  \Omega = \sum_t \Bigg(  \frac{
  \norm{ (\nabla_{\Vh^{(t)}} L) \frac{\partial \Vh^{(t)}}{\partial \Vh^{(t-1)}}}}
  {\norm{\nabla_{\Vh^{(t)}} L}} -1 \Bigg)^2.
 \end{align}
-计算这一\gls{gradient}的正则项可能会出现困难，但 L$考虑为近乎恒定的近似（为了计算正则化的目的，没有必要通过它们向后传播）。
+计算这一\gls{gradient}的正则项可能会出现困难，但{cite?}提出可以将后向传播向量$\nabla_{\Vh^{(t)}} L$考虑为近乎恒定的近似（为了计算正则化的目的，没有必要通过它们向后传播）。
 使用该正则项的实验表明，如果与标准的启发式截断（处理梯度爆炸）相结合，该正则项可以显著地增加\glssymbol{RNN}可以学习的依赖的跨度。
 \gls{gradient_clipping}特别重要，因为它保持了爆炸\gls{gradient}边缘的\glssymbol{RNN}动态。
 如果没有\gls{gradient_clipping}，\gls{gradient}爆炸将阻碍成功学习。
@@ -1184,15 +1184,15 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 
 \gls{NN}擅长存储隐性知识，但是他们很难记住事实。
 被存储在\gls{NN}参数中之前，\gls{SGD}需要多次提供相同的输入，即使如此，该输入也不会被特别精确地存储。
-(working memory)系统，即类似人类为实现一些目标而明确保存和操作相关信息片段的系统。
+{cite?}推测这是因为\gls{NN}缺乏\textbf{工作存储}(working memory)系统，即类似人类为实现一些目标而明确保存和操作相关信息片段的系统。
 这种外显记忆组件将使我们的系统不仅能够快速"故意"地存储和检索具体的事实，也能利用他们循序推论。
-\gls{NN}处理序列信息的需要，改变了每个步骤向网络注入输入的方式，长期以来推理能力被认为是重要的，而不是对输入做出自动的、直观的反应 。
+\gls{NN}处理序列信息的需要，改变了每个步骤向网络注入输入的方式，长期以来推理能力被认为是重要的，而不是对输入做出自动的、直观的反应{cite?} 。
 
 
-为了解决这一难题，，其中包括一组可以通过寻址机制来访问的记忆单元。
+为了解决这一难题，{cite?}引入了\firstgls{memory_network}，其中包括一组可以通过寻址机制来访问的记忆单元。
 \gls{memory_network}原本需要监督信号指示他们如何使用自己的记忆单元。
-），允许端到端的训练。
-这种软寻址机制已成为其他允许基于\gls{gradient}优化的模拟算法机制的相关架构的标准。
+{cite?}引入的\firstgls{NTM}，不需要明确的监督指示采取哪些行动而能学习从记忆单元读写任意内容，并通过使用基于内容的软注意机制（见{cite?}和\sec?），允许端到端的训练。
+这种软寻址机制已成为其他允许基于\gls{gradient}优化的模拟算法机制的相关架构的标准{cite?}。
 
 每个记忆单元可以被认为是\glssymbol{LSTM}和GRU中记忆单元的扩展。
 不同的是，网络输出一个内部状态来选择从哪个单元读取或写入，正如数字计算机读或写入到特定地址的内存访问。
@@ -1243,12 +1243,12 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 
 <!-- % -- 406 -- -->
 
-作为存储器单元的加权平均值\gls{backward_propagation}的替代，我们可以将存储器寻址系数解释为概率，并随机从一个单元读取。
+作为存储器单元的加权平均值\gls{backward_propagation}的替代，我们可以将存储器寻址系数解释为概率，并随机从一个单元读取{cite?}。
 优化离散决策的模型需要专门的优化算法，在\sec?中描述。
 目前为止，训练这些做离散决策的随机架构，仍比训练进行软判决的确定性算法更难。
 
-无论是软（允许\gls{backward_propagation}）或随机硬性的，用于选择一个地址的机制与先前在机器翻译的背景下引入的\gls{attention_mechanism}形式相同中也有讨论。
-甚至更早之前，\gls{attention_mechanism}的想法就被引入了\gls{NN}，在手写生成的情况下。
+无论是软（允许\gls{backward_propagation}）或随机硬性的，用于选择一个地址的机制与先前在机器翻译的背景下引入的\gls{attention_mechanism}形式相同{cite?}，这在\sec?中也有讨论。
+甚至更早之前，\gls{attention_mechanism}的想法就被引入了\gls{NN}，在手写生成的情况下{cite?}，有一个被约束为通过序列只向前移动的\gls{attention_mechanism}。
 在机器翻译和\gls{memory_network}的情况下，每个步骤中关注的焦点可以移动到一个完全不同的地方(相比之前的步骤)。
 
 \gls{RNN}提供了将\gls{DL}扩展到序列数据的一种方法。
