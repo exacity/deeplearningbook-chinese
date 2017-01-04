@@ -1,7 +1,8 @@
-% !Mode:: "TeX:UTF-8"
-% Translator: Kai Li
-\chapter{\glsentrytext{deep_feedforward_network}}
-\label{chap:deep_feedforward_networks}
+---
+title: \glsentrytext{deep_feedforward_network}
+layout: post
+share: false
+---
 
 \firstgls{deep_feedforward_network}，也叫作\firstgls{feedforward_neural_network}或者\firstall{MLP}，是典型的深度学习模型。\gls{feedforward_network}的目标是近似某个函数$f^*$。
 例如，对于分类器，$y = f^*(\bm{x})$将输入$\bm{x}$映射到一个类别$y$。
@@ -9,7 +10,7 @@
 
 这种模型被称为\firstgls{feedforward}的，是因为信息流过$\bm{x}$的函数，流经用于定义$f$的中间计算过程，最终到达输出$\bm{y}$。%这里的feedforward是翻译成前向的，还是前馈的？
 在模型的输出和模型本身之间没有\firstgls{feedback}连接。
-当前馈神经网络被扩展成包含\gls{feedback}连接时，它们被称为\firstgls{RNN}，在第\ref{chap:sequence_modeling_recurrent_and_recursive_nets}章介绍。
+当前馈神经网络被扩展成包含\gls{feedback}连接时，它们被称为\firstgls{RNN}，在第\?章介绍。
 
 \gls{feedforward_network}对于机器学习的从业者是极其重要的。
 它们是许多重要商业应用的基础。
@@ -22,7 +23,7 @@
 这些链式结构是神经网络中最常用的结构。
 在这种情况下，$f^{(1)}$被称为网络的\firstgls{first_layer}，$f^{(2)}$被称为\firstgls{second_layer}，以此类推。
 链的全长称为模型的\firstgls{depth}。
-正是因为这个术语才出现了``深度学习''这个名字。
+正是因为这个术语才出现了"深度学习"这个名字。
 \gls{feedforward_network}的最后一层被称为\firstgls{output_layer}。
 在神经网络训练的过程中，我们让$f(\bm{x})$去匹配$f^*(\bm{x})$的值。
 训练数据为我们提供了在不同训练点上取值的、含有噪声的$f^*(\bm{x})$的近似实例。
@@ -33,7 +34,7 @@
 相反，学习算法必须决定如何使用这些层来最好地实现$f^*$的近似。
 因为训练数据并没有给出这些层中的每一层所需的输出，所以这些层被称为\firstgls{hidden_layer}。
 
-% -- 163 --
+<!-- % -- 163 -- -->
 
 最后，这些网络被称为\emph{神经网络}是因为它们或多或少地受到神经科学的启发。
 网络中的每个\gls{hidden_layer}通常都是向量值的。这些\gls{hidden_layer}的维数决定了模型的\firstgls{width}。
@@ -50,22 +51,22 @@
 线性模型也有明显的缺陷，那就是该模型的能力被局限在线性函数里，所以它无法理解任何两个输入变量间的相互作用。
 
 为了扩展线性模型来表示$\bm{x}$的非线性函数，我们可以把线性模型不用在$\bm{x}$ 本身，而是用在一个变换后的输入$\phi(\bm{x})$上，这里$\phi$是一个非线性变换。
-等价地，我们可以使用\ref{sec:support_vector_machines}节中描述的\gls{kernel_trick}，来得到一个基于隐含地使用$\phi$映射的非线性学习算法。
+等价地，我们可以使用\?，来得到一个基于隐含地使用$\phi$映射的非线性学习算法。
 我们可以认为$\phi$提供了一组描述$\bm{x}$的特征，或者认为它提供了$\bm{x}$的一个新的表示。
 
-% -- 164 --
+<!-- % -- 164 -- -->
 
 剩下的问题就是如何选择映射$\phi$。
-\begin{itemize}
-\item 其中一种选择是使用一个通用的$\phi$，例如无限维的$\phi$，它隐含地用在基于\glssymbol{RBF}核的\gls{kernel_machines}上。
+
++ 其中一种选择是使用一个通用的$\phi$，例如无限维的$\phi$，它隐含地用在基于\glssymbol{RBF}核的\gls{kernel_machines}上。
 如果$\phi(\bm{x})$具有足够高的维数，我们总是有足够的能力来拟合训练集，但是对于测试集的\gls{generalization}往往不佳。
 非常通用的特征映射通常只基于局部平滑的原则，并没有将足够的先验信息进行编码来解决高级问题。
 
-\item 另一种选择是手动地设计$\phi$。
++ 另一种选择是手动地设计$\phi$。
 在深度学习出现以前，这都是主流的方法。
 这种方法对于每个单独的任务都需要人们数十年的努力，其中包括不同领域的（如语音识别或计算机视觉）专家以及不同领域间微小的迁移(transfer)。%此处难道是没有迁移吗？
 
-\item 深度学习的策略是去学习$\phi$。
++ 深度学习的策略是去学习$\phi$。
 在这种方法中，我们有一个模型$y = f(\bm{x};\theta, \bm{w}) = \phi(\bm{x}; \theta)^\top \bm{w}$。
 我们现在有两种参数：用于从一大类函数中学习$\phi$的参数$\bm{\theta}$，以及用于将$\phi(\bm{x})$映射到所需的输出的参数$\bm{w}$。
 这是\gls{deep_feedforward_network}的一个例子，$\phi$定义一个\gls{hidden_layer}。
@@ -75,14 +76,14 @@
 这种方法也可以获得第二种方法的优点。
 人类专家可以将他们的知识编码进网络来帮助扩展，他们只需要设计那些他们期望能够表现优异的函数族$\phi(\bm{x}; \bm{\theta})$即可。
 这种方法的优点是人类设计者只需要寻找正确的函数族即可，而不需要去寻找精确的函数。
-\end{itemize}
+
 
 这种通过学习特征来改善模型的一般化原则不止适用于本章描述的\gls{feedforward_neural_network}。
 它是深度学习中反复出现的主题，适用于全书描述的所有种类的模型。
 \gls{feedforward_neural_network}是这个原则的应用，它学习从$\bm{x}$到$\bm{y}$的确定性映射并且没有反馈连接。
 后面出现的其他模型会把这些原则应用到学习随机映射、学习带有反馈的函数以及学习单个向量的概率分布。
 
-% -- 165 --
+<!-- % -- 165 -- -->
 
 本章我们先从\gls{feedforward_network}的一个简单例子说起。
 接着，我们讨论部署一个\gls{feedforward_network}所需的每个设计决策。
@@ -94,12 +95,13 @@
 我们给出\firstgls{back_propagation}算法和它的现代推广，可以用来高效地计算这些梯度。
 最后，我们以某些历史视角来结束这一章。
 
-\section{实例：学习XOR}
-\label{sec:example_learning_xor}
+
+# 实例：学习XOR
+
 
 为了使\gls{feedforward_network}更加具体，我们首先从一个\gls{feedforward_network}充分发挥作用的简单例子说起：学习XOR函数。
 
-XOR函数（``异或''逻辑）是两个二进制值$x_1$和$x_2$的运算。
+XOR函数（"异或"逻辑）是两个二进制值$x_1$和$x_2$的运算。
 当这些二进制值中恰好有一个为1时，XOR函数返回值为1。
 其余情况下返回值为0。
 XOR函数提供了我们想要学习的目标函数$y = f^*(\bm{x})$。
@@ -113,7 +115,7 @@ XOR函数提供了我们想要学习的目标函数$y = f^*(\bm{x})$。
 我们选择这个损失函数是为了尽可能简化本例中用到的数学。
 我们后面会看到还有其他更加合适的方法来对二进制数据建模。
 
-% -- 166 --
+<!-- % -- 166 -- -->
 
 为了对在整个训练集上的表现进行评估，MSE损失函数为
 \begin{equation}
@@ -130,9 +132,9 @@ f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 解正规方程以后，我们得到$\bm{w} = 0$以及$b = \frac{1}{2}$。
 线性模型仅仅在任意一点都输出0.5。
 为什么会发生这种事？
-图\ref{fig:chap6_xor_space_gray}演示了线性模型为什么不能用来表示XOR函数。
+图\?演示了线性模型为什么不能用来表示XOR函数。
 解决这个问题的其中一种方法是使用一个模型来学习一个不同的特征空间，在这个空间上线性模型能够表示这个解。
-% fig 6.1
+<!-- % fig 6.1 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -153,18 +155,17 @@ f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 线性模型现在可以将函数描述为$h_1$增大和$h_2$减小。
 在该示例中，学习特征空间的动机仅仅是使得模型的能力更大，使得它可以拟合训练集。
 在更现实的应用中，学习的表示也可以帮助模型\gls{generalization}。}
-\label{fig:chap6_xor_space_gray}
 \end{figure}
 
 
 特别地，我们这里引入一个非常简单的\gls{feedforward_neural_network}，它有一层\gls{hidden_layer}并且\gls{hidden_layer}中包含两个单元。
-参见图\ref{fig:chap6_example_mlp}中对该模型的解释。
+参见图\?中对该模型的解释。
 这个\gls{feedforward_network}有一个通过函数$f^{(1)}(\bm{x};\bm{W}, \bm{c})$计算得到的\gls{hidden_layer}单元向量$\bm{h}$。
 这些\gls{hidden_layer}单元的值随后被用作第二层的输入。
 第二层就是这个网络的输出层。
 输出层仍然只是一个线性回归模型，只不过现在它作用于$\bm{h}$而不是$\bm{x}$。
 网络现在包含链接在一起的两个函数：$\bm{h}=f^{(1)}(\bm{x}; \bm{W}, \bm{c})$和$y = f^{(2)}(\bm{h}; \bm{w}, b)$，完整的模型是$f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = f^{(2)}(f^{(1)}(\bm{x}))$。
-% fig 6.2
+<!-- % fig 6.2 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -182,7 +183,6 @@ f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 有时，我们对图中的边使用参数名进行注释，这些参数是用来描述两层之间的关系的。
 这里，我们用矩阵$\bm{W}$描述从$\bm{x}$到$\bm{h}$的映射，用向量$\bm{w}$描述从$\bm{h}$到$y$的映射。
 当标记这种图时，我们通常省略与每个层相关联的截距参数。}
-\label{fig:chap6_example_mlp}
 \end{figure}
 
 
@@ -191,7 +191,7 @@ $f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，�
 暂时忽略截距项，假设$f^{(1)}(\bm{x})= \bm{W}^\top \bm{x}$并且$f^{(2)}(\bm{h})=\bm{h}^\top \bm{w}$，那么$f(\bm{x}) = \bm{w}^\top\bm{W}^\top \bm{x}$。
 我们可以将这个函数重新表示成$f(\bm{x}) = \bm{x}^\top\bm{w}'$其中$\bm{w}' = \bm{W}\bm{w}$。
 
-% -- 167 --
+<!-- % -- 167 -- -->
 
 显然，我们必须用非线性函数来描述这些特征。
 大多数神经网络通过仿射变化以及紧接着一个被称为激活函数的固定的非线性函数来实现这个目标，其中仿射变化由学得的参数控制。
@@ -199,8 +199,8 @@ $f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，�
 先前，为了描述线性回归模型，我们使用权重向量和一个标量的偏置参数来描述一个从输入向量到输出标量的仿射变换。
 现在，因为我们描述的是向量$\bm{x}$到向量$\bm{h}$的仿射变换，所以我们需要一整个向量的偏置参数。
 激活函数$g$通常选择一个对每个元素分别智能作用的函数，有$h_i =g(\bm{x}^\top \bm{W}_{:, i} + c_i)$。
-在现代神经网络中，默认的推荐是使用由激活函数$g(z)=\max\{0, z\}$定义的\firstgls{ReLU}或者称为\glssymbol{ReLU}\citep{Jarrett-ICCV2009-small,Nair-2010-small,Glorot+al-AI-2011-small}，如图\ref{fig:chap6_relu_color}所示。
-% fig 6.3
+在现代神经网络中，默认的推荐是使用由激活函数$g(z)=\max\{0, z\}$定义的\firstgls{ReLU}或者称为\glssymbol{ReLU}所示。
+<!-- % fig 6.3 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -212,7 +212,6 @@ $f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，�
 将此函数用于线性变换的输出将产生非线性变换。 然而，函数仍然非常接近线性，在这种意义上它是具有两个线性部分的分段线性函数。
 由于\gls{ReLU}几乎是线性的，因此它们保留了许多使得线性模型易于使用基于梯度的方法进行优化的属性。 它们还保留了许多使得线性模型能够\gls{generalization}良好的属性。 计算机科学的一个公共原则是，我们可以从最小的组件构建复杂的系统。
 就像图灵机的内存只需要能够存储0或1的状态，我们可以从\gls{rectified_linear}函数构建一个\gls{universal_function_approximator}。}
-\label{fig:chap6_relu_color}
 \end{figure}
 
 
@@ -221,9 +220,9 @@ $f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，�
 f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = \bm{w}^\top \max\{ 0, \bm{W}^\top \bm{x} + \bm{c} \} +b.
 \end{equation}
 
-% -- 168 --
+<!-- % -- 168 -- -->
 
-% -- 169 --
+<!-- % -- 169 -- -->
 
 我们现在可以给出XOR问题的一个解。
 令
@@ -283,10 +282,10 @@ f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = \bm{w}^\top \max\{ 0, \bm{W}^\top \bm{x} 
 \end{bmatrix}. 
 \end{equation}
 
-% -- 170 --
+<!-- % -- 170 -- -->
 
 这个变换改变了样例间的关系。它们不再处于同一条直线上了。
-如图\ref{fig:chap6_relu_color}所示，它们现在处在一个可以用线性模型解决的空间上。
+如图\?所示，它们现在处在一个可以用线性模型解决的空间上。
 
 我们最后乘以一个权重向量$\bm{w}$:
 \begin{equation}
@@ -307,11 +306,12 @@ XOR问题的其他的一些等价解也可以被梯度下降算法找到。
 梯度下降算法的收敛点取决于参数的初始值。
 在实践中，梯度下降通常不会找到像我们这里给出的那种干净的、容易理解的、整数值的解。
 
-\section{基于梯度的学习}
-\label{sec:gradient_based_learning}
+
+# 基于梯度的学习
+
 
 设计和训练神经网络与使用梯度下降训练其他的任何机器学习模型并没有太大不同。
-在\ref{sec:building_a_machine_learning_algorithm}节中，我们描述了如何通过指明一个优化过程、代价函数和一个模型族来构建一个机器学习算法。
+在\?节中，我们描述了如何通过指明一个优化过程、代价函数和一个模型族来构建一个机器学习算法。
 
 我们到目前为止看到的线性模型和神经网络的最大区别，在于神经网络的非线性导致大多数我们感兴趣的损失函数都成为了非凸的。
 这意味着神经网络的训练通常使用迭代的、基于梯度的优化，仅仅使得代价函数达到一个非常小的值；而不是用于训练线性回归模型的线性方程求解器，或者是用于训练\gls{logistic_regression}或者\glssymbol{SVM}的具有全局收敛保证的凸优化算法。
@@ -319,22 +319,23 @@ XOR问题的其他的一些等价解也可以被梯度下降算法找到。
 用于非凸损失函数的随机梯度下降没有这种收敛性保证，并且对参数的初始值很敏感。
 对于\gls{feedforward_neural_network}，将所有的权重值初始化为小随机数是很重要的。
 偏置可以初始化为零或者小的正值。
-这种用于训练\gls{feedforward_neural_network}以及几乎所有深度模型的迭代的基于梯度的优化算法会在第\ref{chap:optimization_for_training_deep_models}章详细介绍，参数初始化会在\ref{sec:parameter_initialization_strategies}节中特别说明。
+这种用于训练\gls{feedforward_neural_network}以及几乎所有深度模型的迭代的基于梯度的优化算法会在第\?节中特别说明。
 就目前而言，只需要懂得，训练算法几乎总是基于使用代价函数的梯度下降的这种或那种方式即可。
-一些特别的算法是对梯度下降思想的改进和提纯，在\ref{sec:gradient_based_optimization}节中介绍，还有一些更特别的，大多数是对随机梯度下降算法的改进，在\ref{sec:stochastic_gradient_descent_chap5}节中介绍。
+一些特别的算法是对梯度下降思想的改进和提纯，在\?节中介绍。
 
-% -- 171 --
+<!-- % -- 171 -- -->
 
 我们当然也可以用梯度下降来训练诸如线性回归和支持向量机之类的模型，并且事实上当训练集相当大时这是很常用的。
 从这点来看，训练神经网络和训练其他任何模型并没有太大区别。
 计算梯度对于神经网络会略微复杂一些，但仍然可以很高效而精确地实现。
-\ref{sec:back_propagation_and_other_differentiation_algorithms}节将会介绍如何用反向传播算法以及它的现代扩展算法来求得梯度。
+\?节将会介绍如何用反向传播算法以及它的现代扩展算法来求得梯度。
 
 和其他的机器学习模型一样，为了使用基于梯度的学习方法我们必须选择一个代价函数，并且我们必须选择如何表示模型的输出。
 现在，我们重温这些设计上的考虑，并且特别强调神经网络的情景。
 
-\subsection{代价函数}
-\label{sec:cost_functions}
+
+## 代价函数
+
 
 深度神经网络设计中的一个重要方面是代价函数的选择。
 幸运的是，神经网络的代价函数或多或少是和其他参数模型例如线性模型的代价函数相同的。
@@ -346,14 +347,13 @@ XOR问题的其他的一些等价解也可以被梯度下降算法找到。
 某些专门的损失函数允许我们来训练这些估计的预测器。
 
 用于训练神经网络的完整的代价函数通常在我们这里描述的基本代价函数的基础上结合一个正则项。
-我们已经在\ref{sec:regularization}节中看到正则化应用到线性模型中的一些简单的例子。
+我们已经在\?节中看到正则化应用到线性模型中的一些简单的例子。
 用于线性模型的权值衰减方法也直接适用于深度神经网络，而且是最流行的正则化策略之一。
-用于神经网络的更高级的正则化策略会在第\ref{chap:regularization_for_deep_learning}章中讨论。
+用于神经网络的更高级的正则化策略会在第\?章中讨论。
 
-% -- 172 --
+<!-- % -- 172 -- -->
 
 \subsubsection{用最大似然学习条件分布}
-\label{sec:learning_conditional_distributions_with_maximum_likelihood}
 
 大多数现代的神经网络使用最大似然来训练。
 这意味着代价函数就是负的对数似然，它与训练数据和模型分布间的交叉熵等价。
@@ -364,7 +364,7 @@ J(\bm{\theta}) = -\SetE_{\mathbf{x}, \mathbf{y} \sim \hat{p}_\text{data}} \log p
 
 代价函数的具体形式随着模型而改变，取决于$\log p_\text{model}$的具体形式。
 上述方程的展开形式通常会有一些项不依赖于模型的参数，我们可以舍去。
-例如，正如我们在\ref{sec:the_task_t}节中看到的，如果$p_\text{model}(\bm{y}\mid\bm{x}) = \CalN(\bm{y};f(\bm{x};\bm{\theta}), \bm{I})$，那么我们恢复均方误差代价，
+例如，正如我们在\?)$，那么我们恢复均方误差代价，
 \begin{equation}
 J(\theta) = \frac{1}{2} \SetE_{\RVx, \RVy \sim  \hat{p}_\text{data}} || \bm{y} - f(\bm{x}; \bm{\theta}) ||^2 + \text{const},
 \end{equation}
@@ -381,18 +381,17 @@ J(\theta) = \frac{1}{2} \SetE_{\RVx, \RVy \sim  \hat{p}_\text{data}} || \bm{y} -
 负的对数似然帮助我们在很多模型中避免这个问题。
 很多输出单元都会包含一个指数函数，这在它的变量取绝对值非常大的负值时会造成饱和。
 负对数似然代价函数中的对数函数消除了某些输出单元中的指数效果。
-我们将会在\ref{sec:output_units}节中讨论代价函数和输出单元的选择间的交互关系。
+我们将会在\?节中讨论代价函数和输出单元的选择间的交互关系。
 
-% -- 173 --
+<!-- % -- 173 -- -->
 
 用于实现最大似然估计的交叉熵代价函数有一个不同寻常的特性，那就是当应用到实践中经常遇到的模型上时它通常没有最小值。
 对于离散型输出变量，大多数模型以一种特殊的形式来参数化，即它们不能表示概率零和一，但是可以无限接近。
 \gls{logistic_regression}是其中一个例子。
 对于实值的输出变量，如果模型可以控制输出分布的密度（例如，通过学习Gaussian输出分布的方差参数），那么它可能对正确的训练集输出赋予极其高的密度，这将导致交叉熵趋向负无穷。
-第\ref{chap:regularization_for_deep_learning}章中描述的正则化技术提供了一些不同的方法来修正学习问题，所以模型不会通过这种方式来获得无限制的奖赏。
+第\?章中描述的正则化技术提供了一些不同的方法来修正学习问题，所以模型不会通过这种方式来获得无限制的奖赏。
 
 \subsubsection{学习条件统计量}
-\label{sec:learning_conditional_statistics}
 
 有时我们并不是想学习一个完整的概率分布$p(\bm{y}\mid\bm{x}; \bm{\theta})$，而仅仅是想学习在给定$\bm{x}$时$\bm{y}$的某个条件统计量。
 
@@ -402,11 +401,11 @@ J(\theta) = \frac{1}{2} \SetE_{\RVx, \RVy \sim  \hat{p}_\text{data}} || \bm{y} -
 泛函是函数到实数的映射。我们因此可以将学习看作是选择一个函数而不仅仅是选择一组参数。
 我们可以设计代价泛函在我们希望的某些特殊函数处取得最小值。
 例如，我们可以设计一个代价泛函，使它的最小值处于一个特殊的函数上，这个函数将$\bm{x}$映射到给定$\bm{x}$时$\bm{y}$的期望值。
-对函数求解优化问题需要用到\firstgls{calculus_of_variations}这个数学工具，我们将在\ref{sec:calculus_of_variations}节中讨论。
+对函数求解优化问题需要用到\firstgls{calculus_of_variations}这个数学工具，我们将在\?节中讨论。
 理解变分法对于理解本章的内容不是必要的。
 目前，只需要知道变分法可以被用来导出下面的两个结果。
 
-% -- 174 --
+<!-- % -- 174 -- -->
 
 我们使用变分法导出的第一个结果是解优化问题
 \begin{equation}
@@ -432,8 +431,9 @@ f^* = \underset{f}{\argmin} \ \SetE_{\RVx, \RVy \sim  p_\text{data}} ||\bm{y} - 
 这就是为什么交叉熵代价函数比均方误差或者平均绝对误差更受欢迎的原因之一了，即使是在没必要估计整个$p(\bm{y}\mid\bm{x})$分布时。
 
 
-\subsection{输出单元}
-\label{sec:output_units}
+
+## 输出单元
+
 
 代价函数的选择与输出单元的选择紧密相关。
 大多数时候，我们简单地使用数据分布和模型分布间的交叉熵。
@@ -441,15 +441,14 @@ f^* = \underset{f}{\argmin} \ \SetE_{\RVx, \RVy \sim  p_\text{data}} ||\bm{y} - 
 
 任何种类的可以被用作输出的神经网络单元也可以被用作\gls{hidden_unit}。
 这里，我们关注把这些单元用作模型的输出，但是原则上它们也可以在内部使用。
-我们将在\ref{sec:hidden_units}节中重温这些单元并且提供当它们被用作\gls{hidden_unit}时额外的细节。
+我们将在\?时额外的细节。
 
 在本节中，我们假设\gls{feedforward_network}提供了一组定义为$\bm{h}=f(\bm{x};\bm{\theta})$的隐藏特征。
 输出层的作用是随后对这些特征提供一些额外的变换来完成整个网络必须完成的任务。
 
-% -- 175 --
+<!-- % -- 175 -- -->
 
 \subsubsection{用于Gaussian输出分布的线性单元}
-\label{sec:linear_units_for_gaussian_output_distributions}
 
 一种简单的输出单元是基于没有非线性存在的仿射变换的输出单元。
 它们往往被称为线性单元。
@@ -465,12 +464,11 @@ p(\bm{y}\mid\bm{x}) = \CalN(\bm{y}; \hat{\bm{y}}, \bm{I} ).
 最大化似然的框架使它也可以很直观的来学习\gls{gaussian_distribution}的协方差矩阵，或者使得\gls{gaussian_distribution}的协方差是输入的函数。
 然而，对于所有输入协方差矩阵都必须被限制成一个正定的矩阵。
 用线性输出层来满足这种限制是困难的，所以通常其他的输出单元被用来对协方差参数化。
-对协方差建模的方法在\ref{sec:other_output_types}节中简要介绍。
+对协方差建模的方法在\?节中简要介绍。
 
 因为线性模型不会饱和，所以它们对基于梯度的优化算法没有任何困难并且可以被用在相当广泛的优化算法中。
 
 \subsubsection{用于Bernoulli输出分布的sigmoid单元}
-\label{sec:sigmoid_units_for_bernoulli_output_distributions}
 
 许多任务需要预测二元变量$y$的值。
 具有两个类的分类问题可以归结为这种形式。
@@ -489,7 +487,7 @@ P(y=1 \mid \bm{x}) = \max \left \{ 0, \min \{1, \bm{w}^\top \bm{h}+b \} \right \
 任何时候当$\bm{w}^\top \bm{h}+b$处于单位区间外时，模型的输出对它的参数的梯度都将为$\bm{0}$。
 梯度为$\bm{0}$通常是有问题的，因为学习算法对于如何提高相应的参数没有了指导。
 
-% -- 176 --
+<!-- % -- 176 -- -->
 
 与之相对的，最好是使用一种不同的方法来保证无论何时模型给出了错误的答案时总能有一个很强的梯度。
 这种方法是基于使用sigmoid输出单元结合最大似然来实现的。
@@ -498,7 +496,7 @@ sigmoid输出单元定义为
 \begin{equation}
 \hat{y} = \sigma \left (\bm{w}^\top \bm{h} + b \right ),
 \end{equation}
-这里$\sigma$是第\ref{sec:useful_properties_of_common_functions}节中介绍的logistic sigmoid函数。
+这里$\sigma$是第\?节中介绍的logistic sigmoid函数。
 
 我们可以认为sigmoid输出单元具有两个部分。
 首先，它使用一个线性层来计算$z=\bm{w}^\top \bm{h}+b$。
@@ -518,7 +516,7 @@ P(y) &= \sigma((2y-1)z).
 基于指数和归一化的概率分布在统计建模的文献中很常见。
 定义这种二元变量分布的变量$z$被称为\firstgls{logit}。
 
-% -- 177 --
+<!-- % -- 177 -- -->
 
 这种在对数空间里预测概率的方法可以很自然地使用最大似然学习。
 因为用于最大似然的代价函数是$-\log P(y\mid\bm{x})$，代价函数中的log抵消了sigmoid中的exp。
@@ -530,7 +528,7 @@ J(\bm{\theta}) &= -\log P(y\mid\bm{x})\\
 &= \zeta((1-2y)z).
 \end{align}
 
-这个推导使用了\ref{sec:useful_properties_of_common_functions}节中的一些性质。
+这个推导使用了\?节中的一些性质。
 通过将损失函数写成softplus函数的形式，我们可以看到它仅仅在$(1-2y)z$取绝对值非常大的负值时才会饱和。
 因此饱和只会出现在模型已经得到正确答案时——当$y=1$且$z$取非常大的正值时，或者$y=0$且$z$取非常小的负值时。
 当$z$的符号错误时，softplus函数的变量$(1-2y)z$可以简化为$|z|$。
@@ -548,12 +546,11 @@ sigmoid激活函数在$z$取非常小的负值时会饱和到0，当$z$取非常
 如果sigmoid函数下溢到零，那么之后对$\hat{y}$取对数会得到负无穷。
 
 \subsubsection{用于multinoulli输出分布的softmax单元}
-\label{sec:softmax_units_for_multinoulli_output_distributions}
 
 任何时候当我们想要表示一个具有$n$个可能取值的离散型随机变量的分布时，我们都可以使用softmax函数。
 它可以看作是sigmoid函数的扩展，sigmoid函数用来表示二元变量的分布。
 
-% -- 178 --
+<!-- % -- 178 -- -->
 
 softmax函数最常用作分类器的输出，来表示$n$个不同类上的概率分布。
 比较少见的是，softmax函数可以在模型内部使用，例如如果我们想要在某个内部变量的$n$个不同选项中进行选择。
@@ -584,13 +581,12 @@ softmax函数然后可以对$z$指数化和归一化来获得需要的$\hat{\bm{
 将softmax定义成指数的形式是很自然的因为对数似然中的log可以抵消softmax中的exp：
 \begin{equation}
 \log \text{softmax}(\bm{z})_i = z_i - \log \sum_j \exp(z_j).
-\label{eq:6.30}
 \end{equation}
 
-% -- 179 --
+<!-- % -- 179 -- -->
 
-公式\ref{eq:6.30}中的第一项表示输入$z_i$总是对代价函数有直接的贡献。
-因为这一项不会饱和，所以即使$z_i$对公式\ref{eq:6.30}的第二项的贡献很小，学习依然可以进行。
+公式\?中的第一项表示输入$z_i$总是对代价函数有直接的贡献。
+因为这一项不会饱和，所以即使$z_i$对公式\?的第二项的贡献很小，学习依然可以进行。
 当最大化对数似然时，第一项鼓励$z_i$被推高，而第二项则鼓励所有的$\bm{z}$被压低。
 为了对第二项$\log \sum_j \exp(z_j)$有一个直观的理解，注意到这一项可以大致近似为$\max_j z_j$。
 这种近似是基于对任何明显小于$\max_j z_j$的$z_k$，$\exp(z_k)$都是不重要的。
@@ -608,7 +604,7 @@ softmax函数然后可以对$z$指数化和归一化来获得需要的$\hat{\bm{
 
 除了对数似然之外的许多目标函数对softmax函数不起作用。
 具体来说，那些不使用对数来抵消softmax中的指数的目标函数，当指数函数的变量取非常小的负值时会造成梯度消失，从而无法学习。
-特别是，平方误差对于softmax单元来说是一个很差的损失函数，即使模型做出高度可信的不正确预测，也不能训练模型改变其输出\citep{Bridle90}。
+特别是，平方误差对于softmax单元来说是一个很差的损失函数，即使模型做出高度可信的不正确预测，也不能训练模型改变其输出。
 要理解为什么这些损失函数可能失败，我们需要检查softmax函数本身。
 
 像sigmoid一样，softmax激活函数可能会饱和。
@@ -617,7 +613,7 @@ sigmoid函数具有单个输出，当它的输入极端负或者极端正时会�
 当输入值之间的差异变得极端时，这些输出值可能饱和。
 当softmax饱和时，基于softmax的许多代价函数也饱和，除非它们能够转化饱和的激活函数。
 
-% -- 180 --
+<!-- % -- 180 -- -->
 
 为了说明softmax函数对于输入之间差异的响应，观察到当对所有的输入都加上一个相同常数时softmax的输出不变：
 \begin{equation}
@@ -649,17 +645,16 @@ $n$个输出总和必须为1的约束意味着只有$n-1$个参数是必要的�
 这与被认为存在于皮质中相邻神经元间的侧抑制类似。
 在极端情况下（当最大的$a_i$和其他的在幅度上差异很大时），它变成了\firstgls{winner_take_all}的形式（其中一个输出接近1，其他的接近0）。
 
-``softmax''的名称可能会让人产生困惑。
+"softmax"的名称可能会让人产生困惑。
 这个函数更接近于argmax函数而不是max函数。
-``soft''这个术语来源于softmax函数是连续可微的。
-``argmax''函数的结果表示为一个\gls{one_hot}向量（只有一个元素为1，其余元素都为0的向量），不是连续和可微的。
-softmax函数因此提供了argmax的``软化''版本。max函数相应的软化版本是$\text{softmax}(\bm{z})^\top \bm{z}$。
-可能最好是把softmax函数称为``softargmax''，但当前名称是一个根深蒂固的习惯了。
+"soft"这个术语来源于softmax函数是连续可微的。
+"argmax"函数的结果表示为一个\gls{one_hot}向量（只有一个元素为1，其余元素都为0的向量），不是连续和可微的。
+softmax函数因此提供了argmax的"软化"版本。max函数相应的软化版本是$\text{softmax}(\bm{z})^\top \bm{z}$。
+可能最好是把softmax函数称为"softargmax"，但当前名称是一个根深蒂固的习惯了。
 
-% -- 181 --
+<!-- % -- 181 -- -->
 
 \subsubsection{其他的输出类型}
-\label{sec:other_output_types}
 
 先前描述的线性、sigmoid和softmax输出单元是最常见的。
 神经网络可以推广到我们希望的几乎任何种类的输出层。
@@ -681,7 +676,7 @@ softmax函数因此提供了argmax的``软化''版本。max函数相应的软化
 我们可能希望模型对不同的$\RVx$值预测出$\RVy$不同的方差。
 这被称为\firstgls{heteroscedastic}模型。
 在异方差情况下，我们简单地把方差指定为$f(\RVx;\bm{\theta})$其中一个输出值。
-实现它的典型方法是使用精度而不是方差来表示\gls{gaussian_distribution}，就像公式\ref{eq:3.22}所描述的。
+实现它的典型方法是使用精度而不是方差来表示\gls{gaussian_distribution}，就像公式\?所描述的。
 在多维变量的情况下，最常见的是使用一个对角精度矩阵
 \begin{equation}
 \text{diag}(\bm{\beta}).
@@ -695,21 +690,21 @@ softmax函数因此提供了argmax的``软化''版本。max函数相应的软化
 通过平方运算的梯度可能在零附近消失，这使得学习被平方的参数变得困难。
 无论我们使用的是标准差，方差还是精度，我们必须确保\gls{gaussian_distribution}的协方差矩阵是正定的。
 因为精度矩阵的特征值是协方差矩阵特征值的倒数，所以这等价于确保精度矩阵是正定的。
-如果我们使用对角矩阵，或者是一个常数乘以单位矩阵\footnote{译者注：这里原文是``If we use a diagonal matrix, or a scalar times the diagonal matrix...''即``如果我们使用对角矩阵，或者是一个标量乘以对角矩阵...''，但一个标量乘以对角矩阵和对角矩阵没区别，结合上下文可以看出，这里原作者误把``identity''写成了``diagonal matrix''，因此这里采用``常数乘以单位矩阵''的译法。}，那么我们需要对模型输出强加的唯一条件是它的元素都为正。
+如果我们使用对角矩阵，或者是一个常数乘以单位矩阵\footnote{译者注：这里原文是"If we use a diagonal matrix, or a scalar times the diagonal matrix..."即"如果我们使用对角矩阵，或者是一个标量乘以对角矩阵..."，但一个标量乘以对角矩阵和对角矩阵没区别，结合上下文可以看出，这里原作者误把"identity"写成了"diagonal matrix"，因此这里采用"常数乘以单位矩阵"的译法。}，那么我们需要对模型输出强加的唯一条件是它的元素都为正。
 如果我们假设$\bm{a}$是用于确定对角精度的模型的原始激活，那么可以用softplus 函数来获得正的精度向量：$\bm{\beta}=\bm{\zeta}(\bm{a})$。
 这种相同的策略对于方差或标准差同样适用，也适用于常数乘以单位阵的情况。
 
-% -- 182 --
+<!-- % -- 182 -- -->
 
 学习一个比对角矩阵具有更丰富结构的协方差或者精度矩阵是很少见的。
 如果协方差矩阵是满的和有条件的，那么参数化的选择就必须要保证预测的协方差矩阵是正定的。
 这可以通过写成$\bm{\Sigma}(\bm{x})=\bm{B}(\bm{x})\bm{B}^\top (\bm{x})$来实现，这里$\bm{B}$是一个无约束的方阵。
 如果矩阵是满秩的，那么一个实际问题是计算似然是很昂贵的，计算一个$d\times d$的矩阵的行列式或者$\bm{\Sigma}(\bm{x})$的逆（或者等价地并且更常用地，对它特征值分解或者$\bm{B}(\bm{x})$的特征值分解）需要$O(d^3)$的计算量。
 
-% -- 183 --
+<!-- % -- 183 -- -->
 
 我们经常想要执行多峰回归(multimodal regression)，即预测条件分布$p(\bm{y}\mid\bm{x})$的实值，该条件分布对于相同的$\bm{x}$值在$\bm{y}$空间中有多个不同的峰值。
-在这种情况下，Gaussian混合是输出的自然表示\citep{Jacobs-nc91,bishop1994mixture}。
+在这种情况下，Gaussian混合是输出的自然表示。
 带有将Gaussian混合作为其输出的神经网络通常被称为\firstgls{mixture_density_network}。
 具有$n$个分量的Gaussian混合输出由下面的条件分布定义
 \begin{equation}
@@ -718,31 +713,31 @@ p(\bm{y}\mid\bm{x}) = \sum_{i=1}^n p(\RSc = i \mid \bm{x}) \CalN(\bm{y}; \bm{\mu
 神经网络必须有三个输出：定义$p(\RSc=i\mid\bm{x})$的向量，对所有的$i$给出$\bm{\mu}^{(i)}(\bm{x})$的矩阵，以及对所有的$i$给出$\bm{\Sigma}^{(i)}(\bm{x})$的张量。
 这些输出必须满足不同的约束：
 \begin{enumerate}
-\item 混合组件$p(\RSc=i\mid\bm{x})$：它们由隐变量
++ 混合组件$p(\RSc=i\mid\bm{x})$：它们由隐变量
 \footnote{我们认为$\RSc$是隐变量是因为我们不能直接在数据中观测到它：给定输入$\RVx$和目标$\RVy$，不可能确切地知道是哪个Gaussian组件产生$\RVy$，但我们可以想象$\RVy$是通过选择其中一个来产生的，并且将那个未被观测到的选择作为随机变量。}
 $\RSc$关联着，在$n$个不同组件上形成multinoulli分布。
 这个分布通常可以由$n$维向量的softmax来获得，以确保这些输出是正的并且和为1。
 
-\item 均值$\bm{\mu}^{(i)}(\bm{x})$：它们指明了与第$i$个Gaussian组件相关联的中心或者均值，并且是无约束的（通常对于这些输出单元完全没有非线性）。
++ 均值$\bm{\mu}^{(i)}(\bm{x})$：它们指明了与第$i$个Gaussian组件相关联的中心或者均值，并且是无约束的（通常对于这些输出单元完全没有非线性）。
 如果$\RVy$是个$d$维向量，那么网络必须输出一个由$n$个这种$d$维向量组成的$n\times d$ 的矩阵。
 用最大似然来学习这些均值要比学习只有一个输出模式的分布的均值稍稍复杂一些。我们只想更新那个真正产生观测数据的组件的均值。
 在实践中，我们并不知道是那个组件产生了观测数据。
 负对数似然的表达式对每个样例对于损失函数的贡献关于每个组件赋予相应的权重，权重值的大小由相应的组件产生这个样例的概率来决定。
 
-\item 协方差$\bm{\Sigma}^{(i)}(\bm{x})$：它们指明了每个组件$i$的协方差矩阵。
++ 协方差$\bm{\Sigma}^{(i)}(\bm{x})$：它们指明了每个组件$i$的协方差矩阵。
 当学习单个的Gaussian组件时，我们通常使用对角矩阵来避免计算行列式。
 当学习混合均值时，最大似然是很复杂的，它需要将每个点的部分责任分配给每个混合组件。
 如果给定了混合模型的正确的负对数似然，梯度下降将自动地遵循正确的过程。
 \end{enumerate}
 有报道说基于梯度的优化方法对于混合条件Gaussian（作为神经网络的输出）可能是不可靠的，部分是因为涉及到除法（除以方差）可能是数值不稳定的（当某个方差对于特定的实例变得非常小时，会导致非常大的梯度）。
-一种解决方法是\firstgls{clip_gradients}（见\ref{sec:clipping_gradients}节），另外一种是启发式梯度放缩\citep{Uria+al-ICML2014}。
+一种解决方法是\firstgls{clip_gradients}（见\?节），另外一种是启发式梯度放缩。
 
-% -- 184 --
+<!-- % -- 184 -- -->
 
-Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理运动\citep{Graves-arxiv2013}中特别有效。
+Gaussian混合输出在语音生成模型中特别有效。
 混合密度策略为网络提供了一种方法来表示多种输出模式，并且控制输出的方差，这对于在这些实数域中获得高质量的结果是至关重要的。
-混合密度网络的一个实例如图\ref{fig:chap6_mdn_color}所示。
-% fig 6.4
+混合密度网络的一个实例如图\?所示。
+<!-- % fig 6.4 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -753,22 +748,22 @@ Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理
 \caption{从具有混合密度输出层的神经网络中抽取的样本。
 输入$x$从\gls{uniform_distribution}中采样，输出$y$从$p_{\text{model}}(y\mid x)$中采样。 神经网络能够学习从输入到输出分布的参数的非线性映射。 这些参数包括控制三个组件中的哪一个将产生输出的概率，以及每个组件各自的参数。
 每个混合组件都是\gls{gaussian_distribution}，具有预测的均值和方差。 输出分布的这些方面都能够相对输入$x$变化，并且以非线性的方式改变。}
-\label{fig:chap6_mdn_color}
 \end{figure}
 
 
 一般的，我们可能希望继续对包含更多变量的更大的向量$\bm{y}$来建模，并在这些输出变量上施加更多更丰富的结构。
 例如，我们可能希望神经网络输出字符序列形成一个句子。
 在这些情况下，我们可以继续使用最大似然原理应用到我们的模型$p(\bm{y};\bm{\omega}(\bm{x}))$上，但我们用来描述$\bm{y}$的模型会变得非常复杂，超出了本章的范畴。
-第\ref{chap:sequence_modeling_recurrent_and_recursive_nets}章描述了如何用循环神经网络来定义这种序列上的模型，第\ref{part:deep_learning_research}部分描述了对任意概率分布进行建模的高级技术。
+第\?部分描述了对任意概率分布进行建模的高级技术。
 
-\section{\glsentrytext{hidden_unit}}
-\label{sec:hidden_units}
+
+# \glsentrytext{hidden_unit}
+
 
 到目前为止我们集中讨论了神经网络的设计选择，这对于使用基于梯度的优化方法来训练的大多数参数化机器学习模型都是通用的。
 现在我们转向一个\gls{feedforward_neural_network}独有的问题：该如何选择\gls{hidden_unit}的类型，这些\gls{hidden_unit}用在模型的\gls{hidden_layer}中。
 
-% -- 185 --
+<!-- % -- 185 -- -->
 
 \gls{hidden_unit}的设计是一个非常活跃的研究领域，并且还没有许多明确的指导性理论原则。
 
@@ -784,8 +779,8 @@ Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理
 例如，\gls{ReLU}$g(z)=\max\{0, z\}$在$z=0$处不可微。
 这似乎使得$g$对于基于梯度的学习算法无效。
 在实践中，梯度下降对这些机器学习模型仍然表现得足够好。
-部分原因是神经网络训练算法通常不会达到代价函数的局部最小值，而是仅仅显著地减小它的值，如图\ref{fig:chap4_approx_opt_color}所示。
-这些想法会在第\ref{chap:optimization_for_training_deep_models}章中进一步描述。
+部分原因是神经网络训练算法通常不会达到代价函数的局部最小值，而是仅仅显著地减小它的值，如图\?所示。
+这些想法会在第\?章中进一步描述。
 因为我们不再期望训练能够实际到达梯度为$\bm{0}$的点，所以代价函数的最小值对应于梯度未定义的点是可以接受的。
 不可微的\gls{hidden_unit}通常只在少数点上不可微。
 一般来说，函数$g(z)$具有左导数和右导数，左导数定义为紧邻在$z$左边的函数的斜率，右导数定义为紧邻在$z$右边的函数的斜率。
@@ -799,13 +794,14 @@ Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理
 在某些情况下，理论上更好的理由可以使用，但这些通常对神经网络训练并不适用。
 重要的是，在实践中，我们可以放心地忽略下面描述的\gls{hidden_unit}激活函数的不可微性。
 
-% -- 186 --
+<!-- % -- 186 -- -->
 
 除非另有说明，大多数的\gls{hidden_unit}都可以描述为接受输入向量$\bm{x}$，计算仿射变换$\bm{z}=\bm{W}^\top \bm{x}+\bm{b}$，然后使用一个作用于每个元素的非线性函数$g(\bm{z})$。
 大多数\gls{hidden_unit}的区别仅仅在于激活函数$g(\bm{z})$的形式。
 
-\subsection{\gls{ReLU}及其扩展}
-\label{sec:rectified_linear_units_and_their_generalizations}
+
+## \gls{ReLU}及其扩展
+
 
 \gls{ReLU}使用激活函数$g(z)=\max\{0, z\}$。
 
@@ -831,13 +827,13 @@ Gaussian混合输出在语音生成模型\citep{schuster1999supervised}和物理
 
 \gls{ReLU}的三个扩展基于当$z_i<0$时使用一个非零的斜率$\alpha_i$：$h_i =g(\bm{z}, \bm{\alpha})_i = \max(0, z_i) + \alpha_i \min(0, z_i)$。
 \firstgls{absolute_value_rectification}固定$\alpha_i=1$来得到$g(z)=|z|$。
-它用于图像中的对象识别\citep{Jarrett-ICCV2009}，其中寻找在输入照明极性反转下不变的特征是有意义的。
+它用于图像中的对象识别，其中寻找在输入照明极性反转下不变的特征是有意义的。
 \gls{ReLU}的其他扩展更广泛地适用。
-\firstgls{leaky_ReLU}\citep{Maas-et-al-ICML2013}将$\alpha_i$固定成一个类似0.01的小值，\firstgls{PReLU}或者\textbf{\glssymbol{PReLU}}将$\alpha_i$作为学习的参数\citep{He-et-al-arxiv2015}。
+\firstgls{leaky_ReLU}。
 
-% -- 187 --
+<!-- % -- 187 -- -->
 
-\firstgls{maxout_unit}\citep{Goodfellow_maxout_2013}进一步扩展了\gls{ReLU}。
+\firstgls{maxout_unit}。
 并不是使用作用于每个元素的函数$g(z)$，maxout单元将$\bm{z}$划分为具有$k$个值的组。
 每个maxout单元然后输出其中一组的最大元素：
 \begin{equation}
@@ -853,25 +849,26 @@ maxout单元因此可以视为\textbf{学习激活函数}本身而不仅仅是�
 maxout层的参数化当然也将与这些层不同，所以即使是maxout学习去实现和其他种类的层相同的$\bm{x}$的函数这种情况下，学习的机理也是不一样的。
 
 每个maxout单元现在由$k$个权重向量来参数化，而不仅仅是一个，所以maxout单元通常比\gls{ReLU}需要更多的正则化。
-如果训练集很大并且每个单元分得的块数保持很低的话，它们可以在没有正则化的情况下正常工作\citep{cai2013deep}。
+如果训练集很大并且每个单元分得的块数保持很低的话，它们可以在没有正则化的情况下正常工作。
 
 Maxout单元还有一些其他的优点。
 在某些情况下，需要更少的参数可以获得一些统计和计算上的优点。
 具体来说，如果由$n$个不同的线性过滤器描述的特征可以在不损失信息的情况下，用每一组$k$个特征的最大值来概括的话，那么下一层可以获得$k$倍更少的权重数 。
 
-因为每个单元由多个过滤器驱动，maxout单元具有一些冗余来帮助它们抵抗一种被称为\firstgls{catastrophic_forgetting}的现象，这个现象是说神经网络忘记了如何执行它们过去训练的任务\citep{Goodfellow+al-ICLR2014-small}。
+因为每个单元由多个过滤器驱动，maxout单元具有一些冗余来帮助它们抵抗一种被称为\firstgls{catastrophic_forgetting}的现象，这个现象是说神经网络忘记了如何执行它们过去训练的任务。
 
 \gls{ReLU}和它们的这些扩展都是基于一个原则，那就是如果它们的行为更接近线性，那么模型更容易优化。
 使用线性行为更容易优化的一般性原则同样也适用在除了深度线性网络以外的内容。
 循环网络可以从序列中学习并产生状态和输出的序列。
 当训练它们时，需要通过一些时间步长来传播信息，当其中包含一些线性计算（具有大小接近1的某些方向导数）时，这会更容易。
 作为性能最好的循环网络结构之一，LSTM通过求和来在时间上传播信息，这是一种特别直观的线性激活。
-它将在\ref{sec:the_long_short_term_memory_and_other_gated_rnns}节中进一步讨论。
+它将在\?节中进一步讨论。
 
-% -- 188 --
+<!-- % -- 188 -- -->
 
-\subsection{Logistic Sigmoid与双曲正切函数}
-\label{sec:logistic_sigmoid_and_hyperbolic_tangent}
+
+## Logistic Sigmoid与双曲正切函数
+
 
 在引入\gls{ReLU}之前，大多数神经网络使用logistic sigmoid激活函数
 \begin{equation}
@@ -894,13 +891,14 @@ sigmoid单元的广泛饱和性会使得基于梯度的学习变得非常困难�
 因为$\text{tanh}$在0附近与单位函数类似，训练深层神经网络$\hat{y}=\bm{w}^\top \text{tanh}(\bm{U}^\top \text{tanh}(\bm{V}^\top \bm{x}))$类似于训练一个线性模型$\hat{y}= \bm{w}^\top \bm{U}^\top \bm{V}^\top \bm{x}$，只要网络的激活能够被保持地很小。
 这使得训练$\text{tanh}$网络更加容易。
 
-% -- 189 --
+<!-- % -- 189 -- -->
 
 sigmoid激活函数在除了\gls{feedforward_network}以外的配置中更为常见。
 循环网络、许多概率模型以及一些自动编码器有一些额外的要求使得它们不能使用分段线性激活函数，并且使得sigmoid单元更具有吸引力，尽管它存在饱和性的问题。
 
-\subsection{其他\gls{hidden_unit}}
-\label{sec:other_hidden_units}
+
+## 其他\gls{hidden_unit}
+
 
 也存在许多其他种类的\gls{hidden_unit}，但它们并不常用。
 
@@ -929,38 +927,39 @@ sigmoid激活函数在除了\gls{feedforward_network}以外的配置中更为常
 这是以将线性变换约束为低秩的代价来实现的，但这些低秩关系往往是足够的。
 线性\gls{hidden_unit}因此提供了一种减少网络中参数数量的有效方法。
 
-% -- 190 --
+<!-- % -- 190 -- -->
 
 
-softmax单元是另外一种经常用作输出的单元（如第\ref{sec:softmax_units_for_multinoulli_output_distributions}节中所描述的），但有时也可以用作\gls{hidden_unit}。
+softmax单元是另外一种经常用作输出的单元（如第\?。
 softmax单元很自然地表示具有$k$个可能值的离散型随机变量的概率分布，所以它们可以用作一种开关。
-这些类型的\gls{hidden_unit}通常仅用于明确地学习操作内存的高级结构中，将在\ref{sec:explicit_memory}节中描述。
+这些类型的\gls{hidden_unit}通常仅用于明确地学习操作内存的高级结构中，将在\?节中描述。
 
 其他一些常见的\gls{hidden_unit}类型包括：
-\begin{itemize}
-\item \firstall{RBF}：$h_i = \exp \left (-\frac{1}{\sigma_i^2}|| \bm{W}_{:,i}-\bm{x}||^2 \right )$。
+
++ \firstall{RBF}：$h_i = \exp \left (-\frac{1}{\sigma_i^2}|| \bm{W}_{:,i}-\bm{x}||^2 \right )$。
 这个函数在$\bm{x}$接近模板$\bm{W}_{:,i}$时更加活跃。
 因为它对大部分$\bm{x}$都饱和到0，因此很难优化。
 
-\item \textbf{\gls{softplus}}函数：$g(a)=\zeta(a)=\log(1+e^a)$。
-这是\gls{ReLU}的平滑版本，由\cite{Dugas01}引入用于函数近似，由\cite{Nair-2010-small}引入用于无向概率模型的条件分布。
-\cite{Glorot+al-AI-2011-small}比较了softplus和\gls{ReLU}，发现后者的结果更好。
++ \textbf{\gls{softplus}}函数：$g(a)=\zeta(a)=\log(1+e^a)$。
+这是\gls{ReLU}的平滑版本，由{Dugas01}引入用于函数近似，由{Nair-2010-small}引入用于无向概率模型的条件分布。
+{Glorot+al-AI-2011-small}比较了softplus和\gls{ReLU}，发现后者的结果更好。
 通常不鼓励使用softplus函数。
 softplus表明\gls{hidden_unit}类型的性能可能是非常反直觉的——因为它处处可导或者因为它不完全饱和，人们可能希望它具有优于\gls{ReLU}的点，但根据经验来看，它并没有。
 
-\item \firstgls{hard_tanh}：它的形状和$\text{tanh}$以及修正先行单元类似，但是不同于后者，它是有界的，$g(a)=\max(-1, \min(1,a))$。
-它由\cite{Collobert04}引入。
-\end{itemize}
++ \firstgls{hard_tanh}：它的形状和$\text{tanh}$以及修正先行单元类似，但是不同于后者，它是有界的，$g(a)=\max(-1, \min(1,a))$。
+它由{Collobert04}引入。
+
 
 \gls{hidden_unit}的设计仍然是一个活跃的研究领域，许多有用的\gls{hidden_unit}类型仍有待发现。
 
-\section{结构设计}
-\label{sec:architecture_design}
+
+# 结构设计
+
 
 神经网络设计的另一个关键点是确定它的结构。
 \firstgls{architecture}一词是指网络的整体结构：它应该具有多少单元，以及这些单元应该如何连接。
 
-% -- 191 --
+<!-- % -- 191 -- -->
 
 大多数神经网络被组织成称为层的单元组。
 大多数神经网络结构将这些层布置成链式结构，其中每一层都是前一层的函数。
@@ -979,8 +978,9 @@ softplus表明\gls{hidden_unit}类型的性能可能是非常反直觉的——�
 更深层的网络通常能够对每一层使用更少的单元数和更少的参数，并且经常推广到测试集，但是通常也更难以优化。
 对于一个具体的任务，理想的网络结构必须通过实验，观测在验证集上的错误来找到。
 
-\subsection{通用近似性质和深度}
-\label{sec:universal_approximation_properties_and_depth}
+
+## 通用近似性质和深度
+
 
 线性模型，通过矩阵乘法将特征映射到输出，顾名思义，仅能表示线性函数。
 它具有易于训练的优点，因为当使用线性模型时，许多损失函数会导出凸优化问题。
@@ -988,46 +988,46 @@ softplus表明\gls{hidden_unit}类型的性能可能是非常反直觉的——�
 
 乍一看，我们可能认为学习非线性函数需要为我们想要学习的那种非线性专门设计一类模型族。
 幸运的是，具有\gls{hidden_layer}的\gls{feedforward_network}提供了一种通用近似框架。
-具体来说，\firstgls{universal_approximation_theorem}\citep{Hornik89,Cybenko89}表明，一个\gls{feedforward_neural_network}如果具有线性输出层和至少一层具有任何一种``挤压''性质的激活函数（例如logistic sigmoid激活函数）的\gls{hidden_layer}，只要给予网络足够数量的\gls{hidden_unit}，它可以以任意的精度来近似任何从一个有限维空间到另一个有限维空间的Borel可测函数。
-\gls{feedforward_network}的导数也可以任意好地来近似函数的导数\citep{hornik1990universal}。
+具体来说，\firstgls{universal_approximation_theorem}，它可以以任意的精度来近似任何从一个有限维空间到另一个有限维空间的Borel可测函数。
+\gls{feedforward_network}的导数也可以任意好地来近似函数的导数。
 Borel可测的概念超出了本书的范畴；对于我们想要实现的目标，只需要知道定义在$\SetR^n$的有界闭集上的任意连续函数是Borel可测的，因此可以用神经网络来近似。
 神经网络也可以近似从任何有限维离散空间映射到另一个的任意函数。
-虽然原始定理最初以具有特殊激活函数的单元的形式来描述，这个激活函数当变量取绝对值非常大的正值和负值时都会饱和，通用近似定理也已经被证明对于更广泛类别的激活函数也是适用的，其中就包括现在常用的\gls{ReLU}\citep{Leshno-et-al-1993}。
+虽然原始定理最初以具有特殊激活函数的单元的形式来描述，这个激活函数当变量取绝对值非常大的正值和负值时都会饱和，通用近似定理也已经被证明对于更广泛类别的激活函数也是适用的，其中就包括现在常用的\gls{ReLU}。
 
-% -- 192 --
+<!-- % -- 192 -- -->
 
 通用近似定理意味着无论我们试图学习什么函数，我们知道一个大的MLP一定能够\textbf{表示}这个函数。
 然而，我们不能保证训练算法能够\textbf{学得}这个函数。
 即使MLP能够表示该函数，学习也可能因两个不同的原因而失败。
 首先，用于训练的优化算法可能找不到用于期望函数的参数值。
 其次，训练算法可能由于过拟合选择了错误的函数。
-回忆\ref{sec:the_no_free_lunch_theorem}节中的``没有免费的午餐''定理说明了没有普遍优越的机器学习算法。
+回忆\?节中的"没有免费的午餐"定理说明了没有普遍优越的机器学习算法。
 \gls{feedforward_network}提供了表示函数的通用系统，在这种意义上，给定一个函数，存在一个\gls{feedforward_network}能够近似该函数。
 不存在通用的过程既能够验证训练集上的特殊样例，又能够选择一个函数来扩展到训练集上没有的点。
 
 通用近似定理说明了存在一个足够大的网络能够达到我们所希望的任意精度，但是定理并没有说这个网络有多大。
-\cite{Barron93}提供了单层网络近似一大类函数所需大小的一些界。
+{Barron93}提供了单层网络近似一大类函数所需大小的一些界。
 不幸的是，在最坏情况下，可能需要指数数量的\gls{hidden_unit}（可能一个\gls{hidden_unit}对应着一个需要区分的输入配置）。
 这在二进制情况下很容易看到：向量$\bm{v}\in \{0,1\}^n$上的可能的二进制函数的数量是$2^{2^n}$并且选择一个这样的函数需要$2^n$位，这通常需要$O(2^n)$的自由度。
 
 总之，具有单层的\gls{feedforward_network}足以表示任何函数，但是网络层可能不可实现得大并且可能无法正确地学习和\gls{generalization}。
 在很多情况下，使用更深的模型能够减少表示期望函数所需的单元的数量，并且可以减少\gls{generalization}误差。
 
-% -- 193 --
+<!-- % -- 193 -- -->
 
 存在一些函数族能够在网络的深度大于某个值$d$时被高效地近似，而当深度被限制到小于或等于$d$时需要一个远远大于之前的模型。
 在很多情况下，浅层模型所需的\gls{hidden_unit}的数量是$n$的指数级。
 这个结果最初被证明是在那些不与连续可微的神经网络类似的机器学习模型中出现，但现在已经扩展到了这些模型。
-第一个结果是关于逻辑门电路的\citep{Hastad86}。
-后来的工作将这些结果扩展到了具有非负权重的线性阈值单元\citep{Hastad91,Hajnal-et-al-1993}，然后扩展到了具有连续值激活的网络\citep{Maass-1992,Maass-et-al-1994}。
+第一个结果是关于逻辑门电路的。
+后来的工作将这些结果扩展到了具有非负权重的线性阈值单元。
 许多现代神经网络使用\gls{ReLU}。
-\cite{Leshno-et-al-1993}证明带有一大类非多项式激活函数族的浅层网络，包括\gls{ReLU}，具有通用的近似性质，但是这些结果并没有强调深度或效率的问题——它们仅指出足够宽的修正线性网络能够表示任意函数。
-\cite{Montufar-et-al-NIPS2014}指出一些用深度修正线性网络表示的函数可能需要浅层网络（一个\gls{hidden_layer}）指数级的\gls{hidden_unit}才能表示。
+{Leshno-et-al-1993}证明带有一大类非多项式激活函数族的浅层网络，包括\gls{ReLU}，具有通用的近似性质，但是这些结果并没有强调深度或效率的问题——它们仅指出足够宽的修正线性网络能够表示任意函数。
+{Montufar-et-al-NIPS2014}指出一些用深度修正线性网络表示的函数可能需要浅层网络（一个\gls{hidden_layer}）指数级的\gls{hidden_unit}才能表示。
 更确切的说，他们说明分段线性网络（可以通过修正非线性或maxout单元获得）可以表示区域的数量是网络深度的指数级的函数。
-图\ref{fig:chap6_space_folding}解释了带有绝对值修正的网络是如何创建函数的镜像图像的，这些函数在某些\gls{hidden_unit}的顶部计算，作用于\gls{hidden_unit}的输入。
+图\?的输入。
 每个\gls{hidden_unit}指定在哪里折叠输入空间，来创造镜像响应（在绝对值非线性的两侧）。
 通过组合这些折叠操作，我们获得指数级的分段线性区域，他们可以概括所有种类的规则模式（例如，重复）。
-% fig 6.5
+<!-- % fig 6.5 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1035,17 +1035,16 @@ Borel可测的概念超出了本书的范畴；对于我们想要实现的目标
 \centerline{\includegraphics[width=\textwidth]{Chapter6/figures/space_folding.jpg}}
 \fi
 \caption{ % This is a screenshot.
-关于更深的整流网络具有指数优势的一个直观的几何解释，来自\cite{Montufar-et-al-NIPS2014}。 
+关于更深的整流网络具有指数优势的一个直观的几何解释，来自{Montufar-et-al-NIPS2014}。 
 \emph{(左)}\gls{absolute_value_rectification}单元对其输入中的每对镜像点有相同的输出。
 镜像的对称轴由单元的权重和偏置定义的超平面给出。 在该单元顶部计算的函数（绿色决策面）将是横跨该对称轴的更简单模式的一个镜像。 
 \emph{(中)}该函数可以通过折叠对称轴周围的空间来得到。
 \emph{(右)}另一个重复模式可以在第一个的顶部折叠（由另一个下游单元）以获得另外的对称性（现在重复四次，使用了两个\gls{hidden_layer}）。 
-图重置得到了\cite{Montufar-et-al-NIPS2014}的许可。}
-\label{fig:chap6_space_folding}
+图重置得到了{Montufar-et-al-NIPS2014}的许可。}
 \end{figure}
 
 
-更确切的说，\cite{Montufar-et-al-NIPS2014}的主要定理指出，具有$d$个输入，深度为$l$，每个\gls{hidden_layer}有$n$个单元的深度修正线性网络可以描述的线性区域的数量是
+更确切的说，{Montufar-et-al-NIPS2014}的主要定理指出，具有$d$个输入，深度为$l$，每个\gls{hidden_layer}有$n$个单元的深度修正线性网络可以描述的线性区域的数量是
 \begin{equation}
 O \left ( {n \choose d}^{d(l-1)} n^d \right ),
 \end{equation}
@@ -1055,7 +1054,7 @@ O \left ( {n \choose d}^{d(l-1)} n^d \right ),
 O \left ( k^{(l-1)+d} \right ).
 \end{equation}
 
-% -- 194 --
+<!-- % -- 194 -- -->
 
 当然，我们不能保证在机器学习（特别是AI）的应用中我们想要学得的函数类型享有这样的属性。
 
@@ -1065,10 +1064,10 @@ O \left ( k^{(l-1)+d} \right ).
 这可以从表示学习的观点来解释， 我们相信学习的问题包含发现一组潜在的变化因素，它们可以根据其他更简单的潜在的变化因素来描述。
 或者，我们可以将深度结构的使用解释为另一种信念，那就是我们想要学得的函数是包含多个步骤的计算机程序，其中每个步骤使用前一步骤的输出。
 这些中间输出不一定是变化的因素，而是可以类似于网络用来组织其内部处理的计数器或指针。
-根据经验，更深的模型似乎确实会更适用于广泛的任务\citep{Bengio-NIPS2007,Erhan2009,Bengio-2009-book,UTLC+LISA-2011-small,Ciresan-et-al-2012,Krizhevsky-2012-small,sermanet-cvpr-13,Farabet-et-al-2013,couprie-iclr-13,LISA-EmotiW2013,Goodfellow+et+al-ICLR2014a,Szegedy-et-al-arxiv2014}。
-图\ref{fig:chap6_depth_color}和图\ref{fig:chap6_model_size_color}展示了一些实验结果的例子。
+根据经验，更深的模型似乎确实会更适用于广泛的任务。
+图\?展示了一些实验结果的例子。
 这表明使用深层结构确实在模型学习的函数空间上表示了一个有用的先验。
-% fig 6.6
+<!-- % fig 6.6 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1077,13 +1076,12 @@ O \left ( k^{(l-1)+d} \right ).
 \fi
 \caption{深度的影响。
 实验结果表明，当从地址照片转录多位数字时，更深层的网络能够更好地\gls{generalization}。
-数据来自\cite{Goodfellow+et+al-ICLR2014a}。
+数据来自{Goodfellow+et+al-ICLR2014a}。
 测试集上的准确率随着深度的增加而不断增加。
-图\ref{fig:chap6_model_size_color}给出了一个对照实验，它说明了对模型尺寸其他方面的增加并不能产生相同的效果。}
-\label{fig:chap6_depth_color}
+图\?
 \end{figure}
 
-% fig 6.7
+<!-- % fig 6.7 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1093,26 +1091,26 @@ O \left ( k^{(l-1)+d} \right ).
 \caption{参数数量的影响。
 更深的模型往往表现更好。
 这不仅仅是因为模型更大。
-\cite{Goodfellow+et+al-ICLR2014a}的这项实验表明，增加\gls{convolutional_network}层中参数的数量，但是不增加它们的深度，在提升测试集性能方面几乎没有效果，如此图所示。
+{Goodfellow+et+al-ICLR2014a}的这项实验表明，增加\gls{convolutional_network}层中参数的数量，但是不增加它们的深度，在提升测试集性能方面几乎没有效果，如此图所示。
 图例标明了用于画出每条曲线的网络深度，以及曲线表示的是卷积层还是全连接层的大小变化。
 我们可以观察到，在这种情况下，浅层模型在参数数量达到2000万时就过拟合，而深层模型在参数数量超过6000万时仍然表现良好。
 这表明，使用深层模型表达出了对模型可以学习的函数空间的有用偏好。
 具体来说，它表达了一种信念，即该函数应该由许多更简单的函数复合在一起而得到。
 这可能导致学习由更简单的表示所组成的表示（例如，由边所定义的角）或者学习具有顺序依赖步骤的程序（例如，首先定位一组对象，然后分割它们，之后识别它们）。}
-\label{fig:chap6_model_size_color}
 \end{figure}
 
-\subsection{其他结构上的考虑}
-\label{sec:other_architectural_considerations}
+
+## 其他结构上的考虑
+
 
 到目前为止，我们都将神经网络描述成简单的层的链式结构，主要的考虑因素是网络的深度和每层的宽度。
 在实践中，神经网络显示出相当的多样性。
 
 许多神经网络结构已经被开发用于特定的任务。
-用于计算机视觉的卷积神经网络的特殊结构将在第\ref{chap:convolutional_networks}章中介绍。
-\gls{feedforward_network}也可以推广到用于序列处理的循环神经网络，但有它们自己的结构考虑，将在第\ref{chap:sequence_modeling_recurrent_and_recursive_nets}章中介绍。
+用于计算机视觉的卷积神经网络的特殊结构将在第\?章中介绍。
+\gls{feedforward_network}也可以推广到用于序列处理的循环神经网络，但有它们自己的结构考虑，将在第\?章中介绍。
 
-% -- 195 --
+<!-- % -- 195 -- -->
 
 一般的，层不需要连接在链中，尽管这是最常见的做法。
 许多结构构建了一个主链，但随后又添加了额外的结构属性，例如从层$i$到层$i+2$或者更高层的跳动连接。
@@ -1122,22 +1120,23 @@ O \left ( k^{(l-1)+d} \right ).
 默认的神经网络层采用矩阵$\bm{W}$描述的线性变换，每个输入单元连接到每个输出单元。
 在之后章节中的许多专用网络具有较少的连接，使得输入层中的每个单元仅连接到输出层单元的一个小子集。
 这些用于减少连接数量的策略减少了参数的数量以及用于评估网络的计算量，但通常高度依赖于问题。
-例如，第\ref{chap:convolutional_networks}章描述的卷积神经网络使用对于计算机视觉问题非常有效的稀疏连接的专用模式。
+例如，第\?章描述的卷积神经网络使用对于计算机视觉问题非常有效的稀疏连接的专用模式。
 在这一章中，很难对通用神经网络的结构给出更多具体的建议。
 随后的章节研发了一些特殊的结构策略，可以在不同的领域工作良好。
 
-% -- 196 --
+<!-- % -- 196 -- -->
 
-\section{\gls{BP}和其他的微分算法}
-\label{sec:back_propagation_and_other_differentiation_algorithms}
+
+# \gls{BP}和其他的微分算法
+
 
 当我们使用\gls{feedforward_neural_network}接收输入$\bm{x}$并产生输出$\hat{\bm{y}}$时，信息通过网络向前流动。
 输入$\bm{x}$提供初始信息，然后传播到每一层的\gls{hidden_unit}，最终产生输出$\hat{\bm{y}}$。
 这称之为\firstgls{forward_propagation}。
 在训练过程中，前向传播可以持续向前直到它产生一个标量代价函数$J(\bm{\theta})$。
-\firstgls{back_propagation}算法\citep{RHW}，经常简称为\textbf{\glsdesc{BP}}，允许来自代价函数的信息通过网络向后流动，以便计算梯度。
+\firstgls{back_propagation}算法，允许来自代价函数的信息通过网络向后流动，以便计算梯度。
 
-% -- 197 --
+<!-- % -- 197 -- -->
 
 计算梯度的解析表达式是很直观的，但是数值化地求解这样的表达式在计算上可能是昂贵的。
  反向传播算法使用简单和廉价的程序来实现这个目标。
@@ -1152,8 +1151,9 @@ O \left ( k^{(l-1)+d} \right ).
 通过网络传播信息来计算导数的想法是非常通用的，并且可以用于计算诸如具有多个输出的函数$f$的Jacobi矩阵的值。
 我们这里描述的是最常用的情况，$f$只有单个输出。
 
-\subsection{计算图}
-\label{sec:computational_graphs}
+
+## 计算图
+
 
 到目前为止我们已经用相对非正式的图形语言讨论了神经网络。
 为了更精确地描述反向传播算法，使用更精确的\firstgls{computational_graph}语言是很有帮助的。
@@ -1168,7 +1168,7 @@ O \left ( k^{(l-1)+d} \right ).
 我们的图形语言伴随着一组被允许的操作。
 可以通过将多个操作组合在一起来描述比该组中的操作更复杂的函数。
 
-% -- 198 --
+<!-- % -- 198 -- -->
 
 不失一般性，我们定义一个操作仅返回单个输出变量。
 这并没有失去一般性，因为输出变量可以有多个条目，例如向量。
@@ -1177,8 +1177,8 @@ O \left ( k^{(l-1)+d} \right ).
 如果变量$y$是变量$x$通过一个操作计算得到的，那么我们画一条从$x$到$y$的有向边。
 我们有时用操作的名称来注释输出的节点，当上下文很明确时有时也会省略这个标注。
 
-计算图的实例可以参见图\ref{fig:chap6_computational_graph}。
-% fig 6.8
+计算图的实例可以参见图\?。
+<!-- % fig 6.8 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1193,11 +1193,11 @@ O \left ( k^{(l-1)+d} \right ).
 \emph{(c)}表达式$\bm{H} = \max \{ 0, \bm{X}\bm{W}+ \bm{b} \}$的计算图，在给定包含小批量输入数据的设计矩阵$\bm{X}$时，它计算\gls{ReLU}激活的设计矩阵$\bm{H}$。
 \emph{(d)}示例a-c对每个变量最多只实施一个操作，但是对变量实施多个操作也是可能的。 这里我们展示一个计算图，它对线性回归模型的权重$\bm{w}$实施多个操作。
 这个权重不仅用于预测$\hat{y}$，也用于权重衰减罚项$\lambda \sum_i w_i^2$。}
-\label{fig:chap6_computational_graph}
 \end{figure}
 
-\subsection{微积分中的链式法则}
-\label{sec:chain_rule_of_calculus}
+
+## 微积分中的链式法则
+
 
 微积分中的链式法则（为了不与概率中的链式法则相混淆）用于计算复合函数的导数。
 反向传播是一种计算链式法则的算法，使用高效的特定运算顺序。
@@ -1207,7 +1207,6 @@ O \left ( k^{(l-1)+d} \right ).
 那么链式法则是说
 \begin{equation}
 \frac{dz}{dx}=\frac{dz}{dy} \frac{dy}{dx}.
-\label{eq:6.44}
 \end{equation}
 
 我们可以将这种标量情况进行扩展。
@@ -1225,7 +1224,7 @@ O \left ( k^{(l-1)+d} \right ).
 从这里我们看到变量$\bm{x}$的梯度可以通过将Jacobi矩阵$\frac{\partial \bm{y}}{\partial \bm{x}}$是$g$的$n\times m$乘以梯度$\nabla_{\bm{y}} z$来得到。
 反向传播算法由图中每一个这样的Jacobi梯度的乘积操作所组成。
 
-% -- 199 --
+<!-- % -- 199 -- -->
 
 通常我们不将反向传播算法仅用于向量，而是应用于任意维度的张量。
 从概念上讲，这与使用向量的反向传播完全相同。 
@@ -1233,7 +1232,7 @@ O \left ( k^{(l-1)+d} \right ).
 我们可以想象，在我们运行反向传播之前，将每个张量变平为一个向量，计算一个向量值梯度，然后将该梯度重新构造成一个张量。
 从这种重新排列的观点上看，反向传播仍然只是将Jacobi矩阵乘以梯度。
 
-% -- 200 --
+<!-- % -- 200 -- -->
 
 为了表示值$z$对张量$\TSX$的梯度，我们记为$\nabla_\TSX z$，就像$\TSX$是向量一样。
 $\TSX$的索引现在有多个坐标——例如，一个3维的张量由三个坐标索引。
@@ -1244,46 +1243,45 @@ $\TSX$的索引现在有多个坐标——例如，一个3维的张量由三个�
 如果$\TSY=g(\TSX)$并且$z=f(\TSY)$，那么
 \begin{equation}
   \nabla_\TSX z = \sum_j (\nabla_\TSX \TEY_j)\frac{\partial z}{\partial \TEY_j}.
-  \label{eq:6.47}
 \end{equation}
 
-\subsection{递归地使用链式法则来实现BP}
-\label{sec:recursively_applying_the_chain_rule_to_obtain_backprop}
+
+## 递归地使用链式法则来实现BP
+
 
 使用链式规则，可以直接写出某个标量对于计算图中任何产生该标量的节点的梯度的代数表达式。
 然而，实际在计算机中计算该表达式时会引入一些额外的考虑。
 
 具体来说，许多子表达式可能在梯度的整个表达式中重复若干次。
 任何计算梯度的程序都需要选择是存储这些子表达式还是重新计算它们几次。
-图\ref{fig:chap6_repeated_subexpression}给出了一个例子来说明这些重复的子表达式是如何出现的。
+图\?给出了一个例子来说明这些重复的子表达式是如何出现的。
 在某些情况下，计算两次相同的子表达式纯粹是浪费。
 在复杂图中，可能存在指数多的这种计算上的浪费，使得简单的链式法则不可实现。
 在其他情况下，计算两次相同的子表达式可能是以较高的运行时间为代价来减少内存开销的有效手段。
 
-我们首先给出一个版本的反向传播算法，它指明了梯度的直接计算方式（算法\ref{alg:bprop}以及相关的正向计算的算法\ref{alg:fprop}），按照它实际完成的顺序并且递归地使用链式法则。
+我们首先给出一个版本的反向传播算法，它指明了梯度的直接计算方式（算法\?），按照它实际完成的顺序并且递归地使用链式法则。
 可以直接执行这些计算或者将算法的描述视为用于计算反向传播的计算图的符号表示。
 然而，这些公式并没有明确地操作和构造用于计算梯度的符号图。
-这些公式在后面的\ref{sec:general_back_propagation}节和算法\ref{alg:backprop}中给出，其中我们还推广到了包含任意张量的节点。
+这些公式在后面的\?中给出，其中我们还推广到了包含任意张量的节点。
 
 首先考虑描述如何计算单个标量$u^{(n)}$（例如训练样例上的损失函数）的计算图。
 我们想要计算这个标量对$n_i$个输入节点$u^{(1)}$到$u^{(n_i)}$的梯度。
 换句话说，我们希望对所有的$i\in\{1,2,\ldots,n_i\}$计算$\frac{\partial u^{(n)}}{\partial u^{(i)}}$。
 在用反向传播计算梯度来实现参数的梯度下降时，$u^{(n)}$将对应单个或者小批量实例的代价函数，而$u^{(1)}$到$u^{(n_i)}$则对应于模型的参数。
 
-% -- 201 --
+<!-- % -- 201 -- -->
 
 我们将假设图的节点已经以一种特殊的方式被排序，使得我们可以一个接一个地计算他们的输出，从$u^{(n_i+1)}$开始，一直上升到$u^{(n)}$。
-如算法\ref{alg:fprop}中所定义的，每个节点$u^{(i)}$与操作$f^{(i)}$相关联，并且通过对该函数求值来得到
+如算法\?$相关联，并且通过对该函数求值来得到
 \begin{equation}
   u^{(i)} = f(\SetA^{(i)}),
 \end{equation}
 其中$\SetA^{(i)}$是$u^{(i)}$所有双亲节点的集合。
-% alg 6.1
+<!-- % alg 6.1 -->
 \begin{algorithm}[htbp]
 \caption{计算将$n_i$个输入$u^{(1)}$到$u^{(n_i)}$映射到一个输出$u^{(n)}$的程序。
 这定义了一个计算图，其中每个节点通过将函数$f^{(i)}$应用到变量集合$\SetA^{(i)}$上来计算$u^{(i)}$的值，$\SetA^{(i)}$包含先前节点$u^{(j)}$的值满足$j<i$且$j \in Pa(u^{(i)})$。
 计算图的输入是向量$\bm{x}$，并且被分配给前$n_i$个节点$u^{(1)}$到$u^{(n_i)}$。计算图的输出可以从最后一个节点$u^{(n)}$读出。}
-\label{alg:fprop}
 \begin{algorithmic}
 \FOR {$i=1, \ldots, n_i$}
  \STATE $u^{(i)} \leftarrow x_i$
@@ -1296,7 +1294,7 @@ $\TSX$的索引现在有多个坐标——例如，一个3维的张量由三个�
 \end{algorithmic}
 \end{algorithm}
 
-% -- 202 --
+<!-- % -- 202 -- -->
 
 该算法详细说明了前向传播的计算，我们可以将其放入图$\CalG$中。
 为了执行反向传播，我们可以构造一个依赖于$\CalG$并添加额外一组节点的计算图。
@@ -1305,15 +1303,14 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 这通过对标量输出$u^{(n)}$使用链式法则来完成
 \begin{equation}
   \frac{\partial u^{(n)}}{\partial u^{(j)}} = \sum_{i:j \in Pa(u^{(i)})} \frac{\partial u^{(n)} }{ \partial u^{(i)} } \frac{ \partial u^{(i)} }{ \partial u^{(j)} }
-  \label{eq:6.49}
 \end{equation}
-在算法\ref{alg:bprop}中详细说明。
+在算法\?中详细说明。
 子图$\CalB$恰好包含每一条对应着$\CalG$中从节点$u^{(j)}$到节点$u^{(i)}$的边。
 从$u^{(j)}$到$u^{(i)}$的边对应着计算$\frac{\partial u^{(i)}}{\partial u^{(j)}}$。
 另外，对于每个节点都要执行一个内积，内积的一个因子是对于$u^{j}$孩子节点$u^{(i)}$的已经计算的梯度，另一个因子是对于相同孩子节点$u^{(i)}$ 的偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$组成的向量。
 总而言之，执行反向传播所需的计算量与$\CalG$中的边的数量成比例，其中每条边的计算包括计算偏导数（节点关于它的一个双亲节点的偏导数）以及执行一次乘法和一次加法。
 下面，我们将此分析推广到张量值节点，这只是在同一节点中对多个标量值进行分组并能够更有效的实现。
-% fig 6.9
+<!-- % fig 6.9 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1325,33 +1322,30 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 计算梯度时导致重复子表达式的计算图。
 令$w \in \SetR$为图的输入。
 我们对链中的每一步使用相同的操作函数$f: \SetR \to \SetR$，这样$x=f(w), y=f(x), z=f(y)$。
-为了计算$\frac{\partial z}{\partial w}$，我们应用公式\ref{eq:6.44}得到：
+为了计算$\frac{\partial z}{\partial w}$，我们应用公式\?得到：
 \begin{align}
 & \frac{\partial z}{\partial w}\\
 =& \frac{\partial z}{\partial y} \frac{\partial y}{\partial x} \frac{\partial x}{\partial w}\\
-\label{eq:6.52}
 =& f'(y)f'(x)f'(w)\\ 
-\label{eq:6.53}
 =& f'(f(f(w))) f'(f(w)) f'(w). 
 \end{align}
-公式\ref{eq:6.52}建议我们采用的实现方式是，仅计算$f(w)$的值一次并将它存储在变量$x$中。
+公式\?建议我们采用的实现方式是，仅计算$f(w)$的值一次并将它存储在变量$x$中。
 这是\gls{BP}算法所采用的方法。
-公式\ref{eq:6.53}提出了一种替代方法，其中子表达式$f(w)$出现了不止一次。 %这里不知道怎么弄多个label的公式，会报错
+公式\?提出了一种替代方法，其中子表达式$f(w)$出现了不止一次。 %这里不知道怎么弄多个label的公式，会报错
 在替代方法中，每次只在需要时重新计算$f(w)$。
-当存储这些表达式的值所需的存储较少时，公式\ref{eq:6.52}的\gls{BP}方法显然是较优的，因为它减少了运行时间。
-然而，公式\ref{eq:6.53}也是链式法则的有效实现，并且当存储受限时它是有用的。}
-\label{fig:chap6_repeated_subexpression}
+当存储这些表达式的值所需的存储较少时，公式\?方法显然是较优的，因为它减少了运行时间。
+然而，公式\?
 \end{figure}
 
-% -- 203 --
+<!-- % -- 203 -- -->
 
 反向传播算法被设计为减少公共子表达式的数量而不考虑存储的开销。
 具体来说，它执行了图中每个节点一个Jacobi乘积的数量的计算。
-这可以从算法\ref{alg:bprop}中看出，反向传播算法访问了图中的节点$u^{(j)}$到节点$u^{(i)}$的每条边一次，以获得相关的偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$。
+这可以从算法\?$。
 反向传播因此避免了重复子表达式的指数爆炸。
 然而，其他算法可能通过对计算图进行简化来避免更多的子表达式，或者也可能通过重新计算而不是存储这些子表达式来节省内存。
 我们将在描述完反向传播算法本身后再重新审视这些想法。
-% alg 6.2
+<!-- % alg 6.2 -->
 \begin{algorithm}[htb!]
 \caption{\gls{BP}算法的简化版本，用于计算$u^{(n)}$对图中变量的导数。
 这个示例旨在通过演示所有变量都是标量的简化情况来进一步理解\gls{BP}算法，这里我们希望计算关于$u^{(1)},\ldots,u^{(n)}$的导数。
@@ -1359,9 +1353,8 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 假定与每条边相关联的偏导数计算需要恒定的时间的话，该算法的计算成本与图中边的数量成比例。
 这与\gls{forward_propagation}的计算次数具有相同的阶。
 每个$\frac{\partial u^{(i)}}{\partial u^{(j)}}$是$u^{(i)}$的父节点$u^{(j)}$的函数，从而将前向图的节点链接到\gls{BP}图中添加的节点。}
-\label{alg:bprop}
 \begin{algorithmic}
-\STATE Run forward propagation (algorithm \ref{alg:fprop} for this example) to obtain
+\STATE Run forward propagation (algorithm \? for this example) to obtain
 the activations of the network
 \STATE Initialize {\tt grad\_table}, a data structure that will store the derivatives
 that have been computed. The entry ${\tt grad\_table}[u^{(i)}]$ will store the computed
@@ -1379,23 +1372,23 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 \end{algorithm}
 
 
-% -- 204 --
+<!-- % -- 204 -- -->
 
-\subsection{全连接MLP中BP的计算}
-\label{sec:back_propagation_computation_in_fully_connected_mlp}
+
+## 全连接MLP中BP的计算
+
 
 为了阐明反向传播的上述定义，让我们考虑一个与全连接的多层MLP相关联的特定图。
 
-算法\ref{alg:mlp-fprop}首先给出了前向传播，它将参数映射到与单个训练样例（输入，目标）$(\bm{x},\bm{y})$相关联的有监督损失函数$L(\hat{\bm{y}}, \bm{y})$，其中$\hat{\bm{y}}$是当$\bm{x}$提供输入时神经网络的输出。
-% alg 6.3
+算法\?$提供输入时神经网络的输出。
+<!-- % alg 6.3 -->
 \begin{algorithm}[ht]
 \caption{典型深度神经网络中的\gls{forward_propagation}和代价函数的计算。
-损失函数$L(\hat{\Vy}，\Vy)$取决于输出$\hat{\Vy}$和目标$\Vy$（参见\ref{sec:learning_conditional_distributions_with_maximum_likelihood}节中损失函数的示例）。
+损失函数$L(\hat{\Vy}，\Vy)$取决于输出$\hat{\Vy}$和目标$\Vy$（参见\?节中损失函数的示例）。
 为了获得总代价$J$，损失函数可以加上正则项$\Omega(\theta)$，其中$\theta$包含所有参数（权重和偏置）。
-算法\ref{alg:mlp-bprop}说明了如何计算$J$对参数$\bm{W}$和$\bm{b}$的梯度。 为简单起见，该演示仅使用单个输入样例$\Vx$。
+算法\?$的梯度。 为简单起见，该演示仅使用单个输入样例$\Vx$。
 实际应用应该使用\gls{minibatch}。
-请参见\ref{sec:example_back_propagation_for_mlp_training}以获得更加真实的演示。}
-\label{alg:mlp-fprop}
+请参见\?
 \begin{algorithmic}
 \REQUIRE Network depth, $l$
 \REQUIRE $\MW^{(i)}, i \in \{ 1, \dots, l\},$ the weight matrices of the model
@@ -1412,15 +1405,14 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 \end{algorithmic}
 \end{algorithm}
 
-算法\ref{alg:mlp-bprop}随后说明了将反向传播应用于改图所需的相关计算。
-% alg 6.4
+算法\?随后说明了将反向传播应用于改图所需的相关计算。
+<!-- % alg 6.4 -->
 \begin{algorithm}[htbp]
-\caption{深度神经网络中算法\ref{alg:mlp-fprop}的反向计算，它使用了不止输入$\Vx $和目标$\bm{y}$。
+\caption{深度神经网络中算法\?$。
 该计算对于每一层$k$都产生了对激活$\Va^{(k)}$的梯度，从输出层开始向后计算一直到第一个\gls{hidden_layer}。
 这些梯度可以看作是对每层的输出应如何调整以减小误差的指导，根据这些梯度可以获得对每层参数的梯度。
 权重和偏置上的梯度可以立即用作随机梯度更新的一部分（梯度算出后即可执行更新），或者与其他基于梯度的优化方法一起使用。
 }
-\label{alg:mlp-bprop}
 \begin{algorithmic}
 \STATE After the forward computation, compute the gradient on the output layer:
 \STATE $\Vg \leftarrow \nabla_{\hat{\Vy}} J = \nabla_{\hat{\Vy}} L(\hat{\Vy},\Vy)$
@@ -1437,16 +1429,17 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 \end{algorithmic}
 \end{algorithm}
 
-算法\ref{alg:mlp-fprop}和算法\ref{alg:mlp-bprop}是简单而直观的演示。
+算法\?是简单而直观的演示。
 然而，它们专门针对特定的问题。
 
-现在的软件实现基于之后\ref{sec:general_back_propagation}节中描述的一般形式的反向传播，它可以通过明确地操作用于表示符号计算的数据结构，来适应任何计算图。
+现在的软件实现基于之后\?节中描述的一般形式的反向传播，它可以通过明确地操作用于表示符号计算的数据结构，来适应任何计算图。
 
 
-% -- 205 --
+<!-- % -- 205 -- -->
 
-\subsection{符号到符号的导数}
-\label{sec:symbol_to_symbol_derivatives}
+
+## 符号到符号的导数
+
 
 代数表达式和计算图都对\firstgls{symbol}或不具有特定值的变量进行操作。
 这些代数或者基于图的表达式被称为\firstgls{symbolic_representation}。
@@ -1454,18 +1447,18 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 我们用一个特定的\firstgls{numeric_value}来替代网络的符号输入$\bm{x}$，例如$[1.2, 3,765, -1.8]^\top$。
 
 一些反向传播的方法采用计算图和一组用于图的输入的数值，然后返回在这些输入值处梯度的一组数值。
-我们将这种方法称为``符号到数值''的微分。
-这种方法用在诸如Torch\citep{Torch-2011}和Caffe\citep{Jia13caffe}之类的库中。
+我们将这种方法称为"符号到数值"的微分。
+这种方法用在诸如Torch之类的库中。
 
-% -- 206 --
+<!-- % -- 206 -- -->
  
 另一种方法是采用计算图以及添加一些额外的节点到计算图中，这些额外的节点提供了我们所需导数的符号描述。
-这是Theano\citep{bergstra+al:2010-scipy-small,Bastien-Theano-2012}和TensorFlow\citep{tensorflow}采用的方法。
-图\ref{fig:chap6_symbol_to_symbol}给出了该方法如何工作的一个例子。
+这是Theano采用的方法。
+图\?给出了该方法如何工作的一个例子。
 这种方法的主要优点是导数可以使用与原始表达式相同的语言来描述。
 因为导数只是另外一张计算图，可以再次运行反向传播，对导数再进行求导以得到更高阶的导数。
-高阶导数的计算在\ref{sec:higher_order_derivatives}中描述。
-% fig 6.10
+高阶导数的计算在\?中描述。
+<!-- % fig 6.10 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1480,7 +1473,6 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 \emph{(左)}在这个例子中，我们从表示$z=f(f(f(w)))$的图开始。
 \emph{(右)}我们运行\gls{BP}算法，指导它构造表达式$\frac{dz}{dw}$对应的图。 在这个例子中，我们不解释\gls{BP}算法如何工作。
 我们的目的只是说明想要的结果是什么：具有导数的符号描述的计算图。}
-\label{fig:chap6_symbol_to_symbol}
 \end{figure}
 
 我们将使用后一种方法，并且使用构造导数的计算图的方法来描述反向传播算法。
@@ -1488,14 +1480,15 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 这允许我们避免完全指明每个操作应该在何时计算。
 相反，通用的图计算引擎只要当一个节点的父节点的值都可用时就可以进行求值。
 
-% -- 207 --
+<!-- % -- 207 -- -->
   
 基于符号到符号的方法的描述包含了符号到数值的方法。
 符号到数值的方法可以理解为执行了与符号到符号的方法中构建图的过程中完全相同的计算。
 关键的区别是符号到数值的方法不会显示出图形。
 
-\subsection{一般化的BP}
-\label{sec:general_back_propagation}
+
+## 一般化的BP
+
 
 反向传播算法非常简单。
 为了计算某个标量$z$对图中它的一个祖先$\bm{x}$的梯度，我们首先观察到对$z$的梯度由$\frac{dz}{dz}=1$给出。
@@ -1508,21 +1501,21 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 张量通常可以具有任意维度，并且包含标量、向量和矩阵。
 
 我们假设每个变量$\TSV$与下列子程序相关联：
-\begin{itemize}
-    \item \verb|get_operation|($\TSV$)：它返回用于计算$\TSV$的操作，代表了在计算图中流入$\TSV$的边。
+
++ \verb|get_operation|($\TSV$)：它返回用于计算$\TSV$的操作，代表了在计算图中流入$\TSV$的边。
     例如，可能有一个Python或者C++的类表示矩阵乘法操作，以及\verb|get_operation|函数。
     假设我们的一个变量是由矩阵乘法产生的，$\bm{C}=\bm{A}\bm{B}$。
     那么，\verb|get_operation|($\TSV$)返回一个指向相应C++类的实例的指针。
 
-    \item \verb|get_consumers|($\TSV, \CalG$)：它返回一组变量，是计算图$\CalG$中$\TSV$的孩子节点。
++ \verb|get_consumers|($\TSV, \CalG$)：它返回一组变量，是计算图$\CalG$中$\TSV$的孩子节点。
 
-    \item \verb|get_inputs|($\TSV, \CalG$)：它返回一组变量，是计算图$\CalG$中$\TSV$的父节点。
-\end{itemize}
++ \verb|get_inputs|($\TSV, \CalG$)：它返回一组变量，是计算图$\CalG$中$\TSV$的父节点。
 
-% -- 208 --
+
+<!-- % -- 208 -- -->
   
 每个操作\verb|op|也与\verb|bprop|操作相关联。
-该\verb|bprop|操作可以计算如公式\ref{eq:6.47}所描述的Jacobi向量积。
+该\verb|bprop|操作可以计算如公式\?所描述的Jacobi向量积。
 这是反向传播算法能够实现很大通用性的原因。
 每个操作负责了解如何通过它参与的图中的边来反向传播。
 例如，我们可以使用矩阵乘法操作来产生变量$\bm{C}=\bm{A}\bm{B}$。
@@ -1536,7 +1529,7 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 \begin{equation}
   \sum_i (\nabla_{\TSX} \verb|op.f(inputs|)_i) \textsf{G}_i,
 \end{equation}
-这只是如公式\ref{eq:6.47}所表达的链式法则的实现。
+这只是如公式\?所表达的链式法则的实现。
 这里，\verb|inputs|是提供给操作的一组输入，\verb|op.f|是操作实现的数学函数，$\TSX$是输入，我们想要计算关于它的梯度，$\TSG$是操作对于输出的梯度。
 
 \verb|op.bprop|方法应该总是假装它的所有输入彼此不同，即使它们不是。
@@ -1546,16 +1539,15 @@ value of $\frac{\partial u^{(n)}}{\partial u^{(i)}}$.
 反向传播算法的软件实现通常提供操作和其\verb|bprop|两种方法，所以深度学习软件库的用户能够对使用诸如矩阵乘法、指数运算、对数运算等等常用操作构建的图进行反向传播。
 构建反向传播新实现的软件工程师或者需要向现有库添加自己的操作的高级用户通常必须手动为新操作推导\verb|op.bprop|方法。
 
-反向传播算法的正式描述参见算法\ref{alg:backprop}。
+反向传播算法的正式描述参见算法\?。
 
-% -- 209 --
-% alg 6.5
+<!-- % -- 209 -- -->
+<!-- % alg 6.5 -->
 \begin{algorithm}[ht]
 \caption{\gls{BP}算法最外围的骨架。
 这部分做简单的设置和清理工作。
-大多数重要的工作在发生在算法\ref{alg:build_grad}的子程序{\tt build\_grad}中。
+大多数重要的工作在发生在算法\?中。
 }
-\label{alg:backprop}
 \begin{algorithmic}
 \REQUIRE $\SetT$, the target set of variables whose gradients must be computed.
 \REQUIRE $\CalG$, the computational graph
@@ -1574,9 +1566,8 @@ to their gradients
 
 \begin{algorithm}[ht]
 \caption{\gls{BP}算法的内循环子程序${\tt build\_grad}(\TSV, \CalG, \CalG', {\tt grad\_table})$，
-被在算法\ref{alg:backprop}中定义的\gls{BP}算法调用。
+被在算法\?算法调用。
 }
-\label{alg:build_grad}
 \begin{algorithmic}
 \REQUIRE $\TSV$, the variable whose gradient should be added to $\CalG$
 and {\tt grad\_table}.
@@ -1603,9 +1594,9 @@ gradients
 \end{algorithm}
 
 
-% -- 210 --
+<!-- % -- 210 -- -->
   
-在\ref{sec:chain_rule_of_calculus}节中，我们使用反向传播作为一种策略来避免多次计算链式法则中的相同子表达式。
+在\?节中，我们使用反向传播作为一种策略来避免多次计算链式法则中的相同子表达式。
 由于这些重复子表达式的存在，简单的算法可能具有指数运行时间。
 现在我们已经详细说明了反向传播算法，我们可以去理解它的计算成本。
 如果我们假设每个操作的执行都有大致相同的开销，那么我们可以依据执行操作的数量来分析计算成本。
@@ -1619,7 +1610,7 @@ gradients
 大多数神经网络的代价函数大致是链式结构的，使得反向传播只有$O(n)$的成本。
 这远远胜过简单的方法，简单方法可能需要执行指数级的节点。
 这种潜在的指数级代价可以通过非递归地扩展和重写递归链式法则（公式
-\ref{eq:6.49}）来看出：
+\?）来看出：
 \begin{equation}
   \frac{\partial u^{(n)}}{\partial u^{(j)}} =
   \sum_{\substack{\text{path}(u^{(\pi_1)}, u^{(\pi_2)}, \ldots, u^{(\pi_t)}  ),\\ \text{from } \pi_1=j \text{ to }\pi_t = n}}
@@ -1632,10 +1623,11 @@ gradients
 通过顺序填充这些表的条目，反向传播算法避免了重复计算许多公共子表达式。
 这种表填充策略有时被称为\firstgls{dynamic_programming}。
   
-% -- 211 --
+<!-- % -- 211 -- -->
   
-\subsection{实例：用于MLP训练的BP}
-\label{sec:example_back_propagation_for_mlp_training}
+
+## 实例：用于MLP训练的BP
+
 
 作为一个例子，我们利用反向传播算法来训练多层感知器。
 
@@ -1655,8 +1647,8 @@ gradients
   J = J_{\text{MLE}} + \lambda \left ( \sum_{i, j} \left (W_{i, j}^{(1)} \right )^2 + \sum_{i, j} \left (W_{i, j}^{(2)} \right)^2 \right )
 \end{equation}
 包含了交叉熵和系数为$\lambda$的权重衰减项。
-它的计算图在图\ref{fig:chap6_mlp_example}中给出。
-% fig 6.11
+它的计算图在图\?中给出。
+<!-- % fig 6.11 -->
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -1664,18 +1656,17 @@ gradients
 \centerline{\includegraphics{Chapter6/figures/mlp_example}}
 \fi
 \caption{用于计算代价函数的计算图，这个代价函数是使用\gls{cross_entropy}损失以及权重衰减训练我们的单层\glssymbol{MLP}示例所产生的。}
-\label{fig:chap6_mlp_example}
 \end{figure}
 
 这个示例的梯度计算图实在太大，以至于绘制或者阅读都将是乏味的。
 这显示出了反向传播算法的优点之一，即它可以自动生成梯度，而这种计算对于软件工程师来说需要进行直观但冗长的手动推导。
 
-我们可以通过观察图\ref{fig:chap6_mlp_example}中的正向传播图来粗略地描述反向传播算法的行为。
+我们可以通过观察图\?中的正向传播图来粗略地描述反向传播算法的行为。
 为了训练，我们希望计算$\nabla_{\bm{W}^{(1)}} J$和$\nabla_{\bm{W}^{(2)}} J$。
 有两种不同的路径从$J$后退到权重：一条通过交叉熵成本，另一条通过权重衰减成本。
 权重衰减成本相对简单，它总是对$\bm{W}^{(i)}$上的梯度贡献$2\lambda \bm{W}^{(i)}$。
   
-% -- 212 --
+<!-- % -- 212 -- -->
   
 另一条通过交叉熵成本的路径稍微复杂一些。
 令$\bm{G}$是由\verb|cross_entropy|操作提供的对未归一化对数概率$\bm{U}^{(2)}$的梯度。
@@ -1695,10 +1686,11 @@ gradients
 这些值从被计算时开始存储，直到反向过程回到了同一点。
 因此存储成本是$O(mn_h)$，其中$m$是minibatch中样例的数目，$n_h$是\gls{hidden_unit}的数量。
   
-% -- 213 --
+<!-- % -- 213 -- -->
   
-\subsection{复杂化}
-\label{sec:complications}
+
+## 复杂化
+
 
 我们这里描述的反向传播算法要比现实中实际使用的实现要简单。
 
@@ -1718,10 +1710,11 @@ gradients
 
 各种其他技术的特性使现实世界的微分更加复杂。 这些技术性并不是不可逾越的，本章已经描述了计算微分所需的关键智力工具，但重要的是要知道还有许多的精妙之处存在。
   
-% -- 214 --
+<!-- % -- 214 -- -->
   
-\subsection{深度学习界以外的微分}
-\label{sec:differentiation_outside_the_deep_learning_community}
+
+## 深度学习界以外的微分
+
 
 深度学习界在某种程度上已经与更广泛的计算机科学界隔离开来，并且在很大程度上发展了自己关于如何进行微分的文化态度。
 更一般地，\firstgls{automatic_differentiation}领域关心如何以算法方式计算导数。 
@@ -1729,7 +1722,7 @@ gradients
 它是一种称为\firstgls{reverse_mode_accumulation}的更广泛类型的技术的特殊情况。 
 其他方法以不同的顺序来计算链式法则的子表达式。 
 一般来说，确定一种计算的顺序使得计算开销最小，是困难的问题。 
-找到计算梯度的最优操作序列是NP完全问题\citep{naumann2008optimal}，在这种意义上，它可能需要将代数表达式简化为它们最廉价的形式。
+找到计算梯度的最优操作序列是NP完全问题，在这种意义上，它可能需要将代数表达式简化为它们最廉价的形式。
 
 例如，假设我们有变量$p_1,p_2\ldots,p_n$表示概率，和变量$z_1,z_2,\ldots,z_n$表示未归一化的对数概率。
 假设我们定义
@@ -1739,18 +1732,18 @@ gradients
 其中我们通过指数化、求和与除法运算构建softmax函数，并构造交叉熵损失函数$J=-\sum_i p_i\log q_i$。
 人类数学家可以观察到$J$对$z_i$的导数采用了非常简单的形式：$p_iq_i-p_i$。
 反向传播算法不能够以这种方式来简化梯度，而是会通过原始图中的所有对数和指数操作显示地传播梯度。
-一些软件库如Theano\citep{bergstra+al:2010-scipy-small,Bastien-Theano-2012}能够执行某些种类的代数替换来改进由纯反向传播算法提出的图。
+一些软件库如Theano能够执行某些种类的代数替换来改进由纯反向传播算法提出的图。
   
-% -- 215 --
+<!-- % -- 215 -- -->
   
-当前向图$\CalG$具有单个输出节点，并且每个偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$都可以用恒定的计算量来计算时，反向传播保证梯度计算的计算数目和前向计算的计算数目是同一个量级：这可以在算法\ref{alg:bprop}中看出，因为每个局部偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$以及递归链式公式（公式\ref{eq:6.49}）中相关的乘和加都只需计算一次。
+当前向图$\CalG$具有单个输出节点，并且每个偏导数$\frac{\partial u^{(i)}}{\partial u^{(j)}}$都可以用恒定的计算量来计算时，反向传播保证梯度计算的计算数目和前向计算的计算数目是同一个量级：这可以在算法\?）中相关的乘和加都只需计算一次。
 因此，总的计算量是$O(\#\text{edges})$。
 然而，可能通过对反向传播算法构建的计算图进行简化来减少这些计算量，并且这是NP完全问题。
 诸如Theano和TensorFlow的实现使用基于匹配已知简化模式的试探法，以便重复地尝试去简化图。
 我们定义反向传播仅用于计算标量输出的梯度，但是反向传播可以扩展到计算Jacobi矩阵（该Jacobi矩阵或者来源于图中的$k$个不同标量节点，或者来源于包含$k$个值的张量值节点）。
 朴素的实现可能需要$k$倍的计算：对于原始前向图中的每个内部标量节点，朴素的实现计算$k$个梯度而不是单个梯度。
 当图的输出数目大于输入的数目时，有时更偏向于使用另外一种形式的自动微分，称为\firstgls{forward_mode_accumulation}。
-前向模式计算已经被提出用于循环神经网络梯度的实时计算，例如\citep{Williams89b}。
+前向模式计算已经被提出用于循环神经网络梯度的实时计算，例如。
 这也避免了存储整个图的值和梯度的需要，是计算效率和内存使用的折中。
 前向模式和后向模式的关系类似于左乘和右乘一系列矩阵之间的关系，例如
 \begin{equation}
@@ -1770,10 +1763,11 @@ gradients
 因此，反向传播不是计算梯度的唯一方式或最佳方式，但它是一个非常实用的方法，继续为深度学习社区服务。 
 在未来，深度网络的微分技术可能会提高，因为深度学习的从业者更加懂得了更广泛的自动微分领域的进步。
   
-% -- 216 --
+<!-- % -- 216 -- -->
   
-\subsection{高阶微分}
-\label{sec:higher_order_derivatives}
+
+## 高阶微分
+
 
 一些软件框架支持使用高阶导数。 
 在深度学习软件框架中，这至少包括Theano和TensorFlow。
@@ -1790,7 +1784,7 @@ gradients
 Krylov方法是用于执行各种操作的一组迭代技术，这些操作包括像近似求解矩阵的逆、或者近似矩阵的特征值或特征向量等，而不使用矩阵-向量乘法以外的任何操作。
 
 为了在Hesssian矩阵上使用Krylov方法，我们只需要能够计算Hessian矩阵$\bm{H}$和一个任意向量$\bm{v}$间的乘积即可。
-实现这一目标的一种直观方法\citep{christianson1992automatic}是
+实现这一目标的一种直观方法是
 \begin{equation}
   \bm{Hv}=\nabla_{\bm{x}} \left [ (\nabla_{\bm{x}} f(x))^\top \bm{v}\right ].
 \end{equation}
@@ -1802,29 +1796,30 @@ Krylov方法是用于执行各种操作的一组迭代技术，这些操作包�
 虽然计算Hessian通常是不可取的，但是可以使用Hessian向量积。
 可以对所有的$i=1,\ldots,n$简单地计算$\bm{He}^{(i)}$，其中$\bm{e}^{(i)}$是$e_i^{(i)}=1$并且其他元素都为0的\gls{one_hot}向量。
 
-\section{历史小记}
-\label{sec:historical_notes}
+
+# 历史小记
+
 
 \gls{feedforward_network}可以被视为一种高效的非线性函数逼近器，它以使用梯度下降来最小化函数近似误差为基础。
 从这个角度来看，现代\gls{feedforward_network}是一般函数近似任务的几个世纪进步的结晶。
   
-% -- 217 --
+<!-- % -- 217 -- -->
   
-处于反向传播算法底层的链式法则是17世纪发明的\citep{Leibniz-1676,LHopital-1696}。
-微积分和代数长期以来被用于求解优化问题的封闭形式，但梯度下降直到19世纪才作为优化问题的一种迭代近似的求解方法被引入\citep{cauchy1847}。
+处于反向传播算法底层的链式法则是17世纪发明的。
+微积分和代数长期以来被用于求解优化问题的封闭形式，但梯度下降直到19世纪才作为优化问题的一种迭代近似的求解方法被引入。
 
 从20世纪40年代开始，这些函数近似技术被用于导出诸如感知机的机器学习模型。 
 然而，最早的模型都是基于线性模型。 
 来自包括Marvin Minsky的批评指出了线性模型族的几个缺陷，例如它无法学习XOR函数，这导致了对整个神经网络方法的抵制。
 
 学习非线性函数需要多层感知机的发展和计算该模型梯度的方法。
-基于动态规划的链式法则的高效应用开始出现在20世纪60年代和70年代，主要用于控制领域\citep{Kelley-1960,Bryson-et-al-1961,Dreyfus-1962,Bryson-1969,Dreyfus-1973}，也用于灵敏度分析\citep{Linnainmaa-1976}。 
-\cite{Werbos-1981}提出应用这些技术来训练人工神经网络。
-这个想法以不同的方式被独立地重新发现后\citep{LeCun85,Parker-1985,Rumelhart86b-small}，最终在实践中得以发展。
-\firstgls{parallel_distributed_processing}一书在其中一章提供了第一次成功使用反向传播的一些实验的结果\citep{Rumelhart86c}，这对反向传播的普及做出了巨大的贡献，并且开启了一个研究多层神经网络非常活跃的时期。
+基于动态规划的链式法则的高效应用开始出现在20世纪60年代和70年代，主要用于控制领域。 
+{Werbos-1981}提出应用这些技术来训练人工神经网络。
+这个想法以不同的方式被独立地重新发现后，最终在实践中得以发展。
+\firstgls{parallel_distributed_processing}一书在其中一章提供了第一次成功使用反向传播的一些实验的结果，这对反向传播的普及做出了巨大的贡献，并且开启了一个研究多层神经网络非常活跃的时期。
 然而，该书作者提出的想法，特别是Rumelhart 和Hinton提出的想法远远超过了反向传播。
-它们包括一些关键思想，关于可能通过计算实现认知和学习的几个核心方面，后来被冠以`` 联结主义''的名称，因为它强调了神经元之间的连接作为学习和记忆的轨迹的重要性。
-特别地，这些想法包括分布式表示的概念\citep{Hinton-et-al-PDP1986}。
+它们包括一些关键思想，关于可能通过计算实现认知和学习的几个核心方面，后来被冠以" 联结主义"的名称，因为它强调了神经元之间的连接作为学习和记忆的轨迹的重要性。
+特别地，这些想法包括分布式表示的概念。
 
 在反向传播的成功之后，神经网络研究获得了普及，并在20世纪90年代初达到高峰。 
 随后，其他机器学习技术变得更受欢迎，直到2006年开始的现代深度学习复兴。
@@ -1836,38 +1831,38 @@ Krylov方法是用于执行各种操作的一组迭代技术，这些操作包�
 第二，神经网络由于更强大的计算机和更好的软件基础设施已经变得更大。
 然而，少量算法上的变化也显著改善了神经网络的性能。
   
-% -- 218 --
+<!-- % -- 218 -- -->
   
 其中一个算法上的变化是用损失函数的交叉熵族替代均方误差。
 均方误差在20世纪80年代和90年代流行，但逐渐被交叉熵损失替代，并且最大似然原理的想法在统计学界和机器学习界之间广泛传播。
 使用交叉熵损失大大提高了具有sigmoid和softmax输出的模型的性能，而当使用均方误差损失时会存在饱和和学习缓慢的问题。
 
 另一个显著改善\gls{feedforward_network}性能的算法上的主要变化是使用分段线性\gls{hidden_unit}来替代sigmoid\gls{hidden_unit}，例如用\gls{ReLU}。
-使用$\max\{0, z\}$函数的修正在早期神经网络中已经被引入，并且至少可以追溯到认知机（Cognitron）和神经认知机(Neocognitron)\citep{Fukushima75,Fukushima80}。
+使用$\max\{0, z\}$函数的修正在早期神经网络中已经被引入，并且至少可以追溯到认知机（Cognitron）和神经认知机(Neocognitron)。
 这些早期的模型没有使用\gls{ReLU}，而是将修正用于非线性函数。
 尽管修正在早期很普及，在20世纪80年代，修正很大程度上被sigmoid所取代，也许是因为当神经网络非常小时，sigmoid表现更好。
 到21世纪初，由于有些迷信的观念，相信必须避免具有不可导点的激活函数，所以避免了\gls{ReLU}。
 这在2009年开始发生改变。
-\cite{Jarrett-ICCV2009-small}观察到，在神经网络结构设计的几个不同因素中``使用修正非线性是提高识别系统性能的最重要的唯一因素''。
+{Jarrett-ICCV2009-small}观察到，在神经网络结构设计的几个不同因素中"使用修正非线性是提高识别系统性能的最重要的唯一因素"。
 
-对于小的数据集，\cite{Jarrett-ICCV2009-small}观察到，使用修正非线性甚至比学习\gls{hidden_layer}的权重值更加重要。
+对于小的数据集，{Jarrett-ICCV2009-small}观察到，使用修正非线性甚至比学习\gls{hidden_layer}的权重值更加重要。
 随机的权重足以通过修正线性网络传播有用的信息，允许在顶部的分类器层学习如何将不同的特征向量映射到类标识。
 
 当有更多数据可用时，学习开始提取足够的有用知识来超越随机选择参数的性能。
-\cite{Glorot+al-AI-2011-small}说明，在深度修正线性网络中的学习比在激活函数具有曲率或两侧饱和的深度网络中的学习更容易。
+{Glorot+al-AI-2011-small}说明，在深度修正线性网络中的学习比在激活函数具有曲率或两侧饱和的深度网络中的学习更容易。
 
 \gls{ReLU}还具有历史意义，因为它们表明神经科学继续对深度学习算法的发展产生影响。
-\cite{Glorot+al-AI-2011-small}从生物学考虑\gls{ReLU}的导出。
+{Glorot+al-AI-2011-small}从生物学考虑\gls{ReLU}的导出。
 半修正非线性旨在描述生物神经元的这些性质：1）对于某些输入，生物神经元是完全不活跃的。
 2）对于某些输入，生物神经元的输出和它的输入成比例。
 3）大多数时间，生物神经元是在它们不活跃的状态下进行操作（即它们应该具有\firstgls{sparse_activation}）。
   
-% -- 219 --
+<!-- % -- 219 -- -->
   
 当2006年深度学习开始现代复兴时，\gls{feedforward_network}仍然有不良的声誉。
 从2006年至2012年，人们普遍认为，\gls{feedforward_network}不会表现良好，除非它们得到其他模型的辅助，例如概率模型。
 现在已经知道，具备适当的资源和工程实践，\gls{feedforward_network}表现非常好。
-今天，\gls{feedforward_network}中基于梯度的学习被用作发展概率模型的工具，例如第\ref{chap:deep_generative_models}章中描述的变分自动编码器和生成式对抗网络。
+今天，\gls{feedforward_network}中基于梯度的学习被用作发展概率模型的工具，例如第\?章中描述的变分自动编码器和生成式对抗网络。
 并不是被视为必须由其他技术支持的不可靠技术，\gls{feedforward_network}中基于梯度的学习自2012年以来一直被视为一种强大的技术，可应用于许多其他机器学习任务。
 在2006 年，业内使用无监督学习来支持监督学习，现在更讽刺的是，更常见的是使用监督学习来支持无监督学习。
 
@@ -1877,5 +1872,5 @@ Krylov方法是用于执行各种操作的一组迭代技术，这些操作包�
 在接下来的章节中，我们将讨论如何使用这些模型——如何对它们进行正则化和训练。
 
   
-% -- 220 --
+<!-- % -- 220 -- -->
   

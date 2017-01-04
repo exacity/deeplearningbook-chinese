@@ -1,0 +1,55 @@
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="{{ site.url }}/">Home</a></li>
+		<li>
+			<a href="#">About</a>
+			<ul class="dl-submenu">
+				<li>
+					<img src="{{ site.url }}/images/{{ site.owner.avatar }}" alt="{{ site.owner.name }} photo" class="author-photo">
+					<h4>{{ site.owner.name }}</h4>
+					<p>{{ site.owner.bio }}</p>
+				</li>
+				<li><a href="{{ site.url }}/about/"><span class="btn btn-inverse">Learn More</span></a></li>
+				{% if site.owner.email %}<li>
+					<a href="mailto:{{ site.owner.email }}"><i class="fa fa-fw fa-envelope"></i> Email</a>
+				</li>{% endif %}
+				{% if site.owner.twitter %}<li>
+					<a href="https://twitter.com/{{ site.owner.twitter }}"><i class="fa fa-fw fa-twitter"></i> Twitter</a>
+				</li>{% endif %}
+				{% if site.owner.facebook %}<li>
+					<a href="https://facebook.com/{{ site.owner.facebook }}"><i class="fa fa-fw fa-facebook"></i> Facebook</a>
+				</li>{% endif %}
+				{% if site.owner.google_plus %}<li>
+					<a href="https://google.com/{{ site.owner.google_plus }}"><i class="fa fa-fw fa-google-plus"></i> Google+</a>
+				</li>{% endif %}
+				{% if site.owner.linkedin %}<li>
+					<a href="https://linkedin.com/in/{{ site.owner.linkedin }}"><i class="fa fa-fw fa-linkedin"></i> LinkedIn</a>
+				</li>{% endif %}
+				{% if site.owner.github %}<li>
+					<a href="https://github.com/{{ site.owner.github }}"><i class="fa fa-fw fa-github"></i> GitHub</a>
+				</li>{% endif %}
+				{% if site.owner.stackexchange %}<li>
+					<a href="{{ site.owner.stackexchange }}"><i class="fa fa-fw fa-stack-exchange"></i> Stackexchange</a>
+				</li>{% endif %}
+				{% if site.owner.instagram %}<li>
+					<a href="https://instagram.com/{{ site.owner.instagram }}"><i class="fa fa-fw fa-instagram"></i> Instagram</a>
+				</li>{% endif %}
+				{% if site.owner.flickr %}<li>
+					<a href="https://www.flickr.com/photos/{{ site.owner.flickr }}"><i class="fa fa-fw fa-flickr"></i> Flickr</a>
+				</li>{% endif %}
+				{% if site.owner.tumblr %}<li>
+					<a href="http://{{ site.owner.tumblr }}.tumblr.com"><i class="fa fa-fw fa-tumblr"></i> Tumblr</a>
+				</li>{% endif %}
+			</ul><!-- /.dl-submenu -->
+		</li>
+	    {% for link in site.data.navigation %}
+	    {% if link.url contains 'http' %}
+	        {% assign domain = '' %}
+	        {% else %}
+	        {% assign domain = site.url %}
+	    {% endif %}
+	    <li><a href="{{ domain }}{{ link.url }}" {% if link.url contains 'http' %}target="_blank"{% endif %}>{{ link.title }}</a></li>
+	  {% endfor %}
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->

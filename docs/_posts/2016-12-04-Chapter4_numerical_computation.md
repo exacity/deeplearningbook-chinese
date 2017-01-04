@@ -1,0 +1,577 @@
+---
+title: 数值计算
+layout: post
+share: false
+---
+
+\gls{ML}算法通常需要大量的数值计算。
+这通常是指通过迭代地更新解来解决数学问题的算法，而不是解析地提供正确解的符号表达。
+常见的操作包括优化（找到最小化或最大化函数值的参数）和线性方程组的求解。
+对数字计算机来说实数无法在有限内存下精确表示，因此仅仅计算涉及实数的函数也是困难的。
+
+
+# \glsentrytext{overflow}和\glsentrytext{underflow}
+
+在数字计算机上实现连续数学的根本困难是，我们需要通过有限数量的位模式来表示无限多的实数。
+这意味着我们在计算机中表示实数时，几乎总会引入一些近似误差。
+在许多情况下，这仅仅是舍入误差。
+如果在理论上可行的算法没有被设计为最小化舍入误差的累积，可能就会在实践中失效，因此舍入误差会导致一些问题（特别是许多操作复合时）。
+
+一种特别的毁灭性舍入误差是\firstgls{underflow}。
+当接近零的数被四舍五入为零时发生\gls{underflow}。
+许多函数在其参数为零而不是一个很小的正数时才会表现出质的不同。
+例如，我们通常要避免被零除（一些软件环境将在这种情况下抛出异常，有些会返回一个非数字(not-a-number)的占位符）或避免取零的对数（这通常被视为$-\infty$，进一步的算术运算会使其变成非数字）。
+
+<!-- % -- 77 -- -->
+
+另一个极具破坏力的数值错误形式是\firstgls{overflow}。
+当大量级的数被近似为$\infty$或$-\infty$时发生\gls{overflow}。
+进一步的运算通常导致这些无限值变为非数字。
+
+必须对\gls{overflow}和\gls{underflow}进行数值稳定的一个例子是\firstgls{softmax}。
+\gls{softmax}经常用于预测与\gls{multinoulli}相关联的概率，定义为
+\begin{align}
+ \text{softmax}(\Vx)_i = \frac{\exp(\Sx_i)}{\sum_{j=1}^n \exp(\Sx_j)} .
+\end{align}
+考虑一下当所有$\Sx_i$都等于某个常数$\Sc$时会发生什么。
+从理论分析上说，我们可以发现所有的输出都应该为$\frac{1}{n}$。
+从数值计算上说，当$\Sc$量级很大时，这可能不会发生。
+如果$\Sc$是很小的负数，$\exp(c)$就会\gls{underflow}。
+这意味着\gls{softmax}的分母会变成0，所以最后的结果是未定义的。
+当$\Sc$是非常大的正数时，$\exp(c)$的\gls{overflow}再次导致整个表达式未定义。
+这两个困难能通过计算$\text{softmax}(\Vz)$同时解决，其中$\Vz = \Vx - \max_i \Sx_i$。
+简单的代数计算表明，$\text{softmax}$解析上的函数值不会因为从输入向量减去或加上标量而改变。
+减去$\max_i x_i$导致$\exp$的最大参数为$0$，这排除了\gls{overflow}的可能性。
+同样地，分母中至少有一个值为1的项，这就排除了因分母\gls{underflow}而导致被零除的可能性。
+
+还有一个小问题。
+分子中的\gls{underflow}仍可以导致整体表达式被计算为零。
+这意味着，如果我们在计算$\log ~\text{softmax}(\Vx)$时先计算$\text{softmax}$再把结果传给$\log$函数，会错误地得到$-\infty$。
+相反，我们必须实现一个单独的函数，并以数值稳定的方式计算$\log \text{softmax}$。
+我们可以使用相同的技巧稳定$\log \text{softmax}$函数。
+
+在大多数情况下，我们没有明确地对本书描述的各种算法所涉及的数值考虑进行详细说明。
+底层库的开发者在实现\gls{DL}算法时应该牢记数值问题。
+本书的大多数读者可以简单地依赖保证数值稳定的底层库。
+在某些情况下，有可能在实现一个新的算法时自动保持数值稳定。
+Theano中许多常见的数值不稳定的表达式。
+
+<!-- % -- 78 -- -->
+
+
+# \glsentrytext{poor_conditioning}
+
+
+条件数表明函数相对于输入的微小变化而变化的快慢程度。
+输入被轻微扰动而迅速改变的函数对于科学计算来说是可能是有问题的，因为输入中的舍入误差可能导致输出的巨大变化。
+
+考虑函数$f(\Vx) = \MA^{-1} \Vx$。
+当$\MA \in \SetR^{n \times n}$ 具有特征值分解时，其条件数为
+\begin{align}
+ \underset{i,j}{\max}~ \Bigg| \frac{\lambda_i}{ \lambda_j} \Bigg|.
+\end{align}
+这是最大和最小特征值的模之比。
+当该数很大时，矩阵求逆对输入的误差特别敏感。
+
+这种敏感性是矩阵本身的固有特性，而不是矩阵求逆期间舍入误差的结果。
+即使我们乘以完全正确的矩阵逆，\gls{poor_conditioning}的矩阵也会放大预先存在的误差。
+在实践中，该错误将与求逆过程本身的数值误差进一步复合。
+
+
+
+
+# 基于梯度的优化方法
+
+
+大多数\gls{DL}算法涉及某种形式的优化。
+优化指的是改变$\Vx$以最小化或最大化某个函数$f(\Vx)$的任务。
+我们通常以最小化$f(\Vx)$指代大多数最优化问题。
+最大化可经由最小化算法最小化$-f(\Vx)$来实现。
+
+我们把要最小化或最大化的函数称为\firstgls{objective_function}或\firstgls{criterion}。
+当我们对其进行最小化时，我们也把它称为\firstgls{cost_function}、\firstgls{loss_function}或\firstgls{error_function}。
+虽然有些机器学习著作赋予这些名称特殊的意义，但在这本书中我们交替使用这些术语。
+
+我们通常使用一个上标$*$表示最小化或最大化函数的$\Vx$值。
+如我们记$\Vx^*=\argmin f(\Vx)$。
+
+我们假设读者已经熟悉微积分，这里简要回顾微积分概念如何与优化联系。
+
+<!-- % -- 79 -- -->
+
+假设我们有一个函数$\Sy = f(\Sx)$， 其中$\Sx$和$\Sy$是实数。
+这个函数的\firstgls{derivative}记为$f^\prime(x)$或$\frac{dy}{dx}$。
+导数$f^\prime(\Sx)$代表$f(\Sx)$在点$x$处的斜率。
+换句话说，它表明如何缩放输入的小变化才能在输出获得相应的变化：
+$f(\Sx+\epsilon) \approx f(\Sx) + \epsilon f^\prime(\Sx) $。
+
+因此\gls{derivative}对于最小化一个函数很有用，因为它告诉我们如何更改$x$来略微地改善$y$。
+例如，我们知道对于足够小的$\epsilon$来说，$f(\Sx-\epsilon \text{sign}(f^\prime(\Sx)) )$是比$f(\Sx)$小的。
+因此我们可以将$\Sx$往\gls{derivative}的反方向移动一小步来减小$f(\Sx)$。
+这种技术被称为\firstgls{GD}。
+\fig?展示了一个例子。
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter4/figures/gradient_descent_color}}
+\fi
+\caption{\gls{GD}。 
+\gls{GD}算法如何使用函数导数的示意图，即沿着函数的下坡方向（导数反方向）直到最小。}
+\end{figure}
+
+<!-- % -- 80 -- -->
+
+当$f^\prime(\Sx)=0$，\gls{derivative}无法提供往哪个方向移动的信息。
+$ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary_point}。
+一个\firstgls{local_minimum}意味着这个点的$f(\Sx)$小于所有邻近点，因此不可能通过移动无穷小的步长来减小$f(\Sx)$。
+一个\firstgls{local_maximum}是$f(x)$意味着这个点的$f(\Sx)$大于所有邻近点，因此不可能通过移动无穷小的步长来增大$f(x)$。
+有些\gls{critical_points}既不是最小点也不是最大点。这些点被称为\firstgls{saddle_points}。
+见\fig?给出的各种临界点的例子。
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter4/figures/critical_color}}
+\fi
+\caption{\gls{critical_points}的类型。 
+一维情况下，三种\gls{critical_points}的示例。
+\gls{critical_points}是斜率为零的点。
+这样的点可以是\firstgls{local_minimum}，其值低于相邻点; \firstgls{local_maximum}，其值高于相邻点; 或\gls{saddle_points}，同时存在更高和更低的相邻点。
+}
+\end{figure}
+
+使$f(x)$取得绝对的最小值（相对所有其他值）的点是\firstgls{global_minimum}。
+函数可能只有一个\gls{global_minimum}或存在多个\gls{global_minimum}，
+还可能存在不是全局最优的\gls{local_minimum}。
+在\gls{DL}的背景下，我们优化的函数可能含有许多不是最优的\gls{local_minimum}，或许多被非常平坦的区域包围的\gls{saddle_points}。
+尤其是当输入是多维的时候，所有这些都将使优化变得困难。
+因此，我们通常寻找$f$非常小的值，但在任何形式意义下并不一定是最小。
+见\fig?的例子。
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter4/figures/approx_opt_color}}
+\fi
+\caption{近似最小化。 
+当存在多个\gls{local_minimum}或平坦区域时，优化算法可能无法找到\gls{global_minimum}。
+在深度学习的背景下，即使找到的解不是真正最小的，但只要它们对应于\gls{cost_function}的显著低的值，我们通常就能接受这样的解。
+}
+\end{figure}
+
+我们经常最小化具有多维输入的函数：$f: \SetR^n \rightarrow \SetR $。 
+为了使"最小化"的概念有意义，输出必须是一维的(标量)。
+
+<!-- % -- 81 -- -->
+
+针对具有多维输入的函数，我们需要用到\firstgls{partial_derivatives}的概念。
+\gls{partial_derivatives}$\frac{\partial}{\partial \Sx_i}f(\Vx)$衡量点$\Vx$处只有$x_i$增加时$f(\Vx)$如何变化。
+\firstgls{gradient}是相对一个向量求导的\gls{derivative}:$f$的导数是包含所有\gls{partial_derivatives}的向量，记为$\nabla_{\Vx} f(\Vx)$。
+\gls{gradient}的第$i$个元素是$f$关于$x_i$的\gls{partial_derivatives}。
+在多维情况下，\gls{critical_points}是\gls{gradient}中所有元素都为零的点。
+
+在$\Vu$（单位向量）方向的\firstgls{directional_derivative}是函数$f$在$\Vu$方向的斜率。
+换句话说，\gls{directional_derivative}是函数$f(\Vx + \alpha \Vu)$关于$\alpha$的\gls{derivative}（在$\alpha = 0$时取得）。
+使用\gls{chain_rule}，我们可以看到当$\alpha=0$时，$\frac{\partial}{\partial \alpha} f(\Vx + \alpha \Vu) = \Vu^\Tsp \nabla_{\Vx} f(\Vx)$。
+
+为了最小化$f$，我们希望找到使$f$下降得最快的方向。
+计算\gls{directional_derivative}：
+\begin{align}
+ \underset{\Vu, \Vu^\Tsp\Vu = 1}{\min} \Vu^\Tsp & \nabla_{\Vx} f(\Vx) \\
+ = \underset{\Vu, \Vu^\Tsp\Vu = 1}{\min} \| \Vu \|_2 \| &\nabla_{\Vx}f(\Vx) \|_2 \cos \theta
+\end{align}
+其中$\theta$是$\Vu$与\gls{gradient}的夹角。
+将$ \| \Vu \|_2 = 1$代入，并忽略与$\Vu$无关的项，就能简化得到$ \underset{\Vu}{\min} \cos \theta $。 
+这在$\Vu$与\gls{gradient}方向相反时取得最小。
+换句话说，\gls{gradient}向量指向上坡，负\gls{gradient}向量指向下坡。
+我们在负\gls{gradient}方向上移动可以减小$f$。
+这被称为\textbf{最速下降法}(method of steepest descent)或\firstgls{GD}。
+
+最速下降建议新的点为
+\begin{align}
+  \Vx' = \Vx - \epsilon \nabla_{\Vx} f(\Vx)
+\end{align}
+其中$\epsilon$为\firstgls{learning_rate}，是一个确定步长大小的正标量。
+我们可以通过几种不同的方式选择$\epsilon$。
+普遍的方式是选择一个小常数。
+有时我们通过计算，选择使\gls{directional_derivative}消失的步长。
+还有一种方法是根据几个$\epsilon$计算$f(\Vx - \epsilon \nabla_{\Vx} f(\Vx))$， 并选择其中能产生最小\gls{objective_function}值的$\epsilon$。
+这种策略被称为\gls{line_search}。
+
+最速下降在\gls{gradient}的每一个元素为零时收敛（或在实践中，很接近零时）。
+在某些情况下，我们也许能够避免运行该迭代算法，并通过解方程$\nabla_{\Vx} f(\Vx)= 0$直接跳到\gls{critical_points}。
+
+<!-- % -- 82 -- -->
+
+虽然\gls{GD}被限制在连续空间中的优化问题，但不断向更好的情况移动一小步（即近似最佳的小移动）的一般概念可以推广到离散空间。
+递增带有离散参数的\gls{objective_function}被称为\firstgls{hill_climbing}算法。
+
+
+## \glsentrytext{gradient}之上：\glsentrytext{jacobian}和\glsentrytext{hessian}矩阵
+
+有时我们需要计算输入和输出都为向量的函数的所有\gls{partial_derivatives}。
+包含所有这样的偏导数的矩阵被称为\firstgls{jacobian}矩阵。
+具体来说，如果我们有一个函数：$\Vf: \SetR^m \rightarrow \SetR^n$，$\Vf$的\gls{jacobian}矩阵$\MJ \in \SetR^{n \times m}$定义为$J_{i,j} = \frac{\partial}{\partial \Sx_j} f(\Vx)_i$。
+
+有时，我们也对\gls{derivative}的\gls{derivative}感兴趣，即\firstgls{second_derivative}。
+例如，有一个函数$f: \SetR^m \rightarrow \SetR$，$f$的一阶\gls{derivative}(关于$\Sx_j$)关于$x_i$的\gls{derivative}记为$\frac{\partial^2}{\partial \Sx_i \partial \Sx_j} f$。
+在一维情况下，我们可以将$\frac{\partial^2}{\partial \Sx^2} f$为$f"(\Sx)$。
+\gls{second_derivative}告诉我们的一阶\gls{derivative}将如何随着输入的变化而改变。
+它表示只基于\gls{gradient}信息的\gls{GD}步骤是否会产生如我们预期的那样大的改善，因此是重要的。
+我们可以认为，\gls{second_derivative}是对\gls{curvature}的衡量。
+假设我们有一个二次函数（虽然很多实践中的函数都不是二次，但至少在局部可以很好地用二次近似）。
+如果这样的函数具有零\gls{second_derivative}，那就没有\gls{curvature}。
+也就是一条完全平坦的线，仅用\gls{gradient}就可以预测它的值。
+我们使用沿负\gls{gradient}方向大小为$\epsilon$的下降步，当该\gls{gradient}是$1$时，\gls{cost_function}将下降$\epsilon$。
+如果\gls{second_derivative}是负的，函数曲线向下凹陷(向上凸出)，因此\gls{cost_function}将下降的比$\epsilon$多。
+如果\gls{second_derivative}是正的，函数曲线是向上凹陷(向下凸出)，
+因此\gls{cost_function}将下降的比$\epsilon$少。
+从\fig?值的关系。
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter4/figures/curvature_color}}
+\fi
+\caption{\gls{second_derivative}确定函数的\gls{curvature}。
+这里我们展示具有各种\gls{curvature}的二次函数。
+虚线表示我们仅根据梯度信息进行\gls{GD}后预期的\gls{cost_function}值。
+对于负\gls{curvature}，\gls{cost_function}实际上比梯度预测下降得更快。
+没有\gls{curvature}时，梯度正确预测下降值。
+对于正\gls{curvature}，函数比预期下降得更慢，并且最终会开始增加，因此太大的步骤实际上可能会无意地增加函数值。
+}
+\end{figure}
+
+当我们的函数具有多维输入时，\gls{second_derivative}也有很多。
+可以这些导数合并成一个矩阵，称为\firstgls{hessian}矩阵。
+\gls{hessian}矩阵$\MH(f)(\Vx)$定义为
+\begin{align}
+ \MH(f)(\Vx)_{i,j} = \frac{\partial^2}{\partial \Sx_i \partial  \Sx_j} f(\Vx).
+\end{align}
+\gls{hessian}等价于\gls{gradient}的\gls{jacobian}矩阵。
+
+<!-- % -- 83 -- -->
+
+微分算子在任何二阶偏导连续的点处可交换，也就是它们的顺序可以互换：
+\begin{align}
+ \frac{\partial^2}{\partial \Sx_i \partial \Sx_j} f(\Vx) = \frac{\partial^2}{\partial \Sx_j\partial \Sx_i} f(\Vx) .
+\end{align}
+这意味着$H_{i,j} = H_{j,i}$， 因此\gls{hessian}矩阵在这些点上是对称的。
+在\gls{DL}背景下，我们遇到的大多数函数的\gls{hessian}几乎处处都是对称的。
+因为\gls{hessian}矩阵是实对称的，我们可以将其分解成一组实特征值和特征向量的正交。
+在特定方向$\Vd$上的\gls{second_derivative}可以写成$\Vd^\Tsp \MH \Vd$。
+当$\Vd$是$\MH$的一个特征向量时，这个方向的\gls{second_derivative}就是对应的特征值。
+对于其他的方向$\Vd$，方向\gls{second_derivative}是所有特征值的加权平均，权重在0和1之间，且与$\Vd$夹角越小的特征向量有更大的权重。
+最大特征值确定最大\gls{second_derivative}，最小特征值确定最小\gls{second_derivative}。
+
+<!-- % -- 84 -- -->
+
+我们可以通过（方向）\gls{second_derivative}预期一个\gls{GD}步骤能表现得多好。
+我们在当前点$\Vx^{(0)}$处作函数$f(\Vx)$的近似二阶\gls{taylor}级数：
+\begin{align}
+ f(\Vx) \approx f(\Vx^{(0)}) + (\Vx - \Vx^{(0)})^\Tsp \Vg + 
+ \frac{1}{2}  (\Vx - \Vx^{(0)})^\Tsp \MH  (\Vx - \Vx^{(0)}),
+\end{align}
+其中$\Vg$是梯度，$\MH$是$ \Vx^{(0)}$点的\gls{hessian}。
+如果我们使用\gls{learning_rate}$\epsilon$，那么新的点$\Vx$将会是$\Vx^{(0)}-\epsilon \Vg$。
+代入上述的近似，可得
+\begin{align}
+ f(\Vx^{(0)} - \epsilon \Vg ) \approx f(\Vx^{(0)})  - \epsilon \Vg^\Tsp \Vg + \frac{1}{2} \epsilon^2 \Vg^\Tsp \MH  \Vg.
+\end{align}
+其中有3项：函数的原始值、函数斜率导致的预期改善、函数\gls{curvature}导致的校正。
+当这最后一项太大时，\gls{GD}实际上是可能向上移动的。
+当$\Vg^\Tsp \MH  \Vg$为零或负时，近似的\gls{taylor}级数表明增加$\epsilon$将永远导致$f$的下降。
+在实践中，\gls{taylor}级数不会在$\epsilon$大的时候也保持准确，因此在这种情况下我们必须采取更启发式的选择。
+当$\Vg^\Tsp \MH  \Vg$为正时，通过计算可得，使近似\gls{taylor}级数下降最多的最优步长为
+\begin{align}
+ \epsilon^* = \frac{ \Vg^\Tsp \Vg}{ \Vg^\Tsp \MH  \Vg} .
+\end{align}
+最坏的情况下，$\Vg$与$\MH$最大特征值$\lambda_{\max}$对应的特征向量对齐，则最优步长是$\frac{1}{\lambda_{\max}}$。
+我们要最小化的函数能用二次函数很好地近似的情况下，\gls{hessian}的特征值决定了\gls{learning_rate}的量级。
+
+\gls{second_derivative}还可以被用于确定一个\gls{critical_points}是否是\gls{local_maximum}、\gls{local_minimum}或\gls{saddle_points}。
+回想一下，在\gls{critical_points}处$f'(x) = 0$。
+而$f"(x) > 0$意味着$f'(x)$会随着我们移向右边而增加，移向左边而减小，也就是 $f'(x - \epsilon) < 0$ 和 $f'(x+\epsilon)>0$对足够小的$\epsilon$成立。 换句话说，当我们移向右边，斜率开始指向右边的上坡，当我们移向左边，斜率开始指向左边的上坡。
+因此我们得出结论，当$f'(x) = 0$且$f"(x) > 0$时，$\Vx$是一个\gls{local_minimum}。
+同样，当$f'(x) = 0$且$f"(x) < 0$时，$\Vx$是一个\gls{local_maximum}。
+这就是所谓的\firstgls{second_derivative_test}。
+不幸的是，当$f"(x) = 0$时测试是不确定的。
+在这种情况下，$\Vx$可以是一个\gls{saddle_points}或平坦区域的一部分。
+
+<!-- % -- 85 -- -->
+
+在多维情况下，我们需要检测函数的所有\gls{second_derivative}。
+利用\gls{hessian}的特征值分解，我们可以将\gls{second_derivative_test}扩展到多维情况。
+在\gls{critical_points}处（$\nabla_{\Vx} f(\Vx) = 0$），我们通过检测\gls{hessian}的特征值来判断该\gls{critical_points}是一个\gls{local_maximum}、\gls{local_minimum}还是\gls{saddle_points}。
+当\gls{hessian}是正定的（所有特征值都是正的），则该\gls{critical_points}是\gls{local_minimum}。
+因为方向\gls{second_derivative}在任意方向都是正的，参考单变量的\gls{second_derivative_test}就能得出此结论。
+同样的，当\gls{hessian}是负定的（所有特征值都是负的），这个点就是\gls{local_maximum}。
+在多维情况下，实际上可以找到确定该点是否为\gls{saddle_points}的积极迹象（某些情况下）。
+如果\gls{hessian}的特征值中至少一个是正的且至少一个是负的，那么$\Vx$是$f$某个横截面的\gls{local_maximum}，却是另一个横截面的\gls{local_minimum}。
+见\fig?中的例子。
+最后，多维\gls{second_derivative_test}可能像单变量版本那样是不确定的。
+当所有非零特征值是同号的且至少有一个特征值是$0$时，这个检测就是不确定的。
+这是因为单变量的\gls{second_derivative_test}在零特征值对应的横截面上是不确定的。
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter4/figures/saddle_3d_color}}
+\fi
+\caption{既有正\gls{curvature}又有负\gls{curvature}的\gls{saddle_points}。
+示例中的函数是$f(\Vx) = x_1^2 - x_2^2$。
+函数沿$x_1$轴向上弯曲。
+$x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
+函数沿$x_2$轴向下弯曲。
+该方向对应于\gls{hessian}负特征值的特征向量。
+名称"\gls{saddle_points}"源自该处函数的鞍状形状。
+这是具有\gls{saddle_points}函数的典型示例。
+维度多于一个时，\gls{saddle_points}不一定要具有0特征值：仅需要同时具有正特征值和负特征值。
+我们可以想象这样一个鞍点（具有正负特征值）在一个横截面内是\gls{local_maximum}，另一个横截面内是\gls{local_minimum}。
+}
+\end{figure}
+
+多维情况下，单个点处每个方向上的\gls{second_derivative}是不同。
+\gls{hessian}的条件数衡量这些\gls{second_derivative}的变化范围。
+当\gls{hessian}的条件数很差时，\gls{GD}法也会表现得很差。
+这是因为一个方向上的\gls{derivative}增加得很快，而在另一个方向上增加得很慢。
+\gls{GD}不知道导数的这种变化，所以它不知道应该优先探索导数长期为负的方向。
+\gls{poor_conditioning}也导致很难选择合适的步长。
+步长必须足够小，以免冲过最小而向具有较强的正\gls{curvature}方向上升。
+这通常意味着步长太小，以致于在其它较小\gls{curvature}的方向上进展不明显。
+见\fig?的例子。
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter4/figures/poor_conditioning_color}}
+\fi
+\caption{\gls{GD}无法利用包含在\gls{hessian}矩阵中的\gls{curvature}信息。
+这里我们使用\gls{GD}来最小化\gls{hessian}矩阵条件数为5的二次函数$f(\Vx)$。
+这意味着最大\gls{curvature}方向具有比最小\gls{curvature}方向多五倍的\gls{curvature}。
+在这种情况下，最大\gls{curvature}在$[1,1]^\top$方向上，最小\gls{curvature}在$[1,-1]^\top$方向上。
+红线表示\gls{GD}的路径。
+这个非常细长的二次函数类似一个长峡谷。
+\gls{GD}把时间浪费于在峡谷壁反复下降，因为它们是最陡峭的特征。
+由于步长有点大，有超过函数底部的趋势，因此需要在下一次迭代时在对面的峡谷壁下降。
+与指向该方向的特征向量对应的\gls{hessian}的大的正特征值表示该方向上的导数快速增加，因此基于\gls{hessian}的优化算法可以预测，在此情况下最陡峭方向实际上不是有前途的搜索方向。
+}
+\end{figure}
+
+<!-- % -- 86 -- -->
+
+使用\gls{hessian}矩阵的信息指导搜索可以解决这个问题。
+其中最简单的方法是\firstgls{newton_method}。
+\gls{newton_method}基于一个二阶\gls{taylor}展开来近似$\Vx^{(0)}$附近的$f(\Vx)$：
+\begin{align}
+ f(\Vx) \approx f(\Vx^{(0)}) + (\Vx - \Vx^{(0)})^\Tsp \nabla_{\Vx} f(\Vx^{(0)}) + 
+ \frac{1}{2}  (\Vx - \Vx^{(0)})^\Tsp \MH(f)(\Vx^{(0)})  (\Vx - \Vx^{(0)}).
+\end{align}
+接着通过计算，我们可以得到这个函数的\gls{critical_points}：
+ \Vx^* =  \Vx^{(0)} -  \MH(f)(\Vx^{(0)})^{-1}  \nabla_{\Vx} f(\Vx^{(0)}) .
+\end{align}
+当$f$是一个正定二次函数时，\gls{newton_method}只要应用一次\eqn?就能直接跳到函数的最小点。
+如果$f$不是一个真正二次但能在局部近似为正定二次，\gls{newton_method}则需要多次迭代应用\eqn?。
+迭代地更新近似函数和跳到近似函数的最小点可以比\gls{GD}更快地到达临界点。
+这在接近\gls{local_minimum}时是一个特别有用的性质，但是在\gls{saddle_points}附近是有害的。
+如\eqn?)。
+
+仅使用\gls{gradient}信息的优化算法被称为\textbf{一阶优化算法}(first-order optimization algorithms)，如\gls{GD}。
+使用\gls{hessian}矩阵的优化算法被称为\textbf{二阶最优化算法}(second-order optimization algorithms)。
+
+在本书大多数上下文中使用的优化算法适用于各种各样的函数，但几乎都没有保证。
+因为在\gls{DL}中使用的函数族是相当复杂的，所以\gls{DL}算法往往缺乏保证。
+在许多其他领域，优化的主要方法是为有限的函数族设计优化算法。
+
+在\gls{DL}的背景下，限制函数满足\firstgls{lipschitz_continuous}或其导数\gls{lipschitz}连续可以获得一些保证。
+\gls{lipschitz}连续函数的变化速度以\firstgls{lipschitz_constant}$\CalL$为界：
+\begin{align}
+ \forall \Vx,~\forall \Vy, ~| f(\Vx) - f(\Vy)|  \leq \CalL \| \Vx - \Vy \|_2 .
+\end{align}
+这个属性允许我们量化我们的假设——\gls{GD}等算法导致的输入的微小变化将使输出只产生微小变化，因此是很有用的。
+\gls{lipschitz}连续性也是相当弱的约束，并且\gls{DL}中很多优化问题经过相对较小的修改后就能变得\gls{lipschitz_continuous}。
+
+<!-- % -- 88 -- -->
+
+最成功的特定优化领域或许是\firstgls{convex_optimization}。
+\gls{convex_optimization}通过更强的限制提供更多的保证。
+\gls{convex_optimization}算法只对凸函数适用——即\gls{hessian}处处半正定的函数。
+因为这些函数没有\gls{saddle_points}而且其所有\gls{local_minimum}必然是\gls{global_minimum}，所以表现很好。
+然而，\gls{DL}中的大多数问题都难以表示成\gls{convex_optimization}的形式。
+\gls{convex_optimization}仅用作的一些\gls{DL}算法的子程序。
+\gls{convex_optimization}中的分析思路对证明\gls{DL}算法的收敛性非常有用，然而一般来说，\gls{DL}背景下的\gls{convex_optimization}的重要性大大减少。 
+有关\gls{convex_optimization}的详细信息，见{Boyd04}或{rockafellar1997convex}。
+
+
+
+# \glsentrytext{constrained_optimization}
+
+有时候，在$\Vx$的所有可能值下最大化或最小化一个函数$f(x)$不是我们所希望的。
+相反，我们可能希望在$\Vx$的某些集合$\SetS$中找$f(\Vx)$的最大值或最小值。
+这被称为\firstgls{constrained_optimization}。
+在\gls{constrained_optimization}术语中，集合$\SetS$内的点$\Vx$被称为\firstgls{feasible}点。
+
+我们常常希望找到在某种意义上小的解。
+针对这种情况下的常见方法是强加一个范数约束，如$\| \Vx \| \leq 1$。
+
+\gls{constrained_optimization}的一个简单方法是将约束考虑在内后简单地对\gls{GD}进行修改。
+如果我们使用一个小的恒定步长$\epsilon$，我们可以先取\gls{GD}的单步结果，然后将结果投影回$\SetS$。
+如果我们使用\gls{line_search}，我们只能在步长为$\epsilon$范围内搜索\gls{feasible}的新$\Vx$点，或者我们可以将线上的每个点投影到约束区域。
+如果可能的话，在\gls{GD}或\gls{line_search}前将\gls{gradient}投影到\gls{feasible}域的切空间会更高效。
+
+一个更复杂的方法是设计一个不同的、无约束的优化问题，其解可以转化成原始\gls{constrained_optimization}问题的解。
+例如，我们要在$\Vx \in \SetR^2$中最小化$f(\Vx)$，其中$\Vx$约束为具有单位$L^2$范数。
+我们可以关于$\theta$最小化$g(\theta) = f([\cos \theta, \sin \theta]^\Tsp)$，最后返回$[\cos \theta, \sin \theta]$作为原问题的解。
+这种方法需要创造性；优化问题之间的转换必须专门根据我们遇到的每一种情况进行设计。
+
+<!-- % -- 89 --  -->
+
+\firstacr{KKT}方法\footnote{\glssymbol{KKT}方法是\textbf{Lagrange乘子法}（只允许等式约束）的推广}是针对\gls{constrained_optimization}非常通用的解决方案。
+为介绍\glssymbol{KKT}方法，我们引入一个称为\firstgls{generalized_lagrangian}或\firstgls{generalized_lagrange_function}的新函数。
+
+为了定义\ENNAME{Lagrangian}，我们先要通过等式和不等式的形式描述$\SetS$。 
+我们希望通过$m$个函数$g^{(i)}$和$n$个函数$h^{(j)}$描述$\SetS$，那么$\SetS$可以表示为$\SetS = \{ \Vx \mid \forall i, g^{(i)}(\Vx) = 0 ~\text{and}~ \forall j, h^{(j)}(\Vx) \leq 0  \}$。
+其中涉及$g^{(i)}$的等式称为\firstgls{equality_constraints}，涉及$h^{(j)}$的不等式称为\firstgls{inequality_constraints}。
+
+我们为每个约束引入新的变量$\lambda_i$和$\alpha_j$，这些新变量被称为\glssymbol{KKT}乘子。\gls{generalized_lagrangian}可以如下定义：
+\begin{align}
+ L(\Vx, \Vlambda, \Valpha) = f(\Vx) + \sum_i \lambda_i g^{(i)}(\Vx)  + \sum_j \alpha_j h^{(j)}(\Vx).
+\end{align}
+
+现在，我们可以通过优化无约束的\gls{generalized_lagrangian}解决约束最小化问题。
+只要存在至少一个\gls{feasible}点且$f(\Vx)$不允许取$\infty$，那么
+\begin{align}
+ \underset{\Vx}{\min}~  \underset{\Vlambda}{\max}~
+ \underset{\Valpha, \Valpha \geq 0}{\max}   L(\Vx, \Vlambda, \Valpha) 
+\end{align}
+与如下函数有相同的最优\gls{objective_function}值和最优点集$\Vx$
+\begin{align}
+ \underset{\Vx \in \SetS}{\min}~ f(\Vx).
+\end{align}
+这是因为当约束满足时，
+\begin{align}
+  \underset{\Vlambda}{\max}~
+ \underset{\Valpha, \Valpha \geq 0}{\max}   L(\Vx, \Vlambda, \Valpha)  = f(\Vx) ,
+\end{align}
+而违反任意约束时，
+\begin{align}
+  \underset{\Vlambda}{\max}  
+ \underset{\Valpha, \Valpha \geq 0}{\max}   L(\Vx, \Vlambda, \Valpha)  = \infty .
+\end{align}
+这些性质保证不可行点不会是最佳的，并且\gls{feasible}点范围内的最优点不变。
+
+<!-- % -- 90 -- -->
+
+要解决约束最大化问题，我们可以构造$-f(\Vx)$的\gls{generalized_lagrange_function}，从而导致以下优化问题：
+\begin{align}
+ \underset{\Vx}{\min}~ \underset{\Vlambda}{\max}  ~
+ \underset{\Valpha, \Valpha \geq 0}{\max} 
+  -f(\Vx) + \sum_i \lambda_i g^{(i)}(\Vx)  + \sum_j \alpha_j h^{(j)}(\Vx).
+\end{align}
+我们也可将其转换为在外层最大化的一个问题：
+\begin{align}
+ \underset{\Vx}{\max}~ \underset{\Vlambda}{\min}~
+ \underset{\Valpha, \Valpha \geq 0}{\min} 
+  f(\Vx) + \sum_i \lambda_i g^{(i)}(\Vx) - \sum_j \alpha_j h^{(j)}(\Vx).
+\end{align}
+\gls{equality_constraints}对应项的符号并不重要；因为优化可以自由选择每个$\lambda_i$的符号，我们可以随意将其定义为加法或减法。
+
+\gls{inequality_constraints}特别有趣。
+如果$h^{(i)}(\Vx^*)= 0$，我们就说说这个约束$h^{(i)}(\Vx)$是\textbf{活跃}(active)的。
+如果约束不是活跃的，则有该约束的问题的解与去掉该约束的问题的解至少存在一个相同的局部解。
+一个不活跃约束有可能排除其他解。
+例如，整个区域（代价相等的宽平区域）都是全局最优点的的凸问题可能因约束消去其中的某个子区域，或在非凸问题的情况下，收敛时不活跃的约束可能排除了较好的局部\gls{stationary_point}。
+然而，无论不活跃的约束是否被包括在内，收敛时找到的点仍然是一个\gls{stationary_point}。
+因为一个不活跃的约束$h^{(i)}$必有负值，那么$
+ \underset{\Vx}{\min}~  \underset{\Vlambda}{\max}~
+ \underset{\Valpha, \Valpha \geq 0}{\max}   L(\Vx, \Vlambda, \Valpha) 
+$中的$\alpha_i = 0$。
+因此，我们可以观察到在该解中$\Valpha \odot \Vh(\Vx) = 0$。
+换句话说，对于所有的$i$， $\alpha_i \geq 0$或$ h^{(j)}(\Vx) \leq 0$在收敛时必有一个是活跃的。
+为了获得关于这个想法的一些直观解释，我们可以说这个解是由不等式强加的边界，我们必须通过对应的\glssymbol{KKT}乘子影响$\Vx$的解，或者不等式对解没有影响，我们则归零\glssymbol{KKT}乘子。
+
+可以使用一组简单性质描述\gls{constrained_optimization}问题的最优点。
+这些性质称为\firstacr{KKT}条件。
+这些是确定一个点是最优点的必要条件，但不一定是充分条件。
+这些条件是：
+
++ \gls{generalized_lagrangian}的\gls{gradient}为零。
++ 所有关于$\Vx$和\glssymbol{KKT}乘子的约束都满足。
++ \gls{inequality_constraints}显示的"互补松弛性"：$\Valpha \odot \Vh(\Vx) = 0$。
+
+有关\glssymbol{KKT}方法的详细信息，请参阅{NumOptBook}。
+
+<!-- % -- 91 -- -->
+
+
+# 实例：线性最小二乘
+
+假设我们希望找到最小化下式的$\Vx$值
+\begin{align}
+ f(\Vx) = \frac{1}{2}\| \MA \Vx - \Vb \|_2^2 .
+\end{align}
+专门线性代数算法能够高效地解决这个问题；但是，我们也可以探索如何使用基于\gls{gradient}的优化来解决这个问题，这可以作为这些技术是如何工作的一个简单例子。
+
+首先，我们计算\gls{gradient}：
+\begin{align}
+ \nabla_{\Vx} f(\Vx) = \MA^\Tsp (\MA \Vx - \Vb) = \MA^\Tsp \MA \Vx - \MA^\Tsp \Vb .
+\end{align}
+
+然后，我们可以采用小的步长，按照这个\gls{gradient}下降。见\alg?中的详细信息。
+
+\begin{algorithm}[ht]
+\caption{从任意点$\Vx$开始，使用\gls{GD}关于$\Vx$最小化
+$ f(\Vx) = \frac{1}{2} || \MA \Vx - \Vb ||_2^2$的算法。
+}
+\begin{algorithmic}
+\STATE 将步长 ($\epsilon$) 和\gls{tolerance} ($\delta$)设为小的正数。
+\WHILE{ $ || \MA^\top \MA \Vx - \MA^\top \Vb ||_2 > \delta $}
+\STATE $\Vx \leftarrow \Vx - \epsilon \left( \MA^\top \MA \Vx - \MA^\top \Vb \right)$
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+
+我们也可以使用\gls{newton_method}解决这个问题。
+因为在这个情况下真正的函数是二次的，\gls{newton_method}所用的二次近似是精确的，该算法会在一步后收敛到\gls{global_minimum}。
+
+现在假设我们希望最小化同样的函数，但受 $\Vx^\Tsp \Vx \leq 1$ 的约束。 
+要做到这一点，我们引入\ENNAME{Lagrangian}
+\begin{align}
+ L(\Vx, \lambda) = f(\Vx) + \lambda (\Vx^\Tsp \Vx - 1).
+\end{align}
+现在，我们解决以下问题
+\begin{align}
+  \underset{\Vx}{\min}~
+ \underset{\lambda, \lambda \geq 0}{\max}~ L(\Vx, \lambda) .
+\end{align}
+
+<!-- % -- 92 -- -->
+
+可以用\ENNAME{Moore-Penrose}伪逆：$\Vx = \MA^+ \Vb$找到无约束最小二乘问题的最小范数解。
+如果这一点是\gls{feasible}，那么这也是约束问题的解。
+否则，我们必须找到约束是活跃的解。
+关于$\Vx$对\ENNAME{Lagrangian}微分，我们得到方程
+\begin{align}
+ \MA^\Tsp \MA \Vx - \MA^\Tsp \Vb + 2 \lambda \Vx = 0.
+\end{align}
+这就告诉我们，该解的形式将会是
+\begin{align}
+\Vx =  (\MA^\Tsp \MA + 2 \lambda \MI )^{-1} \MA^\Tsp \Vb.
+\end{align}
+$\lambda$的选择必须使结果服从约束。
+我们可以关于$\lambda$进行\gls{gradient}上升找到这个值。
+为了做到这一点，观察
+\begin{align}
+ \frac{\partial}{\partial \lambda} L(\Vx, \lambda)  = \Vx^\Tsp \Vx - 1.
+\end{align}
+当$\Vx$的范数超过1时，该导数是正的，所以为了跟随\gls{derivative}上坡并相对$\lambda$增加\ENNAME{Lagrangian}，我们需要增加$\lambda$。
+因为$\Vx^\Tsp \Vx$的惩罚系数增加了，求解关于$\Vx$的线性方程现在将得到具有较小范数的解。
+求解线性方程和调整$\lambda$的过程一直持续到$\Vx$具有正确的范数并且关于$\lambda$的\gls{derivative}是$0$。
+
+本章总结了开发\gls{ML}算法所需的数学基础。
+现在，我们已经准备好建立和分析一些成熟学习系统。
+
+<!-- % -- 93 -- -->
+
