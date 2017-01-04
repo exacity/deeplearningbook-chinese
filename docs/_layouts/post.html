@@ -1,0 +1,64 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+{% include head.html %}
+</head>
+
+<body id="post" {% if page.image.feature %}class="feature"{% endif %}>
+
+{% include browser-upgrade.html %}
+{% include navigation.html %}
+{% include math_symbol.html %}
+
+{% if page.image.feature %}
+<div class="entry-header">
+  {% if page.image.credit %}<div class="image-credit">Image source: {% if page.image.creditlink %}<a href="{{ page.image.creditlink }}">{% endif %}{{ page.image.credit }}{% if page.image.creditlink %}</a>{% endif %}</div><!-- /.image-credit -->{% endif %}
+  <div class="entry-image">
+    <img src="{{ site.url }}/images/{{ page.image.feature }}" alt="{{ page.title }}">
+  </div><!-- /.entry-image -->
+</div><!-- /.entry-header -->
+{% endif %}
+
+<div id="main" role="main">
+  <article class="hentry">
+    <header class="header-title">
+      <div class="header-title-wrap">
+        {% if page.link %}
+          <h1 class="entry-title"><i class="fa fa-bookmark permalink"></i> <a href="{{ page.link }}">{{ page.title }}</a></h1>
+        {% else %}
+          <h1 class="entry-title"><a href="{{ site.url }}{{ page.url }}" rel="bookmark" title="{{ page.title }}">{{ page.title }}</a></h1>
+        {% endif %}
+        {% if site.reading_time %}
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          {% include read-time.html %}
+        </p><!-- /.entry-reading-time -->
+        {% endif %}
+      </div><!-- /.header-title-wrap -->
+    </header>
+    <div class="entry-content">
+      {{ content }}
+      <footer class="entry-meta">
+        <span class="entry-tags">{% for tag in page.tags %}<a href="{{ site.url }}/tags/#{{ tag }}" title="Pages tagged {{ tag }}" class="tag"><span class="term">{{ tag }}</span></a>{% unless forloop.last %}{% endunless %}{% endfor %}</span>
+        {% if page.modified %}<span>Updated on <span class="entry-date date updated"><time datetime="{{ page.modified }}">{{ page.modified | date: "%B %d, %Y" }}</time></span></span>
+        <span class="author vcard"><span class="fn">{{ site.owner.name }}</span></span>{% endif %}
+        {% if page.share != false %}{% include social-share.html %}{% endif %}
+      </footer>
+    </div><!-- /.entry-content -->
+    {% if page.comments != false and site.disqus_shortname %}<section id="disqus_thread"></section><!-- /#disqus_thread -->{% endif %}
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    {% include footer.html %}
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+{% include scripts.html %}	        
+
+</body>
+</html>

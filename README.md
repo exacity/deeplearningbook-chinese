@@ -63,6 +63,7 @@ TODO
 @tttwwy @tankeco @fairmiracle @GageGao @huangpingchun @MaHongP @acgtyrant @yanhuibin315 @Buttonwood @titicacafz 
 @weijy026a @RuiZhang1993 @zymiboxpay @xingkongliang @oisc @tielei @yuduowu @Qingmu @HC-2016 @xiaomingabc 
 @bengordai @Bojian @JoyFYan @minoriwww @khty2000 @gump88 @zdx3578 @PassStory @imwebson @wlbksy @roachsinai @Elvinczp 
+@endymecy
 
 
 
@@ -71,6 +72,14 @@ TODO
 ---------
 为帮助小白学得轻松一点，希望大家多多贡献笔记，单靠我们估计要大半年才能写出不错的笔记，而且时间不允许。
 笔记见各章文件夹内的`README.md`。
+
+
+
+Markdown格式
+------------
+这种格式确实比较重要，方便查阅，也方便索引。初步转换后，生成网页，具体见[deeplearningbook-chinese](https://exacity.github.io/deeplearningbook-chinese)。
+注意，这种转换没有把图放进去，也不会放图。目前使用单个[脚本](scripts/convert2md.sh)，基于latex文件转换。
+后续可能会使用python，但原则是不直接修改[md文件](docs/_posts)。
 
 
 

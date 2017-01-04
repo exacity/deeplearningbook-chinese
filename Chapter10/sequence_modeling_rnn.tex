@@ -347,8 +347,8 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 然后，我们可以从时刻$t=\tau-1$到$t=1$反向迭代， 通过时间\gls{backward_propagation}\gls{gradient}，注意$\Vh^{(t)}(t < \tau)$同时具有$\Vo^{(t)}$和$\Vh^{(t+1)}$两个后续节点。
 因此，它的\gls{gradient}由下式计算
 \begin{align}
-  \nabla_{\Vh^{(t)}} L = \Big( \frac{\partial \Vh^{(t+1)}}{ \Vh^{(t)}}  \Big)^\top(\nabla_{\Vh^{(t+1)}} L) 
-  + \Big( \frac{\partial \Vo^{(t)}}{ \Vh^{(t)}}  \Big)^\top (\nabla_{\Vo^{(t)}} L) \\
+  \nabla_{\Vh^{(t)}} L = \Big( \frac{\partial \Vh^{(t+1)}}{ \partial \Vh^{(t)}}  \Big)^\top(\nabla_{\Vh^{(t+1)}} L) 
+  + \Big( \frac{\partial \Vo^{(t)}}{ \partial \Vh^{(t)}}  \Big)^\top (\nabla_{\Vo^{(t)}} L) \\
   = \MW^\top (\nabla_{\Vh^{(t+1)}} L) \text{diag} \Big( 1 - (\Vh^{(t+1)})^2 \Big) 
     + \MV^\top ( \nabla_{\Vo^{(t)}} L ),
 \end{align}

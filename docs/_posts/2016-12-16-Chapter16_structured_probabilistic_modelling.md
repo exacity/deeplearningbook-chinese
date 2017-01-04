@@ -1,0 +1,1201 @@
+---
+title: \glsentrytext{DL}中的\glsentrytext{structured_probabilistic_models}
+layout: post
+share: false
+---
+<!-- % 549 -->
+
+
+\gls{DL}为研究者们提供了许多指导性的建模和设计算法的思路。
+其中一种形式是\firstgls{structured_probabilistic_models}。
+我们曾经在\sec?中简要讨论过\gls{structured_probabilistic_models}。
+那个简单的介绍已经足够使我们充分了解如何使用\gls{structured_probabilistic_models}来描述第二部分中的某些算法。
+现在在第三部分，\gls{structured_probabilistic_models}是许多\gls{DL}中重要的研究方向的重要组成部分。
+作为讨论这些研究方向的预备知识，本章详细地描述了\gls{structured_probabilistic_models}。
+本章中我们努力做到内容的自洽性。
+在阅读本章之前读者不需要回顾之前的介绍。
+<!-- % 549 -->
+
+
+\gls{structured_probabilistic_models}使用图来描述概率分布中随机变量之间的直接相互作用，从而描述一个概率分布。
+在这里我们使用了图论（一系列结点通过一系列边来连接）中图的概念，由于模型的结构是由图来定义的，所以这些模型也通常被叫做\firstgls{graphical_models}。
+<!-- % 549 -->
+
+
+\gls{graphical_models}的研究领域是巨大的，曾提出过大量的模型，训练算法和推断算法。
+在本章中，我们介绍了\gls{graphical_models}中几个核心方法的基本背景，并且强调了在\gls{DL}领域中\gls{graphical_models}已经被公认为是有效的。
+如果你已经对\gls{graphical_models}已经了解很多，那么你可以跳过本章的绝大部分。
+然而，我们相信即使是资深的\gls{graphical_models}方向的研究者也会从本章的最后一节中获益匪浅，详见\sec?，其中我们强调了在\gls{DL}算法中一些\gls{graphical_models}特有的算法。
+相比于普通的\gls{graphical_models}研究者，\gls{DL}的研究者们通常会使用完全不同的模型结构，学习算法和推断过程。
+在本章中，我们讨论了这种区别并且解释了其中的原因。
+<!-- % 550 head -->
+
+
+在本章中，我们首先介绍了建立大尺度概率模型中面临的挑战。
+之后，我们介绍了如何使用一个图来描述概率分布的结构。
+尽管这个方法能够帮助我们解决许多挑战和问题，它本身也有很多缺陷。
+\gls{graphical_models}中的一个主要难点就是判断哪些变量之间存在直接的相互作用关系，也就是对于给定的问题哪一种图结构是最适合的。
+在\sec?中，通过了解\firstgls{dependency}，我们简要概括了解决这个难点的两种基本方法。
+最后，在\sec?中，我们讨论并强调了\gls{graphical_models}在\gls{DL}中的一些独特之处和一些特有的方法，作为本章的收尾。
+<!-- % 550  ok -->
+
+
+
+
+# 非结构化建模的挑战
+
+<!-- % 16.1   p 550  -->
+
+
+\gls{DL}的目标是使得\gls{ML}能够解决许多\gls{AI}中需要解决的挑战。
+这也意味着能够理解具有丰富结构的高维数据。
+举个例子，我们希望\gls{AI}的算法能够理解自然图片\footnote{自然图片指的是能够在正常的环境下被照相机拍摄的图片，以区别于合成的图片，或者一个网页的截图。}，包含语音的声音信号和拥有许多词和标点的文档。
+<!-- % 550  ok -->
+
+
+分类问题可以把这样一个来自高维分布的数据作为输入，然后用一个标签来概括它－－－这个标签可以是照片中是什么物品，一段语音中说的是哪个单词，也可以是一段文档描述的是哪个话题。
+分类的这个过程丢弃了输入数据中的大部分信息，然后给出了一个单个值的输出（或者是一个输出值的概率分布）。
+这个分类器通常可以忽略输入数据的很多部分。
+举个例子，当我们识别一个照片中是哪一个物品的时候，我们通常可以忽略图片的背景。
+<!-- % 550  ok -->
+
+
+我们也可以使用概率模型来完成许多其它的任务。
+这些任务通常比分类更加昂贵。
+其中的一些任务需要产生多个输出。
+大部分任务需要对输入数据整个结构的完整理解，所以并不能舍弃数据的一部分。
+这些任务包括了以下几个：
+
++ \textbf{估计密度函数}：给定一个输入$\Vx$，\gls{ML}系统返回了一个对数据生成分布的真实密度函数$p(\Vx)$的估计。
+	这只需要一个输出，但它需要完全理解整个输入。
+	即使向量中只有一个元素不太正常，系统也会给它赋予很低的概率。
+	% 551  ok
+	
+	
++
+	\textbf{\gls{denoising}}：给定一个受损的或者观察有误的输入数据$\tilde{\Vx}$，\gls{ML}系统返回了一个对原始的真实$\Vx$的估计。
+举个例子，有时候\gls{ML}系统需要从一张老相片中去除污渍或者抓痕。
+这个系统会产生多个输出（对应着估计的干净样本$\Vx$的每一个元素），并且需要我们有一个对输入的整体理解（因为即使一个严重损害的区域也需要在最后的输出中恢复）。
+	% 551 ok
+	
++
+\textbf{缺失值的填补}：给定$\Vx$的某些元素作为观察值，模型被要求返回一个$\Vx$
+	一些或者全部未观察值的概率分布。
+这个模型返回的也是多个输出。
+由于这个模型需要恢复$\Vx$的每一个元素，所以它必须理解整个输入。
+<!-- % 551 ok -->
+	
+	
++ \textbf{采样}： 模型从分布$p(\Vx)$中抽取新的样本。
+应用包含了语音合成，即产生一个听起来很像人说话的声音。
+这个模型也需要多个输出以及对输入整体的良好建模。
+即使样本只有一个从错误分布中产生的元素，那么采样的过程也是错误的。 
+<!-- % 551 -->
+
+
+\fig?中描述了一个使用较小的自然图片的采样任务。
+<!-- % 551 ok  -->
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/fig-ssrbm_nearest_train}}\ \\
+     \centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/fig-ssrbm_samples}}
+\fi
+	\caption{自然图片的概率建模。
+（上）CIFAR-10数据集{cite?}中的$32\times 32$像素的样例图片。
+（下）这个数据集上训练的\gls{structured_probabilistic_models}中抽出的样本。
+每一个样本都出现在与其欧式距离最近的训练样本的格点中。
+这种比较使得我们发现这个模型确实能够生成新的图片，而不是记住训练样本。
+为了方便展示，两个集合的图片都经过了微调。
+图片经{Courville+al-2011-small}许可转载。}
+\end{figure}
+
+对上千甚至是上百万随机变量的分布建模，无论从计算上还是从统计意义上说，都是一个具有挑战性的任务。
+假设我们只想对二值的随机变量建模。
+这是一个最简单的例子，但是仍然无能为力。
+对一个小的$32\times 32$像素的彩色（RGB）图片来说，存在$2^{3072}$种可能的二值图片。
+这个数量已经超过了$10^{800}$，比宇宙中的原子总数还要多。
+<!-- % 551  -->
+
+通常意义上讲，如果我们希望对一个包含$n$个离散变量并且每个变量都能取$k$个值的$\Vx$的分布建模，那么最简单的表示$P(\Vx)$的方法需要存储一个可以查询的表格。
+这个表格记录了每一种可能的值的概率，需要记录$k^n$个参数。
+<!-- % 551  -->
+
+这种方式是不可行的，基于下述几个原因：
+
++ \emph{内存}： 存储开销。
+	除了极小的$n$和$k$的值，用表格的形式来表示这样一个分布需要太多的存储空间。
+	% 551 
+	
++  \emph{统计的高效性}： 当模型中的参数个数增加的时候，使用随机估计时训练数据的量也需要相应的增加。
+	因为基于查表的模型拥有天文数字级别的参数，为了准确地拟合，相应的训练集的大小也是相同级别的。
+	任何这样的模型都会导致严重的\gls{overfitting}，除非我们添加一些额外的假设来联系表格中的不同元素（正如\sec?中所举的\gls{backoff}或者平滑过的\gls{n_gram}模型）。
+	% 552  end
+	
++ \emph{运行时间}：推断的开销。
+	假设我们需要完成一个推断的任务，其中我们需要使用联合分布$P(\RVx)$来计算某些其它的分布，比如说边缘分布$P(\RSx_1)$或者是条件分布$P(\RSx_2\mid \RSx_1)$。
+	计算这样的分布需要对整个表格的某些项进行求和操作，因此这样的操作的运行时间和上述高昂的内存开销是一个级别的。
+	% 553 head
+	
+	
++ \emph{运行时间}： 采样的开销。
+	类似的，假设我们想要从这样的模型中采样。
+	最简单的方法就是从均匀分布中采样，$u\sim \text{U}(0,1)$，然后把表格中的元素累加起来，直到和大于$u$，然后返回最后一个加上的元素。
+	最差情况下，这个操作需要读取整个表格，所以相比于其它操作，它需要指数级别的时间。
+
+<!-- % 553  -->
+
+
+
+基于表格操作的方法的主要问题是我们显式地对每一种可能的变量的子集所产生的每一种可能类型的相互作用建模。
+在实际问题中我们遇到的概率分布远比这个简单。
+通常，许多变量只是间接的相互作用。
+<!-- % 553 -->
+
+
+比如说，我们想要对接力跑步比赛中一个队伍完成比赛的时间进行建模。
+假设这个队伍有三名成员：Alice， Bob和Carol。
+在比赛开始的时候，Alice拿着接力棒，开始跑第一段距离。
+在跑完她的路程以后，她把棒递给了Bob。
+然后Bob开始跑，再把棒给Carol，Carol跑最后一棒。
+我们可以用连续变量来建模他们每个人完成的时间。
+因为Alice第一个跑，所以她的完成时间并不依赖于其它的人。
+Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完以后才能开始跑。
+如果Alice跑得更快，那么Bob也会完成得更快。
+所有的其它关系都可以被类似地推出。
+最后，Carol的完成时间依赖于她的两个队友。
+如果Alice跑得很慢，那么Bob也会完成得更慢。
+结果，Carol将会更晚开始跑步，因此她的完成时间也更有可能更晚。
+然而，在给定Bob完成时间的情况下Carol的完成时间只是间接地依赖于Alice的完成时间。
+如果我们已经知道了Bob的完成时间，知道Alice的完成时间对估计Carol的完成时间并无任何帮助。
+这意味着可以通过仅仅两个相互作用来建模这个接力赛。
+这两个相互作用分别是Alice的完成时间对Bob的完成时间的影响和Bob的完成时间对Carol的完成时间的影响。
+在这个模型中，我们可以忽略第三种间接的相互作用，即Alice的完成时间对Carol的完成时间的影响。
+<!-- % 553 -->
+
+
+\gls{structured_probabilistic_models}为随机变量之间的直接作用提供了一个正式的建模框架。
+这种方式大大减少了模型的参数个数以致于模型只需要更少的数据来进行有效的估计。
+这些更轻便的模型在模型存储，模型推断以及采样的时候有着更小的计算开销。
+<!-- % 554 head   -->
+
+
+
+# 使用图来描述模型结构
+
+<!-- % 554 -->
+
+
+\gls{structured_probabilistic_models}使用图（在图论中结点是通过边来连接的）来表示随机变量之间的相互作用。
+每一个结点代表一个随机变量。
+每一条边代表一个直接相互作用。
+这些直接相互作用隐含着其它的间接相互作用，但是只有直接的相互作用是被显式地建模的。
+<!-- % 554 -->
+
+
+使用图来描述概率分布中相互作用的方法不止一种。
+在下文中我们会介绍几种最为流行和有用的方法。
+\gls{graphical_models}可以被大致分为两类：基于模型的有向无环图，和基于模型的\gls{undirected_model}。
+<!-- % 554 -->
+
+
+
+## \glsentrytext{directed_model}
+
+<!-- % 554 -->
+
+
+有一种\gls{structured_probabilistic_models}是\firstgls{directed_graphical_model}，也被叫做\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望强调从网络中计算出的值的推断本质，尤其是强调这些值代表的是置信的程度大小时，Judea Pearl建议使用\gls{bayesian_network}这个术语。} {cite?}。
+<!-- % 554 -->
+
+
+之所以命名为\gls{directed_graphical_model}是因为所有的边都是有方向的，即从一个结点指向另一个结点。
+这个方向可以通过画一个箭头来表示。
+箭头所指的方向表示了这个随机变量的概率分布依赖于其它的变量。
+画一个从结点$\RSa$到结点$\RSb$的箭头表示了我们用一个条件分布来定义$\RSb$，而$\RSa$是作为这个条件分布符号右边的一个变量。
+换句话说，$\RSb$的概率分布依赖于$\RSa$的取值。
+<!-- % 554 -->
+
+
+我们继续\sec?所讲的接力赛的例子，我们假设Alice的完成时间为$\RSt_0$，Bob的完成时间为$\RSt_1$，Carol的完成时间为$\RSt_2$。
+就像我们之前看到的一样，$\RSt_1$的估计是依赖于$\RSt_0$的，$\RSt_2$的估计是依赖于$\RSt_1$的，但是仅仅间接地依赖于$\RSt_0$。
+我们用一个\gls{directed_graphical_model}来建模这种关系，就如在\fig?中看到的一样。
+<!-- % 554 end -->
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/relay_race_graph}}	
+\fi
+	\caption{一个描述接力赛例子的\gls{directed_graphical_model}。
+Alice的完成时间$\RSt_0$影响了Bob的完成时间$\RSt_1$，因为Bob会在Alice完成比赛后才开始。
+类似的，Carol也只会在Bob完成之后才开始，所以Bob的完成时间$\RSt_1$直接影响了Carol的完成时间$\RSt_2$。}
+\end{figure}
+
+
+<!-- % 555 head  -->
+正式的讲，变量$\RVx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution}$p(\RSx_i\mid P_{a\CalG}(\RSx_i))$来定义的，其中$P_{a\CalG}(\RSx_i)$表示结点$\RSx_i$的所有父结点。
+$\RVx$的概率分布可以表示为
+\begin{align}
+p(\RVx) = \prod_{i} p(\RSx_i\mid P_{a\CalG}(\RSx_i)).
+\end{align}
+<!-- % 555  -->
+
+
+在之前所述的接力赛的例子中，这意味着概率分布可以被表示为
+\begin{align}
+p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
+\end{align}
+<!-- % 555  -->
+
+
+这是我们看到的第一个\gls{structured_probabilistic_models}的实际例子。
+我们能够检查这样建模的计算开销，为了验证相比于非结构化建模，结构化建模为什么有那么多的优势。
+<!-- % 555  -->
+
+
+假设我们采用从第$0$分钟到第$10$分钟每$6$秒一块的方式离散化地表示时间。
+这使得$\RSt_0$，$\RSt_1$和$\RSt_2$都是一个有$100$个取值可能的离散变量。
+如果我们尝试着用一个表来表示$p(\RSt_0,\RSt_1,\RSt_2)$，那么我们需要存储$999,999$个值
+（$\RSt_0$的取值100 $\times$ $\RSt_1$的取值100 $\times$ $\RSt_2$的取值100 减去1，所有的概率的和为$1$，所以其中有$1$个值的存储是多余的）。
+反之，如果我们用一个表来记录每一种条件概率分布，那么记录$\RSt_0$的分布需要存储$99$个值，给定$\RSt_0$情况下$\RSt_1$的分布需要存储9900个值，给定$\RSt_1$情况下$\RSt_2$的分布也需要存储$9900$个值。
+加起来总共需要存储$19, 899$个值。
+这意味着使用\gls{directed_graphical_model}将需要存储的参数的个数减少了超过$50$倍！
+<!-- % 555  -->
+
+
+通常意义上说，对每个变量都能取$k$个值的$n$个变量建模，基于建表的方法需要的复杂度是$O(k^n)$，就像我们之前讨论过的一样。
+现在假设我们用一个\gls{directed_graphical_model}来对这些变量建模。
+如果$m$代表\gls{graphical_models}的单个条件概率分布中最大的变量数目（在条件符号的左右皆可），那么对这个\gls{directed_model}建表的复杂度大致为$O(k^m)$。
+只要我们在设计模型时使其满足$m\ll n$，那么复杂度就会被大大的减小。
+<!-- % 555  -->
+
+
+换一句话说，只要每个变量只有少量的父结点，那么这个分布就可以用较少的参数来表示。
+图结构上的一些限制条件，比如说要求这个图为一棵树，也可以保证一些操作（比如说求一小部分变量的边缘或者条件分布）更加的高效。
+<!-- % 556 head   16.2 to here  -->
+
+
+
+决定那些信息需要被包含在图中而哪些不需要是很重要的。
+如果许多变量可以被假设为是条件独立的，那么这个\gls{graphical_models}可以被大大简化。
+当然也存在其它的简化\gls{graphical_models}的假设。
+比如说，我们可以假设无论Alice的表现如何，Bob总是跑得一样快
+（实际上，Alice的表现很大概率会影响Bob的表现，这取决于Bob的性格，
+如果在之前的比赛中Alice跑得特别快，这有可能鼓励Bob更加努力，当然这也有可能使得Bob懒惰）。
+那么Alice对Bob的唯一影响就是在计算Bob的完成时间时需要加上Alice的时间。
+这个假设使得我们所需要的参数量从$O(k^2)$降到了$O(k)$。
+然而，值得注意的是在这个假设下$\RSt_0$和$\RSt_1$仍然是直接相关的，因为$\RSt_1$表示的是Bob完成的时间，并不是他跑的时间。
+这也意味着\gls{graphical_models}中会有一个从$\RSt_0$指向$\RSt_1$的箭头。
+"Bob的个人跑步时间相对于其它因素是独立的"这个假设无法在$\RSt_0$，$\RSt_1$，$\RSt_2$的\gls{graphical_models}中被表示出来。
+我们只能将这个关系表示在条件分布中。
+这个条件分布不再是一个大小为$k\times k-1$的分别对应着$\RSt_0$，  $\RSt_1$的表格，而是一个包含了$k-1$个参数的略复杂的公式。
+\gls{directed_graphical_model}并不能对我们如何定义条件分布做出任何限制。
+它只能定义哪些变量之间存在着\gls{dependency}关系。
+<!-- % 556  16.2 to  -->
+
+
+
+
+## \glsentrytext{undirected_model}
+
+<!-- % 556 -->
+
+
+\gls{directed_graphical_model}为我们提供了一个描述\gls{structured_probabilistic_models}的语言。
+而另一种常见的语言则是\firstgls{undirected_model}，也叫做\firstall{MRF}或者是\firstgls{markov_network} {cite?}。
+就像它们的名字所说的那样，\gls{undirected_model}中所有的边都是没有方向的。
+<!-- % 556 end -->
+
+
+\gls{directed_model}适用于当存在一个很明显的理由来描述每一个箭头的时候。
+\gls{directed_model}中，经常存在我们理解的具有因果关系以及因果关系有明确的方向的情况下。
+接力赛的例子就是一个这样的例子。
+之前的运动员的表现影响了后面的运动员，而后面的运动员却不会影响前面的运动员。
+<!-- % 557 head  -->
+
+
+然而并不是所有情况的相互影响中都有一个明确的方向关系。
+当相互的作用并没有本质的方向，或者是明确的有相互影响的时候，使用\gls{undirected_model}更加合适。
+<!-- % 557  -->
+
+
+作为一个这种情况的例子，假设我们希望对三个二值随机变量建模：你是否生病，你的同事是否生病以及你的室友是否生病。
+就像在接力赛的例子中所作的简化的假设一样，我们可以在这里做一些简化的假设。
+假设你的室友和同事并不认识，所以他们不太可能直接相互传染一些疾病，比如说是感冒。
+这个事件太过稀有，所以我们不对此事件建模。
+然而，如果他们之一感染了感冒，很有可能通过你来传染给了另一个人。
+我们通过对你的同事传染给你以及你传染给你的室友建模来对这种间接的从你的同事到你的室友的感冒传染建模。
+<!-- % 557  -->
+
+
+在这种情况下，你传染给你的室友和你的室友传染给你都是非常容易的，所以不存在一个明确的单向的模型。
+这启发我们使用\gls{undirected_model}，其中随机变量对应着图中的相互作用的结点。
+不像是\gls{directed_model}中，在\gls{undirected_model}中的边是没有方向的，并不与一个条件分布相关联。
+<!-- % 557  -->
+
+
+我们把对应你的健康的随机变量记住$\RSh_y$，对应你的室友健康状况的随机变量记住$\RSh_r$，你的同事健康的变量记住$\RSh_c$。
+\fig?表示来这种关系。
+<!-- % 557 end -->
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/cold_undirected_graph}}	
+\fi
+	\caption{表示你室友健康的$h_r$，你的健康的$h_y$，你同事健康的$h_c$之间如何相互影响的一个无向图。
+		你和你的室友可能会相互传染感冒，你和你的同事之间也是如此，但是假设你室友和同事之间相互不认识，他们只能通过你来间接传染。}
+\end{figure}
+
+正式的说，一个\gls{undirected_model}是一个定义在\gls{undirected_model}$\CalG$上的一个\gls{structured_probabilistic_models}。
+对图中的每一个\firstgls{clique}\footnote{图的一个\gls{clique}是图中结点的一个子集，并且其中的点是全连接的}$\CalC$，
+一个\firstgls{factor}$\phi(\CalC)$(也叫做\firstgls{clique_potential})，衡量了\gls{clique}中的变量的不同状态所对应的密切程度。
+这些\gls{factor}都被限制为是非负的。
+合在一起他们定义了\firstgls{unnormalized_probability_function}：
+\begin{align}
+\tilde{p}(\RVx) = \prod_{\CalC\in\CalG} \phi(\CalC).
+\end{align}
+<!-- % 558 head -->
+
+
+只要所有的\gls{clique}中的结点数都不大，那么我们就能够高效地处理这些\gls{unnormalized_probability_function}。
+它包含了这样的思想，越高密切度的状态有越大的概率。
+然而，不像\gls{bayesian_network}，几乎不存在\gls{clique}定义的结构，所以不能保证把它们乘在一起能够得到一个有效的概率分布。
+\fig?展示了一个从\gls{undirected_model}中读取分解信息的例子。
+<!-- % 558 -->
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
+\fi
+	\caption{这个图说明通过选择适当的$\phi$函数
+		$p(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作
+		$\frac{1}{Z}\phi_{\RSa,\RSb}(\RSa,\RSb)\phi_{\RSb,\RSc}(\RSb,\RSc)\phi_{\RSa,\RSd}(\RSa,\RSd)\phi_{\RSb,\RSe}(\RSb,\RSe)\phi_{\RSe,\RSf}(\RSe,\RSf)$。}
+\end{figure}
+
+
+
+在你，你的室友和同事之间感冒传染的例子中包含了两个\gls{clique}。
+一个\gls{clique}包含了$\RSh_y$和$\RSh_c$。
+这个\gls{clique}的\gls{factor}可以通过一个表来定义，可能取到下面的值：
+
+<!-- % \begin{table*}[!hbp] -->
+	% \centering
+\begin{table}
+	\centering
+\begin{tabular}{c|cc}
+		& $\RSh_y = 0$ & $\RSh_y = 1$ \\ \hline
+		$\RSh_c = 0$ & 2 & 1 \\
+		$\RSh_c = 1$  & 1 & 10 \\
+\end{tabular}
+\end{table}
+<!-- % \end{table*} -->
+<!-- % 558 -->
+
+
+状态为$1$代表了健康的状态，相对的状态为$0$则表示不好的健康状态（即被感冒传染）。
+你们两个通常都是健康的，所以对应的状态拥有最高的密切程度。
+两个人中只有一个人是生病的密切程度是最低的，因为这是一个很少见的状态。
+两个人都生病的状态（通过一个人来传染给了另一个人）有一个稍高的密切程度，尽管仍然不及两个人都健康的密切程度。
+<!-- % 559 head   -->
+
+
+为了完整的定义这个模型，我们需要对包含$\RSh_y$和$\RSh_r$的\gls{clique}定义类似的\gls{factor}。
+<!-- % 559 head -->
+
+
+
+## \glsentrytext{partition_function}
+
+<!-- %  16.2.3   p 559 -->
+
+
+
+尽管这个\gls{unnormalized_probability_function}处处不为零，我们仍然无法保证它的概率之和或者积分为$1$。
+为了得到一个有效的概率分布，我们需要使用一个归一化的概率分布\footnote{一个通过归一化\gls{clique_potential}的乘积的分布通常被称作是\gls{gibbs_distribution}}：
+\begin{align}
+p(\RVx) = \frac{1}{Z}\tilde{p}(\RVx),
+\end{align}
+其中，$Z$是使得所有的概率之和或者积分为$1$的常数，并且满足：
+\begin{align}
+Z = \int \tilde{p}(\RVx)d\RVx.
+\end{align}
+当函数$\phi$固定的时候，我们可以把$Z$当成是一个常数。
+值得注意的是如果函数$\phi$带有参数时，那么$Z$是这些参数的一个函数。
+忽略控制$Z$的变量而直接写$Z$是一个常用的方式。
+归一化常数$Z$被称作是\gls{partition_function}，一个从统计物理学中借鉴的术语。
+<!-- % 559  -->
+
+
+由于$Z$通常是由对所有可能的$\RVx$的状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。
+为了获得一个\gls{undirected_model}的归一化的概率分布，模型的结构和函数$\phi$的定义通常需要特殊的设计从而使得能够高效地计算$Z$。
+在\gls{DL}中，$Z$通常是难以处理的。
+由于$Z$难以精确的计算出，我们只能使用一些近似的方法。
+这样的近似方法是\chap?的主要内容。
+<!-- % 559  -->
+
+
+
+<!-- %在设计\gls{undirected_model}时我们必须牢记在心的一个要点是设置一些\gls{factor}使得$Z$不存在这样的方法也是有可能的。 -->
+在设计\gls{undirected_model}时我们必须牢记在心的一个要点是一些使得$Z$不存在的\gls{factor}也是有可能的。
+当模型中的一些变量是连续的，且在$\tilde{p}$在其定义域上的积分无法收敛的时候这种情况就会发生。
+比如说， 当我们需要对一个单独的标量变量$\RSx\in\SetR$建模，并且这个包含一个点的\gls{clique_potential}定义为$\phi(x) = x^2$时。
+在这种情况下，
+\begin{align}
+Z = \int x^2 dx.
+\end{align}
+由于这个积分是发散的，所以不存在一个对应着这个势能函数的概率分布。
+有时候$\phi$函数某些参数的选择可以决定相应的概率分布能否存在。
+比如说，对$\phi$函数$\phi(x;\beta) = \text{exp}(-\beta x^2)$来说，参数$\beta$决定了归一化常数$Z$是否存在。
+一个正的$\beta$使得$\phi$函数是一个关于$\RSx$的高斯分布，但是一个非正的参数$\beta$则使得$\phi$不可能被归一化。
+
+
+<!-- % P560    -->
+\gls{directed_model}和\gls{undirected_model}之间的一个重要的区别就是\gls{directed_model}是通过从起始点的概率分布直接定义的，反之\gls{undirected_model}的定义显得更加宽松，通过$\phi$函数转化为概率分布而定义。
+这和我们处理这些建模问题的直觉相反。
+当我们处理\gls{undirected_model}时需要牢记一点，每一个变量的定义域对于$\phi$函数所对应的概率分布有着重要的影响。
+举个例子，我们考虑一个$n$维向量的随机变量$\RVx$以及一个由偏置向量$\Vb$参数化的\gls{undirected_model}。
+假设$\RVx$的每一个元素对应着一个\gls{clique}，并且满足$\phi^{(i)}(\RSx_i) = \exp(b_i\RSx_i)$。
+在这种情况下概率分布是怎么样的呢？
+答案是我们无法确定，因为我们并没有指定$\RVx$的定义域。
+如果$\RVx$满足$\RVx \in \SetR^n$，那么对于归一化常数$Z$的积分是发散的，这导致了对应的概率分布是不存在的。
+如果$\RVx\in\{0,1\}^n$，那么$p(\RVx)$可以被分解成$n$个独立的分布，并且满足$p(\RSx_i=1) = \text{sigmoid}(b_i)$。
+如果$\RVx$的定义域是\gls{ebv}$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$的集合，
+那么$p(\RSx) = \text{softmax}(\Vb)$，因此对于$j\neq i$一个较大的$b_i$的值会降低所有的$p(\RSx_j = 1)$的概率。
+通常情况下，通过特殊设计变量的定义域，能够使得一个相对简单的$\phi$函数可以获得一个相对复杂的表达。
+我们会在\sec?中讨论这个想法的实际应用。
+<!-- % P560    -->
+
+
+
+## \glsentrytext{energy_based_model}
+
+<!-- % 560 -->
+
+
+\gls{undirected_model}的许多有趣的理论结果依赖于$\forall \Vx,\ \tilde{p}(\Vx)>0$这个假设。
+使这个条件满足的一种简单的方式是使用\firstgls{energy_based_model}，其中
+\begin{align}
+\tilde{p}(\RVx) = \exp(-E(\RVx)).
+\end{align}
+$E(\RVx)$被称作是\firstgls{energy_function}。
+对所有的$\RSz$ $\exp(\RSz)$都是正的，这保证了没有一个\gls{energy_function}会使得某一个状态$\RVx$的概率为$0$。
+我们可以很自由的选择那些能够简化学习过程的\gls{energy_function}。
+如果我们直接学习各个\gls{clique_potential}，我们需要利用带约束的优化方法来指定一些特定的最小概率值。
+学习\gls{energy_function}的过程中，我们可以采用无约束的优化方法\footnote{对于某些模型，我们可以仍然使用带约束的优化方法来确保$Z$存在。}。
+\gls{energy_based_model}中的概率可以无限趋近于$0$但是永远达不到$0$。
+<!-- % p 561  head -->
+
+
+服从\eqn?形式的任意分布都是\firstgls{boltzmann_distribution}的一个实例。
+正是基于这个原因，我们把许多\gls{energy_based_model}叫做\firstgls{BM}{cite?}。
+关于什么时候叫\gls{energy_based_model}，什么时候叫\gls{BM}不存在一个公认的判别标准。
+一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如\gls{mcrbm2}，也涉及到了实值变量。
+虽然\gls{BM}最初的定义既可以包含\gls{latent_variable}也可以不包含\gls{latent_variable}，但是时至今日\gls{BM}这个术语通常用于指拥有\gls{latent_variable}的模型，而没有\gls{latent_variable}的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
+<!-- % 561 -->
+
+
+
+\gls{undirected_model}中的\gls{clique}对应于\gls{unnormalized_probability_function}的\gls{factor}。 
+通过$\exp(a+b) = \exp(a) \exp(b)$，我们发现\gls{undirected_model}中的不同\gls{clique}对应于\gls{energy_function}的不同项。
+换句话说，\gls{energy_based_model}只是一种特殊的\gls{markov_network}：求幂使\gls{energy_function}中的每个项对应于不同\gls{clique}的\gls{factor}。
+关于如何从\gls{undirected_model}结构中获得\gls{energy_function}形式的示例参见\fig?。
+人们可以将\gls{energy_function}带有多个项的\gls{energy_based_model}视作是\firstgls{product_of_expert}{cite?}。
+\gls{energy_function}中的每一项对应的是概率分布中的一个\gls{factor}。
+\gls{energy_function}中的每一项都可以看作决定一个软约束是否能够满足的"专家"。
+<!-- %每个专家只执行仅涉及一个随机变量低维投影的约束，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。 -->
+每个专家只执行一个约束，而这个约束仅仅涉及一个随机变量的低维投影，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。
+<!-- % 561 -->
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
+\fi
+	\caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function}$E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。值得注意的是，我们可以通过取负能量的指数来获得图\?中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
+\end{figure}
+
+
+
+\gls{energy_based_model}定义的一部分无法用\gls{ML}观点来解释：即\eqn?中的负号。
+这个负号的存在主要是为了保持\gls{ML}文献和物理学文献之间的兼容性。
+概率建模的许多研究最初由统计物理学家做出的，其中$E$是指实际的，物理概念的能量，没有任意的符号。
+诸如"能量"和"\gls{partition_function}"这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
+一些\gls{ML}研究者（例如，{Smolensky86}将负能量称为\firstgls{harmony}）发出了不同的声音，但这些都不是标准惯例。
+<!-- % 562  head -->
+
+
+许多对概率模型进行操作的算法不需要计算$p_{\text{model}}(\Vx)$，而只需要计算$\log p_{\text{model}}(\Vx)$。
+对于具有\gls{latent_variable}$\Vh$的\gls{energy_based_model}，这些算法有时会将该量的负数称为\firstgls{free_energy}：
+\begin{align}
+\CalF (\Vx) = -\log \sum_{\Vh} \exp(-E(\Vx,\Vh)).
+\end{align}
+在本书中，我们更倾向于更为通用的基于$\log \tilde{p}_{\text{model}}(\Vx)$的定义。
+<!-- % 562 -->
+
+
+
+## \glsentrytext{separation}和\glsentrytext{dseparation}
+
+
+\gls{graphical_models}中的边告诉我们哪些变量直接相互作用。
+我们经常需要知道哪些变量间接相互作用。 
+某些间接相互作用可以通过观察其他变量来启用或禁用。
+更正式地，我们想知道在给定其他变量子集的值的情况下，哪些变量子集彼此条件独立。
+<!-- % 562 end  -->
+
+
+在\gls{undirected_model}的情况下，识别图中的条件独立性是非常简单的。 
+在这种情况下，图中隐含的条件独立性称为\firstgls{separation}。
+如果图结构显示给定变量$\SetS$的情况下变量$\SetA$与变量$\SetB$无关，
+那么我们声称给定变量$\SetS$时，变量$\SetA$与另一组变量$\SetB$是\gls{separation}的。
+<!-- %如果两个变量$\RSa$和$\RSb$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。 -->
+如果连接两个变量$\RSa$和$\RSb$的路径仅涉及未观察变量，那么这些变量不是\gls{separation}的。
+如果它们之间没有路径，或者所有路径都包含可观测的变量，那么它们是\gls{separation}的。
+我们认为仅涉及到未观察到的变量的路径是"活跃"的，将包括观察到的变量的路径称为"非活跃"的。
+<!-- % 563 -->
+
+
+当我们画图时，我们可以通过加阴影来表示观察到的变量。
+\fig?用于描述当以这种方式绘制时\gls{undirected_model}中的活跃和非活跃路径的样子。
+\fig?描述了一个从一个\gls{undirected_model}中读取\gls{separation}信息的例子。
+<!-- % 563 -->
+
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/undirected_paths_active}}
+\fi
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/undirected_paths_inactive}}	
+\fi
+	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。
+	这意味着$\RSa$，$\RSb$之间不是\gls{separation}的。
+	 (b)图中$\RSs$用阴影填充，表示了它是可观察的。
+	 因为$\RSa$和$\RSb$之间的唯一路径通过$\RSs$，并且这条路径是不活跃的，我们可以得出结论，在给定$\RSs$的条件下$\RSa$和$\RSb$是\gls{separation}的。}
+\end{figure}
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/example_sep}}
+\fi
+	\caption{一个从无向图中读取\gls{separation}性质的例子。
+		这里$\RSb$用阴影填充，表示它是可观察的。
+		由于$\RSb$挡住了从$\RSa$到$\RSc$的唯一路径，我们说在给定$\RSb$的情况下$\RSa$和$\RSc$是相互\gls{separation}的。
+		观察值$\RSb$同样挡住了从$\RSa$到$\RSd$的一条路径，但是它们之间有另一条路径。
+		因此给定$\RSb$的情况下$\RSa$和$\RSd$不是\gls{separation}的。}
+\end{figure}
+
+
+
+类似的概念适用于\gls{directed_model}，除了在\gls{directed_model}中，这些概念被称为\firstgls{dseparation}。
+"d"代表"\gls{dependency}"程度。
+有向图中\gls{dseparation}的定义与\gls{undirected_model}的相同：我们认为如果图结构中给定$\SetS$时 $\SetA$与变量集$\SetB$无关，
+那么给定变量集$\SetS$时，变量集$\SetA$\gls{dseparation}于变量集$\SetB$。
+<!-- % 563 -->
+
+
+与\gls{undirected_model}一样，我们可以通过查看图中存在的活跃路径来检查图中隐含的独立性。
+如前所述，如果两个变量之间存在活跃路径，则两个变量是相关的，如果没有活跃路径，则为\gls{dseparation}。
+在有向网络中，确定路径是否活跃有点复杂。
+关于在\gls{directed_model}中识别活跃路径的方法可以参见\fig?。 
+\fig?是从一个图中读取一些属性的例子。
+<!-- % 564  head  -->
+
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/directed_paths_straight}}	
+\fi
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/directed_paths_out}}
+\fi
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/directed_paths_descendant}}
+\fi
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/directed_paths_v}}		
+\fi
+	\caption{两个随机变量$\RSa$，$\RSb$之间存在的所有种类的长度为$2$的活跃路径。
+		（a）箭头方向从$\RSa$指向$\RSb$的任何路径，反之也成立。
+		如果$\RSs$可以被观察到，这种路径就是阻塞的。
+		在接力赛的例子中，我们已经看到过这种类型的路径。
+		（b）变量$\RSa$和$\RSb$通过\gls{common_cause}$\RSs$相连。
+		举个例子，假设$\RSs$是一个表示是否存在飓风的变量，$\RSa$和$\RSb$表示两个相邻的气象监控区域的风速。
+		如果我们观察到在$\RSa$处有很高的风速，我们可以期望在$b$处也观察到高速的风。
+		如果观察到$\RSs$那么这条路径就被阻塞了。
+		如果我们已经知道存在飓风，那么无论$\RSa$处观察到什么，我们都能期望$\RSb$处有较高的风速。
+		在$\RSa$处观察到一个低于预期的风速并不会改变我们对$\RSb$处风速的期望（已知有飓风的情况下）。
+		然而，如果$\RSs$不被观测到，那么$\RSa$和$\RSb$是依赖的，即路径是活跃的。
+		（c）变量$\RSa$和$\RSb$都是$\RSs$的父节点。
+		这叫做\firstgls{vstructure}或者\firstgls{collider}。
+		根据\firstgls{explaining_away_effect}，\gls{vstructure}导致$\RSa$和$\RSb$是相关的。
+		在这种情况下，当$\RSs$被观测到时路径是活跃的。
+		举个例子，假设$\RSs$是一个表示你的同事不在工作的变量。
+		变量$\RSa$表示他生病了，而变量$\RSb$表示她在休假，但是这两件事同时发生是不太可能的。
+		如果你发现她在休假，那么这个事实足够解释她的缺席了。
+		你可以推断她很可能没有生病。
+		（d）即使$\RSs$的任意后代都被观察到，\gls{explaining_away_effect}也会起作用。
+		举个例子，假设$\RSc$是一个表示你是否收到你同事的报告的一个变量。
+		如果你注意到你还没有收到这个报告，这会增加你估计的她今天不在工作的概率，这反过来又会增加她今天生病或者度假的概率。
+		阻塞\gls{vstructure}中的路径的唯一方法就是共享子节点的后代一个都观察不到。}
+\end{figure}
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/example_dsep}}	
+\fi
+	\caption{从这张图中，我们可以发现一些\gls{dseparation}的性质。这包括了：
+<!-- %	 -->
++ 给定空集的情况下$\RSa$和$\RSb$是\gls{dseparation}的。 -->
++ 给定$\RSc$的情况下$\RSa$和$\RSe$是\gls{dseparation}的。 -->
++ 给定$\RSc$的情况下$\RSd$和$\RSe$是\gls{dseparation}的。 -->
++ize} -->
+	我们还可以发现当我们观察到一些变量的时候，一些变量不再是\gls{dseparation}的：
+<!-- %		 -->
++ 给定$\RSc$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。 -->
++ 给定$\RSd$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。 -->
++ize} -->
+	}
+\end{figure}
+
+
+重要的是要记住\gls{separation}和\gls{dseparation}只能告诉我们图中隐含的条件独立性。
+不需要表示存在的所有独立性的图。 
+进一步的，使用完全图（具有所有可能的边的图）来表示任何分布总是合法的。
+事实上，一些分布包含不可能用现有图形符号表示的独立性。
+\firstgls{context_specific_independence}指的是取决于网络中一些变量的值的独立性。
+例如，考虑一个三个二进制变量的模型：$\RSa$，$\RSb $和$\RSc$。
+假设当$\RSa$是0时，$\RSb$和$\RSc$是独立的， 但是当$\RSa$是1时，$\RSb$确定地等于$\RSc$。
+当$\RSa = 1$时\gls{graphical_models}需要连接$\RSb$和$\RSc$的边。
+当$\RSa = 0$时$\RSb$和$\RSc$不是独立的。
+<!-- % 564 -->
+
+一般来说，当独立性不存在的时候，图不会显示独立性。 
+然而，图可能无法显示存在的独立性。
+<!-- % 564 -->
+
+
+## 在\glsentrytext{directed_model}和\glsentrytext{undirected_model}中转换
+
+
+我们经常将特定的\gls{ML}模型称为\gls{undirected_model}或\gls{directed_model}。
+例如，我们通常将\gls{RBM}称为\gls{undirected_model}， 而\gls{sparse_coding}则被称为\gls{directed_model}。
+这种措辞的选择可能有点误导，因为没有概率模型是有向或无向的。
+但是，一些模型很适合使用有向图描述，而另一些模型很适用于使用\gls{undirected_model}描述。
+<!-- % 564 end -->
+
+\gls{directed_model}和\gls{undirected_model}都有其优点和缺点。
+这两种方法都不是明显优越和普遍优选的。
+相反，我们根据具体的每个任务来决定使用哪一种模型。 
+这个选择将部分取决于我们希望描述的概率分布。
+根据哪种方法可以最大程度的捕捉到概率分布中的独立性，或者哪种方法使用最少的边来描述分布，我们可以决定使用有向建模还是无向建模。
+还有其他因素可以影响我们决定使用哪种建模方式。 
+即使在使用单个概率分布时，我们有时可以在不同的建模方式之间切换。
+有时，如果我们观察到变量的某个子集，或者如果我们希望执行不同的计算任务，换一种建模方式可能更合适。
+例如，\gls{directed_model}通常提供了一种高效的从模型中抽取样本（在\sec?中描述）的直接方法。
+而\gls{undirected_model}公式通常用于\gls{approximate_inference}过程（我们将在\chap?中看到，\eqn?强调了\gls{undirected_model}的作用）。
+<!-- % 566 -->
+
+
+每个概率分布可以由\gls{directed_model}或由\gls{undirected_model}表示。
+在最坏的情况下，可以使用"完全图"来表示任何分布。
+在\gls{directed_model}的情况下，完全图是任何有向无环图，其中我们对随机变量排序，并且每个变量在排序中位于其之前的所有其他变量作为其图中的祖先。
+对于\gls{undirected_model}，完全图只是一个包含所有变量的\gls{clique}。 
+\fig?给出了一个实例。
+<!-- % 566 -->
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/complete}}	
+\fi
+	\caption{完全图的例子，完全图能够描述任何的概率分布。
+		这里我们展示了一个带有四个随机变量的例子。
+		（左）完全无向图。在无向图中，完全图是唯一的。
+		（右）一个完全有向图。
+		在有向图中，并不存在唯一的完全图。
+		我们选择一种变量的排序然后对每一个变量画一条指向顺序在其后面的变量的弧。
+		因此存在着关于变量数阶乘数量级的不同种完全图。
+		在这个例子中，我们从左到右从上到下地排序变量。}
+\end{figure}
+
+
+当然，\gls{graphical_models}的优势在于图能够包含一些变量不直接相互作用的信息。 
+完全图并不是很有用，因为它并不包含任何独立性。
+<!-- % 566 -->
+
+
+当我们用图表示概率分布时，我们想要选择一个包含尽可能多的独立性的图，但是并不会假设任何实际上不存在的独立性。
+<!-- % 566 end -->
+
+
+从这个角度来看，一些分布可以使用\gls{directed_model}更高效地表示，而其他分布可以使用\gls{undirected_model}更高效地表示。
+换句话说，\gls{directed_model}可以编码一些\gls{undirected_model}所不能编码的独立性，反之亦然。
+<!-- % 567 head -->
+
+
+\gls{directed_model}能够使用一种\gls{undirected_model}无法完美表示的特定类型的子结构。
+这个子结构被称为\firstgls{immorality}。
+这种结构出现在当两个随机变量$\RSa$和$\RSb$都是第三个随机变量$\RSc$的父结点，并且不存在任一方向上直接连接$\RSa$和$\RSb$的边的时候。
+（"\gls{immorality}"的名字可能看起来很奇怪; 它在\gls{graphical_models}文献中被创造为一个关于未婚父母的笑话。）
+为了将\gls{directed_model}图$\CalD$转换为\gls{undirected_model}，我们需要创建一个新图$\CalU$。
+对于每对变量$\RSx$和$\RSy$，如果存在连接$\CalD$中的$\RSx$和$\RSy$的有向边（在任一方向上），或者如果$\RSx$和$\RSy$都是图$\CalD$中另一个变量$\RSz$的父节点，则添加将$\RSx$和$\RSy$连接到$\CalU$的无向边。 
+得到的图$\CalU$被称为是\firstgls{moralized_graph}。
+关于一个将\gls{directed_graphical_model}转化为\gls{undirected_model}的例子可以参见\fig?。
+<!-- % 567 -->
+
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/dm_to_um}}	
+\fi
+	\caption{通过构造\gls{moralized_graph}将有向模型（上一行）转化为无向模型（下一行）的例子。
+		（左）只需要把有向边替换成无向边就可以把这个简单的链转化为一个\gls{moralized_graph}。
+		得到的无向模型包含了完全相同的独立关系和条件独立关系。
+		（中）这个图是不丢失独立性的情况下无法转化为无向模型的最简单的有向模型。
+		这个图包含了一个完整的\gls{immorality}结构。
+		因为$\RSa$和$\RSb$都是$\RSc$的父节点，当$\RSc$被观察到时它们之间通过活跃路径相连。
+		为了捕捉这个相关性，无向模型必须包含一个包含所有三个变量的\gls{clique}。
+		这个\gls{clique}无法编码$\RSa \perp \RSb$这个信息。
+		（右）通常讲，\gls{moralization}的过程会给图添加许多边，因此丢失了一些独立性。
+		举个例子，这个\gls{sparse_coding}图需要在每一对隐含单元之间添加\gls{moralization}的边，因此也引入了二次数量级的新的直接依赖关系。}
+\end{figure}
+
+
+
+同样的，\gls{undirected_model}可以包括\gls{directed_model}不能完美表示的子结构。
+具体来说，如果$\CalU$包含长度大于$3$的循环，则有向图$\CalD$不能捕获\gls{undirected_model}$\CalU$所包含的所有条件独立性，除非该循环还包含\gls{chord}。
+\firstgls{loop}指的是由无向边连接的变量的序列，并且满足序列中的最后一个变量连接回序列中的第一个变量。
+\firstgls{chord}是定义环的序列中任意两个非连续变量之间的连接。
+如果$\CalU$具有长度为$4$或更大的环，并且这些环没有\gls{chord}，我们必须在将它们转换为\gls{directed_model}之前添加\gls{chord}。
+添加这些\gls{chord}会丢弃了在$\CalU$中编码的一些独立信息。
+通过将\gls{chord}添加到$\CalU$形成的图被称为\firstgls{chordal_graph}或者\firstgls{triangulated_graph}，
+现在可以用更小的三角形环来描述所有的环。
+要从\gls{chordal_graph}构建有向图$\CalD$，我们还需要为边指定方向。
+当这样做时，我们不能在$\CalD$中创建有向循环，否则将无法定义有效的有向概率模型。
+为$\CalD$中的边分配方向的一种方法是对随机变量排序，然后将每个边从排序较早的节点指向稍后排序的节点。
+一个简单的实例参见\fig?。
+<!-- % 569 end -->
+
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/um_to_dm}}	
+\fi
+	\caption{将一个无向模型转化为一个有向模型。
+		（左）这个无向模型无法转化为有向模型，因为它有一个长度为$4$且不带有\gls{chord}的\gls{loop}。
+		具体说来，这个无向模型包含了两种不同的独立性，并且不存在一个有向模型可以同时描述这两种性质：$\RSa\perp \RSc \mid \{\RSb,\RSd\}$和$\RSb \perp \RSd \mid \{\RSa,\RSc\}$。
+		（中）为了将无向图转化为有向图，我们必须通过保证所有长度大于$3$的\gls{loop}都有\gls{chord}来使得图三角化。
+		为了完成这个，我们可以加一条连接$\RSa$和$\RSc$或者连接$\RSb$和$\RSd$的边。
+		在这个例子中，我们选择添加一条连接$\RSa$和$\RSc$的边。
+		（右）为了完成转化的过程，我们必须给每条边分配一个方向。
+		执行这个任务时，我们必须保证不产生有向环。
+		避免出现有向环的一种方法是赋予节点一定的顺序，然后将每个边从排序较早的节点指向稍后排序的节点。在这个例子中，我们根据变量名的字母进行排序。}
+\end{figure}
+
+
+
+
+## \glsentrytext{factor_graph}
+
+<!-- % 569      16.2.7 -->
+
+
+
+\firstgls{factor_graph}是从\gls{undirected_model}中抽样的另一种方法，可以解决\gls{undirected_model}图中表达的模糊性。
+在\gls{undirected_model}中，每个$\phi$函数的范围必须是图中某个\gls{clique}的子集。
+我们无法确定每一个\gls{clique}是否含有一个作用域包含整个\gls{clique}的\gls{factor}－－－比如说一个包含三个结点的\gls{clique}可能对应的是一个有三个结点的\gls{factor}，也可能对应的是三个\gls{factor}并且每个\gls{factor}包含了一对结点，这通常会导致模糊性。
+通过显式地表示每一个$\phi$函数的作用域，\gls{factor_graph}解决了这种模糊性。
+<!-- %然而，$\phi$没有必要包含每个\gls{clique}的全部。 -->
+<!-- %\gls{factor_graph}明确表示每个$\phi$函数的范围。 -->
+具体来说，\gls{factor_graph}是由包含无向二分图的\gls{undirected_model}的图形表示。
+一些节点被绘制为圆形。 
+这些节点对应于随机变量，如在标准\gls{undirected_model}中。
+其余节点绘制为正方形。
+这些节点对应于\gls{unnormalized_probability_function}的\gls{factor}$\phi$。
+变量和\gls{factor}通过无向边连接。
+当且仅当变量包含在\gls{unnormalized_probability_function}的\gls{factor}中时，变量和\gls{factor}在图中连接。
+没有\gls{factor}可以连接到图中的另一个\gls{factor}，也不能将变量连接到变量。
+\fig?给出了一个例子来说明\gls{factor_graph}如何解决无向网络中的模糊性。
+<!-- % 570   -->
+
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/factor_graph}}	
+\fi
+	\caption{\gls{factor_graph}如何解决无向网络中的模糊性的一个例子。
+		（左）一个包含三个变量的\gls{clique}组成的无向网络。
+		（中）对应这个无向模型的\gls{factor_graph}。这个\gls{factor_graph}有一个包含三个变量的因子。
+		（右）对应这个无向模型的另一种有效的\gls{factor_graph}。这个\gls{factor_graph}包含了三个因子，每个因子只对应两个变量。
+		这个\gls{factor_graph}上进行的表示，推断和学习相比于中图描述的\gls{factor_graph}都要渐进性地廉价，即使它们表示的是同一个无向模型。}
+\end{figure}
+
+
+
+# 从\glsentrytext{graphical_models}中采样
+
+
+<!-- % 570   -->
+\gls{graphical_models}大大简化了从模型中的采样过程。
+
+
+\gls{directed_graphical_model}的一个优点是，可以通过一个简单高效的被称作是\firstgls{ancestral_sampling}的过程从由模型表示的联合分布中抽取样本。
+<!-- % 570   -->
+
+
+其基本思想是将图中的变量$\RSx_i$使用拓扑排序，使得对于所有$i$和$j$，
+如果$\RSx_i$是$\RSx_j$的父亲结点，则$j$大于$i$。
+然后可以按此顺序对变量进行采样。
+换句话说，我们可以首先采$\RSx_1\sim P(\RSx_1)$，然后采$\RSx_2\sim P(\RSx_2\mid Pa_{\CalG}(\RSx_2))$，以此类推，直到最后我们采$\RSx_n\sim P(\RSx_n\mid Pa_{\CalG}(\RSx_n))$。
+只要每个条件分布$\RSx_i\sim P(\RSx_i\mid Pa_{\CalG}(\RSx_i))$都很容易从中采样，那么很容易从整个模型中抽样。
+拓扑排序操作保证我们可以按照\eqn?中条件分布的顺序依次采样。
+如果没有拓扑排序，我们可能会尝试在其父节点可用之前对该变量进行抽样。
+<!-- % 571   -->
+
+
+对于一些图，可能有多个拓扑排序。 
+\gls{ancestral_sampling}可以使用这些拓扑排序中的任何一个。
+<!-- % 571 -->
+
+\gls{ancestral_sampling}通常非常快（假设从每个条件的采样容易）并且方便。
+<!-- % 571   -->
+
+
+\gls{ancestral_sampling}的一个缺点是其仅适用于\gls{directed_graphical_model}。 
+另一个缺点是它并不是每次采样都是条件采样操作。
+当我们希望从\gls{directed_graphical_model}中变量的子集中抽样时，给定一些其他变量，我们经常要求所有给定的条件变量比要抽样的变量的顺序要早。
+在这种情况下，我们可以从模型分布指定的局部条件概率分布进行抽样。 
+否则，我们需要采样的条件分布是给定观测变量的后验分布。
+这些后验分布在模型中通常没有明确指定和参数化。 
+推断这些后验分布的代价可能是昂贵的。 
+在这种情况下的模型中，\gls{ancestral_sampling}不再有效。
+<!-- % 571    -->
+
+
+
+不幸的是，\gls{ancestral_sampling}仅适用于\gls{directed_model}。 
+我们可以通过将\gls{undirected_model}转换为\gls{directed_model}来实现从\gls{undirected_model}中抽样，但是这通常需要解决棘手的推断问题（以确定新有向图的根节点上的边缘分布），或者需要引入许多边，从而会使得到的\gls{directed_model}变得难以处理。
+从\gls{undirected_model}抽样，而不首先将其转换为\gls{directed_model}的做法似乎需要解决循环依赖的问题。 
+每个变量与每个其他变量相互作用，因此对于抽样过程没有明确的起点。
+不幸的是，从\gls{undirected_model}模型中抽取样本是一个昂贵的过程。
+理论上最简单的方法是\firstgls{gibbs_sampling}。
+假设我们在一个$n$维向量的随机变量$\RVx$上有一个\gls{graphical_models}。 
+我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \mid \RSx_{-i})$中抽样。
+由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以仅对$\RSx_i$的邻居条件化。
+不幸的是，在我们遍历\gls{graphical_models}一次并采样所有$n$个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
+相反，我们必须重复该过程并使用它们邻居的更新值对所有$n$个变量重新取样。
+在多次重复之后，该过程渐近地收敛到目标分布。
+很难确定样本何时达到期望分布的足够精确的近似。
+\gls{undirected_model}的抽样技术是一个值得深入的研究方向，\chap?将对此进行更详细的讨论。
+<!-- % 572 head -->
+
+
+
+
+
+# 结构化建模的优势
+
+<!-- % 572 -->
+
+
+使用\gls{structured_probabilistic_models}的主要优点是它们能够显著降低表示概率分布以及学习和推断的成本。
+\gls{directed_model}可以加速采样的过程，但是对于\gls{undirected_model}情况则较为复杂。
+允许所有这些操作使用较少的运行时间和内存的主要机制是选择不对某些变量的相互作用进行建模。
+\gls{graphical_models}构造边来传达信息。
+在没有边的情况下，模型假设不对变量间的相互作用直接建模。
+<!-- % 572 -->
+
+
+使用\gls{structured_probabilistic_models}的一个较小的益处是它们允许我们明确地将给定的现有的知识与知识的学习或者推断分开。
+这使我们的模型更容易开发和调试。 
+我们可以设计，分析和评估适用于更广范围的学习算法和推断算法。
+并且我们可以设计能够捕捉到我们认为重要的关系的模型。
+然后，我们可以组合这些不同的算法和结构，并获得不同可能性的笛卡尔乘积。
+为每种可能的情况设计\gls{end_to_end}算法是困难的。
+<!-- % 572 -->
+
+
+
+
+# 学习\glsentrytext{dependency}关系
+
+<!-- % 572 -->
+
+良好的生成模型需要准确地捕获所观察到的或"可见"变量$\RVv$上的分布。
+通常$\RVv$的不同元素彼此高度依赖。
+在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个潜在的或"隐藏"变量$\Vh$。
+然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_i$直接依赖)。
+<!-- % 572  end  -->
+
+一个好的不包含任何\gls{latent_variable}$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
+但是代表这些高阶的相互作用是昂贵的，首先从计算角度上，存储在存储器中的参数数量是\gls{clique}中成员数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
+<!-- % 573  head   -->
+
+
+当模型旨在描述具有直接连接的可见变量之间的\gls{dependency}关系时，通常不可能连接所有变量，因此设计\gls{graphical_models}时需要连接紧密耦合的那些变量，并忽略其他变量之间的作用。
+\gls{ML}中有一个称为\firstgls{structure_learning}的领域来专门讨论这个问题。
+{koller-book2009}是一个\gls{structure_learning}的好的参考资料。
+大多数\gls{structure_learning}技术是基于一种贪婪搜索的形式。
+它们提出了一种结构，对具有该结构的模型进行训练，然后给出分数。 
+该分数奖励训练集上的高精度并惩罚复杂的模型。
+然后提出添加或移除少量边的候选结构作为搜索的下一步。
+搜索向一个预计会增加分数的方向发展。 
+<!-- % 573 -->
+
+
+使用\gls{latent_variable}而不是自适应结构避免了离散搜索和多轮训练的需要。 
+可见变量和\gls{latent_variable}之间的固定结构可以使用可见单元和隐藏单元之间的直接作用，从而使得可见单元之间间接作用。
+使用简单的参数学习技术，我们可以学习到一个具有固定结构的模型，在边缘分布$p(\Vv)$上输入正确的结构。
+<!-- % 573  -->
+
+
+\gls{latent_variable}还有一个额外的优势，即能够高效的描述$p(\RVv)$。
+新变量$\RVh$还提供了$\RVv$的替代表示。
+例如，如\sec?所示，\glssymbol{GMM}学习了一个\gls{latent_variable}，这个\gls{latent_variable}对应于特征是从哪一个混合体中抽出。
+这意味着\glssymbol{GMM}中的\gls{latent_variable}可以用于做分类。
+在\chap?中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为\gls{manifold}上坐标的\gls{latent_variable}的。
+其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
+许多方法通过学习\gls{latent_variable}来完成特征学习。
+通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\mid\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
+<!-- % 573 -->
+
+
+# 推断和\glsentrytext{approximate_inference}
+
+<!-- % 573 end -->
+
+
+<!-- %我们可以使用概率模型的主要方法之一是提出关于变量如何相互关联的问题。  -->
+解决变量之间如何相互关联的问题是我们使用概率模型的一个主要方式。 
+给定一组医学测试，我们可以询问患者可能患有什么疾病。
+在\gls{latent_variable}模型中，我们可能需要提取能够描述$\RVv$的特征$\SetE[\RVh \mid \RVv]$。
+有时我们需要解决这些问题来执行其他任务。 
+我们经常使用最大似然的准则来训练我们的模型。
+由于
+\begin{align}
+\log p(\Vv) = \SetE_{\RVh \sim p(\RVh\mid \Vv)} [\log p(\Vh,\Vv) -  \log p(\Vh\mid\Vv)]
+\end{align}
+学习过程中，我们经常想要计算$p(\RVh\mid\Vv)$。
+所有这些都是\firstgls{inference}问题的例子，其中我们必须预测给定其他变量的情况下一些变量的值，或者在给定其他变量值的情况下预测一些变量的概率分布。
+<!-- % 574 -->
+
+不幸的是，对于大多数有趣的深层模型，这些推断问题都是难以处理的，即使我们使用结构化的\gls{graphical_models}来简化它们。
+图结构允许我们用合理数量的参数来表示复杂的高维分布，但是用于\gls{DL}的\gls{graphical_models}并不满足这样的条件，从而难以实现高效地推断。
+<!-- % 574 -->
+
+
+可以直接看出，计算一般\gls{graphical_models}的边缘概率是\# P-hard的。
+复杂性类别\# P是复杂性类别NP的泛化。
+NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方案（如果存在）。
+\# P中的问题需要计算解决方案的数量。
+要构建最坏情况的\gls{graphical_models}，想象一下我们在3-SAT问题中定义了二进制变量的\gls{graphical_models}。
+我们可以对这些变量施加均匀分布。
+然后我们可以为每个子句添加一个二进制\gls{latent_variable}，来表示每个子句是否得到满足。
+然后，我们可以添加另一个\gls{latent_variable}，来表示是否满足所有子句。
+这可以通过构造一个\gls{latent_variable}的缩减树来完成，树中的每个结点表示其它两个变量是否满足，从而不需要构造一个大的\gls{clique}。
+该树的叶是每个子句的变量。
+树的根报告整个问题是否满足。
+由于literal上的均匀分布，缩减树的跟结点的边缘分布表示多少比例的分配能够使得该问题成立。
+虽然这是一个设计的最坏情况的例子，NP-hard图通常出现在现实世界的场景中。
+<!-- % 574 -->
+
+
+这促使我们使用\gls{approximate_inference}。
+在\gls{DL}中，这通常涉及\gls{variational_inference}，其中通过寻求尽可能接近真实分布的近似分布$q(\RVh\mid\RVv)$来逼近真实分布$p(\RVh\mid\Vv)$。
+这个技术在\chap?中有深入的描述。
+<!-- % 574 end -->
+
+
+
+
+# 结构化概率模型的\glsentrytext{DL}方法
+
+
+\gls{DL}实践者通常使用与从事\gls{structured_probabilistic_models}研究的\gls{ML}研究者相同的基本计算工具。
+然而，在\gls{DL}中，我们通常对如何组合这些工具做出不同的设计，导致总体算法和模型与更传统的\gls{graphical_models}具有非常不同的风格。
+<!-- % 575 -->
+
+
+\gls{DL}并不总是涉及特别深的\gls{graphical_models}。
+在\gls{graphical_models}中，我们可以根据\gls{graphical_models}的图而不是图计算来定义模型的深度。
+我们可以认为\gls{latent_variable}$h_j$处于深度$j$，如果从$h_i$到观察到的最短路径变量是$j$步。
+我们通常将模型的深度描述为任何这样的$h_j$的最大深度。 
+这种深度不同于由图计算定义的深度。
+用于\gls{DL}的许多生成模型没有\gls{latent_variable}或只有一层\gls{latent_variable}，但使用深度计算图来定义模型中的条件分布。
+<!-- % 575 -->
+
+
+\gls{DL}基本上总是利用分布式表示的思想。
+即使是用于\gls{DL}目的的浅层模型（例如预训练浅层模型，稍后将形成深层模型），也几乎总是具有单个大的\gls{latent_variable}层。
+\gls{DL}模型通常具有比观察到的变量更多的\gls{latent_variable}。
+复杂的变量之间的非线性相互作用通过多个\gls{latent_variable}的间接连接来实现。
+<!-- % 575 -->
+
+
+相比之下，传统的\gls{graphical_models}通常包含偶尔观察到的变量，即使一些训练样本中的许多变量随机丢失。
+传统模型大多使用高阶项和\gls{structure_learning}来捕获变量之间复杂的非线性相互作用。
+如果有\gls{latent_variable}，它们通常数量很少。
+<!-- % 575 -->
+
+
+
+\gls{latent_variable}的设计方式在\gls{DL}中也有所不同。
+\gls{DL}实践者通常不希望\gls{latent_variable}提前采用任何特定的含义，从而训练算法可以自由地开发它需要建模的适用于特定的数据集的概念。
+在事后解释\gls{latent_variable}通常是很困难的，但是可视化技术可以允许它们表示的一些粗略表征。
+当\gls{latent_variable}在传统\gls{graphical_models}中使用时，它们通常被赋予具有一些特定含义，比如文档的主题，学生的智力，导致患者症状的疾病等。
+这些模型通常由研究者解释，并且通常具有更多的理论保证，但是不能扩展到复杂的问题，并且不能在与深度模型一样多的不同背景中重复使用。
+<!-- % 576 -->
+
+
+另一个明显的区别是\gls{DL}方法中经常使用的连接类型。
+深度图模型通常具有大的与其它单元组全连接的单元组，使得两个组之间的相互作用可以由单个矩阵描述。
+传统的\gls{graphical_models}具有非常少的连接，并且每个变量的连接选择可以单独设计。
+模型结构的设计与推断算法的选择紧密相关。
+\gls{graphical_models}的传统方法通常旨在保持精确推断的可追踪性。
+当这个约束太强的时候，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的\gls{approximate_inference}算法。
+这两种方法通常在连接非常稀疏的图上有很好的效果。
+相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$\RSv_i$连接到非常多的隐藏单元$\RSh_j$上，从而使得$\RVh$可以获得一个$\RSv_i$的分布式表示（也可能是其他几个可观察变量）。
+分布式表示具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，分布式表示有一个缺点就是对于精确推断和循环信任传播等传统技术来说不能产生足够稀疏的图。
+结果，\gls{graphical_models}和深度图模型最大的区别之一就是\gls{DL}中从来不会使用\gls{loopy_belief_propagation}。
+相反的，许多\gls{DL}模型可以用来加速\gls{gibbs_sampling}或者\gls{variational_inference}。
+此外，\gls{DL}模型包含了大量的\gls{latent_variable}，使得高效的数值计算代码显得格外重要。
+除了选择高级推断算法之外，这提供了另外的动机，用于将结点分组成层，相邻两层之间用一个矩阵来描述相互作用。
+这要求实现算法的各个步骤具有高效的矩阵乘积运算，或者专门适用于稀疏连接的操作，例如块对角矩阵乘积或卷积。
+<!-- % 576 -->
+
+
+
+最后，\gls{graphical_models}的\gls{DL}方法的一个主要特征在于对未知量的较高容忍度。
+与简化模型直到它的每一个量都可以被精确计算不同的是，我们让模型保持了较高的自由度，以增强模型的威力。
+我们一般使用边缘分布不能计算但是可以简单的从中采样的模型。
+我们经常训练具有难以处理的目标函数的模型，我们甚至不能在合理的时间内近似，但是如果我们能够高效地获得这样的函数的梯度估计，我们仍然能够近似训练模型。
+深度学习方法通常是找出我们绝对需要的最小量信息，然后找出如何尽快得到该信息的合理近似。
+<!-- % 577 head -->
+
+
+
+
+## 实例：\glsentrytext{RBM}
+
+\firstgls{RBM}{cite?}或者\\ \firstgls{harmonium}是\gls{graphical_models}如何用于深度学习的典型例子。 
+\glssymbol{RBM}本身不是一个深层模型。 
+相反，它有一层\gls{latent_variable}，可用于学习输入的表示。 
+在\chap?中，我们将看到\glssymbol{RBM}如何被用来构建许多的深层模型。
+在这里，我们举例展示了\glssymbol{RBM}在许多深度图模型中使用的许多实践：
+它的结点被分成层，层之间的连接由矩阵描述，连通性相对密集。
+该模型能够进行高效的\gls{gibbs_sampling}，并且模型设计的重点在于以很高的自由度来学习\gls{latent_variable}，而不是设计师指定。
+之后在\sec?，我们将更详细地再次讨论\glssymbol{RBM}。
+<!-- % 577 -->
+
+规范的\glssymbol{RBM}是具有二进制的可见和隐藏单元的\gls{energy_based_model}。 其\gls{energy_function}为
+\begin{align}
+E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
+\end{align}
+其中$\Vb,\Vc$和$\MW$都是无约束的实值的可学习参数。
+我们可以看到，模型被分成两组单元：$\Vv$和$\Vh$，它们之间的相互作用由矩阵$\MW$来描述。
+该模型在\fig?中图示。
+如该图所示，该模型的一个重要方面是在任何两个可见单元之间或任何两个隐藏单元之间没有直接的相互作用（因此称为"受限"，一般的\gls{BM}可以具有任意连接）。
+<!-- % 577 -->
+
+
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics{Chapter16/figures/rbm}}	
+\fi
+	\caption{一个画成\gls{markov_network}形式的\glssymbol{RBM}。}
+\end{figure}
+
+
+
+对\glssymbol{RBM}结构的限制产生了好的属性
+\begin{align}
+p(\RVh\mid\RVv) = \prod_i p(\RSh_i\mid \RVv)
+\end{align}
+以及
+\begin{align}
+p(\RVv\mid\RVh) = \prod_i p(\RSv_i\mid \RVh).
+\end{align}
+<!-- % 578 head -->
+
+
+独立的条件分布很容易计算。
+对于二元的\gls{RBM}，我们可以得到：
+\begin{align}
+\begin{aligned}
+p(\RSh_i = 1\mid\RVv) = \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big),\\
+p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
+\end{aligned}
+\end{align}
+结合这些属性可以得到有效的\gls{block_gibbs_sampling}，它在同时采样所有$\Vh$和同时采样所有$\Vv$之间交替。
+\glssymbol{RBM}模型通过\gls{gibbs_sampling}产生的样本在\fig?中。
+<!-- % 578  -->
+
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+	\centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/rbm_samples}}	
+\fi
+	\caption{训练好的\glssymbol{RBM}及其权重中的样本。（左）用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。每一列是一个单独的\gls{gibbs_sampling}过程。没遗憾表示另一个$1000$步\gls{gibbs_sampling}的输出。连续的样本之间彼此高度相关。（右）对应的权重向量。将本图结果与图\?中描述的样本和权重相比。由于\glssymbol{RBM}的先验$p(\Vh)$没有限制为\gls{factorial}，这里的样本表现得更好。采样时\glssymbol{RBM}能够学习到哪些特征需要一起出现。另一方面说，\glssymbol{RBM}后验$p(\Vh \mid \Vv)$是\gls{factorial}的，而\gls{sparse_coding}的后验并不是，所以在特征提取上\gls{sparse_coding}模型表现得更好。其它的模型可以使用非\gls{factorial}的$p(\Vh)$和非\gls{factorial}的$p(\Vh \mid \Vh)$。图片的复制经过{lisa_tutorial_rbm}的允许。}
+\end{figure}
+
+
+由于\gls{energy_function}本身只是参数的线性函数，很容易获取\gls{energy_function}的导数。 例如，
+\begin{align}
+\frac{\partial}{\partial W_{i,j}} E(\RVv,\RVh) = - \RSv_i \RSh_j.
+\end{align}
+这两个属性，高效的\gls{gibbs_sampling}和导数计算，使训练过程非常方便。
+在\chap?中，我们将看到，可以通过计算应用于来自模型的样本的这种导数来训练\gls{undirected_model}。
+<!-- % 579 -->
+
+训练模型可以得到数据$\Vv$的表示$\Vh$。
+我们可以经常使用$\SetE_{\RVh\sim p(\RVh\mid\Vv)}[\Vh]$ 作为一组描述$\Vv$的特征。
+<!-- % 579 -->
+
+
+
+总的来说，\glssymbol{RBM}展示了典型的\gls{graphical_models}的\gls{DL}方法：结合由矩阵参数化的层之间的高效相互作用通过\gls{latent_variable}层完成\gls{representation_learning}。
+<!-- % 579 -->
+
+
+\gls{graphical_models}的语言为描述概率模型提供了一种优雅，灵活和清晰的语言。 在前面的章节中，我们使用这种语言，以及其他视角来描述各种各样的深概率模型。
+<!-- % 579 -->
+
+
+
+

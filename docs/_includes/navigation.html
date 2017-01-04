@@ -1,0 +1,15 @@
+<nav id="dl-menu" class="dl-menuwrapper" role="navigation">
+	<button class="dl-trigger">Open Menu</button>
+	<ul class="dl-menu">
+		<li><a href="{{ site.url }}/">Index</a></li>
+		<li><a href="https://github.com/exacity/deeplearningbook-chinese">Github</a></li>
+	    {% for link in site.data.navigation %}
+	    {% if link.url contains 'http' %}
+	        {% assign domain = '' %}
+	        {% else %}
+	        {% assign domain = site.url %}
+	    {% endif %}
+	    <li><a href="{{ domain }}{{ link.url }}" {% if link.url contains 'http' %}target="_blank"{% endif %}>{{ link.title }}</a></li>
+	  {% endfor %}
+	</ul><!-- /.dl-menu -->
+</nav><!-- /.dl-menuwrapper -->
