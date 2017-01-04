@@ -56,7 +56,7 @@
 % -- 164 --
 
 剩下的问题就是如何选择映射$\phi$。
-\begin{itemize}
+\begin{enumerate}
 \item 其中一种选择是使用一个通用的$\phi$，例如无限维的$\phi$，它隐含地用在基于\glssymbol{RBF}核的\gls{kernel_machines}上。
 如果$\phi(\bm{x})$具有足够高的维数，我们总是有足够的能力来拟合训练集，但是对于测试集的\gls{generalization}往往不佳。
 非常通用的特征映射通常只基于局部平滑的原则，并没有将足够的先验信息进行编码来解决高级问题。
@@ -68,14 +68,14 @@
 \item 深度学习的策略是去学习$\phi$。
 在这种方法中，我们有一个模型$y = f(\bm{x};\theta, \bm{w}) = \phi(\bm{x}; \theta)^\top \bm{w}$。
 我们现在有两种参数：用于从一大类函数中学习$\phi$的参数$\bm{\theta}$，以及用于将$\phi(\bm{x})$映射到所需的输出的参数$\bm{w}$。
-这是\gls{deep_feedforward_network}的一个例子，$\phi$定义一个\gls{hidden_layer}。
-这种方法是三种中唯一一个放弃训练问题的凸性的方法，但是利大于弊。
+这是\gls{deep_feedforward_network}的一个例子，其中$\phi$定义了一个\gls{hidden_layer}。
+这是三种方法中唯一一种放弃训练问题的凸性的方法，但是利大于弊。
 在这种方法中，我们将表示参数化为$\phi(\bm{x}; \bm{\theta})$，并且使用优化算法来寻找$\bm{\theta}$，使它能够得到一个好的表示。
-如果我们希望，这种方法也可以通过使它变得高度通用来获得第一种方法的优点——我们只需使用一个非常广泛的函数族$\phi(\bm{x}; \bm{\theta})$。
+如果我们希望，这种方法也可以通过使它变得高度通用以获得第一种方法的优点——我们只需使用一个非常广泛的函数族$\phi(\bm{x}; \bm{\theta})$。
 这种方法也可以获得第二种方法的优点。
-人类专家可以将他们的知识编码进网络来帮助扩展，他们只需要设计那些他们期望能够表现优异的函数族$\phi(\bm{x}; \bm{\theta})$即可。
+人类专家可以将他们的知识编码进网络来帮助\gls{generalization}，他们只需要设计那些他们期望能够表现优异的函数族$\phi(\bm{x}; \bm{\theta})$即可。
 这种方法的优点是人类设计者只需要寻找正确的函数族即可，而不需要去寻找精确的函数。
-\end{itemize}
+\end{enumerate}
 
 这种通过学习特征来改善模型的一般化原则不止适用于本章描述的\gls{feedforward_neural_network}。
 它是深度学习中反复出现的主题，适用于全书描述的所有种类的模型。
@@ -88,34 +88,35 @@
 接着，我们讨论部署一个\gls{feedforward_network}所需的每个设计决策。
 首先，训练一个\gls{feedforward_network}至少需要做和线性模型同样多的设计决策：选择一个优化模型，代价函数以及输出单元的形式。
 我们先回顾这些基于梯度学习的基本知识，然后去面对那些只出现在\gls{feedforward_network}中的设计决策。
-\gls{feedforward_network}已经介绍了\gls{hidden_layer}的概念，这需要我们去选择用于计算\gls{hidden_layer}值的\firstgls{activation_function}。
-我们也必须设计网络的结构，包括网络应该包含多少层、这些网络应该如何连接，每一层包含多少单元。
+\gls{feedforward_network}已经引入了\gls{hidden_layer}的概念，这需要我们去选择用于计算\gls{hidden_layer}值的\firstgls{activation_function}。
+我们还必须设计网络的结构，包括网络应该包含多少层、这些层应该如何连接，以及每一层包含多少单元。
 在深度神经网络的学习中需要计算复杂函数的梯度。
-我们给出\firstgls{back_propagation}算法和它的现代推广，可以用来高效地计算这些梯度。
-最后，我们以某些历史视角来结束这一章。
+我们给出\firstgls{back_propagation}算法和它的现代推广，它们可以用来高效地计算这些梯度。
+最后，我们以某些历史观点来结束这一章。
 
 \section{实例：学习XOR}
 \label{sec:example_learning_xor}
 
-为了使\gls{feedforward_network}更加具体，我们首先从一个\gls{feedforward_network}充分发挥作用的简单例子说起：学习XOR函数。
+为了使\gls{feedforward_network}的想法更加具体，我们首先从\gls{feedforward_network}充分发挥作用的一个简单例子说起：学习XOR函数。
 
 XOR函数（``异或''逻辑）是两个二进制值$x_1$和$x_2$的运算。
 当这些二进制值中恰好有一个为1时，XOR函数返回值为1。
 其余情况下返回值为0。
 XOR函数提供了我们想要学习的目标函数$y = f^*(\bm{x})$。
-我们的模型给出了一个函数$y=f(\bm{x}; \bm{\theta})$并且我们的学习算法会不断更新参数$\bm{\theta}$来使得$f$尽可能接近$f^*$。
+我们的模型给出了一个函数$y=f(\bm{x}; \bm{\theta})$并且我们的学习算法会不断调整参数$\bm{\theta}$来使得$f$尽可能接近$f^*$。
 
-在这个简单的例子中，我们不会关心统计概括。
-我们希望我们的网络在这四个点$\SetX =\{[0, 0]^\top, [0, 1]^\top, [1, 0]^\top, [1, 1]^\top\}$上表现正确。
-我们会用全部这四个点来训练我们的网络，唯一的挑战是适应训练集。
+在这个简单的例子中，我们不会关心统计\gls{generalization}。
+我们希望网络在这四个点$\SetX =\{[0, 0]^\top, [0, 1]^\top, [1, 0]^\top, [1, 1]^\top\}$上表现正确。
+我们会用全部这四个点来训练我们的网络，唯一的挑战是拟合训练集。
 
-我们可以把这个问题当作是回归问题，并使用均方误差损失函数。
+我们可以把这个问题当作是回归问题，并使用\gls{mean_squared_error}损失函数。
 我们选择这个损失函数是为了尽可能简化本例中用到的数学。
-我们后面会看到还有其他更加合适的方法来对二进制数据建模。
+在应用领域，对于二进制数据建模时，\glssymbol{mean_squared_error}通常并不是一个合适的损失函数。
+更加合适的方法将在\ref{sec:sigmoid_units_for_bernoulli_output_distributions}节中讨论。
 
 % -- 166 --
 
-为了对在整个训练集上的表现进行评估，MSE损失函数为
+为了对在整个训练集上的表现进行评估，\glssymbol{mean_squared_error}损失函数为
 \begin{equation}
 J(\bm{\theta}) = \frac{1}{4} \sum_{\bm{x}\in \SetX} (f^*(\bm{x}) - f(\bm{x}; \bm{\theta}))^2.
 \end{equation}
@@ -125,10 +126,10 @@ J(\bm{\theta}) = \frac{1}{4} \sum_{\bm{x}\in \SetX} (f^*(\bm{x}) - f(\bm{x}; \bm
 \begin{equation}
 f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 \end{equation}
-我们可以用正规方程来对$\bm{w}$和$b$最小化$J(\bm{\theta})$，来得到一个封闭形式的解。
+我们可以用\gls{normal_equations}对$\bm{w}$和$b$最小化$J(\bm{\theta})$，来得到一个封闭形式的解。
 
-解正规方程以后，我们得到$\bm{w} = 0$以及$b = \frac{1}{2}$。
-线性模型仅仅在任意一点都输出0.5。
+解\gls{normal_equations}以后，我们得到$\bm{w} = 0$以及$b = \frac{1}{2}$。
+线性模型仅仅是在任意一点都输出0.5。
 为什么会发生这种事？
 图\ref{fig:chap6_xor_space_gray}演示了线性模型为什么不能用来表示XOR函数。
 解决这个问题的其中一种方法是使用一个模型来学习一个不同的特征空间，在这个空间上线性模型能够表示这个解。
@@ -157,10 +158,10 @@ f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 \end{figure}
 
 
-特别地，我们这里引入一个非常简单的\gls{feedforward_neural_network}，它有一层\gls{hidden_layer}并且\gls{hidden_layer}中包含两个单元。
+具体来说，我们这里引入一个非常简单的\gls{feedforward_neural_network}，它有一层\gls{hidden_layer}并且\gls{hidden_layer}中包含两个单元。
 参见图\ref{fig:chap6_example_mlp}中对该模型的解释。
-这个\gls{feedforward_network}有一个通过函数$f^{(1)}(\bm{x};\bm{W}, \bm{c})$计算得到的\gls{hidden_layer}单元向量$\bm{h}$。
-这些\gls{hidden_layer}单元的值随后被用作第二层的输入。
+这个\gls{feedforward_network}有一个通过函数$f^{(1)}(\bm{x};\bm{W}, \bm{c})$计算得到的\gls{hidden_unit}的向量$\bm{h}$。
+这些\gls{hidden_unit}的值随后被用作第二层的输入。
 第二层就是这个网络的输出层。
 输出层仍然只是一个线性回归模型，只不过现在它作用于$\bm{h}$而不是$\bm{x}$。
 网络现在包含链接在一起的两个函数：$\bm{h}=f^{(1)}(\bm{x}; \bm{W}, \bm{c})$和$y = f^{(2)}(\bm{h}; \bm{w}, b)$，完整的模型是$f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = f^{(2)}(f^{(1)}(\bm{x}))$。
@@ -186,7 +187,7 @@ f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 \end{figure}
 
 
-$f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，让$f^{(1)}$也是线性的是很有诱惑力的。
+$f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，让$f^{(1)}$也是线性的似乎很有诱惑力。
 不幸的是，如果$f^{(1)}$是线性的，那么\gls{feedforward_network}作为一个整体对于输入仍然是线性的。
 暂时忽略截距项，假设$f^{(1)}(\bm{x})= \bm{W}^\top \bm{x}$并且$f^{(2)}(\bm{h})=\bm{h}^\top \bm{w}$，那么$f(\bm{x}) = \bm{w}^\top\bm{W}^\top \bm{x}$。
 我们可以将这个函数重新表示成$f(\bm{x}) = \bm{x}^\top\bm{w}'$其中$\bm{w}' = \bm{W}\bm{w}$。
@@ -194,11 +195,11 @@ $f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，�
 % -- 167 --
 
 显然，我们必须用非线性函数来描述这些特征。
-大多数神经网络通过仿射变化以及紧接着一个被称为激活函数的固定的非线性函数来实现这个目标，其中仿射变化由学得的参数控制。
+大多数神经网络通过仿射变换之后紧跟着一个被称为激活函数的固定非线性函数来实现这个目标，其中仿射变换由学得的参数控制。
 我们这里使用这种策略，定义$\bm{h}=g(\bm{W}^\top \bm{x}+\bm{c})$，其中$\bm{W}$是线性变换的权重矩阵，$\bm{c}$是偏置。
-先前，为了描述线性回归模型，我们使用权重向量和一个标量的偏置参数来描述一个从输入向量到输出标量的仿射变换。
+先前，为了描述线性回归模型，我们使用权重向量和一个标量的偏置参数来描述从输入向量到输出标量的仿射变换。
 现在，因为我们描述的是向量$\bm{x}$到向量$\bm{h}$的仿射变换，所以我们需要一整个向量的偏置参数。
-激活函数$g$通常选择一个对每个元素分别智能作用的函数，有$h_i =g(\bm{x}^\top \bm{W}_{:, i} + c_i)$。
+激活函数$g$通常选择对每个元素分别起作用的函数，有$h_i =g(\bm{x}^\top \bm{W}_{:, i} + c_i)$。
 在现代神经网络中，默认的推荐是使用由激活函数$g(z)=\max\{0, z\}$定义的\firstgls{ReLU}或者称为\glssymbol{ReLU}\citep{Jarrett-ICCV2009-small,Nair-2010-small,Glorot+al-AI-2011-small}，如图\ref{fig:chap6_relu_color}所示。
 % fig 6.3
 \begin{figure}[!htb]
@@ -243,8 +244,8 @@ f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = \bm{w}^\top \max\{ 0, \bm{W}^\top \bm{x} 
 \end{align}
 以及$b=0$。
 
-我们现在考虑让模型处理一批输入。
-令$\bm{X}$表示一个设计好的输入矩阵，包含二进制 输入空间中的全部四个点，每个样例占一行，那么矩阵表示为：
+我们现在可以了解这个模型如何处理一批输入。
+令$\bm{X}$表示设计矩阵，它包含二进制输入空间中全部的四个点，每个样例占一行，那么矩阵表示为：
 \begin{equation} 
 \bm{X} = \begin{bmatrix}
 0 & 0\\
@@ -253,7 +254,8 @@ f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = \bm{w}^\top \max\{ 0, \bm{W}^\top \bm{x} 
 1 & 1
 \end{bmatrix}. 
 \end{equation} 
-神经网络的第一步是将输入矩阵乘以第一层的权重矩阵： \begin{equation}
+神经网络的第一步是将输入矩阵乘以第一层的权重矩阵： 
+\begin{equation}
 \bm{X}\bm{W} = \begin{bmatrix} 
 0 & 0\\ 
 1 & 1\\ 
@@ -273,7 +275,7 @@ f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = \bm{w}^\top \max\{ 0, \bm{W}^\top \bm{x} 
 在这个空间中，所有的样例都处在一条斜率为1的直线上。
 当我们沿着这条直线移动时，输出需要从0升到1，然后再降回0。
 线性模型不能实现这样一种函数。
-为了完成计算$\bm{h}$对每个样例的值，我们使用修正线性变换： 
+为了用$\bm{h}$对每个样例求值，我们使用\gls{rectified_linear_transformation}： 
 \begin{equation}
 \begin{bmatrix} 
 0 & 0\\ 
@@ -300,10 +302,10 @@ f(\bm{x}; \bm{W}, \bm{c}, \bm{w}, b) = \bm{w}^\top \max\{ 0, \bm{W}^\top \bm{x} 
 神经网络对这一批次中的每个样例都给出了正确的结果。
 
 在这个例子中，我们简单地指明了答案，然后说明它得到的误差为零。
-在真实情况下，可能会有几十亿的模型参数以及数十亿的训练样本，所以不能像我们这里做的那样进行简单地猜解。
+在实际情况中，可能会有数十亿的模型参数以及数十亿的训练样本，所以不能像我们这里做的那样进行简单地猜解。
 与之相对的，基于梯度的优化算法可以找到一些参数使得产生的误差非常小。
-我们这里给出的XOR问题的解是损失函数的全局最小点，所以梯度下降算法可以收敛到这一点。
-XOR问题的其他的一些等价解也可以被梯度下降算法找到。
+我们这里给出的XOR问题的解处在损失函数的全局最小点，所以梯度下降算法可以收敛到这一点。
+梯度下降算法还可以找到XOR问题一些其他的等价解。
 梯度下降算法的收敛点取决于参数的初始值。
 在实践中，梯度下降通常不会找到像我们这里给出的那种干净的、容易理解的、整数值的解。
 
@@ -849,7 +851,7 @@ g(\bm{z})_i = \underset{j\in \SetG^{(i)}}{\max} z_j
 maxout单元可以学习具有多达$k$段的分段线性的凸函数。
 maxout单元因此可以视为\textbf{学习激活函数}本身而不仅仅是单元之间的关系。
 使用足够大的$k$，maxout单元可以以任意的逼真度来近似任何凸函数。
-特别地，具有每组两块的maxout层可以学习实现和传统层相同的输入$\bm{x}$的函数，包括修正线性激活函数、绝对值修正函数、leaky或参数化ReLU、或者可以学习实现与这些都不同的函数。
+特别地，具有每组两块的maxout层可以学习实现和传统层相同的输入$\bm{x}$的函数，包括\gls{rectified_linear}激活函数、绝对值修正函数、leaky或参数化ReLU、或者可以学习实现与这些都不同的函数。
 maxout层的参数化当然也将与这些层不同，所以即使是maxout学习去实现和其他种类的层相同的$\bm{x}$的函数这种情况下，学习的机理也是不一样的。
 
 每个maxout单元现在由$k$个权重向量来参数化，而不仅仅是一个，所以maxout单元通常比\gls{ReLU}需要更多的正则化。
@@ -1021,8 +1023,8 @@ Borel可测的概念超出了本书的范畴；对于我们想要实现的目标
 第一个结果是关于逻辑门电路的\citep{Hastad86}。
 后来的工作将这些结果扩展到了具有非负权重的线性阈值单元\citep{Hastad91,Hajnal-et-al-1993}，然后扩展到了具有连续值激活的网络\citep{Maass-1992,Maass-et-al-1994}。
 许多现代神经网络使用\gls{ReLU}。
-\cite{Leshno-et-al-1993}证明带有一大类非多项式激活函数族的浅层网络，包括\gls{ReLU}，具有通用的近似性质，但是这些结果并没有强调深度或效率的问题——它们仅指出足够宽的修正线性网络能够表示任意函数。
-\cite{Montufar-et-al-NIPS2014}指出一些用深度修正线性网络表示的函数可能需要浅层网络（一个\gls{hidden_layer}）指数级的\gls{hidden_unit}才能表示。
+\cite{Leshno-et-al-1993}证明带有一大类非多项式激活函数族的浅层网络，包括\gls{ReLU}，具有通用的近似性质，但是这些结果并没有强调深度或效率的问题——它们仅指出足够宽的\gls{rectifier_network}能够表示任意函数。
+\cite{Montufar-et-al-NIPS2014}指出一些用深度\gls{rectifier_network}表示的函数可能需要浅层网络（一个\gls{hidden_layer}）指数级的\gls{hidden_unit}才能表示。
 更确切的说，他们说明分段线性网络（可以通过修正非线性或maxout单元获得）可以表示区域的数量是网络深度的指数级的函数。
 图\ref{fig:chap6_space_folding}解释了带有绝对值修正的网络是如何创建函数的镜像图像的，这些函数在某些\gls{hidden_unit}的顶部计算，作用于\gls{hidden_unit}的输入。
 每个\gls{hidden_unit}指定在哪里折叠输入空间，来创造镜像响应（在绝对值非线性的两侧）。
@@ -1045,7 +1047,7 @@ Borel可测的概念超出了本书的范畴；对于我们想要实现的目标
 \end{figure}
 
 
-更确切的说，\cite{Montufar-et-al-NIPS2014}的主要定理指出，具有$d$个输入，深度为$l$，每个\gls{hidden_layer}有$n$个单元的深度修正线性网络可以描述的线性区域的数量是
+更确切的说，\cite{Montufar-et-al-NIPS2014}的主要定理指出，具有$d$个输入，深度为$l$，每个\gls{hidden_layer}有$n$个单元的深度\gls{rectifier_network}可以描述的线性区域的数量是
 \begin{equation}
 O \left ( {n \choose d}^{d(l-1)} n^d \right ),
 \end{equation}
@@ -1851,10 +1853,10 @@ Krylov方法是用于执行各种操作的一组迭代技术，这些操作包�
 \cite{Jarrett-ICCV2009-small}观察到，在神经网络结构设计的几个不同因素中``使用修正非线性是提高识别系统性能的最重要的唯一因素''。
 
 对于小的数据集，\cite{Jarrett-ICCV2009-small}观察到，使用修正非线性甚至比学习\gls{hidden_layer}的权重值更加重要。
-随机的权重足以通过修正线性网络传播有用的信息，允许在顶部的分类器层学习如何将不同的特征向量映射到类标识。
+随机的权重足以通过\gls{rectifier_network}传播有用的信息，允许在顶部的分类器层学习如何将不同的特征向量映射到类标识。
 
 当有更多数据可用时，学习开始提取足够的有用知识来超越随机选择参数的性能。
-\cite{Glorot+al-AI-2011-small}说明，在深度修正线性网络中的学习比在激活函数具有曲率或两侧饱和的深度网络中的学习更容易。
+\cite{Glorot+al-AI-2011-small}说明，在深度\gls{rectifier_network}中的学习比在激活函数具有曲率或两侧饱和的深度网络中的学习更容易。
 
 \gls{ReLU}还具有历史意义，因为它们表明神经科学继续对深度学习算法的发展产生影响。
 \cite{Glorot+al-AI-2011-small}从生物学考虑\gls{ReLU}的导出。
