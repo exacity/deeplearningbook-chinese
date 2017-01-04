@@ -16,7 +16,7 @@ share: false
 
 
 在本章中，我们描述了一些带有\gls{latent_variable}的最简单的概率模型：\firstgls{linear_factor}。
-这些模型有时被用来构建混合块模型。
+这些模型有时被用来构建混合块模型{cite?}或者更大的深度概率模型{cite?}。
 他们还展示了构建\gls{generative_model}所需的许多基本方法，更先进的深层模型也将在此基础上进一步扩展。
 <!-- % 479 -->
 
@@ -60,10 +60,10 @@ share: false
 
 <!-- % 480 -->
 
-\firstgls{PPCA}，\gls{FA}和其他\gls{linear_factor}是上述等式（\eqn?$\Vh$的先验的选择上不同。
+\firstgls{PPCA}，\gls{FA}和其他\gls{linear_factor}是上述等式（\eqn?,\eqn?）的特殊情况，并且仅在对观测到$\Vx$之前的噪声分布和\gls{latent_variable}$\Vh$的先验的选择上不同。
 <!-- % 480 -->
 
-\firstgls{FA}
+\firstgls{FA}{cite?}中，\gls{latent_variable}的先验是一个方差为单位矩阵的\gls{gaussian_distribution}
 \begin{align}
 \RVh \sim \CalN(\Vh; \mathbf{0},\MI),
 \end{align}
@@ -112,14 +112,14 @@ share: false
 <!-- % 481 -->
 
 
-\firstall{ICA}是最古老的\gls{representation_learning}算法之一。
+\firstall{ICA}是最古老的\gls{representation_learning}算法之一{cite?}。
 它是一种建模线性因子的方法，旨在分离观察到的信号，并转换为许多基础信号的叠加。
-这些信号是完全独立的，而不是仅仅彼此不相关\footnote{\sec?。
+这些信号是完全独立的，而不是仅仅彼此不相关\footnote{\sec?讨论了不相关变量和独立变量之间的差异。}。
 <!-- % 481 -->
 
 
 许多不同的具体方法被称为\gls{ICA}。
-与我们本书中描述的其他\gls{generative_model}最相似的\gls{ICA}变种是训练完全参数化的\gls{generative_model}。
+与我们本书中描述的其他\gls{generative_model}最相似的\gls{ICA}变种是训练完全参数化的\gls{generative_model}{cite?}。
 隐含因子$\Vh$的先验$p(\Vh)$，必须由用户给出并固定。
 接着模型确定性地生成$\Vx = \MW \Vh$。
 我们可以通过非线性变化（使用\eqn?）来确定$p(\Vx)$。
@@ -167,9 +167,9 @@ share: false
 <!-- % 483 head -->
 
 
-正如\glssymbol{PCA}可以推广到\chap?，其中我们使用非线性函数$f$来生成观测数据。
+正如\glssymbol{PCA}可以推广到\chap?中描述的非线性\gls{AE}，\gls{ICA}可以推广到非线性\gls{generative_model}，其中我们使用非线性函数$f$来生成观测数据。
 关于非线性\gls{ICA}最初的工作可以参考{hyvarinen1999nonlinear}，它和\gls{ensemble_learning}的成功结合可以参见{roberts2001independent,lappalainen2000nonlinear}。
-\gls{ICA}的另一个非线性扩展是\firstall{NICE}方法行列式。
+\gls{ICA}的另一个非线性扩展是\firstall{NICE}方法{cite?}，这个方法堆叠了一系列可逆变换（\gls{encoder}），从而能够高效地计算每个变换的\gls{jacobian}行列式。
 这使得我们能够精确地计算似然，并且像\glssymbol{ICA}一样，\glssymbol{NICE}尝试将数据变换到具有可分解的边缘分布的空间。
 由于非线性\gls{encoder}的使用\footnote{译者注：相比于\glssymbol{ICA}}，这种方法更可能成功。
 因为\gls{encoder}和一个与其（\gls{encoder}）完美逆作用的\gls{decoder}相关联，所以可以直接从模型生成样本（通过首先从$p(\Vh)$采样，然后应用\gls{decoder}）。
@@ -191,7 +191,7 @@ share: false
 <!-- % 484 head -->
 
 
-\firstall{SFA}是使用来自时间信号的信息来学习不变特征的\gls{linear_factor}。
+\firstall{SFA}是使用来自时间信号的信息来学习不变特征的\gls{linear_factor}{cite?}。
 <!-- % 484 -->
 
 
@@ -204,7 +204,7 @@ share: false
 <!-- % 484 -->
 
 
-\gls{slow_principle}早于\glssymbol{SFA}，并已被应用于各种模型。
+\gls{slow_principle}早于\glssymbol{SFA}，并已被应用于各种模型{cite?}。
 一般来说，我们可以将\gls{slow_principle}应用于可以使用\gls{GD}训练的任何可微分模型。 
 为了引入\gls{slow_principle}，我们可以通过向\gls{cost_function}添加以下项
 \begin{align}
@@ -221,7 +221,7 @@ $L$的一个常见选择是平均误差平方。
 <!-- % 484 -->
 
 
-\glssymbol{SFA}算法包括将$f(\Vx;\theta)$定义为线性变换，并求解满足如下约束
+\glssymbol{SFA}算法{cite?}包括将$f(\Vx;\theta)$定义为线性变换，并求解满足如下约束
 \begin{align}
 \SetE_t  f(\Vx^{(t)})_i = 0 
 \end{align}
@@ -260,8 +260,8 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 <!-- % 485 -->
 
 
-当训练在自然场景的视频的小空间补丁的时候，使用二次基扩展的\glssymbol{SFA}能够学习到与V1皮层中那些复杂细胞类似的许多特征。
-当训练在3-D计算机呈现环境内的随机运动的视频时，深度\glssymbol{SFA}模型能够学习到与大鼠脑中用于导航的神经元学到的类似的特征。
+当训练在自然场景的视频的小空间补丁的时候，使用二次基扩展的\glssymbol{SFA}能够学习到与V1皮层中那些复杂细胞类似的许多特征{cite?}。
+当训练在3-D计算机呈现环境内的随机运动的视频时，深度\glssymbol{SFA}模型能够学习到与大鼠脑中用于导航的神经元学到的类似的特征{cite?}。
 因此从生物学角度上说\glssymbol{SFA}是一个合理的有依据的模型。
 <!-- % 485 -->
 
@@ -275,7 +275,7 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 <!-- % 486 -->
 
 
-深度\glssymbol{SFA}也已经被用于学习用在对象识别和姿态估计的特征。
+深度\glssymbol{SFA}也已经被用于学习用在对象识别和姿态估计的特征{cite?}。
 到目前为止，\gls{slow_principle}尚未成为任何最先进的技术应用的基础。
 究竟是什么因素限制了其性能也有待研究。
 我们推测，或许慢度先验是太过强势，并且，最好添加这样一个先验使得当前步骤到下一步的预测更加容易，而不是加一个先验使得特征应该近似为一个常数。
@@ -289,7 +289,7 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 <!-- % 486 -->
 
 
-\firstgls{sparse_coding}特征学习和特征提取机制进行了大量研究。
+\firstgls{sparse_coding}{cite?}是一个\gls{linear_factor}，已作为\gls{unsupervised}特征学习和特征提取机制进行了大量研究。
 严格地说，术语"\gls{sparse_coding}"是指在该模型中推断$\Vh$的值的过程，而"稀疏建模"是指设计和学习模型的过程，但是通常这两个概念都可以用术语"\gls{sparse_coding}"描述。
 <!-- % 486 -->
 
@@ -302,7 +302,7 @@ p(\Vx\mid \Vh) = \CalN
 <!-- % 486 -->
 
 
-关于$p(\Vh)$分布通常选择一个峰值很尖锐且接近$0$的分布。
+关于$p(\Vh)$分布通常选择一个峰值很尖锐且接近$0$的分布{cite?}。
 常见的选择包括了可分解的Laplace，Cauchy或者可分解的Student-t分布。
 例如，以稀疏惩罚系数$\lambda$为参数的Laplace先验可以表示为
 \begin{align}
@@ -328,7 +328,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 <!-- % 487 -->
 
 
-结合\eqn?，我们得到如下的优化问题：
+结合\eqn?和\eqn?，我们得到如下的优化问题：
 \begin{align}
 & \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vx) \\
 = & \underset{\Vh}{\arg\max}\ \log  p(\Vh\mid\Vx)\\
@@ -372,9 +372,9 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 
 
 非参数\gls{encoder}的主要缺点是在给定$\Vx$的情况下需要大量的时间来计算$\Vh$，因为非参数方法需要运行迭代算法。
-在\chap?方法仅使用固定数量的层，通常只有一层。
+在\chap?中讲到的参数化的\gls{AE}方法仅使用固定数量的层，通常只有一层。
 另一个缺点是它不直接通过非参数\gls{encoder}进行反向传播，这使得我们很难采用先使用\gls{unsupervised}方式预训练\gls{sparse_coding}模型然后使用\gls{supervised}方式对其进行微调的方法。
-允许近似导数的\gls{sparse_coding}模型的修改版本确实存在但未被广泛使用。
+允许近似导数的\gls{sparse_coding}模型的修改版本确实存在但未被广泛使用{cite?}。
 <!-- % 488  end -->
 
 像其他\gls{linear_factor}一样，\gls{sparse_coding}经常产生糟糕的样本，如\fig?所示。
@@ -409,7 +409,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 <!-- % 489 au -->
 
 
-\gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以理解为学习一个\gls{manifold}。
+\gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以理解为学习一个\gls{manifold}{cite?}。
 我们可以将\gls{PPCA}定义为高概率的薄饼状区域，即\gls{gaussian_distribution}，沿着某些轴非常窄，就像薄饼沿着其垂直轴非常平坦，但沿着其他轴是细长的，正如薄饼在其水平轴方向是很宽的一样。
 \fig?解释了这种现象。
 \glssymbol{PCA}可以理解为将该薄饼与更高维空间中的线性\gls{manifold}对准。

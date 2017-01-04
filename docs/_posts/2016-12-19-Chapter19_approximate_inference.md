@@ -20,7 +20,7 @@ share: false
 
 
 在本章中，我们介绍了几个基本的技巧，用来解决难以处理的推断问题。
-稍后，在\chap?。
+稍后，在\chap?中，我们还将描述如何将这些技巧应用到训练其他方法难以奏效的概率模型中，如\gls{DBN}，\gls{DBM}。
 <!-- % 623 -->
 
 
@@ -36,7 +36,7 @@ share: false
 \else
 	\centerline{\includegraphics[width=0.8\textwidth]{Chapter19/figures/intractable_graphs}}
 \fi
-	\caption{深度学习中难以处理的推断问题通常是由于结构化图模型中\gls{latent_variable}的相互作用。这些相互作用产生于当V-结构的子节点是可观察的时候一个\gls{latent_variable}与另一个\gls{latent_variable}或者更长的激活路径相连。（左）一个隐含节点相互连接的\gls{srbm}
+	\caption{深度学习中难以处理的推断问题通常是由于结构化图模型中\gls{latent_variable}的相互作用。这些相互作用产生于当V-结构的子节点是可观察的时候一个\gls{latent_variable}与另一个\gls{latent_variable}或者更长的激活路径相连。（左）一个隐含节点相互连接的\gls{srbm}{cite?}。由于存在大量的\gls{latent_variable}的\gls{clique}，\gls{latent_variable}的直接连接使得后验分布难以处理。（中）一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。（右）当可见变量是可以观察时这个有向模型的\gls{latent_variable}之间存在相互作用，因为每两个\gls{latent_variable}都是\gls{coparent}。即使拥有上图中的某一种结构，一些概率模型依然能够获得易于处理的后验分布。如果我们选择条件概率分布来引入相对于图结构描述的额外的独立性这种情况也是可能出现的。举个例子，\gls{PPCA}的图结构如右图所示，然而由于其条件分布的特殊性质（带有相互正交的基向量的线性高斯条件分布）依然能够进行简单的推断。}
 \end{figure}
 
 
@@ -230,7 +230,7 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 <!-- % 628 -->
 
 
-我们回过头来看\sec?。
+我们回过头来看\sec?中的\gls{sparse_coding}，\gls{sparse_coding}是一种在隐含节点上加上了鼓励稀疏的先验知识的\gls{linear_factor}。
 一个常用的选择是可分解的拉普拉斯先验，表示为
 \begin{align}
 	p(h_i) = \frac{\lambda}{2} \exp(-\lambda\mid h_i\mid).
@@ -275,7 +275,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 <!-- % 629 -->
 
 
-关于$\MH$的最小化问题需要某些特别设计的算法诸如特征符号搜索方法。
+关于$\MH$的最小化问题需要某些特别设计的算法诸如特征符号搜索方法{cite?}。
 <!-- % 629 -->
 
 
@@ -303,7 +303,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 \end{align}
 这被叫做是\firstgls{mean_field}方法。
 一般来说，我们可以通过选择$q$分布的形式来选择任何\gls{graphical_models}的结构，通过选择变量之间的相互作用来决定近似程度的大小。
-这种完全通用的\gls{graphical_models}方法叫做\firstgls{structured_variational_inference} 。
+这种完全通用的\gls{graphical_models}方法叫做\firstgls{structured_variational_inference} {cite?}。
 <!-- % 630  -->
 
 
@@ -321,7 +321,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 在这种情况下，我们要用$q$来拟合$p$。
 然而，我们并不是直接拟合一个近似，而是处理一个\gls{KL}的问题。
 当我们使用\gls{MLE}来将数据拟合到模型的时候，我们最小化$D_{\text{KL}}(p_{\text{data}\Vert p_{\text{model}}})$。
-如同\fig?促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
+如同\fig?中所示，这意味着\gls{MLE}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
 这两种方法都有各自的优点与缺点。
 选择哪一种方法取决于在具体应用中哪一种性质更受偏好。
 在基于优化的推断问题中，从计算角度考虑，我们选择使用$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
@@ -498,7 +498,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\fig?。
 
 
 首先，我们给出了对$\hat{h}_i$的导数的表达式。
-为了得到这个表达式，我们将方程~\eq?的左边：
+为了得到这个表达式，我们将方程~\eq?代入到方程~\eq?的左边：
 \begin{align}
 & \frac{\partial}{\partial \hat{h}_i} \CalL (\Vv,\Vtheta,\hat{\Vh})    \\
 = & \frac{\partial}{\partial \hat{h}_i} \Bigg[\sum_{j=1}^{m}\Big[\hat{h}_j (\log \sigma(b_j) - \log \hat{h}_j) + (1 - \hat{h}_j)(\log \sigma(-b_j) - \log (1-\hat{h}_j))\Big] \\
@@ -509,7 +509,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\fig?。
 \end{align}
 <!-- % 635   -->
 
-为了应用固定点更新的推断规则，我们通过令方程~\eq?_i$：
+为了应用固定点更新的推断规则，我们通过令方程~\eq?等于$0$来解$\hat{h}_i$：
 
 \begin{align}
 \hat{h}_i = \sigma\Bigg(b_i + \Vv^{\top} {\Vbeta} \MW_{:,i} - \frac{1}{2} \MW_{:,i}^{\top} {\Vbeta} \MW_{:,i} - \sum_{j \neq i }  \MW_{:,j}^{\top} {\Vbeta}  \MW_{:,i} \hat{h}_j \Bigg).
@@ -702,14 +702,14 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 来得到最优的$q(h_i\mid\Vv)$。
 在这个方程中计算期望就能得到一个$q(h_i\mid\Vv)$的正确表达式。
 我们只有在希望提出一种新形式的变分学习算法时才需要直接推导$q$的函数形式。
-方程~\eq?近似。
+方程~\eq?给出了适用于任何概率模型的\gls{mean_field}近似。
 <!-- % 640   -->
 
 
 
 
 <!-- % 640   -->
-方程~\eq?，对每一个$i$它都被迭代的反复使用直到收敛。
+方程~\eq?是一个\gls{fixed_point_equation}，对每一个$i$它都被迭代的反复使用直到收敛。
 然而，它还包含着更多的信息。
 我们发现这种\gls{functional}定义的问题的最优解是存在的，无论我们是否能够通过\gls{fixed_point_equation}来解出它。
 这意味着我们可以把一些值当成参数，然后通过优化算法来解决这个问题。
@@ -826,7 +826,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 训练一个可以用$\Vv$来推断$\Vh$的模型的一个主要的难点在于我们没有一个有监督的训练集来训练模型。
 给定一个$\Vv$，我们无法获知一个合适的$\Vh$。
 从$\Vv$到$\Vh$的映射依赖于模型类型的选择，并且在学习过程中随着${\Vtheta}$的改变而变化。
-\firstgls{wake_sleep}算法通过从模型分布中抽取$\Vv$和$\Vh$样本来解决这个问题。
+\firstgls{wake_sleep}算法{cite?}通过从模型分布中抽取$\Vv$和$\Vh$样本来解决这个问题。
 例如，在\gls{directed_model}中，这可以通过执行从$\Vh$开始并在$\Vv$结束的\gls{ancestral_sampling}来高效地完成。
 然后推断网络可以被训练来执行反向的映射：预测哪一个$\Vh$产生了当前的$\Vv$。
 这种方法的主要缺点是我们将只能够训练推断网络在模型下具有高概率的$\Vv$值。
@@ -834,7 +834,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 <!-- % 643 -->
 
 
-在\sec?的负梯度的负相位样本。
+在\sec?中，我们看到睡眠在人类和动物中的作用的一个可能的解释是，梦想可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}的对数\gls{partition_function}的负梯度的负相位样本。
 生物作梦的另一个可能的解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推断网络在给定$\Vv$的情况下预测$\Vh$。
 在某些意义上，这种解释比\gls{partition_function}的解释更令人满意。
 如果\gls{monte_carlo}算法仅使用梯度的正相位进行几个步骤，然后仅对梯级的负相位进行几个步骤，那么他们的结果不会很好。
@@ -855,20 +855,20 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 <!-- % 644    19.5.2  -->
 
 这种\gls{learned}近似推断策略已经被应用到了其它模型中。
-能够得到更快的推断。
+{cite?}证明了在\gls{learned}推断网络中的单一路径相比于在\gls{DBM}中迭代\gls{mean_field}\gls{fixed_point_equation}能够得到更快的推断。
 训练过程基于运行推断网络，然后应用\gls{mean_field}的一步来改进其估计，并训练推断网络来输出这个精细的估计而不是其原始估计。
 <!-- % 644 -->
 
 
-我们已经在\sec?。
+我们已经在\sec?中已经看到，预测性的稀疏分解模型训练浅层的\gls{encoder}网络以预测输入的\gls{sparse_coding}。
 这可以被看作是\gls{AE}和\gls{sparse_coding}之间的混合。
 为模型设计概率语义是可能的，其中\gls{encoder}可以被视为执行\gls{learned}近似\gls{MAP}推断。
 由于其浅层的\gls{encoder}，PSD不能实现我们在\gls{mean_field}推断中看到的单元之间的那种竞争。
-然而，该问题可以通过训练深度\gls{encoder}来执行\gls{learned}近似推断来补救，如ISTA技术。
+然而，该问题可以通过训练深度\gls{encoder}来执行\gls{learned}近似推断来补救，如ISTA技术{cite?}。
 <!-- % 644 -->
 
 
-近来\gls{learned}近似推断已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一。
+近来\gls{learned}近似推断已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一{cite?}。
 在这种优美的方法中，不需要为推断网络构造显式的目标。
 反之，推断网络被用来定义$\CalL$，然后调整推断网络的参数来增大$\CalL$。这种模型在\sec?中详细描述。
 <!-- % 644 -->

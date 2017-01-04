@@ -54,7 +54,7 @@ share: false
 底层库的开发者在实现\gls{DL}算法时应该牢记数值问题。
 本书的大多数读者可以简单地依赖保证数值稳定的底层库。
 在某些情况下，有可能在实现一个新的算法时自动保持数值稳定。
-Theano中许多常见的数值不稳定的表达式。
+Theano{cite?}就是这样软件包的一个例子，它能自动检测并稳定\gls{DL}中许多常见的数值不稳定的表达式。
 
 <!-- % -- 78 -- -->
 
@@ -108,7 +108,7 @@ $f(\Sx+\epsilon) \approx f(\Sx) + \epsilon f^\prime(\Sx) $。
 因此\gls{derivative}对于最小化一个函数很有用，因为它告诉我们如何更改$x$来略微地改善$y$。
 例如，我们知道对于足够小的$\epsilon$来说，$f(\Sx-\epsilon \text{sign}(f^\prime(\Sx)) )$是比$f(\Sx)$小的。
 因此我们可以将$\Sx$往\gls{derivative}的反方向移动一小步来减小$f(\Sx)$。
-这种技术被称为\firstgls{GD}。
+这种技术被称为\firstgls{GD}{cite?}。
 \fig?展示了一个例子。
 \begin{figure}[!htb]
 \ifOpenSource
@@ -205,7 +205,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 <!-- % -- 82 -- -->
 
 虽然\gls{GD}被限制在连续空间中的优化问题，但不断向更好的情况移动一小步（即近似最佳的小移动）的一般概念可以推广到离散空间。
-递增带有离散参数的\gls{objective_function}被称为\firstgls{hill_climbing}算法。
+递增带有离散参数的\gls{objective_function}被称为\firstgls{hill_climbing}算法{cite?}。
 
 
 ## \glsentrytext{gradient}之上：\glsentrytext{jacobian}和\glsentrytext{hessian}矩阵
@@ -227,7 +227,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 如果\gls{second_derivative}是负的，函数曲线向下凹陷(向上凸出)，因此\gls{cost_function}将下降的比$\epsilon$多。
 如果\gls{second_derivative}是正的，函数曲线是向上凹陷(向下凸出)，
 因此\gls{cost_function}将下降的比$\epsilon$少。
-从\fig?值的关系。
+从\fig?可以看出不同形式的\gls{curvature}如何影响基于\gls{gradient}的预测值与真实的\gls{cost_function}值的关系。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -375,10 +375,10 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
 如果$f$不是一个真正二次但能在局部近似为正定二次，\gls{newton_method}则需要多次迭代应用\eqn?。
 迭代地更新近似函数和跳到近似函数的最小点可以比\gls{GD}更快地到达临界点。
 这在接近\gls{local_minimum}时是一个特别有用的性质，但是在\gls{saddle_points}附近是有害的。
-如\eqn?)。
+如\eqn?所讨论的，当附近的\gls{critical_points}是最小点（\gls{hessian}的所有特征值都是正的）时\gls{newton_method}才适用，而\gls{GD}不会被吸引到\gls{saddle_points}(除非\gls{gradient}指向\gls{saddle_points})。
 
 仅使用\gls{gradient}信息的优化算法被称为\textbf{一阶优化算法}(first-order optimization algorithms)，如\gls{GD}。
-使用\gls{hessian}矩阵的优化算法被称为\textbf{二阶最优化算法}(second-order optimization algorithms)。
+使用\gls{hessian}矩阵的优化算法被称为\textbf{二阶最优化算法}(second-order optimization algorithms){cite?}，如\gls{newton_method}。
 
 在本书大多数上下文中使用的优化算法适用于各种各样的函数，但几乎都没有保证。
 因为在\gls{DL}中使用的函数族是相当复杂的，所以\gls{DL}算法往往缺乏保证。
@@ -418,7 +418,7 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
 \gls{constrained_optimization}的一个简单方法是将约束考虑在内后简单地对\gls{GD}进行修改。
 如果我们使用一个小的恒定步长$\epsilon$，我们可以先取\gls{GD}的单步结果，然后将结果投影回$\SetS$。
 如果我们使用\gls{line_search}，我们只能在步长为$\epsilon$范围内搜索\gls{feasible}的新$\Vx$点，或者我们可以将线上的每个点投影到约束区域。
-如果可能的话，在\gls{GD}或\gls{line_search}前将\gls{gradient}投影到\gls{feasible}域的切空间会更高效。
+如果可能的话，在\gls{GD}或\gls{line_search}前将\gls{gradient}投影到\gls{feasible}域的切空间会更高效{cite?}。
 
 一个更复杂的方法是设计一个不同的、无约束的优化问题，其解可以转化成原始\gls{constrained_optimization}问题的解。
 例如，我们要在$\Vx \in \SetR^2$中最小化$f(\Vx)$，其中$\Vx$约束为具有单位$L^2$范数。
@@ -492,7 +492,7 @@ $中的$\alpha_i = 0$。
 为了获得关于这个想法的一些直观解释，我们可以说这个解是由不等式强加的边界，我们必须通过对应的\glssymbol{KKT}乘子影响$\Vx$的解，或者不等式对解没有影响，我们则归零\glssymbol{KKT}乘子。
 
 可以使用一组简单性质描述\gls{constrained_optimization}问题的最优点。
-这些性质称为\firstacr{KKT}条件。
+这些性质称为\firstacr{KKT}条件{cite?}。
 这些是确定一个点是最优点的必要条件，但不一定是充分条件。
 这些条件是：
 
