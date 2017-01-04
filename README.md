@@ -49,7 +49,6 @@ TODO
  2. ~~链接补全~~，12月14日已ok，大家可以帮忙检查文献引用是否正确，图片、章节和公式引用是否正确。
  3. 语句通顺
  4. ~~第20章正在校对，这章比较难估计还需2周~~，12月14日完成校对
- 5. 转换为markdown或mobi格式，这可能需要花点时间写个python脚本。谁有兴趣可以贡献一下。没有的话，我2月28号搞下。
 
 
 实在有问题，请发邮件至`echo c3dvcmQueW9ya0BnbWFpbC5jb20K | base64 -d`。
@@ -73,6 +72,14 @@ TODO
 ---------
 为帮助小白学得轻松一点，希望大家多多贡献笔记，单靠我们估计要大半年才能写出不错的笔记，而且时间不允许。
 笔记见各章文件夹内的`README.md`。
+
+
+
+Markdown格式
+------------
+这种格式确实比较重要，方便查阅，也方便索引。初步转换后，生成网页，具体见[deeplearningbook-chinese](https://exacity.github.io/deeplearningbook-chinese)。
+注意，这种转换没有把图放进去，也不会放图。目前使用单个[脚本](scripts/convert2md.sh)，基于latex文件转换。
+后续可能会使用python，但原则是不直接修改[md文件](docs/_posts)。
 
 
 
