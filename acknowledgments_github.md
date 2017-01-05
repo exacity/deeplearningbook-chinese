@@ -144,3 +144,7 @@
  - @endymecy ==> Chapter14, 语句问题
 
 
+2017年1月5日
+---------------
+ - @tonyzeng2016 ==> Chapter8, 8.1.2最后一段翻译建议
+ - @zdx3578 ==> Chapter18, "intractable"翻译建议
