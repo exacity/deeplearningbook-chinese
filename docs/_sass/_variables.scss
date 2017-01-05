@@ -1,0 +1,56 @@
+/* ==========================================================================
+   SCSS Variables
+   ========================================================================== */
+
+/* 
+   Page
+   ========================================================================== */
+
+$feature-image-height            : 400px; // min 150px recommended
+$front-page-feature-image-height : 400px; // min 150px recommended
+
+/* 
+   Typography
+   ========================================================================== */
+
+$base-font                       : 'Lato', Calibri, Arial, sans-serif;
+$heading-font                    : $base-font;
+$caption-font                    : $base-font;
+$code-font                       : monospace;
+$alt-font                        : serif;
+
+$doc-font-size                   : 16;
+$doc-line-height                 : 26;
+
+
+// set-up the body font-size / line-height
+body {
+  margin-top: 0px + $doc-line-height;
+  font-size: 0px + $doc-font-size;
+}
+
+/* 
+   Colors
+   ========================================================================== */
+
+$base-color                      : rgba(#222,0.8);
+$body-color                      : #e8e8e8;
+$text-color                      : rgba(#222,0.8);
+$comp-color                      : complement(#222);
+$border-color                    : lighten($base-color,60);
+$link-color                      : rgba(#222,0.8);
+
+$primary                         : #222;
+$success                         : #5cb85c;
+$warning                         : #dd8338;
+$danger                          : #C64537;
+$info                            : #308cbc;
+
+
+/* 
+   Screen sizes
+   ========================================================================== */
+
+$small                           : "only screen and (min-width: 30em)";
+$medium                          : "only screen and (min-width: 48em)";
+$large                           : "only screen and (min-width: 62.5em)";

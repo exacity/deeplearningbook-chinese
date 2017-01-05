@@ -59,7 +59,7 @@
 
 % -- 518 --
 
-\section{贪心地逐层\glsentrytext{unsupervised_pretraining}}
+\section{贪心地逐层\glsentrytext{unsupervised_pretraining} }
 \label{sec:greedy_layer_wise_unsupervised_pretraining}
 \gls{unsupervised_learning}在\gls{DNN}的复兴历史上起到了关键作用，使研究者首次可以训练不含诸如\gls{convolution}或者\gls{recurrence}这类特殊结构的深度监督网络。
 我们将这一过程称为\firstgls{unsupervised_pretraining}，或者更精确地，\firstgls{greedy_layer_wise_unsupervised_pretraining}。
@@ -71,7 +71,7 @@
 如\algref{alg:pretraining}所示正式的表述。
 
 \begin{algorithm}
-\caption{{\em \gls{greedy_layer_wise_unsupervised_pretraining}的协定}\\
+\caption{ {\em \gls{greedy_layer_wise_unsupervised_pretraining}的协定}\\
 给定如下：无监督特征学习算法$\CalL$，$\CalL$使用训练集样本并返回\gls{encoder}或特征函数$f$。
 原始输入数据是$\MX$，每行一个样本，并且$f^{(1)}(\MX)$是第一阶段\gls{encoder}关于$\MX$的输出。
 在执行\gls{fine_tune}的情况下，我们使用学习者$\CalT$，并使用初始函数$f$，输入样本$\MX$（以及在监督\gls{fine_tune}情况下关联的目标$\MY$），并返回细调好函数。 阶段数为$m$。

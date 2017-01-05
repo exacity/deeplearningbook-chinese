@@ -1,0 +1,28 @@
+---
+layout: post-index
+title: Deep Learning Book Chinese Translation
+comments: false
+---
+
+{% for post in paginator.posts reversed %}
+
+<article class="hentry">
+  <header>
+    {% if post.image.feature %}
+      <div class="entry-image-index">
+        <a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}"><img src="{{ site.url }}/images/{{ post.image.feature }}" alt="{{ post.title }}"></a>
+      </div><!-- /.entry-image -->
+    {% endif %}
+    {% if post.link %}
+      <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" class="permalink" rel="bookmark" title="{{ post.title }}"><i class="fa fa-bookmark"></i></a> <a href="{{ post.link }}">{{ post.title }}</a></h1>
+    {% else %}
+    <h1 class="entry-title"><a href="{{ site.url }}{{ post.url }}" rel="bookmark" title="{{ post.title }}" itemprop="url">{{ post.url | replace:'_', ' ' | replace:'/Chapter', '第' | truncatewords: 1 | remove:'...' | append: '章 ' }} <span style='font-size:0.8em;margin-left:1em;'> {{ post.title }} </span></a></h1>
+    {% endif %}
+  </header>
+  <div class="read-more-content">
+    <p>{% if post.description %}{{ post.description }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 140 }}&hellip;{% endif %} <a href="{{ site.url }}{{ post.url }}">继续阅读</a></p>
+  </div><!-- /.read-more-content -->
+</article><!-- /.hentry -->
+{% endfor %}
+
+{% include pagination.html %}

@@ -1,0 +1,46 @@
+////////////////////////
+//      Settings      //
+////////////////////////
+
+// overlay
+$mfp-overlay-color:                   #000;                     // Color of overlay screen
+$mfp-overlay-opacity:                 0.8;                        // Opacity of overlay screen
+$mfp-shadow:                          0 0 8px rgba(0, 0, 0, 0.6); // Shadow on image or iframe
+
+// spacing
+$mfp-popup-padding-left:              8px;                        // Padding from left and from right side
+$mfp-popup-padding-left-mobile:       6px;                        // Same as above, but is applied when width of window is less than 800px
+
+$mfp-z-index-base:                    1040;                       // Base z-index of popup
+
+// controls
+$mfp-include-arrows:                  true;                       // Include styles for nav arrows
+$mfp-controls-opacity:                1;                          // Opacity of controls
+$mfp-controls-color:                  #fff;                     // Color of controls
+$mfp-controls-border-color:           #fff;                     // Border color of controls
+$mfp-inner-close-icon-color:          #fff;                     // Color of close button when inside
+$mfp-controls-text-color:             #CCC;                       // Color of preloader and "1 of X" indicator
+$mfp-controls-text-color-hover:       #fff;                     // Hover color of preloader and "1 of X" indicator
+$mfp-IE7support:                      true;                       // Very basic IE7 support
+
+// Iframe-type options
+$mfp-include-iframe-type:             true;                       // Enable Iframe-type popups
+$mfp-iframe-padding-top:              40px;                       // Iframe padding top
+$mfp-iframe-background:               #000;                       // Background color of iframes
+$mfp-iframe-max-width:                900px;                      // Maximum width of iframes
+$mfp-iframe-ratio:                    9/16;                       // Ratio of iframe (9/16 = widescreen, 3/4 = standard, etc.)
+
+// Image-type options
+$mfp-include-image-type:              true;                       // Enable Image-type popups
+$mfp-image-background:                #444 !default;
+$mfp-image-padding-top:               40px;                       // Image padding top
+$mfp-image-padding-bottom:            40px;                       // Image padding bottom
+$mfp-include-mobile-layout-for-image: true;                       // Removes paddings from top and bottom
+
+// Image caption options
+$mfp-caption-title-color:             #F3F3F3;                    // Caption title color
+$mfp-caption-subtitle-color:          #BDBDBD;                    // Caption subtitle color
+.mfp-counter { font-family: $alt-font; }                          // Caption font family
+
+// A11y
+$mfp-use-visuallyhidden:              false; 

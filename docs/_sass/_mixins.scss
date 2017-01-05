@@ -1,0 +1,124 @@
+/* ==========================================================================
+   Mixins
+   ========================================================================== */
+
+/* 
+   Utility mixins
+   ========================================================================== */
+
+/* clearfix */
+@mixin clearfix {
+  *zoom: 1;
+
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+    // Fixes Opera/contenteditable bug:
+    // http://nicolasgallagher.com/micro-clearfix-hack/#comment-36952
+    line-height: 0;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+/* Webkit-style focus */
+@mixin tab-focus() {
+  // Default
+  outline: thin dotted #333;
+  // Webkit
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+/* Center-align a block level element */
+
+@mixin center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 
+   Typography mixins
+   ========================================================================== */
+
+/* Full-fat vertical rhythm */
+@mixin font-size($size) {
+  font-size: 0px + $size;
+  font-size: 0rem + $size / $doc-font-size;
+  line-height: 0 + round($doc-line-height / $size*10000) / 10000;
+  margin-bottom: 0px + $doc-line-height;
+  margin-bottom: 0rem + ($doc-line-height / $doc-font-size);
+}
+
+/* Just the REMs */
+@mixin font-rem($size) {
+  font-size: 0px + $size;
+  font-size: 0rem + $size / $doc-font-size;
+}
+
+/* Just font-size and line-height */
+@mixin font($size) {
+  font-size: 0px + $size;
+  font-size: 0rem + $size / $doc-font-size;
+  line-height: 0 + round($doc-line-height / $size*10000) / 10000;
+}
+
+/* Ellipsis */
+@mixin text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+}
+
+/* 
+   Visibility
+   ========================================================================== */
+
+/* For image replacement */
+@mixin hide-text() {
+  text-indent : 100%;
+  white-space : nowrap;
+  overflow : hidden; 
+}
+
+/* Hide from visual and speaking browsers */
+@mixin hidden() {
+  display : none !important; 
+  visibility : hidden; 
+}
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+/* Hide but maintain layout */
+@mixin invisible() { 
+  visibility : hidden; 
+}
+
+/* Hidden but available to speaking browsers */
+@mixin visuallyhidden() { 
+  overflow : hidden; 
+  position : absolute;
+  clip : rect(0 0 0 0); 
+  height : 1px; 
+  width : 1px;
+  margin : -1px; 
+  padding : 0; 
+  border : 0; 
+}
+
+/* Make visuallyhidden focusable with a keyboard */
+.visuallyhidden.focusable:active, 
+.visuallyhidden.focusable:focus { 
+  position : static;
+  clip : auto; 
+  height : auto; 
+  width : auto;
+  margin : 0; 
+  overflow: visible; 
+}
