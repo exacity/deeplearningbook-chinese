@@ -78,8 +78,8 @@ TODO
 Markdown格式
 ------------
 这种格式确实比较重要，方便查阅，也方便索引。初步转换后，生成网页，具体见[deeplearningbook-chinese](https://exacity.github.io/deeplearningbook-chinese)。
-注意，这种转换没有把图放进去，也不会放图。目前使用单个[脚本](scripts/convert2md.sh)，基于latex文件转换。
-后续可能会使用python，但原则是不直接修改[md文件](docs/_posts)。
+注意，这种转换没有把图放进去，也不会放图。目前使用单个[脚本](scripts/convert2md.sh)，基于latex文件转换，以后可能会更改但原则是不直接修改[md文件](docs/_posts)。
+需要的同学可以自行修改[脚本](scripts/convert2md.sh)。
 
 
 
