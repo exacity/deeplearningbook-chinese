@@ -13,7 +13,7 @@ share: false
 如果我们在每个时间点都有一个单独的参数，我们不但不能泛化到训练时没有见过序列长度，也不能在时间上共享不同序列长度和不同位置的统计强度。
 当信息的特定部分能够在该序列内多个位置出现时，这样的共享尤为重要。
 例如，考虑这两句话："I went to Nepal in 2009"和"In 2009, I went to Nepal." 
-如果我们让一个\gls{ML}模型读取这两个句子，并提取叙述者去\ENNAME{Nepal}的年份，无论"2009年"出现在句子的第六个单词或第二个单词，我们都希望它能认出"2009年"作为相关资料片段。
+如果我们让一个\gls{ML}模型读取这两个句子，并提取叙述者去Nepal的年份，无论"2009年"出现在句子的第六个单词或第二个单词，我们都希望它能认出"2009年"作为相关资料片段。
 假设我们训练一个处理固定长度句子的\gls{feedforward_network}。
 传统的全连接\gls{feedforward_network}会给每个输入特征一个单独的参数，所以需要分别学习句子每个位置的所有语言规则。
 相比之下，\gls{RNN}在几个\gls{time_step}内共享相同的权重。
@@ -442,7 +442,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 
 \gls{graphical_model}中的边表示哪些变量直接依赖于其他变量。
 许多\gls{graphical_model}的目标是省略不存在强相互作用的边以实现统计和计算的效率。
-例如，通常可以作\ENNAME{Markov}假设，即\gls{graphical_model}应该只包含从$\{ \RSy^{(t-k)}, \dots, \RSy^{(t-1)}\}$到$\RSy^{(t)}$的边，而不是包含整个过去历史的边。
+例如，通常可以作Markov假设，即\gls{graphical_model}应该只包含从$\{ \RSy^{(t-k)}, \dots, \RSy^{(t-1)}\}$到$\RSy^{(t)}$的边，而不是包含整个过去历史的边。
 然而，在一些情况下，我们认为整个过去的输入会对序列的下一个元素有一定影响。
 当我们认为$\RSy^{(t)}$的分布可能取决于遥远过去(在某种程度)的$y^{(i)}$的值，且无法通过$y^{(t-1)}$捕获$y^{(i)}$的影响时，\glssymbol{RNN}将会很有用。
 
@@ -489,11 +489,11 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 
 <!-- % -- 379 -- -->
 
-另一种选择是在模型中引入一个额外的\ENNAME{Bernoulli}输出，表示在每个\gls{time_step}决定是否继续产生或停止产生。
+另一种选择是在模型中引入一个额外的Bernoulli输出，表示在每个\gls{time_step}决定是否继续产生或停止产生。
 这种方法比向词汇表增加一个额外符号的方法更普遍的，因为它可以适用于任何\glssymbol{RNN}，而不仅仅是输出符号序列的\glssymbol{RNN}。
 例如，它可以应用于一个产生实数序列的\glssymbol{RNN}。
-新的输出单元通常使用\ENNAME{sigmoid}单元，并通过\gls{cross_entropy}训练。
-在这种方法中，\ENNAME{sigmoid}被训练为最大化正确预测的对数似然，即在每个\gls{time_step}序列是否结束或继续。
+新的输出单元通常使用sigmoid单元，并通过\gls{cross_entropy}训练。
+在这种方法中，sigmoid被训练为最大化正确预测的对数似然，即在每个\gls{time_step}序列是否结束或继续。
 
 确定序列长度$\tau$的另一种方法是将一个额外的输出添加到模型并预测整数$\tau$本身。
 模型可以采出$\tau$的值，然后采$\tau$步有价值的数据。
@@ -1002,7 +1002,7 @@ $d$\gls{time_step}的\gls{skip_connection}是确保单元总能被之前$d$个\g
 \glssymbol{LSTM}\gls{recurrent_network}除了外部\glssymbol{RNN}的循环外，还具有内部的循环（自环）的"\glssymbol{LSTM}细胞"，因此不是简单地向输入和循环单元的仿射变换之后施加一个逐元素的非线性。
 与普通的\gls{recurrent_network}类似，每个单元有相同的输入和输出，但也有更多的参数和控制信息流动的门限单元系统。
 最重要的组成部分是状态单元$s_i^{(t)}$，与前一节讨论的\gls{leaky_unit}有类似的线性自环。
-然而，此处自环的权重（或相关联的时间常数）由\firstgls{forget_gate}$f_i^{(t)}$控制（时刻$t$和细胞$i$），由\ENNAME{sigmoid}单元将权重设置为0和1之间的值：
+然而，此处自环的权重（或相关联的时间常数）由\firstgls{forget_gate}$f_i^{(t)}$控制（时刻$t$和细胞$i$），由sigmoid单元将权重设置为0和1之间的值：
 \begin{align}
  f_i^{(t)} = \sigma \Big( b_i^f + \sum_j U_{i,j}^f x_j^{(t)} + \sum_j W_{i,j}^f h_j^{(t-1)} \Big),
 \end{align}
@@ -1014,11 +1014,11 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
  \sigma \Big( b_i + \sum_j U_{i,j} x_j^{(t)} + \sum_j W_{i,j} h_j^{(t-1)} \Big),
 \end{align}
 其中$\Vb, \MU, \MW$分别是LSTM细胞中的\gls{bias_aff}、输入权重和\gls{forget_gate}的循环权重。
-\textbf{外部输入门}(external input gate)单元$g_i^{(t)}$以类似\gls{forget_gate}（使用一个\ENNAME{sigmoid}获得一个0和1之间的值）的方式更新，但有自身的参数：
+\textbf{外部输入门}(external input gate)单元$g_i^{(t)}$以类似\gls{forget_gate}（使用一个sigmoid获得一个0和1之间的值）的方式更新，但有自身的参数：
 \begin{align}
  g_i^{(t)} = \sigma \Big( b_i^g + \sum_j U_{i,j}^g x_j^{(t)} + \sum_j W_{i,j}^g h_j^{(t-1)} \Big).
 \end{align}
-\glssymbol{LSTM}细胞的输出$h_i^{(t)}$也可以由\textbf{输出门}(output gate)~$q_i^{(t)}$关闭（使用\ENNAME{sigmoid}单元作为门限）：
+\glssymbol{LSTM}细胞的输出$h_i^{(t)}$也可以由\textbf{输出门}(output gate)~$q_i^{(t)}$关闭（使用sigmoid单元作为门限）：
 \begin{align}
  h_i^{(t)} &= \text{tanh}\big( s_i^{(t)} \big) q_i^{(t)}, \\
  q_i^{(t)} &= \sigma \Big( b_i^o + \sum_j U_{i,j}^o x_j^{(t)} + \sum_j W_{i,j}^o h_j^{(t-1)} \Big),
@@ -1055,7 +1055,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
  r_i^{(t)} = \sigma \Big( b_i^r + \sum_j U_{i,j}^r x_j^{(t)} + \sum_j W_{i,j}^r h_j^{(t)} \Big).
 \end{align}
 复位和更新门能独立地"忽略"的状态向量的一部分。
-更新门像条件渗漏累积器一样可以线性门限任意维度，从而选择将它复制（在\ENNAME{sigmoid}的一个极端）或完全由新的"目标状态"值（朝向渗漏累积器的收敛方向）替换并完全忽略它（在另一个极端）。
+更新门像条件渗漏累积器一样可以线性门限任意维度，从而选择将它复制（在sigmoid的一个极端）或完全由新的"目标状态"值（朝向渗漏累积器的收敛方向）替换并完全忽略它（在另一个极端）。
 复位门控制状态用于计算下一个目标状态的某部分，引入了过去状态和未来状态之间的关系附加非线性效应。
 
 <!-- % -- 400 -- -->
@@ -1077,7 +1077,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 如果二阶导数与一阶导数以类似的速率收缩，那么一阶和二阶导数的比率可保持相对恒定。
 不幸的是，二阶方法有许多缺点，包括高的计算成本、需要一个大的\gls{minibatch}、并且倾向于被吸引到鞍点。
 {Martens+Sutskever-ICML2011}发现，采用二阶方法有前途的结果。
-之后，{sutskeverimportance}发现使用较简单的方法可以达到类似的结果，例如细心初始化的\ENNAME{Nesterov}动量法。
+之后，{sutskeverimportance}发现使用较简单的方法可以达到类似的结果，例如细心初始化的Nesterov动量法。
 更详细的内容参考{Sutskever-thesis2012}。
 应用于\glssymbol{LSTM}时，这两种方法在很大程度上被单纯的\glssymbol{SGD}（甚至没有动量）取代。
 这是\gls{ML}中一个延续的主题，设计一个易于优化模型通常比设计出更加强大的优化算法更容易。
@@ -1203,7 +1203,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 为了缓解这一问题，\glssymbol{NTM}实际同时从多个记忆单元写入或读取。
 读取时，它们采取许多单元的加权平均值。
 写入时，他们对多个单元修改不同的数值。
-用于这些操作的系数被选择为集中在一个小数目的单元，如通过\ENNAME{softmax}函数产生它们。
+用于这些操作的系数被选择为集中在一个小数目的单元，如通过softmax函数产生它们。
 使用这些具有非零导数的权重允许函数控制访问存储器，从而能使用梯度下降法优化。
 关于这些系数的\gls{gradient}指示着其中每个参数是应该增加还是减少，但\gls{gradient}通常只在接收大系数的存储器地址上变大。
 

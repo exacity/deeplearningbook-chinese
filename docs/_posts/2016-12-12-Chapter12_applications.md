@@ -485,7 +485,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
 尽管直到最近\glssymbol{GMM}-\glssymbol{HMM}一直在\gls{ASR}中占据主导地位，\gls{SR}仍然是\gls{NN}所成功应用的第一个领域。
 从20世纪80年代末期到90年代初期，许多的\gls{SR}系统使用了\gls{NN}{cite?}。
 在那段时间，基于\gls{NN}的\gls{ASR}的表现和\glssymbol{GMM}-\glssymbol{HMM}系统的表现差不多。
-比如说，{Robinson+Fallside91}在TIMIT数据集{cite?}（有$39$个区分的\gls{phoneme}\footnote{39}）上达到了$26$\%的\gls{phoneme}错误率，这个结果优于或者是可比于基于\glssymbol{HMM}的结果。
+比如说，{Robinson+Fallside91}在TIMIT数据集{cite?}（有$39$个区分的\gls{phoneme}\footnote{39}）上达到了$26$%的\gls{phoneme}错误率，这个结果优于或者是可比于基于\glssymbol{HMM}的结果。
 从那时起，TIMIT成为了\gls{phoneme}识别的一个基准数据集，在\gls{SR}中的作用就和MNIST在图像中的作用差不多。
 然而，由于\gls{SR}软件系统中复杂的工程因素以及在基于\glssymbol{GMM}-\glssymbol{HMM}的系统中所已经付出的巨大努力，工业界并没有转向\gls{NN}。
 结果，直到21世纪00年代末期，学术界和工业界的研究者们更多的是用\gls{NN}为\glssymbol{GMM}-\glssymbol{HMM}系统学习一些额外的特征。
@@ -498,7 +498,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
  \gls{RBM}将会在第三部分中被描述。
  为了完成\gls{SR}任务，\gls{unsupervised}的\gls{pretraining}被用来构造一个\gls{deep_feedforward_network}，这个\gls{NN}是通过训练\gls{RBM}来初始化的。
  这些网络的输入是从一个固定规格的滑动窗（以当前帧为中心）的谱特征中抽取，预测了当前帧所对应的\glssymbol{HMM}状态的条件概率。
- 训练一个这样的\gls{NN}能够可以显著提高在TIMIT数据集上的识别率~{cite?}，并将\gls{phoneme}级别的错误率从$26$\%降到了$20.7$\%。
+ 训练一个这样的\gls{NN}能够可以显著提高在TIMIT数据集上的识别率~{cite?}，并将\gls{phoneme}级别的错误率从$26$%降到了$20.7$%。
 关于这个模型成功原因的详细分析可以参考{mohamed2012understanding}。
  对于基础\gls{SR}的扩展包括了添加自适应的说话人相关的特征{cite?}的方法，可以进一步的降低错误率。
  紧接着的工作是将结构从\gls{phoneme}识别（TIMIT所主要关注的）转向了大规模词汇语音识别{cite?}，这不仅包含了识别\gls{phoneme}，还包括了识别大规模词汇的序列。
@@ -510,7 +510,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
 随后，当他们使用了越来越大的带标签的数据集，加入了各种初始化，训练方法以及调试\gls{DNN}的结构之后，他们发现这种\gls{unsupervised}的\gls{pretraining}方式是没有必要的，或者说不能带来任何显著的改进。
 <!-- % 447 -->
 
-用\gls{SR}中词错误率来衡量，在\gls{SR}性能上的这些突破是史无前例的（大约$30$\%的提高），在这之前的长达十年左右的时间基于\glssymbol{GMM}-\glssymbol{HMM}的系统的传统技术已经停滞不前了，尽管数据集的规模是随时间增长的（见{Deng+Yu-2014}的图2.4）。
+用\gls{SR}中词错误率来衡量，在\gls{SR}性能上的这些突破是史无前例的（大约$30$%的提高），在这之前的长达十年左右的时间基于\glssymbol{GMM}-\glssymbol{HMM}的系统的传统技术已经停滞不前了，尽管数据集的规模是随时间增长的（见{Deng+Yu-2014}的图2.4）。
 这也导致了\gls{SR}领域快速地转向\gls{DL}的研究。
 在大约的两年时间内，工业界的大多数的\gls{SR}产品都包含了\gls{DL}，这种成功也激发了\gls{ASR}领域对\gls{DL}算法和结构的一波新的研究浪潮，并且影响至今。
 <!-- % 448 -->
@@ -523,7 +523,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
 另一个重要的至今仍然活跃的推动，是完全抛弃了\glssymbol{HMM}的\firstgls{end_to_end}\gls{DL}\gls{SR}系统。
 这个领域的第一个主要的突破是{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}的\gls{RNN}（见\sec?），使用了帧－\gls{phoneme}排列的\gls{MAP}估计推断，比如{chapter-gradient-document-2001}，以及CTC框架~{cite?}。
 一个深度\gls{RNN}~{cite?}在每一步都有状态变量，每个\gls{time_step}各层都有状态变量，有两种\gls{unfolded_graph}的方式：一种是根据层的堆叠，另一种是时间展开。
-这个工作把TIMIT数据集上\gls{phoneme}的错误率降到了记录的新低$17.7$\%。关于应用于其它领域的深度\gls{RNN}的变种可以参考{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
+这个工作把TIMIT数据集上\gls{phoneme}的错误率降到了记录的新低$17.7$%。关于应用于其它领域的深度\gls{RNN}的变种可以参考{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
 <!-- % 448 -->
 
 另一个\gls{end_to_end}\gls{DL}\gls{SR}的最新方法是让系统学习如何利用\firstgls{phonetic}层级的信息排列\firstgls{acoustic}层级的信息{cite?}。
@@ -602,7 +602,7 @@ P({\tt THE\ DOG\ RAN\ AWAY}) = P_3({\tt THE\ DOG\ RAN}) P_3({\tt DOG\ RAN\ AWAY}
 \gls{smoothing}技术将概率质量从观察到的元组转移到类似的未观察到的元组。
 见{Chen+Goodman99}的综述和实验比较。
 其中一种基本技术基于向所有可能的下一个符号值添加非零概率质量。
-这个方法可以被证明是，计数参数具有均匀或\ENNAME{Dirichlet}先验的贝叶斯\gls{inference}。
+这个方法可以被证明是，计数参数具有均匀或Dirichlet先验的贝叶斯\gls{inference}。
 另一个非常流行的想法是包含高阶和低阶\gls{n_gram}模型的混合模型，其中高阶模型提供更多的\gls{capacity}，而低阶模型尽可能地避免零计数。
 如果上下文$x_{t-n+k}, \ldots, x_{t-1}$的频率太小而不能使用高阶模型，\textbf{回退方法}(back-off methods)就查找低阶\gls{n_gram} 。
 更正式地说，它们通过使用上下文$x_{t-n+k}, \ldots, x_{t-1}$来估计$x_t$上的分布，并增加$k$直到找到足够可靠的估计。
@@ -673,16 +673,16 @@ P({\tt THE\ DOG\ RAN\ AWAY}) = P_3({\tt THE\ DOG\ RAN}) P_3({\tt DOG\ RAN\ AWAY}
 在许多自然语言应用中，我们经常希望我们的模型产生词（而不是字符）作为输出的基本单位。
 对于大词汇表，由于词汇量很大，在词的选择上表示输出分布计算上可能是昂贵的。
 在许多应用中，$\SetV$包含数十万词。
-表示这种分布的朴素方法是应用一个仿射变换，将隐藏表示转换到输出空间，然后应用\ENNAME{softmax}函数。
+表示这种分布的朴素方法是应用一个仿射变换，将隐藏表示转换到输出空间，然后应用softmax函数。
 假设我们的词汇表$\SetV$大小为$| \SetV |$。
 因为其输出维数为$| \SetV |$，描述该仿射变换线性分量的权重矩阵非常大。
 这增加了表示该矩阵的高存储成本，以及乘以它的高计算成本。
-因为\ENNAME{softmax}在所有$| \SetV |$输出之间归一化，所以在训练时以及测试时执行全矩阵乘法是必要的 ——我们不能仅计算与正确输出的权重向量的点积。
+因为softmax在所有$| \SetV |$输出之间归一化，所以在训练时以及测试时执行全矩阵乘法是必要的 ——我们不能仅计算与正确输出的权重向量的点积。
 因此，输出层的高计算成本在训练期间（计算似然性及其梯度）和测试期间（计算所有或所选词的概率）同时出现。
-对于专门的\gls{loss_function}，可以有效地计算梯度 {cite?}，但是应用于传统\ENNAME{softmax}输出层的标准\gls{cross_entropy}损失时会出现了许多困难。
+对于专门的\gls{loss_function}，可以有效地计算梯度 {cite?}，但是应用于传统softmax输出层的标准\gls{cross_entropy}损失时会出现了许多困难。
 
 假设$\Vh$是用于预测输出概率$\hat \Vy$的顶部隐藏层。
-如果我们用学到的权重$\MW$和学到的\gls{bias_aff}$\Vb$来参数化从$\Vh$到$\hat \Vy$的变换，则仿射\ENNAME{softmax}输出层执行以下计算：
+如果我们用学到的权重$\MW$和学到的\gls{bias_aff}$\Vb$来参数化从$\Vh$到$\hat \Vy$的变换，则仿射softmax输出层执行以下计算：
 \begin{align}
   a_i &= b_i + \sum_j  W_{ij} h_j \;\;\; \forall i \in \{1,\ldots,|\SetV|\}, \\
   \hat{y}_i &= \frac{e^{a_i}}{\sum_{i'=1}^{|\SetV|} e^{a_{i'}}}.
@@ -693,17 +693,17 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 <!-- % -- 453 -- -->
 
 \subsubsection{使用\glsentrytext{shortlist}}
-第一个\gls{NLM}{cite?}通过将词汇量限制为10,000或20,000来减轻大词汇表上\ENNAME{softmax}的高成本。
+第一个\gls{NLM}{cite?}通过将词汇量限制为10,000或20,000来减轻大词汇表上softmax的高成本。
 {Schwenk+Gauvain2002}和 {Schwenk-2007}在这种方法的基础上建立新的方式，将词汇表$\SetV$分为最常见词汇（由\gls{NN}处理）的\firstgls{shortlist}~$\SetL$和较稀有词汇的尾列表$\SetT = \SetV \backslash \SetL$（由\gls{n_gram}模型处理）。
 为了组合这两个预测，\gls{NN}还必须预测在上下文$C$之后出现的词位于尾部列表的概率。
-可以添加额外的\ENNAME{sigmoid}输出单元估计 $P(i \in \SetT \mid C)$实现这个预测。
+可以添加额外的sigmoid输出单元估计 $P(i \in \SetT \mid C)$实现这个预测。
 额外输出则可以用来估计$\SetV$中所有词的概率分布，如下：
 \begin{align}
  P(y=i\mid C)  =& 1_{i \in \SetL} P(y=i\mid C, i \in \SetL) (1 - P(i \in \SetT\mid C)) \nonumber \\
      & + 1_{i \in \SetT} P(y=i\mid C, i \in \SetT) P(i \in \SetT\mid C),
 \end{align}
 其中$P(y=i\mid C, i \in \SetL)$由\gls{NLM}提供$P(y=i\mid C, i \in \SetT)$由\gls{n_gram}模型提供。
-稍作修改，这种方法也可以在\gls{NLM}模型的\ENNAME{softmax}层中使用额外的输出值，而不是单独的\ENNAME{sigmoid}单元。
+稍作修改，这种方法也可以在\gls{NLM}模型的softmax层中使用额外的输出值，而不是单独的sigmoid单元。
 
 \gls{shortlist}方法的一个明显的缺点是，\gls{NLM}模型的潜在泛化优势仅限于最常用的词，这大概是最没用的。
 这个缺点激发了处理高维输出替代方法的探索，如下所述。
@@ -768,13 +768,13 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 对数似然的精确优化似乎难以解决，因为词层次的选择是离散的，不适于基于梯度的优化。
 然而，可以使用离散优化来近似地最优化词类的分割。
 
-分层\ENNAME{softmax}的一个重要优点是，它在训练期间和测试期间（如果在测试时我们想计算特定词的概率）都带来了计算的好处。
+分层softmax的一个重要优点是，它在训练期间和测试期间（如果在测试时我们想计算特定词的概率）都带来了计算的好处。
 
-当然即使使用分层\ENNAME{softmax}，计算所有$|\SetT|$词的概率仍将是昂贵的。
+当然即使使用分层softmax，计算所有$|\SetT|$词的概率仍将是昂贵的。
 另一个重要的操作是在给定上下文中选择最可能的词。
 不幸的是，树结构不能为这个问题提供有效和精确的解决方案。
 
-缺点是在实践中，分层\ENNAME{softmax}倾向于更差的测试结果（相对基于采样的方法），我们将在下面描述。
+缺点是在实践中，分层softmax倾向于更差的测试结果（相对基于采样的方法），我们将在下面描述。
 这可能是词类选择得不好。
 
 \subsubsection{\glsentrytext{importance_sampling}}
@@ -789,7 +789,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
  &= \frac{\partial}{\partial \theta} (a_y - \log \sum_i e^{a_i}) \\ 
  &= \frac{\partial a_y}{\partial \theta}  - \sum_i P(y = i \mid C) \frac{\partial a_i}{\partial \theta},
 \end{align}
-其中$\Va$是\ENNAME{presoftmax}激活（或分数）向量，每个词对应一个元素。
+其中$\Va$是presoftmax激活（或分数）向量，每个词对应一个元素。
 第一项是\textbf{正相}(positive phase)项推动$a_y$向上，而第二项是\textbf{负相}(negative phase)项，对于所有$i$以权重$P(i \mid C)$推动$a_i$向下。
 由于负相项是期望值，我们可以用\gls{monte_carlo}采样来估计。
 然而，这将需要从模型本身采样。
@@ -811,7 +811,7 @@ $n_h$为数千和$| \SetV |$数十万的情况下，这个操作占据了\gls{NL
 很容易从数据估计这种分布的参数。
 在估计参数之后，也可以非常高效地从这样的分布采样。
 
-\firstgls{importance_sampling}不仅可以加速具有较大\ENNAME{softmax}输出的模型。
+\firstgls{importance_sampling}不仅可以加速具有较大softmax输出的模型。
 更一般地，它可以加速具有大稀疏输出层的训练，其中输出是稀疏向量而不是$n$选$1$。
 其中一个例子是\gls{bag_of_words}。
 \gls{bag_of_words}具有稀疏向量$\Vv$，其中$v_i$表示词汇表中的词$i$存不存在文档中。
@@ -1032,7 +1032,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 \glssymbol{SVD}的一个问题是它以任意方式处理丢失的条目，如同它们对应于目标值0。
 相反，我们希望避免为缺失条目做出的预测付出任何代价。
 幸运的是，观察到的评级的平方误差总和也可以通过基于梯度的优化最小化。
-\glssymbol{SVD}和式 \eq?中的双线性预测在\ENNAME{Netflix}奖（目的是仅基于大量匿名用户的之前评级来预测电影的评级）的竞争中表现得非常好{cite?}。
+\glssymbol{SVD}和式 \eq?中的双线性预测在Netflix奖（目的是仅基于大量匿名用户的之前评级来预测电影的评级）的竞争中表现得非常好{cite?}。
 许多\gls{ML}专家参加了2006年和2009年之间的这场比赛。
 它提高了使用先进\gls{ML}的\gls{recommender_system}的研究水平，并改进了\gls{recommender_system}。
 即使简单的双线性预测或\glssymbol{SVD}本身并没有赢得比赛，但它是大多数竞争对手提出的整体模型中一个组成部分，包括胜者{cite?}。
@@ -1040,7 +1040,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 <!-- % -- 466 -- -->
 
 除了这些具有\gls{distributed_representation}的双线性模型之外，第一次用于\gls{collaborative_filtering}的\gls{NN}之一是基于\glssymbol{RBM}的无向概率模型~{cite?}。
-\glssymbol{RBM}是赢得\ENNAME{Netflix}比赛方法的一个重要组成部分{cite?}。
+\glssymbol{RBM}是赢得Netflix比赛方法的一个重要组成部分{cite?}。
 \gls{NN}社区中也已经探索了对评级矩阵进行因子分解的更高级变体{cite?}。
 
 然而，\gls{collaborative_filtering}系统有一个基本限制：当引入新项目或新用户时，缺乏评级历史意味着无法评估其与其他项目或用户的相似性，或者说无法评估新的用户和现有项目的联系。
@@ -1174,7 +1174,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 如果模型提出了不在数据集中的事实，我们不确定模型是犯了错误还是发现了一个新的以前未知的事实。
 度量基于测试模型如何将已知真实事实的留存集合与不太可能为真的其他事实相比较，因此有些不精确。
 构造感兴趣的负样本（可能为假的事实）的常见方式是从真实事实开始，并创建该事实的损坏版本，例如用随机选择的不同实体替换\gls{relation}中的一个实体 。
- 通用的测试精度（10$\%$度量）计算模型在该事实的所有损坏版本的前10$\%$中选择"正确"事实的次数。
+ 通用的测试精度（10$%$度量）计算模型在该事实的所有损坏版本的前10$%$中选择"正确"事实的次数。
 
 \gls{knowledge_base}和\gls{distributed_representation}的另一个应用是\firstgls{word_sense_disambiguation} {cite?}，这个任务决定在某些语境中哪个词的意义是恰当。
 

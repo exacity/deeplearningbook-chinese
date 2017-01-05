@@ -8,13 +8,13 @@ share: false
 
 许多概率模型是很难训练的，其根本原因是很难进行推断。
 在\gls{DL}中，我们通常有一系列的可见变量$\Vv$和一系列的\gls{latent_variable}$\Vh$。
-推断的挑战往往在于计算$P(\Vh\mid\Vv)$或者计算在$P(\Vh\mid\Vv)$下的期望的困难性。
-这样的操作在一些任务比如\gls{MLE}中往往又是必须的。
+推断的挑战往往在于计算$P(\Vh\mid\Vv)$或者计算在分布$P(\Vh\mid\Vv)$下期望的困难性。
+这样的操作在一些任务比如\gls{MLE}中往往又是必需的。
 <!-- % 623 -->
 
-许多诸如\gls{RBM}和\gls{PPCA}这样的仅仅含有一层隐层的简单的\gls{graphical_models}的定义，往往使得推断操作如计算$P(\Vh\mid\Vv)$或者计算$P(\Vh\mid\Vv)$下的期望是非常容易的。
+许多诸如\gls{RBM}和\gls{PPCA}这样的仅仅含有一层隐层的简单\gls{graphical_models}的定义，往往使得推断操作如计算$P(\Vh\mid\Vv)$或者计算分布$P(\Vh\mid\Vv)$下的期望是非常容易的。
 不幸的是，大多数的具有多层\gls{latent_variable}的\gls{graphical_models}的后验分布都很难处理。
-精确的推断算法需要一个指数量级的运行时间。
+精确的推断算法需要指数量级的运行时间。
 即使一些只有单层的模型，如\gls{sparse_coding}，也存在着这样的问题。
 <!-- % 623 -->
 
@@ -24,9 +24,9 @@ share: false
 <!-- % 623 -->
 
 
-在\gls{DL}中难以处理的推断问题通常源于\gls{structured_probabilistic_models}中的\gls{latent_variable}之间的相互作用。
+在\gls{DL}中难以处理的推断问题通常源于\gls{structured_probabilistic_models}中\gls{latent_variable}之间的相互作用。
 详见\fig?的几个例子。
-这些相互作用可能是\gls{undirected_model}的直接作用，也可能是\gls{directed_model}中的一个可见变量的共同祖先之间的\gls{explaining_away}作用。
+这些相互作用可能是\gls{undirected_model}的直接作用，也可能是\gls{directed_model}中一个可见变量的共同祖先之间的\gls{explaining_away}作用。
 <!-- % 623 end -->
 
 
@@ -36,7 +36,14 @@ share: false
 \else
 	\centerline{\includegraphics[width=0.8\textwidth]{Chapter19/figures/intractable_graphs}}
 \fi
-	\caption{深度学习中难以处理的推断问题通常是由于结构化图模型中\gls{latent_variable}的相互作用。这些相互作用产生于当V-结构的子节点是可观察的时候一个\gls{latent_variable}与另一个\gls{latent_variable}或者更长的激活路径相连。（左）一个隐含节点相互连接的\gls{srbm}{cite?}。由于存在大量的\gls{latent_variable}的\gls{clique}，\gls{latent_variable}的直接连接使得后验分布难以处理。（中）一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。（右）当可见变量是可以观察时这个有向模型的\gls{latent_variable}之间存在相互作用，因为每两个\gls{latent_variable}都是\gls{coparent}。即使拥有上图中的某一种结构，一些概率模型依然能够获得易于处理的后验分布。如果我们选择条件概率分布来引入相对于图结构描述的额外的独立性这种情况也是可能出现的。举个例子，\gls{PPCA}的图结构如右图所示，然而由于其条件分布的特殊性质（带有相互正交的基向量的线性高斯条件分布）依然能够进行简单的推断。}
+	\caption{深度学习中难以处理的推断问题通常是由于结构化图模型中\gls{latent_variable}的相互作用。
+	这些相互作用产生于当\gls{vstructure}的子节点是可观察的时候一个\gls{latent_variable}与另一个\gls{latent_variable}或者更长的激活路径相连。
+	（左）一个隐含节点相互连接的\gls{srbm}{cite?}。由于存在大量的\gls{latent_variable}的\gls{clique}，\gls{latent_variable}的直接连接使得后验分布难以处理。
+	（中）一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。
+	（右）当可见变量是可以观察时这个有向模型的\gls{latent_variable}之间存在相互作用，因为每两个\gls{latent_variable}都是\gls{coparent}。
+	即使拥有上图中的某一种结构，一些概率模型依然能够获得易于处理的后验分布。
+	如果我们选择条件概率分布来引入相对于图结构描述的额外的独立性这种情况也是可能出现的。
+	举个例子，\gls{PPCA}的图结构如右图所示，然而由于其条件分布的特殊性质（带有相互正交的基向量的线性高斯条件分布）依然能够进行简单的推断。}
 \end{figure}
 
 
@@ -45,7 +52,7 @@ share: false
 
 <!-- % 624 -->
 
-许多难以利用观察值进行精确推断的问题往往可以描述为是一个优化问题。
+许多难以利用观察值进行精确推断的问题往往可以描述为一个优化问题。
 通过近似这样一个潜在的优化问题，我们往往可以推导出近似推断算法。
 <!-- % 624 -->
 
@@ -56,7 +63,7 @@ share: false
 作为替代，我们可以计算一个$\log p(\Vv;\Vtheta)$的下界。
 这个下界叫做\firstall{ELBO}。
 这个下界的另一个常用的名字是负的\firstgls{variational_free_energy}。
-这个\glssymbol{ELBO}是这样定义的：
+这个\gls{ELBO}是这样定义的：
 
 \begin{align}
 \CalL(\Vv,{\Vtheta},q) = \log p(\Vv;{\Vtheta}) - D_{\text{KL}}(q(\Vh\mid\Vv) \Vert p(\Vh\mid\Vv;{\Vtheta})).
@@ -84,7 +91,7 @@ share: false
 <!-- % 625 -->
 
 
-这也给出了\glssymbol{ELBO}的标准的定义：
+这也给出了\gls{ELBO}的标准定义：
 \begin{align}
 \CalL(\Vv,{\Vtheta},q) = \SetE_{\RVh\sim q}[\log p(\Vh , \Vv)] + H(q).
 \end{align}
@@ -98,15 +105,15 @@ share: false
 
 
 我们可以将推断问题看做是找一个分布$q$使得$\CalL$最大的过程。
-精确的推断能够通过找一组包含分布$p(\Vh\mid\Vv)$的函数，完美的最大化$\CalL$。
+精确的推断能够通过找一组包含分布$p(\Vh\mid\Vv)$的函数，完美地最大化$\CalL$。
 在本章中，我们将会讲到如何通过近似优化来找$q$的方法来推导出不同形式的的近似推断。
-我们可以通过限定分布$q$的形式或者使用并不彻底的优化方法来使得优化的过程更加高效，但是优化的结果是不完美的，因为只能显著的提升$\CalL$而无法彻底的最大化$\CalL$。
+我们可以通过限定分布$q$的形式或者使用并不彻底的优化方法来使得优化的过程更加高效，但是优化的结果是不完美的，因为只能显著地提升$\CalL$而无法彻底地最大化$\CalL$。
 <!-- % 625  end -->
 
 
 无论什么样的$q$的选择，$\CalL$是一个下界。
 我们可以通过选择一个更简单抑或更复杂的计算过程来得到对应的更加松的或者更紧的下界。
-通过一个不彻底的优化过程或者将$q$分布做很强的限定（使用一个彻底的优化过程）我们可以获得一个很差的$q$，尽管计算开销是极小的。
+通过一个不彻底的优化过程或者将$q$分布做很强的限定（并且使用一个彻底的优化过程）我们可以获得一个很差的$q$，尽管计算开销是极小的。
 <!-- % 626 head -->
 
 
@@ -115,7 +122,7 @@ share: false
 
 <!-- % 626 -->
 
-我们介绍的第一个最大化下界$\CalL$的算法是\firstall{EM}。
+我们介绍的第一个最大化下界$\CalL$的算法是\firstall{EM}算法。
 在\gls{latent_variable}模型中，这是一个非常热门的训练算法。
 在这里我们描述{emview}所提出的\glssymbol{EM}算法。
 不像大多数我们在本章中介绍的其他算法一样，\glssymbol{EM}并不是一个近似推断算法，但是是一种能够学到近似后验的算法。
@@ -125,10 +132,10 @@ share: false
 \glssymbol{EM}算法包含了交替的两步运算直到收敛的过程：
 
 + \firstgls{e_step}: 令${\Vtheta^{(0)}}$表示在这一步开始时参数的初始值。
-	令$q(\Vh^{(i)}\mid \Vv) = p(\Vh^{(i)}\mid\Vv^{(i)};\Vtheta^{(0)})$对任何我们想要训练的(对所有的或者小批数据均成立)索引为$i$的训练样本$\Vv^{(i)}$。
+	令$q(\Vh^{(i)}\mid \Vv) = p(\Vh^{(i)}\mid\Vv^{(i)};\Vtheta^{(0)})$对任何我们想要训练的(对所有的或者\gls{minibatch}数据均成立)索引为$i$的训练样本$\Vv^{(i)}$。
 	通过这个定义，我们认为$q$在当前的参数$\Vtheta^{(0)}$下定义。
 	如果我们改变$\Vtheta$，那么$p(\Vh\mid\Vv;\Vtheta)$将会相应的变化，但是$q(\Vh\mid\Vv)$还是不变并且等于$p(\Vh\mid\Vv;\Vtheta^{(0)})$。
-+ \firstgls{m_step}：使用选择的优化算法完全地或者部分的最大化关于$\Vtheta$的
++ \firstgls{m_step}：使用选择的优化算法完全地或者部分地最大化关于$\Vtheta$的
 	\begin{align}
 	\sum_i \CalL(\Vv^{(i)},\Vtheta,q).
 	\end{align}
@@ -136,7 +143,7 @@ share: false
 <!-- % 626   -->
 
 
-这可以被看做是一个坐标上升算法来最大化$\CalL$。
+这可以被看做通过\gls{coordinate_ascent}算法来最大化$\CalL$。
 在第一步中，我们更新$q$来最大化$\CalL$，而另一步中，我们更新$\Vtheta$来最大化$\CalL$。
 <!-- % 626 -->
 
@@ -156,14 +163,14 @@ share: false
 
 
 \glssymbol{EM}算法包含了一些不同的解释。
-首先，学习过程中的基本结构中，我们通过更新模型参数来提高整个数据集的似然，其中缺失的变量的值是通过后验分布来估计的。
+首先，学习过程的一个基本思路就是，我们通过更新模型参数来提高整个数据集的似然，其中缺失变量的值是通过后验分布来估计的。
 这种解释并不仅仅适用于\glssymbol{EM}算法。
-比如说，使用梯度下降来最大化似然函数的对数这种方法也利用了相同的性质。
+比如说，使用\gls{GD}来最大化似然函数的对数这种方法也利用了相同的性质。
 计算对数似然函数的梯度需要对隐含节点的后验分布来求期望。 
 \glssymbol{EM}算法的另一个关键的性质是当我们移动到另一个$\Vtheta$时候，我们仍然可以使用旧的$q$。
-在传统\gls{ML}中，这种特有的性质在推导M步更新时候被广泛的应用。
+在传统\gls{ML}中，这种特有的性质在推导M步更新时候得到了广泛的应用。
 在\gls{DL}中，大多数模型太过于复杂以致于在M步中很难得到一个最优解。
-所以\glssymbol{EM}算法的第二个特质较少的被使用。
+所以\glssymbol{EM}算法的第二个特质较少被使用。
 <!-- % 627 -->
 
 
@@ -463,7 +470,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\fig?。
 <!-- % 634  head  -->
 
 
-原则上说，我们可以使用关于$\Vv$和$\Vh$的梯度下降。
+原则上说，我们可以使用关于$\Vv$和$\Vh$的\gls{GD}。
 这会成为一个完美的组合的推断学习算法。
 但是，由于两个原因，我们往往不这么做。
 第一点，对每一个$\Vv$我们需要存储$\hat{\Vh}$。
@@ -874,7 +881,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 <!-- % 644 -->
 
 我们可以使用近似推断来训练和使用大量的模型。
-许多模型将在下一章中被描述。
+许多模型将在下一章中描述。
 <!-- % 644 -->
 
 

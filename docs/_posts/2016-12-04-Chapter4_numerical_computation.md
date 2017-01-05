@@ -430,7 +430,7 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
 \firstacr{KKT}方法\footnote{\glssymbol{KKT}方法是\textbf{Lagrange乘子法}（只允许等式约束）的推广}是针对\gls{constrained_optimization}非常通用的解决方案。
 为介绍\glssymbol{KKT}方法，我们引入一个称为\firstgls{generalized_lagrangian}或\firstgls{generalized_lagrange_function}的新函数。
 
-为了定义\ENNAME{Lagrangian}，我们先要通过等式和不等式的形式描述$\SetS$。 
+为了定义Lagrangian，我们先要通过等式和不等式的形式描述$\SetS$。 
 我们希望通过$m$个函数$g^{(i)}$和$n$个函数$h^{(j)}$描述$\SetS$，那么$\SetS$可以表示为$\SetS = \{ \Vx \mid \forall i, g^{(i)}(\Vx) = 0 ~\text{and}~ \forall j, h^{(j)}(\Vx) \leq 0  \}$。
 其中涉及$g^{(i)}$的等式称为\firstgls{equality_constraints}，涉及$h^{(j)}$的不等式称为\firstgls{inequality_constraints}。
 
@@ -537,7 +537,7 @@ $ f(\Vx) = \frac{1}{2} || \MA \Vx - \Vb ||_2^2$的算法。
 因为在这个情况下真正的函数是二次的，\gls{newton_method}所用的二次近似是精确的，该算法会在一步后收敛到\gls{global_minimum}。
 
 现在假设我们希望最小化同样的函数，但受 $\Vx^\Tsp \Vx \leq 1$ 的约束。 
-要做到这一点，我们引入\ENNAME{Lagrangian}
+要做到这一点，我们引入Lagrangian
 \begin{align}
  L(\Vx, \lambda) = f(\Vx) + \lambda (\Vx^\Tsp \Vx - 1).
 \end{align}
@@ -549,10 +549,10 @@ $ f(\Vx) = \frac{1}{2} || \MA \Vx - \Vb ||_2^2$的算法。
 
 <!-- % -- 92 -- -->
 
-可以用\ENNAME{Moore-Penrose}伪逆：$\Vx = \MA^+ \Vb$找到无约束最小二乘问题的最小范数解。
+可以用Moore-Penrose伪逆：$\Vx = \MA^+ \Vb$找到无约束最小二乘问题的最小范数解。
 如果这一点是\gls{feasible}，那么这也是约束问题的解。
 否则，我们必须找到约束是活跃的解。
-关于$\Vx$对\ENNAME{Lagrangian}微分，我们得到方程
+关于$\Vx$对Lagrangian微分，我们得到方程
 \begin{align}
  \MA^\Tsp \MA \Vx - \MA^\Tsp \Vb + 2 \lambda \Vx = 0.
 \end{align}
@@ -566,7 +566,7 @@ $\lambda$的选择必须使结果服从约束。
 \begin{align}
  \frac{\partial}{\partial \lambda} L(\Vx, \lambda)  = \Vx^\Tsp \Vx - 1.
 \end{align}
-当$\Vx$的范数超过1时，该导数是正的，所以为了跟随\gls{derivative}上坡并相对$\lambda$增加\ENNAME{Lagrangian}，我们需要增加$\lambda$。
+当$\Vx$的范数超过1时，该导数是正的，所以为了跟随\gls{derivative}上坡并相对$\lambda$增加Lagrangian，我们需要增加$\lambda$。
 因为$\Vx^\Tsp \Vx$的惩罚系数增加了，求解关于$\Vx$的线性方程现在将得到具有较小范数的解。
 求解线性方程和调整$\lambda$的过程一直持续到$\Vx$具有正确的范数并且关于$\lambda$的\gls{derivative}是$0$。
 

@@ -5,15 +5,15 @@ share: false
 ---
 <!-- % 581 -->
 
-随机算法可以粗略的分为两类：\ENNAME{Las Vegas}算法和\gls{monte_carlo}算法。
-\ENNAME{Las Vegas}算法通常精确地返回一个正确答案 （或者发布一个失败报告）。
+随机算法可以粗略的分为两类：Las Vegas算法和\gls{monte_carlo}算法。
+Las Vegas算法通常精确地返回一个正确答案 （或者发布一个失败报告）。
 这类方法通常需要占用随机量的计算资源（通常包括内存和运行时间）。
 与此相对的，\gls{monte_carlo}方法返回一个伴随着随机量错误的答案。
 花费更多的计算资源（通常包括内存和运行时间）可以减少这种随机量的错误。
 在任意的固定的计算资源下， \gls{monte_carlo}算法可以得到一个近似解。
 
 对于\gls{ML}中的许多问题来说，我们很难得到精确的答案。
-这类问题很难用精确的确定性的算法如\ENNAME{Las Vegas}算法解决。
+这类问题很难用精确的确定性的算法如Las Vegas算法解决。
 取而代之的是确定性的近似算法或\gls{monte_carlo}方法。
 这两种方法在\gls{ML}中都非常普遍。
 本章主要关注\gls{monte_carlo}方法。
@@ -307,7 +307,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 如果我们想要得到完全独立的样本，那么我们需要同时并行的运行多个\gls{markov_chain}。
 这种方法使用了额外的并行计算来消除潜在因素的干扰。
 使用一条\gls{markov_chain}来生成所有样本的策略和每条\gls{markov_chain}只产生一个样本的策略是两种极端。
-深度学习的研究者们通常选取的\gls{markov_chain}的数目和\ENNAME{minibatch}中的样本数相近，然后从这些\gls{markov_chain}的集合中采集所需要的样本。
+深度学习的研究者们通常选取的\gls{markov_chain}的数目和minibatch中的样本数相近，然后从这些\gls{markov_chain}的集合中采集所需要的样本。
 常用的\gls{markov_chain}的数目通常选为$100$。
 <!-- % 589 -->
 

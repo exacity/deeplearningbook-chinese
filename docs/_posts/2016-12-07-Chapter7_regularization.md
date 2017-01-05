@@ -354,9 +354,9 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 
 <!-- % -- 231 -- -->
 
-{Hinton-et-al-arxiv2012}尤其推荐由{Srebro05}引入的策略：约束\gls{NN}层的权重矩阵每列的范数，而不是限制整个权重矩阵的\ENNAME{Frobenius}范数。
+{Hinton-et-al-arxiv2012}尤其推荐由{Srebro05}引入的策略：约束\gls{NN}层的权重矩阵每列的范数，而不是限制整个权重矩阵的Frobenius范数。
 分别限制每一列的范数可以防止某一\gls{hidden_unit}有非常大的权重。
-如果我们将此约束转换成\ENNAME{Lagrange}函数中的一个惩罚，这将与$L^2$ \gls{weight_decay}类似但每个\gls{hidden_unit}的权重都具有单独的\glssymbol{KKT}乘子。
+如果我们将此约束转换成Lagrange函数中的一个惩罚，这将与$L^2$ \gls{weight_decay}类似但每个\gls{hidden_unit}的权重都具有单独的\glssymbol{KKT}乘子。
 每个\glssymbol{KKT}乘子分别会被动态更新，以使每个\gls{hidden_unit}服从约束。
 在实践中，列范数的限制总是通过重投影的显式约束实现。
 
@@ -385,7 +385,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 
 <!-- % -- 232 -- -->
 
-正如我们在\sec?看到，我们可以使用\ENNAME{Moore-Penrose}求解欠定线性方程。 
+正如我们在\sec?看到，我们可以使用Moore-Penrose求解欠定线性方程。 
 回想$\MX$伪逆$\MX^+$的一个定义：
 \begin{align} 
  \MX^+ = \lim_{\alpha \searrow 0} (\MX^\top \MX + \alpha \MI)^{-1}\MX^\top.
@@ -895,7 +895,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 正如对参数的$L^1$惩罚诱导参数\gls{sparse}性，对\gls{representation}元素的$L^1$惩罚诱导\gls{sparse}的\gls{representation}：
 $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 当然$L^1$惩罚是导致\gls{sparse}\gls{representation}的选择之一。
-其他包括从\gls{representation}上\ENNAME{Student} $t$先验导出的惩罚{cite?}和\gls{KL}惩罚{cite?}有利于表示元素约束于单位区间上。
+其他包括从\gls{representation}上Student $t$先验导出的惩罚{cite?}和\gls{KL}惩罚{cite?}有利于表示元素约束于单位区间上。
 {HonglakL2008-small}和{Goodfellow2009}都提供了基于几个样本平均激活的\gls{regularization}策略的例子，即令$\frac{1}{m}\sum_i \Vh^{(i)}$接近某些目标值（如每项都是$.01$的向量）。
 
 还有其他方法使用激活值的硬性约束获得\gls{representation}\gls{sparse}。
@@ -905,8 +905,8 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 \end{align}
 其中$\norm{\Vh}_0 $是$\Vh$中非零项的个数。
 当$\MW$被约束为正交时，这个问题可以高效地解决。
-这种方法通常被称为\ENNAME{OMP}-$k$，通过$k$指定允许的非零特征数量。
-{Coates2011b}证明\ENNAME{OMP}-$1$可以成为深度架构中非常有效的特征提取器。
+这种方法通常被称为OMP-$k$，通过$k$指定允许的非零特征数量。
+{Coates2011b}证明OMP-$1$可以成为深度架构中非常有效的特征提取器。
 
 <!-- % -- 248 -- -->
 
@@ -977,7 +977,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 作为科学论文算法的基准时，它通常是不鼓励使用的，因为任何\gls{ML}算法可从\gls{model_averaging}中大幅获益（以增加计算和存储的代价）。
 
 \gls{ML}比赛通常使用超过几十种\gls{model_averaging}的方法取胜。
-最近一个突出的例子是\ENNAME{Netflix Grand Prize}{cite?}。
+最近一个突出的例子是Netflix Grand Prize{cite?}。
 
 不是所有构建\gls{ensemble}的技术都是为了让\gls{ensemble}模型比单一模型更加\gls{regularization}。
 例如，一种被称为\firstgls{boosting}的技术{cite?}构建比单个模型\gls{capacity}更高\gls{ensemble}模型。
@@ -1181,7 +1181,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 在这些情况下，使用\gls{dropout}和更大模型的计算代价可能超过\gls{regularization}带来的好处。
 
 只有极少的训练样本可用时，\gls{dropout}不会很有效。
-在只有不到5000的样本的\ENNAME{Alternative Splicing}数据集上{cite?}，贝叶斯神经网络{cite?}比\gls{dropout}表现更好{cite?}。
+在只有不到5000的样本的Alternative Splicing数据集上{cite?}，贝叶斯神经网络{cite?}比\gls{dropout}表现更好{cite?}。
 当有其他未分类的数据可用时，\gls{unsupervised}特征学习比\gls{dropout}更有优势。
 
 
@@ -1208,7 +1208,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 当随机抽样的\gls{ensemble}成员相互独立地训练好后，\gls{bagging}\gls{ensemble}的\gls{regularization}效果才能达到。
 
 \gls{dropout}启发其它以随机方法训练指数量级的共享权重的\gls{ensemble}。
-\ENNAME{DropConnect}是
+DropConnect是
 \gls{dropout}的一个特殊情况，其中一个标量权重和单个\gls{hidden_unit}状态之间的每个乘积被认为是可以丢弃的一个单元{cite?}。
 随机\gls{pooling}是构造\gls{CNN}\gls{ensemble}的一种随机\gls{pooling}的形式(见\sec?)，其中每个卷积网络参与每个特征图的不同空间位置。
 目前为止，\gls{dropout}仍然是最广泛使用的隐式\gls{ensemble}方法。
@@ -1263,7 +1263,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 在许多情况下，\gls{NN}在独立同分布的测试集上进行评估时已经达到人类表现。
 因此，自然要怀疑这些模型在这些任务上是否获得了真正的人类层次的理解。
 为了探测网络对底层任务的理解层次，我们可以搜索这个模型错误分类的例子。
-{Szegedy-ICLR2014}发现，精度达到人类水平的\gls{NN}在通过优化过程故意构造的点上的误差率接近\NUMTEXT{100\%}，模型在这个输入点$\Vx'$的输出与附近的数据点$\Vx$非常不同。
+{Szegedy-ICLR2014}发现，精度达到人类水平的\gls{NN}在通过优化过程故意构造的点上的误差率接近100%，模型在这个输入点$\Vx'$的输出与附近的数据点$\Vx$非常不同。
 在许多情况下，$\Vx'$与$\Vx$非常近似，人类观察者不知道原始样本和\firstgls{adversarial_example}之间的差异，但是网络会作出非常不同的预测。
 见\fig?的例子。
 \begin{figure}[!htb]
@@ -1283,7 +1283,7 @@ $\ +\ .007\ \times$ &%
     $\centering \Vx$     &%
     & $\text{sign} (\nabla_{\Vx} J(\Vtheta, \Vx, y) )$ & & $\Vx + \epsilon \text{sign} (\nabla_{\Vx} J(\Vtheta, \Vx, y) )$ \\
     $y=$"panda" &                & "nematode"     &   & "gibbon" \\
-    w/ 57.7\% confidence &        &   w/ 8.2\% confidence & & w/ 99.3 \% confidence
+    w/ 57.7% confidence &        &   w/ 8.2% confidence & & w/ 99.3 % confidence
 \end{tabular}    
 \fi
 \caption[Fast adversarial sample generation]{
@@ -1375,7 +1375,7 @@ $\ +\ .007\ \times$ &%
 显式的数据集增强能对抗较大扰动。
 二是无限小的做法对基于\gls{ReLU}的模型是困难的。
 这些模型只能通过关闭单元或缩小它们的权重才能缩小它们的导数。
-他们不能像\ENNAME{sigmoid}或\ENNAME{tanh}单元一样通过大的权重在高值处饱和以收缩导数。
+他们不能像sigmoid或tanh单元一样通过大的权重在高值处饱和以收缩导数。
 数据集增强在\gls{ReLU}上工作得很好，因为整流单元的不同子集针对每一个原始输入不同的转换版本激活。
 
 <!-- % -- 264 -- -->

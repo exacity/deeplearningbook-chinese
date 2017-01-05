@@ -564,7 +564,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/training_size_grows}}
 \fi
-\caption{训练集大小对\gls{training_error}，\gls{test_error}以及\gls{optimal_capacity}的影响。通过给一个$5$阶多项式添加适当大小的噪声，我们构造了一个合成的\gls{regression}问题，生成单个测试集，然后生成一些不同尺寸的训练集。为了描述\%95置信区间的\gls{error_bar}，对于每一个尺寸，我们生成了$40$个不同的训练集。（上）两个不同的模型上训练集和测试集的\glssymbol{mean_squared_error}，一个二次模型，另一个模型的阶数通过最小化\gls{test_error}来选择。两个模型都是用闭式解来拟合。对于二次模型来说，当训练集增加时\gls{training_error}也随之增大。这是由于越大的数据集越难以拟合。同时，\gls{test_error}随之减小，因为关于训练数据的不正确的假设越来越少。二次模型的容量并不足以解决这个问题，所以它的\gls{test_error}趋近于一个较高的值。\gls{optimal_capacity}点处的\gls{test_error}趋近于\gls{bayes_error}。\gls{training_error}可以低于\gls{bayes_error}，因为训练算法有能力记住训练集中特定的样本。当训练集趋向于无穷大时，任何固定容量的模型（在这里指的是二次模型）的\gls{training_error}都至少增至\gls{bayes_error}。（下）当训练集大小增大时，\gls{optimal_capacity}（在这里是用最优多项式回归器的阶数衡量的）也会随之增大。\gls{optimal_capacity}在达到足够捕捉模型复杂度之后就不再增长了。}
+\caption{训练集大小对\gls{training_error}，\gls{test_error}以及\gls{optimal_capacity}的影响。通过给一个$5$阶多项式添加适当大小的噪声，我们构造了一个合成的\gls{regression}问题，生成单个测试集，然后生成一些不同尺寸的训练集。为了描述%95置信区间的\gls{error_bar}，对于每一个尺寸，我们生成了$40$个不同的训练集。（上）两个不同的模型上训练集和测试集的\glssymbol{mean_squared_error}，一个二次模型，另一个模型的阶数通过最小化\gls{test_error}来选择。两个模型都是用闭式解来拟合。对于二次模型来说，当训练集增加时\gls{training_error}也随之增大。这是由于越大的数据集越难以拟合。同时，\gls{test_error}随之减小，因为关于训练数据的不正确的假设越来越少。二次模型的容量并不足以解决这个问题，所以它的\gls{test_error}趋近于一个较高的值。\gls{optimal_capacity}点处的\gls{test_error}趋近于\gls{bayes_error}。\gls{training_error}可以低于\gls{bayes_error}，因为训练算法有能力记住训练集中特定的样本。当训练集趋向于无穷大时，任何固定容量的模型（在这里指的是二次模型）的\gls{training_error}都至少增至\gls{bayes_error}。（下）当训练集大小增大时，\gls{optimal_capacity}（在这里是用最优多项式回归器的阶数衡量的）也会随之增大。\gls{optimal_capacity}在达到足够捕捉模型复杂度之后就不再增长了。}
 \end{figure}
 
 
@@ -684,7 +684,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 另一个作为验证集，用于估计训练中或训练后的泛化误差，更新超参数。
 用于学习参数的数据子集通常仍被称为训练集，尽管这会和整个训练过程用到的更大的\gls{dataset}相混。
 用于挑选超参数的数据子集被称为\gls{validation_set}。
-通常，$80\%$的训练数据用于训练，$20\%$用于验证。
+通常，$80%$的训练数据用于训练，$20%$用于验证。
 由于验证集是用来"训练"超参数的，尽管验证集的误差通常会比训练集误差小，验证集会低估泛化误差。
 所有超参数优化完成之后，泛化误差可能会通过\gls{test_set}来估计。
 
@@ -911,12 +911,12 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 我们通常用\gls{test_set}样本的误差均值来估计泛化误差。
 \gls{test_set}中\gls{example:chap5}的数量决定了这个估计的精确度。
 中心极限定理告诉我们均值会接近一个高斯分布，我们可以用\gls{standard_error}计算出真实期望落在选定区间的概率。
-例如，以均值$\hat{\mu}_m$为中心的$95\%$置信区间是
+例如，以均值$\hat{\mu}_m$为中心的$95%$置信区间是
 \begin{equation}
     ( \hat{\mu}_m - 1.96\text{SE}(\hat{\mu}_m), \hat{\mu}_m + 1.96 \text{SE}(\hat{\mu}_m) ),
 \end{equation}
 以上区间是基于均值$\hat{\mu}_m$和方差$\text{SE}(\hat{\mu}_m)^2$的高斯分布。
-在\gls{ML}实验中，我们通常说算法$A$比算法$B$好，是指算法$A$的误差的$95\%$置信区间的上界小于算法$B$的误差的$95\%$置信区间的下界。
+在\gls{ML}实验中，我们通常说算法$A$比算法$B$好，是指算法$A$的误差的$95%$置信区间的上界小于算法$B$的误差的$95%$置信区间的下界。
 
 \textbf{实例：伯努利分布} \quad 我们再次考虑从伯努利分布（回顾$P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{1 - x^{(i)}}$）中独立同分布采样出来的一组\gls{example:chap5}$\{ x^{(1)}, \dots, x^{(m)} \}$。
 这次我们关注估计$\hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}$的方差：

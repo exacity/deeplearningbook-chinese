@@ -20,7 +20,7 @@ comments: false
     {% endif %}
   </header>
   <div class="read-more-content">
-    <p>{% if post.description %}{{ post.description }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 140 }}&hellip;{% endif %} <a href="{{ site.url }}{{ post.url }}">Continue reading</a></p>
+    <p>{% if post.description %}{{ post.description }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 140 }}&hellip;{% endif %} <a href="{{ site.url }}{{ post.url }}">继续阅读</a></p>
   </div><!-- /.read-more-content -->
 </article><!-- /.hentry -->
 {% endfor %}

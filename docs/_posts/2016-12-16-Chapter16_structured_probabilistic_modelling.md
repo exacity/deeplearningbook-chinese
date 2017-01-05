@@ -909,7 +909,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 我们可以通过将\gls{undirected_model}转换为\gls{directed_model}来实现从\gls{undirected_model}中抽样，但是这通常需要解决棘手的推断问题（以确定新有向图的根节点上的边缘分布），或者需要引入许多边，从而会使得到的\gls{directed_model}变得难以处理。
 从\gls{undirected_model}抽样，而不首先将其转换为\gls{directed_model}的做法似乎需要解决循环依赖的问题。 
 每个变量与每个其他变量相互作用，因此对于抽样过程没有明确的起点。
-不幸的是，从\gls{undirected_model}模型中抽取样本是一个昂贵的过程。
+不幸的是，从\gls{undirected_model}中抽取样本是一个昂贵的过程。
 理论上最简单的方法是\firstgls{gibbs_sampling}。
 假设我们在一个$n$维向量的随机变量$\RVx$上有一个\gls{graphical_models}。 
 我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \mid \RSx_{-i})$中抽样。

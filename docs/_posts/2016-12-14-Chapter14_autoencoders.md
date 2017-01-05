@@ -132,7 +132,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh),
 \log p_{\text{model}}(\Vh, \Vx)=\log p_{\text{model}}(\Vh) + \log p_{\text{model}}(\Vx \mid \Vh) .
 \end{align}
 $\log p_{\text{model}}(\Vh) $ 项能被\gls{sparse}诱导。
-如\ENNAME{Laplace}先验，
+如Laplace先验，
 \begin{align}
 p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 \end{align}
@@ -145,7 +145,7 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 \end{align}
 这里的常数项只跟$\lambda$有关。
 通常我们将$\lambda$视为超参数，因此可以丢弃不影响参数学习的常数项。
-其它如\ENNAME{Student-t}先验也能诱导\gls{sparse}性。
+其它如Student-t先验也能诱导\gls{sparse}性。
 从\gls{sparse}性导致$p_{\text{model}}(\Vh)$学习成近似最大似然的结果看，\gls{sparse}惩罚完全不是一个正则项。
 这仅仅影响模型关于隐变量的分布。
 这个观点提供了训练\gls{AE}的另一个动机：这是近似训练\gls{generative_model}的一种途径。
@@ -263,7 +263,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 \gls{loss_function}的具体形式视$p_{\text{decoder}}$的形式而定。
 就传统的\gls{feedforward_network}来说，我们通常使用线性输出单元来参数化高斯分布的均值（如果$\Vx$是实的）。
 在这种情况下，负对数似然就对应\gls{mean_squared_error}\gls{criterion}。
-类似地，二值$\Vx$对应参数由\ENNAME{sigmoid}单元确定的\gls{bernoulli_distribution}，离散的$\Vx$对应\ENNAME{softmax}分布等等。
+类似地，二值$\Vx$对应参数由sigmoid单元确定的\gls{bernoulli_distribution}，离散的$\Vx$对应softmax分布等等。
 为了便于计算概率分布，通常认为输出变量与给定$\Vh$是条件独立的，但一些技术（如混合密度输出）可以解决输出相关的建模。
 
 <!-- % -- 500 -- -->
@@ -554,7 +554,7 @@ $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{A
 \fi
 \caption{如果每个位置处的切平面（见\fig?）是已知的，则它们可以平铺后形成全局坐标系或密度函数。
 每个局部块可以被认为是局部欧几里德坐标系或者是局部平面高斯或"薄饼"，在与薄饼正交的方向上具有非常小的方差而在定义坐标系的方向上具有非常大的方差。
-这些高斯的混合提供了估计的密度函数，如\gls{manifold}中的\ENNAME{Parzen}窗口算法{cite?} 或其非局部的基于\gls{NN}的变体{cite?}。
+这些高斯的混合提供了估计的密度函数，如\gls{manifold}中的Parzen窗口算法{cite?} 或其非局部的基于\gls{NN}的变体{cite?}。
 }
 \end{figure}
 
@@ -575,7 +575,7 @@ $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{A
 \begin{align}
  \Omega(\Vh) = \lambda \Bigg\| \frac{\partial f(\Vx)}{\partial \Vx} \Bigg\|_F^2 .
 \end{align}
-惩罚项$\Omega(\Vh)$为平方\ENNAME{Frobenius}范数（元素平方之和），作用于与\gls{encoder}的函数相关\gls{partial_derivatives}的\gls{jacobian}矩阵。
+惩罚项$\Omega(\Vh)$为平方Frobenius范数（元素平方之和），作用于与\gls{encoder}的函数相关\gls{partial_derivatives}的\gls{jacobian}矩阵。
 
 
 \gls{DAE}和\gls{CAE}之间存在一定联系：{Alain+Bengio-ICLR2013-small}指出在小高斯噪声的限制下，当\gls{reconstruction}函数将$\Vx$映射到$\Vr = g(f(\Vx))$时，\gls{denoising}\gls{reconstruction_error}与\gls{contractive}惩罚项是等价的。
@@ -592,15 +592,15 @@ $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{A
 说得更清楚一点，\glssymbol{CAE}只在局部\gls{contractive}——一个训练样本$\Vx$的所有扰动都映射到$f(\Vx)$的附近。
 全局来看，两个不同的点$\Vx$和$\Vx'$会分别被映射到远离原点的两个点$f(\Vx)$和$f(\Vx')$。
 $f$扩展到数据\gls{manifold}的中间或远处是合理的（见\fig?中小例子的情况）。
-当$\Omega(\Vh)$惩罚应用于\ENNAME{sigmoid}单元时，\gls{contractive}\gls{jacobian}的简单方式是令\ENNAME{sigmoid}趋向饱和的0或1。
-这鼓励\glssymbol{CAE}使用\ENNAME{sigmoid}的极值编码输入点，或许可以解释为二进制\gls{code}。
-它也保证了\glssymbol{CAE}可以穿过大部分\ENNAME{sigmoid}\gls{hidden_unit}能张成的超立方体，进而扩散其\gls{code}值。
+当$\Omega(\Vh)$惩罚应用于sigmoid单元时，\gls{contractive}\gls{jacobian}的简单方式是令sigmoid趋向饱和的0或1。
+这鼓励\glssymbol{CAE}使用sigmoid的极值编码输入点，或许可以解释为二进制\gls{code}。
+它也保证了\glssymbol{CAE}可以穿过大部分sigmoid\gls{hidden_unit}能张成的超立方体，进而扩散其\gls{code}值。
 
 我们可以认为点$\Vx$处的\gls{jacobian}矩阵$\MJ$能将非线性\gls{encoder}近似为线性算子。
 这允许我们更形式地使用"\gls{contractive}"这个词。
 在线性理论中，当$\MJ\Vx$的范数对于所有单位$\Vx$都小于等于1时，$\MJ$被称为\gls{contractive}的。
 换句话说，如果$\MJ$收缩了单位球，他就是\gls{contractive}的。
-我们可以认为\glssymbol{CAE}为了鼓励每个局部线性算子具有收缩性，而在每个训练数据点上将\ENNAME{Frobenius}范数作为$f(\Vx)$的局部线性近似的惩罚。
+我们可以认为\glssymbol{CAE}为了鼓励每个局部线性算子具有收缩性，而在每个训练数据点上将Frobenius范数作为$f(\Vx)$的局部线性近似的惩罚。
 
 
 如\sec?中描述，正则\gls{AE}基于两种相反的推动力学习\gls{manifold}。
@@ -725,11 +725,11 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 这种通过\gls{dimensionality_reduction}和二值化的\gls{information_retrieval}方法被称为\firstgls{semantic_hashing}{cite?}，已经被用于文本输入{cite?}和图像{cite?}。
 
 
-通常在最终层上使用\ENNAME{sigmoid}的编码函数来产生\gls{semantic_hashing}的二值\gls{code}。
-\ENNAME{sigmoid}单元必须被训练为到达饱和，对所有输入值都接近0或接近1。
-能做到这一点的窍门就是训练时在\ENNAME{sigmoid}非线性单元前简单地注入加性噪声。
+通常在最终层上使用sigmoid的编码函数来产生\gls{semantic_hashing}的二值\gls{code}。
+sigmoid单元必须被训练为到达饱和，对所有输入值都接近0或接近1。
+能做到这一点的窍门就是训练时在sigmoid非线性单元前简单地注入加性噪声。
 噪声的大小应该随时间增加。
-要对抗这种噪音并且保存尽可能多的信息，网络必须加大输入到\ENNAME{sigmoid}函数的幅度，直到饱和。
+要对抗这种噪音并且保存尽可能多的信息，网络必须加大输入到sigmoid函数的幅度，直到饱和。
 
 <!-- % -- 515 -- -->
 

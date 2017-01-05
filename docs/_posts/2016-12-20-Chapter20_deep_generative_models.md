@@ -57,8 +57,8 @@ share: false
 这意味着学习规则是"局部"的，这使得\gls{BM}的学习似乎在某种程度上生物学合理。
 可以想象，如果每个神经元都是\gls{BM}中的随机变量，那么连接两个随机变量的轴突和树突只能通过观察与它们物理上实际接触的细胞的激发模式来学习。
 特别地，\gls{positive_phase}期间，经常同时激活的两个单元的连接会被加强。
-这是\ENNAME{Hebbian}学习规则{cite?}的一个例子 ，经常总结为好记的短语——"fire together, wire together"。
-\ENNAME{Hebbian}学习规则是生物系统学习中最古老的假设性解释之一，直至今天仍然相关 {cite?}。
+这是Hebbian学习规则{cite?}的一个例子 ，经常总结为好记的短语——"fire together, wire together"。
+Hebbian学习规则是生物系统学习中最古老的假设性解释之一，直至今天仍然相关 {cite?}。
 
 
 不仅仅使用局部统计信息的其他学习算法似乎需要假设更多的学习机制。
@@ -334,7 +334,7 @@ P(v_i^{(k)} = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\t
 当然，当我们条件于奇数层中的变量时，偶数层中的变量也会变得条件独立。
 
 \glssymbol{DBM}的二分图结构意味着我们可以应用之前用于\glssymbol{RBM}条件分布的相同式子来确定\glssymbol{DBM}中的条件分布。
-在给定相邻层值的情况下，层内的单元彼此条件独立，因此二值变量的分布可以由\ENNAME{Bernoulli}参数（描述每个单元的激活概率）完全描述。
+在给定相邻层值的情况下，层内的单元彼此条件独立，因此二值变量的分布可以由Bernoulli参数（描述每个单元的激活概率）完全描述。
 在具有两个\gls{hidden_layer}的示例中，激活概率由下式给出：
 \begin{align}
  P(v_i=1  \mid  \Vh^{(1)}) &= \sigma \big( \MW_{i,:}^{(1)}\Vh^{(1)} \big), \\
@@ -367,7 +367,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \glssymbol{DBM}在\glssymbol{DBN}之后开发。
 与\glssymbol{DBN}相比，\glssymbol{DBM}的后验分布$P(\Vh  \mid  \Vv)$更简单。
 有点违反直觉的是，这种后验分布的简单性允许更加丰富的后验近似。
-在\glssymbol{DBN}的情况下，我们使用启发式的近似\gls{inference}过程进行分类，其中我们可以通过\glssymbol{MLP}（使用\ENNAME{sigmoid}激活函数并且权重与原始\glssymbol{DBN}相同）中的向上传播猜测\gls{hidden_unit}合理的\gls{meanfield}期望值。
+在\glssymbol{DBN}的情况下，我们使用启发式的近似\gls{inference}过程进行分类，其中我们可以通过\glssymbol{MLP}（使用sigmoid激活函数并且权重与原始\glssymbol{DBN}相同）中的向上传播猜测\gls{hidden_unit}合理的\gls{meanfield}期望值。
 \emph{任何}分布$Q(\Vh)$可以用于获得对数似然的变分下界。
 因此这种启发式过程让我们能够获得这样的下界。
 但是，该界没有以任何方式显式优化，所以该界可能是远远不紧的。
@@ -954,8 +954,8 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
  {HonglakL2009} 的方法使得每个检测器单元在相同的池化区域中互斥，解决了计算问题，但仍然不允许可变大小的池化区域。
 例如，假设我们在学习边缘检测器时，检测器单元上具有$2 \times 2$的概率最大池化。
 这强制约束在每个$2 \times 2$的区域中只能出现这些边中的一条。
-如果我们随后在每个方向上将输入图像的大小增加50\%， 则期望边缘的数量会相应地增加。
-相反，如果我们在每个方向上将池化区域的大小增加50\%到$3 \times 3 $，则互斥性约束现在指定这些边中的每一个在$3 \times3$区域中仅可以出现一次。
+如果我们随后在每个方向上将输入图像的大小增加50%， 则期望边缘的数量会相应地增加。
+相反，如果我们在每个方向上将池化区域的大小增加50%到$3 \times 3 $，则互斥性约束现在指定这些边中的每一个在$3 \times3$区域中仅可以出现一次。
 当我们以这种方式增长模型的输入图像时， 模型会生成密度较小的边。
 当然，这些问题只有在模型必须使用可变数量的池化，以便产出固定大小的输出向量时才会出现。
 只要模型的输出是可以与输入图像成比例缩放的特征图，使用概率最大池化的模型仍然可以接受可变大小的输入图像。
@@ -1082,7 +1082,7 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 
 
 要求$f$是连续可微的，当然需要$\Vy$是连续的。
-如果我们希望通过产生离散值样本的采样过程进行\gls{back_propagation}，则可以使用\gls{RL}算法（如\ENNAME{REINFORCE}算法{cite?}的变体）来估计$\Vomega$上的梯度，将在\sec?中讨论。
+如果我们希望通过产生离散值样本的采样过程进行\gls{back_propagation}，则可以使用\gls{RL}算法（如REINFORCE算法{cite?}的变体）来估计$\Vomega$上的梯度，将在\sec?中讨论。
 
 在神经网络应用中，我们通常选择从一些简单的分布中采样$\Vz$，如单位均匀或单位\gls{gaussian_distribution}，并通过网络的确定性部分重塑其输入来实现更复杂的分布。
 
@@ -1107,12 +1107,12 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 大问题是导数在阶跃边界之间的区域几乎处处为零。
 因此，任何\gls{cost_function}$J(\Vy)$的导数无法给出如何更新模型参数$\Vtheta$的任何信息。
 
-\ENNAME{REINFORCE}算法 （REward Increment $=$ nonnegative Factor $\times$ Offset Reinforcement $\times$ Characteristic Eligibility）提供了定义一系列简单而强大解决方案的框架{cite?}。
+REINFORCE算法 （REward Increment $=$ nonnegative Factor $\times$ Offset Reinforcement $\times$ Characteristic Eligibility）提供了定义一系列简单而强大解决方案的框架{cite?}。
 其核心思想是，即使$J(f(\Vz;\Vomega))$是具有无用导数的阶跃函数，期望代价$\SetE_{\RVz \sim p(\RVz)} J(f(\Vz;\Vomega))$通常是服从\gls{GD}的光滑函数。
 虽然当 $\Vy$是高维（或者是许多离散随机决策组合的结果）时，该期望通常是难解的，但我们可以使用\gls{monte_carlo}平均进行无偏估计。
 梯度的随机估计可以与\glssymbol{SGD}或其他基于随机梯度的优化技术一起使用。
 
-通过简单地微分期望成本，我们可以推导出\ENNAME{REINFORCE}最简单的版本：
+通过简单地微分期望成本，我们可以推导出REINFORCE最简单的版本：
 \begin{align}
  \SetE_{\Vz}[J(\Vy)] &= \sum_{\Vy} J(\Vy) p(\Vy), \\
  \frac{\partial \SetE[J(\Vy)]}{\partial \Vomega} &= \sum_{\Vy} J(\Vy)
@@ -1131,10 +1131,10 @@ $\frac{\partial\log p(\Vy)}{\partial \Vomega} = \frac{1}{p(\Vy)}
 在本节中我们写的$p(\Vy)$，可以等价地写成$p(\Vy  \mid  \Vx)$。
 这是因为$p(\Vy)$由$\Vomega$参数化，并且如果$\Vx$存在，$\Vomega$包含$\Vtheta$和$\Vx$两者。
 
-简单\ENNAME{REINFORCE}估计的一个问题是其具有非常高的方差，需要采$\Vy$的许多样本才能获得对梯度的良好估计，或者等价地，如果仅绘制一个样本，\glssymbol{SGD}将收敛得非常缓慢并将需要较小的学习率。
+简单REINFORCE估计的一个问题是其具有非常高的方差，需要采$\Vy$的许多样本才能获得对梯度的良好估计，或者等价地，如果仅绘制一个样本，\glssymbol{SGD}将收敛得非常缓慢并将需要较小的学习率。
 通过使用\firstgls{variance_reduction}方法~{cite?}，可以地减少该估计的方差。
 想法是修改估计量，使其预期值保持不变，但方差减小。
-在\ENNAME{REINFORCE}的情况下提出的\gls{variance_reduction}方法，涉及计算用于偏移$J(\Vy)$的\textbf{基线}(baseline)。
+在REINFORCE的情况下提出的\gls{variance_reduction}方法，涉及计算用于偏移$J(\Vy)$的\textbf{基线}(baseline)。
 注意，不依赖于$\Vy$的任何偏移$b(\Vw)$都不会改变估计梯度的期望，因为
 \begin{align}
  E_{p(\Vy)} \Bigg[ \frac{\partial\log p(\Vy)}{\partial \Vomega}  \Bigg] &=
@@ -1172,11 +1172,11 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 <!-- % -- 681 -- -->
 
 在\gls{RL}背景下引入的\gls{variance_reduction}方法{cite?}， {Dayan-1990}t推广了二值奖励的前期工作。
-参见{bengio2013estimating}、{Mnih+Gregor-ICML2014}、{Ba+Mnih-arxiv2014}、{Mnih2014}或 {Xu-et-al-ICML2015} 中在深度学习的背景下使用减少方差的\ENNAME{REINFORCE}算法的现代例子。
+参见{bengio2013estimating}、{Mnih+Gregor-ICML2014}、{Ba+Mnih-arxiv2014}、{Mnih2014}或 {Xu-et-al-ICML2015} 中在深度学习的背景下使用减少方差的REINFORCE算法的现代例子。
 除了使用与输入相关的基线$b(\Vomega)$，{Mnih+Gregor-ICML2014} 发现，可以在训练期间调整$（J(\Vy)) - b(\Vomega)）$的尺度（即除以训练期间的移动平均估计的标准差 ），作为一种适应性学习速率，可以抵消训练过程中该量大小发生的重要变化的影响。
 {Mnih+Gregor-ICML2014} 称之为启发式\textbf{方差归一化}(variance normalization)。
 
-基于\ENNAME{REINFORCE}的估计器可以被理解为将$\Vy$的选择与$J(\Vy)$的对应值相关联来估计梯度。
+基于REINFORCE的估计器可以被理解为将$\Vy$的选择与$J(\Vy)$的对应值相关联来估计梯度。
 如果在当前参数化下不太可能出现$\Vy$的良好值，则可能需要很长时间来偶然获得它，并且获得所需信号的配置应当被加强。
 
 
@@ -1247,7 +1247,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 \begin{align}
  \Vx = g(\Vz) = \Vmu + \ML \Vz ,
 \end{align}
-其中$\ML$由$\VSigma$的\ENNAME{Cholesky}分解给出。
+其中$\ML$由$\VSigma$的Cholesky分解给出。
 
 
 伪随机数发生器也可以使用简单分布的非线性变换。
@@ -1270,7 +1270,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 当然，取决于$g$的选择，这个公式可能难以评估，因此我们经常需要使用间接学习$g$的方法，而不是直接尝试最大化$\log p(\Vx)$。
 
 在某些情况下，我们使用$g$来定义$\Vx$上的条件分布，而不是使用$g$直接提供$\Vx$的样本。
-例如，我们可以使用一个\gls{generator_network}，其最后一层由\ENNAME{sigmoid}输出组成，可以提供\gls{bernoulli_distribution}的平均参数：
+例如，我们可以使用一个\gls{generator_network}，其最后一层由sigmoid输出组成，可以提供\gls{bernoulli_distribution}的平均参数：
 \begin{align}
  p(\RVx_i = 1  \mid  \Vz) = g(\Vz)_i .
 \end{align}
@@ -1407,7 +1407,7 @@ DRAW模型的生成过程包括顺序访问不同的小图像块并绘制这些�
 \caption{由\gls{VAE}学习的高维\gls{manifold}在2维坐标系中的示例{cite?}。
 我们可以在纸上直接绘制两个可视化的维度，因此可以使用2维隐编码训练模型来了解模型的工作原理（即使我们认为数据\gls{manifold}的固有维度要高得多）。
 所示的图像不是来自训练集的样本，而是仅仅通过改变2维"编码"$\Vz$，由模型$p(\Vx \mid \Vz)$实际生成的图像$\Vx$（每个图像对应于"编码"$\Vz$位于2维均匀网格的不同选择）。
-(左)\ENNAME{Frey}人脸\gls{manifold}的2维映射。 其中一个维度（水平）已发现大致对应于面部的旋转，而另一个（垂直）对应于情绪表达。
+(左)Frey人脸\gls{manifold}的2维映射。 其中一个维度（水平）已发现大致对应于面部的旋转，而另一个（垂直）对应于情绪表达。
 (右)MNIST\gls{manifold}的2维映射。
 }
 \end{figure}
@@ -1495,9 +1495,9 @@ $\vcenter{\hbox{
 \glssymbol{GAN}学习问题也可以通过将生成过程分成许多级别的细节来简化。
 我们可以训练有条件的\glssymbol{GAN}{cite?}，可以学习从分布$p(\Vx \mid \Vy)$中采样，而不是简单地从边缘分布$p(\Vx)$中采样。
 {denton2015deep} 表明一系列的条件\glssymbol{GAN}可以被训练为先生成非常低分辨率的图像，然后增量地向图像添加细节。
-由于使用拉普拉斯金字塔来生成包含不同细节水平的图像，这种技术被称为\ENNAME{LAPGAN}模型。
-\ENNAME{LAPGAN}生成器不仅能够欺骗判别器网络，而且能够欺骗人类观察者，实验主体将高达40％的网络输出识别为真实数据。
-请看\fig?中\ENNAME{LAPGAN}生成器生成的图像示例。
+由于使用拉普拉斯金字塔来生成包含不同细节水平的图像，这种技术被称为LAPGAN模型。
+LAPGAN生成器不仅能够欺骗判别器网络，而且能够欺骗人类观察者，实验主体将高达40％的网络输出识别为真实数据。
+请看\fig?中LAPGAN生成器生成的图像示例。
 
 
 \glssymbol{GAN}训练过程中一个不寻常的能力是它可以拟合向训练点分配零概率的概率分布。
@@ -1611,7 +1611,7 @@ $\vcenter{\hbox{
 
 
 \gls{auto_regressive_network}的最简单形式是没有\gls{hidden_unit}、没有参数或特征共享的形式。
-每个$P(x_i \mid x_{i-1},\dots, x_1)$被参数化为\gls{linear_model}（对于实值数据的\gls{linear_regression}，对于二值数据的\gls{logistic_regression}，对于离散数据的\ENNAME{softmax}回归）。
+每个$P(x_i \mid x_{i-1},\dots, x_1)$被参数化为\gls{linear_model}（对于实值数据的\gls{linear_regression}，对于二值数据的\gls{logistic_regression}，对于离散数据的softmax回归）。
 这个模型由~{Frey98} 引入，当有$d$个变量要建模时，该模型有$\CalO(d^2)$个参数。
 如\fig?所示。
 
@@ -1670,7 +1670,7 @@ $\vcenter{\hbox{
 
 
 使神经网络的输出预测$x_i$条件分布的\emph{参数}，每个$P(x_i  \mid  x_{i-1}, \dots, x_1)$就可以表示一个条件分布，如在\sec?中讨论的。
-虽然原始\gls{neural_auto_regressive_network}最初是在纯粹离散多变量数据（带有\ENNAME{sigmoid}输出的\ENNAME{Bernoulli}变量或\ENNAME{softmax}输出的\ENNAME{multinoulli}变量）的背景下评估，但我们可以自然地将这样的模型扩展到连续变量或同时涉及离散和连续变量的联合分布。
+虽然原始\gls{neural_auto_regressive_network}最初是在纯粹离散多变量数据（带有sigmoid输出的Bernoulli变量或softmax输出的multinoulli变量）的背景下评估，但我们可以自然地将这样的模型扩展到连续变量或同时涉及离散和连续变量的联合分布。
 
 <!-- % -- 698 -- -->
 
@@ -1714,8 +1714,8 @@ $\vcenter{\hbox{
 
 如前所述，\gls{auto_regressive_network}可以被扩展成处理连续数据。
 用于参数化连续密度的特别强大和通用的方法是混合权重为$\alpha_i$（组$i$的系数或先验概率），每组条件均值为$\mu_i$和每组条件方差为$\sigma_i^2$的高斯混合体。
-一个称为\ENNAME{RNADE}的模型{cite?} 使用这种参数化将\glssymbol{NADE}扩展到实值。
-与其他混合密度网络一样，该分布的参数是网络的输出，由\ENNAME{softmax}单元产生混合的权量概率以及参数化的方差，因此可使它们为正的。
+一个称为RNADE的模型{cite?} 使用这种参数化将\glssymbol{NADE}扩展到实值。
+与其他混合密度网络一样，该分布的参数是网络的输出，由softmax单元产生混合的权量概率以及参数化的方差，因此可使它们为正的。
 由于条件均值$\mu_i$和条件方差$\sigma_i^2$之间的相互作用，\gls{SGD}在数值上可能会表现不好。
 为了减少这种困难， {Benigno-et-al-NIPS2013-small}在后向传播阶段使用伪梯度代替平均值上的梯度。
 
