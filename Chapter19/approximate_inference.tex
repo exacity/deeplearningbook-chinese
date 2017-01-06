@@ -312,11 +312,11 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 变分方法的优点是我们不需要为分布$q$设定一个特定的参数化的形式。
 我们设定它如何分解，之后通过解决优化问题来找出在这些分解限制下的最优的概率分布。
-对离散型的\gls{latent_variable}来说，这意味着我们使用了传统的优化技巧来优化描述$q$分布的有限个数的变量。
-对连续性的变量来说，这意味着我们使用了一个叫做\firstgls{calculus_of_variations}的数学分支来解决对一个空间的函数的优化问题。
+对离散型\gls{latent_variable}来说，这意味着我们使用了传统的优化技巧来优化描述$q$分布的有限个数的变量。
+对连续型\gls{latent_variable}来说，这意味着我们使用了一个叫做\gls{calculus_of_variations}的数学分支来解决对一个空间上函数的优化问题。
 然后决定哪一个函数来表示$q$分布。
 \gls{calculus_of_variations}是``变分学习''或者``变分推断''这些名字的来历，尽管当\gls{latent_variable}是离散的时候\gls{calculus_of_variations}并没有用武之地。
-当遇到连续的\gls{latent_variable}的时候，\gls{calculus_of_variations}是一种很有用的工具，只需要设定分布$q$如何分解，而不需要过多的人工选择模型，比如尝试着设计一个特定的能够精确的近似原后验分布的$q$分布。
+当遇到连续型\gls{latent_variable}的时候，\gls{calculus_of_variations}是一种很有用的工具，只需要设定分布$q$如何分解，而不需要过多的人工选择模型，比如尝试着设计一个特定的能够精确的近似原后验分布的$q$分布。
 % 630 
 
 
@@ -336,19 +336,19 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 
 
-\subsection{离散\gls{latent_variable}}
+\subsection{离散型\gls{latent_variable}}
 \label{sec:discrete_latent_variables}
 % 631  19.4.1
 
-关于离散型的\gls{latent_variable}的变分推断相对来说更为直接。
+关于离散型\gls{latent_variable}的变分推断相对来说更为直接。
 我们定义一个分布$q$，通常$q$的每个因子都由一些离散状态的表格定义。
 在最简单的情况中，$\Vh$是二元的并且我们做了\gls{mean_field}的假定，$q$可以根据每一个$h_i$分解。
 在这种情况下，我们可以用一个向量$\hat{\Vh}$来参数化$q$分布，$\hat{\Vh}$的每一个元素都代表一个概率，即$q(h_i = 1\mid \Vv) = \hat{h}_i$。
 % 631
 
 
-在确定了如何表示$q$以后，我们简单的优化了它的参数。
-在离散型的\gls{latent_variable}模型中，这是一个标准的优化问题。
+在确定了如何表示$q$以后，我们简单地优化了它的参数。
+在离散型\gls{latent_variable}模型中，这是一个标准的优化问题。
 基本上$q$的选择可以通过任何的优化算法解决，比如说\gls{GD}。
 % 631
 
@@ -356,19 +356,19 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 这个优化问题是很高效的因为它在许多学习算法的内循环中出现。
 为了追求速度，我们通常使用特殊设计的优化算法。
 这些算法通常能够在极少的循环内解决一些小而简单的问题。
-一个常见的选择是使用\gls{fixed_point_equation}，换句话说，就是对$\hat{h}_i$解决
+一个常见的选择是使用\gls{fixed_point_equation}，换句话说，就是关于$\hat{h}_i$解
 \begin{align}
 	\frac{\partial}{\partial \hat{h}_i}\CalL = 0.
 \end{align}
-我们反复的更新$\hat{\Vh}$不同的元素直到收敛条件满足。
+我们反复地更新$\hat{\Vh}$不同的元素直到收敛条件满足。
 % 631
 
 
-为了具体化这些描述，我们接下来会讲如何将变分推断应用到\firstgls{binary_sparse_coding}模型（这里我们所描述的模型是\citet{henniges2010binary}提出的，但是我们采用了传统的通用的\gls{mean_field}方法，而原文作者采用了一种特殊设计的算法）中。
+为了具体化这些描述，我们接下来会讲如何将变分推断应用到\firstgls{binary_sparse_coding}模型（这里我们所描述的模型是\citet{henniges2010binary}提出的，但是我们采用了传统且通用的\gls{mean_field}方法，而原文作者采用了一种特殊设计的算法）中。
 推导过程在数学上非常详细，为希望完全了解变分推断细节的读者所准备。
 而对于并不计划推导或者实现变分学习算法的读者来说，可以完全跳过，直接阅读下一节，这并不会导致重要概念的遗漏。
 那些从事过\gls{binary_sparse_coding}研究的读者可以重新看一下\secref{sec:useful_properties_of_common_functions}中的一些经常在概率模型中出现的有用的函数性质。
-我们在推导过程中随意的使用了这些性质，并没有特别强调它们。
+我们在推导过程中随意地使用了这些性质，并没有特别强调它们。
 % 632  head
 
 
@@ -380,7 +380,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 \begin{align}
 	p(\Vv\mid\Vh) = \CalN(\Vv;\MW \Vh,{\Vbeta}^{-1}),
 \end{align}
-其中$\Vb$是一个可以学习的偏置向量\footnote{此处似乎有笔误，公式里面漏了$\Vb$?}，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角的精度矩阵。
+其中$\Vb$是一个可以学习的偏置向量，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角的精度矩阵。
 % 632
 
 
@@ -447,7 +447,6 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 
 \gls{ELBO}可以表示为
 \begin{align}
-\label{eqn:1936}
 & \CalL(\Vv,\Vtheta,q)\\
  = & \SetE_{\RVh\sim q}[\log p(\Vh,\Vv)] + H(q)\\
  = & \SetE_{\RVh\sim q}[\log p(\Vh) + \log p(\Vv\mid\Vh) - \log q(\Vh\mid\Vv)]\\
@@ -456,14 +455,15 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 & +  \SetE_{\RVh\sim q} \Bigg[ \sum_{i=1}^{n}\log \sqrt{\frac{\beta_i}{2\pi}}\exp(-\frac{\beta_i}{2}(v_i - \MW_{i,:}\Vh)^2)\Bigg] \\
 = &  \sum_{i=1}^{m}\Big[\hat{h}_i(\log \sigma(b_i) - \log \hat{h}_i) + (1 - \hat{h}_i)(\log \sigma(-b_i) - \log (1-\hat{h}_i))\Big] \\
 & + \frac{1}{2} \sum_{i=1}^{n} \Bigg[ \log {\frac{\beta_i}{2\pi}} - \beta_i \Bigg(v_i^2 - 2 v_i \MW_{i,:}\hat{\Vh} + \sum_{j}\Big[W^2_{i,j}\hat{h}_j + \sum_{k \neq j}W_{i,j}W_{i,k}\hat{h}_j\hat{h}_k \Big] \Bigg) \Bigg]. 
+\label{eqn:1936}
 \end{align}
 % 634 head 
 
 
-尽管从美学观点这些方程有些不尽如人意。
-他们展示了$\CalL$可以被表示为少数的简单的代数运算。
+尽管这些方程从美学观点来看有些不尽如人意。
+他们展示了$\CalL$可以被表示为少量简单的代数运算。
 因此\gls{ELBO}是易于处理的。
-我们可以把$\CalL$看作是难以处理的似然函数的对数。
+我们可以把$\CalL$看作是难以处理的对数似然函数的一个替代。
 % 634  head 
 
 
@@ -472,7 +472,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 但是，由于两个原因，我们往往不这么做。
 第一点，对每一个$\Vv$我们需要存储$\hat{\Vh}$。
 我们通常更加偏向于那些不需要为每一个样本都准备内存的算法。
-如果我们需要为每一个样本都存储一个动态更新的向量，很难使得算法能够处理好几亿的样本。
+如果我们需要为每一个样本都存储一个动态更新的向量，使得算法很难处理好几亿的样本。
 第二个原因就是为了能够识别$\Vv$的内容，我们希望能够有能力快速提取特征$\hat{\Vh}$。
 在实际应用下，我们需要在有限时间内计算出$\hat{\Vh}$。
 % 634
@@ -505,13 +505,13 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 首先，我们给出了对$\hat{h}_i$的导数的表达式。
 为了得到这个表达式，我们将方程~\eqref{eqn:1936}代入到方程~\eqref{eqn:1937}的左边：
 \begin{align}
-\label{eqn:1943}
 & \frac{\partial}{\partial \hat{h}_i} \CalL (\Vv,\Vtheta,\hat{\Vh})    \\
 = & \frac{\partial}{\partial \hat{h}_i} \Bigg[\sum_{j=1}^{m}\Big[\hat{h}_j (\log \sigma(b_j) - \log \hat{h}_j) + (1 - \hat{h}_j)(\log \sigma(-b_j) - \log (1-\hat{h}_j))\Big] \\
 & + \frac{1}{2} \sum_{j=1}^{n} \Bigg[ \log {\frac{\beta_j}{2\pi}} - \beta_j \Bigg(v_j^2 - 2 v_j \MW_{j,:}\hat{\Vh} + \sum_{k}\Bigg[W^2_{j,k}\hat{h}_k + \sum_{l \neq k}W_{j,k}W_{j,l}\hat{h}_k\hat{h}_l \Bigg] \Bigg) \Bigg]\Bigg] \\
 = & \log \sigma(b_i) - \log \hat{h}_i - 1 + \log (1 - \hat{h}_i ) + 1 - \log \sigma (- b_i ) \\
  & + \sum_{j=1}^{n} \Bigg[\beta_j \Bigg(v_j W_{j,i} - \frac{1}{2} W_{j,i}^2 - \sum_{k \neq i} \MW_{j,k}\MW_{j,i} \hat{h}_k\Bigg) \Bigg]\\
  = & b_i - \log \hat{h}_i + \log (1 - \hat{h}_i ) + \Vv^{\top} {\Vbeta} \MW_{:,i} - \frac{1}{2} \MW_{:,i}^{\top} {\Vbeta}\MW_{:,i} -\sum_{j\neq i}\MW^{\top}_{:,j}{\Vbeta}\MW_{:,i}\hat{h}_j.
+ \label{eqn:1943}
 \end{align}
 % 635  
 
@@ -535,7 +535,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 输入层通常给隐藏层结点发送一个固定的信息$\Vv^{\top}\beta\MW$，然而隐藏层结点不断地更新互相传送的信息。
 具体的说，当$\hat{h}_i$和$\hat{h}_j$两个单元的权重向量对准时，他们会产生相互抑制。
 这也是一种形式的竞争－－－两个共同理解输入的隐层结点之间，只有一个解释的更好的才能继续保持活跃。
-在\gls{binary_sparse_coding}的后杨分布中，\gls{mean_field}近似为了捕获到更多的\gls{explaining_away}作用，产生了这种竞争。
+在\gls{binary_sparse_coding}的后验分布中，\gls{mean_field}近似为了捕获到更多的\gls{explaining_away}作用，产生了这种竞争。
 事实上，\gls{explaining_away}效应会导致一个多峰值的后验分布，所以我们如果从后验分布中采样，一些样本只有一个结点是活跃的，其它的样本在其它的结点活跃，只有很少的样本能够所有的结点都处于活跃状态。
 不幸的是，\gls{explaining_away}作用无法通过\gls{mean_field}中可分解的$q$分布来建模，因此建模时\gls{mean_field}近似只能选择一个峰值。
 这个现象的一个例子可以参考\figref{fig:chap3_kl_direction_color}。
@@ -571,7 +571,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 \label{sec:calculus_of_variations}
 % p 637 head   19.4.2 
 
-在继续描述变分学习之前，我们有必要简单的介绍一种变分学习中的重要的数学工具：\firstgls{calculus_of_variations}。
+在继续描述变分学习之前，我们有必要简单地介绍一种变分学习中的重要的数学工具：\firstgls{calculus_of_variations}。
 % p 637
 
 
@@ -602,12 +602,12 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 \end{align}
 在其他\gls{ML}的文献中的许多结果是利用了更为通用的\firstgls{euler_lagrange_eqn}，
 它能够使得$g$不仅依赖于$f$的导数而且也依赖于$f$的值。
-但是本书中我们不需要把完整的讲述这个结果。
+但是本书中我们不需要完整的讲述这个结果。
 % p 637  end
 
 
-为了优化某个函数关于一个向量，我们求出了这个函数关于这个向量的梯度，然后找一个梯度的每一个元素都为0的点。
-类似的，我们可以通过寻找一个函数使得\gls{functional_derivative}的每个点都等于0从而来优化一个\gls{functional}。
+为了优化某个函数关于一个向量，我们求出了这个函数关于这个向量的梯度，然后找一个梯度的每一个元素都为$0$的点。
+类似的，我们可以通过寻找一个函数使得\gls{functional_derivative}的每个点都等于$0$从而来优化一个\gls{functional}。
 % p 638 head
 
 
@@ -623,7 +623,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 % p 638
 
 
-我们不能简单的关于函数$p(x)$最大化$H[p]$，因为那样的化结果可能不是一个概率分布。
+我们不能简单的关于函数$p(x)$最大化$H[p]$，因为那样的话结果可能不是一个概率分布。
 为了解决这个问题，我们需要使用一个拉格朗日乘子来添加一个$p(x)$积分值为1的约束。
 此外，当方差增大的时候，熵也会无限制的增加。
 因此，寻找哪一个分布有最大熵这个问题是没有意义的。
@@ -639,7 +639,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 % p 638   
 
 
-为了关于$p$最小化拉格朗日乘子，我们令\gls{functional_derivative}等于0：
+为了关于$p$最小化拉格朗日乘子，我们令\gls{functional_derivative}等于$0$：
 \begin{align}
 \label{eqn:1952}
 	\forall x,\ \  \frac{\delta}{\delta p(x)} \CalL = \lambda_1 + \lambda_2 x + \lambda_3(x-\mu)^2 - 1 - \log p(x) = 0 .
@@ -677,10 +677,10 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 当函数把越多的概率密度加到$x = \mu + \sigma$和$x = \mu - \sigma$两个点上和越少的概率密度到其他点上时，他们的熵值会减少，而方差却不变。
 然而任何把所有的权重都放在这两点的函数的积分并不为1。
 所以不存在一个最小熵的概率分布函数，就像不存在一个最小的正实数一样。
-然而，我们发现存在一个概率分布的收敛的序列，直到把权重都放在两个点上。
+然而，我们发现存在一个收敛的概率分布的序列，收敛到权重都在两个点上。
 这种情况能够退化为混合\gls{dirac_distribution}。
 因为\gls{dirac_distribution}并不是一个单独的概率分布，所以\gls{dirac_distribution}或者混合\gls{dirac_distribution}并不能对应函数空间的一个点。
-所以对我们来说，当寻找一个\gls{functional_derivative}为0的函数空间的点的时候，这些分布是不可见的。
+所以对我们来说，当寻找一个\gls{functional_derivative}为$0$的函数空间的点的时候，这些分布是不可见的。
 这就是这种方法的局限之处。
 像\gls{dirac_distribution}这样的分布可以通过其他方法被找到，比如可以被猜到，然后证明它是满足条件的。
 % 639 
