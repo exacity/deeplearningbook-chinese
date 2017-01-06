@@ -250,7 +250,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 在第一级中，卷积层并行地进行多个卷积运算来产生一组线性激活函数。
 在第二级中，非线性的激活函数如\gls{ReLU}函数等作用在第一级中的每一个线性输出上。
 这一级有时也被称为\firstgls{detector_stage}。
-在第三级中，我们使用\firstgls{pooling_funciton}函数来更进一步地调整卷积层的输出。
+在第三级中，我们使用\firstgls{pooling_funciton}来更进一步地调整卷积层的输出。
 % fig 9.7
 \begin{figure}[!htb]
 \ifOpenSource

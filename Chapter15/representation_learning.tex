@@ -204,7 +204,7 @@
 \cite{Erhan+al-2010-small}进行了许多实验来解释\gls{unsupervised_pretraining}的几个成功点。
 对训练误差和测试误差的改进都可以解释为，\gls{unsupervised_pretraining}将参数引入到了可能不会探索的区域。
 \gls{NN}训练是非确定性的，并且每次运行都会收敛到不同的函数。
-训练可以停止在梯度变小的点；也可以\gls{early_stopping}结束训练，以防过拟合；还可以停止在梯度很大，但由于诸如随机性或海森矩阵\gls{poor_conditioning}等问题难以找到合适下降方向的点。
+训练可以停止在梯度变小的点；也可以\gls{early_stopping}结束训练，以防过拟合；还可以停止在梯度很大，但由于诸如随机性或\gls{hessian}矩阵\gls{poor_conditioning}等问题难以找到合适下降方向的点。
 经过\gls{unsupervised_pretraining}的神经网络会一致地停止在一片相同的区域，但未经过\gls{pretraining}的\gls{NN}会一致地停在另一个区域。
 参看\figref{fig:chap15_isomap}了解这种现象。
 经过\gls{pretraining}的网络到达的区域是较小的，这表明\gls{pretraining}减少了估计过程的方差，这进而又可以降低严重过拟合的风险。
@@ -248,7 +248,7 @@
 
 % -- 525 --
 
-如今，大部分算法已经不使用\gls{unsupervised_pretraining}了，除了在自然语言处理领域，其中单词作为\gls{one_hot}矢量的自然表示不能传达相似性信息，并且有非常多的未标记集可用。
+如今，大部分算法已经不使用\gls{unsupervised_pretraining}了，除了在自然语言处理领域，其中单词作为\gls{one_hot}向量的自然表示不能传达相似性信息，并且有非常多的未标记集可用。
 在这种情况下，\gls{pretraining}的优点是可以对一个巨大的未标记集合（例如用包含数十亿单词的语料库）进行\gls{pretraining}，学习良好的表示（通常是单词，但也可以是句子），然后使用该表示或\gls{fine_tune}表示，用于训练集样本很少的监督任务。
 这种方法由\cite{CollobertR2008-small}，\cite{Turian+Ratinov+Bengio-2010-small}和\cite{collobert2011natural}开创，至今仍在使用。
 

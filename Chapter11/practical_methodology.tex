@@ -534,7 +534,7 @@
 
 % -- 426 --
 
-通常，我们会测试矢量值函数$g:\SetR^m \to \SetR^n$的梯度或雅可比矩阵。
+通常，我们会测试向量值函数$g:\SetR^m \to \SetR^n$的梯度或\gls{jacobian}矩阵。
 令人遗憾的是，\gls{finite_difference}只允许我们每次计算一个导数。
 我们既可以运行\gls{finite_difference}$mn$次评估$g$的所有偏导数，又可以将该测试应用于一个输入输出都是$g$的随机投影的新函数。
 例如，我们可以用导数实现去测试函数$f(x) = \Vu^T g(\Vv x)$，其中$\Vu$和$\Vv$是随机向量。
