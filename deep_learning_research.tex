@@ -2,6 +2,47 @@
 \part{深度学习研究}
 \label{part:deep_learning_research}
 
+\newpage
+本书这一部分描述目前研究社群所追求的、更有远见和更先进的\gls{DL}方法。
+
+在本书的前两部分，我们已经展示了如何解决\gls{supervised_learning}问题，即在给定足够的映射样本的情况下，学习将一个向量映射到另一个。
+
+我们想要解决的问题并不全都属于这个类别。
+我们可能希望生成新的样本、或确定一个点的似然性、或处理缺失值以及利用一组大量的未标记样本或相关任务的样本。
+当前应用于工业的最先进技术的缺点是我们的学习算法需要大量的监督数据才能实现良好的精度。
+在本书这一部分，我们讨论一些推测性的方法，来减少现有模型工作所需的标注数据量，并适用于更广泛的任务。 
+实现这些目标通常需要某种形式的\gls{unsupervised}或\gls{semi_supervised}学习。
+
+许多\gls{DL}算法被设计为处理\gls{unsupervised_learning}问题，但不像\gls{DL}已经在很大程度上解决了各种任务的\gls{supervised_learning}问题，没有一个算法能以同样的方式真正解决\gls{unsupervised_learning}问题。
+在本书这一部分，我们描述\gls{unsupervised_learning}的现有方法和一些如何在这一领域取得进展的流行思想。
+
+\gls{unsupervised_learning}困难的核心原因是被建模的随机变量的高维度。
+这带来了两个不同的挑战：统计挑战和计算挑战。
+\emph{统计挑战}与泛化相关：我们可能想要区分的配置数会随着感兴趣的维度数指数增长，并且这快速变得比可能具有的（或者在有限计算资源下使用的）样本数大得多。
+与高维分布相关联的\emph{计算挑战}之所以会出现，是因为用于学习或使用训练模型的许多算法（特别是基于估计显式概率函数的算法）涉及难处理的计算量，并且随维数呈指数增长。
+
+使用概率模型，这种计算挑战来自执行难解的\gls{inference}或归一化分布。
+\begin{itemize}
+ \item \emph{难解的\gls{inference}}：\gls{inference}主要在\chapref{chap:approximate_inference}讨论。
+\gls{inference}关于捕获$a$，$b$和$c$上联合分布的模型，给定其他变量$b$的情况下，猜测一些变量$a$的可能值。
+为了计算这样的条件概率，我们需要对变量$c$的值求和，以及计算对$a$和$c$的值求和的归一化常数。
+ \item \emph{难解的归一化常数（\gls{partition_function}）}：\gls{partition_function}主要在\chapref{chap:confronting_the_partition_function}讨论。
+归一化概率函数的常数在\gls{inference}（上文）以及学习中出现。
+许多概率模型涉及这样的归一化常数。
+不幸的是，学习这样的模型通常需要相对于模型参数计算\gls{partition_function}对数的梯度。
+该计算通常与计算\gls{partition_function}本身一样难解。
+\glsacr{mcmc}（\chapref{chap:monte_carlo_methods}）通常用于处理\gls{partition_function}。
+不幸的是，当模型分布的模式众多且分离良好时，\glssymbol{mcmc}方法会出现问题，特别是在高维空间中（\secref{sec:the_challenge_of_mixing_between_separated_modes}）。
+\end{itemize}
+
+面对这些难以处理的计算的一种方法是近似它们，如在本书的第三部分中讨论的，研究者已经提出了许多方法。
+这里还讨论另一种有趣的方式是通过设计模型，完全避免这些难以处理的计算，因此不需要这些计算的方法是非常有吸引力的。
+近年来，研究者已经提出了数种具有该动机的生成模型。
+其中\chapref{chap:deep_generative_models}讨论了各种各样的现代生成式建模方法。
+
+第三部分对于研究者来说是最重要的，研究者想要了解\gls{DL}领域的广度，并将领域推向真正的\gls{AI}。
+
+
 
 \input{Chapter13/linear_factor_models.tex}
 \input{Chapter14/autoencoders.tex}
