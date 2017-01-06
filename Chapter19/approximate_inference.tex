@@ -296,7 +296,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 变分学习的核心思想就是我们通过选择给定的分布族中的一个$q$分布来最大化$\CalL$。
 选择这个分布族的时候应该考虑到计算$\SetE_q \log p(\Vh,\Vv)$的简单性。
-一个典型的方法就是添加一些假设诸如$q$可以分解。
+一个典型的方法就是添加一些假设诸如$q$分布可以分解。
 % 630 head
 
 
@@ -311,19 +311,19 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 
 变分方法的优点是我们不需要为分布$q$设定一个特定的参数化的形式。
-我们设定它如何分解，而优化问题中决定了在这些分解限制下的最优的概率分布。
+我们设定它如何分解，之后通过解决优化问题来找出在这些分解限制下的最优的概率分布。
 对离散型的\gls{latent_variable}来说，这意味着我们使用了传统的优化技巧来优化描述$q$分布的有限个数的变量。
 对连续性的变量来说，这意味着我们使用了一个叫做\firstgls{calculus_of_variations}的数学分支来解决对一个空间的函数的优化问题。
-然后决定哪一个函数来表示$q$。
+然后决定哪一个函数来表示$q$分布。
 \gls{calculus_of_variations}是``变分学习''或者``变分推断''这些名字的来历，尽管当\gls{latent_variable}是离散的时候\gls{calculus_of_variations}并没有用武之地。
-当遇到连续的\gls{latent_variable}的时候，\gls{calculus_of_variations}是一种很有用的工具，只需要设定分布$q$如何分解，而不需要过多的人工选择模型，比如尝试着设计一个特定的能够精确的近似原后验分布的$q$。
+当遇到连续的\gls{latent_variable}的时候，\gls{calculus_of_variations}是一种很有用的工具，只需要设定分布$q$如何分解，而不需要过多的人工选择模型，比如尝试着设计一个特定的能够精确的近似原后验分布的$q$分布。
 % 630 
 
 
-因为$\CalL(\Vv,\Vtheta,q)$定义成$\log p(\Vv;\Vtheta) - D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv;\Vtheta))$，我们可以认为关于$q$最大化$\CalL$的问题等价于最小化$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
+因为$\CalL(\Vv,\Vtheta,q)$定义成$\log p(\Vv;\Vtheta) - D_{\text{KL}} (q(\Vh\mid\Vv) \Vert  p(\Vh\mid\Vv;\Vtheta) )$，我们可以认为关于$q$最大化$\CalL$的问题等价于最小化$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
 在这种情况下，我们要用$q$来拟合$p$。
 然而，我们并不是直接拟合一个近似，而是处理一个\gls{KL}的问题。
-当我们使用\gls{MLE}来将数据拟合到模型的时候，我们最小化$D_{\text{KL}}(p_{\text{data}\Vert p_{\text{model}}})$。
+当我们使用\gls{MLE}来将数据拟合到模型的时候，我们最小化$D_{\text{KL}}(p_{\text{data}} \Vert p_{\text{model}})$。
 如同\figref{fig:chap3_kl_direction_color}中所示，这意味着\gls{MLE}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
 这两种方法都有各自的优点与缺点。
 选择哪一种方法取决于在具体应用中哪一种性质更受偏好。
