@@ -153,3 +153,4 @@
 2017年1月7日
 ---------------
  - @zdx3578 ==> Chapter20, 公式错误，少子图
+ - name:YUE-DaJiong ==> Chapter20, discriminator network
