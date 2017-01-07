@@ -828,20 +828,20 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 \label{sec:learned_approximate_inference}
 % 642  end    19.5
 
-我们已经看到了推断可以被视作是一个增加函数$\CalL$的值的一个优化过程。
-显式的通过迭代方法比如\gls{fixed_point_equation}或者基于梯度的优化算法来执行优化的过程通常是代价昂贵且耗时巨大的。
-<bad>具体的说，我们可以将优化过程视作一个将输入$\Vv$投影到一个近似分布$q^* = \arg\max_q\  \CalL(\Vv,q)$的函数$f$。
-<bad>一旦我们将多步的迭代优化过程看作是一个函数，我们可以用一个近似$\hat{f}(\Vv;{\Vtheta})$的\gls{NN}来近似。
+我们已经看到了推断可以被视作是一个增加函数$\CalL$的值的优化过程。
+显式地通过迭代方法比如\gls{fixed_point_equation}或者基于梯度的优化算法来执行优化的过程通常是代价昂贵且耗时巨大的。
+<bad>具体地说，我们可以将优化过程视作将输入$\Vv$投影到一个近似分布$q^* = \arg\max_q\  \CalL(\Vv,q)$的函数$f$。
+<bad>一旦我们将多步的迭代优化过程看作是一个函数，我们可以用一个近似函数为$\hat{f}(\Vv;{\Vtheta})$的\gls{NN}来近似它。
 
 
 \subsection{\glsentrytext{wake_sleep}}
 \label{sec:wake_sleep}
 % 643 head 19.5.1
 
-训练一个可以用$\Vv$来推断$\Vh$的模型的一个主要的难点在于我们没有一个有监督的训练集来训练模型。
+训练一个可以用$\Vv$来推断$\Vh$的模型的一个主要难点在于我们没有一个有监督的训练集来训练模型。
 给定一个$\Vv$，我们无法获知一个合适的$\Vh$。
 从$\Vv$到$\Vh$的映射依赖于模型类型的选择，并且在学习过程中随着${\Vtheta}$的改变而变化。
-\firstgls{wake_sleep}算法\citep{Hinton95,Frey96}通过从模型分布中抽取$\Vv$和$\Vh$样本来解决这个问题。
+\firstgls{wake_sleep}算法\citep{Hinton95,Frey96}通过从模型分布中抽取$\Vv$和$\Vh$的样本来解决这个问题。
 例如，在\gls{directed_model}中，这可以通过执行从$\Vh$开始并在$\Vv$结束的\gls{ancestral_sampling}来高效地完成。
 然后推断网络可以被训练来执行反向的映射：预测哪一个$\Vh$产生了当前的$\Vv$。
 <bad>这种方法的主要缺点是我们将只能够训练推断网络在模型下具有高概率的$\Vv$值。
@@ -849,17 +849,17 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 % 643
 
 
-<bad>在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中，我们看到睡眠在人类和动物中的作用的一个可能的解释是，梦想可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}的对数\gls{partition_function}的负梯度的负相位样本。
-生物作梦的另一个可能的解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推断网络在给定$\Vv$的情况下预测$\Vh$。
+<bad>在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中，我们看到做梦睡眠在人类和动物中作用的一个可能解释是，做梦可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}中对数\gls{partition_function}负梯度的负相位样本。
+生物做梦的另一个可能的解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推断网络在给定$\Vv$的情况下预测$\Vh$。
 在某些意义上，这种解释比\gls{partition_function}的解释更令人满意。
 如果\gls{monte_carlo}算法仅使用梯度的正相位进行几个步骤，然后仅对梯级的负相位进行几个步骤，那么他们的结果不会很好。
-人类和动物通常醒来连续几个小时，然后睡着连续几个小时。
+人类和动物通常连续清醒几个小时，然后连续睡着几个小时。
 这个时间表如何支持\gls{undirected_model}的\gls{monte_carlo}训练尚不清楚。
 然而，基于最大化$\CalL$的学习算法可以通过长时间调整改进$q$和长期调整${\Vtheta}$来实现。
-如果生物作梦的作用是训练网络来预测$q$，那么这解释了动物如何能够保持清醒几个小时（它们清醒的时间越长，$\CalL$和$\log p(\Vv)$之间的差距越大， 但是$\CalL$将保持下限）并且睡眠几个小时（生成模型本身在睡眠期间不被修改）， 而不损害它们的内部模型。
-当然，这些想法纯粹是猜测性的，没有任何坚实的证据表明梦想实现了这些目标之一。
-梦想也可以服务\gls{RL}而不是概率建模，通过从动物的过渡模型采样合成经验，从来训练动物的策略。
-也许睡眠可以服务于一些机器学习社区尚未发现的其他目的。
+如果生物做梦的作用是训练网络来预测$q$，那么这解释了动物如何能够保持清醒几个小时（它们清醒的时间越长，$\CalL$和$\log p(\Vv)$之间的差距越大， 但是$\CalL$将保持下限）并且睡眠几个小时（\gls{generative_model}本身在睡眠期间不被修改）， 而不损害它们的内部模型。
+当然，这些想法纯粹是猜测性的，没有任何坚实的证据表明做梦实现了这些目标之一。
+做梦也可以服务\gls{RL}而不是概率建模，通过从动物的过渡模型采样合成经验，从来训练动物的策略。
+也许睡眠可以服务于一些\gls{ML}社区尚未发现的其他目的。
 % 644 head
 
 
@@ -869,7 +869,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 % 644    19.5.2 
 
 这种\gls{learned}\gls{approximate_inference}策略已经被应用到了其它模型中。
-\citep{Salakhutdinov+Larochelle-2010}证明了在\gls{learned}推断网络中的单一路径相比于在\gls{DBM}中迭代\gls{mean_field}\gls{fixed_point_equation}能够得到更快的推断。
+\citet{Salakhutdinov+Larochelle-2010}证明了在\gls{learned}推断网络中的单一路径相比于在\gls{DBM}中迭代\gls{mean_field}\gls{fixed_point_equation}能够得到更快的推断。
 训练过程基于运行推断网络，然后应用\gls{mean_field}的一步来改进其估计，并训练推断网络来输出这个精细的估计而不是其原始估计。
 % 644
 
