@@ -1,6 +1,6 @@
 % !Mode:: "TeX:UTF-8"
 % Translator: Tianfan Fu 
-\chapter{近似推断}
+\chapter{\glsentrytext{approximate_inference}}
 \label{chap:approximate_inference}
 % 623
 
@@ -52,7 +52,7 @@
 % 624
 
 许多难以利用观察值进行精确推断的问题往往可以描述为一个优化问题。
-通过近似这样一个潜在的优化问题，我们往往可以推导出近似推断算法。
+通过近似这样一个潜在的优化问题，我们往往可以推导出\gls{approximate_inference}算法。
 % 624
 
 
@@ -105,7 +105,7 @@
 
 我们可以将推断问题看做是找一个分布$q$使得$\CalL$最大的过程。
 精确的推断能够通过找一组包含分布$p(\Vh\mid\Vv)$的函数，完美地最大化$\CalL$。
-在本章中，我们将会讲到如何通过近似优化来找$q$的方法来推导出不同形式的的近似推断。
+在本章中，我们将会讲到如何通过近似优化来找$q$的方法来推导出不同形式的的\gls{approximate_inference}。
 我们可以通过限定分布$q$的形式或者使用并不彻底的优化方法来使得优化的过程更加高效，但是优化的结果是不完美的，因为只能显著地提升$\CalL$而无法彻底地最大化$\CalL$。
 % 625  end
 
@@ -123,7 +123,7 @@
 我们介绍的第一个最大化下界$\CalL$的算法是\firstall{EM}算法。
 在\gls{latent_variable}模型中，这是一个非常热门的训练算法。
 在这里我们描述\citet{emview}所提出的\glssymbol{EM}算法。
-不像大多数我们在本章中介绍的其他算法一样，\glssymbol{EM}并不是一个近似推断算法，但是是一种能够学到近似后验的算法。
+不像大多数我们在本章中介绍的其他算法一样，\glssymbol{EM}并不是一个\gls{approximate_inference}算法，但是是一种能够学到近似后验的算法。
 % 626
 
 
@@ -152,7 +152,7 @@
 % 626 end
 
 
-即使\gls{e_step}采用的是精确推断，我们仍然可以将\glssymbol{EM}算法视作是某种程度上的近似推断。
+即使\gls{e_step}采用的是精确推断，我们仍然可以将\glssymbol{EM}算法视作是某种程度上的\gls{approximate_inference}。
 具体地说，\gls{m_step}假设了一个$q$分布可以被所有的$\Vtheta$分享。
 当\gls{m_step}越来越远离\gls{e_step}中的$\Vtheta^{(0)}$的时候，这将会导致$\CalL$和真实的$\log p(\Vv)$的差距。
 此外，当下一个循环的时候，\gls{e_step}把这种差距又降到了$0$。
@@ -189,9 +189,9 @@
 
 
 
-\gls{MAP}推断并不是一种近似推断，它计算了最有可能的一个$\Vh^*$。
+\gls{MAP}推断并不是一种\gls{approximate_inference}，它计算了最有可能的一个$\Vh^*$。
 然而，如果我们希望能够最大化$\CalL(\Vv,\Vh,q)$，那么我们可以把\gls{MAP}推断看成是输出一个$q$的学习过程。%是很有帮助的。
-在这种情况下，我们可以将\gls{MAP}推断看成是近似推断，因为它并不能提供一个最优的$q$。
+在这种情况下，我们可以将\gls{MAP}推断看成是\gls{approximate_inference}，因为它并不能提供一个最优的$q$。
 % 627 end
 
 
@@ -201,7 +201,7 @@
 \CalL(\Vv,{\Vtheta},q)
  = \SetE_{\RVh\sim q}[\log q(\Vh , \Vv)] + H(q).
 \end{align}
-我们通过限定$q$分布属于某个分布族，能够使得\gls{MAP}推断成为一种形式的近似推断。
+我们通过限定$q$分布属于某个分布族，能够使得\gls{MAP}推断成为一种形式的\gls{approximate_inference}。
 具体的说，我们令$q$分布满足一个\gls{dirac_distribution}：
 \begin{align}
 q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
@@ -705,11 +705,13 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 \label{eqn:1955}
 	q(\Vh\mid\Vv) = \prod_i q(h_i \mid\Vv),
 \end{align}
-并且对任何的$j\neq i$固定了$q(h_j\mid\Vv)$，那么只需要满足$p$中任何联合分布中的变量不为$0$,我们就可以通过归一化下面这个未归一的分布
+% 640 mid
+并且对任何的$j\neq i$固定了$q(h_j\mid\Vv)$，那么只需要满足$p$中任何联合分布中的变量不为$0$，我们就可以通过归一化下面这个未归一的分布
 \begin{align}
 	\label{eqn:1956}
-	\tilde{q}(h_i \mid\Vv) = \exp (\SetE_{h_{-i}\sim q(h_{-i}\mid\Vv)}	\log \tilde{p}(\Vv,\Vh))
+	\tilde{q}(h_i \mid\Vv) = \exp \big(\SetE_{\RVh_{-i}\sim q(\RVh_{-i}\mid\Vv)}	\log \tilde{p}(\Vv,\Vh)\big)
 \end{align}
+% 640 mid
 来得到最优的$q(h_i\mid\Vv)$。
 在这个方程中计算期望就能得到一个$q(h_i\mid\Vv)$的正确表达式。
 我们只有在希望提出一种新形式的变分学习算法时才需要直接推导$q$的函数形式。
@@ -720,17 +722,17 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 
 
 % 640  
-方程~\eqref{eqn:1956}是一个\gls{fixed_point_equation}，对每一个$i$它都被迭代的反复使用直到收敛。
+方程~\eqref{eqn:1956}是一个\gls{fixed_point_equation}，对每一个$i$它都被迭代地反复使用直到收敛。
 然而，它还包含着更多的信息。
 我们发现这种\gls{functional}定义的问题的最优解是存在的，无论我们是否能够通过\gls{fixed_point_equation}来解出它。
 这意味着我们可以把一些值当成参数，然后通过优化算法来解决这个问题。
 
 
 % 640  
-我们拿一个简单的概率模型作为一个例子，其中\gls{latent_variable}满足$\Vh\in\SetR^2$，可视的变量只有一个$v$。
+我们拿一个简单的概率模型作为例子，其中\gls{latent_variable}满足$\Vh\in\SetR^2$，可见变量只有一个$v$。
 假设$p(\Vh) = \CalN(\Vh;0,\MI)$以及$p(v\mid\Vh) = \CalN(v;\Vw^{\top}\Vh;1)$，我们可以通过把$\Vh$积掉来简化这个模型，结果是关于$v$的高斯分布。
 这个模型本身并不有趣。
-为了说明\gls{calculus_of_variations}如何应用在概率建模，我们构造了这个模型。
+为了说明\gls{calculus_of_variations}如何应用在概率建模之中，我们构造了这个模型。
 
 
 
@@ -741,8 +743,8 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
    & p(\Vh\mid\Vv)\\
  \propto & p(\Vh, \Vv)\\
  = & p(h_1) p(h_2) p(\Vv\mid\Vh)\\
- \propto & \exp(-\frac{1}{2} [h_1^2 + h_2^2 + (v-h_1w_1 - h_2w_2)^2])\\
- = & \exp(-\frac{1}{2}[h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 - 2vh_2w_2 - 2vh_2w_2 + 2h_1w_1h_2w_2]).
+ \propto & \exp \big(-\frac{1}{2} [h_1^2 + h_2^2 + (v-h_1w_1 - h_2w_2)^2]\big)\\
+ = & \exp \big( - \frac{1}{2} [h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 - 2vh_1w_1 - 2vh_2w_2 + 2h_1w_1h_2w_2] \big).
 \end{align}
 在上式中，我们发现由于带有$h_1,h_2$乘积的项的存在，真实的后验并不能将$h_1,h_2$分开。
 % 641 head 
@@ -752,7 +754,8 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 展开方程~\eqref{eqn:1956}，我们可以得到
 \begin{align}
 \label{eqn:1962}
-& \tilde{q}(h_1\mid\Vv)\\ = & \exp(\SetE_{\RSh_2\sim q(\RSh_2\mid\Vv)} \log \tilde{p}(\Vv,\Vh))\\
+& \tilde{q}(h_1\mid\Vv)\\ 
+= & \exp\big(\SetE_{\RSh_2\sim q(\RSh_2\mid\Vv)} \log \tilde{p}(\Vv,\Vh)\big) \\
 = & \exp\Big( -\frac{1}{2} \SetE_{\RSh_2\sim q(\RSh_2\mid\Vv)} [h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 \\
 & -2vh_1w_1 - 2vh_2w_2 + 2h_1w_1h_2w_2]\Big).
 \end{align}
@@ -777,7 +780,7 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 % 641
 
 当然，上述模型只是为了说明情况的一个简单例子。
-\gls{DL}中关于变分学习中连续变量的实际应用可以参考\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}。
+\gls{DL}中关于变分学习中连续型变量的实际应用可以参考\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}。
 % 641
 
 
@@ -787,12 +790,12 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 % 641 end  19.4.4  
 
 
-%使用近似推断作为学习算法的一部分影响学习过程，反过来这也影响推断算法的准确性。
-在学习算法中使用近似推断会影响学习的过程，反过来这也会影响推断算法的准确性。
+%使用\gls{approximate_inference}作为学习算法的一部分影响学习过程，反过来这也影响推断算法的准确性。
+在学习算法中使用\gls{approximate_inference}会影响学习的过程，反过来这也会影响推断算法的准确性。
 % 641 end
 
 
-具体来说，训练算法倾向于以使得近似推断算法中的近似假设变得更加真实的方向来适应模型。<bad>
+具体来说，训练算法倾向于以使得\gls{approximate_inference}算法中的近似假设变得更加真实的方向来适应模型。<bad>
 当训练参数时，变分学习增加
 \begin{align}
 \label{eqn:1968}
@@ -800,15 +803,15 @@ $f$函数的函数被称为是\firstgls{functional}$J[f]$。
 \end{align}
 % 642 
 
-对于一个特定的$\Vv$，对于$q(\Vh \mid \Vv)$中概率很大的$\Vh$它增加了$p(\Vh\mid\Vv)$，对于$q(\Vh \mid \Vv)$中概率很小的$\Vh$它减小了$p(\Vh\mid\Vv)$。
+对于一个特定的$\Vv$，对于$q(\Vh \mid \Vv)$中概率很大的$\Vh$ 它增加了$p(\Vh\mid\Vv)$，对于$q(\Vh \mid \Vv) $ 中概率很小的$\Vh$它减小了$p(\Vh\mid\Vv)$。
 % 642
 
 这种行为使得我们做的近似假设变得合理。 %这种行为使我们的近似假设成为自我实现。
-<bad> 如果我们用单峰值的模型近似后验分布，我们将获得一个真实后验的模型，该模型比我们通过使用精确推断训练模型获得的模型更接近单峰。
+<bad> 如果我们用单\gls{mode}的模型近似后验分布，我们将获得一个真实后验的模型，该模型比我们通过使用精确推断训练模型获得的模型更接近单\gls{mode}。
 % 642
 
 
-因此，估计由于变分近似所产生的对模型的坏处是很困难的。
+因此，估计由于变分近似对模型产生的伤害大小是很困难的。
 存在几种估计$\log p(\Vv)$的方式。
 通常我们在训练模型之后估计$\log p(\Vv;\Vtheta)$，然后发现它和$\CalL(\Vv,\Vtheta,q)$的差距是很小的。
 从这里我们可以发现，对于特定的从学习过程中获得的$\Vtheta$来说，变分近似普遍是很准确的。
@@ -821,7 +824,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 
 
 
-\section{\glsentrytext{learned}近似推断}
+\section{\glsentrytext{learned}\glsentrytext{approximate_inference}}
 \label{sec:learned_approximate_inference}
 % 642  end    19.5
 
@@ -865,7 +868,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 \label{sec:other_forms_of_learned_inference}
 % 644    19.5.2 
 
-这种\gls{learned}近似推断策略已经被应用到了其它模型中。
+这种\gls{learned}\gls{approximate_inference}策略已经被应用到了其它模型中。
 \citep{Salakhutdinov+Larochelle-2010}证明了在\gls{learned}推断网络中的单一路径相比于在\gls{DBM}中迭代\gls{mean_field}\gls{fixed_point_equation}能够得到更快的推断。
 训练过程基于运行推断网络，然后应用\gls{mean_field}的一步来改进其估计，并训练推断网络来输出这个精细的估计而不是其原始估计。
 % 644
@@ -875,16 +878,16 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 这可以被看作是\gls{AE}和\gls{sparse_coding}之间的混合。
 为模型设计概率语义是可能的，其中\gls{encoder}可以被视为执行\gls{learned}近似\gls{MAP}推断。
 由于其浅层的\gls{encoder}，PSD不能实现我们在\gls{mean_field}推断中看到的单元之间的那种竞争。
-然而，该问题可以通过训练深度\gls{encoder}来执行\gls{learned}近似推断来补救，如ISTA技术\citep{Gregor+LeCun-ICML2010}。
+然而，该问题可以通过训练深度\gls{encoder}来执行\gls{learned}\gls{approximate_inference}来补救，如ISTA技术\citep{Gregor+LeCun-ICML2010}。
 % 644
 
 
-近来\gls{learned}近似推断已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一\citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
+近来\gls{learned}\gls{approximate_inference}已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一\citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
 在这种优美的方法中，不需要为推断网络构造显式的目标。
 反之，推断网络被用来定义$\CalL$，然后调整推断网络的参数来增大$\CalL$。这种模型在\secref{sec:variational_autoencoders}中详细描述。
 % 644
 
-我们可以使用近似推断来训练和使用大量的模型。
+我们可以使用\gls{approximate_inference}来训练和使用大量的模型。
 许多模型将在下一章中描述。
 % 644
 
