@@ -3,10 +3,10 @@
 \chapter{\glsentrytext{AE}}
 \label{chap:autoencoders}
 \firstgls{AE}是\gls{NN}的一种，经过训练后能尝试将输入复制到输出。
-\firstgls{AE}内部有一个隐含层$\Vh$，可以产生\firstgls{code}来表示输入。
+\firstgls{AE}内部有一个隐含层$\Vh$，可以产生\firstgls{code}表示输入。
 该网络可以看作由两部分组成：一个\gls{encoder}函数$ \Vh = f(\Vx)$和一个生成\gls{reconstruction}的\gls{decoder}$\Vr=g(\Vh)$。
 \figref{fig:chap14_autoencoder}展示了这种架构。
-如果一个\gls{AE}学会简单地设置$g(f(\Vx)) =\Vx$，那么这个\gls{AE}不会很有用。
+如果一个\gls{AE}学会简单地设置$g(f(\Vx)) =\Vx$，那么这个\gls{AE}就不会特别有用。
 相反，\gls{AE}应该被设计成不能学会完美地复制。
 这通常需要强加一些约束，使\gls{AE}只能近似地复制，并只能复制类似训练数据的输入。
 这些约束强制模型划定输入数据不同方面的主次顺序，因此它往往能学习到数据的有用特性。
@@ -16,7 +16,7 @@
 
 
 数十年间，\gls{AE}的想法一直是\gls{NN}历史景象的一部分~\citep{Lecun-these87,Bourlard88,hinton1994amd-small}。
-传统上，\gls{AE}被用于\gls{dimensionality_reduction}或特征学习。
+传统\gls{AE}被用于\gls{dimensionality_reduction}或特征学习。
 近年来，\gls{AE}与隐变量模型理论的联系将\gls{AE}带到了生成建模的前沿，我们将在\chapref{chap:deep_generative_models}看到更多细节。
 \gls{AE}可以被看作是\gls{feedforward_network}的一种特殊情况，并且可以使用完全相同的技术进行训练，通常使用\gls{minibatch}\gls{GD}法（基于\gls{back_propagation}计算的梯度）。
 不像一般的\gls{feedforward_network}，\gls{AE}也可以使用\firstgls{recirculation}训练\citep{Hinton+McClelland-NIPS1987}，这是一种基于比较原始输入和\gls{reconstruction}输入激活的学习算法。
@@ -58,7 +58,7 @@ L(\Vx, g(f(\Vx)),
 
 
 因此拥有非线性编码函数$f$和非线性\gls{decoder}函数$g$的\gls{AE}能够学习出更强大的\glssymbol{PCA}非线性推广。
-不幸的是，如果\gls{encoder}和\gls{decoder}被赋予太大的\gls{capacity}，\gls{AE}会执行复制任务而捕捉不到有关数据分布的有用信息。
+不幸的是，如果\gls{encoder}和\gls{decoder}被赋予太大的\gls{capacity}，\gls{AE}会执行复制任务而捕捉不到任何有关数据分布的有用信息。
 从理论上说，我们可以想象只有一维\gls{code}的\gls{AE}，但具有一个非常强大的非线性\gls{encoder}，能够将每个训练数据$\Vx^{(i)}$表示为\gls{code}$~i$。
 \gls{decoder}可以学习将这些整数索引映射回特定训练样本的值。
 这种特定情形不会在实践中发生，但它清楚地说明，如果\gls{AE}的\gls{capacity}太大，那训练来执行复制任务的\gls{AE}可能无法学习到数据集的任何有用信息。
@@ -75,8 +75,7 @@ L(\Vx, g(f(\Vx)),
 在这些情况下，即使是线性\gls{encoder}和线性\gls{decoder}也可以学会将输入复制到输出，而学不到任何有关数据分布的有用信息。
 
 
-理想情况下，根据要建模的数据分布的复杂性，选择合适的\gls{code}维数和\gls{encoder}、\gls{decoder}
-\gls{capacity}，就可以成功训练任意架构的\gls{AE}。
+理想情况下，根据要建模的数据分布的复杂性，选择合适的\gls{code}维数和\gls{encoder}、\gls{decoder}\gls{capacity}，就可以成功训练任意架构的\gls{AE}。
 正则\gls{AE}提供这样做的可能。
 正则\gls{AE}使用的\gls{loss_function}可以鼓励模型学习其它特性（除了将输入复制到输出），而不用限制使用浅层的\gls{encoder}和\gls{decoder}以及小的\gls{code}维数来限制模型的\gls{capacity}。
 这些特性包括\gls{sparse}\gls{representation}、\gls{representation}的小导数、以及对噪声或输入缺失的鲁棒性。
@@ -116,13 +115,13 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh),
 
 我们可以认为整个\gls{sparse}\gls{AE}框架是对带有隐变量的\gls{generative_model}的近似最大似然训练，而不将\gls{sparse}惩罚视为复制任务的\gls{regularization}。
 假如我们有一个带有可见变量$\Vx$和隐变量$\Vh$的模型，且具有明确的联合分布$p_{\text{model}}(\Vx,\Vh)=p_{\text{model}}(\Vh)p_{\text{model}} (\Vx \mid \Vh)$。
-<BAD>我们将$p_{\text{model}}(\Vh)$视为模型关于隐变量的先验分布，表示模型看到$\Vx$的信念先验。
+我们将$p_{\text{model}}(\Vh)$视为模型关于隐变量的先验分布，表示模型看到$\Vx$的信念先验。
 这与我们之前使用``先验''的方式不同，之前指分布$p(\Vtheta)$在我们看到数据前就对模型参数的先验进行编码。
 对数似然函数可分解为
 \begin{align}
 \log p_{\text{model}}(\Vx)=\log \sum_{\Vh} p_{\text{model}}(\Vh, \Vx) .
 \end{align}
-我们可以认为\gls{AE}使用一个高似然值$\Vh$的点估计来近似这个总和。
+我们可以认为\gls{AE}使用一个高似然值$\Vh$的点估计近似这个总和。
 这类似于\gls{sparse_coding}\gls{generative_model}（\secref{sec:sparse_coding}），但$\Vh$是参数\gls{encoder}的输出，而不是从优化结果推断出的最可能的$\Vh$。
 从这个角度看，我们根据这个选择的$\Vh$，最大化如下
 \begin{align}
@@ -157,7 +156,7 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 
 
 \citet{Glorot+al-ICML-2011-small}提出了一种在\gls{sparse}（和\gls{denoising}）\gls{AE}的$\Vh$中实现\emph{真正为零}的方式。
-该想法是使用\gls{ReLU}来产生\gls{code}层。
+该想法是使用\gls{ReLU}产生\gls{code}层。
 基于将\gls{representation}真正推向零（如绝对值惩罚）的先验，可以间接控制\gls{representation}中零的平均数量。
 
 
@@ -183,7 +182,7 @@ L(\Vx, g(f(\tilde \Vx)),
 因此\gls{DAE}必须撤消这些损坏，而不是简单地复制输入。
 
 \citet{Alain+Bengio-ICLR2013-small}和\citet{Bengio-et-al-NIPS2013-small}指出\gls{denoising}训练过程强制$f$和$g$隐式地学习$p_{\text{data}} (\Vx)$的结构。
-因此\gls{DAE}也是一个通过最小化\gls{reconstruction_error}来获取有用特性的例子。
+因此\gls{DAE}也是一个通过最小化\gls{reconstruction_error}获取有用特性的例子。
 这也是将\gls{overcomplete}、高\gls{capacity}的模型用作\gls{AE}的一个例子——只要小心防止这些模型仅仅学习一个恒等函数。
 \gls{DAE}将在\secref{sec:denoising_autoencoders}给出更多细节。
 
@@ -207,7 +206,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 
 这样\gls{regularization}的\gls{AE}被称为\firstall{CAE}。
 这种方法与\gls{DAE}、\gls{manifold_learning}和概率模型存在一定理论联系。
-\gls{CAE}在\secref{sec:contractive_autoencoders}有更详细的描述。
+\gls{CAE}将在\secref{sec:contractive_autoencoders}更详细地描述。
 
 
 \section{表示能力、层的大小和深度}
@@ -221,7 +220,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 此外，\gls{encoder}和\gls{decoder}自身都是一个\gls{feedforward_network}，因此这两个部分也能各自从深度中获得好处。
 
 
-普遍逼近定理保证至少有一层隐含层且\gls{hidden_unit}足够多的\gls{feedforward_neural_network}能以任意精度近似任意函数（在很大范围里），这是非平凡深度的一个主要优点。
+\gls{universal_approximation_theorem}保证至少有一层隐含层且\gls{hidden_unit}足够多的\gls{feedforward_neural_network}能以任意精度近似任意函数（在很大范围里），这是非平凡深度的一个主要优点。
 这意味着单层隐藏层的\gls{AE}在数据范围能表示任意接近数据的恒等函数。
 但是，从输入到\gls{code}的映射是浅层的。
 这意味这我们不能任意添加约束，比如约束\gls{code}\gls{sparse}。
@@ -229,35 +228,35 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 
 % -- 499 --
 
-深度可以指数减少表示某些函数的计算成本。
-深度也能指数减少学习一些函数所需的训练数据量。
-可以参考\secref{sec:universal_approximation_properties_and_depth}巩固深度在\gls{feedforward_network}中的优势。
+深度可以指数地减少表示某些函数的计算成本。
+深度也能指数地减少学习一些函数所需的训练数据量。
+读者可以参考\secref{sec:universal_approximation_properties_and_depth}巩固深度在\gls{feedforward_network}中的优势。
 
 
 实验中，深度\gls{AE}能比相应的浅层或线性\gls{AE}产生更好的压缩效率\citep{Hinton-Science2006}。
 
-训练深度\gls{AE}的普遍的策略是训练一堆浅层的\gls{AE}来贪心地预训练相应的深度架构。
-所以我们经常会遇到浅层\gls{AE}，即使最终目标是训练深度\gls{AE}。
+训练深度\gls{AE}的普遍策略是训练一堆浅层的\gls{AE}来贪心地预训练相应的深度架构。
+所以即使最终目标是训练深度\gls{AE}，我们也经常会遇到浅层\gls{AE}。
 
 
 \section{随机\glsentrytext{encoder}和\glsentrytext{decoder}}
 \label{sec:stochastic_encoders_and_decoders}
-\gls{AE}仅仅是一个\gls{feedforward_network}，可以使用与传统的\gls{feedforward_network}同样的\gls{loss_function}和输出单元。
+\gls{AE}仅仅是一个\gls{feedforward_network}，可以使用与传统\gls{feedforward_network}相同的\gls{loss_function}和输出单元。
 
 
-如\secref{sec:other_output_types}中描述，设计\gls{feedforward_network}的输出单元和\gls{loss_function}普遍策略是定义一个输出分布$p(\Vy \mid \Vx) $并最小化负的对数似然$-\log p(\Vy \mid \Vx)$。
+如\secref{sec:other_output_types}中描述，设计\gls{feedforward_network}的输出单元和\gls{loss_function}普遍策略是定义一个输出分布$p(\Vy \mid \Vx) $并最小化负对数似然$-\log p(\Vy \mid \Vx)$。
 在这种情况下，$\Vy$是关于目标的向量（如类标）。
 
 
 在\gls{AE}中，$\Vx$既是输入也是目标。
 然而，我们仍然可以使用与之前相同的架构。
-给定一个隐藏层\gls{code}$\Vh$，我们可以认为\gls{decoder}提供了一个条件分布$p_{\text{model}}(\Vx \mid \Vh)$. 
+给定一个隐藏层\gls{code}$\Vh$，我们可以认为\gls{decoder}提供了一个条件分布$p_{\text{model}}(\Vx \mid \Vh)$。
 接着我们根据最小化$-\log p_{\text{decoder}}(\Vx \mid \Vh)$来训练\gls{AE}。
 \gls{loss_function}的具体形式视$p_{\text{decoder}}$的形式而定。
-就传统的\gls{feedforward_network}来说，我们通常使用线性输出单元来参数化高斯分布的均值（如果$\Vx$是实的）。
-在这种情况下，负对数似然就对应\gls{mean_squared_error}\gls{criterion}。
+就传统的\gls{feedforward_network}来说，我们通常使用线性输出单元参数化高斯分布的均值（如果$\Vx$是实的）。
+在这种情况下，负对数似然对应\gls{mean_squared_error}\gls{criterion}。
 类似地，二值$\Vx$对应参数由\ENNAME{sigmoid}单元确定的\gls{bernoulli_distribution}，离散的$\Vx$对应\ENNAME{softmax}分布等等。
-为了便于计算概率分布，通常认为输出变量与给定$\Vh$是条件独立的，但一些技术（如混合密度输出）可以解决输出相关的建模。
+为了便于计算概率分布，我们通常认为输出变量与给定$\Vh$是条件独立的，但一些技术（如混合密度输出）可以解决输出相关的建模。
 
 % -- 500 --
 
@@ -274,7 +273,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 \label{fig:chap14_stochastic-autoencoder}
 \end{figure}
 
-任何隐变量模型$p_{\text{model}}(\Vh, \Vx)$定义了一个随机\gls{encoder}
+任何隐变量模型$p_{\text{model}}(\Vh, \Vx)$定义一个随机\gls{encoder}
 \begin{align}
 p_{\text{encoder}}(\Vh \mid \Vx) = p_{\text{model}}(\Vh\mid\Vx)
 \end{align}
@@ -283,7 +282,7 @@ p_{\text{encoder}}(\Vh \mid \Vx) = p_{\text{model}}(\Vh\mid\Vx)
 p_{\text{decoder}}(\Vx \mid \Vh) = p_{\text{model}}(\Vx\mid\Vh).
 \end{align}
 一般情况下，\gls{encoder}和\gls{decoder}的分布没有必要与一个唯一的联合分布$p_{\text{model}}(\Vx, \Vh)$的条件分布相容。
-\citet{Alain-et-al-arxiv2015}指出将\gls{encoder}和\gls{decoder}作为\gls{DAE}来训练能使它们渐近地相容（有足够的\gls{capacity}和样本）。
+\citet{Alain-et-al-arxiv2015}指出将\gls{encoder}和\gls{decoder}作为\gls{DAE}训练，能使它们渐近地相容（有足够的\gls{capacity}和样本）。
 
 
 
@@ -312,7 +311,7 @@ $p_{\text{reconstruct}} (\Vx \mid \tilde \Vx) = p_{\text{decoder}}(\Vx \mid\Vh)$
 \centerline{\includegraphics{Chapter14/figures/DAE}}
 \fi
 \caption{\gls{DAE}\gls{cost_function}的计算图。\gls{DAE}被训练为从损坏的版本$\tilde \Vx$~\gls{reconstruction}干净数据点$\Vx$。
-这可以通过最小化损失$L = - \log p_{\text{decoder}} (\Vx \mid \Vh = f(\tilde \Vx))$来实现，其中$\tilde \Vx$是样本$\Vx$经过损坏过程$C (\tilde \Vx \mid \Vx)$后得到的损坏版本。
+这可以通过最小化损失$L = - \log p_{\text{decoder}} (\Vx \mid \Vh = f(\tilde \Vx))$实现，其中$\tilde \Vx$是样本$\Vx$经过损坏过程$C (\tilde \Vx \mid \Vx)$后得到的损坏版本。
 通常， 分布$p_{\text{decoder}}$是因子的分布（平均参数由前馈网络$g$给出）。
 }
 \label{fig:chap14_DAE}
@@ -335,11 +334,11 @@ $p_{\text{reconstruct}} (\Vx \mid \tilde \Vx) = p_{\text{decoder}}(\Vx \mid\Vh)$
  \nabla_{\Vx} \log p(\Vx) .
 \end{align}
 
-将在\secref{sec:score_matching_and_ratio_matching}中更详细的讨论\gls{score_matching}。
+我们将在\secref{sec:score_matching_and_ratio_matching}中更详细地讨论\gls{score_matching}。
 对于现在讨论的\gls{AE}，理解学习$\log p_{\text{data}}$的梯度场是学习$p_{\text{data}}$结构的一种方式就足够了。
 
 
-\glssymbol{DAE}的训练\gls{criterion})（条件高斯$p(\Vx \mid \Vh)$）能让\gls{AE}学到能估计数据分布得分的向量场$(g(f(\Vx))-\Vx)$ ，这是\glssymbol{DAE}的一个重要特性。
+\glssymbol{DAE}的训练\gls{criterion}（条件高斯$p(\Vx \mid \Vh)$）能让\gls{AE}学到能估计数据分布得分的向量场$(g(f(\Vx))-\Vx)$ ，这是\glssymbol{DAE}的一个重要特性。
 具体如\figref{fig:chap14_denoising_task}所示。
 
 \begin{figure}[!htb]
@@ -365,7 +364,7 @@ $g(f(\tilde \Vx))$对可能产生$\tilde \Vx$的原始点$\Vx$的质心进行估
 当\glssymbol{RBM}使用\firstgls{denoising_score_matching}~\citep{Kingma+LeCun-2010-small}训练时，它的学习算法与训练对应的\gls{DAE}是等价的。
 在一个确定的噪声水平下，\gls{regularization}的\gls{score_matching}不是一致估计量；相反它会恢复分布的一个模糊版本。
 然而，当噪声水平趋向于0且训练样本数趋向与无穷时，一致性就会恢复。
-将会在\secref{sec:denoising_score_matching}更详细地讨论\gls{denoising_score_matching}。
+我们将会在\secref{sec:denoising_score_matching}更详细地讨论\gls{denoising_score_matching}。
 
 
 \gls{AE}和\glssymbol{RBM}还存在其它联系。
@@ -424,11 +423,11 @@ $g(f(\tilde \Vx))$对可能产生$\tilde \Vx$的原始点$\Vx$的质心进行估
 然而，``\gls{DAE}''的命名指的不仅仅是学习\gls{denoising}，而且可以学到一个好的内部\gls{representation}（作为学习\gls{denoising}的副效用）。
 这个想法提出较晚\citep{VincentPLarochelleH2008-small,Vincent-JMLR-2010-small}。
 学习到的\gls{representation}可以被用来预训练更深的\gls{unsupervised}网络或\gls{supervised}网络。
-与\gls{sparse}\gls{AE}、\gls{sparse_coding}、\gls{CAE}等\gls{regularization}的\gls{AE}类似， \glssymbol{DAE}的动机是允许使用一个\gls{capacity}非常大的\gls{encoder}，同时防止在\gls{encoder}和\gls{decoder}学习一个毫无用处的恒等函数 。
+与\gls{sparse}\gls{AE}、\gls{sparse_coding}、\gls{CAE}等\gls{regularization}的\gls{AE}类似， \glssymbol{DAE}的动机是允许使用\gls{capacity}非常大的\gls{encoder}，同时防止在\gls{encoder}和\gls{decoder}学习一个毫无用处的恒等函数 。
 
 
 在引入现代\glssymbol{DAE}之前，\citet{Inayoshi-and-Kurita-2005}探讨了与一些相同的方法和相同的目标。
-他们的做法在有\gls{supervised}目标的情况下最小化\gls{reconstruction_error} ，并在监督\glssymbol{MLP}的隐藏层注入噪声，通过引入\gls{reconstruction_error}和注入噪声提升泛化能力。
+他们在\gls{supervised}目标的情况下最小化\gls{reconstruction_error} ，并在监督\glssymbol{MLP}的隐藏层注入噪声，通过引入\gls{reconstruction_error}和注入噪声提升泛化能力。
 然而，他们的方法基于线性\gls{encoder}，因此无法学习到现代\glssymbol{DAE}能学习的强大函数族。
 
 
@@ -446,7 +445,7 @@ $g(f(\tilde \Vx))$对可能产生$\tilde \Vx$的原始点$\Vx$的质心进行估
 
 \gls{manifold}的一个重要特征是\firstgls{tangent_plane}的集合。
 $d$维\gls{manifold}上的一点$\Vx$，\gls{tangent_plane}由能张成\gls{manifold}上允许变动的局部方向的$d$维基向量给出。
-如\figref{fig:chap14_tangent_plane_color}所示，这些局部方向说明了我们能如何微小地改变$\Vx$但一直处于\gls{manifold}上。
+如\figref{fig:chap14_tangent_plane_color}所示，这些局部方向说明了我们能如何微小地改变$\Vx$而一直处于\gls{manifold}上。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -512,11 +511,11 @@ $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{A
 
 % -- 508 --
 
-对比其他的方法是有用且受启发的，可以了解\gls{AE}为什么对\gls{manifold_learning}是有用的。
-学习表征\gls{manifold}最常见的是\gls{manifold}上（或附近）数据点的\gls{representation}。
+对比其他方法是有用且受启发的，可以了解\gls{AE}为什么对\gls{manifold_learning}是有用的。
+学习表征\gls{manifold}最常见的是\gls{manifold}上（或附近）数据点的\firstgls{representation}。
 对于特定的实例，这样的表示也被称为\gls{embedding}。
 它通常由一个低维向量给出，具有比这个\gls{manifold}的``外围''空间更少的维数。
-有些算法（下面讨论的\gls{nonparametric}\gls{manifold_learning}算法）直接学习每个训练样例的\gls{embedding}，而其他算法学习一个更一般的映射（有时被称为\gls{encoder}或表示函数），将周围空间（输入空间）的任意点映射到它的\gls{embedding}。
+有些算法（下面讨论的\gls{nonparametric}\gls{manifold_learning}算法）直接学习每个训练样例的\gls{embedding}，而其他算法学习更一般的映射（有时被称为\gls{encoder}或表示函数），将周围空间（输入空间）的任意点映射到它的\gls{embedding}。
 
 
 \gls{manifold_learning}大多专注于试图捕捉到这些\gls{manifold}的\gls{unsupervised_learning}过程。
@@ -539,7 +538,7 @@ $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{A
 \label{fig:chap14_faces_graph_manifold}
 \end{figure}
 
-全局坐标系就可以通过优化或求解线性系统获得。
+全局坐标系则可以通过优化或求解线性系统获得。
 \figref{fig:chap14_tiling-a-manifold}展示了如何通过大量局部线性的类高斯样平铺（或``薄煎饼''，因为高斯块在\gls{tangent_plane}方向是扁平的）得到一个\gls{manifold}。
 
 \begin{figure}[!htb]
@@ -555,13 +554,13 @@ $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{A
 \label{fig:chap14_tiling-a-manifold}
 \end{figure}
 
-然而，\citet{Bengio+Monperrus-2005}指出了这些局部\gls{nonparametric}方法应用于\gls{manifold_learning}的根本困难：如果\gls{manifold}不是很光滑（它们有许多波峰、波谷和弯曲），我们可能需要非常多的训练样本以覆盖其中的每一个变化，导致没有能力泛化到没见过的变化。
+然而，\citet{Bengio+Monperrus-2005}指出了这些局部\gls{nonparametric}方法应用于\gls{manifold_learning}的根本困难：如果\gls{manifold}不是很光滑（它们有许多波峰、波谷和弯曲），为覆盖其中的每一个变化，我们可能需要非常多的训练样本，导致没有能力泛化到没见过的变化。
 实际上，这些方法只能通过内插，概括相邻实例之间\gls{manifold}的形状。
 不幸的是，\glssymbol{AI}问题中涉及的\gls{manifold}可能具有非常复杂的结构，难以仅从局部插值捕获特征。
 考虑\figref{fig:chap14_tangent_plane_color}转换所得的\gls{manifold}样例。
-如果我们只观察输入向量内的一个坐标$\Vx_i$，当平移图像，我们可以观察到当这个坐标遇到波峰或波谷时，图像的亮度也会经历一个波峰或波谷。
+如果我们只观察输入向量内的一个坐标$x_i$，当平移图像，我们可以观察到当这个坐标遇到波峰或波谷时，图像的亮度也会经历一个波峰或波谷。
 换句话说，底层图像模板亮度的模式复杂性决定执行简单的图像变换所产生的\gls{manifold}的复杂性。
-这是采用\gls{distributed_representation}和\gls{DL}来捕获\gls{manifold}结构的动机。
+这是采用\gls{distributed_representation}和\gls{DL}捕获\gls{manifold}结构的动机。
 
 % -- 509 --
 
@@ -581,7 +580,7 @@ $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{A
 如\secref{sec:estimating_the_score}所讨论，应用于$f(\Vx)$的\gls{contractive}惩罚与\gls{score_matching}也有紧密的联系。
 
 \firstgls{contractive}源于\glssymbol{CAE}弯曲空间的方式。
-具体来说，由于\glssymbol{CAE}是训练成能抵抗输入扰动，鼓励将输入点邻域映射到输出点一更小的邻域。
+具体来说，由于\glssymbol{CAE}训练为抵抗输入扰动，鼓励将输入点邻域映射到输出点处更小的邻域。
 我们能认为这是将输入的邻域\gls{contractive}到更小的输出邻域。
 
 
@@ -596,19 +595,19 @@ $f$扩展到数据\gls{manifold}的中间或远处是合理的（见\figref{fig:
 这允许我们更形式地使用``\gls{contractive}''这个词。
 在线性理论中，当$\MJ\Vx$的范数对于所有单位$\Vx$都小于等于1时，$\MJ$被称为\gls{contractive}的。
 换句话说，如果$\MJ$收缩了单位球，他就是\gls{contractive}的。
-我们可以认为\glssymbol{CAE}为了鼓励每个局部线性算子具有收缩性，而在每个训练数据点上将\ENNAME{Frobenius}范数作为$f(\Vx)$的局部线性近似的惩罚。
+我们可以认为\glssymbol{CAE}为鼓励每个局部线性算子具有收缩性，而在每个训练数据点处将\ENNAME{Frobenius}范数作为$f(\Vx)$的局部线性近似的惩罚。
 
 
 如\secref{sec:learning_manifolds_with_autoencoders}中描述，正则\gls{AE}基于两种相反的推动力学习\gls{manifold}。
 在\glssymbol{CAE}的情况下，这两种推动力是\gls{reconstruction_error}和\gls{contractive}惩罚$\Omega(\Vh)$。
 单独的\gls{reconstruction_error}鼓励\glssymbol{CAE}学习一个恒等函数。
 单独的\gls{contractive}惩罚将鼓励\glssymbol{CAE}学习关于$\Vx$是恒定的特征。
-这两种推动力的的折衷产生一个导数$\frac{\partial f(\Vx)}{\partial \Vx}$大多是微小的\gls{AE}。
+这两种推动力的的折衷产生导数$\frac{\partial f(\Vx)}{\partial \Vx}$大多是微小的\gls{AE}。
 只有少数\gls{hidden_unit}，对应于一小部分输入数据的方向，可能有显著的导数。
 
 
 \glssymbol{CAE}的目标是学习数据的\gls{manifold}结构。
-大的$\MJ\Vx$快速改变$\Vh$的方向$\Vx$很可能是近似\gls{manifold}\gls{tangent_plane}的方向。
+使$\MJ\Vx$很大的方向$\Vx$，会快速改变$\Vh$，因此很可能是近似\gls{manifold}\gls{tangent_plane}的方向。
 \citet{Rifai+al-2011-small,Salah+al-2011-small}的实验显示训练\glssymbol{CAE}会导致$\MJ$中大部分奇异值（幅值）比1小，因此是收缩的。
 然而，有些奇异值仍然比1大，因为\gls{reconstruction_error}的惩罚鼓励\glssymbol{CAE}对最大局部变化的方向进行编码。
 对应于最大奇异值的方向被解释为\gls{CAE}学到的切方向。
@@ -668,7 +667,7 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 
 \firstall{PSD}是\gls{sparse_coding}和参数化\gls{AE}\citep{koray-psd-08}的混合模型。
 参数化\gls{encoder}被训练为能预测迭代推断的输出。
-\glssymbol{PSD}被应用与图片和视频中对象识别的\gls{unsupervised}特征学习\citep{Koray-08-small,koray-nips-10-small,Jarrett-ICCV2009-small,farabet-suml-11}，在音频中也有所应用\citep{henaff-ismir-11-small}。
+\glssymbol{PSD}被应用于图片和视频中对象识别的\gls{unsupervised}特征学习\citep{Koray-08-small,koray-nips-10-small,Jarrett-ICCV2009-small,farabet-suml-11}，在音频中也有所应用\citep{henaff-ismir-11-small}。
 这个模型由一个\gls{encoder}$f(\Vx)$和一个\gls{decoder}$g(\Vh)$组成，并且都是参数化的。
 在训练过程中，$\Vh$由优化算法控制。
 优化过程是最小化
@@ -686,12 +685,12 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 
 \gls{PSD}是\firstgls{learned_approximate_inference}的一个例子。
 在\secref{sec:learned_approximate_inference}中，这个话题将会进一步展开。
-\chapref{chap:approximate_inference}中展示的工具能让我们了解到，\glssymbol{PSD}能够被解释为最大化模型的对数似然下界来训练有向\gls{sparse_coding}的概率模型。
+\chapref{chap:approximate_inference}中展示的工具能让我们了解到，\glssymbol{PSD}能够被解释为通过最大化模型的对数似然下界训练有向\gls{sparse_coding}的概率模型。
 
 
 在\glssymbol{PSD}的实际应用中，迭代优化仅在训练过程中使用。
 模型被部署后，参数\gls{encoder}$f$用于计算学习好的特征。
-相比于通过\gls{GD}来推断$\Vh$，计算$f$是很容易的。
+相比通过\gls{GD}推断$\Vh$，计算$f$是很容易的。
 因为$f$是一个可微带参函数，\glssymbol{PSD}模型可堆叠，并用于初始化其他训练\gls{criterion}的深度网络。
 
 % -- 514 --
@@ -703,24 +702,24 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 \gls{dimensionality_reduction}是\gls{representation_learning}和\gls{DL}的第一批应用之一。
 它是研究\gls{AE}早期动机之一。
 例如， \citet{Hinton-Science2006}训练了一个堆叠\glssymbol{RBM}，然后利用它们的权重初始化一个深度\gls{AE}并逐渐变小隐藏层，在30个单元的瓶颈处达到极值。
-生成的\gls{code}比30维的\glssymbol{PCA}产生更少的\gls{reconstruction_error}，所学的表示更容易定性解释，并能联系基础类别，这些类别表现为分离良好的集群。
+生成的\gls{code}比30维的\glssymbol{PCA}产生更少的\gls{reconstruction_error}，所学到的表示更容易定性解释，并能联系基础类别，这些类别表现为分离良好的集群。
 
 
 低维\gls{representation}可以提高许多任务的性能，例如分类。
 小空间的模型消耗更少的内存和运行时间。
-据\citet{Salakhutdinov+Hinton2007-small}和\citet{Torralba+Fergus+Weiss-2008}观察，\gls{dimensionality_reduction}的许多形式是跟彼此邻近的例子语义相关的。
+据\citet{Salakhutdinov+Hinton2007-small}和\citet{Torralba+Fergus+Weiss-2008}观察，\gls{dimensionality_reduction}的许多形式是跟彼此邻近的样本语义相关的。
 映射到低维空间能帮助泛化提示了这个想法。
 
 
-从\gls{dimensionality_reduction}中比普通任务受益更多的是\gls{information_retrieval}，即在数据库中查询类似条目的任务。
+从\gls{dimensionality_reduction}中比普通任务受益更多的是\firstgls{information_retrieval}，即在数据库中查询类似条目的任务。
 此任务从\gls{dimensionality_reduction}获得类似其他任务的一般益处，同时在某些种低维空间中的搜索变得极为高效。
-特别的，如果我们训练\gls{dimensionality_reduction}算法来生成一个低维且\emph{二值}的\gls{code}，那么我们就可以将所有数据库条目在哈希表映射为二进制编码向量。
-这个哈希表允许我们返回具有相同二进制代码的数据库条目作为查询结果进行\gls{information_retrieval}。
+特别的，如果我们训练\gls{dimensionality_reduction}算法生成一个低维且\emph{二值}的\gls{code}，那么我们就可以将所有数据库条目在哈希表映射为二值编码向量。
+这个哈希表允许我们返回具有相同二值编码的数据库条目作为查询结果进行\gls{information_retrieval}。
 我们也可以非常高效地搜索稍有不同条目，只需反转查询编码的各个位。
 这种通过\gls{dimensionality_reduction}和二值化的\gls{information_retrieval}方法被称为\firstgls{semantic_hashing}\citep{Salakhutdinov+Hinton2007-small,Salakhutdinov+Geoff-2009}，已经被用于文本输入\citep{Salakhutdinov+Hinton2007-small,Salakhutdinov+Geoff-2009}和图像\citep{Torralba+Fergus+Weiss-2008,WeissTF08,KrizhevskyH11}。
 
 
-通常在最终层上使用\ENNAME{sigmoid}的编码函数来产生\gls{semantic_hashing}的二值\gls{code}。
+通常在最终层上使用\ENNAME{sigmoid}编码函数产生\gls{semantic_hashing}的二值\gls{code}。
 \ENNAME{sigmoid}单元必须被训练为到达饱和，对所有输入值都接近0或接近1。
 能做到这一点的窍门就是训练时在\ENNAME{sigmoid}非线性单元前简单地注入加性噪声。
 噪声的大小应该随时间增加。
@@ -728,4 +727,4 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 
 % -- 515 --
 
-<BAD>学习哈希函数的思想也在其他几个方向进一步探讨，包括改变损失训练\gls{representation}的想法，这个表示与哈希表中查找附近样本的任务有更直接的联系\citep{Norouzi+Fleet-ICML2011}。
+学习哈希函数的思想已在其他数个方向进一步探讨，包括改变损失训练\gls{representation}的想法，其中所需优化的损失与哈希表中查找附近样本的任务有更直接的联系\citep{Norouzi+Fleet-ICML2011}。

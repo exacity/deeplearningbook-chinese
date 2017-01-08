@@ -1917,6 +1917,16 @@ minibatch的数目$m'$通常是一个相对较小的数，从一到几百。
 
 <!-- % -- 156 -- -->
 
+\begin{figure}[!htb]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics[width=0.7\textwidth]{Chapter5/figures/noise}}
+\fi
+\caption{随机地均匀抽取图像（根据均匀分布随机地选择每一个像素）会得到噪音图像。尽管在人工智能应用中生成一个脸或者其它物体的图像是非零概率的，但是实践中我们从来没有观察到这个现象。这也意味着人工智能应用中遇到的图像在所有图像空间中的占比是忽略不计的。}
+\end{figure}
+
+
 数据位于低维流形的假设并不总是对的或者有用的。
 我们认为在人工智能的一些场景中，如涉及到处理图像，声音或者文本，流形假设至少是
 近似对的。
@@ -1931,14 +1941,6 @@ minibatch的数目$m'$通常是一个相对较小的数，从一到几百。
 因为大部分字母长序列不对应着自然语言序列：
 自然语言序列的分布只占了字母序列的总空间里非常小的一部分。
 
-\begin{figure}[!htb]
-\ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
-\else
-\centerline{\includegraphics[width=0.7\textwidth]{Chapter5/figures/noise}}
-\fi
-\caption{随机地均匀抽取图像（根据均匀分布随机地选择每一个像素）会得到噪音图像。尽管在人工智能应用中生成一个脸或者其它物体的图像是非零概率的，但是实践中我们从来没有观察到这个现象。这也意味着人工智能应用中遇到的图像在所有图像空间中的占比是忽略不计的。}
-\end{figure}
 
 当然，集中的概率分布不足以说明数据位于一个相当小的流形中。
 我们还必须确定，我们遇到的样本和其他样本相互连接，每个样本被其他高度相似的样本包围，可以通过变换来遍历该流形。
@@ -1960,13 +1962,13 @@ minibatch的数目$m'$通常是一个相对较小的数，从一到几百。
 这个一般性原则能够用在很多情况中。
 \fig?展示了包含脸的数据集的流形结构。
 在本书的最后，我们会介绍一些学习这样的流形结构的必备方法。
-在图20.6中，我们将看到机器学习算法如何成功完成这个目标。
+在\fig?中，我们将看到机器学习算法如何成功完成这个目标。
 
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter5/figures/QMUL-facedataset}}
+\centerline{\includegraphics[width=0.8\textwidth]{Chapter5/figures/QMUL-facedataset}}
 \fi
 \caption{QMUL Multiview Face数据集中训练样本{cite?}，其中的物体是移动的从而覆盖对应两个旋转角度的二维流形。我们希望学习算法能够发现并且解决这些流形坐标。图\?提供了这样一个例子。}
 \end{figure}

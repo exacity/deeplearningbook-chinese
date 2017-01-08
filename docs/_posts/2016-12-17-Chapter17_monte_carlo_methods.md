@@ -436,8 +436,11 @@ Gibbs采样是一种概念简单而又有效的方法，它构造一个从$p_{\t
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-	\centerline{\includegraphics{Chapter17/figures/fig-adversarial}}
-	\centerline{\includegraphics{Chapter17/figures/fig-dbm-bad-mixing}}	
+    \centering
+    \begin{tabular}{cc}
+    \includegraphics[width=0.45\figwidth]{Chapter17/figures/fig-adversarial}
+    \includegraphics[width=0.45\figwidth]{Chapter17/figures/fig-dbm-bad-mixing}
+    \end{tabular}
 \fi
 	\caption{深度概率模型中一个混合缓慢问题的实例。
 	每张图都是按照从左到右从上到下的顺序的。

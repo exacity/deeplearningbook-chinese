@@ -386,7 +386,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-	\centerline{\includegraphics{Chapter13/figures/s3c_samples}}
+    \centerline{\includegraphics[width=\figwidth]{Chapter13/figures/s3c_samples}}
 \fi
 \caption{尖峰和平板稀疏编码模型上在MNIST数据集训练的样例和权重。
 	（左）这个模型中的样本和训练样本相差很大。
