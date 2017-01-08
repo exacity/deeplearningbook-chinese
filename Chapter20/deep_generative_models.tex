@@ -84,7 +84,16 @@
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics{Chapter20/figures/dbn}}
+\centering
+\begin{tabular}{cc}
+\includegraphics{Chapter20/figures/squished_rbm.pdf} &
+\includegraphics{Chapter20/figures/dbn.pdf}\\
+(a)&(b)
+\end{tabular}
+\begin{tabular}{c}
+ \includegraphics{Chapter20/figures/dbm_simple.pdf}\\
+(c)
+\end{tabular}
 \fi
 \caption{可以用\gls{RBM}构建的模型示例。
 (a)\gls{RBM}本身是基于二分图的无向\gls{graphical_model}，在图的一部分具有可见单元，另一部分具有\gls{hidden_unit}。可见单元之间没有连接，\gls{hidden_unit}之间也没有任何连接。通常每个可见单元连接到每个\gls{hidden_unit}，但也可以构造稀疏连接的\glssymbol{RBM}，如卷积\glssymbol{RBM}。
@@ -302,10 +311,10 @@ P(v_i^{(k)} = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\t
  P(\Vv, \Vh^{(1)},  \Vh^{(2)},  \Vh^{(3)}) = \frac{1}{Z(\Vtheta)} 
  \exp \big( -E(\Vv, \Vh^{(1)},  \Vh^{(2)},  \Vh^{(3)}; \Vtheta) \big).
 \end{align}
-为简化表示，我们在下面省略了\gls{bias_aff}参数。
+为简化表示，下式省略了\gls{bias_aff}参数。
 \glssymbol{DBM}\gls{energy_function}定义如下：
 \begin{align}
- E(\Vv, \Vh^{(2)},  \Vh^{(3)}; \Vtheta)  = -\Vv^\top \MW^{(1)}\Vh^{(1)} 
+    E(\Vv, \Vh^{(1)}, \Vh^{(2)}, \Vh^{(3)}; \Vtheta)  = -\Vv^\top \MW^{(1)}\Vh^{(1)} 
  - \Vh^{(1)^\top}\MW^{(2)}\Vh^{(2)}- \Vh^{(2)^\top}\MW^{(3)}\Vh^{(3)}.
 \end{align}
 

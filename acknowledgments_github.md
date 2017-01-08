@@ -148,3 +148,9 @@
 ---------------
  - @tonyzeng2016 ==> Chapter8, 8.1.2最后一段翻译建议
  - @zdx3578 ==> Chapter18, "intractable"翻译建议
+
+
+2017年1月7日
+---------------
+ - @zdx3578 ==> Chapter20, 公式错误，少子图
+ - name:YUE-DaJiong ==> Chapter20, discriminator network
