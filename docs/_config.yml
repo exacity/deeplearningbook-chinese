@@ -7,7 +7,7 @@ share: false
 
 # Your site's domain goes here (eg: https://mmistakes.github.io, http://yourdomain.com, etc)
 # When testing locally leave blank or use http://localhost:4000
-baseurl: /deeplearningbook-chinese
+baseurl: 
 url: https://exacity.github.io/deeplearningbook-chinese
 
 # Owner/author information
