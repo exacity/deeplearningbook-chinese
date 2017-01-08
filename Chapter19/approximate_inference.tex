@@ -5,15 +5,15 @@
 % 623
 
 
-许多概率模型是很难训练的，其根本原因是很难进行推断。
-在\gls{DL}中，我们通常有一系列的可见变量$\Vv$和一系列的\gls{latent_variable}$\Vh$。
-推断的挑战往往在于计算$P(\Vh\mid\Vv)$或者计算在分布$P(\Vh\mid\Vv)$下期望的困难性。
-这样的操作在一些任务比如\gls{MLE}中往往又是必需的。
+许多概率模型是很难训练的，其原因是很难进行推断。
+在\gls{DL}中，我们通常有一个可见变量$\Vv$的集合和一个\gls{latent_variable}$\Vh$的集合。
+推断的挑战往往在于计算$p(\Vh\mid\Vv)$或者计算在分布$p(\Vh\mid\Vv)$下期望的困难性。
+而这样的操作在一些任务比如最大似然学习中往往又是必需的。
 % 623
 
-许多诸如\gls{RBM}和\gls{PPCA}这样的仅仅含有一层隐层的简单\gls{graphical_models}的定义，往往使得推断操作如计算$P(\Vh\mid\Vv)$或者计算分布$P(\Vh\mid\Vv)$下的期望是非常容易的。
+许多诸如\gls{RBM}和\gls{PPCA}这样的仅仅含有一层隐层的简单\gls{graphical_models}的定义，往往使得推断操作如计算$p(\Vh\mid\Vv)$或者计算分布$p(\Vh\mid\Vv)$下的期望是非常容易的。
 不幸的是，大多数的具有多层\gls{latent_variable}的\gls{graphical_models}的后验分布都很难处理。
-精确的推断算法需要指数量级的运行时间。
+对于这些模型精确的推断算法需要指数量级的运行时间。
 即使一些只有单层的模型，如\gls{sparse_coding}，也存在着这样的问题。
 % 623
 
@@ -23,9 +23,9 @@
 % 623
 
 
-在\gls{DL}中难以处理的推断问题通常源于\gls{structured_probabilistic_models}中\gls{latent_variable}之间的相互作用。
+在\gls{DL}中难以处理的推断问题通常源于结构化图模型中\gls{latent_variable}之间的相互作用。
 详见\figref{fig:intractable_graphs}的几个例子。
-这些相互作用可能是\gls{undirected_model}的直接作用，也可能是\gls{directed_model}中一个可见变量的共同祖先之间的\gls{explaining_away}作用。
+这些相互作用可能是\gls{undirected_model}的直接作用，也可能是\gls{directed_model}中同一个可见变量的共同祖先之间的\gls{explaining_away}作用。
 % 623 end
 
 
@@ -57,17 +57,17 @@
 
 
 为了构造这样一个优化问题，假设我们有一个包含可见变量$\Vv$和\gls{latent_variable}$\Vh$的概率模型。
-我们希望计算观察数据的概率的对数$\log p(\Vv;\Vtheta)$。
-有时候如果消去$\Vh$来计算$\Vx$的边缘分布很费时的话，我们通常很难计算$\log p(\Vv;\Vtheta)$。
-作为替代，我们可以计算一个$\log p(\Vv;\Vtheta)$的下界。
+我们希望计算观察数据的概率对数$\log p(\Vv;\Vtheta)$。
+有时候如果边缘化消去$\Vh$的操作很费时的话，我们通常很难计算$\log p(\Vv;\Vtheta)$。
+作为替代，我们可以计算一个$\log p(\Vv;\Vtheta)$的下界$\CalL(\Vv,{\Vtheta},q)$。
 这个下界叫做\firstall{ELBO}。
-这个下界的另一个常用的名字是负的\firstgls{variational_free_energy}。
-这个\gls{ELBO}是这样定义的：
+这个下界的另一个常用名字是负\firstgls{variational_free_energy}。
+具体地，这个\gls{ELBO}是这样定义的：
 
 \begin{align}
 \CalL(\Vv,{\Vtheta},q) = \log p(\Vv;{\Vtheta}) - D_{\text{KL}}(q(\Vh\mid\Vv) \Vert p(\Vh\mid\Vv;{\Vtheta})).
 \end{align}
-在这里 $q$是关于$\Vh$的一个任意的概率分布。
+在这里 $q$是关于$\Vh$的一个任意概率分布。
 % 625
 
 
@@ -77,8 +77,8 @@
 % 625
 
 
-令人吃惊的是，对某些分布$q$，$\CalL$可以被化的更简单。
-通过简单的代数运算我们可以把$\CalL$写成更加简单的形式：
+令人吃惊的是，对某些分布$q$，$\CalL$可以被化得更简单。
+通过简单的代数运算我们可以把$\CalL$重写成一个更加简单的形式：
 
 \begin{align}
 \CalL(\Vv,{\Vtheta},q) = & \log p(\Vv;{\Vtheta})- D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv;{\Vtheta})) \\
@@ -96,22 +96,22 @@
 \end{align}
 
 
-对于一个较好的选择$q$来说，$\CalL$是可以计算的。
+对于一个较好的选择$q$来说，$\CalL$是容易计算的。
 对任意选择$q$来说，$\CalL$提供了一个似然函数的下界。
-越好的近似$q$的分布$q(\Vh\mid\Vv)$得到的下界就越紧，即与$\log p(\Vv)$更加接近。
+越好的近似$q$的分布$q(\Vh\mid\Vv)$得到的下界就越紧，换句话说，就是与$\log p(\Vv)$更加接近。
 当$q(\Vh\mid\Vv) = p(\Vh\mid\Vv)$时，这个近似是完美的，也意味着$\CalL(\Vv,{\Vtheta},q) = \log {p(\Vv;{\Vtheta})} $。
 % 625
 
 
-我们可以将推断问题看做是找一个分布$q$使得$\CalL$最大的过程。
-精确的推断能够通过找一组包含分布$p(\Vh\mid\Vv)$的函数，完美地最大化$\CalL$。
+因此我们可以将推断问题看做是找一个分布$q$使得$\CalL$最大的过程。
+精确的推断能够通过搜索一组包含分布$p(\Vh\mid\Vv)$的$q$函数族，完美地最大化$\CalL$。
 在本章中，我们将会讲到如何通过近似优化来找$q$的方法来推导出不同形式的的\gls{approximate_inference}。
 我们可以通过限定分布$q$的形式或者使用并不彻底的优化方法来使得优化的过程更加高效，但是优化的结果是不完美的，因为只能显著地提升$\CalL$而无法彻底地最大化$\CalL$。
 % 625  end
 
 
-无论什么样的$q$的选择，$\CalL$是一个下界。
-我们可以通过选择一个更简单抑或更复杂的计算过程来得到对应的更加松的或者更紧的下界。
+无论我们选择什么样的$q$，$\CalL$始终是一个下界。
+我们可以通过选择一个更简单抑或更复杂的计算过程来得到对应的更松或者更紧的下界。
 通过一个不彻底的优化过程或者将$q$分布做很强的限定（并且使用一个彻底的优化过程）我们可以获得一个很差的$q$，尽管计算开销是极小的。
 % 626 head
 
@@ -127,7 +127,7 @@
 % 626
 
 
-\glssymbol{EM}算法包含了交替的两步运算直到收敛的过程：
+\glssymbol{EM}算法包含了交替进行两步运算直到收敛的过程：
 \begin{itemize}
 	\item \firstgls{e_step}: 令${\Vtheta^{(0)}}$表示在这一步开始时参数的初始值。
 	令$q(\Vh^{(i)}\mid \Vv) = p(\Vh^{(i)}\mid\Vv^{(i)};\Vtheta^{(0)})$对任何我们想要训练的(对所有的或者\gls{minibatch}数据均成立)索引为$i$的训练样本$\Vv^{(i)}$。
@@ -148,21 +148,21 @@
 
 基于\gls{latent_variable}模型的\gls{SGA}可以被看做是一个\glssymbol{EM}算法的特例，其中\gls{m_step}包括了单次梯度的操作。
 \glssymbol{EM}算法的其他变种可以实现多次梯度操作。
-对一些模型，\gls{m_step}可以通过推出理论解直接完成，不同于其他方法，在给定当前$q$的情况下直接求出最优解。
+对一些模型族来说，\gls{m_step}甚至可以通过推出理论解直接完成，不同于其他方法，在给定当前$q$的情况下直接求出最优解。
 % 626 end
 
 
 即使\gls{e_step}采用的是精确推断，我们仍然可以将\glssymbol{EM}算法视作是某种程度上的\gls{approximate_inference}。
 具体地说，\gls{m_step}假设了一个$q$分布可以被所有的$\Vtheta$分享。
 当\gls{m_step}越来越远离\gls{e_step}中的$\Vtheta^{(0)}$的时候，这将会导致$\CalL$和真实的$\log p(\Vv)$的差距。
-此外，当下一个循环的时候，\gls{e_step}把这种差距又降到了$0$。
+幸运的事，当下一个循环的时候，\gls{e_step}把这种差距又降到了$0$。
 % 627 head
 
 
 
 \glssymbol{EM}算法包含了一些不同的解释。
 首先，学习过程的一个基本思路就是，我们通过更新模型参数来提高整个数据集的似然，其中缺失变量的值是通过后验分布来估计的。
-这种解释并不仅仅适用于\glssymbol{EM}算法。
+这种特定的性质并不仅仅适用于\glssymbol{EM}算法。
 比如说，使用\gls{GD}来最大化似然函数的对数这种方法也利用了相同的性质。
 计算对数似然函数的梯度需要对隐含节点的后验分布来求期望。 
 \glssymbol{EM}算法另一个关键的性质是当我们移动到另一个$\Vtheta$时候，我们仍然可以使用旧的$q$。
