@@ -13,12 +13,12 @@
 如果你不熟悉基于梯度的基本优化，我们建议您查看\chapref{chap:numerical_computation}。
 该章简要概述了一般的数值优化。
 
-本章主要关注这一类优化问题：寻找神经网络上的一组参数$\Vtheta$以显著降低损失函数$J(\Vtheta)$，该损失函数通常包括整个训练集上的性能评估和正则项。
+本章主要关注这一类优化问题：寻找神经网络上的一组参数$\Vtheta$以显著降低\gls{cost_function}$J(\Vtheta)$，该\gls{cost_function}通常包括整个训练集上的性能评估和正则项。
 
 首先，我们会介绍机器学习任务训练算法中的优化和纯优化在哪些地方不一样。
 接下来，我们会介绍神经网络优化很难的几个具体原因。
 然后，我们会介绍几个实用算法，包括优化算法本身和初始化参数的技巧。
-更高级的算法能够在训练中调整学习速率，或者使用损失函数二阶导数包含的信息。
+更高级的算法能够在训练中调整学习速率，或者使用\gls{cost_function}二阶导数包含的信息。
 最后，我们会介绍几个将简单优化算法融入高级过程的优化策略。
 
 % -- 267 --
@@ -29,16 +29,16 @@
 机器学习通常是间接的。
 在大多数机器学习问题中，我们关注定义于测试集上的，也可能是不可解的性能度量$P$.
 因此，我们只是间接地优化$P$。
-我们希望通过降低损失函数$J(\Vtheta)$来提高$P$。
+我们希望通过降低\gls{cost_function}$J(\Vtheta)$来提高$P$。
 这一点不同于纯优化最小化$J$本身。
 训练\gls{deep_model}的优化算法通常也会包括一些用于机器学习目标函数特定结构上的特殊优化。
 
-通常，损失函数可写为训练集上的平均，如
+通常，\gls{cost_function}可写为训练集上的平均，如
 \begin{equation}
 \label{eq:8.1}
     J(\Vtheta) = \SetE_{(\RVx, \RSy) \sim\hat{p}_\text{data}} L(f(\Vx ; \Vtheta), y),
 \end{equation}
-其中$L$是每个样本的损失函数，$f(\Vx;\Vtheta)$是输入是$\Vx$时的预测输出，$\hat{p}_{\text{data}}$是经验分布。
+其中$L$是每个样本的\gls{loss_function}，$f(\Vx;\Vtheta)$是输入是$\Vx$时的预测输出，$\hat{p}_{\text{data}}$是经验分布。
 监督学习中，$y$是目标输出。
 在本章中，我们会介绍不带正则项的监督学习，$L$的参数是$f(\Vx;\Vtheta)$和$y$。
 很容易将这种监督学习扩展成其他形式，如包括$\Vtheta$或者$\Vx$做参数，或是去掉参数$y$，以发展不同形式的正则项或是\gls{unsupervised_learning}。
@@ -78,34 +78,34 @@
 然而，经验风险最小化容易过拟合。
 高\gls{capacity}的模型会简单地记住训练集。
 在很多情况下，经验风险最小化并非真的可行。
-最有效的现代优化算法是基于梯度下降的，但是很多有用的损失函数，如$0-1$损失，没有导数（导数要么为零，要么没有定义）。
+最有效的现代优化算法是基于梯度下降的，但是很多有用的\gls{loss_function}，如$0-1$损失，没有导数（导数要么为零，要么没有定义）。
 这两个问题说明，在深度学习中我们很少使用经验风险最小化。
 反之，我们会使用一个稍稍不同的方法，我们真正优化的目标会更加不同于我们希望优化的目标。
 
-\subsection{替代损失函数和\glsentrytext{early_stopping}}
+\subsection{\glsentrytext{surrogate_loss_function}和\glsentrytext{early_stopping}}
 \label{sec:surrogate_loss_functions_and_early_stopping}
-有时，我们真正关心的损失函数（比如分类误差）并不能有效地优化。
+有时，我们真正关心的\gls{loss_function}（比如分类误差）并不能有效地优化。
 例如，即使对于线性分类器而言，精确地最小化$0-1$损失通常是不可解的（复杂度几何级数增长于输入维数）\citep{Marcotte-92}。
 在这种情况下，我们通常会优化\firstgls{surrogate_loss_function}。
-替代损失函数作为原目标的代理，还有一些优点。  
+\gls{surrogate_loss_function}作为原目标的代理，还有一些优点。  
 例如，正确类别的负对数似然通常用作$0-1$损失的替代。
 负对数似然允许模型估计给定样本的条件概率，如果该模型效果好，那么它能够输出最小期望分类误差对应的类别。
 
 % -- 269 --
 
-在某些情况下，替代损失函数能比原函数学习到更多。
+在某些情况下，\gls{surrogate_loss_function}能比原函数学习到更多。
 例如，使用对数似然替代函数时，在训练集上的$0-1$损失达到$0$之后，测试集上的$0-1$损失还能持续下降很长一段时间。
 这是因为即使$0-1$损失期望是零时，我们还能拉开不同类别的距离以改进分类器的鲁棒性，获得一个更强壮的，值得信赖的分类器。
 因而，相较于简单地最小化训练集上的平均$0-1$损失，从训练数据中抽取了更多信息。
 
 一般的优化和我们用于训练算法的优化的一个重要不同：训练算法通常不收敛在局部极小。
-反之，机器学习通常优化替代损失函数，并可能基于\secref{sec:early_stopping}的收敛条件\gls{early_stopping}。
-通常，\gls{early_stopping}使用真实损失函数，如验证集上的$0-1$损失函数，并在过拟合发生之前终止；与纯优化不同的是，\gls{early_stopping}时替代损失函数仍然有较大的导数，而纯优化终止时导数较小。
+反之，机器学习通常优化\gls{surrogate_loss_function}，并可能基于\secref{sec:early_stopping}的收敛条件\gls{early_stopping}。
+通常，\gls{early_stopping}使用真实损失函数，如验证集上的$0-1$损失函数，并在过拟合发生之前终止；与纯优化不同的是，\gls{early_stopping}时\gls{surrogate_loss_function}仍然有较大的导数，而纯优化终止时导数较小。
 
 \subsection{批算法和\gls{minibatch}算法}
 \label{sec:batch_and_minibatch_algorithms}
 机器学习算法和一般优化算法不同的一点是，机器学习算法的目标函数通常可以分解为训练样本上的求和。
-机器学习优化算法通常使用整个损失函数中的一部分项去更新其参数。
+机器学习优化算法通常使用整个\gls{cost_function}中的一部分项去更新其参数。
 
 例如，最大似然估计问题可以在对数空间中分解成每个样本的总和：
 \begin{equation}
@@ -276,9 +276,9 @@
 这是数值优化，凸优化或其他形式的优化中普遍存在的问题，更多细节请参看\secref{sec:beyond_the_gradient_jacobian_and_hessian_matrices}。
 
 病态问题一般被认为存在于神经网络训练过程中。
-病态体现在随机梯度下降会``卡''在某些情况，此时即使很小的更新步长也会增加损失函数。
+病态体现在随机梯度下降会``卡''在某些情况，此时即使很小的更新步长也会增加\gls{cost_function}。
 
-回顾\eqnref{eq:4.9}，损失函数的二阶系列展开预测梯度下降中的$-\epsilon\Vg$会增加
+回顾\eqnref{eq:4.9}，\gls{cost_function}的二阶系列展开预测梯度下降中的$-\epsilon\Vg$会增加
 \begin{equation}
     \frac{1}{2} \epsilon^2 \Vg^\top \MH\Vg - \epsilon\Vg^\top\Vg
 \end{equation}
@@ -337,10 +337,10 @@
 包括权重空间对称性，很多神经网络还有其他导致不可辨认的原因。
 例如，在任意\gls{rectified_linear}网络或者\gls{maxout}网络中，
 我们可以放大传入权重和\gls{bias_aff}$\alpha$倍，然后缩小传出权重$\frac{1}{\alpha}$倍，而保持模型等价。
-这意味着，如果损失函数不包括如权重衰减这种直接依赖于权重而非模型输出的项，那么\gls{rectified_linear}网络或者\gls{maxout}网络的每一个局部极小解都在等价局部极小解的$(m\times n)$维双曲线上。
+这意味着，如果\gls{cost_function}不包括如权重衰减这种直接依赖于权重而非模型输出的项，那么\gls{rectified_linear}网络或者\gls{maxout}网络的每一个局部极小解都在等价局部极小解的$(m\times n)$维双曲线上。
 
-这些\gls{model_identifiability}问题意味着神经网络损失函数具有非常多，甚至无限多的局部极小解。
-然而，所有这些由于不可辨识性问题产生的局部极小解都有相同的损失函数值。
+这些\gls{model_identifiability}问题意味着神经网络\gls{cost_function}具有非常多，甚至无限多的局部极小解。
+然而，所有这些由于不可辨识性问题产生的局部极小解都有相同的\gls{cost_function}值。
 因此，这些局部极小解并非是非凸所带来的问题。
 
 如果局部极小解和全局极小解相差很大时，那么此时多个局部极小解会带来很大的隐患。
@@ -353,7 +353,7 @@
 多年来，大多数从业者认为局部极小值是困扰神经网络优化的常见问题。
 如今，情况有所变化。
 这个问题仍然是学术界的热点问题，但是学者们现在猜想，对于足够大的神经网络而言，
-大部分局部极小值都具有很小的损失函数，我们能不能找到真正的全局极小值并不重要，而是需要在参数空间中找到一个具有很少损失的点\citep{Saxe-et-al-ICLR13,Dauphin-et-al-NIPS2014-small,GoodfellowOptimization15,Choromanska-et-al-AISTATS2015}。
+大部分局部极小值都具有很小的\gls{cost_function}，我们能不能找到真正的全局极小值并不重要，而是需要在参数空间中找到一个具有很少损失的点\citep{Saxe-et-al-ICLR13,Dauphin-et-al-NIPS2014-small,GoodfellowOptimization15,Choromanska-et-al-AISTATS2015}。
 
 很多从业者将神经网络优化中的所有困难都归结于局部极小值。
 我们鼓励从业者要仔细测试特定的问题。
@@ -369,7 +369,7 @@
 \gls{saddle_points}附近的某些点比\gls{saddle_points}有更大的损失，而其他点则有更小的损失。
 在\gls{saddle_points}处，\gls{hessian}矩阵同时具有正负特征值。
 位于正特征值对应的特征向量方向的点比\gls{saddle_points}有更大的损失，反之，位于负特征值对应的特征向量方向的点有更小的损失。
-我们可以将\gls{saddle_points}视为损失函数某个横截面上的局部极小值，同时也可以视为损失函数某个横截面上的局部极大值。
+我们可以将\gls{saddle_points}视为\gls{cost_function}某个横截面上的局部极小值，同时也可以视为\gls{cost_function}某个横截面上的局部极大值。
 如\figref{fig:chap4_saddle_3d_color}所示。
 
 多类随机函数表现出以下性质：低维空间中，局部极小值很普遍。
@@ -394,10 +394,10 @@
 那么是否在神经网络中也有发生呢？
 \cite{Baldi89}从理论上证明，不具非线性的浅层\gls{AE}（\chapref{chap:autoencoders}中将介绍的训练输入到输出的前馈网络）只有全局极小值和\gls{saddle_points}，没有损失比全局极小值更大的局部极小值。
 他们还发现这些结果能够扩展到不具非线性的更深层网络上，不过没有证明。
-这类网络的输出是其输入的线性函数，但它们仍然有助于分析非线性神经网络模型，因为它们的损失函数是关于参数的非凸函数。
+这类网络的输出是其输入的线性函数，但它们仍然有助于分析非线性神经网络模型，因为它们的\gls{loss_function}是关于参数的非凸函数。
 这类网络本质上是多个矩阵组合在一起。
 \cite{Saxe-et-al-ICLR13}精确解析了这类网络中的完整学习动态，表明这些模型的学习能够捕捉，训练具有非线性激励函数的\gls{deep_model}中的许多定性特征。
-\cite{Dauphin-et-al-NIPS2014-small}实验表明，真实的网络也会有包含很多高损失\gls{saddle_points}的损失函数。
+\cite{Dauphin-et-al-NIPS2014-small}实验表明，真实的网络也会有包含很多高损失\gls{saddle_points}的\gls{loss_function}。
 \cite{Choromanska-et-al-AISTATS2015}理论证明了另一类和神经网络相关的高维随机函数也满足这种情况。
 
 训练算法时的\gls{saddle_points}扩散会有哪些影响呢？
@@ -405,7 +405,7 @@
 \gls{saddle_points}附近的梯度通常会非常小。
 另一方面，实验中梯度下降似乎可以在许多情况下逃离\gls{saddle_points}。
 \cite{GoodfellowOptimization15}可视化了最新神经网络的几个学习轨迹，如\figref{fig:chap8_plot_atmu_relu_5}所示。
-这些可视化显示权重都为零的\gls{saddle_points}附近，损失函数都是平坦的。
+这些可视化显示权重都为零的\gls{saddle_points}附近，\gls{cost_function}都是平坦的。
 但是他们也展示了梯度下降轨迹能够迅速逸出该区间。
 \cite{GoodfellowOptimization15}还认为，或许可以解析地表明连续时间的梯度下降会逃离，而不是吸引，附近的\gls{saddle_points}，但是对于梯度下降更现实的使用，情况或许是不同的。
 
@@ -471,7 +471,7 @@
 不管我们是从上还是从下接近悬崖，情况都很糟糕，但幸运的是可以用使用\secref{sec:clipping_gradients}介绍的启发式\firstgls{gradient_clipping}来避免其主要缺点。
 基本想法源自考虑到梯度并没有指明最佳步长，只是说明在无限小区域内的最佳方向。
 当传统的梯度下降算法提议更新很大一步时，启发式\gls{gradient_clipping}会干涉去减小步长，从而使其不太可能走出梯度很大的悬崖区域。
-悬崖结构在\gls{RNN}的损失函数中很常见，因为这类模型会涉及到多个时间步长因素的相乘。
+悬崖结构在\gls{RNN}的\gls{cost_function}中很常见，因为这类模型会涉及到多个时间步长因素的相乘。
 因此，长期时间序列会产生大量相乘。
 
 \subsection{\glsentrytext{long_term_dependency}}
@@ -492,7 +492,7 @@
 \end{equation}
 当特征值$\lambda_i$不在$1$附近时，若在量级上大于$1$则会爆炸；若小于$1$时则会消失。
 \textbf{梯度消失（或弥散）问题}（\textbf{vanishing gradient problem}）和\textbf{梯度爆炸问题}（\textbf{exploding gradient problem}）是指该计算图上的梯度也会因为$\text{diag}(\Vlambda)^t$大幅度变化。
-消失的梯度使得难以知道参数朝哪个方向移动能够改进损失函数，而爆炸梯度会使得学习不稳定。
+消失的梯度使得难以知道参数朝哪个方向移动能够改进\gls{cost_function}，而爆炸梯度会使得学习不稳定。
 之前描述的诱发梯度截断的悬崖结构便是爆炸梯度现象的一个例子。
 
 此处描述的每个时间点重复与$\MW$相乘非常类似于寻求矩阵$\MW$的最大特征值及对应的特征向量的\firstgls{power_method}。
@@ -518,11 +518,11 @@
 例如，对比散度是用来近似波尔兹曼机不可解对数似然梯度的一种技术。
 
 各种神经网络优化算法的设计都考虑到了梯度估计的欠完整性。
-我们可以选择比真实损失函数更容易估计的替代损失函数来避免这个问题。
+我们可以选择比真实\gls{loss_function}更容易估计的替代\gls{loss_function}来避免这个问题。
 
 \subsection{局部和全局结构间的弱对应}
 \label{sec:poor_correspondence_between_local_and_global_structure}
-迄今为止，我们讨论的许多问题都是关于损失函数在单点的性质——若$J(\Vtheta)$在当前点$\Vtheta$是\gls{poor_conditioning}，或者$\Vtheta$在悬崖中，或者$\Vtheta$是一个隐藏下降梯度的\gls{saddle_points}，那么会很难更新当前步。
+迄今为止，我们讨论的许多问题都是关于\gls{loss_function}在单点的性质——若$J(\Vtheta)$在当前点$\Vtheta$是\gls{poor_conditioning}，或者$\Vtheta$在悬崖中，或者$\Vtheta$是一个隐藏下降梯度的\gls{saddle_points}，那么会很难更新当前步。
 
 如果其方向在局部改进了很多，但是并没有指向损失低得多的遥远区域，那么有可能在单点处克服以上所有困难，但仍然表现不佳。
 
@@ -532,10 +532,10 @@
 大多数优化研究的难点集中于训练是否到达了全局最小值，局部最小值，或是\gls{saddle_points}，但在实践中神经网络不会到达任何一种临界点。
 \figref{fig:chap8_grad_norm_increases}表明神经网络通常不会到达梯度很小的区域。
 甚至，这些临界点不是必然存在的。
-例如，损失函数$-\log p(y\mid\Vx;\Vtheta)$没有全局极小点，而是当模型更自信时会逐渐趋向某个值。    
+例如，\gls{loss_function}$-\log p(y\mid\Vx;\Vtheta)$没有全局极小点，而是当模型更自信时会逐渐趋向某个值。    
 对于具有离散标签$y$和softmax分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类训练集上的每个样本，则负对数似然可以任意地趋近于零，但是不可能实际达到零值。
 同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无限大——如果$f(\Vtheta)$能够正确预测所有的训练集目标$y$，学习算法会无边界地增加$\beta$。
-如\figref{fig:chap8_bad_global}所示，即使没有局部极小值和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的损失函数值。
+如\figref{fig:chap8_bad_global}所示，即使没有局部极小值和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的\gls{cost_function}值。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -624,7 +624,7 @@
 在实践中，有必要随着时间的推移逐渐降低学习速率，因此我们将第$k$步迭代的学习速率记作$\epsilon_k$。
 
 这是因为\glssymbol{SGD}梯度估计引入的噪源（$m$个训练样本的随机采样）并不会在极小值处消失。
-相比之下，当我们使用\gls{batch}梯度下降到达极小值时，整个损失函数的真实梯度会变得很小，甚至为$\mathbf{0}$，因此\gls{batch}梯度下降可以使用固定的学习速率。
+相比之下，当我们使用\gls{batch}梯度下降到达极小值时，整个\gls{cost_function}的真实梯度会变得很小，甚至为$\mathbf{0}$，因此\gls{batch}梯度下降可以使用固定的学习速率。
 保证\glssymbol{SGD}收敛的一个充分条件是
 \begin{equation}
 \label{eq:8.12}
@@ -652,8 +652,8 @@
 通常$\tau$被设为需要反复遍历训练样本几百次的迭代次数。
 通常$\epsilon_\tau$应设为大约$1\%$的$\epsilon_0$。
 主要问题是如何设置$\epsilon_0$。
-若$\epsilon_0$太大，学习曲线将会剧烈振荡，损失函数值通常会明显增加。
-温和的振荡是良好的，特别是训练于随机损失函数上，例如由信号丢失引起的损失函数。
+若$\epsilon_0$太大，学习曲线将会剧烈振荡，\gls{cost_function}值通常会明显增加。
+温和的振荡是良好的，特别是训练于随机\gls{cost_function}上，例如由信号丢失引起的\gls{cost_function}。
 如果学习速率太慢，那么学习进程会缓慢。
 如果初始学习速率太低，那么学习可能会卡在一个相当高的损失值。
 通常，就总训练时间和最终损失值而言，最优初始学习速率会高于大约迭代100步后输出最好效果的学习速率。
@@ -663,7 +663,7 @@
 即使训练样本数目非常大时，这也能收敛。
 对于足够大的数据集，\glssymbol{SGD}可能会在处理整个训练集之前就收敛到最终测试集误差的某个固定容差范围内。
 
-研究优化算法的收敛率，一般会衡量\firstgls{excess_error}$J(\Vtheta) - \min_{\Vtheta} J(\Vtheta)$，即当前损失函数超出最低可能损失的量。
+研究优化算法的收敛率，一般会衡量\firstgls{excess_error}$J(\Vtheta) - \min_{\Vtheta} J(\Vtheta)$，即当前\gls{cost_function}超出最低可能损失的量。
 \glssymbol{SGD}应用于凸问题时，$k$步迭代后的额外误差量级是$O(\frac{1}{\sqrt{k}})$，在强凸情况下是$O(\frac{1}{k})$。
 除非假定额外的条件，否则这些界限不能进一步改进。
 \gls{batch}梯度下降在理论上比随机梯度下降有更好的收敛率。
@@ -777,8 +777,8 @@
 求解微分方程的一个简单数值方法是欧拉方法，通过在每个梯度方向上小且有限的步来简单模拟该等式定义的动力学。
 
 这解释了动量更新的基本形式，但具体什么是力呢？
-力正比于损失函数的负梯度$-\nabla_{\Vtheta} J(\Vtheta)$。
-该力推动粒子沿着损失函数表面下坡的方向移动。
+力正比于\gls{cost_function}的负梯度$-\nabla_{\Vtheta} J(\Vtheta)$。
+该力推动粒子沿着\gls{cost_function}表面下坡的方向移动。
 梯度下降算法基于每个梯度简单地更新一步，而使用动量算法的牛顿方案则使用该力改变粒子的速度。
 我们可以将粒子视作在冰面上滑行的冰球。
 每当它沿着表面最陡的部分下降时，它会累积继续在该方向上滑行的速度，直到其开始向上滑动为止。
@@ -786,7 +786,7 @@
 % -- 290 --
 
 另一个力也是必要的。
-如果损失函数的梯度是唯一的力，那么粒子可能永远不会停下来。
+如果\gls{cost_function}的梯度是唯一的力，那么粒子可能永远不会停下来。
 想象一下，假设冰面没有摩擦，一个冰球从山谷的一端下滑，上升到另一端，永远来回振荡。
 要解决这个问题，我们添加另一个正比于$-\Vv(t)$的力。
 在物理术语中，此力对应于粘性阻力，就像粒子必须通过一个抵抗介质，如糖浆。
@@ -802,7 +802,7 @@
 非零值初始速度的粒子仅受到湍流阻力，会从初始位置永远地移动下去，和初始位置的距离大概正比于$O(\log t)$。
 因此我们必须使用速度较低幂次的力。
 如果幂次为零，相当于干摩擦，那么力太强了。
-当损失函数的梯度表示的力很小但非零时，由于摩擦导致的恒力会使得粒子在达到局部极小值之前就停下来。
+当\gls{cost_function}的梯度表示的力很小但非零时，由于摩擦导致的恒力会使得粒子在达到局部极小值之前就停下来。
 粘性阻力避免了这两个问题——它足够弱，可以使梯度引起的运动直到达到最小，但又足够强，使得坡度不够时可以阻止运动。
 
 \subsection{Nesterov动量}
@@ -1411,7 +1411,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 举一个简单的例子，假设我们有一个\gls{DNN}，每一层只有一个单元，并且在每个\gls{hidden_layer}不使用激励函数：$\hat{y} = xw_1 w_2 w_3 \dots w_l$。
 这里，$w_i$表示用于层$i$的权重。层$i$的输出是$h_i = h_{i-1} w_i$。
 输出$\hat{y}$是输入$x$的线性函数，但是权重$w_i$的非线性函数。
-假设我们的损失函数$\hat{y}$上的梯度为$1$，所以我们希望稍稍降低$\hat{y}$。
+假设我们的\gls{cost_function}$\hat{y}$上的梯度为$1$，所以我们希望稍稍降低$\hat{y}$。
 然后反向传播算法可以计算梯度$\Vg = \nabla_{\Vw} \hat{y}$。
 想想我们在更新$\Vw \leftarrow \Vw - \epsilon \Vg$时会发生什么。
 近似$\hat{y}$的一阶泰勒级数会预测$\hat{y}$的值下降$\epsilon \Vg^\top \Vg$。
@@ -1456,7 +1456,7 @@ $\hat{y}$的更新值为
 至关重要的是，\emph{我们反向传播这些操作}，计算均值和标准差，并应用它们于标准化$\MH$。
 这意味着，梯度不会再简单地增加$h_i$的\gls{standard_deviation}或均值；标准化操作会除掉这一操作的影响，归零其在梯度中的元素。
 这是\gls{batch_normalization}方法的一个重大创新。
-以前的方法添加损失函数的惩罚，以鼓励单位标准化激励统计量，或是在每个梯度下降步骤之后重新标准化单位统计量。
+以前的方法添加\gls{cost_function}的惩罚，以鼓励单位标准化激励统计量，或是在每个梯度下降步骤之后重新标准化单位统计量。
 前者通常会导致不完全的标准化，而后者通常会显著地消耗时间，因为学习算法会反复改变均值和方差而标准化步骤会反复抵消这种变化。
 \gls{batch_normalization}重新参数化模型，以使一些单元总是被定义标准化，巧妙地回避了这两个问题。
 
@@ -1520,7 +1520,7 @@ $\hat{y}$的更新值为
 % -- 312 --
 
 当优化问题中的不同变量能够清楚地分成相对独立的组，或是当优化一组变量明显比优化所有变量效率更高时，坐标下降最有意义。
-例如，考虑损失函数
+例如，考虑\gls{cost_function}
 \begin{equation}
     J(\MH, \MW) = \sum_{i,j} |H_{i,j}| + \sum_{i,j} \left( \MX - \MW^\top \MH \right)_{i,j}^2 .
 \end{equation}
@@ -1551,7 +1551,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 % -- 313 --
 
 在非凸问题中，优化轨迹的路径可以非常复杂，经过了许多不同的区域。
-包括参数空间中遥远过去的点，可能与当前点在损失函数上相隔很大的障碍，看上去不像一个有用的行为。
+包括参数空间中遥远过去的点，可能与当前点在\gls{cost_function}上相隔很大的障碍，看上去不像一个有用的行为。
 其结果是，当应用Polyak平均于非凸问题时，通常会使用指数衰减计算平均值：
 \begin{equation}
     \hat{\Vtheta}^{(t)} = \alpha \hat{\Vtheta}^{(t-1)} + (1-\alpha) \Vtheta^{(t)} .
@@ -1643,7 +1643,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 特别地，创新的模型，如\glssymbol{LSTM}，\gls{ReLU}和\gls{maxout}单元都比先前的模型（如基于\gls{sigmoid}单元的\gls{deep_network}）使用更多的线性函数。
 这些模型都具有简化优化的性质。
 如果线性变换的雅可比具有相对合理的奇异值，那么梯度能够流经很多层。
-此外，线性函数在一个方向上一致增加，所以即使模型的输出远离正确值，也可以简单清晰地计算梯度，使其输出方向朝降低损失函数的方向移动。
+此外，线性函数在一个方向上一致增加，所以即使模型的输出远离正确值，也可以简单清晰地计算梯度，使其输出方向朝降低\gls{loss_function}的方向移动。
 换言之，现代神经网络的设计方案旨在使其\emph{局部}梯度信息合理地对应着移向一个遥远的解。
 
 其他的模型设计技巧有助于使优化更简单。
@@ -1659,15 +1659,17 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 \subsection{连续方法和课程学习}
 \label{sec:continuation_methods_and_curriculum_learning}
-正如\secref{sec:poor_correspondence_between_local_and_global_structure}探讨的，许多优化挑战都来自于损失函数的全局结构，不能仅通过局部更新方向上更好的估计来解决。
-解决这个问题的主要方法是尝试初始化参数在一个区域内，该区域可以在参数空间中通过一个局部下降能发现的短路径连接到解。
+正如\secref{sec:poor_correspondence_between_local_and_global_structure}探讨的，许多优化挑战都来自于\gls{cost_function}的全局结构，不能仅通过局部更新方向上更好的估计来解决。
+解决这个问题的主要方法是尝试初始化参数到某种区域内，该区域可以通过局部下降很快连接到参数空间中的解。
+
 
 \firstgls{continuation_method}是一族通过挑选初始点使优化更容易的方法，以确保局部优化花费大部分时间在表现良好的空间。
 \gls{continuation_method}的背后想法是构造一系列具有相同参数的目标函数。
-为了最小化代价函数$J(\Vtheta)$，我们构建新的损失函数$\{J^{(0)},\dots,J^{(n)}\}$这些损失函数逐步提高难度，其中$J^{(0)}$是最容易最小化的，$J^{(n)}$是最难的，真正的损失函数促进整个过程。
+为了最小化\gls{cost_function}$J(\Vtheta)$，我们构建新的\gls{cost_function}$\{J^{(0)},\dots,J^{(n)}\}$。
+这些\gls{cost_function}逐步提高难度，其中$J^{(0)}$是最容易最小化的，$J^{(n)}$是最难的，真正的\gls{cost_function}促进整个过程。
 当我们说$J^{(i)}$比$J^{(i+1)}$更容易时，是指其在更多的$\Vtheta$空间上表现良好。
-随机初始化更有可能落入局部下降可以成功最小化损失函数的区域，因为其良好区域更大。
-这系列损失函数设计为前一个解是下一个的良好初始点。
+随机初始化更有可能落入局部下降可以成功最小化\gls{cost_function}的区域，因为其良好区域更大。
+这系列\gls{cost_function}设计为前一个解是下一个的良好初始点。
 因此，我们首先解决一个简单的问题，然后改进解以解决逐步变难的问题，直到我们求解真正问题的解。
 
 传统的\gls{continuation_method}（用于神经网络训练之前的连续方法）通常是基于平滑的目标函数。
@@ -1680,7 +1682,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 传统上，\gls{continuation_method}主要用来克服局部极小值的问题。
 具体地，它被设计来在有很多局部极小值的情况下，求解一个全局极小值。
-这些连续方法会通过``模糊''原来的损失函数来构建更容易的损失函数。
+这些连续方法会通过``模糊''原来的\gls{cost_function}来构建更容易的\gls{cost_function}。
 这些模糊操作可以是用采样来近似
 \begin{equation}
     J^{(i)}(\Vtheta) = \SetE_{\theta' \sim \mathcal{N}(\Vtheta'; \Vtheta, \sigma^{(i)2})} J(\Vtheta')
@@ -1688,11 +1690,13 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 这个方法的直觉是有些非凸函数在模糊后会近似凸的。
 在许多情况下，这种模糊保留了关于全局极小值的足够信息，我们可以通过逐步求解更少模糊的问题来求解全局极小值。
 这种方法有三种可能失败的方式。
-首先，它可能成功地定义了一连串损失函数，并从开始的一个凸函数起（逐一地）沿着函数链最佳轨迹逼近全局最小值，但可能需要非常多的逐步损失函数，整个过程的成本仍然很高。
+首先，它可能成功地定义了一连串\gls{cost_function}，并从开始的一个凸函数起（逐一地）沿着函数链最佳轨迹逼近全局最小值，但可能需要非常多的逐步\gls{cost_function}，整个过程的成本仍然很高。
 另外，即使\gls{continuation_method}可以适用，NP难的优化问题仍然是NP难的。
 其他两种\gls{continuation_method}失败的原因是不实用。
 其一，不管如何模糊，可能函数没法变成凸的，比如函数$J(\Vtheta) = -\Vtheta^\top \Vtheta$。
-其二，函数可能在模糊后是凸的，但模糊函数的最小值可能会逐步到一个局部值，而非原始损失函数的全局最小值。
+其二，函数可能在模糊后是凸的，但模糊函数的最小值可能会逐步到一个局部值，而非原始\gls{cost_function}的全局最小值。
+
+
 尽管\gls{continuation_method}最初用来解决局部最小值的问题，局部最小值已不再是神经网络优化中的主要问题了。
 幸运的是，\gls{continuation_method}仍然有所帮助。
 \gls{continuation_method}引入的简化目标函数能够消除平坦区域，减少梯度估计的方差，提高\gls{hessian}矩阵的条件数，使局部更新更容易计算，或是改进局部更新方向和朝向全局解方向之间的对应关系。
@@ -1700,7 +1704,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 \cite{Bengio+al-2009}指出被称为\firstgls{curriculum_learning}或者\firstgls{shaping}的方法可以解释为\gls{continuation_method}。
 \gls{curriculum_learning}规划学习过程的想法是，首先学习简单的概念，然后逐步学习依赖于这些简化概念的复杂概念。
 之前这一基本技巧被用来加速动物训练过程\citep{Skinner1958,Peterson2004,Krueger+Dayan-2009}和机器学习过程\citep{solomonoff1989system,Elman93,Sanger-1994}。
-\cite{Bengio+al-2009}验证这一技巧为\gls{continuation_method}，通过增加简单样本的影响（通过分配它们较大的系数到损失函数，或者更频繁地采样），先前的$J^{(i)}$会容易。
+\cite{Bengio+al-2009}验证这一技巧为\gls{continuation_method}，通过增加简单样本的影响（通过分配它们较大的系数到\gls{cost_function}，或者更频繁地采样），先前的$J^{(i)}$会容易。
 实验证明，在大规模的神经语言模型任务上使用\gls{curriculum_learning}，可以获得更好的结果。
 课程学习已经成功应用于大量的自然语言\citep{Spitkovsky-et-al-HLT2010,collobert2011natural,Mikolov-ASRU-2011,Tu+Honavar-IJCAI2011}和计算机视觉\citep{Kumar+al-2010,Lee+Grauman-CVPR2011,Supancic+Ramanan-CVPR2013}任务上。
 \gls{curriculum_learning}被证实为与人类教学方式一致\citep{Khan+Zhu+Mutlu-2011}：
