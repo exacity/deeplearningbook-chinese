@@ -37,7 +37,7 @@
 \fi
 	\caption{深度学习中难以处理的推断问题通常是由于结构化图模型中\gls{latent_variable}的相互作用。
 	<bad>这些相互作用产生于当\gls{vstructure}的子节点是可观察的时候一个\gls{latent_variable}与另一个\gls{latent_variable}或者更长的激活路径相连。
-	（左）一个隐含节点相互连接的\gls{srbm}\citep{Osindero+Hinton-2008}。由于存在大量的\gls{latent_variable}的\gls{clique}，\gls{latent_variable}的直接连接使得后验分布难以处理。
+	（左）一个\gls{hidden_unit}相互连接的\gls{srbm}\citep{Osindero+Hinton-2008}。由于存在大量的\gls{latent_variable}的\gls{clique}，\gls{latent_variable}的直接连接使得后验分布难以处理。
 	（中）一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。
 	（右）当可见变量是可以观察时这个有向模型的\gls{latent_variable}之间存在相互作用，因为每两个\gls{latent_variable}都是\gls{coparent}。
 	即使拥有上图中的某一种结构，一些概率模型依然能够获得易于处理的后验分布。
@@ -164,7 +164,7 @@
 首先，学习过程的一个基本思路就是，我们通过更新模型参数来提高整个数据集的似然，其中缺失变量的值是通过后验分布来估计的。
 这种特定的性质并不仅仅适用于\glssymbol{EM}算法。
 比如说，使用\gls{GD}来最大化似然函数的对数这种方法也利用了相同的性质。
-计算对数似然函数的梯度需要对隐含节点的后验分布来求期望。 
+计算对数似然函数的梯度需要对\gls{hidden_unit}的后验分布来求期望。 
 \glssymbol{EM}算法另一个关键的性质是当我们移动到另一个$\Vtheta$时候，我们仍然可以使用旧的$q$。
 在传统\gls{ML}中，这种特有的性质在推导M步更新时候得到了广泛的应用。
 在\gls{DL}中，大多数模型太过于复杂以致于在M步中很难得到一个最优解。
@@ -234,7 +234,7 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 % 628
 
 
-我们回过头来看\secref{sec:sparse_coding}中的\gls{sparse_coding}，\gls{sparse_coding}是一种在隐含节点上加上了鼓励稀疏的先验知识的\gls{linear_factor}。
+我们回过头来看\secref{sec:sparse_coding}中的\gls{sparse_coding}，\gls{sparse_coding}是一种在\gls{hidden_unit}上加上了鼓励稀疏的先验知识的\gls{linear_factor}。
 一个常用的选择是可分解的拉普拉斯先验，表示为
 \begin{align}
 	p(h_i) = \frac{\lambda}{2}  \exp(-\lambda \vert h_i \vert).
@@ -341,13 +341,13 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 % 631  19.4.1
 
 关于离散型\gls{latent_variable}的变分推断相对来说更为直接。
-我们定义一个分布$q$，通常$q$的每个因子都由一些离散状态的表格定义。
+我们定义一个分布$q$，通常$q$的每个因子都由一些离散状态的可查询表格定义。
 在最简单的情况中，$\Vh$是二元的并且我们做了\gls{mean_field}的假定，$q$可以根据每一个$h_i$分解。
 在这种情况下，我们可以用一个向量$\hat{\Vh}$来参数化$q$分布，$\hat{\Vh}$的每一个元素都代表一个概率，即$q(h_i = 1\mid \Vv) = \hat{h}_i$。
 % 631
 
 
-在确定了如何表示$q$以后，我们简单地优化了它的参数。
+在确定了如何表示$q$以后，我们只需要优化它的参数。
 在离散型\gls{latent_variable}模型中，这是一个标准的优化问题。
 基本上$q$的选择可以通过任何的优化算法解决，比如说\gls{GD}。
 % 631
@@ -356,7 +356,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 这个优化问题是很高效的因为它在许多学习算法的内循环中出现。
 为了追求速度，我们通常使用特殊设计的优化算法。
 这些算法通常能够在极少的循环内解决一些小而简单的问题。
-一个常见的选择是使用\gls{fixed_point_equation}，换句话说，就是关于$\hat{h}_i$解
+一个常见的选择是使用\gls{fixed_point_equation}，换句话说，就是解关于$\hat{h}_i$的方程
 \begin{align}
 	\frac{\partial}{\partial \hat{h}_i}\CalL = 0.
 \end{align}
@@ -366,21 +366,21 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 为了具体化这些描述，我们接下来会讲如何将变分推断应用到\firstgls{binary_sparse_coding}模型（这里我们所描述的模型是\citet{henniges2010binary}提出的，但是我们采用了传统且通用的\gls{mean_field}方法，而原文作者采用了一种特殊设计的算法）中。
 推导过程在数学上非常详细，为希望完全了解变分推断细节的读者所准备。
-而对于并不计划推导或者实现变分学习算法的读者来说，可以完全跳过，直接阅读下一节，这并不会导致重要概念的遗漏。
+而对于并不计划推导或者实现变分学习算法的读者来说，可以完全跳过，直接阅读下一节，这并不会导致新的高级概念的遗漏。
 那些从事过\gls{binary_sparse_coding}研究的读者可以重新看一下\secref{sec:useful_properties_of_common_functions}中的一些经常在概率模型中出现的有用的函数性质。
 我们在推导过程中随意地使用了这些性质，并没有特别强调它们。
 % 632  head
 
 
 在\gls{binary_sparse_coding}模型中，输入$\Vv\in\SetR^n$，是由模型通过添加高斯噪音到$m$个或有或无的成分。
-每一个成分可以是开或者关的通过对应的隐藏层节点$\Vh \in\{0,1\}^m$:
+每一个成分可以是开或者关的通过对应的\gls{hidden_unit}$\Vh \in\{0,1\}^m$:
 \begin{align}
 	p(h_i = 1) = \sigma(b_i),
 \end{align}
 \begin{align}
 	p(\Vv\mid\Vh) = \CalN(\Vv;\MW \Vh,{\Vbeta}^{-1}),
 \end{align}
-其中$\Vb$是一个可以学习的偏置向量，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角的精度矩阵。
+其中$\Vb$是一个可以学习的偏置的集合，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角精度矩阵。
 % 632
 
 
@@ -399,8 +399,8 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 这需要计算$p(\Vh\mid\Vv)$下的期望。
 不幸的是，$p(\Vh\mid\Vv)$是一个很复杂的分布。
-$p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
-隐含节点的后验分布对应的是完全图，所以相对于暴力算法，消元算法并不能有助于提高计算所需要的期望的效率。
+$p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构见\figref{fig:bsc}。
+\gls{hidden_unit}的后验分布对应的是完全图，所以相对于暴力算法，消元算法并不能有助于提高计算所需要的期望的效率。
 % 633 head
 
 
@@ -410,7 +410,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 \else
 	\centerline{\includegraphics{Chapter19/figures/bsc}}
 \fi
-	\caption{包含四个隐含单元的\gls{binary_sparse_coding}的图结构。（左）$p(\Vh,\Vv)$的图结构。要注意边是有向的，每两个隐含单元都是每个可见单元的\gls{coparent}。（右）$p(\Vh,\Vv)$的图结构。为了解释\gls{coparent}之间的活跃路径，后验分布所有隐含单元之间都有边。}
+	\caption{包含四个\gls{hidden_unit}的\gls{binary_sparse_coding}的图结构。（左）$p(\Vh,\Vv)$的图结构。要注意边是有向的，每两个\gls{hidden_unit}都是每个可见单元的\gls{coparent}。（右）$p(\Vh,\Vv)$的图结构。为了解释\gls{coparent}之间的活跃路径，后验分布所有\gls{hidden_unit}之间都有边。}
 	\label{fig:bsc}
 \end{figure}
 
@@ -484,7 +484,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 
 
 \gls{fixed_point_equation}的核心思想是我们寻找一个关于$\Vh$的局部最大值，满足$\nabla_{\Vh}\CalL(\Vv,\Vtheta,\hat{\Vh}) = 0$。
-我们无法同时高效的计算所有的$\hat{\Vh}$的元素。
+我们无法同时高效地计算所有的$\hat{\Vh}$的元素。
 然而，我们可以解决单个变量的问题：
 \begin{align}
 \label{eqn:1937}
@@ -493,12 +493,12 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 % 634 end  
 
 
-我们可以迭代的将这个解应用到$i = 1,\ldots,m$，然后重复这个循环直到我们满足了收敛标准。
+我们可以迭代地将这个解应用到$i = 1,\ldots,m$，然后重复这个循环直到我们满足了收敛标准。
 常见的收敛标准包含了当整个循环所改进的$\CalL$不超过预设的容忍的量时停止，或者是循环中改变的$\hat{\Vh}$不超过某个值的时候停止。
 % 635  head
 
 在很多不同的模型中，迭代的\gls{mean_field}\gls{fixed_point_equation}是一种能够提供快速变分推断的通用的算法。
-为了使他更加具体化，我们详细的讲一下如何推导出\gls{binary_sparse_coding}模型的更新过程。
+为了使它更加具体化，我们详细地讲一下如何推导出\gls{binary_sparse_coding}模型的更新过程。
 % 635
 
 
@@ -531,10 +531,10 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 % 636  head 
 
 <bad>
-在\gls{binary_sparse_coding}模型中，我们可以发现\eqnref{eqn:1944}中描述的循环网络包含了根据相邻的变化着的隐藏层结点值来反复更新当前隐藏层结点的操作。
-输入层通常给隐藏层结点发送一个固定的信息$\Vv^{\top}\beta\MW$，然而隐藏层结点不断地更新互相传送的信息。
+在\gls{binary_sparse_coding}模型中，我们可以发现\eqnref{eqn:1944}中描述的循环网络包含了根据相邻的变化着的\gls{hidden_unit}值来反复更新当前\gls{hidden_unit}的操作。
+输入层通常给\gls{hidden_unit}发送一个固定的信息$\Vv^{\top}\beta\MW$，然而\gls{hidden_unit}不断地更新互相传送的信息。
 具体的说，当$\hat{h}_i$和$\hat{h}_j$两个单元的权重向量对准时，他们会产生相互抑制。
-这也是一种形式的竞争－－－两个共同理解输入的隐层结点之间，只有一个解释的更好的才能继续保持活跃。
+这也是一种形式的竞争－－－两个共同理解输入的\gls{hidden_unit}之间，只有一个解释的更好的才能继续保持活跃。
 在\gls{binary_sparse_coding}的后验分布中，\gls{mean_field}近似为了捕获到更多的\gls{explaining_away}作用，产生了这种竞争。
 事实上，\gls{explaining_away}效应会导致一个多峰值的后验分布，所以我们如果从后验分布中采样，一些样本只有一个结点是活跃的，其它的样本在其它的结点活跃，只有很少的样本能够所有的结点都处于活跃状态。
 不幸的是，\gls{explaining_away}作用无法通过\gls{mean_field}中可分解的$q$分布来建模，因此建模时\gls{mean_field}近似只能选择一个峰值。
@@ -558,7 +558,7 @@ $p(\Vh\mid\Vv)$和$p(\Vh,\Vv)$的图结构见\figref{fig:bsc}。
 接下来我们考虑如何同时更新许多结点。
 某些\gls{graphical_models}，比如\glssymbol{DBM}，我们可以同时更新$\hat{\Vh}$中的许多元素。
 不幸的是，\gls{binary_sparse_coding}并不适用这种块更新。
-取而代之的是，我们使用一种称为是\firstgls{damping}的启发式的技巧来实现块更新。
+取而代之的是，我们使用一种称为是\firstgls{damping}的启发式技巧来实现块更新。
 在\gls{damping}方法中，对$\hat{\Vh}$中的每一个元素我们都可以解出最优值，然后对于所有的值都在这个方向上移动一小步。
 这个方法不能保证每一步都能增加$\CalL$，但是对于许多模型来说却很有效。
 关于在\gls{message_passing}算法中如何选择同步程度以及使用\gls{damping}策略可以参考\citet{koller-book2009} 。
