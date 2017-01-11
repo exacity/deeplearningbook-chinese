@@ -28,7 +28,7 @@
  - 负责人也就是对应的翻译者。
  - 我们需要有人简单地阅读，最好是刚入门或者想入门的同学。有什么翻得不明白的地方可以直接指出，不用给出意见。或者可以对语句不通顺的地方提出修改意见。每章至少3人。
  - 我们也需要有人进行中英对比，最好能排除少翻错翻的情况。最好是时间充足、能中英对应阅读、细心的同学。每章至少2人。
- - 专业人士则需要纠正译者的错误理解。大家不要谦虚，阅读过相关论文的同学可以作为专业人士。每章至少1人。
+ - 相关方向的校对者则需要纠正译者的错误理解。大家不要谦虚，阅读过相关论文的同学可以作为相关方向的人士。每章至少1人。
 
 我们会在纸质版正式出版的时候，在书中致谢，正式感谢各位作出贡献的同学！
 
@@ -37,7 +37,7 @@
  1. 点开下表中对应的章节
  2. 选取网页中的词语或语句，跳出来Annotate，点击就行了。需要注册一个帐号，注意批注得公开我们才能看到。
 
-| 章节 | 负责人 | 简单阅读 | 中英对比 | 专业人士 |
+| 章节 | 负责人 | 简单阅读 | 中英对比 | 相关方向 |
 | ------------ | ------------- | ---------- |  ------------ | --------- |
 | [第一章 前言](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | liu chang,@SiriusXDJ | @linzhp |  |
 | [第二章 线性代数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | @SiriusXDJ |  |  |
@@ -58,7 +58,7 @@
 | [第十七章 蒙特卡罗方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter17_monte_carlo_methods/) | @futianfan | |  |  |
 | [第十八章 面对配分函数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter18_confronting_the_partition_function/) | @liber145 | |  |  |
 | [第十九章 近似推断](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter19_approximate_inference/) | @futianfan | |  |  |
-| [第二十章 深度生成模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter20_deep_generative_models/) | @swordyork | |  |  |
+| [第二十章 深度生成模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter20_deep_generative_models/) | @swordyork | | @endymecy | @endymecy |
 
 
 
