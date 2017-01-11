@@ -39,10 +39,10 @@
 
 | 章节 | 负责人 | 简单阅读 | 中英对比 | 专业人士 |
 | ------------ | ------------- | ---------- |  ------------ | --------- |
-| [第一章 前言](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | liu chang | @linzhp |  |
-| [第二章 线性代数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | |  |  |
-| [第三章 概率与信息论](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/) | @KevinLee1110 | |  |  |
-| [第四章 数值计算](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter4_numerical_computation/) | @swordyork | |  |  |
+| [第一章 前言](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | liu chang,@SiriusXDJ | @linzhp |  |
+| [第二章 线性代数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | @SiriusXDJ |  |  |
+| [第三章 概率与信息论](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/) | @KevinLee1110 | @SiriusXDJ |  |  |
+| [第四章 数值计算](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter4_numerical_computation/) | @swordyork |  | @quasi-jing |  |
 | [第五章 机器学习基础](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter5_machine_learning_basics/) | @liber145 | |  |  |
 | [第六章 深度前馈网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter6_deep_feedforward_networks/) | @KevinLee1110 |  |  |  |
 | [第七章 深度学习的正则化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter7_regularization/) | @swordyork | |  |  |
