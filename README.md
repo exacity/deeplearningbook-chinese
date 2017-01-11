@@ -16,7 +16,7 @@
 面向的读者
 --------------------
 
-请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.3-alpha/dlbook_cn_v0.4-alpha.pdf)阅读。
+请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.4-alpha/dlbook_cn_v0.4-alpha.pdf)阅读。
 虽然这一版准确性有所提高，但我们仍然建议英文好的同学或研究者直接阅读[原版](http://www.deeplearningbook.org/)。
 
 
@@ -87,7 +87,7 @@ TODO
  - 由于版权问题，我们不能将图片和bib上传，请见谅。
  - Due to copyright issues, we would not upload figures and the bib file.
  - 可用于学习研究目的，不得用于任何商业行为。谢谢！
- - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.3-alpha/dlbook_cn_v0.4-alpha.pdf)文件每天更新。
+ - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.4-alpha/dlbook_cn_v0.4-alpha.pdf)文件每天更新。
  - 大家不要watch啊，邮箱可能会炸。
  - **先不要打印，这一版不值得打印，浪费钱** 打印版仅供学习参考和找茬纠错，正式出版后，希望大家多多支持纸质正版书籍。
 
