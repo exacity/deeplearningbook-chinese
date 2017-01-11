@@ -289,7 +289,11 @@
 \else
 \centerline{\includegraphics{Chapter15/figures/multi_task_input}}
 \fi
-\caption{TODO}
+\caption{\gls{multitask_learning}或者\gls{transfer_learning}的架构示例。
+输出变量$\RVy$在所有的任务上具有相同的语义；输入变量$\RVx$在每个任务（或者，比如每个用户）上具有不同的意义（甚至可能具有不同的维度），图上三个任务为$\RVx^{(1)}$，$\RVx^{(2)}$，$\RVx^{(3)}$。
+底层结构（决定了选择方向）是面向任务的，上层结构是共享的。
+底层结构学习将面向特定任务的输入转化为通用特征。
+}
 \label{fig:chap15_multi_task_input}
 \end{figure}
 
@@ -403,7 +407,7 @@
 \else
 \centerline{\includegraphics{Chapter15/figures/mixture_model_color}}
 \fi
-\caption{混合模型。具有三个混合分量的混合密度示例。混合分量的内在本质是潜在解释因素，$y$。
+\caption{混合模型。具有三个混合分量的混合密度示例。混合分量的内在本质是潜在解释因素$y$。
 因为混合分量（例如，图像数据中的自然对象类别）在统计学上是显著的，所以使用无标记的样本无监督建模$p(x)$也能显示解释因素$y$。
 }
 \label{fig:chap15_mixture_model}
@@ -464,7 +468,11 @@
 \includegraphics[width=0.45\textwidth]{Chapter15/figures/ping_pong_reconstruction}
 \end{tabular}
 \fi
-\caption{TODO}
+\caption{机器人任务上，基于\gls{mean_squared_error}训练的\gls{AE}不能重构乒乓球。
+乒乓球的存在及其所有空间坐标，是生成图像且与机器人任务相关的重要潜在因素。
+不幸的是，\gls{AE}具有有限的容量，基于\gls{mean_squared_error}的训练没能将乒乓球显著识别出来编码。
+以上图像由Chelsea Finn提供。
+}
 \label{fig:chap15_pingpong}
 \end{figure}
 
