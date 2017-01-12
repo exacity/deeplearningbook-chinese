@@ -1,14 +1,165 @@
 % !Mode:: "TeX:UTF-8"
 %TODO
-TODO
-与原书类似
-\begin{itemize}
- \item $\Sa$ 数
- \item $\Va$ 向量
- \item $\MA$ 矩阵
- \item 需要时加tensor $\boldsymbol{\mathsf{A}}$
- \item $\RSa$ 随机数
- \item $\RVa$ 随机向量
- \item 需要时加随机矩阵 $\boldsymbol{\mathrm{A}}$
- \item $\SetA$ 集合
-\end{itemize} 
+\chapter*{数学符号}
+\label{notation}
+
+\addcontentsline{toc}{chapter}{数学符号}
+
+
+本节简要介绍本书所使用的数学符号。 
+我们在\chapref{chap:linear_algebra}至\chapref{chap:numerical_computation}中描述大多数数学概念，如果你不熟悉任何相应的数学概念，可以参考对应的章节。
+
+\vspace{\notationgap}
+\begin{minipage}{\textwidth}
+\centerline{\bf 数和数组}
+\bgroup
+% The \arraystretch definition here increases the space between rows in the table,
+% so that \displaystyle math has more vertical space.
+\def\arraystretch{1.5}
+\begin{tabular}{cp{3.25in}}
+$\displaystyle a$ & 标量 (整数或实数) \\
+$\displaystyle \Va$ & 向量 \\
+$\displaystyle \MA$ & 矩阵 \\
+$\displaystyle \TSA$ & 张量 \\
+$\displaystyle \MI_n$ & $n$行$n$列的\gls{identity_matrix} \\
+    $\displaystyle \MI$ &  维度蕴含于上下文的\gls{identity_matrix} \\
+$\displaystyle \Ve^{(i)}$ & 标准基向量$[0,\dots,0,1,0,\dots,0]$，其中索引$i$处值为1 \\ 
+$\displaystyle \text{diag}(\Va)$ & 对角方阵，其中对角元素由$\Va$给定 \\
+$\displaystyle \RSa$ & 标量随机变量 \\
+$\displaystyle \RVa$ & 向量随机变量 \\
+$\displaystyle \RMA$ & 矩阵随机变量 \\
+\end{tabular}
+\egroup
+\end{minipage}
+
+\vspace{\notationgap}
+\begin{minipage}{\textwidth}
+\centerline{\bf 集合和图}
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabular}{cp{3.25in}}
+$\displaystyle \SetA$ & 集合 \\
+$\displaystyle \SetR$ & 实数集 \\
+$\displaystyle \{0, 1\}$ & 包含0和1的集合 \\
+$\displaystyle \{0, 1, \dots, n \}$ & 包含$0$和$n$之间所有整数的集合 \\
+$\displaystyle [a, b]$ & 包含$a$和$b$的实数区间 \\
+$\displaystyle (a, b]$ & 不包含$a$但包含$b$的实数区间 \\
+$\displaystyle \SetA \backslash \SetB$ & 差集，即其元素包含于$\SetA$但不包含于$\SetB$\\
+$\displaystyle \CalG$ & 图 \\
+$\displaystyle Pa_\CalG(\RSx_i)$ & 图$\CalG$中$\RSx_i$的父节点
+\end{tabular}
+\egroup
+\end{minipage}
+
+\vspace{\notationgap}
+\begin{minipage}{\textwidth}
+\centerline{\bf 索引}
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabular}{cp{3.25in}}
+$\displaystyle a_i$ & 向量$\Va$的第$i$个元素，其中索引从1开始  \\
+$\displaystyle a_{-i}$ & 除了第$i$个元素，$\Va$的所有元素 \\
+$\displaystyle A_{i,j}$ & 矩阵$\MA$的$i,j$元素 \\
+$\displaystyle \MA_{i, :}$ & 矩阵$\MA$的第$i$行 \\
+$\displaystyle \MA_{:, i}$ & 矩阵$\MA$的第$i$列 \\
+$\displaystyle \TEA_{i, j, k}$ & 3维张量$\TSA$的$(i, j, k)$元素   \\
+$\displaystyle \TSA_{:, :, i}$ & 3维张量的2维切片 \\
+$\displaystyle \RSa_i$ & 随机向量$\RVa$的第$i$个元素 \\
+\end{tabular} 
+\egroup
+\end{minipage}
+
+\vspace{\notationgap}
+\begin{minipage}{\textwidth}
+\centerline{\bf 线性代数中的操作}
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabular}{cp{3.25in}}
+$\displaystyle \MA^\top$ & 矩阵$\MA$的转置 \\
+$\displaystyle \MA^+$ & $\MA$的\gls{Moore} \\
+    $\displaystyle \MA \odot \MB $ &  $\MA$和$\MB$的逐元素乘积（\gls{hadamard_product}） \\
+$\displaystyle \mathrm{det}(\MA)$ & $\MA$的行列式 \\
+\end{tabular} 
+\egroup
+\end{minipage}
+
+\vspace{\notationgap}
+\begin{minipage}{\textwidth}
+\centerline{\bf 微积分}
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabular}{cp{3.25in}}
+$\displaystyle\frac{d y} {d x}$ &  $y$关于$x$的导数 \\
+$\displaystyle \frac{\partial y} {\partial x} $ &  $y$关于$x$的偏导 \\
+$\displaystyle \nabla_{\Vx} y $ & $y$关于$\Vx$的梯度 \\
+$\displaystyle \nabla_{\MX} y $ & $y$关于$\MX$的矩阵导数 \\
+$\displaystyle \nabla_{\TSX} y $ &  $y$关于$\TSX$求导后的张量 \\
+$\displaystyle \frac{\partial f}{\partial \Vx} $ &$f: \SetR^n \rightarrow \SetR^m$的\gls{jacobian}矩阵$\MJ \in \SetR^{m\times n}$   \\
+$\displaystyle \nabla_{\Vx}^2 f(\Vx)\text{ or }\MH( f)(\Vx)$ &  $f$在点$\Vx$处的\gls{hessian}矩阵 \\
+$\displaystyle \int f(\Vx) d\Vx $ & $\Vx$整个域上的定积分 \\
+$\displaystyle \int_\SetS f(\Vx) d\Vx$ & 集合$\SetS$上关于$\Vx$的定积分 \\
+\end{tabular}
+\egroup
+\end{minipage}
+
+\vspace{\notationgap}
+\begin{minipage}{\textwidth}
+\centerline{\bf 概率和信息论}
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabular}{cp{3.25in}}
+$\displaystyle \RSa \bot \RSb$ &  $\RSa$和$\RSb$相互独立的随机变量 \\
+$\displaystyle \RSa \bot \RSb \mid \RSc $ &  给定$\RSc$后条件独立 \\
+$\displaystyle P(\RSa)$ & 离散变量上的概率分布 \\
+$\displaystyle p(\RSa)$ & 连续变量（或变量类型未指定时）上的概率分布  \\
+$\displaystyle \RSa \sim P$ &  具有分布$P$的随机变量$\RSa$\\
+$\displaystyle  \SetE_{\RSx\sim P} [ f(x) ]\text{ or } \SetE f(x)$ & $f(x)$关于$P(\RSx)$的期望 \\
+$\displaystyle \Var(f(x)) $ &  $f(x)$在分布$P(\RSx)$下的方差 \\
+$\displaystyle \Cov(f(x),g(x)) $ &  $f(x)$和$g(x)$在分布$P(\RSx)$下的协方差 \\
+$\displaystyle H(\RSx) $ & 随机变量$\RSx$的\gls{Shannon_entropy} \\
+$\displaystyle D_{\text{KL}} ( P \Vert Q ) $ & P和Q的\gls{KL_divergence} \\
+$\displaystyle \mathcal{N} ( \Vx ; \Vmu , \VSigma)$ & 均值为$\Vmu$协方差为$\VSigma$，$\Vx$上的\gls{gaussian_distribution} \\
+\end{tabular}
+\egroup
+\end{minipage}
+
+\vspace{\notationgap}
+\begin{minipage}{\textwidth}
+\centerline{\bf 函数}
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabular}{cp{3.25in}}
+$\displaystyle f: \SetA \rightarrow \SetB$ & 定义域为$\SetA$值域为$\SetB$的函数$f$ \\
+$\displaystyle f \circ g $ &  $f$和$g$的组合 \\
+$\displaystyle f(\Vx ; \Vtheta) $ &  由$\Vtheta$参数化，关于$\Vx$的函数（有时为简化表示，我们忽略$\Vtheta$记为$f(\Vx)$ ）\\
+$\displaystyle \log x$ & $x$的自然对数 \\
+$\displaystyle \sigma(x)$ & Logistic sigmoid, $\displaystyle \frac{1} {1 + \exp(-x)}$ \\
+$\displaystyle \zeta(x)$ & Softplus, $\log(1 + \exp(x))$ \\
+$\displaystyle || \Vx ||_p $ & $\Vx$的$L^p$范数 \\
+$\displaystyle || \Vx || $ &  $\Vx$的$L^2$范数 \\
+$\displaystyle x^+$ & $x$的正数部分, 即$\max(0,x)$\\
+$\displaystyle \textbf{1}_\mathrm{condition}$ & 如果条件为真则为1，否则为0\\ 
+\end{tabular}
+\egroup
+\end{minipage}
+
+有时候我们使用函数$f$，它的参数是一个标量，但应用到一个向量、矩阵或张量： $f(\Vx)$, $f(\MX)$, or $f(\TSX)$ 。
+这表示逐元素地将$f$应用于数组。
+例如，$\TSC = \sigma(\TSX)$，则对于所有合法的$i$、$j$和$k$， $\TEC_{i,j,k} = \sigma(\TEX_{i,j,k})$。
+
+
+\vspace{\notationgap}
+\begin{minipage}{\textwidth}
+\centerline{\bf 数据集和分布}
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabular}{cp{3.25in}}
+$\displaystyle p_{\text{data}}$ & 数据生成分布 \\
+$\displaystyle \hat{p}_{\text{train}}$ & 由训练集定义的经验分布 \\
+$\displaystyle \SetX$ & 训练样本的集合 \\
+$\displaystyle \Vx^{(i)}$ & 数据集的第$i$个样本（输入）\\
+$\displaystyle y^{(i)}\text{ or }\Vy^{(i)}$ & \gls{supervised_learning}中与$\Vx^{(i)}$关联的目标 \\
+$\displaystyle \MX$ & $m \times n$ 的矩阵，其中行$\MX_{i,:}$为输入样本$\Vx^{(i)}$ \\
+\end{tabular} 
+\egroup
+\end{minipage}
