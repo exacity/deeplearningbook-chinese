@@ -1,17 +1,10 @@
 # Deep Learning 中文翻译
 
-经过3个多月，我们终于完成了翻译草稿。当然这是草稿中的草稿，我们会不断改进，就像梯度下降一样，要迭代好几轮才能找到一个不错的解。
- 
-目前的版本是直译版，尽可能地保留原书[Deep Learning](http://www.deeplearningbook.org/)中的每一个字。
-如
+公开1个多月，在众多网友的帮助下，草稿中的草稿慢慢变成了草稿。原本打算我们翻译人员先相互校对一遍再让网友校对，但由于时间不足，于是更改计划，打算一起校对。
 
-> Inventors have long dreamed of creating machines that think. This desire dates back to at least the time of ancient Greece.
-> 自古以来,创造者就梦想着创造能思考的机器。这个愿望至少可以追溯到古希腊的时期。
+[直译版](https://github.com/exacity/deeplearningbook-chinese/tree/literal)逐渐向意译版过渡，我们希望尽可能地保留原书[Deep Learning](http://www.deeplearningbook.org/)中的意思并保留原书的语句。
+然而我们水平有限，哈姆雷特成千上万，我们无法消除众多读者的方差。我们需要大家的建议和帮助，一起减小翻译的偏差。
 
-之后我们可能会翻译成
-> 远在古希腊时期,创造者就梦想着创造能思考的机器。
-
-语句流畅度的提高必然伴随精度下降（我们水平有限）。因此我们需要ensemble，需要大家的建议。
 对应的翻译者：
   - 第1、4、7、10、14、20章及第12.4、12.5节由 @swordyork 负责
   - 第2、5、8、11、15、18章由 @liber145 负责
@@ -23,33 +16,57 @@
 面向的读者
 --------------------
 
-请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.3-alpha/dlbook_cn_v0.3-alpha.pdf)阅读。
-这一版读起来肯定费劲，我们建议英文好的或者研究者直接读原版。
-这一版面向的读者是英语不好，急于想入门深度学习的同学。或者希望帮忙校对的各路大哥也可以读读，只要不嫌弃。
+请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.4-alpha/dlbook_cn_v0.4-alpha.pdf)阅读。
+虽然这一版准确性有所提高，但我们仍然建议英文好的同学或研究者直接阅读[原版](http://www.deeplearningbook.org/)。
 
 
 
-注意
------------
+校对认领
+--------------------
 
- - 各种问题或者建议可以提issue，建议使用中文。 
- - 由于版权问题，我们不能将图片和bib上传，请见谅。
- - Due to copyright issues, we would not upload figures and the bib file.
- - 可用于学习研究目的，不得用于任何商业行为。谢谢！
- - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.3-alpha/dlbook_cn_v0.3-alpha.pdf)文件每天更新。
- - 大家不要watch啊，邮箱可能会炸。
- - **先不要打印，这一版不值得打印，浪费钱，** 给我们一个月时间，我们给出我们自己满意的版本。打印版仅供学习参考和找茬纠错，正式出版后，希望大家多多支持纸质正版书籍。
+我们划分4个类别的校对人员。每个类别需要很多人。
+ - 负责人也就是对应的翻译者。
+ - 我们需要有人简单地阅读，最好是刚入门或者想入门的同学。有什么翻得不明白的地方可以直接指出，不用给出意见。或者可以对语句不通顺的地方提出修改意见。每章至少3人。
+ - 我们也需要有人进行中英对比，最好能排除少翻错翻的情况。最好是时间充足、能中英对应阅读、细心的同学。每章至少2人。
+ - 相关方向的校对者则需要纠正译者的错误理解。大家不要谦虚，阅读过相关论文的同学可以作为相关方向的人士。每章至少1人。
+
+我们会在纸质版正式出版的时候，在书中致谢，正式感谢各位作出贡献的同学！
+
+我们采用网上批注的形式（如果觉得不方便，可以在pdf中批注，然后发给我们）。Latex转成markdown后，图片和某些公式会错误，排版也会出问题。希望大家谅解。
+具体批注方式：
+ 1. 点开下表中对应的章节
+ 2. 选取网页中的词语或语句，跳出来Annotate，点击就行了。需要注册一个帐号，注意批注得公开我们才能看到。
+
+| 章节 | 负责人 | 简单阅读 | 中英对比 | 相关方向 |
+| ------------ | ------------- | ---------- |  ------------ | --------- |
+| [第一章 前言](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | liu chang,@SiriusXDJ | @linzhp |  |
+| [第二章 线性代数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | @SiriusXDJ |  |  |
+| [第三章 概率与信息论](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/) | @KevinLee1110 | @SiriusXDJ |  |  |
+| [第四章 数值计算](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter4_numerical_computation/) | @swordyork |  | @quasi-jing,@hengqujushi | @hengqujushi |
+| [第五章 机器学习基础](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter5_machine_learning_basics/) | @liber145 | |  |  |
+| [第六章 深度前馈网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter6_deep_feedforward_networks/) | @KevinLee1110 |  |  |  |
+| [第七章 深度学习的正则化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter7_regularization/) | @swordyork | |  |  |
+| [第八章 深度模型中的优化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter8_optimization_for_training_deep_models/) | @liber145 | |  |  |
+| [第九章 卷积神经网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter9_convolutional_networks/) | @KevinLee1110 | @zhaoyu611 | @zhiding |  |
+| [第十章 序列建模：循环和递归网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter10_sequence_modeling_rnn/) | @swordyork | liu chang | @zhaoyu611 |  |
+| [第十一章 实用方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter11_practical_methodology/) | @liber145 | |  |  |
+| [第十二章 应用](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork,@futianfan | |  |  |
+| [第十三章 线性因子模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | |  |  |
+| [第十四章 自动编码器](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter14_autoencoders/) | @swordyork | @zizhan | @Seaball |  |
+| [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 |  |  |  |
+| [第十六章 深度学习中的结构化概率模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter16_structured_probabilistic_modelling/) | @futianfan | |  |  |
+| [第十七章 蒙特卡罗方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter17_monte_carlo_methods/) | @futianfan | |  |  |
+| [第十八章 面对配分函数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter18_confronting_the_partition_function/) | @liber145 | |  |  |
+| [第十九章 近似推断](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter19_approximate_inference/) | @futianfan | |  |  |
+| [第二十章 深度生成模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter20_deep_generative_models/) | @swordyork | | @endymecy | @endymecy |
 
 
 
 TODO
 ---------
 
- 1. ~~翻译图片描述，表格和算法~~，12月28日完成。
- 2. ~~链接补全~~，12月14日已ok，大家可以帮忙检查文献引用是否正确，图片、章节和公式引用是否正确。
- 3. 语句通顺
- 4. ~~第20章正在校对，这章比较难估计还需2周~~，12月14日完成校对
-
+ 1. 语句通顺
+ 2. 排版，见issue [#35](https://github.com/exacity/deeplearningbook-chinese/issues/35)
 
 实在有问题，请发邮件至`echo c3dvcmQueW9ya0BnbWFpbC5jb20K | base64 -d`。
 
@@ -63,8 +80,19 @@ TODO
 @tttwwy @tankeco @fairmiracle @GageGao @huangpingchun @MaHongP @acgtyrant @yanhuibin315 @Buttonwood @titicacafz 
 @weijy026a @RuiZhang1993 @zymiboxpay @xingkongliang @oisc @tielei @yuduowu @Qingmu @HC-2016 @xiaomingabc 
 @bengordai @Bojian @JoyFYan @minoriwww @khty2000 @gump88 @zdx3578 @PassStory @imwebson @wlbksy @roachsinai @Elvinczp 
-@endymecy name:YUE-DaJiong
+@endymecy name:YUE-DaJiong @9578577 @linzhp
 
+
+注意
+-----------
+
+ - 各种问题或者建议可以提issue，建议使用中文。 
+ - 由于版权问题，我们不能将图片和bib上传，请见谅。
+ - Due to copyright issues, we would not upload figures and the bib file.
+ - 可用于学习研究目的，不得用于任何商业行为。谢谢！
+ - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.4-alpha/dlbook_cn_v0.4-alpha.pdf)文件每天更新。
+ - 大家不要watch啊，邮箱可能会炸。
+ - **先不要打印，这一版不值得打印，浪费钱** 打印版仅供学习参考和找茬纠错，正式出版后，希望大家多多支持纸质正版书籍。
 
 
 
