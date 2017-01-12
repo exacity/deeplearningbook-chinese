@@ -23,7 +23,7 @@
 
 % -- 267 --
 
-\section{学习和优化有什么不同}
+\section{学习和纯优化有什么不同}
 \label{sec:how_learning_differs_from_pure_optimization}
 用于\gls{deep_model}训练的优化算法与传统的优化算法在几个方面有所不同。
 机器学习通常是间接的。
@@ -260,7 +260,7 @@
 在使用一个非常大的训练集时，过拟合不再是问题，而欠拟合和计算效率变成了主要的顾虑。
 也可以参看\cite{bottou-bousquet-2008}中关于训练样本数目增长时，泛化误差上计算瓶颈影响的讨论。
 
-\section{神经网络的优化挑战}
+\section{神经网络优化中的挑战}
 \label{sec:challenges_in_neural_network_optimization}
 优化通常是一个极其困难的任务。
 通常，机器学习会小心设计目标函数和约束，以确保优化问题是凸的，
@@ -363,7 +363,7 @@
 在高维空间中，很难正面证明并非是局部极小值导致的问题。
 许多并非局部极小值的结构也具有很小的梯度。
 
-\subsection{高原，\glsentrytext{saddle_points}和其他平坦区域}
+\subsection{高原、\glsentrytext{saddle_points}和其他平坦区域}
 \label{sec:plateaus_saddle_points_and_other_flat_regions}
 对于很多高维非凸函数而言，局部极小值（或极大值）事实上都远少于另一类梯度为零的点：\gls{saddle_points}。
 \gls{saddle_points}附近的某些点比\gls{saddle_points}有更大的损失，而其他点则有更小的损失。
@@ -1002,7 +1002,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 这些初始化技巧有些能够得到更快的收敛率和更好的泛化误差，因为它们编码了模型初始参数分布的信息。
 其他技巧显然效果不错的原因主要在于它们设置参数为正确的数值范围，或是设置不同单元计算互相不同的函数。
 
-\section{自适应学习率的算法}
+\section{具有自适应学习率的算法}
 \label{sec:algorithms_with_adaptive_learning_rates}
 神经网络研究员早就意识到学习率肯定是难以设置的超参数之一，因为它对模型的性能有显著的影响。
 正如我们在\secref{sec:gradient_based_optimization}和\secref{sec:challenges_in_neural_network_optimization}中探讨的，损失通常高度敏感于参数空间中的某些方向，而不敏感于其他。
@@ -1395,7 +1395,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 
 % -- 308 --
 
-\section{优化技巧和元算法}
+\section{优化策略和元算法}
 \label{sec:optimization_strategies_and_meta_algorithms}
 许多优化技术并非真正的算法，而是一般化的模板，可以特定产生算法，或是并入到很多不同的算法中。
 

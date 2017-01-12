@@ -29,7 +29,7 @@
 \gls{experience}$E$，任务$T$和\gls{performance_measures}$P$的定义范围非常宽广，在本书中我们并不会去试图解释这些定义的具体意义。
 相反，我们会在接下来的章节中提供直观的解释和示例来介绍不同的任务、\gls{performance_measures}和\gls{experience}，这些将被用来构建\gls{ML}算法。
 
-\subsection{任务，$T$}
+\subsection{任务 $T$}
 \label{sec:the_task_t}
 \gls{ML}可以让我们解决一些人为设计和实现固定程序很难解决的问题。
 从科学和哲学的角度来看，\gls{ML}受到关注是因为发展我们对\gls{ML}的认识需要发展我们对智能背后原理的理解。
@@ -138,7 +138,7 @@
 当然，还有很多其他或其他类型的任务。
 这里我们列举的任务类型只是用来介绍\gls{ML}可以做哪些任务，并非严格地定义\gls{ML}任务分类。
 
-\subsection{\glsentrytext{performance_measures}，$P$}
+\subsection{\glsentrytext{performance_measures} $P$}
 \label{sec:the_performance_measure_p}
 为了评估\gls{ML}算法的能力，我们必须设计其性能的定量度量。
 通常\gls{performance_measures}$P$是特定于系统执行的任务$T$而言的。
@@ -172,7 +172,7 @@
 在许多这类模型中，计算空间中特定点的概率是不可行的。
 在这些情况下，我们必须设计一个仍然对应于设计对象的替代标准，或者设计一个理想标准的良好近似。
 
-\subsection{\glsentrytext{experience}，$E$}
+\subsection{\glsentrytext{experience} $E$}
 \label{sec:the_experience_e}
 根据学习过程中的不同\gls{experience}，\gls{ML}算法可以大致分类为\firstgls{unsupervised}和\firstgls{supervised}。
 
@@ -375,7 +375,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 \gls{linear_regression}当然是一个极其简单且有局限的学习算法，但是它提供了一个说明学习算法如何工作的例子。
 在接下来的小节中，我们将会介绍一些设计学习算法的基本原则，并说明如何使用这些原则来构建更复杂的学习算法。
 
-\section{\glsentrytext{capacity}，\glsentrytext{overfitting}和\glsentrytext{underfitting}}
+\section{\glsentrytext{capacity}、\glsentrytext{overfitting}和\glsentrytext{underfitting}}
 \label{sec:capacity_overfitting_and_underfitting}
 \gls{ML}的主要挑战是我们的算法必须能够在先前未观测的新输入上表现良好，而不只是在训练集上效果好。
 在先前未观测到的输入上表现良好的能力被称为\firstgls{generalization}。
@@ -703,7 +703,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 在第$i$次测试时，数据的第$i$个子集用于\gls{test_set}，其他的数据用于训练集。
 带来的一个问题是不存在平均误差方差的无偏估计\citep{Bengio-Grandvalet-JMLR-04}，但是我们通常会使用近似来解决。
 
-\section{估计，偏差和方差}
+\section{估计、偏差和方差}
 \label{sec:estimators_bias_and_variance}
 统计领域为我们提供了很多工具用于实现\gls{ML}目标，不仅可以解决训练集上的任务，还可以泛化。
 基本的概念，例如参数估计，偏差和方差，对于形式化刻画泛化，欠拟合和过拟合都非常有帮助。
@@ -1729,7 +1729,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 % -- 150 --
 
-\section{推动\glsentrytext{DL}的挑战}
+\section{\glsentrytext{DL}的动机与挑战}
 \label{sec:challenges_motivating_deep_learning}
 本章描述的简单\gls{ML}算法在很多不同的重要问题上都效果良好。
 但是他们不能成功解决人工智能中的核心问题，如语音识别或者对象识别。
