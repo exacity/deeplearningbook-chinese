@@ -374,7 +374,7 @@
 
 % -- 607 --
 
-这看起来似乎是一个没有道理的技巧，但可以证明最大化伪似然的估计是渐近一致的\citep{Mase1995}。
+这看起来似乎是一个没有道理的策略，但可以证明最大化伪似然的估计是渐近一致的\citep{Mase1995}。
 当然，在数据集不接近大采样极限的情况下，伪可能性可能表现出与最大似然估计不同的结果。
 
 
@@ -391,7 +391,7 @@
 基于\gls{pseudolikelihood}的方法的性能在很大程度上取决于模型是如何使用的。
 对于完全联合分布$p(\RVx)$模型的任务（例如密度估计和采样），\gls{pseudolikelihood}通常效果不好。
 对于在训练期间只需要使用条件分布的任务而言，它的效果比最大似然更好，例如填充少量的缺失值。
-如果数据具有规则结构，使得$\SetS$索引集可以被设计为表现最重要的相关性质，同时略去相关性可忽略的变量，那么广义伪似然技巧将会非常有效。
+如果数据具有规则结构，使得$\SetS$索引集可以被设计为表现最重要的相关性质，同时略去相关性可忽略的变量，那么广义伪似然策略将会非常有效。
 例如，在自然图像中，空间中相隔很远的像素也具有弱相关性，因此广义伪似然可以应用于每个$\SetS$集是小的空间定位窗口的情况。
 
 
@@ -471,7 +471,7 @@
 \right)^2.
 \end{equation}
 其中$f(\Vx, j)$返回$j$处位值取反的$\RVx$。
-\gls{ratio_matching}使用了与\gls{pseudolikelihood}估计相同的技巧来绕开\gls{partition_function}：\gls{partition_function}会在两个概率的比率中抵消掉。
+\gls{ratio_matching}使用了与\gls{pseudolikelihood}估计相同的策略来绕开\gls{partition_function}：\gls{partition_function}会在两个概率的比率中抵消掉。
 \cite{Marlin10Inductive-small}发现，
 训练模型给测试集图像\gls{denoising}时，\gls{ratio_matching}的效果要优于\glssymbol{SML}，\gls{pseudolikelihood}和\glssymbol{GSM}。
 

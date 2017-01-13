@@ -209,7 +209,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
     p(\RVx) = \prod_{i=1}^n p(\RSx_i \mid \RSx_1,\dots,\RSx_{i-1}) .
 \end{equation}
 该分解意味着我们可以将其拆分成$n$个\gls{supervised_learning}，来解决表面上的\gls{unsupervised_learning}$p(\Vx)$。
-另外，我们求解\gls{supervised_learning}问题$p(y\mid\RVx)$时，也可以使用传统的\gls{unsupervised_learning}技巧学习联合分布$p(\RVx,y)$，然后推断
+另外，我们求解\gls{supervised_learning}问题$p(y\mid\RVx)$时，也可以使用传统的\gls{unsupervised_learning}策略学习联合分布$p(\RVx,y)$，然后推断
 \begin{equation}
     p(y\mid\RVx) = \frac{p(\RVx,y)}{\sum_{y'}p(\RVx,y')}.
 \end{equation}
@@ -1115,7 +1115,7 @@ KL散度定义为
 有参\gls{mean_squared_error}估计随着$m$的增加而减少，当$m$较大时，Cram\'er-Rao下界\citep{Rao-1945,Cramer-1946}表明不存在\gls{mean_squared_error}低于\gls{MLE}的一致估计。
 
 因为这些原因（一致性和统计效率），最大似然通常是\gls{ML}中的首选估计。
-当\gls{example:chap5}数目小到会过拟合时，\gls{regularization}技巧如权重衰减可用于获得训练数据有限时方差较小的最大似然有偏版本。
+当\gls{example:chap5}数目小到会过拟合时，\gls{regularization}策略如权重衰减可用于获得训练数据有限时方差较小的最大似然有偏版本。
 
 % -- 131 --
 
@@ -1332,7 +1332,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 % -- 137 --
 
 \gls{SVM}的一个重要创新是\firstgls{kernel_trick}。
-核技巧观察到许多\gls{ML}算法都可以写成\gls{example:chap5}间\gls{dot_product}的形式。
+核策略观察到许多\gls{ML}算法都可以写成\gls{example:chap5}间\gls{dot_product}的形式。
 例如，\gls{SVM}中的线性函数可以重写为
 \begin{equation}
     \Vw^\Tsp \Vx + b = b + \sum_{i=1}^m \alpha_i \Vx^\Tsp \Vx^{(i)} ,
@@ -1352,7 +1352,7 @@ $\cdot$操作表示类似于$\phi(\Vx)^\Tsp \phi(\Vx^{(i)})$的\gls{dot_product}
 $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 核函数完全等价于用$\phi(\Vx)$预处理所有的输入，然后在新的转换空间学习线性模型。
 
-核技巧十分强大有两个原因。
+核策略十分强大有两个原因。
 首先，它使我们能够使用保证有效收敛的凸优化技术来学习作为$\Vx$的函数的非线性模型。
 这是可能的，因为我们可以认为$\phi$是固定的，仅优化$\alpha$，即优化算法可以将决策函数视为不同空间中的线性函数。
 其二，核函数$k$的实现方法通常有比直接构建$\phi(\Vx)$再算\gls{dot_product}高效很多。
@@ -1379,9 +1379,9 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 该模型进而会赋予相对应的训练\gls{label}$y$较大的权重。
 总的来说，预测将会组合很多这种通过训练样本相似性加权的训练标签。
 
-\gls{SVM}不是唯一可以使用核技巧来增强的算法。
+\gls{SVM}不是唯一可以使用核策略来增强的算法。
 许多其他的线性模型可以通过这种方式来增强。
-使用核技巧的算法类别被称为\firstgls{kernel_machines}或\firstgls{kernel_methods}\citep{Williams+Rasmussen-nips8,Scholkopf99}。    
+使用核策略的算法类别被称为\firstgls{kernel_machines}或\firstgls{kernel_methods}\citep{Williams+Rasmussen-nips8,Scholkopf99}。    
 
 核机器的一个主要缺点是计算决策函数的成本关于训练\gls{example:chap5}的数目是线性的。
 因为第$i$个\gls{example:chap5}贡献$\alpha_i k(\Vx, \Vx^{(i)})$到决策函数。
@@ -1670,7 +1670,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 继续增加$m$不会延长达到模型可能的最优测试误差的时间。
 从这点来看，我们可以认为用\glssymbol{SGD}训练模型的渐近代价是关于$m$的函数的$O(1)$级别。
 
-在\gls{DL}之前，学习非线性模型的主要方法是结合核技巧的线性模型。
+在\gls{DL}之前，学习非线性模型的主要方法是结合核策略的线性模型。
 很多核学习算法需要构建一个$m\times m$的矩阵$G_{i,j}=k(\Vx^{(i)}, \Vx^{(j)})$。
 构建这个矩阵的计算量是$O(m^2)$。
 当\gls{dataset}是几十亿个\gls{example:chap5}时，这个计算量是不能接受的。
