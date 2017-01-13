@@ -1,6 +1,6 @@
 % !Mode:: "TeX:UTF-8"
 % Translator: Shenjian Zhao
-\chapter{\glsentrytext{DL}的正则化}
+\chapter{\glsentrytext{DL}中的正则化技术}
 \label{chap:regularization_for_deep_learning}
 设计不仅在训练数据上表现好，并且能在新输入上泛化好的算法是\gls{ML}中的一个核心问题。
 在\gls{ML}中许多策略通过明确设计，以增大训练误差为代价来减少测试误差。
@@ -915,7 +915,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 有\gls{hidden_unit}的模型本质上都能变得\gls{sparse}。
 在这本书中，我们将看到各种情况下使用\gls{sparse}\gls{regularization}的例子。
 
-\section{\glsentrytext{bagging}和其他\glsentrytext{ensemble}的方法}
+\section{\glsentrytext{bagging}和其它\glsentrytext{ensemble}方法}
 \label{sec:bagging_and_other_ensemble_methods}
 \firstgls{bagging}是通过结合几个模型降低泛化误差的技术\citep{ML:Breiman:bagging}。
 主要想法是分别训练几个不同的模型，然后让所有模型表决测试样例的输出。

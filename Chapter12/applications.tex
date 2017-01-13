@@ -51,7 +51,7 @@
 它为视频游戏所设计的特性也可以使\gls{NN}的计算受益。
 % 432  
 
-视频游戏要求许多操作能够快速并行的实现。
+视频游戏要求许多操作能够快速并行地实现。
 环境和角色模型通过一系列顶点的3D坐标确定。
 为了将大量的3D坐标转化为2D显示器上的坐标，显卡必须快速实现矩阵乘法或者除法。
 之后，显卡必须并行地实现每个像素上的计算来确定每个像素点的颜色。
@@ -286,18 +286,20 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 \section{\glsentrytext{CV}}
 \label{sec:computer_vision}
 
-一直以来\gls{CV}就是\gls{DL}应用的几个最活跃的研究方向。
+一直以来\gls{CV}就是\gls{DL}应用中几个最活跃的研究方向之一。
 因为视觉是一个对人类以及许多动物毫不费力，但对计算机却充满挑战的任务\citep{ballard1983parallel}。
-\gls{DL}中许多流行的基准任务包含了物体识别以及光学字符识别。
+\gls{DL}中许多流行的标准基准任务包含了\gls{object_recognition}以及光学字符识别。
 % 440  
 
 
 \gls{CV}是一个广阔的发展领域，其中包含了多种多样的处理图片的方式以及应用方向。
-\gls{CV}的应用既包含复现人类视觉能力，比如识别人脸，也囊括了可视化一个新类别的物体这样的任务。
-举个例子，近期一个新的\gls{CV}应用是从视频中可视物体振动中识别相应的声波\citep{Davis2014VisualMic}。
+\gls{CV}的应用既包含复现人类视觉能力，比如识别人脸，也囊括了可视化一个新类别物体这样的任务。
+举个后者的例子，近期一个新的\gls{CV}应用是从视频中可视物体振动中识别相应的声波\citep{Davis2014VisualMic}。
 大多数\gls{CV}领域的\gls{DL}研究未曾关注过这样一个奇异的应用，它扩展了图像的范围，而不是仅仅关注于\gls{AI}中较小的核心目标，即复制人类的能力。
-无论是报告图像中存在哪个物体，还是给图像中每个对象的添加注释性的边框，从图像中转录符号序列，或给图像中的每个像素标记它所属对象的标识，\gls{CV}中的\gls{DL}往往用于某种形式的对象识别或检测。
-因为\gls{generative_model}已经是\gls{DL}研究的指导原则，还有大量的使用深度模型的图像合成工作。
+无论是报告图像中存在哪个物体，还是给图像中每个对象周围添加注释性的边框，
+从图像中转录符号序列，或给图像中的每个像素标记它所属对象的标识，
+大多数\gls{CV}中的\gls{DL}往往用于\gls{object_recognition}或者某种形式的检测。
+因为\gls{generative_model}已经是\gls{DL}研究的指导原则，还有大量使用深度模型的图像合成工作。
 尽管图像合成通常不包括在\gls{CV}内，但是能够进行图像合成的模型通常用于图像恢复，修复图像中的缺陷或从图像中移除对象这样的\gls{CV}任务。
 % 441 
 
@@ -305,13 +307,13 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 \label{sec:preprocessing}
 % 441 
 
-许多应用领域需要复杂的预处理，因为原始输入以许多\gls{DL}架构难以表示的形式出现。
+许多应用领域需要复杂精细的预处理，因为原始输入以许多\gls{DL}架构难以表示的形式出现。
 \gls{CV}通常只需要相对少的这种预处理。
 图像应该被标准化，从而使得它们的像素都在相同并且合理的范围内，比如$[0,1]$或者$[-1,1]$。
 将$[0,1]$中的图像与$[0,255]$中的图像混合通常会导致失败。
 将图像格式化为具有相同的比例严格上说是唯一一种必要的预处理。
 许多\gls{CV}架构需要标准尺寸的图像，因此必须裁剪或缩放图像以适应该尺寸。
-然而，即使是这种重新调整并不总是必要的。
+然而，严格地说即使是这种重新调整比例的操作并不总是必要的。
 一些卷积模型接受可变大小的输入并动态地调整它们的池区域大小以保持输出大小恒定\citep{Waibel89b}。
 其他卷积模型具有可变大小的输出，其尺寸随输入自动缩放，例如对图像中的每个像素进行\gls{denoise}或标注的模型\citep{Hadsell-RSS-07}。
 % 441 
@@ -334,11 +336,11 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 \label{sec:contrast_normalization}
 % 442 
 
-可以为许多任务安全地移除的最明显的变化源之一是图像中的对比度量。
-对比度仅指图像中亮像素和暗像素之间的差异的大小。
+可以为许多任务安全移除的最明显的变化源之一是图像中的对比度量。
+对比度仅指图像中亮像素和暗像素之间差异的大小。
 量化图像对比度有许多方式。
 在\gls{DL}中，对比度通常指的是图像或图像区域中像素的\gls{standard_deviation}。
-假设我们有一个张量表示的图像$\TSX \in\SetR^{r\times c\times 3}$，其中$\TEX_{i,j,1}$表示第$i$行第$j$列红色的强度，$\TEX_{i,j,2}$对应的是绿色，$\TEX_{i,j,3}$对应的是蓝色。
+假设我们有一个张量表示的图像$\TSX \in\SetR^{r\times c\times 3}$，其中$\TEX_{i,j,1}$表示第$i$行第$j$列红色的强度，$\TEX_{i,j,2}$对应的是绿色的强度，$\TEX_{i,j,3}$对应的是蓝色的强度。
 然后整个图像的对比度可以表示如下：
 \begin{align}
 \label{eqn:121}
@@ -349,36 +351,40 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 \label{eqn:122}
  \bar{\TSX} =  \frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3}\TEX_{i,j,k}.
 \end{align}
-\firstall{GCN}旨在通过从每个图像中减去平均值，然后重新缩放其使得其像素上的\gls{standard_deviation}等于某个常数s来防止图像具有变化的对比度。
+
+
+\firstall{GCN}旨在通过从每个图像中减去其平均值，然后重新缩放其使得其像素上的\gls{standard_deviation}等于某个常数$s$来防止图像具有变化的对比度。
 这种方法非常复杂，没有缩放因子可以改变零对比度图像（所有像素都具有相等强度的图像）的对比度。
 具有非常低但非零对比度的图像通常几乎没有信息内容。
 在这种情况下除以真实\gls{standard_deviation}通常仅能放大传感器噪声或压缩伪像。
 这种现象启发我们引入小的正的\gls{regularization}参数$\lambda$来平衡估计的\gls{standard_deviation}。
-或者，我们至少可以约束分母。
-给定输入图像$\TSX$，\gls{GCN}产生输出图像$\TSX'$，定义为
+或者，我们至少可以约束分母使其大于等于$\epsilon$。
+给定一个输入图像$\TSX$，\gls{GCN}产生输出图像$\TSX'$，定义为
 \begin{align}
 \label{eqn:123}
 \TEX'_{i,j,k} = s\frac{\TEX_{i,j,k} - \bar{\TEX}}{\max\{ \epsilon, \sqrt{ \lambda + {\frac{1}{3rc}\sum_{i=1}^{r}\sum_{j=1}^{c}\sum_{k=1}^{3}} (\TEX_{i,j,k} - \bar{\TEX} )^2} \}}.
 \end{align}
 
 
-从大图像中剪切有趣对象所组成的数据集不可能包含具有几乎恒定强度的任何图像。
-在这些情况下，通过设置$\lambda = 0$来忽略小分母问题是安全的，并且在极少的情况下为了避免除以$0$，通过将极小值设置为$10^{-8}$。
+从大图像中剪切有趣对象所组成的数据集不可能包含任何具有几乎恒定强度的图像。
+在这些情况下，通过设置$\lambda = 0$来忽略小分母问题是安全的，并且在非常罕见的情况下为了避免除以$0$，通过将$\epsilon$设置为一个非常小的值比如说$10^{-8}$。
 这也是\citet{Goodfellow+al-arxiv-2013}在CIFAR-10数据集上所使用的方法。
-随机剪裁的小图像更可能具有几乎恒定的强度，使得\gls{regularization}更有用。
+随机剪裁的小图像更可能具有几乎恒定的强度，使得激进的\gls{regularization}更有用。
 在处理从CIFAR-10数据中随机选择的补丁时，\citet{Coates2011}使用$\epsilon = 0, \lambda = 10$。
 % 443
 
 尺度参数$s$通常可以设置为$1$，如\citet{Coates2011}，或选择使所有样本上每个像素的\gls{standard_deviation}接近$1$，如\citet{Goodfellow+al-arxiv-2013}。
+% 443 mid
 
-公式~\eqref{eqn:123}中的\gls{standard_deviation}仅仅是对$L^2$范数的重新缩放（假设图像的平均值已经被移除）。
-我们更偏向于根据\gls{standard_deviation}而不是$L^2$范数来定义\gls{GCN}，因为\gls{standard_deviation}包括除以像素数量，因此基于\gls{standard_deviation}的\gls{GCN}允许使用与图像大小无关的相同的$s$。
+
+公式~\eqref{eqn:123}中的\gls{standard_deviation}仅仅是对图片$L^2$范数的重新缩放（假设图像的平均值已经被移除）。
+我们更偏向于根据\gls{standard_deviation}而不是$L^2$范数来定义\gls{GCN}，因为\gls{standard_deviation}包括除以像素数量，因此基于\gls{standard_deviation}的\gls{GCN}允许使用与图像大小无关的固定的$s$。
 然而，观察到$L^2$范数与\gls{standard_deviation}成比例，这符合我们的直觉。
 我们可以把\gls{GCN}理解成到球壳的一种映射。
 \figref{fig:gcn_sphere_color}给了一个说明。
 这可能是一个有用的属性，因为\gls{NN}往往更好地响应空间方向，而不是精确的位置。
-响应相同方向上的多个距离需要具有共线的权重向量但具有不同偏置的隐藏单元。
-这对于学习算法来说可能是困难的。
+响应相同方向上的多个距离需要具有共线权重向量但具有不同偏置的隐藏单元。
+这样的情况对于学习算法来说可能是困难的。
 <bad>此外，许多浅层的图模型往往会把多个分离的峰值表示在一条线上。
 \gls{GCN}采用一个样本一个方向\footnote{译者：所有样本相似的距离}而不是不同的方向和距离来避免这些问题。
 % 444 head
@@ -389,11 +395,19 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 \else
 	\centerline{\includegraphics{Chapter12/figures/gcn_sphere_color}}
 \fi
-	\caption{\glssymbol{GCN}将样本投影到一个球上。（左）原始的输入数据可能拥有任意的范数。（中）$\lambda=0$时候的\glssymbol{GCN}可以完美地将所有的非零样本投影到球上。这里我们令$s=1$，$\epsilon = 10^{-8}$。由于我们使用的\glssymbol{GCN}是基于归一化\gls{standard_deviation}而不是$L^2$范数，所得到的球并不是单位球。（右）$\lambda>0$的\gls{regularization}\glssymbol{GCN}将样本投影到球上，但是并没有完全地丢弃其范数中变化。$s$和$\epsilon$的取值和之间一样。}
-	\label{fig:gcn_sphere_color}
+	\caption{\glssymbol{GCN}将样本投影到一个球上。
+（左）原始的输入数据可能拥有任意的范数。
+（中）$\lambda=0$时候的\glssymbol{GCN}可以完美地将所有的非零样本投影到球上。
+这里我们令$s=1$，$\epsilon = 10^{-8}$。
+由于我们使用的\glssymbol{GCN}是基于归一化\gls{standard_deviation}而不是$L^2$范数，所得到的球并不是单位球。
+（右）$\lambda>0$的\gls{regularization}\glssymbol{GCN}将样本投影到球上，但是并没有完全地丢弃其范数中变化。
+$s$和$\epsilon$的取值和之前一样。}
+\label{fig:gcn_sphere_color}
 \end{figure}
+% 443 tail
 
 
+% 444 head
 与直觉相反的是，存在被称为\firstgls{sphering}的预处理操作，并且它不同与\gls{GCN}。
 \gls{sphering}并不会使数据位于球形壳上，而是将主要分量重新缩放以具有相等方差，使得\gls{PCA}使用的多变量正态分布具有球形等高线。 
 \gls{sphering}通常被称为\firstgls{whitening}。

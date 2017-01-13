@@ -1,5 +1,5 @@
 % !Mode:: "TeX:UTF-8"
-\documentclass[twoside,nofonts,fancyhdr,openany,10.5pt,UTF8]{ctexbook}
+\documentclass[twoside,nofonts,fancyhdr,openany,UTF8]{ctexbook}
 \usepackage{natbib}
 
 % CJK related
@@ -36,7 +36,6 @@
 % Make bibliography and index appear in table of contents
 \usepackage[nottoc]{tocbibind}
 \usepackage[font=small]{caption}
-\normalspacedchars{-}
 
 \usepackage[section]{placeins}
 \usepackage[chapter]{algorithm}
@@ -118,6 +117,7 @@ plainpages=true]{hyperref}
 
 
 \begin{document}
+\frontmatter
 
 \maketitle
 \cleardoublepage
@@ -144,6 +144,9 @@ plainpages=true]{hyperref}
 \input{applied_math_and_machine_learning_basics.tex}
 \input{deep_networks_modern_practices.tex}
 \input{deep_learning_research.tex}
+
+
+\backmatter
 \appendix
 
 \small{

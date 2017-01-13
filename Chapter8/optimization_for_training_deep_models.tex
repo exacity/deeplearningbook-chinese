@@ -23,7 +23,7 @@
 
 % -- 267 --
 
-\section{学习和优化有什么不同}
+\section{学习和纯优化有什么不同}
 \label{sec:how_learning_differs_from_pure_optimization}
 用于\gls{deep_model}训练的优化算法与传统的优化算法在几个方面有所不同。
 机器学习通常是间接的。
@@ -260,7 +260,7 @@
 在使用一个非常大的训练集时，过拟合不再是问题，而欠拟合和计算效率变成了主要的顾虑。
 也可以参看\cite{bottou-bousquet-2008}中关于训练样本数目增长时，泛化误差上计算瓶颈影响的讨论。
 
-\section{神经网络的优化挑战}
+\section{神经网络优化中的挑战}
 \label{sec:challenges_in_neural_network_optimization}
 优化通常是一个极其困难的任务。
 通常，机器学习会小心设计目标函数和约束，以确保优化问题是凸的，
@@ -363,7 +363,7 @@
 在高维空间中，很难正面证明并非是局部极小值导致的问题。
 许多并非局部极小值的结构也具有很小的梯度。
 
-\subsection{高原，\glsentrytext{saddle_points}和其他平坦区域}
+\subsection{高原、\glsentrytext{saddle_points}和其他平坦区域}
 \label{sec:plateaus_saddle_points_and_other_flat_regions}
 对于很多高维非凸函数而言，局部极小值（或极大值）事实上都远少于另一类梯度为零的点：\gls{saddle_points}。
 \gls{saddle_points}附近的某些点比\gls{saddle_points}有更大的损失，而其他点则有更小的损失。
