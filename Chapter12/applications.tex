@@ -351,36 +351,40 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 \label{eqn:122}
  \bar{\TSX} =  \frac{1}{3rc}\sum_{i=1}^{r} \sum_{j=1}^{c}\sum_{k=1}^{3}\TEX_{i,j,k}.
 \end{align}
-\firstall{GCN}旨在通过从每个图像中减去平均值，然后重新缩放其使得其像素上的\gls{standard_deviation}等于某个常数s来防止图像具有变化的对比度。
+
+
+\firstall{GCN}旨在通过从每个图像中减去其平均值，然后重新缩放其使得其像素上的\gls{standard_deviation}等于某个常数$s$来防止图像具有变化的对比度。
 这种方法非常复杂，没有缩放因子可以改变零对比度图像（所有像素都具有相等强度的图像）的对比度。
 具有非常低但非零对比度的图像通常几乎没有信息内容。
 在这种情况下除以真实\gls{standard_deviation}通常仅能放大传感器噪声或压缩伪像。
 这种现象启发我们引入小的正的\gls{regularization}参数$\lambda$来平衡估计的\gls{standard_deviation}。
-或者，我们至少可以约束分母。
-给定输入图像$\TSX$，\gls{GCN}产生输出图像$\TSX'$，定义为
+或者，我们至少可以约束分母使其大于等于$\epsilon$。
+给定一个输入图像$\TSX$，\gls{GCN}产生输出图像$\TSX'$，定义为
 \begin{align}
 \label{eqn:123}
 \TEX'_{i,j,k} = s\frac{\TEX_{i,j,k} - \bar{\TEX}}{\max\{ \epsilon, \sqrt{ \lambda + {\frac{1}{3rc}\sum_{i=1}^{r}\sum_{j=1}^{c}\sum_{k=1}^{3}} (\TEX_{i,j,k} - \bar{\TEX} )^2} \}}.
 \end{align}
 
 
-从大图像中剪切有趣对象所组成的数据集不可能包含具有几乎恒定强度的任何图像。
-在这些情况下，通过设置$\lambda = 0$来忽略小分母问题是安全的，并且在极少的情况下为了避免除以$0$，通过将极小值设置为$10^{-8}$。
+从大图像中剪切有趣对象所组成的数据集不可能包含任何具有几乎恒定强度的图像。
+在这些情况下，通过设置$\lambda = 0$来忽略小分母问题是安全的，并且在非常罕见的情况下为了避免除以$0$，通过将$\epsilon$设置为一个非常小的值比如说$10^{-8}$。
 这也是\citet{Goodfellow+al-arxiv-2013}在CIFAR-10数据集上所使用的方法。
-随机剪裁的小图像更可能具有几乎恒定的强度，使得\gls{regularization}更有用。
+随机剪裁的小图像更可能具有几乎恒定的强度，使得激进的\gls{regularization}更有用。
 在处理从CIFAR-10数据中随机选择的补丁时，\citet{Coates2011}使用$\epsilon = 0, \lambda = 10$。
 % 443
 
 尺度参数$s$通常可以设置为$1$，如\citet{Coates2011}，或选择使所有样本上每个像素的\gls{standard_deviation}接近$1$，如\citet{Goodfellow+al-arxiv-2013}。
+% 443 mid
 
-公式~\eqref{eqn:123}中的\gls{standard_deviation}仅仅是对$L^2$范数的重新缩放（假设图像的平均值已经被移除）。
-我们更偏向于根据\gls{standard_deviation}而不是$L^2$范数来定义\gls{GCN}，因为\gls{standard_deviation}包括除以像素数量，因此基于\gls{standard_deviation}的\gls{GCN}允许使用与图像大小无关的相同的$s$。
+
+公式~\eqref{eqn:123}中的\gls{standard_deviation}仅仅是对图片$L^2$范数的重新缩放（假设图像的平均值已经被移除）。
+我们更偏向于根据\gls{standard_deviation}而不是$L^2$范数来定义\gls{GCN}，因为\gls{standard_deviation}包括除以像素数量，因此基于\gls{standard_deviation}的\gls{GCN}允许使用与图像大小无关的固定的$s$。
 然而，观察到$L^2$范数与\gls{standard_deviation}成比例，这符合我们的直觉。
 我们可以把\gls{GCN}理解成到球壳的一种映射。
 \figref{fig:gcn_sphere_color}给了一个说明。
 这可能是一个有用的属性，因为\gls{NN}往往更好地响应空间方向，而不是精确的位置。
-响应相同方向上的多个距离需要具有共线的权重向量但具有不同偏置的隐藏单元。
-这对于学习算法来说可能是困难的。
+响应相同方向上的多个距离需要具有共线权重向量但具有不同偏置的隐藏单元。
+这样的情况对于学习算法来说可能是困难的。
 <bad>此外，许多浅层的图模型往往会把多个分离的峰值表示在一条线上。
 \gls{GCN}采用一个样本一个方向\footnote{译者：所有样本相似的距离}而不是不同的方向和距离来避免这些问题。
 % 444 head
@@ -391,11 +395,19 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 \else
 	\centerline{\includegraphics{Chapter12/figures/gcn_sphere_color}}
 \fi
-	\caption{\glssymbol{GCN}将样本投影到一个球上。（左）原始的输入数据可能拥有任意的范数。（中）$\lambda=0$时候的\glssymbol{GCN}可以完美地将所有的非零样本投影到球上。这里我们令$s=1$，$\epsilon = 10^{-8}$。由于我们使用的\glssymbol{GCN}是基于归一化\gls{standard_deviation}而不是$L^2$范数，所得到的球并不是单位球。（右）$\lambda>0$的\gls{regularization}\glssymbol{GCN}将样本投影到球上，但是并没有完全地丢弃其范数中变化。$s$和$\epsilon$的取值和之间一样。}
-	\label{fig:gcn_sphere_color}
+	\caption{\glssymbol{GCN}将样本投影到一个球上。
+（左）原始的输入数据可能拥有任意的范数。
+（中）$\lambda=0$时候的\glssymbol{GCN}可以完美地将所有的非零样本投影到球上。
+这里我们令$s=1$，$\epsilon = 10^{-8}$。
+由于我们使用的\glssymbol{GCN}是基于归一化\gls{standard_deviation}而不是$L^2$范数，所得到的球并不是单位球。
+（右）$\lambda>0$的\gls{regularization}\glssymbol{GCN}将样本投影到球上，但是并没有完全地丢弃其范数中变化。
+$s$和$\epsilon$的取值和之前一样。}
+\label{fig:gcn_sphere_color}
 \end{figure}
+% 443 tail
 
 
+% 444 head
 与直觉相反的是，存在被称为\firstgls{sphering}的预处理操作，并且它不同与\gls{GCN}。
 \gls{sphering}并不会使数据位于球形壳上，而是将主要分量重新缩放以具有相等方差，使得\gls{PCA}使用的多变量正态分布具有球形等高线。 
 \gls{sphering}通常被称为\firstgls{whitening}。
