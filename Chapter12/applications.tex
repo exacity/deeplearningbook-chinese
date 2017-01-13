@@ -378,15 +378,15 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 
 
 公式~\eqref{eqn:123}中的\gls{standard_deviation}仅仅是对图片$L^2$范数的重新缩放（假设图像的平均值已经被移除）。
-我们更偏向于根据\gls{standard_deviation}而不是$L^2$范数来定义\gls{GCN}，因为\gls{standard_deviation}包括除以像素数量，因此基于\gls{standard_deviation}的\gls{GCN}允许使用与图像大小无关的固定的$s$。
+我们更偏向于根据\gls{standard_deviation}而不是$L^2$范数来定义\glssymbol{GCN}，因为\gls{standard_deviation}包括除以像素数量，因此基于\gls{standard_deviation}的\glssymbol{GCN}允许使用与图像大小无关的固定的$s$。
 然而，观察到$L^2$范数与\gls{standard_deviation}成比例，这符合我们的直觉。
-我们可以把\gls{GCN}理解成到球壳的一种映射。
+我们可以把\glssymbol{GCN}理解成到球壳的一种映射。
 \figref{fig:gcn_sphere_color}给了一个说明。
 这可能是一个有用的属性，因为\gls{NN}往往更好地响应空间方向，而不是精确的位置。
 响应相同方向上的多个距离需要具有共线权重向量但具有不同偏置的隐藏单元。
 这样的情况对于学习算法来说可能是困难的。
 <bad>此外，许多浅层的图模型往往会把多个分离的峰值表示在一条线上。
-\gls{GCN}采用一个样本一个方向\footnote{译者：所有样本相似的距离}而不是不同的方向和距离来避免这些问题。
+\glssymbol{GCN}采用一个样本一个方向\footnote{译者：所有样本相似的距离}而不是不同的方向和距离来避免这些问题。
 % 444 head
 
 \begin{figure}[!htb]
@@ -408,14 +408,14 @@ $s$和$\epsilon$的取值和之前一样。}
 
 
 % 444 head
-与直觉相反的是，存在被称为\firstgls{sphering}的预处理操作，并且它不同与\gls{GCN}。
-\gls{sphering}并不会使数据位于球形壳上，而是将主要分量重新缩放以具有相等方差，使得\gls{PCA}使用的多变量正态分布具有球形等高线。 
+与直觉相反的是，存在被称为\firstgls{sphering}的预处理操作，并且它不同于\glssymbol{GCN}。
+\gls{sphering}并不会使数据位于球形壳上，而是将主要分量重新缩放以具有相等方差，使得\glssymbol{PCA}使用的多变量正态分布具有球形等高线。 
 \gls{sphering}通常被称为\firstgls{whitening}。
 % 444 head
 
 
 \gls{GCN}常常不能突出我们想要突出的图像特征，例如边缘和角。
-如果我们有一个场景，有一个大的黑暗区域和一个大的明亮的区域（例如一个城市广场有一半的区域处于建筑物的阴影），
+如果我们有一个场景，包含了一个大的黑暗区域和一个大的明亮的区域（例如一个城市广场有一半的区域处于建筑物的阴影之中），
 则\gls{GCN}将确保暗区域的亮度与亮区域的亮度之间存在大的差异。
 然而，它不能确保暗区内的边缘突出。
 % 444
@@ -447,9 +447,9 @@ $s$和$\epsilon$的取值和之前一样。}
 
 \gls{LCN}的各种定义都是可行的。
  在所有情况下，我们可以通过减去邻近像素的平均值并除以邻近像素的\gls{standard_deviation}来修改每个像素。
-在一些情况下，要计算修改像素为中心的矩形窗口中的所有像素的平均值和\gls{standard_deviation}\citep{Pinto08}。
+在一些情况下，要计算以当前要修改的像素为中心的矩形窗口中所有像素的平均值和\gls{standard_deviation}~\citep{Pinto08}。
 在其他情况下，这是使用以要修改的像素为中心的高斯权重的加权平均和加权\gls{standard_deviation}。
-在彩色图像的情况下，一些策略分别处理不同的颜色通道，而其他策略组合来自不同通道的信息以使每个像素标准化\citep{sermanet-icpr-12}。
+在彩色图像的情况下，一些策略单独处理不同的颜色通道，而其他策略组合来自不同通道的信息以使每个像素标准化\citep{sermanet-icpr-12}。
 % 444
 
 \gls{LCN}通常可以通过使用可分离卷积（参见\secref{sec:efficient_convolution_algorithms}）来计算\gls{feature_map}所需要的局部平均值和局部\gls{standard_deviation}，然后使用元素层面的减法和元素层面的除法实现不同的\gls{feature_map}。
@@ -458,7 +458,7 @@ $s$和$\epsilon$的取值和之前一样。}
 \gls{LCN}是可微分的操作，并且还可以应用于网络隐藏层的非线性作用，以及应用于输入的预处理操作。
 % 444
 
-与\gls{GCN}一样，我们通常需要\gls{regularization}\gls{LCN}来避免除以零。
+与\gls{GCN}一样，我们通常需要\gls{regularization}\gls{LCN}来避免出现除以零的情况。
 事实上，因为\gls{LCN}通常作用于较小的窗口，所以\gls{regularization}更加重要。
 较小的窗口更可能包含彼此几乎相同的值，因此更可能具有零\gls{standard_deviation}。
 % 445
@@ -466,11 +466,11 @@ $s$和$\epsilon$的取值和之前一样。}
 
 \subsection{\glsentrytext{dataset_augmentation}}
 \label{sec:dataset_augmentation_chap12}
-如\secref{sec:dataset_augmentation_chap7}中所讲到的，通过增加训练集的额外副本来增加训练集的大小，从而改进分类器的\gls{generalization}能力。
-其中训练集的额外副本并不改变其标签。
-对象识别是特别适合于这种形式的\gls{dataset_augmentation}的分类任务，因为标签对于许多变换是不变的，可以对输入使用许多几何变换。
+如\secref{sec:dataset_augmentation_chap7}中讲到的一样，很容易通过增加训练集的额外副本来增加训练集的大小来改进分类器的\gls{generalization}能力，
+其中通过一些变化来修改从而生成训练集的额外副本，但是并不改变其类别。
+\gls{object_recognition}是特别适合于这种形式的\gls{dataset_augmentation}的分类任务，因为对于许多变换类别信息是不变的，可以简单地对输入使用许多几何变换。
 如前所述，分类器可以受益于随机转换或者旋转，某些情况下输入的翻转可以增强数据集。
-在专门的\gls{CV}应用中，更高级的变换通常用于\gls{dataset_augmentation}。
+在专门的\gls{CV}应用中，更高级的用以\gls{dataset_augmentation}的变换也是常见的。
 这些方案包括图像中颜色的随机扰动~\citep{Krizhevsky-2012}，以及对输入的非线性几何变形~\citep{chapter-gradient-document-2001}。
 % 445
 
@@ -481,52 +481,53 @@ $s$和$\epsilon$的取值和之前一样。}
 \label{sec:speech_recognition}
 % 446
 
-\gls{SR}任务将一段包括了自然语言发音的声音信号投影到对应说话人的词序列上。
+\gls{SR}任务在于将一段包括了自然语言发音的声学信号投影到对应说话人的词序列上。
 令$\MX=(\Vx^{(1)},\Vx^{(2)},\ldots,\Vx^{(T)})$表示语音的输入向量（传统做法以$20$ms为一帧分割信号）。
 许多\gls{SR}的系统通过特殊的手工设计方法预处理输入信号，从而提取特征，但是某些\gls{DL}系统\citep{jaitly2011learning}直接从原始输入中学习特征。
 令$\Vy=(y_{1},y_{2},\ldots,y_{N})$表示目标的输出序列（通常是一个词或者字符的序列）。
-\firstall{ASR}任务指的是构造一个函数$f^*_{\text{ASR}}$，使得它能够在给定语音序列$\MX$的情况下计算最有可能的$\Vy$序列：
+\firstall{ASR}任务指的是构造一个函数$f^*_{\text{ASR}}$，使得它能够在给定声学序列$\MX$的情况下计算最有可能的语言序列$\Vy$：
 \begin{align}
 \label{eqn:124}
 f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
 \end{align}
-其中$P^*$是给定输入值$\MX$时对应目标$\Vy$的条件分布。
+其中$P^*$是给定输入值$\MX$时对应目标$\Vy$的真实条件分布。
 % 446
 
 从20世纪80年代直到2009-2012年，最先进的\gls{SR}系统是\firstall{HMM}和\firstall{GMM}的结合。
-\glssymbol{GMM}对语音特征和\firstgls{phoneme}之间的关系建模\citep{Bahl87}，\glssymbol{HMM}对\gls{phoneme}序列建模。
+\glssymbol{GMM}对声学特征和\firstgls{phoneme}之间的关系建模\citep{Bahl87}，\glssymbol{HMM}对\gls{phoneme}序列建模。
 \glssymbol{GMM}-\glssymbol{HMM}模型将语音信号视作由如下过程生成：首先，一个\glssymbol{HMM}生成了一个\gls{phoneme}的序列以及离散的\gls{phoneme}子状态（比如每一个\gls{phoneme}的开始，中间，结尾），然后\glssymbol{GMM}把每一个离散的状态转化为一个简短的声音信号。
-尽管直到最近\glssymbol{GMM}-\glssymbol{HMM}一直在\gls{ASR}中占据主导地位，\gls{SR}仍然是\gls{NN}所成功应用的第一个领域。
-从20世纪80年代末期到90年代初期，许多的\gls{SR}系统使用了\gls{NN}\citep{Bourlard-cspla89,Waibel89b,Robinson+Fallside91,Bengio91z,Bengio92c,Konig96}。
-在那段时间，基于\gls{NN}的\gls{ASR}的表现和\glssymbol{GMM}-\glssymbol{HMM}系统的表现差不多。
+尽管直到最近\glssymbol{GMM}-\glssymbol{HMM}一直在\glssymbol{ASR}中占据主导地位，\gls{SR}仍然是\gls{NN}所成功应用的第一个领域。
+从20世纪80年代末期到90年代初期，大量\gls{SR}系统使用了\gls{NN}\citep{Bourlard-cspla89,Waibel89b,Robinson+Fallside91,Bengio91z,Bengio92c,Konig96}。
+在那段时间，基于\gls{NN}的\glssymbol{ASR}的表现和\glssymbol{GMM}-\glssymbol{HMM}系统的表现差不多。
 比如说，\citet{Robinson+Fallside91}在TIMIT数据集\citep{garofolo1993darpa}（有$39$个区分的\gls{phoneme}\footnote{39}）上达到了$26$\%的\gls{phoneme}错误率，这个结果优于或者是可比于基于\glssymbol{HMM}的结果。
-从那时起，TIMIT成为了\gls{phoneme}识别的一个基准数据集，在\gls{SR}中的作用就和MNIST在图像中的作用差不多。
-然而，由于\gls{SR}软件系统中复杂的工程因素以及在基于\glssymbol{GMM}-\glssymbol{HMM}的系统中所已经付出的巨大努力，工业界并没有转向\gls{NN}。
+从那时起，TIMIT成为了\gls{phoneme}识别的一个基准数据集，在\gls{SR}中的作用就和MNIST在\gls{object_recognition}中的作用差不多。
+然而，由于\gls{SR}软件系统中复杂的工程因素以及在基于\glssymbol{GMM}-\glssymbol{HMM}的系统中已经付出的巨大努力，工业界并没有迫切转向\gls{NN}的需求。
 结果，直到21世纪00年代末期，学术界和工业界的研究者们更多的是用\gls{NN}为\glssymbol{GMM}-\glssymbol{HMM}系统学习一些额外的特征。
 % 447
 
 
-之后，随着更大的更深的模型，更大的数据集的出现，通过使用\gls{NN}代替\glssymbol{GMM}来实现将语音的特征转化为\gls{phoneme}（或者\gls{phoneme}的子状态）可以大大的提高识别的精度。
+之后，随着更大更深的模型以及更大的数据集的出现，通过使用\gls{NN}代替\glssymbol{GMM}来实现将声学特征转化为\gls{phoneme}（或者\gls{phoneme}的子状态）的过程可以大大地提高识别的精度。
 从2009年开始，\gls{SR}的研究者们将一种\gls{unsupervised_learning}的\gls{DL}方法应用于\gls{SR}。
 这种\gls{DL}方法基于训练一个被称作是\gls{RBM}的无向概率模型，从而对输入数据建模。
- \gls{RBM}将会在第三部分中被描述。
- 为了完成\gls{SR}任务，\gls{unsupervised}的\gls{pretraining}被用来构造一个\gls{deep_feedforward_network}，这个\gls{NN}是通过训练\gls{RBM}来初始化的。
- 这些网络的输入是从一个固定规格的滑动窗（以当前帧为中心）的谱特征中抽取，预测了当前帧所对应的\glssymbol{HMM}状态的条件概率。
- 训练一个这样的\gls{NN}能够可以显著提高在TIMIT数据集上的识别率~\citep{mohamed2009deep,Mohamed+Dahl+Hinton-2012}，并将\gls{phoneme}级别的错误率从$26$\%降到了$20.7$\%。
+ \gls{RBM}将会在第三部分中描述。
+ 为了完成\gls{SR}任务，\gls{unsupervised}的\gls{pretraining}被用来构造一个\gls{deep_feedforward_network}，这个\gls{NN}每一层都是通过训练\gls{RBM}来初始化的。
+ 这些网络的输入是从一个固定规格的输入窗（以当前帧为中心）的谱声学表示抽取，预测了当前帧所对应的\glssymbol{HMM}状态的条件概率。
+ 训练一个这样的\gls{NN}能够可以显著提高在TIMIT数据集上的识别率~\citep{mohamed2009deep,Mohamed+Dahl+Hinton-2012}，并将\gls{phoneme}级别的错误率从大约$26$\%降到了$20.7$\%。
 关于这个模型成功原因的详细分析可以参考\citet{mohamed2012understanding}。
- 对于基础\gls{SR}的扩展包括了添加自适应的说话人相关的特征\citep{mohamed2011deep}的方法，可以进一步的降低错误率。
- 紧接着的工作是将结构从\gls{phoneme}识别（TIMIT所主要关注的）转向了大规模词汇语音识别\citep{Dahl2012}，这不仅包含了识别\gls{phoneme}，还包括了识别大规模词汇的序列。
-\gls{SR}上的\gls{DNN}从最初的使用\gls{RBM}进行\gls{pretraining}发展到了使用\gls{ReLU}和\gls{dropout}等较为先进的技术~\citep{Zeiler+al-ICASSP-2013,Dahl-et-al-ICASSP2013}。
+关于基本电话通道识别的一个扩展工作包括了添加说话人自适应相关特征\citep{mohamed2011deep}的方法，可以进一步地降低错误率。
+紧接着的工作是将结构从\gls{phoneme}识别（TIMIT所主要关注的）转向了大规模词汇语音识别\citep{Dahl2012}，这不仅包含了识别\gls{phoneme}，还包括了识别大规模词汇的序列。
+\gls{SR}上的深度网络从最初的使用\gls{RBM}进行\gls{pretraining}发展到了使用诸如\gls{ReLU}和\gls{dropout}这样的技术~\citep{Zeiler+al-ICASSP-2013,Dahl-et-al-ICASSP2013}。
 从那时开始，工业界的几个语音研究组开始寻求与学术圈的研究者之间的合作。
-\citet{Hinton-et-al-2012}描述了这些合作所带来的突破性进展，这些技术现在在移动手机端广泛应用。
+\citet{Hinton-et-al-2012}描述了这些合作所带来的突破性进展，这些技术现在被广泛应用在产品中，比如移动手机端。
 % 447
 
-随后，当他们使用了越来越大的带标签的数据集，加入了各种初始化，训练方法以及调试\gls{DNN}的结构之后，他们发现这种\gls{unsupervised}的\gls{pretraining}方式是没有必要的，或者说不能带来任何显著的改进。
+随后，当他们使用了越来越大的带标签的数据集，加入了各种初始化，训练方法以及调试\gls{DNN}的结构之后，
+他们发现这种\gls{unsupervised}的\gls{pretraining}方式是没有必要的，或者说不能带来任何显著的改进。
 % 447
 
 用\gls{SR}中词错误率来衡量，在\gls{SR}性能上的这些突破是史无前例的（大约$30$\%的提高），在这之前的长达十年左右的时间基于\glssymbol{GMM}-\glssymbol{HMM}的系统的传统技术已经停滞不前了，尽管数据集的规模是随时间增长的（见\citet{Deng+Yu-2014}的图2.4）。
 这也导致了\gls{SR}领域快速地转向\gls{DL}的研究。
-在大约的两年时间内，工业界的大多数的\gls{SR}产品都包含了\gls{DL}，这种成功也激发了\gls{ASR}领域对\gls{DL}算法和结构的一波新的研究浪潮，并且影响至今。
+在大约的两年时间内，工业界的大多数的\gls{SR}产品都包含了\gls{DNN}，这种成功也激发了\glssymbol{ASR}领域对\gls{DL}算法和结构的一波新的研究浪潮，并且影响至今。
 % 448
 
 其中的一个创新点是\gls{CNN}的应用\citep{Sainath-et-al-ICASSP2013}。
