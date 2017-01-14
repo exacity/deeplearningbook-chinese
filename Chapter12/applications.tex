@@ -530,18 +530,19 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
 在大约的两年时间内，工业界的大多数的\gls{SR}产品都包含了\gls{DNN}，这种成功也激发了\glssymbol{ASR}领域对\gls{DL}算法和结构的一波新的研究浪潮，并且影响至今。
 % 448
 
-其中的一个创新点是\gls{CNN}的应用\citep{Sainath-et-al-ICASSP2013}。
-\gls{CNN} 在时间和频率维度复用了权重，改进了之前的仅对时间使用重复权值的\gls{TDNNs}。
+其中的一个创新点是\gls{convolutional_network}的应用~\citep{Sainath-et-al-ICASSP2013}。
+\gls{convolutional_network} 在时间和频率维度复用了权重，改进了之前的仅对时间使用重复权值的\gls{TDNNs}。
 这种新的二维的卷积模型并不是将输入的频谱当作一个长的向量，而是当成是一个图像，其中一个轴对应着时间，另一个轴对应的是谱分量的频率。
 % 448
 
-另一个重要的至今仍然活跃的推动，是完全抛弃了\glssymbol{HMM}的\firstgls{end_to_end}\gls{DL}\gls{SR}系统。
-这个领域的第一个主要的突破是\citet{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}的\gls{RNN}（见\secref{sec:the_long_short_term_memory_and_other_gated_rnns}），使用了帧－\gls{phoneme}排列的\gls{MAP}估计推断，比如\citet{chapter-gradient-document-2001}，以及CTC框架~\citep{Graves-et-al-2006,Graves-book2012}。
-一个深度\gls{RNN}~\citep{Graves-et-al-ICASSP2013}在每一步都有状态变量，每个\gls{time_step}各层都有状态变量，有两种\gls{unfolded_graph}的方式：一种是根据层的堆叠，另一种是时间展开。
-这个工作把TIMIT数据集上\gls{phoneme}的错误率降到了记录的新低$17.7$\%。关于应用于其它领域的深度\gls{RNN}的变种可以参考\citet{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
+另一个重要的至今仍然活跃的推动，是完全抛弃了\glssymbol{HMM}的\gls{end_to_end}\gls{DL}\gls{SR}系统。
+这个领域第一个主要的突破是\citet{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}\gls{RNN}（见\secref{sec:the_long_short_term_memory_and_other_gated_rnns}），使用了帧－\gls{phoneme}排列的\glssymbol{MAP}推断，就像\citet{chapter-gradient-document-2001}以及CTC框架~\citep{Graves-et-al-2006,Graves-book2012}中一样。
+一个深度\gls{RNN}~\citep{Graves-et-al-ICASSP2013}每个\gls{time_step}各层都有状态变量，有两种\gls{unfolded_graph}的方式：一种是根据层的堆叠，另一种是时间\gls{unfolding}。
+这个工作把TIMIT数据集上\gls{phoneme}的错误率降到了记录的新低$17.7$\%。
+关于应用于其它领域的深度\gls{RNN}的变种可以参考\citet{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
 % 448
 
-另一个\gls{end_to_end}\gls{DL}\gls{SR}的最新方法是让系统学习如何利用\firstgls{phonetic}层级的信息排列\firstgls{acoustic}层级的信息\citep{Chorowski-et-al-arxiv2014,llu_is2015b}。
+另一个\gls{end_to_end}\gls{DL}\gls{SR}方向的最新方法是让系统学习如何利用\firstgls{phonetic}层级的信息``排列''\firstgls{acoustic}层级的信息~\citep{Chorowski-et-al-arxiv2014,llu_is2015b}。
 % 448
 
 

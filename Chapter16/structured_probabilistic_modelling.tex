@@ -186,7 +186,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554
 
 
-\gls{structured_probabilistic_models}使用图（在图论中结点是通过边来连接的）来表示随机变量之间的相互作用。
+\gls{structured_probabilistic_models}使用图（在图论中``结点''是通过``边''来连接的）来表示随机变量之间的相互作用。
 每一个结点代表一个随机变量。
 每一条边代表一个直接相互作用。
 这些直接相互作用隐含着其它的间接相互作用，但是只有直接的相互作用是被显式地建模的。
@@ -195,7 +195,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 
 使用图来描述概率分布中相互作用的方法不止一种。
 在下文中我们会介绍几种最为流行和有用的方法。
-\gls{graphical_models}可以被大致分为两类：基于模型的有向无环图，和基于模型的\gls{undirected_model}。
+\gls{graphical_models}可以被大致分为两类：基于有向无环图的模型，和基于\gls{undirected_model}的模型。
 % 554
 
 
@@ -204,38 +204,41 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554
 
 
-有一种\gls{structured_probabilistic_models}是\firstgls{directed_graphical_model}，也被叫做\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望强调从网络中计算出的值的推断本质，尤其是强调这些值代表的是置信的程度大小时，Judea Pearl建议使用\gls{bayesian_network}这个术语。} \citep{pearl85bayesian}。
+\firstgls{directed_graphical_model}是一种\gls{structured_probabilistic_models}，也被叫做\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望强调从网络中计算出的值的推断本质，尤其是强调这些值代表的是置信程度大小而不是事件的频率时，Judea Pearl建议使用``\gls{bayesian_network}''这个术语。} \citep{pearl85bayesian}。
 % 554
 
 
 之所以命名为\gls{directed_graphical_model}是因为所有的边都是有方向的，即从一个结点指向另一个结点。
 这个方向可以通过画一个箭头来表示。
-箭头所指的方向表示了这个随机变量的概率分布依赖于其它的变量。
+箭头所指的方向表示了这个随机变量的概率分布是由其它变量的概率分布所定义的。
 画一个从结点$\RSa$到结点$\RSb$的箭头表示了我们用一个条件分布来定义$\RSb$，而$\RSa$是作为这个条件分布符号右边的一个变量。
 换句话说，$\RSb$的概率分布依赖于$\RSa$的取值。
 % 554
 
 
 我们继续\secref{sec:the_challenge_of_unstructured_modelling}所讲的接力赛的例子，我们假设Alice的完成时间为$\RSt_0$，Bob的完成时间为$\RSt_1$，Carol的完成时间为$\RSt_2$。
-就像我们之前看到的一样，$\RSt_1$的估计是依赖于$\RSt_0$的，$\RSt_2$的估计是依赖于$\RSt_1$的，但是仅仅间接地依赖于$\RSt_0$。
+就像我们之前看到的一样，$\RSt_1$的估计是依赖于$\RSt_0$的，$\RSt_2$的估计是直接依赖于$\RSt_1$的，但是仅仅间接地依赖于$\RSt_0$。
 我们用一个\gls{directed_graphical_model}来建模这种关系，就如在\figref{fig:relay_race_graph}中看到的一样。
 % 554 end
+
 
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-	\centerline{\includegraphics{Chapter16/figures/relay_race_graph}}	
+\centerline{\includegraphics{Chapter16/figures/relay_race_graph}}	
 \fi
-	\caption{一个描述接力赛例子的\gls{directed_graphical_model}。
+\caption{一个描述接力赛例子的\gls{directed_graphical_model}。
 Alice的完成时间$\RSt_0$影响了Bob的完成时间$\RSt_1$，因为Bob会在Alice完成比赛后才开始。
-类似的，Carol也只会在Bob完成之后才开始，所以Bob的完成时间$\RSt_1$直接影响了Carol的完成时间$\RSt_2$。}
-	\label{fig:relay_race_graph}
+类似的，Carol也只会在Bob完成之后才开始，
+所以Bob的完成时间$\RSt_1$直接影响了Carol的完成时间$\RSt_2$。}
+\label{fig:relay_race_graph}
 \end{figure}
 
 
 % 555 head 
-正式的讲，变量$\RVx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution} $p(\RSx_i\mid P_{a\CalG}(\RSx_i))$来定义的，其中$P_{a\CalG}(\RSx_i)$表示结点$\RSx_i$的所有父结点。
+正式的讲，变量$\RVx$的有向概率模型是通过有向无环图$\CalG$ （每个结点都是模型中的随机变量）
+和一系列\firstgls{local_conditional_probability_distribution} $p(\RSx_i\mid P_{a\CalG}(\RSx_i))$来定义的，其中$P_{a\CalG}(\RSx_i)$表示结点$\RSx_i$的所有父结点。
 $\RVx$的概率分布可以表示为
 \begin{align}
 \label{eqn:161}
@@ -244,7 +247,7 @@ p(\RVx) = \prod_{i} p(\RSx_i\mid P_{a\CalG}(\RSx_i)).
 % 555 
 
 
-在之前所述的接力赛的例子中，这意味着概率分布可以被表示为
+在之前所述的接力赛的例子中，参考\figref{fig:relay_race_graph}，这意味着概率分布可以被表示为
 \begin{align}
 \label{eqn:162}
 p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
