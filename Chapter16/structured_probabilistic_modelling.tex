@@ -235,7 +235,7 @@ Alice的完成时间$\RSt_0$影响了Bob的完成时间$\RSt_1$，因为Bob会�
 
 
 % 555 head 
-正式的讲，变量$\RVx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution}$p(\RSx_i\mid P_{a\CalG}(\RSx_i))$来定义的，其中$P_{a\CalG}(\RSx_i)$表示结点$\RSx_i$的所有父结点。
+正式的讲，变量$\RVx$的有向概率模型是通过有向无环图$\CalG$和一系列\firstgls{local_conditional_probability_distribution} $p(\RSx_i\mid P_{a\CalG}(\RSx_i))$来定义的，其中$P_{a\CalG}(\RSx_i)$表示结点$\RSx_i$的所有父结点。
 $\RVx$的概率分布可以表示为
 \begin{align}
 \label{eqn:161}
@@ -352,9 +352,9 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 	\label{fig:cold_undirected_graph}
 \end{figure}
 
-正式的说，一个\gls{undirected_model}是一个定义在\gls{undirected_model}$\CalG$上的一个\gls{structured_probabilistic_models}。
+正式的说，一个\gls{undirected_model}是一个定义在\gls{undirected_model} $\CalG$上的一个\gls{structured_probabilistic_models}。
 对图中的每一个\firstgls{clique}\footnote{图的一个\gls{clique}是图中结点的一个子集，并且其中的点是全连接的}$\CalC$，
-一个\firstgls{factor}$\phi(\CalC)$(也叫做\firstgls{clique_potential})，衡量了\gls{clique}中的变量的不同状态所对应的密切程度。
+一个\firstgls{factor} $\phi(\CalC)$(也叫做\firstgls{clique_potential})，衡量了\gls{clique}中的变量的不同状态所对应的密切程度。
 这些\gls{factor}都被限制为是非负的。
 合在一起他们定义了\firstgls{unnormalized_probability_function}：
 \begin{align}
@@ -468,7 +468,7 @@ Z = \int x^2 dx.
 答案是我们无法确定，因为我们并没有指定$\RVx$的定义域。
 如果$\RVx$满足$\RVx \in \SetR^n$，那么对于归一化常数$Z$的积分是发散的，这导致了对应的概率分布是不存在的。
 如果$\RVx\in\{0,1\}^n$，那么$p(\RVx)$可以被分解成$n$个独立的分布，并且满足$p(\RSx_i=1) = \text{sigmoid}(b_i)$。
-如果$\RVx$的定义域是\gls{ebv}$(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$的集合，
+如果$\RVx$的定义域是\gls{ebv} $(\{[1,0,\ldots,0],[0,1,\ldots,0],\ldots,[0,0,\ldots,1]\})$的集合，
 那么$p(\RSx) = \text{softmax}(\Vb)$，因此对于$j\neq i$一个较大的$b_i$的值会降低所有的$p(\RSx_j = 1)$的概率。
 通常情况下，通过特殊设计变量的定义域，能够使得一个相对简单的$\phi$函数可以获得一个相对复杂的表达。
 我们会在\secref{sec:convolutional_boltzmann_machines}中讨论这个想法的实际应用。
@@ -520,7 +520,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
-	\caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function}$E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。值得注意的是，我们可以通过取负能量的指数来获得图\ref{fig:example_undirected}中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
+	\caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function} $E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。值得注意的是，我们可以通过取负能量的指数来获得图\ref{fig:example_undirected}中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
 	\label{fig:example_undirected_2}
 \end{figure}
 
@@ -535,7 +535,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 许多对概率模型进行操作的算法不需要计算$p_{\text{model}}(\Vx)$，而只需要计算$\log p_{\text{model}}(\Vx)$。
-对于具有\gls{latent_variable}$\Vh$的\gls{energy_based_model}，这些算法有时会将该量的负数称为\firstgls{free_energy}：
+对于具有\gls{latent_variable} $\Vh$的\gls{energy_based_model}，这些算法有时会将该量的负数称为\firstgls{free_energy}：
 \begin{align}
 \label{eqn:168}
 \CalF (\Vx) = -\log \sum_{\Vh} \exp(-E(\Vx,\Vh)).
@@ -645,7 +645,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 		（a）箭头方向从$\RSa$指向$\RSb$的任何路径，反之也成立。
 		如果$\RSs$可以被观察到，这种路径就是阻塞的。
 		在接力赛的例子中，我们已经看到过这种类型的路径。
-		（b）变量$\RSa$和$\RSb$通过\gls{common_cause}$\RSs$相连。
+		（b）变量$\RSa$和$\RSb$通过\gls{common_cause} $\RSs$相连。
 		举个例子，假设$\RSs$是一个表示是否存在飓风的变量，$\RSa$和$\RSb$表示两个相邻的气象监控区域的风速。
 		如果我们观察到在$\RSa$处有很高的风速，我们可以期望在$b$处也观察到高速的风。
 		如果观察到$\RSs$那么这条路径就被阻塞了。
@@ -798,7 +798,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 同样的，\gls{undirected_model}可以包括\gls{directed_model}不能完美表示的子结构。
-具体来说，如果$\CalU$包含长度大于$3$的循环，则有向图$\CalD$不能捕获\gls{undirected_model}$\CalU$所包含的所有条件独立性，除非该循环还包含\gls{chord}。
+具体来说，如果$\CalU$包含长度大于$3$的循环，则有向图$\CalD$不能捕获\gls{undirected_model} $\CalU$所包含的所有条件独立性，除非该循环还包含\gls{chord}。
 \firstgls{loop}指的是由无向边连接的变量的序列，并且满足序列中的最后一个变量连接回序列中的第一个变量。
 \firstgls{chord}是定义环的序列中任意两个非连续变量之间的连接。
 如果$\CalU$具有长度为$4$或更大的环，并且这些环没有\gls{chord}，我们必须在将它们转换为\gls{directed_model}之前添加\gls{chord}。
@@ -848,7 +848,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 一些节点被绘制为圆形。 
 这些节点对应于随机变量，如在标准\gls{undirected_model}中。
 其余节点绘制为正方形。
-这些节点对应于\gls{unnormalized_probability_function}的\gls{factor}$\phi$。
+这些节点对应于\gls{unnormalized_probability_function}的\gls{factor} $\phi$。
 变量和\gls{factor}通过无向边连接。
 当且仅当变量包含在\gls{unnormalized_probability_function}的\gls{factor}中时，变量和\gls{factor}在图中连接。
 没有\gls{factor}可以连接到图中的另一个\gls{factor}，也不能将变量连接到变量。
@@ -964,7 +964,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_i$直接依赖)。
 % 572  end 
 
-一个好的不包含任何\gls{latent_variable}$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
+一个好的不包含任何\gls{latent_variable} $\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
 但是代表这些高阶的相互作用是昂贵的，首先从计算角度上，存储在存储器中的参数数量是\gls{clique}中成员数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
 % 573  head  
 
@@ -1054,7 +1054,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 \gls{DL}并不总是涉及特别深的\gls{graphical_models}。
 在\gls{graphical_models}中，我们可以根据\gls{graphical_models}的图而不是图计算来定义模型的深度。
-我们可以认为\gls{latent_variable}$h_j$处于深度$j$，如果从$h_i$到观察到的最短路径变量是$j$步。
+我们可以认为\gls{latent_variable} $h_j$处于深度$j$，如果从$h_i$到观察到的最短路径变量是$j$步。
 我们通常将模型的深度描述为任何这样的$h_j$的最大深度。 
 这种深度不同于由图计算定义的深度。
 用于\gls{DL}的许多生成模型没有\gls{latent_variable}或只有一层\gls{latent_variable}，但使用深度计算图来定义模型中的条件分布。

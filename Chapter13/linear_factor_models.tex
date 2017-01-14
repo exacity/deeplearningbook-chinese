@@ -8,7 +8,7 @@
 
 许多深度学习的研究前沿涉及到了构建输入的概率模型$p_{\text{model}}(\Vx)$。
 原则上说，给定任何其他变量的情况下，这样的模型可以使用概率推断来预测其环境中的任何变量。
-许多这样的模型还具有\gls{latent_variable}$\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\mid\Vh)$。
+许多这样的模型还具有\gls{latent_variable} $\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\mid\Vh)$。
 这些\gls{latent_variable}提供了表示数据的另一种方式。
  基于\gls{latent_variable}的分布式表示可以有很多优点，这些我们在\gls{deep_feedforward_network}和\gls{RNN}中已经发现。
 % 479
@@ -61,7 +61,7 @@
 \label{sec:probabilistic_PCA_and_factor_analysis}
 % 480
 
-\firstgls{PPCA}，\gls{FA}和其他\gls{linear_factor}是上述等式（\eqnref{eqn:131},\eqnref{eqn:132}）的特殊情况，并且仅在对观测到$\Vx$之前的噪声分布和\gls{latent_variable}$\Vh$的先验的选择上不同。
+\firstgls{PPCA}，\gls{FA}和其他\gls{linear_factor}是上述等式（\eqnref{eqn:131},\eqnref{eqn:132}）的特殊情况，并且仅在对观测到$\Vx$之前的噪声分布和\gls{latent_variable} $\Vh$的先验的选择上不同。
 % 480
 
 \firstgls{FA}\citep{Bartholomew-1987,Basilevsky94}中，\gls{latent_variable}的先验是一个方差为单位矩阵的\gls{gaussian_distribution}
@@ -102,7 +102,7 @@
 % 481
 
 
-\gls{PPCA}模型利用了这样一种观察的现象：除了一些小的\gls{reconstruction_error}$\sigma^2$，数据中的大多数变化可以由\gls{latent_variable}$\Vh$描述。
+\gls{PPCA}模型利用了这样一种观察的现象：除了一些小的\gls{reconstruction_error} $\sigma^2$，数据中的大多数变化可以由\gls{latent_variable} $\Vh$描述。
 通过\citet{tipping99mixtures}的研究可以发现，当$\sigma \xrightarrow{} 0$的时候，\gls{PPCA}等价于\glssymbol{PCA}。
 在这种情况下，给定$\Vx$情况下的$\Vh$的条件期望等于将$\Vx - \Vb$投影到$\MW$的$d$列的生成空间，与\glssymbol{PCA}一样。
 % 481

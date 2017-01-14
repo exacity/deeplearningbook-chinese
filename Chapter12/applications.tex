@@ -702,7 +702,7 @@ P({\tt THE\ DOG\ RAN\ AWAY}) = P_3({\tt THE\ DOG\ RAN}) P_3({\tt DOG\ RAN\ AWAY}
 对于专门的\gls{loss_function}，可以有效地计算梯度 \citep{Vincent2015}，但是应用于传统\ENNAME{softmax}输出层的标准\gls{cross_entropy}损失时会出现了许多困难。
 
 假设$\Vh$是用于预测输出概率$\hat \Vy$的顶部隐藏层。
-如果我们使用学到的权重$\MW$和学到的\gls{bias_aff}$\Vb$参数化从$\Vh$到$\hat \Vy$的变换，则仿射\ENNAME{softmax}输出层执行以下计算：
+如果我们使用学到的权重$\MW$和学到的\gls{bias_aff} $\Vb$参数化从$\Vh$到$\hat \Vy$的变换，则仿射\ENNAME{softmax}输出层执行以下计算：
 \begin{align}
 \label{eq:softmax-over-words}
   a_i &= b_i + \sum_j  W_{ij} h_j \;\;\; \forall i \in \{1,\ldots,|\SetV|\}, \\
@@ -839,7 +839,7 @@ $|\SetV|$因子可以降低到$\log |\SetV|$一样低，而无需与$|\SetV|$成
 \begin{align}
   \sum_{i=1}^{|\SetV|} P(i \mid C) \frac{\partial a_i}{\partial \theta}  \approx \frac{1}{m} \sum_{i=1}^m w_i \frac{\partial a_{n_i}}{\partial \theta}.
   \end{align}
-  \gls{unigram}或\gls{bigram}分布与\gls{proposal_distribution}$q$工作得一样好。
+  \gls{unigram}或\gls{bigram}分布与\gls{proposal_distribution} $q$工作得一样好。
 从数据估计这种分布的参数是很容易。
 在估计参数之后，也可以非常高效地从这样的分布采样。
 

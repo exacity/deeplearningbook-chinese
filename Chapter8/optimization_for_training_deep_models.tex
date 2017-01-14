@@ -13,7 +13,7 @@
 如果你不熟悉基于梯度的基本优化，我们建议您查看\chapref{chap:numerical_computation}。
 该章简要概述了一般的数值优化。
 
-本章主要关注这一类优化问题：寻找神经网络上的一组参数$\Vtheta$以显著降低\gls{cost_function}$J(\Vtheta)$，该\gls{cost_function}通常包括整个训练集上的性能评估和正则项。
+本章主要关注这一类优化问题：寻找神经网络上的一组参数$\Vtheta$以显著降低\gls{cost_function} $J(\Vtheta)$，该\gls{cost_function}通常包括整个训练集上的性能评估和正则项。
 
 首先，我们会介绍机器学习任务训练算法中的优化和纯优化在哪些地方不一样。
 接下来，我们会介绍神经网络优化很难的几个具体原因。
@@ -29,7 +29,7 @@
 机器学习通常是间接的。
 在大多数机器学习问题中，我们关注定义于测试集上的，也可能是不可解的性能度量$P$.
 因此，我们只是间接地优化$P$。
-我们希望通过降低\gls{cost_function}$J(\Vtheta)$来提高$P$。
+我们希望通过降低\gls{cost_function} $J(\Vtheta)$来提高$P$。
 这一点不同于纯优化最小化$J$本身。
 训练\gls{deep_model}的优化算法通常也会包括一些用于机器学习目标函数特定结构上的特殊优化。
 
@@ -336,7 +336,7 @@
 
 包括权重空间对称性，很多神经网络还有其他导致不可辨认的原因。
 例如，在任意\gls{rectified_linear}网络或者\gls{maxout}网络中，
-我们可以放大传入权重和\gls{bias_aff}$\alpha$倍，然后缩小传出权重$\frac{1}{\alpha}$倍，而保持模型等价。
+我们可以放大传入权重和\gls{bias_aff} $\alpha$倍，然后缩小传出权重$\frac{1}{\alpha}$倍，而保持模型等价。
 这意味着，如果\gls{cost_function}不包括如权重衰减这种直接依赖于权重而非模型输出的项，那么\gls{rectified_linear}网络或者\gls{maxout}网络的每一个局部极小解都在等价局部极小解的$(m\times n)$维双曲线上。
 
 这些\gls{model_identifiability}问题意味着神经网络\gls{cost_function}具有非常多，甚至无限多的局部极小解。
@@ -532,7 +532,7 @@
 大多数优化研究的难点集中于训练是否到达了全局最小值，局部最小值，或是\gls{saddle_points}，但在实践中神经网络不会到达任何一种临界点。
 \figref{fig:chap8_grad_norm_increases}表明神经网络通常不会到达梯度很小的区域。
 甚至，这些临界点不是必然存在的。
-例如，\gls{loss_function}$-\log p(y\mid\Vx;\Vtheta)$没有全局极小点，而是当模型更自信时会逐渐趋向某个值。    
+例如，\gls{loss_function} $-\log p(y\mid\Vx;\Vtheta)$没有全局极小点，而是当模型更自信时会逐渐趋向某个值。    
 对于具有离散标签$y$和softmax分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类训练集上的每个样本，则负对数似然可以任意地趋近于零，但是不可能实际达到零值。
 同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无限大——如果$f(\Vtheta)$能够正确预测所有的训练集目标$y$，学习算法会无边界地增加$\beta$。
 如\figref{fig:chap8_bad_global}所示，即使没有局部极小值和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的\gls{cost_function}值。
@@ -663,7 +663,7 @@
 即使训练样本数目非常大时，这也能收敛。
 对于足够大的数据集，\glssymbol{SGD}可能会在处理整个训练集之前就收敛到最终测试集误差的某个固定容差范围内。
 
-研究优化算法的收敛率，一般会衡量\firstgls{excess_error}$J(\Vtheta) - \min_{\Vtheta} J(\Vtheta)$，即当前\gls{cost_function}超出最低可能损失的量。
+研究优化算法的收敛率，一般会衡量\firstgls{excess_error} $J(\Vtheta) - \min_{\Vtheta} J(\Vtheta)$，即当前\gls{cost_function}超出最低可能损失的量。
 \glssymbol{SGD}应用于凸问题时，$k$步迭代后的额外误差量级是$O(\frac{1}{\sqrt{k}})$，在强凸情况下是$O(\frac{1}{k})$。
 除非假定额外的条件，否则这些界限不能进一步改进。
 \gls{batch}梯度下降在理论上比随机梯度下降有更好的收敛率。
@@ -979,7 +979,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 
 \item 有时，一个单元会控制其他单元能否参与到方程中。
 在这种情况下，我们有一个单元输出$u$，另一个单元$h\in[0,1]$，那么我们可以将$h$视作闸门，以决定$uh\approx 1$还是$uh\approx 0$。
-在这种情形下，我们希望设置\gls{bias_aff}$h$，使得在初始化的大多数情况下$h\approx 1$。
+在这种情形下，我们希望设置\gls{bias_aff} $h$，使得在初始化的大多数情况下$h\approx 1$。
 否则，$u$没有机会学习。
 例如，\cite{Jozefowicz-et-al-ICML2015}提议设置LSTM模型遗忘门的\gls{bias_aff}为$1$，如\secref{sec:the_long_short_term_memory_and_other_gated_rnns}所述。
 \end{itemize}
@@ -1411,7 +1411,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习速率有时�
 举一个简单的例子，假设我们有一个\gls{DNN}，每一层只有一个单元，并且在每个\gls{hidden_layer}不使用激励函数：$\hat{y} = xw_1 w_2 w_3 \dots w_l$。
 这里，$w_i$表示用于层$i$的权重。层$i$的输出是$h_i = h_{i-1} w_i$。
 输出$\hat{y}$是输入$x$的线性函数，但是权重$w_i$的非线性函数。
-假设我们的\gls{cost_function}$\hat{y}$上的梯度为$1$，所以我们希望稍稍降低$\hat{y}$。
+假设我们的\gls{cost_function} $\hat{y}$上的梯度为$1$，所以我们希望稍稍降低$\hat{y}$。
 然后反向传播算法可以计算梯度$\Vg = \nabla_{\Vw} \hat{y}$。
 想想我们在更新$\Vw \leftarrow \Vw - \epsilon \Vg$时会发生什么。
 近似$\hat{y}$的一阶泰勒级数会预测$\hat{y}$的值下降$\epsilon \Vg^\top \Vg$。
@@ -1665,7 +1665,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 \firstgls{continuation_method}是一族通过挑选初始点使优化更容易的方法，以确保局部优化花费大部分时间在表现良好的空间。
 \gls{continuation_method}的背后想法是构造一系列具有相同参数的目标函数。
-为了最小化\gls{cost_function}$J(\Vtheta)$，我们构建新的\gls{cost_function}$\{J^{(0)},\dots,J^{(n)}\}$。
+为了最小化\gls{cost_function} $J(\Vtheta)$，我们构建新的\gls{cost_function} $\{J^{(0)},\dots,J^{(n)}\}$。
 这些\gls{cost_function}逐步提高难度，其中$J^{(0)}$是最容易最小化的，$J^{(n)}$是最难的，真正的\gls{cost_function}促进整个过程。
 当我们说$J^{(i)}$比$J^{(i+1)}$更容易时，是指其在更多的$\Vtheta$空间上表现良好。
 随机初始化更有可能落入局部下降可以成功最小化\gls{cost_function}的区域，因为其良好区域更大。

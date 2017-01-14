@@ -4,7 +4,7 @@
 \label{chap:autoencoders}
 \firstgls{AE}是\gls{NN}的一种，经过训练后能尝试将输入复制到输出。
 \firstgls{AE}内部有一个隐含层$\Vh$，可以产生\firstgls{code}表示输入。
-该网络可以看作由两部分组成：一个\gls{encoder}函数$ \Vh = f(\Vx)$和一个生成\gls{reconstruction}的\gls{decoder}$\Vr=g(\Vh)$。
+该网络可以看作由两部分组成：一个\gls{encoder}函数$ \Vh = f(\Vx)$和一个生成\gls{reconstruction}的\gls{decoder} $\Vr=g(\Vh)$。
 \figref{fig:chap14_autoencoder}展示了这种架构。
 如果一个\gls{AE}学会简单地设置$g(f(\Vx)) =\Vx$，那么这个\gls{AE}就不会特别有用。
 相反，\gls{AE}应该被设计成不能学会完美地复制。
@@ -28,7 +28,7 @@
 \else
 \centerline{\includegraphics{Chapter14/figures/autoencoder}}
 \fi
-\caption{\gls{AE}的一般结构，通过内部表示或\gls{code}$\Vh$将输入$\Vx$映射到输出（称为\gls{reconstruction}）$\Vr$。
+\caption{\gls{AE}的一般结构，通过内部表示或\gls{code} $\Vh$将输入$\Vx$映射到输出（称为\gls{reconstruction}）$\Vr$。
 \gls{AE}具有两个组件：\gls{encoder}~$f$（将$\Vx$映射到$\Vh$）和\gls{decoder}~$g$（将$\Vh$映射到$\Vr$）。
 }
 \label{fig:chap14_autoencoder}
@@ -59,7 +59,7 @@ L(\Vx, g(f(\Vx)),
 
 因此拥有非线性编码函数$f$和非线性\gls{decoder}函数$g$的\gls{AE}能够学习出更强大的\glssymbol{PCA}非线性推广。
 不幸的是，如果\gls{encoder}和\gls{decoder}被赋予太大的\gls{capacity}，\gls{AE}会执行复制任务而捕捉不到任何有关数据分布的有用信息。
-从理论上说，我们可以想象只有一维\gls{code}的\gls{AE}，但具有一个非常强大的非线性\gls{encoder}，能够将每个训练数据$\Vx^{(i)}$表示为\gls{code}$~i$。
+从理论上说，我们可以想象只有一维\gls{code}的\gls{AE}，但具有一个非常强大的非线性\gls{encoder}，能够将每个训练数据$\Vx^{(i)}$表示为\gls{code} $~i$。
 \gls{decoder}可以学习将这些整数索引映射回特定训练样本的值。
 这种特定情形不会在实践中发生，但它清楚地说明，如果\gls{AE}的\gls{capacity}太大，那训练来执行复制任务的\gls{AE}可能无法学习到数据集的任何有用信息。
 
@@ -250,7 +250,7 @@ L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
 
 在\gls{AE}中，$\Vx$既是输入也是目标。
 然而，我们仍然可以使用与之前相同的架构。
-给定一个隐藏层\gls{code}$\Vh$，我们可以认为\gls{decoder}提供了一个条件分布$p_{\text{model}}(\Vx \mid \Vh)$。
+给定一个隐藏层\gls{code} $\Vh$，我们可以认为\gls{decoder}提供了一个条件分布$p_{\text{model}}(\Vx \mid \Vh)$。
 接着我们根据最小化$-\log p_{\text{decoder}}(\Vx \mid \Vh)$来训练\gls{AE}。
 \gls{loss_function}的具体形式视$p_{\text{decoder}}$的形式而定。
 就传统的\gls{feedforward_network}来说，我们通常使用线性输出单元参数化高斯分布的均值（如果$\Vx$是实的）。
@@ -299,7 +299,7 @@ p_{\text{decoder}}(\Vx \mid \Vh) = p_{\text{model}}(\Vx\mid\Vh).
 \item 从训练数据中采一个训练样本$\Vx$。
 \item 从$C(\tilde{\RVx} \mid \RVx=\Vx)$采一个损坏样本$\tilde \Vx$。
 \item 将$(\Vx, \tilde \Vx)$作为训练样本来估计\gls{AE}的\gls{reconstruction}分布 
-$p_{\text{reconstruct}} (\Vx \mid \tilde \Vx) = p_{\text{decoder}}(\Vx \mid\Vh)$，其中$\Vh$是\gls{encoder}$f(\tilde \Vx)$的输出，$p_{\text{decoder}}$根据解码函数$g(\Vh)$定义。
+$p_{\text{reconstruct}} (\Vx \mid \tilde \Vx) = p_{\text{decoder}}(\Vx \mid\Vh)$，其中$\Vh$是\gls{encoder} $f(\tilde \Vx)$的输出，$p_{\text{decoder}}$根据解码函数$g(\Vh)$定义。
 \end{enumerate}
 通常我们可以简单地对负对数似然$-\log p_{\text{decoder}} (\Vx \mid \Vh)$进行基于梯度法（如\gls{minibatch}\gls{GD}）的近似最小化。
 只要\gls{encoder}是确定性的，\gls{DAE}就是一个\gls{feedforward_network}，并且可以使用与其他\gls{feedforward_network}完全相同的方式进行训练。
@@ -351,7 +351,7 @@ $p_{\text{reconstruct}} (\Vx \mid \tilde \Vx) = p_{\text{decoder}}(\Vx \mid\Vh)$
 我们将训练样本$\Vx$表示为位于低维\gls{manifold}（粗黑线）附近的红叉。
 我们用灰色圆圈表示等概率的损坏过程$C(\tilde \Vx \mid \Vx)$。
 灰色箭头演示了如何将一个训练样本转换为经过此损坏过程的样本。
-当训练\gls{DAE}最小化平方误差$\| g(f(\tilde \Vx)) - \Vx \|^2$的平均值时，\gls{reconstruction}$g(f(\tilde \Vx))$估计$\SetE_{\RVx, \tilde{\RVx} \sim p_{\text{data}}(\RVx) C(\tilde{\RVx} \mid \RVx)}[\RVx \mid \tilde{\Vx}]$。
+当训练\gls{DAE}最小化平方误差$\| g(f(\tilde \Vx)) - \Vx \|^2$的平均值时，\gls{reconstruction} $g(f(\tilde \Vx))$估计$\SetE_{\RVx, \tilde{\RVx} \sim p_{\text{data}}(\RVx) C(\tilde{\RVx} \mid \RVx)}[\RVx \mid \tilde{\Vx}]$。
 $g(f(\tilde \Vx))$对可能产生$\tilde \Vx$的原始点$\Vx$的质心进行估计，所以向量$ g(f(\tilde \Vx)) - \tilde \Vx $近似指向\gls{manifold}上最近的点。
 因此\gls{AE}可以学习由绿色箭头表示的向量场$ g(f( \Vx)) -  \Vx $。
 <BAD>该向量场估计得分$\nabla_{\Vx} \log p_{\text{data}}(\Vx)$为乘法因子，即平均均方根\gls{reconstruction_error}。
@@ -473,7 +473,7 @@ $n$维\gls{manifold}在每个点处都具有$n$维切平面。
 
 所有\gls{AE}的训练过程涉及两种推动力的折衷：
 \begin{enumerate}
- \item 学习训练样本$\Vx$的\gls{representation}$\Vh$使得$\Vx$能通过\gls{decoder}近似地从$\Vh$中恢复。
+ \item 学习训练样本$\Vx$的\gls{representation} $\Vh$使得$\Vx$能通过\gls{decoder}近似地从$\Vh$中恢复。
 $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{AE}不需要成功\gls{reconstruction}不属于数据生成分布下的输入。
  \item 满足约束或正则惩罚。
 这可以是限制\gls{AE}\gls{capacity}的架构约束，也可以是加入到\gls{reconstruction}代价的一个正则项。
@@ -566,7 +566,7 @@ $\Vx$是从训练数据挑出的事实是关键的，因为这意味着在\gls{A
 
 \section{\glsentrytext{CAE}}
 \label{sec:contractive_autoencoders}
-\gls{CAE}\citep{Rifai+al-2011-small,Salah+al-2011-small}在\gls{code}$\Vh = f(\Vx)$的基础上添加了显式的正则项，鼓励$f$的导数尽可能小：
+\gls{CAE}\citep{Rifai+al-2011-small,Salah+al-2011-small}在\gls{code} $\Vh = f(\Vx)$的基础上添加了显式的正则项，鼓励$f$的导数尽可能小：
 \begin{align}
  \Omega(\Vh) = \lambda \Bigg\| \frac{\partial f(\Vx)}{\partial \Vx} \Bigg\|_F^2 .
 \end{align}
@@ -668,7 +668,7 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 \firstall{PSD}是\gls{sparse_coding}和参数化\gls{AE}\citep{koray-psd-08}的混合模型。
 参数化\gls{encoder}被训练为能预测迭代推断的输出。
 \glssymbol{PSD}被应用于图片和视频中对象识别的\gls{unsupervised}特征学习\citep{Koray-08-small,koray-nips-10-small,Jarrett-ICCV2009-small,farabet-suml-11}，在音频中也有所应用\citep{henaff-ismir-11-small}。
-这个模型由一个\gls{encoder}$f(\Vx)$和一个\gls{decoder}$g(\Vh)$组成，并且都是参数化的。
+这个模型由一个\gls{encoder} $f(\Vx)$和一个\gls{decoder} $g(\Vh)$组成，并且都是参数化的。
 在训练过程中，$\Vh$由优化算法控制。
 优化过程是最小化
 \begin{align}
@@ -689,7 +689,7 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 
 
 在\glssymbol{PSD}的实际应用中，迭代优化仅在训练过程中使用。
-模型被部署后，参数\gls{encoder}$f$用于计算学习好的特征。
+模型被部署后，参数\gls{encoder} $f$用于计算学习好的特征。
 相比通过\gls{GD}推断$\Vh$，计算$f$是很容易的。
 因为$f$是一个可微带参函数，\glssymbol{PSD}模型可堆叠，并用于初始化其他训练\gls{criterion}的深度网络。
 
