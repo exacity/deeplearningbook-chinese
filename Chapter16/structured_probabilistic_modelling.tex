@@ -277,27 +277,27 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 % 555 
 
 
-换一句话说，只要每个变量只有少量的父结点，那么这个分布就可以用较少的参数来表示。
+换一句话说，只要图中的每个变量都只有少量的父结点，那么这个分布就可以用较少的参数来表示。
 图结构上的一些限制条件，比如说要求这个图为一棵树，也可以保证一些操作（比如说求一小部分变量的边缘或者条件分布）更加地高效。
 % 556 head   16.2 to here 
 
 
 
-决定那些信息需要被包含在图中而哪些不需要是很重要的。
-如果许多变量可以被假设为是条件独立的，那么这个\gls{graphical_models}可以被大大简化。
-当然也存在其它的简化\gls{graphical_models}的假设。
+决定哪些信息需要被包含在图中而哪些不需要是很重要的。
+如果变量之间可以被假设为是条件独立的，那么这个图可以包含这种简化假设。
+当然也存在其它类型的简化\gls{graphical_models}的假设。
 比如说，我们可以假设无论Alice的表现如何，Bob总是跑得一样快
 （实际上，Alice的表现很大概率会影响Bob的表现，这取决于Bob的性格，
-如果在之前的比赛中Alice跑得特别快，这有可能鼓励Bob更加努力，当然这也有可能使得Bob懒惰）。
+如果在之前的比赛中Alice跑得特别快，这有可能鼓励Bob更加努力并取得更好的成绩，当然这也有可能使得Bob过分自信或者变得懒惰）。
 那么Alice对Bob的唯一影响就是在计算Bob的完成时间时需要加上Alice的时间。
 这个假设使得我们所需要的参数量从$O(k^2)$降到了$O(k)$。
-然而，值得注意的是在这个假设下$\RSt_0$和$\RSt_1$仍然是直接相关的，因为$\RSt_1$表示的是Bob完成的时间，并不是他跑的时间。
-这也意味着\gls{graphical_models}中会有一个从$\RSt_0$指向$\RSt_1$的箭头。
-``Bob的个人跑步时间相对于其它因素是独立的''这个假设无法在$\RSt_0$，$\RSt_1$，$\RSt_2$的\gls{graphical_models}中被表示出来。
-我们只能将这个关系表示在条件分布中。
+然而，值得注意的是在这个假设下$\RSt_0$和$\RSt_1$仍然是直接相关的，因为$\RSt_1$表示的是Bob完成时的时间，并不是他跑的总时间。
+这也意味着图中会有一个从$\RSt_0$指向$\RSt_1$的箭头。
+``Bob的个人跑步时间相对于其它因素是独立的''这个假设无法在$\RSt_0$，$\RSt_1$，$\RSt_2$的图中被表示出来。
+反之，我们只能将这个关系表示在条件分布的定义中。
 这个条件分布不再是一个大小为$k\times k-1$的分别对应着$\RSt_0$，  $\RSt_1$的表格，而是一个包含了$k-1$个参数的略复杂的公式。
 \gls{directed_graphical_model}并不能对我们如何定义条件分布做出任何限制。
-它只能定义哪些变量之间存在着\gls{dependency}关系。
+<bad>它只能定义哪些变量之间存在着\gls{dependency}关系。
 % 556  16.2 to 
 
 
@@ -307,40 +307,42 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 % 556
 
 
-\gls{directed_graphical_model}为我们提供了一个描述\gls{structured_probabilistic_models}的语言。
+\gls{directed_graphical_model}为我们提供了一种描述\gls{structured_probabilistic_models}的语言。
 而另一种常见的语言则是\firstgls{undirected_model}，也叫做\firstall{MRF}或者是\firstgls{markov_network} \citep{kindermann-book-1980}。
 就像它们的名字所说的那样，\gls{undirected_model}中所有的边都是没有方向的。
 % 556 end
 
 
-\gls{directed_model}适用于当存在一个很明显的理由来描述每一个箭头的时候。
-\gls{directed_model}中，经常存在我们理解的具有因果关系以及因果关系有明确的方向的情况下。
-接力赛的例子就是一个这样的例子。
-之前的运动员的表现影响了后面的运动员，而后面的运动员却不会影响前面的运动员。
+\gls{directed_model}显然适用于当存在一个很明显的理由来描述每一个箭头的时候。
+\gls{directed_model}中，经常存在我们理解的具有因果关系以及因果关系有明确方向的情况下。
+接力赛的例子就是一个这样的情况。
+之前运动员的表现影响了后面运动员的完成时间，而后面运动员却不会影响前面运动员的完成时间。
 % 557 head 
 
 
-然而并不是所有情况的相互影响中都有一个明确的方向关系。
-当相互的作用并没有本质的方向，或者是明确的有相互影响的时候，使用\gls{undirected_model}更加合适。
+然而并不是所有情况的相互作用都有一个明确的方向关系。
+当相互的作用并没有本质性的指向，或者是明确的双向相互作用的时候，使用\gls{undirected_model}更加合适。
 % 557 
 
 
 作为一个这种情况的例子，假设我们希望对三个二值随机变量建模：你是否生病，你的同事是否生病以及你的室友是否生病。
-就像在接力赛的例子中所作的简化的假设一样，我们可以在这里做一些简化的假设。
+就像在接力赛的例子中所作的简化假设一样，我们可以在这里做一些关于相互作用的简化假设。
 假设你的室友和同事并不认识，所以他们不太可能直接相互传染一些疾病，比如说是感冒。
 这个事件太过稀有，所以我们不对此事件建模。
-然而，如果他们之一感染了感冒，很有可能通过你来传染给了另一个人。
+然而，很有可能他们之一将感冒传染给你，然后通过你来传染给了另一个人。
 我们通过对你的同事传染给你以及你传染给你的室友建模来对这种间接的从你的同事到你的室友的感冒传染建模。
 % 557 
 
 
-在这种情况下，你传染给你的室友和你的室友传染给你都是非常容易的，所以不存在一个明确的单向的模型。
-这启发我们使用\gls{undirected_model}，其中随机变量对应着图中的相互作用的结点。
-不像是\gls{directed_model}中，在\gls{undirected_model}中的边是没有方向的，并不与一个条件分布相关联。
+在这种情况下，你传染给你的室友和你的室友传染给你都是非常容易的，所以模型不存在一个明确的单向箭头。
+这启发我们使用\gls{undirected_model}。
+其中随机变量对应着图中的相互作用的结点。
+与\gls{directed_model}相同的是，如果在\gls{undirected_model}中的两个结点通过一条边相连接，那么对应这些结点的随机变量相互之间是直接作用的。
+不同于\gls{directed_model}，在\gls{undirected_model}中的边是没有方向的，并不与一个条件分布相关联。
 % 557 
 
 
-我们把对应你的健康的随机变量记住$\RSh_y$，对应你的室友健康状况的随机变量记住$\RSh_r$，你的同事健康的变量记住$\RSh_c$。
+我们把对应你的健康的随机变量记作$\RSh_y$，对应你的室友健康状况的随机变量记作$\RSh_r$，你的同事健康的变量记作$\RSh_c$。
 \figref{fig:cold_undirected_graph}表示来这种关系。
 % 557 end
 
@@ -350,13 +352,14 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \else
 	\centerline{\includegraphics{Chapter16/figures/cold_undirected_graph}}	
 \fi
-	\caption{表示你室友健康的$h_r$，你的健康的$h_y$，你同事健康的$h_c$之间如何相互影响的一个无向图。
-		你和你的室友可能会相互传染感冒，你和你的同事之间也是如此，但是假设你室友和同事之间相互不认识，他们只能通过你来间接传染。}
+\caption{表示你室友健康的$\RSh_r$，你的健康的$\RSh_y$，你同事健康的$\RSh_c$之间如何相互影响的一个无向图。
+你和你的室友可能会相互传染感冒，你和你的同事之间也是如此，
+但是假设你室友和同事之间相互不认识，他们只能通过你来间接传染。}
 	\label{fig:cold_undirected_graph}
 \end{figure}
 
 正式的说，一个\gls{undirected_model}是一个定义在\gls{undirected_model} $\CalG$上的一个\gls{structured_probabilistic_models}。
-对图中的每一个\firstgls{clique}\footnote{图的一个\gls{clique}是图中结点的一个子集，并且其中的点是全连接的}$\CalC$，
+对图中的每一个\gls{clique}\footnote{图的一个\gls{clique}是图中结点的一个子集，并且其中的点是全连接的}$\CalC$，
 一个\firstgls{factor} $\phi(\CalC)$(也叫做\firstgls{clique_potential})，衡量了\gls{clique}中的变量的不同状态所对应的密切程度。
 这些\gls{factor}都被限制为是非负的。
 合在一起他们定义了\firstgls{unnormalized_probability_function}：
