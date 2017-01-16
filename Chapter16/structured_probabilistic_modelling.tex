@@ -358,9 +358,9 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 	\label{fig:cold_undirected_graph}
 \end{figure}
 
-正式的说，一个\gls{undirected_model}是一个定义在\gls{undirected_model} $\CalG$上的一个\gls{structured_probabilistic_models}。
+正式的说，一个\gls{undirected_model}是一个定义在\gls{undirected_model} $\CalG$上的\gls{structured_probabilistic_models}。
 对图中的每一个\gls{clique}\footnote{图的一个\gls{clique}是图中结点的一个子集，并且其中的点是全连接的}$\CalC$，
-一个\firstgls{factor} $\phi(\CalC)$(也叫做\firstgls{clique_potential})，衡量了\gls{clique}中的变量的不同状态所对应的密切程度。
+一个\firstgls{factor} $\phi(\CalC)$(也叫做\firstgls{clique_potential})，衡量了\gls{clique}中变量每一种可能的联合状态所对应的密切程度。
 这些\gls{factor}都被限制为是非负的。
 合在一起他们定义了\firstgls{unnormalized_probability_function}：
 \begin{align}
@@ -393,7 +393,6 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 在你，你的室友和同事之间感冒传染的例子中包含了两个\gls{clique}。
 一个\gls{clique}包含了$\RSh_y$和$\RSh_c$。
 这个\gls{clique}的\gls{factor}可以通过一个表来定义，可能取到下面的值：
-
 % \begin{table*}[!hbp]
 	% \centering
 \begin{table}
@@ -408,14 +407,14 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 % 558
 
 
-状态为$1$代表了健康的状态，相对的状态为$0$则表示不好的健康状态（即被感冒传染）。
+状态为$1$代表了健康的状态，相对的状态为$0$则表示不好的健康状态（即感染了感冒）。
 你们两个通常都是健康的，所以对应的状态拥有最高的密切程度。
 两个人中只有一个人是生病的密切程度是最低的，因为这是一个很少见的状态。
 两个人都生病的状态（通过一个人来传染给了另一个人）有一个稍高的密切程度，尽管仍然不及两个人都健康的密切程度。
 % 559 head  
 
 
-为了完整的定义这个模型，我们需要对包含$\RSh_y$和$\RSh_r$的\gls{clique}定义类似的\gls{factor}。
+为了完整地定义这个模型，我们需要对包含$\RSh_y$和$\RSh_r$的\gls{clique}定义类似的\gls{factor}。
 % 559 head
 
 
