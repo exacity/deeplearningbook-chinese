@@ -50,13 +50,13 @@
 
 % -- 646 --
 
-\gls{BM}有一个有趣的属性，当基于最大似然的学习规则训练时，连接两个单元的特定权重的更新仅取决于这两个单元在不同分布下收集的统计信息：$P_{\text{model}}(\Vv)$和$\hat{P}_{\text{data}}(\Vv) P_{\text{model}}(\Vh  \mid  \Vv)$。
+\gls{BM}有一个有趣的性质，当基于最大似然的学习规则训练时，连接两个单元的特定权重的更新仅取决于这两个单元在不同分布下收集的统计信息：$P_{\text{model}}(\Vv)$和$\hat{P}_{\text{data}}(\Vv) P_{\text{model}}(\Vh  \mid  \Vv)$。
 网络的其余部分参与\gls{shaping}这些统计信息，但权重可以在完全不知道网络其余部分或这些统计信息如何产生的情况下更新。
 这意味着学习规则是``局部''的，这使得\gls{BM}的学习似乎在某种程度上是生物学合理的。
-<BAD>可以想象，如果每个神经元都是\gls{BM}中的随机变量，那么连接两个随机变量的轴突和树突只能通过观察与它们物理上实际接触的细胞的激发模式来学习。
+我们可以设想每个神经元都是\gls{BM}中的随机变量的情况，那么连接两个随机变量的轴突和树突只能通过观察与它们物理上实际接触的细胞的激发模式来学习。
 特别地，\gls{positive_phase}期间，经常同时激活的两个单元之间的连接会被加强。
 这是\ENNAME{Hebbian}学习规则\citep{Hebb49}的一个例子 ，经常总结为好记的短语——``fire together, wire together''。
-\ENNAME{Hebbian}学习规则是生物系统学习中最古老的假设性解释之一，直至今天仍然相关 \citep{DelGuidice-et-al-2009}。
+\ENNAME{Hebbian}学习规则是生物系统学习中最古老的假设性解释之一，直至今天仍然有重大意义 \citep{DelGuidice-et-al-2009}。
 
 
 不仅仅使用局部统计信息的其他学习算法似乎需要假设更多的学习机制。
@@ -130,14 +130,14 @@ RBM的\gls{energy_function}由下给出
 \begin{align}
  Z = \sum_{\Vv} \sum_{\Vh} \exp \{-E(\Vv, \Vh) \}
 \end{align}
-从\gls{partition_function} $Z$的定义显而易见，计算$Z$的朴素方法（对所有状态进行穷举求和）可能是计算上难以处理的，除非有巧妙设计的算法可以利用概率分布中的规则来更快地计算$Z$。
+从\gls{partition_function} $Z$的定义显而易见，计算$Z$的朴素方法（对所有状态进行穷举求和）计算上可能是难以处理的，除非有巧妙设计的算法可以利用概率分布中的规则来更快地计算$Z$。
 在\gls{RBM}的情况下， \citet{long10rbm}正式证明\gls{partition_function} $Z$是难解的。
 难解的\gls{partition_function} $Z$意味着归一化\gls{joint_probability_distribution} $P(\Vv)$也难以评估。
 
 
 \subsection{条件分布}
 \label{sec:conditional_distributions_chap20}
-虽然$P(\Vv)$难解，但\glssymbol{RBM}的二分图结构具有非常特殊的性质，其条件分布$P(\Vh \mid \Vv)$和$P(\Vv\mid\Vh)$是\gls{factorial}，并且计算和采样是相对简单的。
+虽然$P(\Vv)$难解，但\glssymbol{RBM}的二分图结构具有非常特殊的性质，其条件分布$P(\RVh \mid \RVv)$和$P(\RVv\mid\RVh)$是\gls{factorial}的，并且计算和采样是相对简单的。
 
 % -- 649 --
 
@@ -151,8 +151,8 @@ RBM的\gls{energy_function}由下给出
  &=  \frac{1}{Z^\prime} \prod_{j=1}^{n_h} \exp \big\{ \Vc_j^\top \Vh_j + \Vv^\top\MW_{:,j} \Vh_j \big\} .
 \end{align}
 由于我们相对可见单元$\RVv$计算条件概率，相对于分布$P(\RVh  \mid  \RVv)$我们可以将它们视为常数。
-条件分布$ P(\Vh  \mid  \Vv) $ \gls{factorial}相乘本质，我们可以将向量$\Vh$上的联合概率写成单独元素$h_j$上（未归一化）分布的乘积。
-现在变成了对单个二值$h_j$上的分布进行归一化的简单问题。
+条件分布$ P(\RVh  \mid  \RVv) $ \gls{factorial}相乘的本质，我们可以将向量$\Vh$上的联合概率写成单独元素$h_j$上（未归一化）分布的乘积。
+现在原问题变成了对单个二值$h_j$上的分布进行归一化的简单问题。
 \begin{align}
  P(h_j=1  \mid  \Vv) &= \frac{\tilde{P}(h_j=1 \mid \Vv)}{\tilde{P}(h_j=0 \mid \Vv) + \tilde{P}(h_j=1 \mid \Vv)} \\
  &= \frac{\exp \{ c_j + \Vv^\top \MW_{:,j} \} }{\exp\{ 0 \} + \exp \{ c_j + \Vv^\top \MW_{:,j}\}} \\
@@ -187,27 +187,26 @@ RBM的\gls{energy_function}由下给出
 在引入\gls{DBN}之前，深度模型被认为太难以优化。
 具有凸目标函数的\gls{kernel_machines}占据了研究前景。
 \gls{DBN}在MNIST数据集上表现超过内核化支持向量机，以此证明深度架构是能够成功的\citep{Hinton06}。
-尽管现在与其他无监督或生成学习算法相比，\gls{DBN}大多已经失去了青睐并很少使用，但他们在深度学习历史中的重要作用仍应该得到承认。
+尽管现在与其他无监督或生成学习算法相比，\gls{DBN}大多已经失去了青睐并很少使用，但它们在深度学习历史中的重要作用仍应该得到承认。
 
 \gls{DBN}是具有若干\gls{latent_variable}层的\gls{generative_model}。
 \gls{latent_variable}通常是二值的，而可见单元可以是二值或实数。
-没有层内连接。
-通常，每层中的每个单元连接到每个相邻层中的每个单元，尽管构造更稀疏连接的\glssymbol{DBN}是可能的。
+尽管构造连接比较稀疏的\glssymbol{DBN}是可能的，但在一般的模型中，每层的每个单元连接到每个相邻层中的每个单元（没有层内连接）。
 顶部两层之间的连接是无向。
-所有其他层之间的连接是有向的，箭头指向最接近数据的层。
+而所有其他层之间的连接是有向的，箭头指向最接近数据的层。
 见\figref{fig:chap20_dbn}b的例子。
 
 
 具有$l$个\gls{hidden_layer}的\glssymbol{DBN}包含$l$个权重矩阵：$\MW^{(1)},\ldots, \MW^{(l)}$。
 同时也包含$l+1$个\gls{bias_aff}向量：
 $\Vb^{(0)},\ldots,\Vb^{(l)}$，其中$\Vb^{(0)}$是可见层的\gls{bias_aff}。
-由\glssymbol{DBN}表示的概率分布由下式给出：
+\glssymbol{DBN}表示的概率分布由下式给出：
 \begin{align}
  P(\Vh^{(l)}, \Vh^{(l-1)}) \propto& \exp \big( \Vb^{(l)^\top} \Vh^{(l)} +  \Vb^{(l-1)^\top} \Vh^{(l-1)}
  + \Vh^{(l-1)^\top} \MW^{(l)} \Vh^{(l)} \big), \\
  P(h_i^{(k)} = 1  \mid  \Vh^{(k+1)}) &= \sigma \big( b_i^{(k)} + \MW_{:,i}^{(k+1)^\top} \Vh^{(k+1)} 
                                                           \big)~ \forall i,  \forall k \in 1, \ldots, l-2, \\
-P(v_i^{(k)} = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \Vh^{(1)} 
+P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \Vh^{(1)} 
                                                           \big)~ \forall i.
 \end{align}
 在实值可见单元的情况下，替换
@@ -227,12 +226,12 @@ P(v_i^{(k)} = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\t
 \gls{DBN}引发许多与\gls{directed_model}和\gls{undirected_model}同时相关的问题。
 
 % What ?
-由于每个有向层内的解释远离效应，并且由于无向连接的两个\gls{hidden_layer}之间的相互作用，在\gls{DBN}中的\gls{inference}是难解的。
+由于每个有向层内的解释远离效应，并且由于无向连接的两个\gls{hidden_layer}之间的相互作用，\gls{DBN}中的\gls{inference}是难解的。
 评估或最大化对数似然的标准\gls{ELBO}也是难以处理的，因为\gls{ELBO}基于大小等于网络宽度的\gls{clique}的期望。
 
-评估或最大化对数似然，不仅需要面对边缘化\gls{latent_variable}时难以处理的\gls{inference}问题，而且还需要面对顶部两层\gls{undirected_model}内的难处理的\gls{partition_function}问题。
+评估或最大化对数似然，不仅需要面对边缘化\gls{latent_variable}时难以处理的\gls{inference}问题，而且还需要面对顶部两层\gls{undirected_model}内难处理的\gls{partition_function}问题。
 
-为训练\gls{DBN}，可以先使用\gls{contrastive_divergence}或\gls{SML}方法训练\glssymbol{RBM}以最大化$ \SetE_{\RVv \sim p_{\text{data}}} \log p(\Vv)$。
+为训练\gls{DBN}，我们可以先使用\gls{contrastive_divergence}或\gls{SML}方法训练\glssymbol{RBM}以最大化$ \SetE_{\RVv \sim p_{\text{data}}} \log p(\Vv)$。
 \glssymbol{RBM}的参数定义了\glssymbol{DBN}第一层的参数。
 然后，第二个\glssymbol{RBM}训练为近似最大化
 \begin{align}
@@ -263,13 +262,13 @@ P(v_i^{(k)} = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\t
 与\chapref{chap:approximate_inference}中从基本原理导出的许多\gls{inference}方程相比，这种特定选择的\glssymbol{MLP}有些任意。
 这个\glssymbol{MLP}是一个启发式选择，似乎在实践中工作良好，并在文献中一贯使用。
 <BAD>许多近似\gls{inference}技术是由它们在一些约束下在对数似然上找到最大\emph{紧}变分下界的能力所驱动的。
-我们可以使用\glssymbol{DBN}中\glssymbol{MLP}定义的\gls{hidden_unit}期望，构造对数似然的变分下界，但是对于\gls{hidden_unit}上的\emph{任何}概率分布都是如此，并没有理由相信该\glssymbol{MLP}提供了一个特别的紧界。
+我们可以使用\glssymbol{DBN}中\glssymbol{MLP}定义的\gls{hidden_unit}的期望，构造对数似然的变分下界，但这对于\gls{hidden_unit}上的\emph{任何}概率分布都是如此，并没有理由相信该\glssymbol{MLP}提供了一个特别的紧界。
 特别地，\glssymbol{MLP}忽略了\glssymbol{DBN}\gls{graphical_model}中许多重要的相互作用。
 \glssymbol{MLP}将信息从可见单元向上传播到最深的\gls{hidden_unit}，但不向下或侧向传播任何信息。
-\glssymbol{DBN}\gls{graphical_model}解释了同一层内所有\gls{hidden_unit}之间的相互作用以及层之间的自顶向下相互作用。
+\glssymbol{DBN}\gls{graphical_model}解释了同一层内所有\gls{hidden_unit}之间的相互作用以及层之间的自顶向下的相互作用。
 
 
-虽然\glssymbol{DBN}的对数似然是难处理的，但它可以用\glssymbol{AIS}近似\citep{Salakhutdinov+Murray-2008}。
+虽然\glssymbol{DBN}的对数似然是难处理的，但它可以使用\glssymbol{AIS}近似\citep{Salakhutdinov+Murray-2008}。
 通过近似，可以评估其作为\gls{generative_model}的质量。
 
 
@@ -287,7 +286,7 @@ P(v_i^{(k)} = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\t
 \firstall{DBM} \citep{SalHinton09}是另一种深度\gls{generative_model}。
 与\glsacr{DBN}不同，它是一个完全无向的模型。
 与\glssymbol{RBM}不同，\glssymbol{DBM}有几层\gls{latent_variable}（\glssymbol{RBM}只有一层）。
-但是像\glssymbol{RBM}一样，每个层内的每个变量是相互独立的，并以相邻层中的变量为条件。
+但是像\glssymbol{RBM}一样，每一层内的每个变量是相互独立的，并条件于相邻层中的变量。
 见\figref{fig:chap20_dbm_simple}中的图结构。
 \gls{DBM}已经被应用于各种任务，包括文档建模\citep{srivastava2013modeling}。
 
@@ -333,7 +332,7 @@ P(v_i^{(k)} = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\t
 \label{fig:chap20_dbm_bipartite}
 \end{figure}
 
-与全连接的\gls{BM}（每个单元连接到每个其他单元）相比，\glssymbol{DBM}提供了类似于\glssymbol{RBM}提供的一些优点。
+与全连接的\gls{BM}（每个单元连接到其他每个单元）相比，\glssymbol{DBM}提供了类似于\glssymbol{RBM}的一些优点。
 
 具体来说， 如\figref{fig:chap20_dbm_bipartite}所示，\glssymbol{DBM}的层可以组织成一个二分图，其中奇数层在一侧，偶数层在另一侧。
 立即可得，当我们条件于偶数层中的变量时，奇数层中的变量变得条件独立。
@@ -360,7 +359,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 我们可以简单地假设具有$l$层的\glssymbol{DBM}需要$l+1$次更新，每次迭代更新由某层单元组成的块。
 然而，我们可以仅在两次迭代中更新所有单元。
 \gls{gibbs_sampling}可以将更新分成两个块，一块包括所有偶数层（包括可见层），另一个包括所有奇数层。
-由于\glssymbol{DBM}二分连接模式，给定偶数层，关于奇数层的分布是\gls{factorial}，因此可以作为块同时且独立地采样。
+由于\glssymbol{DBM}二分连接模式，给定偶数层，关于奇数层的分布是\gls{factorial}的，因此可以作为块同时且独立地采样。
 类似地，给定奇数层，可以同时且独立地将偶数层作为块进行采样。
 高效采样对使用\gls{SML}算法的训练尤其重要。
 
@@ -372,10 +371,10 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 与\glssymbol{DBN}相比，\glssymbol{DBM}的后验分布$P(\Vh  \mid  \Vv)$更简单。
 有点违反直觉的是，这种后验分布的简单性允许更加丰富的后验近似。
 在\glssymbol{DBN}的情况下，我们使用启发式的近似\gls{inference}过程进行分类，其中我们可以通过\glssymbol{MLP}（使用\ENNAME{sigmoid}激活函数并且权重与原始\glssymbol{DBN}相同）中的向上传播猜测\gls{hidden_unit}合理的\gls{meanfield}期望值。
-\emph{任何}分布$Q(\Vh)$可以用于获得对数似然的变分下界。
-因此这种启发式过程让我们能够获得这样的下界。
+\emph{任何}分布$Q(\Vh)$可用于获得对数似然的变分下界。
+因此这种启发式的过程让我们能够获得这样的下界。
 但是，该界没有以任何方式显式优化，所以该界可能是远远不紧的。
-特别地，$Q$的启发式估计忽略了相同层内\gls{hidden_unit}之间的相互作用以及更深层中的\gls{hidden_unit}对更接近输入的\gls{hidden_unit}的自顶向下反馈影响。
+特别地，$Q$的启发式估计忽略了相同层内\gls{hidden_unit}之间的相互作用以及更深层中\gls{hidden_unit}对更接近输入的\gls{hidden_unit}自顶向下的反馈影响。
 因为\glssymbol{DBN}中基于启发式\glssymbol{MLP}的\gls{inference}过程不能考虑这些相互作用，所以得到的$Q$想必远不是最优的。
 \glssymbol{DBM}中，在给定其他层的情况下，层内的所有\gls{hidden_unit}都是条件独立的。
 这种层内相互作用的缺失使得通过\gls{fixed_point_equation}优化变分下界并找到真正最佳的\gls{meanfield}期望（在一些数值容差内）变得可能的。
@@ -389,21 +388,21 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 一个\glssymbol{DBM}不幸的特性是从中采样是相对困难的。
 \glssymbol{DBN}只需要在其顶部的一对层中使用\glssymbol{mcmc}采样。
-其他层仅在采样过程结束时，在一个有效的\gls{ancestral_sampling}步骤中使用。
+其他层仅在采样过程结束时，只需在一个有效的\gls{ancestral_sampling}步骤中使用\glssymbol{mcmc}。
 要从\glssymbol{DBM}生成样本，必须在所有层中使用\glssymbol{mcmc}，并且模型的每一层都参与每个\gls{markov_chain}转移。
 
 
 \subsection{\glssymbol{DBM}\glsentrytext{meanfield}\gls{inference}}
 \label{sec:dbm_mean_field_inference}
-给定相邻层，一个\glssymbol{DBM}层上的条件分布是\gls{factorial}。
+给定相邻层，一个\glssymbol{DBM}层上的条件分布是\gls{factorial}的。
 在有两个\gls{hidden_layer}的\glssymbol{DBM}的示例中，这些分布是$P(\Vv  \mid  \Vh^{(1)}), P(\Vh^{(1)}  \mid  \Vv, \Vh^{(2)})$和$P(\Vh^{(2)}  \mid  \Vh^{(1)})$。
-因为层之间的相互作用，\emph{所有}\gls{hidden_layer}上的分布通常不是\gls{factorial}。
-在有两个\gls{hidden_layer}的示例中，由于$\Vh^{(1)}$和$\Vh^{(2)}$之间的交互权重$\MW^{(2)}$使得这些变量相互依赖， $ P(\Vh^{(1)}  \mid  \Vv, \Vh^{(2)})$不是\gls{factorial}。
+因为层之间的相互作用，\emph{所有}\gls{hidden_layer}上的分布通常不是\gls{factorial}的。
+在有两个\gls{hidden_layer}的示例中，由于$\Vh^{(1)}$和$\Vh^{(2)}$之间的交互权重$\MW^{(2)}$使得这些变量相互依赖， $ P(\Vh^{(1)}  \mid  \Vv, \Vh^{(2)})$不是\gls{factorial}的。
 
 
 与\glssymbol{DBN}的情况一样，我们还是要找出近似\glssymbol{DBM}后验分布的方法。
 然而，与\glssymbol{DBN}不同，\glssymbol{DBM}在其\gls{hidden_unit}上的后验分布（复杂的） 很容易用变分近似来近似（如\secref{sec:variational_inference_and_learning}所讨论），具体是一个\gls{meanfield}近似。
-\gls{meanfield}近似是变分\gls{inference}的简单形式，其中我们将近似分布限制为完全\gls{factorial}分布。
+\gls{meanfield}近似是变分\gls{inference}的简单形式，其中我们将近似分布限制为完全\gls{factorial}的分布。
 在\glssymbol{DBM}的情况下，\gls{meanfield}方程捕获层之间的双向相互作用。
 在本节中，我们推导出由\cite{SalHinton09}最初引入的迭代近似\gls{inference}过程。
 
@@ -448,7 +447,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 % -- 658 --
 
-现在我们已经指定了近似分布$Q$的函数族，仍然需要指定用于选择该函数族中最适合$P$的成员的过程。
+现在我们已经指定了近似分布$Q$的函数族，但仍然需要指定用于选择该函数族中最适合$P$的成员的过程。
 最直接的方法是使用\eqnref{eqn:1956}指定的\gls{meanfield}方程。
 这些方程是通过求解变分下界导数为零的位置而导出。
 他们以抽象的方式描述如何优化任意模型的变分下界（只需对$Q$求期望）。
@@ -467,13 +466,13 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 将近似变分\gls{inference}扩展到更深的\glssymbol{DBM}是直观的。
 
 
-\subsection{\glssymbol{DBM}参数学习}
+\subsection{\glssymbol{DBM}的参数学习}
 \label{sec:dbm_parameter_learning}
 
 \glssymbol{DBM}中的学习必须面对难解\gls{partition_function}的挑战（使用\chapref{chap:confronting_the_partition_function}中的技术），以及难解后验分布的挑战（使用\chapref{chap:approximate_inference}中的技术）。
 
 如\secref{sec:dbm_mean_field_inference}中所描述的，变分\gls{inference}允许构建近似难处理的$P(\Vh  \mid  \Vv)$的分布$Q(\Vh \mid \Vv)$。
-然后通过最大化$\CalL(\Vv, Q, \Vtheta)$（难处理的对数似然的变分下限$\log P(\Vv; \Vtheta)$）学习。
+然后通过最大化$\CalL(\Vv, Q, \Vtheta)$（难处理的对数似然的变分下界$\log P(\Vv; \Vtheta)$）学习。
 
 % -- 659 --
 
@@ -553,8 +552,8 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 如\secref{sec:jointly_training_deep_boltzmann_machines} 所述，目前已经开发了允许联合训练的各种技术。
 然而，克服\glssymbol{DBM}的联合训练问题最初和最流行的方法是贪婪的\gls{layer_wise_pretraining}。
 在该方法中，\glssymbol{DBM}的每一层被单独视为\glssymbol{RBM}，进行训练。
-第一层被训练为对输入数据建模。
-每个后续\glssymbol{RBM}被训练为对来自前一\glssymbol{RBM}后验分布的样本建模。
+第一层被训练为对输入数据进行建模。
+每个后续\glssymbol{RBM}被训练为对来自前一\glssymbol{RBM}后验分布的样本进行建模。
 在以这种方式训练了所有\glssymbol{RBM}之后，它们可以被组合成\glssymbol{DBM}。
 然后可以用\glssymbol{persistent_contrastive_divergence}训练\glssymbol{DBM}。
 通常，\glssymbol{persistent_contrastive_divergence}训练将仅使模型的参数、由数据上的对数似然衡量的性能、或区分输入的能力发生微小的变化。
@@ -583,9 +582,9 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 % -- 661 --
 
-这种贪婪的分层训练过程不仅仅是坐标上升。
+这种贪婪的逐层训练过程不仅仅是坐标上升。
 因为我们在每个步骤优化参数的一个子集，它与坐标上升具有一些传递的相似性。
-然而，在贪婪分层训练过程的情况下，实际上我们在每个步骤使用不同的\gls{objective_function}。
+然而实际上，在贪婪逐层训练过程的情况下，我们在每个步骤使用不同的\gls{objective_function}。
 
 \glssymbol{DBM}的\gls{greedy_layer_wise_pretraining}与\glssymbol{DBN}的\gls{greedy_layer_wise_pretraining}不同。
 每个单独的\glssymbol{RBM}的参数可以直接复制到相应的\glssymbol{DBN}。
@@ -609,12 +608,12 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 这产生一些不希望的性质。
 因为我们不能在训练第一个\glssymbol{RBM}时评估完整\glssymbol{DBM}的属性，所以在训练期间难以跟踪性能。
 因此，直到相当晚的训练过程，我们都很难知道我们的超参数表现如何。
-\glssymbol{DBM}的软件实现需要很多不同的模块，用于单个\glssymbol{RBM}的\glssymbol{contrastive_divergence}训练、完整\glssymbol{DBM}的\glssymbol{persistent_contrastive_divergence}训练以及基于\gls{back_propagation}的\glssymbol{MLP}训练。
+\glssymbol{DBM}的软件实现需要很多不同的模块，如用于单个\glssymbol{RBM}的\glssymbol{contrastive_divergence}训练、完整\glssymbol{DBM}的\glssymbol{persistent_contrastive_divergence}训练以及基于\gls{back_propagation}的\glssymbol{MLP}训练。
 最后，\gls{BM}顶部的\glssymbol{MLP}失去了\gls{BM}概率模型的许多优点，例如当某些输入值丢失时仍能够进行\gls{inference}的优点。
 
 % -- 662 --
 
-有两种主要方法可以处理\gls{DBM}的联合训练问题。
+主要有两种方法可以处理\gls{DBM}的联合训练问题。
 第一个是\textbf{中心化\gls{DBM}}(centered deep Boltzmann machine) \citep{Montavon2012}，通过重参数化模型使其在开始学习过程时\gls{cost_function}的\gls{hessian}具有更好的条件数。
 这个模型不用经过\gls{greedy_layer_wise_pretraining}阶段就能训练。
 这个模型在测试集上获得出色的对数似然，并能产生高质量的样本。
@@ -639,11 +638,11 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 这种重参数化不改变模型可表示的概率分布的集合，但它确实改变了应用于似然的\gls{SGD}的动态。
 具体来说，在许多情况下，这种重参数化导致更好条件数的\gls{hessian}矩阵。
 \citet{melchior2013center}通过实验证实了\gls{hessian}矩阵条件数的改善，并观察到中心化技巧等价于另一个\gls{Boltzmann}学习技术——\textbf{增强梯度}(enhanced gradient) \citep{ICML2011Cho_98-small}。
-即使在困难的情况下，例如训练多层的\gls{DBM}，\gls{hessian}矩阵条件数的改进也能使学习成功。
+即使在困难的情况下，例如训练多层的\gls{DBM}，\gls{hessian}矩阵条件数的改善也能使学习成功。
 
 % -- 664 --
 
-联合训练\gls{DBM}的另一种方法是\glsacr{MPDBM}，将\gls{meanfield}方程视为定义一系列用于近似求解每个可能\gls{inference}问题的\gls{recurrent_network}\citep{Goodfellow-et-al-NIPS2013}。
+联合训练\gls{DBM}的另一种方法是\glsacr{MPDBM}，它将\gls{meanfield}方程视为定义一系列用于近似求解每个可能\gls{inference}问题的\gls{recurrent_network}\citep{Goodfellow-et-al-NIPS2013}。
 模型被训练为使每个\gls{recurrent_network}获得对相应\gls{inference}问题的准确答案，而不是训练模型来最大化似然。
 训练过程如\figref{fig:chap20_multi_prediction_training}所示。
 它包括随机采一个训练样本、随机采样\gls{inference}网络的输入子集，然后训练\gls{inference}网络来预测剩余单元的值。
@@ -681,7 +680,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 通过\gls{inference}图的\gls{back_propagation}有两个主要优点。
 首先，它以模型真正使用的方式训练模型 —— 使用近似\gls{inference}。
 这意味着在\glssymbol{MPDBM}中，进行如填充缺失的输入或执行分类（尽管存在缺失的输入）的近似\gls{inference}比在原始\glssymbol{DBM}中更准确。
-原始\glssymbol{DBM}不会自己做出准确的分类器; 使用原始\glssymbol{DBM}的最佳分类结果是基于\glssymbol{DBM}提取的特征训练单独的分类器，而不是通过使用\glssymbol{DBM}中的\gls{inference}来计算关于类标签的分布。
+原始\glssymbol{DBM}不会自己做出准确的分类器; 使用原始\glssymbol{DBM}的最佳分类结果是基于\glssymbol{DBM}提取的特征训练独立的分类器，而不是通过使用\glssymbol{DBM}中的\gls{inference}来计算关于类标签的分布。
 \glssymbol{MPDBM}中的\gls{meanfield}\gls{inference}作为分类器，不进行特殊修改就表现良好。
 通过近似\gls{inference}\gls{back_propagation}的另一个优点是\gls{back_propagation}计算损失的精确梯度。
 对于优化而言，比\glssymbol{SML}训练中具有偏差和方差的近似梯度更好。
@@ -1147,12 +1146,12 @@ $\frac{\partial\log p(\Vy)}{\partial \Vomega} = \frac{1}{p(\Vy)}
 \end{align}
 这意味着
 \begin{align}
- E_{p(\Vy)} \Bigg[ (J(\Vy)) - b(\Vomega))\frac{\partial\log p(\Vy)}{\partial \Vomega}  \Bigg] &= 
+ E_{p(\Vy)} \Bigg[ (J(\Vy) - b(\Vomega))\frac{\partial\log p(\Vy)}{\partial \Vomega}  \Bigg] &= 
  E_{p(\Vy)} \Bigg[ J(\Vy) \frac{\partial\log p(\Vy)}{\partial \Vomega} \Bigg]
  - b(\Vomega) E_{p(\Vy)} \Bigg[ \frac{\partial\log p(\Vy)}{\partial \Vomega}  \Bigg] \\
  &= E_{p(\Vy)} \Bigg[ J(\Vy) \frac{\partial\log p(\Vy)}{\partial \Vomega} \Bigg] .
 \end{align}
-此外，我们可以通过计算$(J(\Vy)) - b(\Vomega))\frac{\partial\log p(\Vy)}{\partial \Vomega} $
+此外，我们可以通过计算$(J(\Vy) - b(\Vomega))\frac{\partial\log p(\Vy)}{\partial \Vomega} $
 关于$p(\Vy)$的方差，并关于$b(\Vomega)$最小化获得最优$b(\Vomega)$。
 我们发现这个最佳基线$b^*(\Vomega)_i$对于向量$\Vomega$的每个元素$\omega_i$是不同的：
 \begin{align} \label{eq:est_b}
@@ -1162,7 +1161,7 @@ $\frac{\partial\log p(\Vy)}{\partial \Vomega} = \frac{1}{p(\Vy)}
 \end{align}
 相对于$\omega_i$的梯度估计则变为
 \begin{align}
- (J(\Vy)) - b(\Vomega)_i)\frac{\partial\log p(\Vy)}{\partial \omega_i},
+ (J(\Vy) - b(\Vomega)_i)\frac{\partial\log p(\Vy)}{\partial \omega_i},
 \end{align}
 其中$ b(\Vomega)_i$ 估计上述$ b^*(\Vomega)_i$。
 获得估计$b$通常需要将额外输出添加到神经网络，并训练新输出对$\Vomega$的每个元素估计$E_{p(\Vy)} 
@@ -1900,7 +1899,7 @@ $\vcenter{\hbox{
 这可能是一个困难且微妙的任务。
 通常，我们不能实际评估模型下数据的对数概率，但仅可以评估一个近似。
 在这些情况下，重要的是思考和沟通清楚正在测量什么。
-例如，假设我们可以评估模型A对数似然的随机估计和模型B对数似然的确定性下限。
+例如，假设我们可以评估模型A对数似然的随机估计和模型B对数似然的确定性下界。
 如果模型A得分高于模型B，哪个更好？
 如果我们关心确定哪个模型具有分布更好的内部表示，我们实际上不能说哪个更好，除非我们有一些方法来确定模型B的边界有多松。
 然而，如果我们关心在实践中该模型能用得多好，例如执行异常检测，则基于特定于感兴趣的实际任务的准则，可以公平地说模型是更好的，例如基于排名测试样例和排名标准，如精度和召回率。
