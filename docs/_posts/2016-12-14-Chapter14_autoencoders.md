@@ -49,7 +49,7 @@ share: false
 
 学习过程可以简单地描述为最小化一个损失函数 
 \begin{align}
-L(\Vx, g(f(\Vx)),
+    L(\Vx, g(f(\Vx))),
 \end{align}
 其中$L$是一个损失函数，衡量$g(f(\Vx))$与$\Vx$的不相似性，如均方误差。
 
@@ -96,7 +96,7 @@ L(\Vx, g(f(\Vx)),
 
 稀疏自动编码器简单地在训练时结合编码层的稀疏惩罚$\Omega(\Vh)$和重构误差：
 \begin{align}
-L(\Vx, g(f(\Vx)) + \Omega(\Vh),
+    L(\Vx, g(f(\Vx))) + \Omega(\Vh),
 \end{align}
 其中$g(\Vh)$是解码器的输出，通常$\Vh$是编码器的输出，即$\Vh = f(\Vx)$。
 
@@ -172,7 +172,7 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 
 传统的自动编码器最小化以下目标
 \begin{align}
-L(\Vx, g(f(\Vx)),
+    L(\Vx, g(f(\Vx))),
 \end{align}
 其中$L$是一个损失函数，衡量$g(f(\Vx))$与$\Vx$的不相似性，如它们不相似度的$L^2$范数。
 如果模型被赋予足够的容量，$L$仅仅鼓励$g \circ  f$学成一个恒等函数。
@@ -180,7 +180,7 @@ L(\Vx, g(f(\Vx)),
 
 相反，去噪自动编码器最小化 
 \begin{align}
-L(\Vx, g(f(\tilde \Vx)),
+    L(\Vx, g(f(\tilde \Vx))),
 \end{align}
 其中 $\tilde \Vx$是被某种噪声损坏的$\Vx$的副本。
 因此去噪自动编码器必须撤消这些损坏，而不是简单地复制输入。
@@ -197,7 +197,7 @@ L(\Vx, g(f(\tilde \Vx)),
 
 另一正则化自动编码器的策略是使用一个类似稀疏自动编码器中的惩罚项$\Omega$，
 \begin{align}
-L(\Vx, g(f(\Vx)) + \Omega(\Vh, \Vx),
+    L(\Vx, g(f(\Vx))) + \Omega(\Vh, \Vx),
 \end{align}
 但$\Omega$的形式不同：
 \begin{align}
