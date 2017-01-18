@@ -977,7 +977,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 573  head  
 
 
-当模型旨在描述具有直接连接的可见变量之间的\gls{dependency}关系时，通常不可能连接所有变量，因此设计\gls{graphical_models}时需要连接紧密耦合的那些变量，并忽略其他变量之间的作用。
+当模型旨在描述直接连接的可见变量之间的\gls{dependency}关系时，通常不可能连接所有变量，因此设计\gls{graphical_models}时需要连接那些紧密相关的变量，并忽略其他变量之间的作用。
 \gls{ML}中有一个称为\firstgls{structure_learning}的领域来专门讨论这个问题。
 \citet{koller-book2009}是一个\gls{structure_learning}的好的参考资料。
 大多数\gls{structure_learning}技术是基于一种贪婪搜索的形式。
@@ -989,17 +989,17 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 使用\gls{latent_variable}而不是自适应结构避免了离散搜索和多轮训练的需要。 
-可见变量和\gls{latent_variable}之间的固定结构可以使用可见单元和隐藏单元之间的直接作用，从而使得可见单元之间间接作用。
-使用简单的参数学习技术，我们可以学习到一个具有固定结构的模型，在边缘分布$p(\Vv)$上输入正确的结构。
+可见变量和\gls{latent_variable}之间的固定结构可以使用可见单元和\gls{hidden_unit}之间的直接作用，从而使得可见单元之间间接作用。
+使用简单的参数学习技术，我们可以学习到一个具有固定结构的模型，这个模型在边缘分布$p(\Vv)$上拥有正确的结构。
 % 573 
 
 
-\gls{latent_variable}还有一个额外的优势，即能够高效的描述$p(\RVv)$。
+\gls{latent_variable}还有一个额外的优势，即能够高效地描述$p(\RVv)$。
 新变量$\RVh$还提供了$\RVv$的替代表示。
-例如，如\secref{sec:mixtures_of_distributions}所示，\glssymbol{GMM}学习了一个\gls{latent_variable}，这个\gls{latent_variable}对应于特征是从哪一个混合体中抽出。
+例如，如\secref{sec:mixtures_of_distributions}所示，\glssymbol{GMM}学习了一个\gls{latent_variable}，这个\gls{latent_variable}对应于输入样本是从哪一个混合体中抽出。
 这意味着\glssymbol{GMM}中的\gls{latent_variable}可以用于做分类。
-在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器的输入特征或者作为\gls{manifold}上坐标的\gls{latent_variable}的。
-其他模型也可以使用相同的方式，其中具有多种相互作用方式的模型和深层模型可以获得更丰富的输入描述。
+在\chapref{chap:autoencoders}中，我们看到了简单的概率模型如\gls{sparse_coding}是如何学习可以用作分类器输入特征或者作为\gls{manifold}上坐标的\gls{latent_variable}的。
+其他模型也可以使用相同的方式，但是更深的模型和具有多种相互作用方式的模型可以获得更丰富的输入描述。
 许多方法通过学习\gls{latent_variable}来完成特征学习。
 通常，给定$\RVv$和$\RVh$，实验观察显示$\SetE[\RVh\mid\RVv]$或${\arg\max}_{\Vh}\ p(\Vh,\Vv)$都是$\Vv$的良好特征映射。
 % 573
