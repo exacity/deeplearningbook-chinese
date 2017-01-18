@@ -883,7 +883,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \label{sec:sampling_from_graphical_models}
 
 % 570  
-\gls{graphical_models}大大简化了从模型中的采样过程。
+\gls{graphical_models}同样简化了从模型中采样的过程。
 
 
 \gls{directed_graphical_model}的一个优点是，可以通过一个简单高效的被称作是\firstgls{ancestral_sampling}的过程从由模型表示的联合分布中抽取样本。
@@ -891,10 +891,10 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 其基本思想是将图中的变量$\RSx_i$使用拓扑排序，使得对于所有$i$和$j$，
-如果$\RSx_i$是$\RSx_j$的父亲结点，则$j$大于$i$。
+如果$\RSx_i$是$\RSx_j$的一个父亲结点，则$j$大于$i$。
 然后可以按此顺序对变量进行采样。
-换句话说，我们可以首先采$\RSx_1\sim P(\RSx_1)$，然后采$\RSx_2\sim P(\RSx_2\mid Pa_{\CalG}(\RSx_2))$，以此类推，直到最后我们采$\RSx_n\sim P(\RSx_n\mid Pa_{\CalG}(\RSx_n))$。
-只要每个条件分布$\RSx_i\sim P(\RSx_i\mid Pa_{\CalG}(\RSx_i))$都很容易从中采样，那么很容易从整个模型中抽样。
+换句话说，我们可以首先采$\RSx_1\sim P(\RSx_1)$，然后采$\RSx_2\sim P(\RSx_2\mid Pa_{\CalG}(\RSx_2))$，以此类推，直到最后我们从$ P(\RSx_n\mid Pa_{\CalG}(\RSx_n))$中采样。
+只要从每个条件分布$\RSx_i\sim P(\RSx_i\mid Pa_{\CalG}(\RSx_i))$中采样都是很容易的，那么很容易从整个模型中抽样。
 拓扑排序操作保证我们可以按照\eqnref{eqn:161}中条件分布的顺序依次采样。
 如果没有拓扑排序，我们可能会尝试在其父节点可用之前对该变量进行抽样。
 % 571  
@@ -904,13 +904,13 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \gls{ancestral_sampling}可以使用这些拓扑排序中的任何一个。
 % 571
 
-\gls{ancestral_sampling}通常非常快（假设从每个条件的采样容易）并且方便。
+\gls{ancestral_sampling}通常非常快（假设从每个条件分布中采样都是很容易的）并且方便。
 % 571  
 
 
 \gls{ancestral_sampling}的一个缺点是其仅适用于\gls{directed_graphical_model}。 
 另一个缺点是它并不是每次采样都是条件采样操作。
-当我们希望从\gls{directed_graphical_model}中变量的子集中抽样时，给定一些其他变量，我们经常要求所有给定的条件变量比要抽样的变量的顺序要早。
+当我们希望从\gls{directed_graphical_model}中变量的子集中抽样时，给定一些其他变量，我们经常要求所有给定的条件变量在图中比要抽样的变量的顺序要早。
 在这种情况下，我们可以从模型分布指定的局部条件概率分布进行抽样。 
 否则，我们需要采样的条件分布是给定观测变量的后验分布。
 这些后验分布在模型中通常没有明确指定和参数化。 
@@ -921,19 +921,19 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 不幸的是，\gls{ancestral_sampling}仅适用于\gls{directed_model}。 
-我们可以通过将\gls{undirected_model}转换为\gls{directed_model}来实现从\gls{undirected_model}中抽样，但是这通常需要解决棘手的推断问题（以确定新有向图的根节点上的边缘分布），或者需要引入许多边，从而会使得到的\gls{directed_model}变得难以处理。
+我们可以通过将\gls{undirected_model}转换为\gls{directed_model}来实现从\gls{undirected_model}中抽样，但是这通常需要解决棘手的推断问题（以确定新有向图的根节点上的边缘分布），或者需要引入许多边从而会使得到的\gls{directed_model}变得难以处理。
 从\gls{undirected_model}抽样，而不首先将其转换为\gls{directed_model}的做法似乎需要解决循环依赖的问题。 
 每个变量与每个其他变量相互作用，因此对于抽样过程没有明确的起点。
-不幸的是，从\gls{undirected_model}中抽取样本是一个昂贵的过程。
+不幸的是，从\gls{undirected_model}中抽取样本是一个昂贵的多次迭代的过程。
 理论上最简单的方法是\firstgls{gibbs_sampling}。
 假设我们在一个$n$维向量的随机变量$\RVx$上有一个\gls{graphical_models}。 
 我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \mid \RSx_{-i})$中抽样。
-由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以仅对$\RSx_i$的邻居条件化。
+由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以等价地仅对$\RSx_i$的邻居条件化。
 不幸的是，在我们遍历\gls{graphical_models}一次并采样所有$n$个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
 相反，我们必须重复该过程并使用它们邻居的更新值对所有$n$个变量重新取样。
-在多次重复之后，该过程渐近地收敛到目标分布。
-很难确定样本何时达到期望分布的足够精确的近似。
-\gls{undirected_model}的抽样技术是一个值得深入的研究方向，\chapref{chap:monte_carlo_methods}将对此进行更详细的讨论。
+在多次重复之后，该过程渐近地收敛到正确的目标分布。
+很难确定样本何时达到所期望分布的足够精确的近似。
+\gls{undirected_model}的抽样技术是一个高级的研究方向，\chapref{chap:monte_carlo_methods}将对此进行更详细的讨论。
 % 572 head
 
 
@@ -944,18 +944,18 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 572
 
 
-使用\gls{structured_probabilistic_models}的主要优点是它们能够显著降低表示概率分布以及学习和推断的成本。
-\gls{directed_model}可以加速采样的过程，但是对于\gls{undirected_model}情况则较为复杂。
+使用\gls{structured_probabilistic_models}的主要优点是它们能够显著降低表示概率分布、学习和推断的成本。
+\gls{directed_model}中采样还可以被加速，但是对于\gls{undirected_model}情况则较为复杂。
 允许所有这些操作使用较少的运行时间和内存的主要机制是选择不对某些变量的相互作用进行建模。
-\gls{graphical_models}构造边来传达信息。
-在没有边的情况下，模型假设不对变量间的相互作用直接建模。
+\gls{graphical_models}通过省略某些边来传达信息。
+在没有边的情况下，模型假设不对变量间直接的相互作用建模。
 % 572
 
 
-使用\gls{structured_probabilistic_models}的一个较小的益处是它们允许我们明确地将给定的现有的知识与知识的学习或者推断分开。
+使用\gls{structured_probabilistic_models}的一个更加不容易量化的益处是它们允许我们明确地将给定的现有的知识与知识的学习或者推断分开。
 这使我们的模型更容易开发和调试。 
-我们可以设计，分析和评估适用于更广范围的学习算法和推断算法。
-并且我们可以设计能够捕捉到我们认为重要的关系的模型。
+我们可以设计、分析和评估适用于更广范围的图的学习算法和推断算法。
+同时，我们可以设计能够捕捉到我们认为重要的关系的模型。
 然后，我们可以组合这些不同的算法和结构，并获得不同可能性的笛卡尔乘积。
 为每种可能的情况设计\gls{end_to_end}算法是困难的。
 % 572
@@ -969,11 +969,11 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 良好的生成模型需要准确地捕获所观察到的或``可见''变量$\RVv$上的分布。
 通常$\RVv$的不同元素彼此高度依赖。
 在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个潜在的或``隐藏''变量$\Vh$。
-然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_i$直接依赖)。
+然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_j$直接依赖)。
 % 572  end 
 
-一个好的不包含任何\gls{latent_variable} $\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
-但是代表这些高阶的相互作用是昂贵的，首先从计算角度上，存储在存储器中的参数数量是\gls{clique}中成员数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
+一个好的不包含任何\gls{latent_variable}的 关于$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
+仅仅表示这些高阶的相互作用是昂贵的，首先从计算角度上，存储在存储器中的参数数量是\gls{clique}中成员数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
 % 573  head  
 
 
