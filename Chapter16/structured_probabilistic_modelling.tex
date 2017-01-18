@@ -969,11 +969,11 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 良好的生成模型需要准确地捕获所观察到的或``可见''变量$\RVv$上的分布。
 通常$\RVv$的不同元素彼此高度依赖。
 在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个潜在的或``隐藏''变量$\Vh$。
-然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_i$直接依赖)。
+然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_j$直接依赖)。
 % 572  end 
 
-一个好的不包含任何\gls{latent_variable} $\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
-但是代表这些高阶的相互作用是昂贵的，首先从计算角度上，存储在存储器中的参数数量是\gls{clique}中成员数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
+一个好的不包含任何\gls{latent_variable}的 关于$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
+仅仅表示这些高阶的相互作用是昂贵的，首先从计算角度上，存储在存储器中的参数数量是\gls{clique}中成员数量的指数级别，接着在统计学意义上，因为这个指数数量的参数需要大量的数据来准确估计。
 % 573  head  
 
 
