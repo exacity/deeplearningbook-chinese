@@ -136,7 +136,7 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z}
 % 584
 
 对于\gls{importance_sampling}来说任意$q$分布都是可行的（从得到一个期望上正确的值的角度来说），$q^*$指的是最优的$q$分布。
-从$q^*$中采样往往是不可行的，但是其它仍然能降低方差的$q$的选择还是可行的。
+从$q^*$中采样往往是不可行的，但是其他仍然能降低方差的$q$的选择还是可行的。
 % 584
 
 
@@ -166,7 +166,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 585
 
 尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}的应用中仍然扮演着重要的角色，包括\gls{DL}问题。
-比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\secref{sec:importance_sampling_chap12}）或者其它有着大量输出结点的\gls{NN}中。
+比方说，\gls{importance_sampling}被应用于加速训练大规模词汇神经网络的过程中（见\secref{sec:importance_sampling_chap12}）或者其他有着大量输出结点的\gls{NN}中。
 此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见\secref{sec:estimating_the_partition_function}）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见\secref{sec:variational_autoencoders}）。
 采用\gls{SGD}训练模型参数的时候\gls{importance_sampling}可以用来改进对\gls{cost_function}的梯度的估计，尤其是针对于分类器模型的训练中一小部分错误分类样本产生的\gls{cost_function}。
 在这种情况下更加频繁的采集这些困难的样本可以降低梯度估计的方差\citep{Hinton06}。
@@ -258,7 +258,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 
 矩阵$\MA$有一种特殊的结构，因为它的每一列都代表了一个概率分布。
 这样的矩阵被称作是\firstgls{stochastic_matrix}。
-对于任意状态$x$到任意其它状态$x'$存在一个$t$使得转移概率不为$0$，那么Perron-Frobenius定理~\citep{perron1907theorie,frobenius1908matrizen}可以保证这个矩阵的最大特征值是实数且大小为$1$。
+对于任意状态$x$到任意其他状态$x'$存在一个$t$使得转移概率不为$0$，那么Perron-Frobenius定理~\citep{perron1907theorie,frobenius1908matrizen}可以保证这个矩阵的最大特征值是实数且大小为$1$。
 我们可以看到所有的特征值随着时间呈现指数变化：
 \begin{align}
 \Vv^{(t)} = (\MV \text{diag}(\Vlambda)\MV^{-1})^{t} \Vv^{(0)} = \MV \text{diag}(\Vlambda)^t \MV^{-1} \Vv^{(0)}.
@@ -280,7 +280,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 这个条件保证了收敛到了\gls{stationary_distribution}以后，之后的采样过程不会改变不同的\gls{markov_chain}的状态的分布（尽管转移算子自然而然地会改变每个单独的状态）。
 % 588
 
-如果我们正确地选择了转移算子$T$，那么最终的\gls{stationary_distribution}$q$将会等于我们所希望采样的分布$p$。
+如果我们正确地选择了转移算子$T$，那么最终的\gls{stationary_distribution} $q$将会等于我们所希望采样的分布$p$。
 我们会简要地介绍如何选择$T$，详见\secref{sec:gibbs_sampling}。
 % 588
 
@@ -315,7 +315,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 这段时间通常被称为\firstgls{mixing_time}。
 检测一个\gls{markov_chain}是否达到平衡是很困难的。
 我们并没有足够完善的理论来解决这个问题。
-理论只能保证\gls{markov_chain}会最终收敛，但是无法保证其它。
+理论只能保证\gls{markov_chain}会最终收敛，但是无法保证其他。
 如果我们从矩阵$\MA$作用在概率向量$\Vv$的角度来分析\gls{markov_chain}，那么我们可以发现当$\MA^t$除了$1$以外的特征值都趋于$0$的时候，\gls{markov_chain}收敛到了\gls{equilibrium_distribution}。
 这也意味着矩阵$\MA$的第二大的特征值决定了\gls{markov_chain}的混合时间。
 然而，在实践中，我们通常不能将\gls{markov_chain}表示成为矩阵的形式。
@@ -353,8 +353,8 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 % 590
 
 设计从$p_{\text{model}}$中采样的\gls{markov_chain}还存在另外的备选方法。
-比如说，Metropolis-Hastings算法在其它情景下被广泛使用。
-在\gls{DL}的\gls{undirected_model}中，除了\gls{gibbs_sampling}很少使用其它的方法。
+比如说，Metropolis-Hastings算法在其他情景下被广泛使用。
+在\gls{DL}的\gls{undirected_model}中，除了\gls{gibbs_sampling}很少使用其他的方法。
 改进采样技巧也是一个潜在的研究热点。
 % 590
 
@@ -381,7 +381,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 在这种情况下，我们考虑在一定步数内从一个\gls{mode}移动到一个临近\gls{mode}的概率。
 决定这个概率的是两个\gls{mode}之间的``能量障碍''的形状。
 隔着一个巨大``能量障碍'' （低概率的区域）的两个\gls{mode}之间的转移概率是（随着能量障碍的高度）指数下降的，如在\figref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
-当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分又严重依赖其它的变量时，这会导致严重的问题。
+当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分又严重依赖其他的变量时，这会导致严重的问题。
 % 591
 
 
@@ -395,7 +395,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 	（左）一个带有两个独立变量的\gls{multivariate_normal_distribution}。由于变量是独立的，\gls{gibbs_sampling}\gls{mixing}得很好。
 	（中）变量存在高度相关性的\gls{multivariate_normal_distribution}。
 	变量之间的相关性使得\gls{markov_chain}很难\gls{mixing}。
-	因为每一个变量的更新需要相对其它变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。
+	因为每一个变量的更新需要相对其他变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。
 	（右）\gls{mode}之间间距很大且不在轴上对齐的混合高斯。
 	\gls{gibbs_sampling}\gls{mixing}得很慢，因为每次更新一个变量很难跨越不同的\gls{mode}。}
 	\label{fig:chap17_good_bad_really_bad_mixing_color}
@@ -482,7 +482,7 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 % 594
 
 通常情况下，在$\beta = 1$的情况下训练一个模型。
-然而，我们利用了其它\gls{temperature}，尤其是$\beta < 1$的情况。
+然而，我们利用了其他\gls{temperature}，尤其是$\beta < 1$的情况。
 \firstgls{tempering}是一种通用的策略，通过从$\beta<1$模型中采样来在$p_1$的不同\gls{mode}之间快速\gls{mixing}。
 % 594
 

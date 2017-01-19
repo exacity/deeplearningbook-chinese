@@ -2,8 +2,8 @@
 % Translator: Yujun Li 
 \chapter{面对\glsentrytext{partition_function}}
 \label{chap:confronting_the_partition_function}
-在\secref{sec:undirected_models}中，我们看到许多概率模型（通常被称为\gls{undirected_graphical_model}）由未归一化的\gls{PD}$\tilde{p}(\RVx, \theta)$所定义。
-我们必须通过除以\gls{partition_function}$Z(\Vtheta)$来归一化$\tilde{p}$，以获得有效的\gls{PD}：
+在\secref{sec:undirected_models}中，我们看到许多概率模型（通常被称为\gls{undirected_graphical_model}）由未归一化的\gls{PD} $\tilde{p}(\RVx, \theta)$所定义。
+我们必须通过除以\gls{partition_function} $Z(\Vtheta)$来归一化$\tilde{p}$，以获得有效的\gls{PD}：
 \begin{equation}
 	p(\RVx; \Vtheta) = \frac{1}{Z(\Vtheta)} \tilde{p}(\RVx; \Vtheta).
 \end{equation}
@@ -258,7 +258,7 @@
 
 因为每个\gls{markov_chain}在整个学习过程中不断更新，而不是在每个梯度步骤中重新开始，\gls{markov_chain}可以自由探索很远，以找到所有模型的模态。
 因此，\glssymbol{SML}比\glssymbol{contrastive_divergence}具有更强的鲁棒性，以免形成具有\gls{spurious_modes}的模型。
-此外，因为有可能存储所有采样变量的状态，无论是可见的还是潜在的，\glssymbol{SML}为\gls{hidden_unit}和可见单元都提供了初始值。
+此外，因为有可能存储所有采样变量的状态，无论是可见的还是\gls{latent}的，\glssymbol{SML}为\gls{hidden_unit}和可见单元都提供了初始值。
 \glssymbol{contrastive_divergence}只能为可见单元提供初始化，因此\gls{deep_model}需要进行\gls{burn_in}步骤。
 \glssymbol{SML}能够有效地训练\gls{deep_model}。
 \cite{Marlin10Inductive-small}将\glssymbol{SML}与本章中提出的许多其他标准方法进行比较。
@@ -429,7 +429,7 @@
 \end{equation}
 
 
-该目标函数避免了微分\gls{partition_function}$Z$带来的难题，因为$Z$不是$x$的函数，所以$\nabla_{\RVx} Z = 0$。
+该目标函数避免了微分\gls{partition_function} $Z$带来的难题，因为$Z$不是$x$的函数，所以$\nabla_{\RVx} Z = 0$。
 最初，\gls{score_matching}似乎有一个新的困难：计算数据分布的\gls{score}需要知道生成训练数据的真实分布$p_{\text{data}}$。
 幸运的是，最小化$L(\Vx, \Vtheta)$的期望等效于最小化下式的期望
 \begin{equation}
@@ -540,7 +540,7 @@
 该\gls{supervised_learning}问题中的\gls{MLE}定义了原始问题的渐近一致估计。
 
 
-具体来说，我们引入第二个分布，\firstgls{noise_distribution}$p_{\text{noise}}(\RVx)$。
+具体来说，我们引入第二个分布，\firstgls{noise_distribution} $p_{\text{noise}}(\RVx)$。
 \gls{noise_distribution}应该易于估计和从中取样。
 我们现在可以构造一个联合$\RVx$和新二元变量$y$的模型。
 在新的联合模型中，我们指定
@@ -629,7 +629,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 
 \section{估计\glsentrytext{partition_function}}
 \label{sec:estimating_the_partition_function}
-尽管本章中的大部分内容都在避免计算与\gls{undirected_graphical_model}相关的难求解\gls{partition_function}$Z(\Vtheta)$，但在本节中我们将会讨论几种直接估计\gls{partition_function}的方法。
+尽管本章中的大部分内容都在避免计算与\gls{undirected_graphical_model}相关的难求解\gls{partition_function} $Z(\Vtheta)$，但在本节中我们将会讨论几种直接估计\gls{partition_function}的方法。
 
 % -- 614 --
 
@@ -667,7 +667,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 
 一种估计\gls{partition_function}的简单方法是使用\gls{monte_carlo}方法，例如简单\gls{importance_sampling}。
 以下用连续变量积分来表示该方法，也可以替换积分为求和，很容易将其应用到离散变量的情况。
-我们使用\gls{proposal_distribution}$p_0(\RVx) = \frac{1}{Z_0} \tilde{p}_0( \RVx)$，其在\gls{partition_function}$Z_0$和未归一化分布$\tilde{p}_0(\RVx)$上易于采样和估计。
+我们使用\gls{proposal_distribution} $p_0(\RVx) = \frac{1}{Z_0} \tilde{p}_0( \RVx)$，其在\gls{partition_function} $Z_0$和未归一化分布$\tilde{p}_0(\RVx)$上易于采样和估计。
 
 % -- 615 --
 
@@ -684,7 +684,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 \label{eq:18.44}
 	\hat{Z}_1 = \frac{Z_0}{K} \sum_{k=1}^K \frac{ \tilde{p}_1(\RVx^{(k)})  }{ \tilde{p}_0(\RVx^{(k)}) }  \quad\quad \text{s.t.}: \RVx^{(k)} \sim p_0
 \end{equation}
-在最后一行，我们使用\gls{monte_carlo}估计，使用从$p_0(\RVx)$中抽取的采样计算积分$\hat{Z}_1$，然后用未归一化的$\tilde{p}_1$和\gls{proposal_distribution}$p_0$的比率对每个采样加权。
+在最后一行，我们使用\gls{monte_carlo}估计，使用从$p_0(\RVx)$中抽取的采样计算积分$\hat{Z}_1$，然后用未归一化的$\tilde{p}_1$和\gls{proposal_distribution} $p_0$的比率对每个采样加权。
 
 
 这种方法使得我们可以估计\gls{partition_function}之间的比率：
@@ -740,7 +740,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 % -- 617 --
 
 这些中间分布是从哪里来的呢？
-正如最先的\gls{proposal_distribution}$p_0$是一种设计选择，分布序列$p_{\eta_1} \dots p_{\eta_{n-1}}$也是如此。
+正如最先的\gls{proposal_distribution} $p_0$是一种设计选择，分布序列$p_{\eta_1} \dots p_{\eta_{n-1}}$也是如此。
 也就是说，它们可以被特别设计为特定的问题领域。
 中间分布的一个通用目标和流行选择是使用目标分布$p_1$的加权几何平均，起始分布（其\gls{partition_function}是已知的）为$p_0$：
 \begin{equation}
@@ -812,7 +812,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 	= &\frac{ \tilde{p}_1(\Vx_1) }{ \tilde{p}_{\eta_{n-1}}(\Vx_1) } T_{\eta_{n-1}} (\Vx_1 \mid \Vx_{\eta_{n-1}})
 \tilde{p}_{\eta_1} (\Vx_{\eta_1}) \prod_{i=1}^{n-2} \frac{ \tilde{p}_{\eta_{i+1}}(\Vx_{\eta_{i+1}}) }{ \tilde{p}_{\eta_i}(\Vx_{\eta_{i+1}}) } T_{\eta_i} (\Vx_{\eta_{i+1}} \mid \Vx_{\eta_i}) . \label{eq:18.59}
 \end{align}
-通过上面给定的采样方案，现在我们可以从扩展样本上的联合\gls{proposal_distribution}$q$上生成采样，联合分布如下
+通过上面给定的采样方案，现在我们可以从扩展样本上的联合\gls{proposal_distribution} $q$上生成采样，联合分布如下
 \begin{equation}
 	q(\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1)  = p_0(\Vx_{\eta_1}) T_{\eta_1}( \Vx_{\eta_2} \mid \Vx_{\eta_1} ) \dots T_{\eta_{n-1}} (\Vx_1 \mid \Vx_{\eta_{n-1}}) .
 \end{equation}
@@ -840,14 +840,14 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 \subsection{\glsentrytext{bridge_sampling}}
 \label{sec:bridge_sampling}
 类似于\glssymbol{AIS}，\gls{bridge_sampling}\citep{Bennet76}是另一种处理\gls{importance_sampling}缺点的方法。
-并非将一系列中间分布连接在一起，\gls{bridge_sampling}依赖于单个分布$p_*$（被称为桥），在已知\gls{partition_function}的分布$p_0$和分布$p_1$（我们试图估计其\gls{partition_function}$Z_1$）之间插值。
+并非将一系列中间分布连接在一起，\gls{bridge_sampling}依赖于单个分布$p_*$（被称为桥），在已知\gls{partition_function}的分布$p_0$和分布$p_1$（我们试图估计其\gls{partition_function} $Z_1$）之间插值。
 
 
 \gls{bridge_sampling}估计比率$Z_1 / Z_0$：$\tilde{p}_0$和$\tilde{p}_*$之间重要性权重期望与$\tilde{p}_1$和$\tilde{p}_*$之间重要性权重的比率，
 \begin{equation}
 	\frac{Z_1}{ Z_0} \approx \sum_{k=1}^K \frac{ \tilde{p}_*(\Vx_0^{(k)}) }{ \tilde{p}_0(\Vx_0^{(k)}) } \bigg/ \sum_{k=1}^K \frac{ \tilde{p}_*(\Vx_1^{(k)}) }{ \tilde{p}_1(\Vx_1^{(k)}) } .
 \end{equation}
-如果仔细选择\gls{bridge_sampling}$p_*$，使其与$p_0$和$p_1$都有很大重合的话，那么\gls{bridge_sampling}能够允许两个分布（或更正式地，$D_{\text{KL}}(p_0 \| p_1)$）之间有较大差距（相对标准\gls{importance_sampling}而言）。
+如果仔细选择\gls{bridge_sampling} $p_*$，使其与$p_0$和$p_1$都有很大重合的话，那么\gls{bridge_sampling}能够允许两个分布（或更正式地，$D_{\text{KL}}(p_0 \| p_1)$）之间有较大差距（相对标准\gls{importance_sampling}而言）。
 
 % -- 620 --
 

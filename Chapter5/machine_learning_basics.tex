@@ -25,8 +25,8 @@
 \label{sec:learning_algorithms}
 \gls{ML}算法是一种可以从数据中学习的算法。
 然而，我们所谓的``学习''是什么意思呢？
-\cite{Mitchell:1997:ML}提供了一个简洁的定义：``对于某类任务$T$和\gls{performance_measures}$P$，一个计算机程序被认为可以从\gls{experience}$E$中学习是指，通过\gls{experience}$E$改进后，它在任务$T$上由\gls{performance_measures}$P$衡量的性能有所提升。''
-\gls{experience}$E$，任务$T$和\gls{performance_measures}$P$的定义范围非常宽广，在本书中我们并不会去试图解释这些定义的具体意义。
+\cite{Mitchell:1997:ML}提供了一个简洁的定义：``对于某类任务$T$和\gls{performance_measures} $P$，一个计算机程序被认为可以从\gls{experience} $E$中学习是指，通过\gls{experience} $E$改进后，它在任务$T$上由\gls{performance_measures} $P$衡量的性能有所提升。''
+\gls{experience} $E$，任务$T$和\gls{performance_measures} $P$的定义范围非常宽广，在本书中我们并不会去试图解释这些定义的具体意义。
 相反，我们会在接下来的章节中提供直观的解释和示例来介绍不同的任务、\gls{performance_measures}和\gls{experience}，这些将被用来构建\gls{ML}算法。
 
 \subsection{任务 $T$}
@@ -116,16 +116,16 @@
     例如，在语音合成任务中，我们提供书写的句子，要求程序输出这个句子语音的音频波形。
     这是一类\emph{结构化输出任务}，但是多了每个输入并非只有一个正确输出的条件，我们明确希望输出有很大的偏差，使结果看上去更加自然和真实。
 
-    \item \textbf{缺失值填补}：这类任务中，\gls{ML}算法给定一个新\gls{example:chap5}$\Vx\in\SetR^n$，$\Vx$中某些元素$x_i$缺失。
+    \item \textbf{缺失值填补}：这类任务中，\gls{ML}算法给定一个新\gls{example:chap5} $\Vx\in\SetR^n$，$\Vx$中某些元素$x_i$缺失。
     算法必须填补这些缺失值。
 
 % -- 99 --
 
     \item \textbf{\gls{denoising}}：这类任务中，\gls{ML}算法的输入是，由未知破坏过程从\emph{干净\gls{example:chap5}}$\Vx \in \SetR^n$得到的\emph{污染\gls{example:chap5}}$\tilde{\Vx} \in \SetR^n$。
-    算法根据污染后的\gls{example:chap5}$\tilde{\Vx}$预测干净的\gls{example:chap5}$\Vx$，或者更一般地预测条件概率分布$P(\Vx\mid\tilde{\Vx})$。
+    算法根据污染后的\gls{example:chap5} $\tilde{\Vx}$预测干净的\gls{example:chap5} $\Vx$，或者更一般地预测条件概率分布$P(\Vx\mid\tilde{\Vx})$。
     
     \item \textbf{密度估计}\textbf{或}\textbf{\gls{PMF}估计}：在密度估计问题中，\gls{ML}算法学习函数$p_{\text{model}}:\SetR^n \to \SetR$，其中$p_{\text{model}}(\Vx)$可以解释成\gls{example:chap5}采样空间的概率密度函数（如果$\RVx$是连续的）或者\gls{PMF}（如果$\RVx$是离散的）。
-    要做好这样的任务（当我们讨论\gls{performance_measures}$P$时，我们会明确定义任务是什么），算法需要学习观测到的数据的结构。
+    要做好这样的任务（当我们讨论\gls{performance_measures} $P$时，我们会明确定义任务是什么），算法需要学习观测到的数据的结构。
     算法必须知道什么情况下\gls{example:chap5}聚堆出现，什么情况下不太可能出现。
     以上描述的大多数任务都要求学习算法至少能隐式地抓住概率分布的结构。
     密度分布可以让我们显式地抓住该分布。
@@ -141,7 +141,7 @@
 \subsection{\glsentrytext{performance_measures} $P$}
 \label{sec:the_performance_measure_p}
 为了评估\gls{ML}算法的能力，我们必须设计其性能的定量度量。
-通常\gls{performance_measures}$P$是特定于系统执行的任务$T$而言的。
+通常\gls{performance_measures} $P$是特定于系统执行的任务$T$而言的。
 
 对于诸如分类，缺失输入分类和\gls{transcribe}任务，我们通常度量模型的\firstgls{accuracy}。
 \gls{accuracy}是指该模型输出正确结果的\gls{example:chap5}比例。
@@ -198,7 +198,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 
 大致说来，\gls{unsupervised_learning}涉及到观察随机向量$\RVx$的好几个\gls{example:chap5}，试图隐式或显式地学习出概率分布$p(\RVx)$，或者是该分布一些有意思的性质；
 而\gls{supervised_learning}包含观察随机向量$\RVx$及其相关联的值或向量$\RVy$，然后从$\RVx$预测$\RVy$，通常是估计$p(\RVy\mid\RVx)$。
-术语\firstgls{supervised}源自这样一个视角，教员或者老师提供\gls{target}$\RVy$给\gls{ML}系统，指导其应该做什么。
+术语\firstgls{supervised}源自这样一个视角，教员或者老师提供\gls{target} $\RVy$给\gls{ML}系统，指导其应该做什么。
 在\gls{unsupervised_learning}中，没有教员或者老师，算法必须学会在没有指导的情况下让数据有意义。
 
 \gls{unsupervised_learning}和\gls{supervised_learning}不是严格定义的术语。
@@ -208,7 +208,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 \begin{equation}
     p(\RVx) = \prod_{i=1}^n p(\RSx_i \mid \RSx_1,\dots,\RSx_{i-1}) .
 \end{equation}
-该分解意味着我们可以将其拆分成$n$个\gls{supervised_learning}，来解决表面上的\gls{unsupervised_learning}$p(\Vx)$。
+该分解意味着我们可以将其拆分成$n$个\gls{supervised_learning}，来解决表面上的\gls{unsupervised_learning} $p(\Vx)$。
 另外，我们求解\gls{supervised_learning}问题$p(y\mid\RVx)$时，也可以使用传统的\gls{unsupervised_learning}策略学习联合分布$p(\RVx,y)$，然后推断
 \begin{equation}
     p(y\mid\RVx) = \frac{p(\RVx,y)}{\sum_{y'}p(\RVx,y')}.
@@ -237,7 +237,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 \gls{design_matrix}的每一行包含一个不同的\gls{example:chap5}。
 每一列对应不同的\gls{feature}。
 例如，Iris\gls{dataset}包含$150$个\gls{example:chap5}，每个\gls{example:chap5}有4个\gls{feature}。
-这意味着我们将该\gls{dataset}表示成\gls{design_matrix}$\MX\in\SetR^{150\times 4}$，其中$\MX_{i,1}$表示第$i$个植物的萼片长度，$\MX_{i,2}$表示第$i$个植物的萼片宽度，等等。
+这意味着我们将该\gls{dataset}表示成\gls{design_matrix} $\MX\in\SetR^{150\times 4}$，其中$\MX_{i,1}$表示第$i$个植物的萼片长度，$\MX_{i,2}$表示第$i$个植物的萼片宽度，等等。
 我们在本书中描述的大部分学习算法都是讲述它们是如何运行在\gls{design_matrix}\gls{dataset}上的。
 
 当然，将一个\gls{dataset}表示成\gls{design_matrix}，必须是可以将每一个\gls{example:chap5}表示成向量，并且这些向量的大小相同。
@@ -254,7 +254,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 例如，我们希望使用学习算法从照片中识别物体。
 我们需要明确哪些物体会出现在每张照片中。
 我们或许会用数字编码表示，如$0$表示人，$1$表示车，$2$表示猫，等等。
-通常当工作在包含观测\gls{feature}的\gls{design_matrix}$\MX$的\gls{dataset}时，我们也会提供一个\gls{label}向量$\Vy$，其中$y_i$表示\gls{example:chap5}$i$的\gls{label}。
+通常当工作在包含观测\gls{feature}的\gls{design_matrix} $\MX$的\gls{dataset}时，我们也会提供一个\gls{label}向量$\Vy$，其中$y_i$表示\gls{example:chap5} $i$的\gls{label}。
 
 当然，有时\gls{label}可能不止一个数。
 例如，如果我们想要训练语音模型\gls{transcribe}整个句子，那么每个句子\gls{example:chap5}的\gls{label}是一个单词序列。
@@ -280,10 +280,10 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 其中$\Vw\in\SetR^n$是\firstgls{parameters}向量。
 
 \gls{parameters}是控制系统行为的值。
-在这种情况下，$w_i$是系数，会和\gls{feature}$x_i$相乘之后全部相加起来。
+在这种情况下，$w_i$是系数，会和\gls{feature} $x_i$相乘之后全部相加起来。
 我们可以将$\Vw$看作是一组决定每个\gls{feature}如何影响预测的\firstgls{weights}。
-如果\gls{feature}$x_i$对应的权重$w_i$是正的，那么\gls{feature}值增加，我们的预测值$\hat{y}$也会增加。
-如果\gls{feature}$x_i$对应的权重$w_i$是负的，那么\gls{feature}值减少，我们的预测值$\hat{y}$也会减少。
+如果\gls{feature} $x_i$对应的权重$w_i$是正的，那么\gls{feature}值增加，我们的预测值$\hat{y}$也会增加。
+如果\gls{feature} $x_i$对应的权重$w_i$是负的，那么\gls{feature}值减少，我们的预测值$\hat{y}$也会减少。
 如果\gls{feature}权重的大小很大，那么它对预测有很大的影响；如果\gls{feature}权重的大小是零，那么它对预测没有影响。
 
 % -- 104 --
@@ -780,8 +780,8 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     \text{bias}(\hat{\Vtheta}_m) = \SetE(\hat{\Vtheta}_m) - \Vtheta,
 \end{equation}
 其中期望作用在所有数据（看作是从随机变量采样得到的）上，$\Vtheta$是用于定义数据生成分布的$\Vtheta$的真实值。
-如果$\text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5}$\hat{\Vtheta}_m$被称为是\firstgls{unbiased}，这意味着$\SetE(\hat{\Vtheta}_m) = \Vtheta$。
-如果$\lim_{m\to\infty} \text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5}$\hat{\Vtheta}_m$称为是\firstgls{asymptotically_unbiased}，这意味着$\lim_{m\to\infty} \SetE(\hat{\Vtheta}_m) = \Vtheta$。
+如果$\text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5} $\hat{\Vtheta}_m$被称为是\firstgls{unbiased}，这意味着$\SetE(\hat{\Vtheta}_m) = \Vtheta$。
+如果$\lim_{m\to\infty} \text{bias}(\hat{\Vtheta}_m)=0$，那么\gls{estimator:chap5} $\hat{\Vtheta}_m$称为是\firstgls{asymptotically_unbiased}，这意味着$\lim_{m\to\infty} \SetE(\hat{\Vtheta}_m) = \Vtheta$。
 
 % -- 121 --
 
@@ -808,7 +808,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 因为$\text{bias}(\hat{\theta})=0$，我们称估计$\hat{\theta}$是无偏的。
 
 \textbf{实例：均值的高斯分布估计}\quad 
-现在，考虑一组独立同分布的\gls{example:chap5}$\{x^{(1)}, \dots , x^{(m)}\}$服从高斯分布$p(x^{(i)}) = \mathcal{N}(x^{(i)}; \mu, \sigma^2)$，其中$i\in\{1, \dots, m\}$。
+现在，考虑一组独立同分布的\gls{example:chap5} $\{x^{(1)}, \dots , x^{(m)}\}$服从高斯分布$p(x^{(i)}) = \mathcal{N}(x^{(i)}; \mu, \sigma^2)$，其中$i\in\{1, \dots, m\}$。
 回顾高斯概率密度函数如下：
 \begin{equation}
     p(x^{(i)}; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{1}{2} \frac{(x^{(i)} - \mu)^2}{\sigma^2}  \right).
@@ -894,7 +894,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \label{eq:5.46}
     \text{SE}(\hat{\mu}_m) = \sqrt{ \text{Var} \left[ \frac{1}{m} \sum_{i=1}^m x^{(i)} \right] } = \frac{\sigma}{\sqrt{m}},
 \end{equation}
-其中$\sigma^2$是\gls{example:chap5}$x^{(i)}$的真实方差。
+其中$\sigma^2$是\gls{example:chap5} $x^{(i)}$的真实方差。
 \gls{standard_error}通常被记作$\sigma$。
 不幸的是，样本方差的平方根和方差无偏估计的平方根都不是\gls{standard_deviation}的无偏估计。
 这两种计算方法都倾向于低估真实的\gls{standard_deviation}，但仍用于实际中。
@@ -915,7 +915,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 以上区间是基于均值$\hat{\mu}_m$和方差$\text{SE}(\hat{\mu}_m)^2$的高斯分布。
 在\gls{ML}实验中，我们通常说算法$A$比算法$B$好，是指算法$A$的误差的$95\%$置信区间的上界小于算法$B$的误差的$95\%$置信区间的下界。
 
-\textbf{实例：伯努利分布} \quad 我们再次考虑从伯努利分布（回顾$P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{1 - x^{(i)}}$）中独立同分布采样出来的一组\gls{example:chap5}$\{ x^{(1)}, \dots, x^{(m)} \}$。
+\textbf{实例：伯努利分布} \quad 我们再次考虑从伯努利分布（回顾$P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{1 - x^{(i)}}$）中独立同分布采样出来的一组\gls{example:chap5} $\{ x^{(1)}, \dots, x^{(m)} \}$。
 这次我们关注估计$\hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}$的方差：
 \begin{align}
     \text{Var}\left( \hat{\theta}_m \right) &= \text{Var}\left( \frac{1}{m} \sum_{i=1}^m x^{(i)} \right) \\
@@ -982,8 +982,8 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 一致性保证了\gls{estimator:chap5}的偏差会随数据\gls{example:chap5}数目的增多而减少。
 然而，反过来是不正确的——渐近无偏并不意味着一致性。
-例如，考虑用包含$m$个样本的\gls{dataset}$\{x^{(1)},\dots,x^{(m)}\}$估计正态分布$\mathcal{N}(x;\mu,\sigma^2)$的均值参数$\mu$。
-我们可以使用\gls{dataset}的第一个\gls{example:chap5}$x^{(1)}$作为无偏估计量：$\hat{\theta} = x^{(1)}$。
+例如，考虑用包含$m$个样本的\gls{dataset} $\{x^{(1)},\dots,x^{(m)}\}$估计正态分布$\mathcal{N}(x;\mu,\sigma^2)$的均值参数$\mu$。
+我们可以使用\gls{dataset}的第一个\gls{example:chap5} $x^{(1)}$作为无偏估计量：$\hat{\theta} = x^{(1)}$。
 在该情况下，$\SetE(\hat{\theta}_m) = \theta$，所以不管观测到多少数据点，该\gls{estimator:chap5}都是无偏的。
 然而，这不是一个一致估计，因为它\emph{不}满足当$m\to\infty$时，$\hat{\theta}_m \to \theta$。
 
@@ -997,7 +997,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 最常用的准则是\gls{maximum_likelihood_estimation}。
 
-考虑一组含有$m$个\gls{example:chap5}的\gls{dataset}$\SetX=\{ \Vx^{(1)},\dots, \Vx^{(m)} \}$，独立地由真正但未知的数据生成分布$p_{\text{data}}(\RVx)$生成。
+考虑一组含有$m$个\gls{example:chap5}的\gls{dataset} $\SetX=\{ \Vx^{(1)},\dots, \Vx^{(m)} \}$，独立地由真正但未知的数据生成分布$p_{\text{data}}(\RVx)$生成。
 
 让$p_{\text{model}}( \RVx; \Vtheta )$是一族由$\Vtheta$确定在相同空间上的概率分布。
 换言之，$p_{\text{model}}(\Vx;\Vtheta)$将任意输入$\Vx$映射到实数去估计真实概率$p_{\text{data}}(\Vx)$。
@@ -1155,7 +1155,7 @@ KL散度定义为
         \mathrm{d}\Vtheta .
 \end{equation}
 这里，具有正概率密度的$\Vtheta$的每个值有助于下一个\gls{example:chap5}的预测，其中贡献由后验密度本身加权。
-在观测到\gls{dataset}$\{ x^{(1)},\dots,x^{(m)}\}$之后，如果我们仍然非常不确定$\Vtheta$的值，那么这个不确定性会直接包含在我们所做的任何预测中。
+在观测到\gls{dataset} $\{ x^{(1)},\dots,x^{(m)}\}$之后，如果我们仍然非常不确定$\Vtheta$的值，那么这个不确定性会直接包含在我们所做的任何预测中。
 
 % -- 132 --
 
@@ -1374,9 +1374,9 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 高斯核对应于无限维空间中的\gls{dot_product}，但是该空间的推导没有整数上的$\min$核实例直观。
 
 我们可以认为高斯核在执行一种\textbf{模板匹配}。
-训练\gls{label}$y$相关的训练\gls{example:chap5}$\Vx$变成了类别$y$的模版。
+训练\gls{label} $y$相关的训练\gls{example:chap5} $\Vx$变成了类别$y$的模版。
 当测试点$\Vx'$到$\Vx$的欧几里得距离很小时，对应的高斯核很大，表明$\Vx'$和模版$\Vx$非常相似。
-该模型进而会赋予相对应的训练\gls{label}$y$较大的权重。
+该模型进而会赋予相对应的训练\gls{label} $y$较大的权重。
 总的来说，预测将会组合很多这种通过训练样本相似性加权的训练标签。
 
 \gls{SVM}不是唯一可以使用核策略来增强的算法。
@@ -1423,7 +1423,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 进一步假设该\gls{feature}直接决定了输出，即在所有情况中$y=x_1$。
 \gls{nearest_neighbor_regression}不能检测到这个简单模式。
 大多数点$\Vx$的最近邻将取决于$x_2$到$x_{100}$的大多数\gls{feature}，
-而不是单独取决于\gls{feature}$x_1$。
+而不是单独取决于\gls{feature} $x_1$。
 因此，小训练集上的输出将会非常随机。
 
 % -- 140 --
@@ -1511,7 +1511,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 \label{fig:chap5_pca}
 \end{figure}
 
-假设有一个$m\times n$的\gls{design_matrix}$\MX$，数据的均值为零，$\SetE[\Vx\,] = 0$。
+假设有一个$m\times n$的\gls{design_matrix} $\MX$，数据的均值为零，$\SetE[\Vx\,] = 0$。
 若非如此，通过预处理步骤所有\gls{example:chap5}减去均值，数据可以很容易地中心化。
 
 $\MX$对应的无偏样本协方差矩阵给定如下
@@ -1520,7 +1520,7 @@ $\MX$对应的无偏样本协方差矩阵给定如下
 \end{equation}
 \glssymbol{PCA}会找到一个$\text{Var}[\Vz]$是对角矩阵的表示（通过线性变换）$\Vz=\MW^\Tsp\Vx$。
 
-在\secref{sec:example_principal_components_analysis_chap2}，我们看到\gls{design_matrix}$\MX$的主成分由$\MX^\Tsp\MX$的\gls{feature}向量给定。
+在\secref{sec:example_principal_components_analysis_chap2}，我们看到\gls{design_matrix} $\MX$的主成分由$\MX^\Tsp\MX$的\gls{feature}向量给定。
 从这个角度，我们有
 \begin{equation}
     \MX^\Tsp\MX = \MW \VLambda \MW^\Tsp .
@@ -1582,7 +1582,7 @@ $k$-均值聚类提供的\gls{one_hot}编码也是一种稀疏表示，因为每
 
 $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\}$，然后迭代交换两个不同的步骤直到收敛。
 步骤一，每个训练\gls{example:chap5}分配到最近的中心点$\Vmu^{(i)}$所代表的聚类$i$。
-步骤二，每一个中心点$\Vmu^{(i)}$更新为聚类$i$中所有训练\gls{example:chap5}$\Vx^{(j)}$的均值。
+步骤二，每一个中心点$\Vmu^{(i)}$更新为聚类$i$中所有训练\gls{example:chap5} $\Vx^{(j)}$的均值。
 
 关于聚类的一个问题是聚类问题本身是病态的。
 这是说没有单一的标准去度量聚类的数据对应真实世界有多好。
@@ -1636,7 +1636,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 \gls{SGD}的核心是，梯度是期望。
 期望可使用小规模的样本近似估计。
-具体而言，在算法的每一步，我们从训练集中均匀抽出一\firstgls{minibatch}\gls{example:chap5}$\SetB=\{\Vx^{(1)},\dots,\Vx^{(m')}\}$。
+具体而言，在算法的每一步，我们从训练集中均匀抽出一\firstgls{minibatch}\gls{example:chap5} $\SetB=\{\Vx^{(1)},\dots,\Vx^{(m')}\}$。
 \gls{minibatch}的数目$m'$通常是一个相对较小的数，从一到几百。
 重要的是，当训练集大小$m$增长时，$m'$通常是固定的。
 我们可能在拟合几十亿的\gls{example:chap5}时，每次更新计算只用到几百个\gls{example:chap5}。
@@ -1646,7 +1646,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
     \Vg = \frac{1}{m'} \nabla_{\Vtheta} \sum_{i=1}^{m'}
     L(\Vx^{(i)}, y^{(i)}, \Vtheta)
 \end{equation}
-使用来自\gls{minibatch}$\SetB$的\gls{example:chap5}。
+使用来自\gls{minibatch} $\SetB$的\gls{example:chap5}。
 然后，\gls{SGD}算法使用如下的\gls{GD}估计：
 \begin{equation}
     \Vtheta \leftarrow \Vtheta - \epsilon \Vg,
@@ -1810,7 +1810,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 虽然$k$-最近邻算法拷贝了附近训练\gls{example:chap5}的输出，大部分核机器也是在和附近训练\gls{example:chap5}相关的训练集输出上插值。
 一类重要的核函数是\firstgls{local_kernel}，其核函数$k(\Vu,\Vv)$在$\Vu=\Vv$时很大，
 当$\Vu$和$\Vv$距离拉大时而减小。
-局部核可以看作是执行模版匹配的相似函数，度量测试\gls{example:chap5}$\Vx$和每个训练\gls{example:chap5}$\Vx^{(i)}$有多么相似。
+局部核可以看作是执行模版匹配的相似函数，度量测试\gls{example:chap5} $\Vx$和每个训练\gls{example:chap5} $\Vx^{(i)}$有多么相似。
 大部分\gls{DL}的现代动机源自研究局部模版匹配的局限性，以及\gls{DL}如何克服这些局限性\citep{NIPS2005_424}。
 
 决策树也有平滑学习的局限性，因为它将输入空间分成和叶节点一样多的区间，并在每个区间使用单独的参数（或者有些决策树的拓展有多个参数）。
@@ -1830,7 +1830,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \else
 \centerline{\includegraphics{Chapter5/figures/non_distributed}}
 \fi
-\caption{\gls{nearest_neighbor}算法如何将输入空间分区域的一个例子。每个区域内的一个样本（这里用圆圈表示）定义了区域边界（这里用线表示）。每个样本相关的$y$值定义了对应区域内所有数据点的输出。由\gls{nearest_neighbor}定义并且匹配几何模式的区域被叫做Voronoi图。这些连续区域的数量不能比训练样本的数量增加的更快。尽管此图具体说明了\gls{nearest_neighbor}算法的表现，其它的单纯依赖局部光滑先验的机器学习算法也表现出了类似的\gls{generalization}能力：每个训练样本仅仅能告诉学习者如何在其周围的相邻区域\gls{generalization}。}
+\caption{\gls{nearest_neighbor}算法如何将输入空间分区域的一个例子。每个区域内的一个样本（这里用圆圈表示）定义了区域边界（这里用线表示）。每个样本相关的$y$值定义了对应区域内所有数据点的输出。由\gls{nearest_neighbor}定义并且匹配几何模式的区域被叫做Voronoi图。这些连续区域的数量不能比训练样本的数量增加的更快。尽管此图具体说明了\gls{nearest_neighbor}算法的表现，其他的单纯依赖局部光滑先验的机器学习算法也表现出了类似的\gls{generalization}能力：每个训练样本仅仅能告诉学习者如何在其周围的相邻区域\gls{generalization}。}
 \label{fig:chap5_non_distributed}
 \end{figure}
 
@@ -1912,7 +1912,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \else
 \centerline{\includegraphics[width=0.7\textwidth]{Chapter5/figures/noise}}
 \fi
-\caption{随机地均匀抽取图像（根据均匀分布随机地选择每一个像素）会得到噪音图像。尽管在人工智能应用中生成一个脸或者其它物体的图像是非零概率的，但是实践中我们从来没有观察到这个现象。这也意味着人工智能应用中遇到的图像在所有图像空间中的占比是忽略不计的。}
+\caption{随机地均匀抽取图像（根据均匀分布随机地选择每一个像素）会得到噪音图像。尽管在人工智能应用中生成一个脸或者其他物体的图像是非零概率的，但是实践中我们从来没有观察到这个现象。这也意味着人工智能应用中遇到的图像在所有图像空间中的占比是忽略不计的。}
 \label{fig:chap5_noise}
 \end{figure}
 

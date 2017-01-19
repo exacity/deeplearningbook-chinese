@@ -8,7 +8,7 @@
 
 许多深度学习的研究前沿涉及到了构建输入的概率模型$p_{\text{model}}(\Vx)$。
 原则上说，给定任何其他变量的情况下，这样的模型可以使用概率推断来预测其环境中的任何变量。
-许多这样的模型还具有\gls{latent_variable}$\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\mid\Vh)$。
+许多这样的模型还具有\gls{latent_variable} $\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\mid\Vh)$。
 这些\gls{latent_variable}提供了表示数据的另一种方式。
  基于\gls{latent_variable}的分布式表示可以有很多优点，这些我们在\gls{deep_feedforward_network}和\gls{RNN}中已经发现。
 % 479
@@ -25,7 +25,7 @@
 
 
 这些模型很有趣，因为它们使得我们能够发现一些拥有简单联合分布的解释性因子。 
-线性\gls{decoder}的简单性使得这些模型（含有\gls{latent_variable}的模型）能够被广泛研究。
+<bad>线性\gls{decoder}的简单性使得这些对\gls{latent_variable}建模的模型能够被广泛研究。
 % 479
 
 
@@ -51,7 +51,7 @@
 \else
 	\centerline{\includegraphics{Chapter13/figures/linear_factors}}
 \fi
-	\caption{描述\gls{linear_factor}族的\gls{directed_graphical_model}，其中我们假设一个观察到的数据向量$\Vx$是通过独立的隐含因子$\Vh$的线性组合获得的，加上一定的噪音。
+    \caption{描述\gls{linear_factor}族的\gls{directed_graphical_model}，其中我们假设一个观察到的数据向量$\Vx$是通过独立的\gls{latent}因子$\Vh$的线性组合获得的，加上一定的噪音。
 		不同的模型，比如\gls{PPCA}，\gls{FA}或者是\glssymbol{ICA}，都是选择了不同形式的噪音以及先验$p(\Vh)$。}
 	\label{fig:linear_factors}
 \end{figure}
@@ -61,7 +61,7 @@
 \label{sec:probabilistic_PCA_and_factor_analysis}
 % 480
 
-\firstgls{PPCA}，\gls{FA}和其他\gls{linear_factor}是上述等式（\eqnref{eqn:131},\eqnref{eqn:132}）的特殊情况，并且仅在对观测到$\Vx$之前的噪声分布和\gls{latent_variable}$\Vh$的先验的选择上不同。
+\firstgls{PPCA}，\gls{FA}和其他\gls{linear_factor}是上述等式（\eqnref{eqn:131},\eqnref{eqn:132}）的特殊情况，并且仅在对观测到$\Vx$之前的噪声分布和\gls{latent_variable} $\Vh$的先验的选择上不同。
 % 480
 
 \firstgls{FA}\citep{Bartholomew-1987,Basilevsky94}中，\gls{latent_variable}的先验是一个方差为单位矩阵的\gls{gaussian_distribution}
@@ -102,14 +102,16 @@
 % 481
 
 
-\gls{PPCA}模型利用了这样一种观察的现象：除了一些小的\gls{reconstruction_error}$\sigma^2$，数据中的大多数变化可以由\gls{latent_variable}$\Vh$描述。
+\gls{PPCA}模型利用了这样一种观察的现象：除了一些小的\gls{reconstruction_error} $\sigma^2$，数据中的大多数变化可以由\gls{latent_variable} $\Vh$描述。
 通过\citet{tipping99mixtures}的研究可以发现，当$\sigma \xrightarrow{} 0$的时候，\gls{PPCA}等价于\glssymbol{PCA}。
 在这种情况下，给定$\Vx$情况下的$\Vh$的条件期望等于将$\Vx - \Vb$投影到$\MW$的$d$列的生成空间，与\glssymbol{PCA}一样。
 % 481
 
-当$\sigma\xrightarrow{} 0$的时候，\gls{PPCA}所定义的密度函数在$\MW$的$d$维列生成空间的坐标周围非常尖锐。
-如果数据实际上没有集中在超平面附近，这会导致模型为数据分配非常低的可能性。
+当$\sigma\xrightarrow{} 0$的时候，\gls{PPCA}所定义的密度函数在$\MW$的$d$维列生成空间周围非常尖锐。
+这导致模型会为没有在一个超空间附近聚集的数据分配非常低的概率
+%如果某些数据实际上没有集中在超平面附近，这会导致模型为数据分配非常低的可能性。
 % 481
+%导致模型会为没有在一个超空间附近聚集的数据分配非常低的概率”
 
 \section{\glsentrytext{ICA}}
 \label{sec:independent_component_analysis_ica}
@@ -124,14 +126,14 @@
 
 许多不同的具体方法被称为\gls{ICA}。
 与我们本书中描述的其他\gls{generative_model}最相似的\gls{ICA}变种是训练完全参数化的\gls{generative_model}\citep{Pham-et-al-1992}。
-隐含因子$\Vh$的先验$p(\Vh)$，必须由用户给出并固定。
+\gls{latent}因子$\Vh$的先验$p(\Vh)$，必须由用户给出并固定。
 接着模型确定性地生成$\Vx = \MW \Vh$。
 我们可以通过非线性变化（使用\eqnref{eqn:3.47}）来确定$p(\Vx)$。
 然后通过一般的方法比如\gls{MLE}进行学习。
 % 482 head
 
 
-这种方法的动机是，通过选择一个独立的$p(\Vh)$，我们可以尽可能恢复接近独立的隐含因子。
+这种方法的动机是，通过选择一个独立的$p(\Vh)$，我们可以尽可能恢复接近独立的\gls{latent}因子。
 这是一种常用的方法，它并不是用来捕捉高级别的抽象的因果因子，而是恢复已经混合在一起的低级别信号。
 在该设置中，每个训练样本对应一个时刻，每个$x_i$是一个传感器的对混合信号的观察值，并且每个$h_i$是单个原始信号的一个估计。
 例如，我们可能有$n$个人同时说话。 
@@ -140,16 +142,16 @@
 放置在对象的头部上的许多电极传感器用于测量来自身体的许多电信号。
 实验者通常仅对来自大脑的信号感兴趣，但是来自受试者的心脏和眼睛的信号强到足以混淆在受试者的头皮处进行的测量。
 信号到达电极，并且混合在一起，因此\gls{ICA}是必要的，以分离源于心脏与源于大脑的信号，并且将不同脑区域中的信号彼此分离。
-% 482
+% 482 mid 
 
 
 如前所述，\gls{ICA}存在许多变种。
 一些版本在$\Vx$的生成中添加一些噪声，而不是使用确定性的\gls{decoder}。
-大多数不使用\gls{MLE}准则，而是旨在使$\Vh = \MW^{-1}\Vx$的元素彼此独立。
+大多数方法不使用\gls{MLE}准则，而是旨在使$\Vh = \MW^{-1}\Vx$的元素彼此独立。
 许多准则能够达成这个目标。
 \eqnref{eqn:3.47}需要用到$\MW$的行列式，这可能是昂贵且数值不稳定的操作。
 \gls{ICA}的一些变种通过将$\MW$约束为正交来避免这个有问题的操作。
-% 482
+% 482 mid
 
 
 \gls{ICA}的所有变种要求$p(\Vh)$是非高斯的。
@@ -163,10 +165,10 @@
 
 
 
-按照我们的说法\gls{ICA}的许多变种不是\gls{generative_model}。
+按照我们对\gls{generative_model}的定义\gls{ICA}的许多变种不是\gls{generative_model}。
  在本书中，\gls{generative_model}可以直接表示$p(\Vx)$，也可以认为是从$p(\Vx)$中抽取样本。
 \gls{ICA}的许多变种仅知道如何在$\Vx$和$\Vh$之间变换，但没有任何表示$p(\Vh)$的方式，因此也无法确定$p(\Vx)$。
-例如，许多\gls{ICA}变量旨在增加$\Vh = \MW^{-1}\Vx$的样本峰度，因为高峰度使得$p(\Vh)$是非高斯的，但这是在没有显式表示$p(\Vh)$的情况下完成的。
+例如，许多\gls{ICA}变量旨在增加$\Vh = \MW^{-1}\Vx$的样本峰度，因为高峰度说明了$p(\Vh)$是非高斯的，但这是在没有显式表示$p(\Vh)$的情况下完成的。
 这是为什么\gls{ICA}被常用作分离信号的分析工具，而不是用于生成数据或估计其密度。
 % 483 head
 
@@ -180,9 +182,9 @@
 % 483
 
 
-\gls{ICA}的另一个应用是通过在组内鼓励统计依赖关系在组之间抑制依赖关系来学习一组特征。
+\gls{ICA}的另一个推广是通过在组内鼓励统计依赖关系在组之间抑制依赖关系来学习一组特征。
 当相关单元的组不重叠时，这被称为\firstgls{ISA}。
-还可以向每个隐藏单元分配空间坐标，并且空间上相邻的单元形成一定程度的重叠。
+还可以向每个\gls{hidden_unit}分配空间坐标，并且空间上相邻的单元形成一定程度的重叠。
 这能够鼓励相邻的单元学习类似的特征。
 当应用于自然图像时，这种拓扑\gls{ICA}方法学习Gabor滤波器，从而使得相邻特征具有相似的定向，位置或频率。
 在每个区域内出现类似Gabor函数的许多不同相位偏移，使得在小区域上的合并产生了平移不变性。
@@ -214,7 +216,7 @@
 \label{eqn:137}
 \lambda \sum_t L(f(\Vx^{(t+1)}),f(\Vx^{(t)})),
 \end{align}
-其中$\lambda$是确定慢度正则化的强度的超参数项，$t$是样本时间序列的索引，$f$是特征提取器，$L$是测量$f(\Vx^{(t)})$和$f(\Vx^{(t+1)})$之间的距离的\gls{loss_function}。
+其中$\lambda$是确定慢度正则化的强度的超参数项，$t$是样本时间序列的索引，$f$是需要正则化的特征提取器，$L$是测量$f(\Vx^{(t)})$和$f(\Vx^{(t+1)})$之间的距离的\gls{loss_function}。
 $L$的一个常见选择是平均误差平方。
 % 484
 
@@ -300,7 +302,7 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 严格地说，术语``\gls{sparse_coding}''是指在该模型中推断$\Vh$的值的过程，而``稀疏建模''是指设计和学习模型的过程，但是通常这两个概念都可以用术语``\gls{sparse_coding}''描述。
 % 486
 
-像其它的\gls{linear_factor}一样，它使用了线性的\gls{decoder}加上噪音的方式获得一个$\Vx$的重构，就像\eqnref{eqn:132}描述的一样。
+像其他的\gls{linear_factor}一样，它使用了线性的\gls{decoder}加上噪音的方式获得一个$\Vx$的重构，就像\eqnref{eqn:132}描述的一样。
 更具体的说，\gls{sparse_coding}模型通常假设线性因子有一个各向同性的精度为$\beta$的高斯噪音：
 \begin{align}
 \label{eqn:1312}
@@ -317,7 +319,7 @@ p(\Vx\mid \Vh) = \CalN
 \label{eqn:1313}
 p(h_i) = \text{Laplace}(h_i;0,\frac{2}{\lambda}) = \frac{\lambda}{4} \text{e}^{ -\frac{1}{2}\lambda \vert h_i\vert},
 \end{align}
-相应的，Student-t分布可以表示为
+相应的，Student-t先验分布可以表示为
 \begin{align}
 \label{eqn:1314}
 p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
@@ -374,7 +376,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 另一个优点是\gls{encoder}没有泛化误差。
 参数化的\gls{encoder}必须泛化地学习如何将$\Vx$映射到$\Vh$。
 对于与训练数据差异很大的异常的$\Vx$，所学习的参数化的\gls{encoder}可能无法找到对应精确重建的$\Vh$或稀疏的编码。
-对于\gls{sparse_coding}模型的绝大多数形式，推断问题是凸的，优化过程将总是找到最优值（除非出现简并的情况，例如重复的权重向量）。
+对于\gls{sparse_coding}模型的绝大多数形式，推断问题是凸的，优化过程将总是找到最优值（除非出现退化的情况，例如重复的权重向量）。
 显然，稀疏和重构成本仍然可以在不熟悉的点上升，但这归因于\gls{decoder}权重中的\gls{generalization_error}，而不是\gls{encoder}中的\gls{generalization_error}。
 当\gls{sparse_coding}用作分类器的特征提取器时，而不是使用参数化的函数来预测时，基于优化的\gls{sparse_coding}模型的编码过程中\gls{generalization_error}的减小可导致更好的泛化能力。
 \citet{Coates2011b}证明了在对象识别任务中\gls{sparse_coding}特征比基于参数化的\gls{encoder}（如线性\gls{sigmoid}\gls{AE}）的特征拥有更好的泛化能力。
@@ -407,7 +409,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 	因此这个模型也学习到了有用的特征。
 	问题在于特征的\gls{factorial}先验会导致特征子集合随机的组合。
 	一些这样的子集能够合成可识别的MNIST集上的数字。
-	这也促进了拥有更强大的隐含编码的\gls{generative_model}的发展。
+    这也促进了拥有更强大的\gls{latent}编码的\gls{generative_model}的发展。
 	此图是从\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}中拷贝来的，并获得允许。}
 	\label{fig:s3c_samples}
 \end{figure}
@@ -436,7 +438,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 \fi
 	\caption{平坦的高斯能够描述一个低维\gls{manifold}附近的概率密度。
 		此图表示了``\gls{manifold}平面''上的``馅饼''的上半部分并且穿过了它的中心。
-		正交于\gls{manifold}方向（指出平面的箭头）的方差非常小，可以被视作是``噪音''，其它方向（平面内的箭头）的方差则很大，对应了``信号''以及低维数据的坐标系统。}
+		正交于\gls{manifold}方向（指出平面的箭头）的方差非常小，可以被视作是``噪音''，其他方向（平面内的箭头）的方差则很大，对应了``信号''以及低维数据的坐标系统。}
     \label{fig:PPCA_pancake}
 \end{figure}
 

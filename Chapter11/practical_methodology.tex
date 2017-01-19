@@ -84,7 +84,7 @@
 每当这个值超过某个阈值时，我们报告检测结果。
 通过调整阈值，我们能以\gls{precision}换\gls{recall}。
 在很多情况下，我们希望用一个数而不是曲线来概括分类器的性能。
-要做到这一点，我们可以转换\gls{precision}$p$和\gls{recall}$r$为\textbf{F-score}
+要做到这一点，我们可以转换\gls{precision} $p$和\gls{recall} $r$为\textbf{F-score}
 \begin{equation}
 	F = \frac{2pr}{p+r}.
 \end{equation}
@@ -385,7 +385,7 @@
 通常，\gls{grid_search}大约会在\firstgls{logarithmic_scale}下挑选合适的值，例如，一个学习率的取值集合是$\{0.1,0.01,10^{-3},10^{-4},10^{-5}\}$，或者\gls{hidden_unit}数目的取值集合$\{50,100,200,500,1000,2000\}$。
 
 通常重复进行\gls{grid_search}时，效果会最好。
-例如，假设我们在集合$\{-1,0,1\}$上\gls{grid_search}\gls{hyperparameter}$\alpha$。
+例如，假设我们在集合$\{-1,0,1\}$上\gls{grid_search}\gls{hyperparameter} $\alpha$。
 如果找到的最佳值是$1$，那么说明我们低估了最优值$\alpha$所在的范围，应该扩大搜索范围，例如在集合$\{1,2,3\}$中搜索。
 如果最佳值是$0$，那么我们不妨通过细化搜索范围以改进估计，在集合$\{-0.1,0,0.1\}$上进行\gls{grid_search}。
 
@@ -460,7 +460,7 @@
 
 另一个难点是，大部分\gls{ML}模型有多个自适应的部分。
 如果一个部分失效了，其他部分仍然可以自适应，并获得大致可接受的性能。
-例如，假设我们正在训练多层神经网络，其中参数为权重$\MW$和\gls{bias_aff}$\Vb$。
+例如，假设我们正在训练多层神经网络，其中参数为权重$\MW$和\gls{bias_aff} $\Vb$。
 进一步假设，我们单独手动实现了每个参数的梯度下降规则。
 而我们在偏置更新时犯了一个错误：
 \begin{equation}
@@ -536,7 +536,7 @@
 
 通常，我们会测试向量值函数$g:\SetR^m \to \SetR^n$的梯度或\gls{jacobian}矩阵。
 令人遗憾的是，\gls{finite_difference}只允许我们每次计算一个导数。
-我们既可以运行\gls{finite_difference}$mn$次评估$g$的所有偏导数，又可以将该测试应用于一个输入输出都是$g$的随机投影的新函数。
+我们既可以运行\gls{finite_difference} $mn$次评估$g$的所有偏导数，又可以将该测试应用于一个输入输出都是$g$的随机投影的新函数。
 例如，我们可以用导数实现去测试函数$f(x) = \Vu^T g(\Vv x)$，其中$\Vu$和$\Vv$是随机向量。
 正确计算$f'(x)$要求能够正确地通过$g$反向传播，但是使用\gls{finite_difference}能够很有效地计算，因为$f$只有一个输入和一个输出。
 在多个$\Vu$值和$\Vv$值上重复这个测试通常是个好主意，可以减少测试忽略了垂直于随机投影的几率。
@@ -587,8 +587,8 @@
 具体地，目标是达到人类水平，$98\%$的\gls{accuracy}。
 这种程度的\gls{accuracy}并不是总能达到。
 为了达到这个级别的\gls{accuracy}，街景\gls{transcription_system}牺牲了\gls{coverage}。
-因此在保持\gls{accuracy}$98\%$的情况下，\gls{coverage}成了这个项目优化的主要\gls{performance_metrics}。
-随着卷积网络的改进，能够降低网络拒绝转录输入的置信度阈值，最终超出了\gls{coverage}$95\%$的目标。
+因此在保持\gls{accuracy} $98\%$的情况下，\gls{coverage}成了这个项目优化的主要\gls{performance_metrics}。
+随着卷积网络的改进，能够降低网络拒绝转录输入的置信度阈值，最终超出了\gls{coverage} $95\%$的目标。
 
 % -- 428 --
 

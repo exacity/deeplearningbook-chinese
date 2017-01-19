@@ -166,7 +166,7 @@ $ f^\prime(\Sx)=0 $的点称为临界点或驻点。
 <!-- % -- 81 -- -->
 
 针对具有多维输入的函数，我们需要用到偏导数的概念。
-偏导数$\frac{\partial}{\partial \Sx_i}f(\Vx)$衡量点$\Vx$处只有$x_i$增加时$f(\Vx)$如何变化。
+偏导数 $\frac{\partial}{\partial \Sx_i}f(\Vx)$衡量点$\Vx$处只有$x_i$增加时$f(\Vx)$如何变化。
 梯度是相对一个向量求导的导数:$f$的导数是包含所有偏导数的向量，记为$\nabla_{\Vx} f(\Vx)$。
 梯度的第$i$个元素是$f$关于$x_i$的偏导数。
 在多维情况下，临界点是梯度中所有元素都为零的点。
@@ -274,7 +274,7 @@ Hessian等价于梯度的Jacobian矩阵。
  \frac{1}{2}  (\Vx - \Vx^{(0)})^\Tsp \MH  (\Vx - \Vx^{(0)}),
 \end{align}
 其中$\Vg$是梯度，$\MH$是$ \Vx^{(0)}$点的Hessian。
-如果我们使用学习速率$\epsilon$，那么新的点$\Vx$将会是$\Vx^{(0)}-\epsilon \Vg$。
+如果我们使用学习速率 $\epsilon$，那么新的点$\Vx$将会是$\Vx^{(0)}-\epsilon \Vg$。
 代入上述的近似，可得
 \begin{align}
  f(\Vx^{(0)} - \epsilon \Vg ) \approx f(\Vx^{(0)})  - \epsilon \Vg^\Tsp \Vg + \frac{1}{2} \epsilon^2 \Vg^\Tsp \MH  \Vg.
@@ -339,7 +339,7 @@ Hessian的条件数衡量这些二阶导数的变化范围。
 梯度下降不知道导数的这种变化，所以它不知道应该优先探索导数长期为负的方向。
 病态条件数也导致很难选择合适的步长。
 步长必须足够小，以免冲过最小而向具有较强的正曲率方向上升。
-这通常意味着步长太小，以致于在其它较小曲率的方向上进展不明显。
+这通常意味着步长太小，以致于在其他较小曲率的方向上进展不明显。
 见\fig?的例子。
 \begin{figure}[!htb]
 \ifOpenSource
@@ -385,7 +385,7 @@ Hessian的条件数衡量这些二阶导数的变化范围。
 在许多其他领域，优化的主要方法是为有限的函数族设计优化算法。
 
 在深度学习的背景下，限制函数满足Lipschitz连续或其导数Lipschitz连续可以获得一些保证。
-Lipschitz连续函数的变化速度以Lipschitz常数$\CalL$为界：
+Lipschitz连续函数的变化速度以Lipschitz常数 $\CalL$为界：
 \begin{align}
  \forall \Vx,~\forall \Vy, ~| f(\Vx) - f(\Vy)|  \leq \CalL \| \Vx - \Vy \|_2 .
 \end{align}

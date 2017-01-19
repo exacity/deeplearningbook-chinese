@@ -53,16 +53,16 @@
 \gls{regularization}在\gls{DL}的出现前就已经应用了数十年。
 \gls{linear_model}，如\gls{linear_regression}和\gls{logistic_regression}可以使用简单、直接有效的\gls{regularization}策略。
 
-许多\gls{regularization}方法通过对\gls{objective_function}$J$添加一个参数范数惩罚$\Omega(\Vtheta)$，限制模型（如\gls{NN}、\gls{linear_regression}或\gls{logistic_regression}）的学习能力。
+许多\gls{regularization}方法通过对\gls{objective_function} $J$添加一个参数范数惩罚$\Omega(\Vtheta)$，限制模型（如\gls{NN}、\gls{linear_regression}或\gls{logistic_regression}）的学习能力。
 我们将正则化后的\gls{objective_function}记为$\tilde{J}$：
 \begin{align}
  \tilde{J}(\Vtheta;\MX, \Vy) = J(\Vtheta;\MX, \Vy) + \alpha \Omega(\Vtheta),
 \end{align}
-其中$\alpha \in [0, \infty)$是权衡范数惩罚项$\Omega$和标准\gls{objective_function}$J(\MX;\Vtheta)$相对贡献的超参数。
+其中$\alpha \in [0, \infty)$是权衡范数惩罚项$\Omega$和标准\gls{objective_function} $J(\MX;\Vtheta)$相对贡献的超参数。
 将$\alpha$设为0就是没有\gls{regularization}。
 越大的$\alpha$，对应于越多的\gls{regularization}惩罚。
 
-当我们的训练算法最小化\gls{regularization}后的\gls{objective_function}$\tilde{J}$时，它会降低原始目标$J$关于训练数据的误差并同时减小参数$\Vtheta$的规模（或在某些衡量下参数子集的规模）。
+当我们的训练算法最小化\gls{regularization}后的\gls{objective_function} $\tilde{J}$时，它会降低原始目标$J$关于训练数据的误差并同时减小参数$\Vtheta$的规模（或在某些衡量下参数子集的规模）。
 参数范数$\Omega$的不同选择会导致不同的优先解。
 在本节中，我们讨论各种范数惩罚对模型的影响。
 
@@ -224,7 +224,7 @@ $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，我们还可以
 接着我们将讨论$L^1$\gls{regularization}对简单\gls{linear_regression}模型的影响， 与分析$L^2$\gls{regularization}时一样不考虑\gls{bias_aff}参数。  
 我们尤其感兴趣的是找出$L^1$和$L^2$\gls{regularization}之间的差异。
 与$L^2$\gls{weight_decay}类似，$L^1$\gls{weight_decay}的强度也可以通过缩放惩罚项$\Omega$的正超参数$\alpha$控制。 
-因此，\gls{regularization}的\gls{objective_function}$\tilde{J}(\Vw;\MX, \Vy)$如下给出
+因此，\gls{regularization}的\gls{objective_function} $\tilde{J}(\Vw;\MX, \Vy)$如下给出
 \begin{align}
 \tilde{J}(\Vw;\MX, \Vy) = \alpha \| \Vw \|_1 +  J(\Vw;\MX, \Vy) ,
 \end{align}
@@ -274,7 +274,7 @@ $w_i^* < 0$的情况与之类似，但是$L^1$惩罚项使$w_i$更接近0(增加
 此处\gls{sparse}性指的是一些参数具有0的最优值。
 $L^1$\gls{regularization}的\gls{sparse}性是相比$L^2$\gls{regularization}是质的不同。
 \eqnref{eq:713L2}给出了$L^2$\gls{regularization}的解$\tilde \Vw$。 
-如果我们使用\gls{hessian}$\MH$为对角正定的假设（与$L^1$\gls{regularization}分析时一样），重新考虑这个等式，我们发现
+如果我们使用\gls{hessian} $\MH$为对角正定的假设（与$L^1$\gls{regularization}分析时一样），重新考虑这个等式，我们发现
 $\tilde{w_i} = \frac{H_{i,i}}{H_{i,i} + \alpha} w_i^*$。
 如果$w_i^*$不是0，那$\tilde{w_i}$也会保持非0。 
 这表明$L^2$\gls{regularization}不会导致参数变得\gls{sparse}，而$L^1$\gls{regularization}有可能通过足够大的$\alpha$实现\gls{sparse}。
@@ -512,7 +512,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \label{sec:semi_supervised_learning}
 在\gls{semi_supervised_learning}的框架下，$P(\RVx)$产生的未标记样本和$P(\RVx, \RVy)$中的标记样本都用于估计$P(\RVy \mid \RVx)$或者根据$\RVx$预测$\RVy$。
 
-在\gls{DL}的背景下，\gls{semi_supervised_learning}通常指的是学习一个\gls{representation}$h = f(\Vx)$。 
+在\gls{DL}的背景下，\gls{semi_supervised_learning}通常指的是学习一个\gls{representation} $h = f(\Vx)$。 
 学习\gls{representation}的目的是使相同类中的\gls{example}有类似的表示。
 \gls{unsupervised_learning}可以为如何在\gls{representation}空间聚集\gls{example}提供有用线索。
 在输入空间紧密聚集的\gls{example}应该被映射到类似的表示。
@@ -520,7 +520,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 这种方法长期存在的一个变种是应用主成分分析\gls{PCA}作为分类前（在投影后的数据上分类）的预处理步骤。
 
 我们可以构建这样一个模型，其中生成模型$P(\RVx)$或$P(\RVx, \RVy)$与判别模型$P(\RVy \mid \RVx)$共享参数，而不用将\gls{unsupervised}和\gls{supervised}部分分离。
-我们权衡\gls{supervised}\gls{criterion}$-\log P(\RVy \mid \RVx)$和\gls{unsupervised}或生成的\gls{criterion}（如$-\log P(\RVx)$或$-\log P(\RVx, \RVy)$)。
+我们权衡\gls{supervised}\gls{criterion} $-\log P(\RVy \mid \RVx)$和\gls{unsupervised}或生成的\gls{criterion}（如$-\log P(\RVx)$或$-\log P(\RVx, \RVy)$)。
 生成模型\gls{criterion}表达了对\gls{supervised_learning}问题解的特殊形式的先验知识\citep{LasserreJ2006}，即$P(\RVx)$的结构通过某种共享参数的方式连接到$P(\RVy \mid \RVx)$。
 通过控制在总\gls{criterion}中的生成\gls{criterion}，我们可以找到比纯生成或纯判别训练\gls{criterion}更好的权衡\citep{LasserreJ2006,Larochelle2008}。
 
@@ -548,7 +548,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \caption{\gls{multitask_learning}在深度学习框架中可以以多种方式进行，该图说明了任务共享相同输入但涉及不同目标随机变量的常见情况。
 \gls{deep_network}的较低层（无论是\gls{supervised}前馈的，还是包括向下箭头的生成组件）可以跨这样的任务共享，而任务特定的参数（分别与从$\Vh^{(1)}$和$\Vh^{(2)}$进入和发出的权重）可以在共享表示$\Vh^{(\text{shared})}$之上学习。
 这里的基本假设是存在解释输入$\RVx$变化的共同因素池，而每个任务与这些因素的子集相关联。
-在该示例中，额外假设顶层\gls{hidden_unit}$\Vh^{(1)}$和$\Vh^{(2)}$专用于每个任务（分别预测$\RVy^{(1)}$和$\RVy^{(2)}$），而一些中间层表示$\Vh^{(\text{shared})}$在所有任务之间共享。
+在该示例中，额外假设顶层\gls{hidden_unit} $\Vh^{(1)}$和$\Vh^{(2)}$专用于每个任务（分别预测$\RVy^{(1)}$和$\RVy^{(2)}$），而一些中间层表示$\Vh^{(\text{shared})}$在所有任务之间共享。
 在\gls{unsupervised_learning}情况下，一些顶层因素不与输出任务$(\Vh^{(3)})$的任意一个关联是有意义的：这些因素可以解释一些输入变化但与预测$\RVy^{(1)}$或$\RVy^{(2)}$不相关。
 }
 \label{fig:chap7_multi_factor_output}
@@ -647,7 +647,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 这意味着，无需破坏学习动态就能很容易地使用\gls{early_stopping}。
 相对于\gls{weight_decay}，必须小心不能使用太多的\gls{weight_decay}，以防止网络陷入不良\gls{local_minimum}(对应于病态的小权重)。
 
-\gls{early_stopping}可单独使用或与其它的\gls{regularization}策略相结合。
+\gls{early_stopping}可单独使用或与其他的\gls{regularization}策略相结合。
 即使为鼓励更好泛化，使用修改\gls{objective_function}的\gls{regularization}策略，在训练目标的\gls{local_minimum}达到最好泛化也是非常罕见的。
 
 \gls{early_stopping}需要验证集，这意味着某些训练数据不能被馈送到模型。
@@ -734,7 +734,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 事实上，在二次误差的简单\gls{linear_model}和简单的\gls{GD}情况下，我们可以展示\gls{early_stopping}相当于$L^2$\gls{regularization}。
 
 为了与经典$L^2$\gls{regularization}比较，我们考察唯一的参数是线性权重（$\Vtheta = \Vw$）的简单情形。
-我们在权重$\Vw$的经验最佳值$\Vw^*$附近以二次近似建模\gls{cost_function}$J$：
+我们在权重$\Vw$的经验最佳值$\Vw^*$附近以二次近似建模\gls{cost_function} $J$：
 \begin{align}
  \hat J(\Vtheta) = J(\Vw^*) + \frac{1}{2}  (\Vw- \Vw^*)^\top \MH  (\Vw - \Vw^*),
 \end{align}
@@ -809,7 +809,7 @@ $\forall i, w_i^{(A)}$应该与$ w_i^{(B)}$接近。
 我们可以通过\gls{regularization}利用此信息。
 具体来说，我们可以使用以下形式的参数范数惩罚：
 $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
-在这里我们使用$L^2$惩罚，但也可以使用其它选择。
+在这里我们使用$L^2$惩罚，但也可以使用其他选择。
 
 这种方法由\cite{LasserreJ2006}提出，\gls{regularization}一个模型（\gls{supervised}模式下训练的分类器）的参数接近另一个\gls{unsupervised}模式下训练的模型（捕捉观察到的输入数据的分布）。
 这样构造的架构使得许多分类模型中的参数能与之对应的\gls{unsupervised}模型的参数匹配。
@@ -881,12 +881,12 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 % -- 247 --
 
 第一个表达式是参数\gls{sparse}的\gls{linear_regression}模型的例子。
-第二个是数据$\Vx$具有\gls{sparse}\gls{representation}$\Vh$的线性回归。
+第二个是数据$\Vx$具有\gls{sparse}\gls{representation} $\Vh$的线性回归。
 也就是说，$\Vh$是$\Vx$的一个函数，在某种意义上\gls{representation}存在于$\Vx$中的信息，但用一个\gls{sparse}向量\gls{representation}。
 
 \gls{representation}的\gls{regularization}可以使用参数\gls{regularization}中同种类型的机制实现。
 
-\gls{representation}的范数惩罚\gls{regularization}是通过向\gls{loss_function}$J$添加对\gls{representation}的范数惩罚。
+\gls{representation}的范数惩罚\gls{regularization}是通过向\gls{loss_function} $J$添加对\gls{representation}的范数惩罚。
 记这个惩罚为$\Omega(\Vh)$。
 和以前一样，我们将\gls{regularization}后的损失函数记为$\tilde J$：
 \begin{align}
@@ -901,7 +901,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 \cite{HonglakL2008-small}和\cite{Goodfellow2009}都提供了基于几个样本平均激活的\gls{regularization}策略的例子，即令$\frac{1}{m}\sum_i \Vh^{(i)}$接近某些目标值（如每项都是$.01$的向量）。
 
 还有其他方法使用激活值的硬性约束获得\gls{representation}\gls{sparse}。
-例如，\textbf{正交匹配追踪}(orthogonal matching pursuit)\citep{pati93orthogonal}通过解决\gls{constrained_optimization}问题将输入值$\Vx$编码成\gls{representation}$\Vh$
+例如，\textbf{正交匹配追踪}(orthogonal matching pursuit)\citep{pati93orthogonal}通过解决\gls{constrained_optimization}问题将输入值$\Vx$编码成\gls{representation} $\Vh$
 \begin{align}
  \underset{\Vh, \norm{\Vh}_0 < k}{\argmin} \norm{\Vx - \MW \Vh}^2,
 \end{align}
@@ -915,7 +915,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 有\gls{hidden_unit}的模型本质上都能变得\gls{sparse}。
 在这本书中，我们将看到各种情况下使用\gls{sparse}\gls{regularization}的例子。
 
-\section{\glsentrytext{bagging}和其它\glsentrytext{ensemble}方法}
+\section{\glsentrytext{bagging}和其他\glsentrytext{ensemble}方法}
 \label{sec:bagging_and_other_ensemble_methods}
 \firstgls{bagging}是通过结合几个模型降低泛化误差的技术\citep{ML:Breiman:bagging}。
 主要想法是分别训练几个不同的模型，然后让所有模型表决测试样例的输出。
@@ -1044,7 +1044,7 @@ $\Vmu$中的每项都是二值的且独立于其他项采样。
 \end{figure}
 % -- 252 --
 
-更正式地说，假设一个\gls{mask}向量$\Vmu$指定被包括的单元，$J(\Vtheta, \Vmu)$是由参数$\Vtheta$和\gls{mask}$\Vmu$定义的模型代价。
+更正式地说，假设一个\gls{mask}向量$\Vmu$指定被包括的单元，$J(\Vtheta, \Vmu)$是由参数$\Vtheta$和\gls{mask} $\Vmu$定义的模型代价。
 那么\gls{dropout}训练在于最小化$\SetE_{\Vmu} J(\Vtheta, \Vmu)$。 
 期望包含指数多的项，但我们可以通过抽样$\Vmu$获得梯度的无偏估计。
 
@@ -1069,7 +1069,7 @@ $\Vmu$中的每项都是二值的且独立于其他项采样。
  \frac{1}{k} \sum_{i=1}^k p^{(i)}(y \mid \Vx).
 \end{align}
 
-在\gls{dropout}的情况下，通过\gls{mask}$\Vmu$定义每个子模型的概率分布$p(y \mid \Vx, \Vmu)$。
+在\gls{dropout}的情况下，通过\gls{mask} $\Vmu$定义每个子模型的概率分布$p(y \mid \Vx, \Vmu)$。
 关于所有\gls{mask}的算术平均值由下式给出
 \begin{align}
   \sum_{u} p(\Vmu) p(y \mid \Vx, \Vmu),
@@ -1211,7 +1211,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 这表明，\gls{dropout} \gls{bagging}的解释超过\gls{dropout}作为稳健性噪音的解释。
 当随机抽样的\gls{ensemble}成员相互独立地训练好后，\gls{bagging}\gls{ensemble}的\gls{regularization}效果才能达到。
 
-\gls{dropout}启发其它以随机方法训练指数量级的共享权重的\gls{ensemble}。
+\gls{dropout}启发其他以随机方法训练指数量级的共享权重的\gls{ensemble}。
 \ENNAME{DropConnect}是
 \gls{dropout}的一个特殊情况，其中一个标量权重和单个\gls{hidden_unit}状态之间的每个乘积被认为是可以丢弃的一个单元\citep{Wan+al-ICML2013-small}。
 随机\gls{pooling}是构造\gls{CNN}\gls{ensemble}的一种随机\gls{pooling}的形式(见\secref{sec:pooling})，其中每个卷积网络参与每个特征图的不同空间位置。
@@ -1235,7 +1235,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 然而，有比这更进一步的\gls{dropout}观点。
 \gls{dropout}不仅仅是训练一个\gls{bagging}的\gls{ensemble}模型，
 并且是共享\gls{hidden_unit}的\gls{ensemble}模型。
-这意味着无论其它\gls{hidden_unit}是否在模型中，每个\gls{hidden_unit}必须都能够表现良好。
+这意味着无论其他\gls{hidden_unit}是否在模型中，每个\gls{hidden_unit}必须都能够表现良好。
 \gls{hidden_unit}必须准备好进行模型之间的交换和互换。
 \cite{Hinton-et-al-arxiv2012-small}由生物学的想法受到启发：有性繁殖涉及到两个不同生物体之间交换基因，进化产生的压力使得基因不仅是良好的而且要准备好不同有机体之间的交换。
 这样的基因和这些特点对环境的变化是非常稳健的，因为它们一定会正确适应任何一个有机体或模型不寻常的特性。
@@ -1244,7 +1244,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 
 \gls{dropout}强大的大部分是由于施加到\gls{hidden_unit}的\gls{mask}噪声，了解这一事实是重要的。
 这可以看作是对输入内容的信息高度智能化、自适应破坏的一种形式，而不是对输入原始值的破坏。
-例如，如果模型学得通过鼻检测脸的\gls{hidden_unit}$h_i$，那么丢失$h_i$对应于擦除图像中有鼻子的信息。
+例如，如果模型学得通过鼻检测脸的\gls{hidden_unit} $h_i$，那么丢失$h_i$对应于擦除图像中有鼻子的信息。
 模型必须学习另一种$h_i$，要么是鼻子存在的冗余编码，要么是脸部的另一特征，如嘴。
 传统的噪声注入技术，在输入端加非结构化的噪声不能够随机地从脸部图像中抹去关于鼻子的信息，除非噪声的幅度大到几乎能抹去图像中所有的信息。
 破坏提取的特征而不是原始值，让破坏过程充分利用该模型迄今获得的关于输入分布的所有知识。
@@ -1319,7 +1319,7 @@ $\ +\ .007\ \times$ &%
 \gls{adversarial_example}也提供了实现\gls{semi_supervised_learning}的一种手段。
 与数据集中的标签不相关联的点$\Vx$处，模型本身为其分配一些标签$\hat y$。
 模型的标记$\hat y$未必是真正的标签，但如果模型是高品质，那么$\hat y$提供真正标签的可能性很大。
-我们可以搜索一个\gls{adversarial_example}$\Vx'$，导致分类器输出一个标签$y'$且$y' \neq \hat y$。
+我们可以搜索一个\gls{adversarial_example} $\Vx'$，导致分类器输出一个标签$y'$且$y' \neq \hat y$。
 不使用真正的标签，而是由训练好的模型提供标签产生的\gls{adversarial_example}称为\firstgls{virtual_adversarial_example}\citep{miyato2015distributional}。
 分类器可以被训练成对$\Vx$和$\Vx'$分配相同的标签。
 这鼓励分类器学习一个沿着未标签数据所在流形上任意微小变化都是鲁棒的函数。
@@ -1362,7 +1362,7 @@ $\ +\ .007\ \times$ &%
 在一条曲线上，我们选择单个点并绘制了一个与类别\gls{manifold}（平行并接触\gls{manifold}）相切的向量以及与类别\gls{manifold}（与\gls{manifold}正交）垂直的向量。
 在多维情况下，可以存在许多切线方向和法线方向。
 我们希望分类函数沿垂直于\gls{manifold}方向上的移动而快速改变，并且不随着沿类别\gls{manifold}方向的移动而改变。
-\gls{tangent_prop}和\gls{manifold}正切分类器都\gls{regularization}$f(\Vx)$不随$\Vx$沿\gls{manifold}的移动而大量改变。
+\gls{tangent_prop}和\gls{manifold}正切分类器都\gls{regularization} $f(\Vx)$不随$\Vx$沿\gls{manifold}的移动而大量改变。
 \gls{tangent_prop}需要用户手动指定计算正切方向的函数（例如指定小平移后的图像保留在相同类别的\gls{manifold}中），而\gls{manifold}正切分类器通过训练\gls{AE}拟合训练数据来估计\gls{manifold}的正切方向 。
 我们将在\chapref{chap:autoencoders}中讨论使用\gls{AE}来估计\gls{manifold}。
 }
