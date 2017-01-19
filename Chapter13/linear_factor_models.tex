@@ -51,7 +51,7 @@
 \else
 	\centerline{\includegraphics{Chapter13/figures/linear_factors}}
 \fi
-	\caption{描述\gls{linear_factor}族的\gls{directed_graphical_model}，其中我们假设一个观察到的数据向量$\Vx$是通过独立的隐含因子$\Vh$的线性组合获得的，加上一定的噪音。
+    \caption{描述\gls{linear_factor}族的\gls{directed_graphical_model}，其中我们假设一个观察到的数据向量$\Vx$是通过独立的\gls{latent}因子$\Vh$的线性组合获得的，加上一定的噪音。
 		不同的模型，比如\gls{PPCA}，\gls{FA}或者是\glssymbol{ICA}，都是选择了不同形式的噪音以及先验$p(\Vh)$。}
 	\label{fig:linear_factors}
 \end{figure}
@@ -126,14 +126,14 @@
 
 许多不同的具体方法被称为\gls{ICA}。
 与我们本书中描述的其他\gls{generative_model}最相似的\gls{ICA}变种是训练完全参数化的\gls{generative_model}\citep{Pham-et-al-1992}。
-隐含因子$\Vh$的先验$p(\Vh)$，必须由用户给出并固定。
+\gls{latent}因子$\Vh$的先验$p(\Vh)$，必须由用户给出并固定。
 接着模型确定性地生成$\Vx = \MW \Vh$。
 我们可以通过非线性变化（使用\eqnref{eqn:3.47}）来确定$p(\Vx)$。
 然后通过一般的方法比如\gls{MLE}进行学习。
 % 482 head
 
 
-这种方法的动机是，通过选择一个独立的$p(\Vh)$，我们可以尽可能恢复接近独立的隐含因子。
+这种方法的动机是，通过选择一个独立的$p(\Vh)$，我们可以尽可能恢复接近独立的\gls{latent}因子。
 这是一种常用的方法，它并不是用来捕捉高级别的抽象的因果因子，而是恢复已经混合在一起的低级别信号。
 在该设置中，每个训练样本对应一个时刻，每个$x_i$是一个传感器的对混合信号的观察值，并且每个$h_i$是单个原始信号的一个估计。
 例如，我们可能有$n$个人同时说话。 
@@ -184,7 +184,7 @@
 
 \gls{ICA}的另一个推广是通过在组内鼓励统计依赖关系在组之间抑制依赖关系来学习一组特征。
 当相关单元的组不重叠时，这被称为\firstgls{ISA}。
-还可以向每个隐藏单元分配空间坐标，并且空间上相邻的单元形成一定程度的重叠。
+还可以向每个\gls{hidden_unit}分配空间坐标，并且空间上相邻的单元形成一定程度的重叠。
 这能够鼓励相邻的单元学习类似的特征。
 当应用于自然图像时，这种拓扑\gls{ICA}方法学习Gabor滤波器，从而使得相邻特征具有相似的定向，位置或频率。
 在每个区域内出现类似Gabor函数的许多不同相位偏移，使得在小区域上的合并产生了平移不变性。
@@ -302,7 +302,7 @@ Linear SFA modules may then be composed to learn deep nonlinear slow feature ext
 严格地说，术语``\gls{sparse_coding}''是指在该模型中推断$\Vh$的值的过程，而``稀疏建模''是指设计和学习模型的过程，但是通常这两个概念都可以用术语``\gls{sparse_coding}''描述。
 % 486
 
-像其它的\gls{linear_factor}一样，它使用了线性的\gls{decoder}加上噪音的方式获得一个$\Vx$的重构，就像\eqnref{eqn:132}描述的一样。
+像其他的\gls{linear_factor}一样，它使用了线性的\gls{decoder}加上噪音的方式获得一个$\Vx$的重构，就像\eqnref{eqn:132}描述的一样。
 更具体的说，\gls{sparse_coding}模型通常假设线性因子有一个各向同性的精度为$\beta$的高斯噪音：
 \begin{align}
 \label{eqn:1312}
@@ -409,7 +409,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 	因此这个模型也学习到了有用的特征。
 	问题在于特征的\gls{factorial}先验会导致特征子集合随机的组合。
 	一些这样的子集能够合成可识别的MNIST集上的数字。
-	这也促进了拥有更强大的隐含编码的\gls{generative_model}的发展。
+    这也促进了拥有更强大的\gls{latent}编码的\gls{generative_model}的发展。
 	此图是从\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}中拷贝来的，并获得允许。}
 	\label{fig:s3c_samples}
 \end{figure}
@@ -438,7 +438,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 \fi
 	\caption{平坦的高斯能够描述一个低维\gls{manifold}附近的概率密度。
 		此图表示了``\gls{manifold}平面''上的``馅饼''的上半部分并且穿过了它的中心。
-		正交于\gls{manifold}方向（指出平面的箭头）的方差非常小，可以被视作是``噪音''，其它方向（平面内的箭头）的方差则很大，对应了``信号''以及低维数据的坐标系统。}
+		正交于\gls{manifold}方向（指出平面的箭头）的方差非常小，可以被视作是``噪音''，其他方向（平面内的箭头）的方差则很大，对应了``信号''以及低维数据的坐标系统。}
     \label{fig:PPCA_pancake}
 \end{figure}
 

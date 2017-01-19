@@ -25,7 +25,7 @@
 在本章中，我们介绍了\gls{graphical_models}中几个核心方法的基本背景，并且强调了在\gls{DL}领域中\gls{graphical_models}已经被公认为是有效的。
 如果你已经对\gls{graphical_models}已经了解很多，那么你可以跳过本章的绝大部分。
 然而，我们相信即使是资深的\gls{graphical_models}方向的研究者也会从本章的最后一节中获益匪浅，详见\secref{sec:the_deep_learning_approach_to_structured_probabilistic_models}，其中我们强调了在\gls{DL}算法中一些\gls{graphical_models}特有的算法。
-相比于其它\gls{graphical_models}研究领域的是，\gls{DL}的研究者们通常会使用完全不同的模型结构，学习算法和推断过程。
+相比于其他\gls{graphical_models}研究领域的是，\gls{DL}的研究者们通常会使用完全不同的模型结构，学习算法和推断过程。
 在本章中，我们指明了这种区别并且解释了其中的原因。
 % 550 head
 
@@ -58,7 +58,7 @@
 % 550  ok
 
 
-我们也可以使用概率模型来完成许多其它的任务。
+我们也可以使用概率模型来完成许多其他的任务。
 这些任务通常比分类更加昂贵。
 其中的一些任务需要产生多个输出。
 大部分任务需要对输入数据整个结构的完整理解，所以并不能舍弃数据的一部分。
@@ -134,7 +134,7 @@
 % 552  end
 	
 \item \emph{运行时间}：推断的开销。
-假设我们需要完成一个推断的任务，其中我们需要使用联合分布$P(\RVx)$来计算某些其它的分布，比如说边缘分布$P(\RSx_1)$或者是条件分布$P(\RSx_2\mid \RSx_1)$。
+假设我们需要完成一个推断的任务，其中我们需要使用联合分布$P(\RVx)$来计算某些其他的分布，比如说边缘分布$P(\RSx_1)$或者是条件分布$P(\RSx_2\mid \RSx_1)$。
 计算这样的分布需要对整个表格的某些项进行求和操作，因此这样的操作的运行时间和上述高昂的内存开销是一个级别的。
 % 553 head
 	
@@ -142,7 +142,7 @@
 \item \emph{运行时间}： 采样的开销。
 类似的，假设我们想要从这样的模型中采样。
 最简单的方法就是从均匀分布中采样，$u\sim \text{U}(0,1)$，然后把表格中的元素累加起来，直到和大于$u$，然后返回最后一个加上的元素。
-最差情况下，这个操作需要读取整个表格，所以和其它操作一样，它需要指数级别的时间。
+最差情况下，这个操作需要读取整个表格，所以和其他操作一样，它需要指数级别的时间。
 \end{itemize}
 % 553 
 
@@ -160,10 +160,10 @@
 在跑完她的路程以后，她把棒递给了Bob。
 然后Bob开始跑，再把棒给Carol，Carol跑最后一棒。
 我们可以用连续变量来建模他们每个人完成的时间。
-因为Alice第一个跑，所以她的完成时间并不依赖于其它的人。
+因为Alice第一个跑，所以她的完成时间并不依赖于其他的人。
 Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完以后才能开始跑。
 如果Alice跑得更快，那么Bob也会完成得更快。
-所有的其它关系都可以被类似地推出。
+所有的其他关系都可以被类似地推出。
 最后，Carol的完成时间依赖于她的两个队友。
 如果Alice跑得很慢，那么Bob也会完成得更慢。
 结果，Carol将会更晚开始跑步，因此她的完成时间也更有可能要晚。
@@ -189,7 +189,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 \gls{structured_probabilistic_models}使用图（在图论中``结点''是通过``边''来连接的）来表示随机变量之间的相互作用。
 每一个结点代表一个随机变量。
 每一条边代表一个直接相互作用。
-这些直接相互作用隐含着其它的间接相互作用，但是只有直接的相互作用是被显式地建模的。
+这些直接相互作用隐含着其他的间接相互作用，但是只有直接的相互作用是被显式地建模的。
 % 554
 
 
@@ -210,7 +210,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 
 之所以命名为\gls{directed_graphical_model}是因为所有的边都是有方向的，即从一个结点指向另一个结点。
 这个方向可以通过画一个箭头来表示。
-箭头所指的方向表示了这个随机变量的概率分布是由其它变量的概率分布所定义的。
+箭头所指的方向表示了这个随机变量的概率分布是由其他变量的概率分布所定义的。
 画一个从结点$\RSa$到结点$\RSb$的箭头表示了我们用一个条件分布来定义$\RSb$，而$\RSa$是作为这个条件分布符号右边的一个变量。
 换句话说，$\RSb$的概率分布依赖于$\RSa$的取值。
 % 554
@@ -285,7 +285,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 
 决定哪些信息需要被包含在图中而哪些不需要是很重要的。
 如果变量之间可以被假设为是条件独立的，那么这个图可以包含这种简化假设。
-当然也存在其它类型的简化\gls{graphical_models}的假设。
+当然也存在其他类型的简化\gls{graphical_models}的假设。
 比如说，我们可以假设无论Alice的表现如何，Bob总是跑得一样快
 （实际上，Alice的表现很大概率会影响Bob的表现，这取决于Bob的性格，
 如果在之前的比赛中Alice跑得特别快，这有可能鼓励Bob更加努力并取得更好的成绩，当然这也有可能使得Bob过分自信或者变得懒惰）。
@@ -293,7 +293,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 这个假设使得我们所需要的参数量从$O(k^2)$降到了$O(k)$。
 然而，值得注意的是在这个假设下$\RSt_0$和$\RSt_1$仍然是直接相关的，因为$\RSt_1$表示的是Bob完成时的时间，并不是他跑的总时间。
 这也意味着图中会有一个从$\RSt_0$指向$\RSt_1$的箭头。
-``Bob的个人跑步时间相对于其它因素是独立的''这个假设无法在$\RSt_0$，$\RSt_1$，$\RSt_2$的图中被表示出来。
+``Bob的个人跑步时间相对于其他因素是独立的''这个假设无法在$\RSt_0$，$\RSt_1$，$\RSt_2$的图中被表示出来。
 反之，我们只能将这个关系表示在条件分布的定义中。
 这个条件分布不再是一个大小为$k\times k-1$的分别对应着$\RSt_0$，  $\RSt_1$的表格，而是一个包含了$k-1$个参数的略复杂的公式。
 \gls{directed_graphical_model}并不能对我们如何定义条件分布做出任何限制。
@@ -675,25 +675,28 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 	\label{fig:168}
 \end{figure}
 
+
 \begin{figure}[!htb]
+\centering
 \ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
+\includegraphics{figure.pdf}
 \else
-	\centerline{\includegraphics{Chapter16/figures/example_dsep}}	
+\includegraphics{Chapter16/figures/example_dsep}
 \fi
-	\caption{从这张图中，我们可以发现一些\gls{dseparation}的性质。这包括了：
-%	\begin{itemize}
-%		\item 给定空集的情况下$\RSa$和$\RSb$是\gls{dseparation}的。
-%		\item 给定$\RSc$的情况下$\RSa$和$\RSe$是\gls{dseparation}的。
-%		\item 给定$\RSc$的情况下$\RSd$和$\RSe$是\gls{dseparation}的。
-%	\end{\itemize}
-	我们还可以发现当我们观察到一些变量的时候，一些变量不再是\gls{dseparation}的：
-%		\begin{itemize}
-%			\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
-%			\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
-%		\end{\itemize}
-	}
-	\label{fig:169}
+\captionsetup{singlelinecheck=off}
+\caption[d-separation example]{从这张图中，我们可以发现一些\gls{dseparation}的性质。这包括了：
+\begin{itemize}
+	\item 给定空集的情况下$\RSa$和$\RSb$是\gls{dseparation}的。
+	\item 给定$\RSc$的情况下$\RSa$和$\RSe$是\gls{dseparation}的。
+	\item 给定$\RSc$的情况下$\RSd$和$\RSe$是\gls{dseparation}的。
+\end{itemize}
+我们还可以发现当我们观察到一些变量的时候，一些变量不再是\gls{dseparation}的：
+\begin{itemize}
+	\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
+	\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
+\end{itemize}
+}
+\label{fig:169}
 \end{figure}
 
 
@@ -799,7 +802,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 		为了捕捉这个相关性，无向模型必须包含一个包含所有三个变量的\gls{clique}。
 		这个\gls{clique}无法编码$\RSa \perp \RSb$这个信息。
 		（右）通常讲，\gls{moralization}的过程会给图添加许多边，因此丢失了一些独立性。
-		举个例子，这个\gls{sparse_coding}图需要在每一对隐含单元之间添加\gls{moralization}的边，因此也引入了二次数量级的新的直接依赖关系。}
+        举个例子，这个\gls{sparse_coding}图需要在每一对\gls{hidden_unit}之间添加\gls{moralization}的边，因此也引入了二次数量级的新的直接依赖关系。}
 	\label{fig:dm_to_um}
 \end{figure}
 
@@ -927,7 +930,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 不幸的是，从\gls{undirected_model}中抽取样本是一个昂贵的多次迭代的过程。
 理论上最简单的方法是\firstgls{gibbs_sampling}。
 假设我们在一个$n$维向量的随机变量$\RVx$上有一个\gls{graphical_models}。 
-我们迭代地访问每个变量$x_i$，在给定其它变量的条件下从$p(\RSx_i \mid \RSx_{-i})$中抽样。
+我们迭代地访问每个变量$x_i$，在给定其他变量的条件下从$p(\RSx_i \mid \RSx_{-i})$中抽样。
 由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以等价地仅对$\RSx_i$的邻居条件化。
 不幸的是，在我们遍历\gls{graphical_models}一次并采样所有$n$个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
 相反，我们必须重复该过程并使用它们邻居的更新值对所有$n$个变量重新取样。
@@ -968,7 +971,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 良好的生成模型需要准确地捕获所观察到的或``可见''变量$\RVv$上的分布。
 通常$\RVv$的不同元素彼此高度依赖。
-在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个潜在的或``隐藏''变量$\Vh$。
+在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个\gls{latent}的或``隐藏''变量$\RVh$。
 然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_j$直接依赖)。
 % 572  end 
 
@@ -1037,7 +1040,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 我们可以对这些变量施加均匀分布。
 然后我们可以为每个子句添加一个二进制\gls{latent_variable}，来表示每个子句是否得到满足。
 然后，我们可以添加另一个\gls{latent_variable}，来表示是否满足所有子句。
-这可以通过构造一个\gls{latent_variable}的缩减树来完成，树中的每个结点表示其它两个变量是否满足，从而不需要构造一个大的\gls{clique}。
+这可以通过构造一个\gls{latent_variable}的缩减树来完成，树中的每个结点表示其他两个变量是否满足，从而不需要构造一个大的\gls{clique}。
 该树的叶是每个子句的变量。
 树的根报告整个问题是否满足。
 由于literal上的均匀分布，缩减树的跟结点的边缘分布表示多少比例的分配能够使得该问题成立。
@@ -1092,13 +1095,13 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到解决方
 
 
 另一个明显的区别是\gls{DL}方法中经常使用的连接类型。
-深度图模型通常具有大的与其它单元组全连接的单元组，使得两个组之间的相互作用可以由单个矩阵描述。
+深度图模型通常具有大的与其他单元组全连接的单元组，使得两个组之间的相互作用可以由单个矩阵描述。
 传统的\gls{graphical_models}具有非常少的连接，并且每个变量的连接选择可以单独设计。
 模型结构的设计与推断算法的选择紧密相关。
 \gls{graphical_models}的传统方法通常旨在保持精确推断的可追踪性。
 当这个约束太强的时候，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的\gls{approximate_inference}算法。
 这两种方法通常在连接非常稀疏的图上有很好的效果。
-相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$\RSv_i$连接到非常多的隐藏单元$\RSh_j$上，从而使得$\RVh$可以获得一个$\RSv_i$的分布式表示（也可能是其他几个可观察变量）。
+相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$\RSv_i$连接到非常多的\gls{hidden_unit} $\RSh_j$上，从而使得$\RVh$可以获得一个$\RSv_i$的分布式表示（也可能是其他几个可观察变量）。
 分布式表示具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，分布式表示有一个缺点就是对于精确推断和循环信任传播等传统技术来说不能产生足够稀疏的图。
 结果，\gls{graphical_models}和深度图模型最大的区别之一就是\gls{DL}中从来不会使用\gls{loopy_belief_propagation}。
 相反的，许多\gls{DL}模型可以用来加速\gls{gibbs_sampling}或者\gls{variational_inference}。
@@ -1138,7 +1141,7 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
 其中$\Vb,\Vc$和$\MW$都是无约束的实值的可学习参数。
 我们可以看到，模型被分成两组单元：$\Vv$和$\Vh$，它们之间的相互作用由矩阵$\MW$来描述。
 该模型在\figref{fig:rbm}中图示。
-如该图所示，该模型的一个重要方面是在任何两个可见单元之间或任何两个隐藏单元之间没有直接的相互作用（因此称为``受限''，一般的\gls{BM}可以具有任意连接）。
+如该图所示，该模型的一个重要方面是在任何两个可见单元之间或任何两个\gls{hidden_unit}之间没有直接的相互作用（因此称为``受限''，一般的\gls{BM}可以具有任意连接）。
 % 577
 
 
@@ -1187,7 +1190,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 \else
 	\centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/rbm_samples}}	
 \fi
-	\caption{<bad>训练好的\glssymbol{RBM}及其权重中的样本。（左）用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。每一列是一个单独的\gls{gibbs_sampling}过程。没遗憾表示另一个$1000$步\gls{gibbs_sampling}的输出。连续的样本之间彼此高度相关。（右）对应的权重向量。将本图结果与图\ref{fig:s3c_samples}中描述的样本和权重相比。由于\glssymbol{RBM}的先验$p(\Vh)$没有限制为\gls{factorial}，这里的样本表现得更好。采样时\glssymbol{RBM}能够学习到哪些特征需要一起出现。另一方面说，\glssymbol{RBM}后验$p(\Vh \mid \Vv)$是\gls{factorial}的，而\gls{sparse_coding}的后验并不是，所以在特征提取上\gls{sparse_coding}模型表现得更好。其它的模型可以使用非\gls{factorial}的$p(\Vh)$和非\gls{factorial}的$p(\Vh \mid \Vh)$。图片的复制经过\citet{lisa_tutorial_rbm}的允许。}
+	\caption{<bad>训练好的\glssymbol{RBM}及其权重中的样本。（左）用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。每一列是一个单独的\gls{gibbs_sampling}过程。没遗憾表示另一个$1000$步\gls{gibbs_sampling}的输出。连续的样本之间彼此高度相关。（右）对应的权重向量。将本图结果与图\ref{fig:s3c_samples}中描述的样本和权重相比。由于\glssymbol{RBM}的先验$p(\Vh)$没有限制为\gls{factorial}，这里的样本表现得更好。采样时\glssymbol{RBM}能够学习到哪些特征需要一起出现。另一方面说，\glssymbol{RBM}后验$p(\Vh \mid \Vv)$是\gls{factorial}的，而\gls{sparse_coding}的后验并不是，所以在特征提取上\gls{sparse_coding}模型表现得更好。其他的模型可以使用非\gls{factorial}的$p(\Vh)$和非\gls{factorial}的$p(\Vh \mid \Vh)$。图片的复制经过\citet{lisa_tutorial_rbm}的允许。}
 	\label{fig:rbm_sample}
 \end{figure}
 

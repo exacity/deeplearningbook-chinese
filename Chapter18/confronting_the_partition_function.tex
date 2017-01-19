@@ -258,7 +258,7 @@
 
 因为每个\gls{markov_chain}在整个学习过程中不断更新，而不是在每个梯度步骤中重新开始，\gls{markov_chain}可以自由探索很远，以找到所有模型的模态。
 因此，\glssymbol{SML}比\glssymbol{contrastive_divergence}具有更强的鲁棒性，以免形成具有\gls{spurious_modes}的模型。
-此外，因为有可能存储所有采样变量的状态，无论是可见的还是潜在的，\glssymbol{SML}为\gls{hidden_unit}和可见单元都提供了初始值。
+此外，因为有可能存储所有采样变量的状态，无论是可见的还是\gls{latent}的，\glssymbol{SML}为\gls{hidden_unit}和可见单元都提供了初始值。
 \glssymbol{contrastive_divergence}只能为可见单元提供初始化，因此\gls{deep_model}需要进行\gls{burn_in}步骤。
 \glssymbol{SML}能够有效地训练\gls{deep_model}。
 \cite{Marlin10Inductive-small}将\glssymbol{SML}与本章中提出的许多其他标准方法进行比较。

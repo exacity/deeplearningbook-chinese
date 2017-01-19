@@ -3,7 +3,7 @@
 \chapter{\glsentrytext{AE}}
 \label{chap:autoencoders}
 \firstgls{AE}是\gls{NN}的一种，经过训练后能尝试将输入复制到输出。
-\firstgls{AE}内部有一个隐含层$\Vh$，可以产生\firstgls{code}表示输入。
+\firstgls{AE}内部有一个\gls{hidden_layer} $\Vh$，可以产生\firstgls{code}表示输入。
 该网络可以看作由两部分组成：一个\gls{encoder}函数$ \Vh = f(\Vx)$和一个生成\gls{reconstruction}的\gls{decoder} $\Vr=g(\Vh)$。
 \figref{fig:chap14_autoencoder}展示了这种架构。
 如果一个\gls{AE}学会简单地设置$g(f(\Vx)) =\Vx$，那么这个\gls{AE}就不会特别有用。
@@ -17,7 +17,7 @@
 
 数十年间，\gls{AE}的想法一直是\gls{NN}历史景象的一部分~\citep{Lecun-these87,Bourlard88,hinton1994amd-small}。
 传统\gls{AE}被用于\gls{dimensionality_reduction}或特征学习。
-近年来，\gls{AE}与隐变量模型理论的联系将\gls{AE}带到了生成建模的前沿，我们将在\chapref{chap:deep_generative_models}看到更多细节。
+近年来，\gls{AE}与\gls{latent_variable}模型理论的联系将\gls{AE}带到了生成建模的前沿，我们将在\chapref{chap:deep_generative_models}看到更多细节。
 \gls{AE}可以被看作是\gls{feedforward_network}的一种特殊情况，并且可以使用完全相同的技术进行训练，通常使用\gls{minibatch}\gls{GD}法（基于\gls{back_propagation}计算的梯度）。
 不像一般的\gls{feedforward_network}，\gls{AE}也可以使用\firstgls{recirculation}训练\citep{Hinton+McClelland-NIPS1987}，这是一种基于比较原始输入和\gls{reconstruction}输入激活的学习算法。
 相比\gls{back_propagation}算法，\gls{recirculation}算法从生物学上看似更有道理，但很少用于\gls{ML}。
@@ -71,18 +71,18 @@
 我们已经看到，如果这类\gls{AE}被赋予过大的\gls{capacity}，它就不能学到任何有用的信息。
 
 
-如果隐藏层\gls{code}的维数允许与输入相等，或隐藏层\gls{code}维数大于输入的\firstgls{overcomplete}情况下，会发生类似的问题。
+如果隐藏\gls{code}的维数允许与输入相等，或隐藏\gls{code}维数大于输入的\firstgls{overcomplete}情况下，会发生类似的问题。
 在这些情况下，即使是线性\gls{encoder}和线性\gls{decoder}也可以学会将输入复制到输出，而学不到任何有关数据分布的有用信息。
 
 
 理想情况下，根据要建模的数据分布的复杂性，选择合适的\gls{code}维数和\gls{encoder}、\gls{decoder}\gls{capacity}，就可以成功训练任意架构的\gls{AE}。
 正则\gls{AE}提供这样做的可能。
-正则\gls{AE}使用的\gls{loss_function}可以鼓励模型学习其它特性（除了将输入复制到输出），而不用限制使用浅层的\gls{encoder}和\gls{decoder}以及小的\gls{code}维数来限制模型的\gls{capacity}。
+正则\gls{AE}使用的\gls{loss_function}可以鼓励模型学习其他特性（除了将输入复制到输出），而不用限制使用浅层的\gls{encoder}和\gls{decoder}以及小的\gls{code}维数来限制模型的\gls{capacity}。
 这些特性包括\gls{sparse}\gls{representation}、\gls{representation}的小导数、以及对噪声或输入缺失的鲁棒性。
 即使模型\gls{capacity}大到足够学习一个简单的复制功能，非线性且\gls{overcomplete}的正则\gls{AE}仍然能学到一些与数据分布相关的有用信息。
 
 
-除了这里所描述的方法（\gls{regularization}\gls{AE}最自然的解释），几乎任何带有隐变量并配有一个\gls{inference}过程（计算给定输入的隐含表示）的\gls{generative_model}，都可以看作是\gls{AE}的一种特殊形式。
+除了这里所描述的方法（\gls{regularization}\gls{AE}最自然的解释），几乎任何带有\gls{latent_variable}并配有一个\gls{inference}过程（计算给定输入的\gls{latent}表示）的\gls{generative_model}，都可以看作是\gls{AE}的一种特殊形式。
 强调与\gls{AE}联系的两个生成建模方法是\gls{helmholtz_machine}~\citep{Hinton95}的衍生模型，如\gls{VAE}（\secref{sec:variational_autoencoders}）和\gls{GSN}（\secref{sec:generative_stochastic_networks}）。
 这些模型能自然地学习大\gls{capacity}、对输入\gls{overcomplete}的有用编码，而不需要\gls{regularization}。
 这些\gls{code}显然是有用的，因为这些模型被训练为近似训练数据的最大概率而不是将输入复制到输出。
@@ -104,7 +104,7 @@
 
 
 我们可以简单地将惩罚项$\Omega(\Vh)$视为加到\gls{feedforward_network}的正则项，这个\gls{feedforward_network}的主要任务是将输入复制到输出（\gls{unsupervised_learning}的目标），并尽可能地根据这些\gls{sparse}特征执行一些\gls{supervised_learning}任务（根据\gls{supervised_learning}的目标）。
-不像其它正则项如\gls{weight_decay}，这个\gls{regularization}没有直观的贝叶斯解释。
+不像其他正则项如\gls{weight_decay}，这个\gls{regularization}没有直观的贝叶斯解释。
 如\secref{sec:maximum_a_posteriori_map_estimation}描述，\gls{weight_decay}和其他正则惩罚可以被解释为一个\glssymbol{MAP}近似贝叶斯\gls{inference}，\gls{regularization}的惩罚对应于模型参数的先验概率分布。
 这种观点认为，\gls{regularization}的最大似然对应最大化$p(\Vtheta \mid \Vx)$， 相当于最大化$\log p(\Vx \mid \Vtheta) + \log p(\Vtheta)$。 $\log p(\Vx \mid \Vtheta)$即通常的数据似然项，参数的对数先验项$\log p(\Vtheta)$则包含了对$\Vtheta$特定值的偏好。
 这种观点在\secref{sec:bayesian_statistics}有所描述。
@@ -113,9 +113,9 @@
 
 % -- 496 --
 
-我们可以认为整个\gls{sparse}\gls{AE}框架是对带有隐变量的\gls{generative_model}的近似最大似然训练，而不将\gls{sparse}惩罚视为复制任务的\gls{regularization}。
-假如我们有一个带有可见变量$\Vx$和隐变量$\Vh$的模型，且具有明确的联合分布$p_{\text{model}}(\Vx,\Vh)=p_{\text{model}}(\Vh)p_{\text{model}} (\Vx \mid \Vh)$。
-我们将$p_{\text{model}}(\Vh)$视为模型关于隐变量的先验分布，表示模型看到$\Vx$的信念先验。
+我们可以认为整个\gls{sparse}\gls{AE}框架是对带有\gls{latent_variable}的\gls{generative_model}的近似最大似然训练，而不将\gls{sparse}惩罚视为复制任务的\gls{regularization}。
+假如我们有一个带有可见变量$\Vx$和\gls{latent_variable} $\Vh$的模型，且具有明确的联合分布$p_{\text{model}}(\Vx,\Vh)=p_{\text{model}}(\Vh)p_{\text{model}} (\Vx \mid \Vh)$。
+我们将$p_{\text{model}}(\Vh)$视为模型关于\gls{latent_variable}的先验分布，表示模型看到$\Vx$的信念先验。
 这与我们之前使用``先验''的方式不同，之前指分布$p(\Vtheta)$在我们看到数据前就对模型参数的先验进行编码。
 对数似然函数可分解为
 \begin{align}
@@ -141,11 +141,11 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 \end{align}
 这里的常数项只跟$\lambda$有关。
 通常我们将$\lambda$视为超参数，因此可以丢弃不影响参数学习的常数项。
-其它如\ENNAME{Student-t}先验也能诱导\gls{sparse}性。
+其他如\ENNAME{Student-t}先验也能诱导\gls{sparse}性。
 从\gls{sparse}性导致$p_{\text{model}}(\Vh)$学习成近似最大似然的结果看，\gls{sparse}惩罚完全不是一个正则项。
-这仅仅影响模型关于隐变量的分布。
+这仅仅影响模型关于\gls{latent_variable}的分布。
 这个观点提供了训练\gls{AE}的另一个动机：这是近似训练\gls{generative_model}的一种途径。
-这也给出了为什么\gls{AE}学到的特征是有用的另一个解释：它们描述的隐变量可以解释输入。
+这也给出了为什么\gls{AE}学到的特征是有用的另一个解释：它们描述的\gls{latent_variable}可以解释输入。
 
 % -- 497 --
 
@@ -220,11 +220,11 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 此外，\gls{encoder}和\gls{decoder}自身都是一个\gls{feedforward_network}，因此这两个部分也能各自从深度中获得好处。
 
 
-\gls{universal_approximation_theorem}保证至少有一层隐含层且\gls{hidden_unit}足够多的\gls{feedforward_neural_network}能以任意精度近似任意函数（在很大范围里），这是非平凡深度的一个主要优点。
-这意味着单层隐藏层的\gls{AE}在数据范围能表示任意接近数据的恒等函数。
+\gls{universal_approximation_theorem}保证至少有一层\gls{hidden_layer}且\gls{hidden_unit}足够多的\gls{feedforward_neural_network}能以任意精度近似任意函数（在很大范围里），这是非平凡深度的一个主要优点。
+这意味着单层\gls{hidden_layer}的\gls{AE}在数据范围能表示任意接近数据的恒等函数。
 但是，从输入到\gls{code}的映射是浅层的。
 这意味这我们不能任意添加约束，比如约束\gls{code}\gls{sparse}。
-\gls{encoder}至少包含一层额外隐藏层的深度\gls{AE}能够在给定足够多\gls{hidden_unit}的情况，以任意精度近似任何从输入到\gls{code}的映射。
+\gls{encoder}至少包含一层额外\gls{hidden_layer}的深度\gls{AE}能够在给定足够多\gls{hidden_unit}的情况，以任意精度近似任何从输入到\gls{code}的映射。
 
 % -- 499 --
 
@@ -250,7 +250,7 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 
 在\gls{AE}中，$\Vx$既是输入也是目标。
 然而，我们仍然可以使用与之前相同的架构。
-给定一个隐藏层\gls{code} $\Vh$，我们可以认为\gls{decoder}提供了一个条件分布$p_{\text{model}}(\Vx \mid \Vh)$。
+给定一个隐藏\gls{code} $\Vh$，我们可以认为\gls{decoder}提供了一个条件分布$p_{\text{model}}(\Vx \mid \Vh)$。
 接着我们根据最小化$-\log p_{\text{decoder}}(\Vx \mid \Vh)$来训练\gls{AE}。
 \gls{loss_function}的具体形式视$p_{\text{decoder}}$的形式而定。
 就传统的\gls{feedforward_network}来说，我们通常使用线性输出单元参数化高斯分布的均值（如果$\Vx$是实的）。
@@ -273,7 +273,7 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 \label{fig:chap14_stochastic-autoencoder}
 \end{figure}
 
-任何隐变量模型$p_{\text{model}}(\Vh, \Vx)$定义一个随机\gls{encoder}
+任何\gls{latent_variable}模型$p_{\text{model}}(\Vh, \Vx)$定义一个随机\gls{encoder}
 \begin{align}
 p_{\text{encoder}}(\Vh \mid \Vx) = p_{\text{model}}(\Vh\mid\Vx)
 \end{align}
@@ -367,7 +367,7 @@ $g(f(\tilde \Vx))$对可能产生$\tilde \Vx$的原始点$\Vx$的质心进行估
 我们将会在\secref{sec:denoising_score_matching}更详细地讨论\gls{denoising_score_matching}。
 
 
-\gls{AE}和\glssymbol{RBM}还存在其它联系。
+\gls{AE}和\glssymbol{RBM}还存在其他联系。
 \gls{score_matching}应用于\glssymbol{RBM}后，其\gls{cost_function}将等价于\gls{reconstruction_error}结合类似\glssymbol{CAE}惩罚的正则项 \citep{Swersky-ICML2011}。
 \citet{Bengio+Delalleau-2009}指出\gls{AE}的\gls{gradient}是对\glssymbol{RBM}\gls{contrastive_divergence}训练的近似。
 
@@ -427,7 +427,7 @@ $g(f(\tilde \Vx))$对可能产生$\tilde \Vx$的原始点$\Vx$的质心进行估
 
 
 在引入现代\glssymbol{DAE}之前，\citet{Inayoshi-and-Kurita-2005}探讨了与一些相同的方法和相同的目标。
-他们在\gls{supervised}目标的情况下最小化\gls{reconstruction_error} ，并在监督\glssymbol{MLP}的隐藏层注入噪声，通过引入\gls{reconstruction_error}和注入噪声提升泛化能力。
+他们在\gls{supervised}目标的情况下最小化\gls{reconstruction_error} ，并在监督\glssymbol{MLP}的\gls{hidden_layer}注入噪声，通过引入\gls{reconstruction_error}和注入噪声提升泛化能力。
 然而，他们的方法基于线性\gls{encoder}，因此无法学习到现代\glssymbol{DAE}能学习的强大函数族。
 
 
@@ -435,7 +435,7 @@ $g(f(\tilde \Vx))$对可能产生$\tilde \Vx$的原始点$\Vx$的质心进行估
 \section{使用\glsentrytext{AE}学习\glsentrytext{manifold}}
 \label{sec:learning_manifolds_with_autoencoders}
 
-如\secref{sec:manifold_learning}描述，\gls{AE}跟其它很多\gls{ML}算法一样，也应用了将数据集中在一个低维\gls{manifold}或者一小组这样的\gls{manifold}的思想。
+如\secref{sec:manifold_learning}描述，\gls{AE}跟其他很多\gls{ML}算法一样，也应用了将数据集中在一个低维\gls{manifold}或者一小组这样的\gls{manifold}的思想。
 其中一些\gls{ML}算法仅能学习到在\gls{manifold}上表现良好但给定不在\gls{manifold}上的输入会导致异常的函数。
 \gls{AE}进一步借此想法，旨在学习\gls{manifold}的结构。
 
@@ -646,8 +646,8 @@ Input point & Tangent vectors\\
 \end{figure}
 
 
-\gls{CAE}\gls{regularization}\gls{criterion}的一个实际问题是，尽管它在单一隐含层的\gls{AE}情况下是容易计算的，但在更深的\gls{AE}情况下会变的难以计算。
-根据\citet{Rifai+al-2011-small}的策略，分别训练一系列单层的\gls{AE}，并且每个被训练为\gls{reconstruction}前一个\gls{AE}的隐含层。
+\gls{CAE}\gls{regularization}\gls{criterion}的一个实际问题是，尽管它在单一\gls{hidden_layer}的\gls{AE}情况下是容易计算的，但在更深的\gls{AE}情况下会变的难以计算。
+根据\citet{Rifai+al-2011-small}的策略，分别训练一系列单层的\gls{AE}，并且每个被训练为\gls{reconstruction}前一个\gls{AE}的\gls{hidden_layer}。
 这些\gls{AE}的组合就组成了一个深度\gls{AE}。
 因为每个层分别训练成局部\gls{contractive}，深度\gls{AE}自然也是\gls{contractive}的。
 这个结果与联合训练深度模型完整架构（带有关于\gls{jacobian}的惩罚项）获得的结果是不同的，但它抓住了许多理想的定性特征。
@@ -701,7 +701,7 @@ $f$和$g$都是由线性仿射变换后进行逐元素非线性变换的标准\g
 \gls{AE}已成功应用于\gls{dimensionality_reduction}和\gls{information_retrieval}任务。
 \gls{dimensionality_reduction}是\gls{representation_learning}和\gls{DL}的第一批应用之一。
 它是研究\gls{AE}早期动机之一。
-例如， \citet{Hinton-Science2006}训练了一个堆叠\glssymbol{RBM}，然后利用它们的权重初始化一个深度\gls{AE}并逐渐变小隐藏层，在30个单元的瓶颈处达到极值。
+例如， \citet{Hinton-Science2006}训练了一个堆叠\glssymbol{RBM}，然后利用它们的权重初始化一个深度\gls{AE}并逐渐变小\gls{hidden_layer}，在30个单元的瓶颈处达到极值。
 生成的\gls{code}比30维的\glssymbol{PCA}产生更少的\gls{reconstruction_error}，所学到的表示更容易定性解释，并能联系基础类别，这些类别表现为分离良好的集群。
 
 

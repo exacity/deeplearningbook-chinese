@@ -3,7 +3,7 @@
 \chapter{应用}
 \label{chap:applications}
 
-本章，我们将介绍如何使用\gls{DL}解决\gls{CV}、\gls{SR}、\gls{NLP}以及其它商业领域中的应用。
+本章，我们将介绍如何使用\gls{DL}解决\gls{CV}、\gls{SR}、\gls{NLP}以及其他商业领域中的应用。
 首先我们讨论在许多最重要的\glssymbol{AI}应用中所需的大规模\gls{NN}的实现。
 接着，我们回顾\gls{DL}已经成功应用的几个特定领域。
 尽管\gls{DL}的一个目标是设计能够处理各种任务的算法，然而截止目前应用\gls{DL}仍然需要一定程度的特殊化。
@@ -38,7 +38,7 @@
 通过调整\gls{fixed_point_arithmetic}的实现方式，\citet{Vanhoucke-et-al-2011}获得了相对一个很强的\gls{float_point_arithmetic}系统3倍的加速。
 因为各个新型CPU都有各自不同的特性，所以有时候采用\gls{float_point_arithmetic}实现会更快。
 一条重要的准则就是通过特殊设计的数值运算可以获得巨大的回报。
-除了选择\gls{fixed_point_arithmetic}或者\gls{float_point_arithmetic}以外，还包括其它的策略，如通过优化数据结构避免高速缓存缺失、使用向量指令等。
+除了选择\gls{fixed_point_arithmetic}或者\gls{float_point_arithmetic}以外，还包括其他的策略，如通过优化数据结构避免高速缓存缺失、使用向量指令等。
 如果模型规模不会限制模型表现（不会影响模型精度）时，\gls{ML}的研究者们一般忽略这些实现的细节。
 % 432
 
@@ -111,7 +111,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 例如，\gls{ML}库Pylearn2 \citep{pylearn2_arxiv_2013}通过调用Theano \citep{bergstra+al:2010-scipy-short,Bastien-2012}和cuda-convnet \citep{Krizhevsky2010tr}提供的高性能操作，囊括了许多\gls{ML}算法。
 这种分解方法还可以简化对多种硬件的支持。
 例如，同一个Theano程序可以在CPU或者\glssymbol{GPU}上运行，而不需要改变调用Theano的方式。
-其它库如Tensorflow\citep{tensorflow}和Torch\citep{Torch-2011}也提供了类似的功能。
+其他库如Tensorflow\citep{tensorflow}和Torch\citep{Torch-2011}也提供了类似的功能。
 % 434 end
 
 
@@ -141,7 +141,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 这个问题可以使用\firstgls{ASGD}\citep{Bengio+Bengio96,Recht-et-al-NIPS2011}解决。
 在这个方法中，几个处理器的核共用存有参数的内存。
 每一个核在无锁情况下读取了这些参数，然后计算对应的梯度，然后在无锁状态下更新了这些参数。
-这种方法减少了每一个\gls{GD}所获得的平均提升，因为一些核把其它的核所更新的参数（写）覆盖了。
+这种方法减少了每一个\gls{GD}所获得的平均提升，因为一些核把其他的核所更新的参数（写）覆盖了。
 但因为更新步数的速率增加，总体上还是加快了学习过程。
 \citet{Dean-et-al-NIPS2012}率先提出了多机器无锁的\gls{GD}方法，其中参数是由\firstgls{parameter_server}管理而非存储在共用的内存中。
 分布式的异步\gls{GD}方法依然是训练\gls{DNN}的基本方法，被工业界很多\gls{ML}组所使用\citep{chilimbi2014project,Wu-et-al-arXiv2015}。
@@ -177,7 +177,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 为了更加充分地利用了这个新的小模型的\gls{capacity}，最好能够从一个类似于真实的测试数据（后面会用到）的分布中采样$\Vx$。
 这个过程可以通过损坏训练样本或者从原始训练数据训练的生成模型中采样完成。
 
-此外，我们还可以仅在原始训练数据上训练一个更小的模型，但只是为了复制模型的其它特征，比如在不正确的类上的后验分布\citep{Hinton-dark-2014,hinton2015distilling}。
+此外，我们还可以仅在原始训练数据上训练一个更小的模型，但只是为了复制模型的其他特征，比如在不正确的类上的后验分布\citep{Hinton-dark-2014,hinton2015distilling}。
 % 436 
 
 \subsection{\glsentrytext{dynamic_structure}}
@@ -191,7 +191,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 % 436 
 
 \gls{dynamic_structure}计算是一种基础的计算机科学方法，广泛应用于软件工程项目。
-应用于神经网络的最简单的\gls{dynamic_structure}基于决定神经网络（或者其它\gls{ML}模型）中的哪些子集需要应用于特定的输入。
+应用于神经网络的最简单的\gls{dynamic_structure}基于决定神经网络（或者其他\gls{ML}模型）中的哪些子集需要应用于特定的输入。
 % 437 
 
 在分类器中加速推断的可行策略是使用\firstgls{cascade}的分类器。
@@ -539,7 +539,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
 这个领域第一个主要的突破是\citet{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}\gls{RNN}（见\secref{sec:the_long_short_term_memory_and_other_gated_rnns}），使用了帧－\gls{phoneme}排列的\glssymbol{MAP}推断，就像\citet{chapter-gradient-document-2001}以及CTC框架~\citep{Graves-et-al-2006,Graves-book2012}中一样。
 一个深度\gls{RNN}~\citep{Graves-et-al-ICASSP2013}每个\gls{time_step}各层都有状态变量，有两种\gls{unfolded_graph}的方式：一种是根据层的堆叠，另一种是时间\gls{unfolding}。
 这个工作把TIMIT数据集上\gls{phoneme}的错误率降到了记录的新低$17.7$\%。
-关于应用于其它领域的深度\gls{RNN}的变种可以参考\citet{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
+关于应用于其他领域的深度\gls{RNN}的变种可以参考\citet{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
 % 448
 
 另一个\gls{end_to_end}\gls{DL}\gls{SR}方向的最新方法是让系统学习如何利用\firstgls{phonetic}层级的信息``排列''\firstgls{acoustic}层级的信息~\citep{Chorowski-et-al-arxiv2014,llu_is2015b}。
@@ -1225,7 +1225,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 \gls{memory_network}首先被提出解决一个玩具问答任务\citep{Weston2014}。
 \citet{Kumar-et-al-arxiv2015} 提出了一种扩展，使用GRU\gls{recurrent_network}将输入读入存储器并且在给定存储器的内容后产生回答。
 
-\gls{DL}已经应用于其它许多应用（除了这里描述的应用以外），并且肯定会在此之后应用于更多的场景。
+\gls{DL}已经应用于其他许多应用（除了这里描述的应用以外），并且肯定会在此之后应用于更多的场景。
 我们不可能一下子描述全面覆盖主题的所有略微相似的应用 。
 在本文写作之时，这项调查尽可能提供了有代表性的样本。
 
