@@ -39,7 +39,7 @@
 
 | 章节 | 负责人 | 简单阅读 | 中英对比 | 相关方向 |
 | ------------ | ------------- | ---------- |  ------------ | --------- |
-| [第一章 前言](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | lc, @SiriusXDJ | @linzhp |  |
+| [第一章 前言](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | lc, @SiriusXDJ, @corenel | @linzhp |  |
 | [第二章 线性代数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | @SiriusXDJ |  |  |
 | [第三章 概率与信息论](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/) | @KevinLee1110 | @SiriusXDJ |  |  |
 | [第四章 数值计算](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter4_numerical_computation/) | @swordyork |  | @quasi-jing, @hengqujushi | @hengqujushi |
@@ -47,10 +47,10 @@
 | [第六章 深度前馈网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter6_deep_feedforward_networks/) | @KevinLee1110 |  | @minoriwww |  |
 | [第七章 深度学习的正则化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter7_regularization/) | @swordyork | @TonyHan0915 |  |  |
 | [第八章 深度模型中的优化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter8_optimization_for_training_deep_models/) | @liber145 | |  |  |
-| [第九章 卷积神经网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter9_convolutional_networks/) | @KevinLee1110 | @TonyHan0915, @zhaoyu611 | @zhiding |  |
+| [第九章 卷积神经网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter9_convolutional_networks/) | @KevinLee1110 | @TonyHan0915, @zhaoyu611, @corenel | @zhiding |  |
 | [第十章 序列建模：循环和递归网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter10_sequence_modeling_rnn/) | @swordyork | lc, ljl, @ZhiweiYang | @zhaoyu611 |  |
 | [第十一章 实用方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter11_practical_methodology/) | @liber145 | @wheaio |  |  |
-| [第十二章 应用](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork, @futianfan | @wheaio |  |  |
+| [第十二章 应用](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork, @futianfan | @wheaio | @corenel |  |
 | [第十三章 线性因子模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | @ZhiweiYang |  |  |
 | [第十四章 自动编码器](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter14_autoencoders/) | @swordyork | @zizhan, ljl | @Seaball, @huangpingchun | @huangpingchun |
 | [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 |  |  |  |
