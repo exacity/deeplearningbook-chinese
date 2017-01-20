@@ -6,14 +6,14 @@
 
 随机算法可以粗略的分为两类：\ENNAME{Las Vegas}算法和\gls{monte_carlo}算法。
 \ENNAME{Las Vegas}算法通常精确地返回一个正确答案 （或者发布一个失败报告）。
-这类方法通常需要占用随机量的计算资源（通常包括内存和运行时间）。
+这类方法通常需要占用随机量的计算资源（通常指的是内存和运行时间）。
 与此相对的，\gls{monte_carlo}方法返回一个伴随着随机量错误的答案。
 花费更多的计算资源（通常包括内存和运行时间）可以减少这种随机量的错误。
-在任意的固定的计算资源下， \gls{monte_carlo}算法可以得到一个近似解。
+在任意固定的计算资源下， \gls{monte_carlo}算法可以得到一个近似解。
 
 对于\gls{ML}中的许多问题来说，我们很难得到精确的答案。
-这类问题很难用精确的确定性的算法如\ENNAME{Las Vegas}算法解决。
-取而代之的是确定性的近似算法或\gls{monte_carlo}方法。
+这类问题很难用精确的确定性的算法如\ENNAME{Las Vegas}算法解决。% 和 -> 如
+取而代之的是确定性的近似算法或\gls{monte_carlo}近似方法。
 这两种方法在\gls{ML}中都非常普遍。
 本章主要关注\gls{monte_carlo}方法。
 % 581
@@ -21,23 +21,23 @@
 \section{采样和\glsentrytext{monte_carlo}方法}
 \label{sec:sampling_and_monte_carlo_methods}
 
-\gls{ML}中的许多工具是基于从某种分布中采样以及用这些样本对目标量做一个\gls{monte_carlo}估计。
+\gls{ML}中的许多重要工具是基于从某种分布中采样以及用这些样本对目标量做一个\gls{monte_carlo}估计。
 
 \subsection{为什么需要采样？}
 \label{sec:why_sampling}
 
 我们希望从某个分布中采样存在许多理由。
 当我们需要以较小的代价近似许多项的和或某个积分时采样是一种很灵活的选择。
-有时候，我们使用它加速一些很费时却易于处理的和的估计，就像我们使用\gls{minibatch}对整个训练代价进行\gls{subsample}的情况。
-在其他情况下，我们需要近似一个难以处理的和或积分，例如估计一个\gls{undirected_model}的\gls{partition_function}的对数的梯度时。
+有时候，我们使用它加速一些很费时却易于处理的和的估计，就像我们使用\gls{minibatch}对整个训练代价进行\gls{subsample}一样。
+在其他情况下，我们需要近似一个难以处理的和或积分，例如估计一个\gls{undirected_model}中\gls{partition_function}对数的梯度时。
 在许多其他情况下，抽样实际上是我们的目标，就像我们想训练一个可以从训练分布采样的模型。
 % 582 
 
 \subsection{\glsentrytext{monte_carlo}采样的基础}
 \label{sec:basics_of_monte_carlo_sampling}
 
-当无法精确计算和或积分（例如，和具有指数数量个项，且无法被精确简化）时，通常可以使用\gls{monte_carlo}采样。
-这种想法把和或者积分视作某分布下的期望，然后通过估计对应的平均值来近似这个期望。
+当无法精确计算和或积分（例如，和具有指数数量个项，且无法被精确简化）时，通常可以使用\gls{monte_carlo}采样来近似它。
+这种想法把和或者积分视作某分布下的期望，然后\emph{通过估计对应的平均值来近似这个期望}。
 令
 \begin{align}
 s = \sum_{\Vx} p(\Vx)f(\Vx) = E_p[f(\RVx)]
@@ -51,7 +51,7 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 % 582 
 
 我们可以通过从$p$中采集$n$个样本$\Vx^{(1)},\ldots,\Vx^{(n)}$来近似$s$并得到一个经验平均值
-\begin{align}
+\begin{align}	
 \hat{s}_n = \frac{1}{n}\sum_{i=1}^{n}f(\Vx^{(i)}).
 \end{align}
 这种近似可以被证明拥有如下几个性质。
@@ -72,7 +72,7 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \text{Var}[\hat{s}_n] & = \frac{1}{n^2}\sum_{i=1}^{n}\text{Var}[f(\RVx)]\\
 &  = \frac{\text{Var}[f(\RVx)]}{n}.
 \end{align}
-这个简单的结果启迪我们如何估计\gls{monte_carlo}均值中的不确定性或者等价地说是\gls{monte_carlo}估计的期望误差。
+这个简单有用的结果启迪我们如何估计\gls{monte_carlo}均值中的不确定性或者等价地说是\gls{monte_carlo}估计的期望误差。
 我们计算了$f(\Vx^{(i)})$的经验均值和方差\footnote{计算无偏估计的方差时，更倾向于用计算偏差平方和除以$n-1$而非$n$。}，
 然后将估计的方差除以样本数$n$来得到$\text{Var}[\hat{s}_n]$的估计。
 \firstgls{central_limit_theorem}告诉我们$\hat{s}_n$的分布收敛到以$s$为均值以$\frac{\text{Var}[f(\RVx)]}{n}$为方差的\gls{normal_distribution}。
@@ -81,7 +81,7 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 
 以上的所有结论都依赖于我们可以从基准分布$p(\RVx)$中轻易的采样，但是这个假设并不是一直成立的。
 当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在\secref{sec:importance_sampling_chap17}会讲到。
-一种更加通用的方式是采样一系列趋近于目标分布的估计。
+一种更加通用的方式是使用一个趋近于目标分布估计的序列。
 这就是\gls{mcmc}方法（见\secref{sec:markov_chain_monte_carlo_methods}）。
 % 583
 
