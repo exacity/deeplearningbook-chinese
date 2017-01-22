@@ -302,7 +302,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 在\gls{markov_chain}达到\gls{equilibrium_distribution}之后，我们可以从\gls{equilibrium_distribution}中采集一个无限多数量的样本序列。
 这些样本服从同一分布，但是两个连续的样本之间存在强烈的相关性。
 所以一个有限的序列无法完全表达\gls{equilibrium_distribution}。
-一种解决这个问题的方法是每隔$n$个样本返回一个样本，从而使得我们对于\gls{equilibrium_distribution}的统计量的估计不会被\gls{mcmc}方法的样本之间的相关性所干扰。
+一种解决这个问题的方法是每隔$n$个样本返回一个样本，从而使得我们对于\gls{equilibrium_distribution}的统计量的估计不会被\glssymbol{mcmc}方法的样本之间的相关性所干扰。
 所以\gls{markov_chain}在计算上是非常昂贵的，主要源于达到\gls{equilibrium_distribution}前需要\gls{burn_in}的时间以及在达到\gls{equilibrium_distribution}之后从一个样本转移到另一个完全无关的样本所需要的时间。
 如果我们想要得到完全独立的样本，那么我们需要同时并行的运行多个\gls{markov_chain}。
 这种方法使用了额外的并行计算来消除潜在因素的干扰。
@@ -362,18 +362,18 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 
 \section{不同的\glsentrytext{mode}之间的\glsentrytext{mixing}挑战}
 \label{sec:the_challenge_of_mixing_between_separated_modes}
-% 591
+% 591  head 
 
-使用\gls{mcmc}方法的主要难点在于他们经常\gls{mixing}得很慢。
-理想情况下，从\gls{markov_chain}中采出的连续样本之间是完全独立的，而且在$\Vx$空间中，\gls{markov_chain}以正比于不同区域对应的概率的概率访问不同区域。
-然而，在高维的情况下，\gls{mcmc}方法采出的样本可能会具有很强的相关性。
+使用\glssymbol{mcmc}方法的主要难点在于他们经常\gls{mixing}得很糟糕。
+理想情况下，从设计好的\gls{markov_chain}中采出的连续样本之间是完全独立的，而且在$\Vx$空间中，\gls{markov_chain}以正比于不同区域对应的概率的概率访问这些区域。
+然而，\glssymbol{mcmc}方法采出的样本可能会具有很强的相关性，尤其是在高维的情况下。
 我们把这种现象称为慢\gls{mixing}甚至\gls{mixing}失败。
-<bad>具有缓慢\gls{mixing}的\gls{mcmc}方法可以被视为对\gls{energy_function}无意地执行类似于带噪声的\gls{GD}的操作，或者相对于链的状态（随机变量被采样）依据概率进行等效的噪声爬坡。
+具有缓慢\gls{mixing}的\glssymbol{mcmc}方法可以被视为对\gls{energy_function}无意地执行类似于带噪声的\gls{GD}的操作，或者说等价于相对于链的状态（随机变量被采样）依据概率进行等效的噪声爬坡。
 （在\gls{markov_chain}的状态空间中）从$\Vx^{(t-1)}$到$\Vx^{(t)}$该链倾向于选取很小的步长，其中能量$E(\Vx^{(t)})$通常低于或者近似等于能量$E(\Vx^{(t-1)})$，
 倾向于向较低能量的区域移动。
 当从可能性较小的状态（比来自$p(\Vx)$的典型样本拥有更高的能量）开始时，链趋向于逐渐减少状态的能量，并且仅仅偶尔移动到另一个\gls{mode}。
-一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，则低能量的区域可以是同一对象的图像的相连的\gls{manifold}），我们称之为\gls{mode}，链将倾向于围绕着这个\gls{mode}游走（以某一种形式的随机游走）。
-有时候，它会远离该\gls{mode}，通常返回该\gls{mode}或者（如果找到一条离开的路线）移向另一个\gls{mode}。
+一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，则低能量的区域可以是同一对象所对应图像的一个相连的\gls{manifold}），我们称之为\gls{mode}，链将倾向于围绕着这个\gls{mode}游走（以某一种形式的随机游走）。
+它时不时会走出该\gls{mode}，但是结果通常会返回该\gls{mode}或者（如果找到一条离开的路线）移向另一个\gls{mode}。
 问题是对于很多有趣的分布来说成功的离开路线很少，所以\gls{markov_chain}将在一个\gls{mode}附近抽取远超过需求的样本。
 % 591 
 
@@ -392,14 +392,14 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 \else
 	\centerline{\includegraphics{Chapter17/figures/good_bad_really_bad_mixing_color}}
 \fi
-	\caption{对于三种分布使用\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为\gls{mode}。
-	（左）一个带有两个独立变量的\gls{multivariate_normal_distribution}。由于变量是独立的，\gls{gibbs_sampling}\gls{mixing}得很好。
-	（中）变量存在高度相关性的\gls{multivariate_normal_distribution}。
-	变量之间的相关性使得\gls{markov_chain}很难\gls{mixing}。
-	因为每一个变量的更新需要相对其他变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。
-	（右）\gls{mode}之间间距很大且不在轴上对齐的混合高斯。
-	\gls{gibbs_sampling}\gls{mixing}得很慢，因为每次更新一个变量很难跨越不同的\gls{mode}。}
-	\label{fig:chap17_good_bad_really_bad_mixing_color}
+\caption{对于三种分布使用\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为\gls{mode}。
+（左）一个带有两个独立变量的\gls{multivariate_normal_distribution}。由于变量是独立的，\gls{gibbs_sampling}\gls{mixing}得很好。
+（中）变量存在高度相关性的\gls{multivariate_normal_distribution}。
+变量之间的相关性使得\gls{markov_chain}很难\gls{mixing}。
+因为每一个变量的更新需要相对其他变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。
+（右）\gls{mode}之间间距很大且不在轴上对齐的混合高斯。
+\gls{gibbs_sampling}\gls{mixing}得很慢，因为每次更新一个变量很难跨越不同的\gls{mode}。}
+\label{fig:chap17_good_bad_really_bad_mixing_color}
 \end{figure}
 
 
