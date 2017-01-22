@@ -124,20 +124,20 @@
 我们介绍的第一个最大化下界$\CalL$的算法是\firstall{EM}算法。
 在\gls{latent_variable}模型中，这是一个非常热门的训练算法。
 在这里我们描述\citet{emview}所提出的\glssymbol{EM}算法。
-不像大多数我们在本章中介绍的其他算法一样，\glssymbol{EM}并不是一个\gls{approximate_inference}算法，但是是一种能够学到近似后验的算法。
+与大多数我们在本章中介绍的其他算法不同的是，\glssymbol{EM}并不是一个\gls{approximate_inference}算法，但是是一种能够学到近似后验的算法。
 % 626
 
 
 \glssymbol{EM}算法包含了交替进行两步运算直到收敛的过程：
 \begin{itemize}
-	\item \firstgls{e_step}: 令${\Vtheta^{(0)}}$表示在这一步开始时参数的初始值。
-	令$q(\Vh^{(i)}\mid \Vv) = p(\Vh^{(i)}\mid\Vv^{(i)};\Vtheta^{(0)})$对任何我们想要训练的(对所有的或者\gls{minibatch}数据均成立)索引为$i$的训练样本$\Vv^{(i)}$。
-	通过这个定义，我们认为$q$在当前的参数$\Vtheta^{(0)}$下定义。
-	如果我们改变$\Vtheta$，那么$p(\Vh\mid\Vv;\Vtheta)$将会相应的变化，但是$q(\Vh\mid\Vv)$还是不变并且等于$p(\Vh\mid\Vv;\Vtheta^{(0)})$。
-	\item \firstgls{m_step}：使用选择的优化算法完全地或者部分地最大化关于$\Vtheta$的
-	\begin{align}
-	\sum_i \CalL(\Vv^{(i)},\Vtheta,q).
-	\end{align}
+\item \firstgls{e_step}: 令${\Vtheta^{(0)}}$表示在这一步开始时参数的初始值。
+令$q(\Vh^{(i)}\mid \Vv) = p(\Vh^{(i)}\mid\Vv^{(i)};\Vtheta^{(0)})$对任何我们想要训练的（对所有的或者\gls{minibatch}数据均成立）索引为$i$的训练样本$\Vv^{(i)}$。
+通过这个定义，我们认为$q$在当前的参数$\Vtheta^{(0)}$下定义。
+如果我们改变$\Vtheta$，那么$p(\Vh\mid\Vv;\Vtheta)$将会相应的变化，但是$q(\Vh\mid\Vv)$还是不变并且等于$p(\Vh\mid\Vv;\Vtheta^{(0)})$。
+\item \firstgls{m_step}：使用选择的优化算法完全地或者部分地最大化关于$\Vtheta$的
+\begin{align}
+\sum_i \CalL(\Vv^{(i)},\Vtheta,q).
+\end{align}
 \end{itemize}
 % 626  
 
