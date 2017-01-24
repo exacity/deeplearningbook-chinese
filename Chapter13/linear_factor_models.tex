@@ -426,8 +426,8 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 % 489 au
 
 
-\gls{linear_factor}，包括了\glssymbol{PCA}和\gls{FA}，可以理解为学习一个\gls{manifold}\citep{hinton97modelling}。
-我们可以将\gls{PPCA}定义为高概率的薄饼状区域，即\gls{gaussian_distribution}，沿着某些轴非常窄，就像薄饼沿着其垂直轴非常平坦，但沿着其他轴是细长的，正如薄饼在其水平轴方向是很宽的一样。
+\gls{linear_factor}，包括\glssymbol{PCA}和\gls{FA}，可以理解为学习一个\gls{manifold}~\citep{hinton97modelling}。
+我们可以将\gls{PPCA}定义为高概率的薄饼状区域，即一个\gls{gaussian_distribution}，沿着某些轴非常窄，就像薄饼沿着其垂直轴非常平坦，但沿着其他轴是细长的，正如薄饼在其水平轴方向是很宽的一样。
 \figref{fig:PPCA_pancake}解释了这种现象。
 \glssymbol{PCA}可以理解为将该薄饼与更高维空间中的线性\gls{manifold}对准。
 这种解释不仅适用于传统\glssymbol{PCA}，而且适用于学习矩阵$\MW$和$\MV$的任何线性\gls{AE}，其目的是使重构的$\Vx$尽可能接近于原始的$\Vx$。
@@ -440,8 +440,8 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 	\centerline{\includegraphics{Chapter13/figures/PPCA_pancake_color}}
 \fi
 \caption{平坦的高斯能够描述一个低维\gls{manifold}附近的概率密度。
-此图表示了``\gls{manifold}平面''上的``馅饼''的上半部分并且穿过了它的中心。
-正交于\gls{manifold}方向（指出平面的箭头）的方差非常小，可以被视作是``噪音''，其他方向（平面内的箭头）的方差则很大，对应了``信号''以及低维数据的坐标系统。}
+此图表示了``\gls{manifold}平面''上``馅饼''的上半部分，并且这个平面穿过了馅饼的中心。
+正交于\gls{manifold}方向（指向平面外的箭头方向）的方差非常小，可以被视作是``噪音''，其他方向（平面内的箭头）的方差则很大，对应了``信号''以及低维数据的坐标系统。}
 \label{fig:PPCA_pancake}
 \end{figure}
 
@@ -455,7 +455,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 
 
 \gls{encoder}计算$h$的低维表示。
-从\gls{AE}的角度来看，\gls{decoder}负责重构计算
+从\gls{AE}的角度来看，\gls{decoder}负责计算重构：
 \begin{align}
 \label{eqn:1320}
 \hat{\Vx} = g(\Vh) = \Vb + \MV \Vh.
@@ -468,16 +468,17 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 \label{eqn:1321}
 \SetE[\Vert\Vx - \hat{\Vx}\Vert^2]
 \end{align}
-的线性\gls{encoder}和\gls{decoder}的选择对应着$\MV = \MW$，${\Vmu} = \Vb = \SetE[\Vx]$， $\MW$的列 形成一组正交基，这组基生成的子空间相同于主特征向量 对应的\gls{covariance}矩阵$\MC$
+的线性\gls{encoder}和\gls{decoder}的选择对应着$\MV = \MW$，${\Vmu} = \Vb = \SetE[\Vx]$， $\MW$的列 形成一组正交基，这组基生成的子空间相同于\gls{covariance}矩阵$\MC$
 \begin{align}
 \label{eqn:1322}
-\MC = \SetE[(\Vx - {\Vmu})(\Vx - {\Vmu})^{\top}].
+\MC = \SetE[(\Vx - {\Vmu})(\Vx - {\Vmu})^{\top}]
 \end{align}
+的主特征向量所生成的空间。
 % 490 end
 
 
 
-在\glssymbol{PCA}中，$\MW$的列是按照对应的特征值（其全部是实数和非负数）的大小排序所对应的特征向量。
+在\glssymbol{PCA}中，$\MW$的列是按照对应特征值（其全部是实数和非负数）幅度大小排序所对应的特征向量。
 % 490 end
 
 我们还可以发现$\MC$的特征值$\lambda_i$对应了$\Vx$在特征向量$\Vv^{(i)}$方向上的方差。
@@ -489,7 +490,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 因此，如果\gls{covariance_matrix}的秩为$d$，则特征值$\lambda_{d+1}$到$\lambda_{D}$都为$0$，并且\gls{reconstruction_error}为$0$。
 % 491 head 
 
-此外，还可以证明上述解可以通过在正交矩阵$\MW$下最大化$\Vh$元素的方差而不是最小化\gls{reconstruction_error}来获得。
+此外，还可以证明上述解可以通过在给定正交矩阵$\MW$的情况下最大化$\Vh$元素的方差而不是最小化\gls{reconstruction_error}来获得。
 % 491 
 
 
