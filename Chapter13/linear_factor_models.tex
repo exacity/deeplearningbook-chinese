@@ -196,38 +196,38 @@
 % 484 head
 
 
-\firstall{SFA}是使用来自时间信号的信息来学习不变特征的\gls{linear_factor}\citep{WisSej2002}。
+\firstall{SFA}是使用来自时间信号的信息来学习不变特征的\gls{linear_factor}~\citep{WisSej2002}。
 % 484
 
 
-\glssymbol{SFA}的想法源于所谓的\firstgls{slow_principle}。
-其基本思想是，与场景中的描述作用的物体相比，场景的重要特性通常变化得非常缓慢。
+\gls{SFA}的想法源于所谓的\firstgls{slow_principle}。
+其基本思想是，与场景中起描述作用的单个量度相比，场景的重要特性通常变化得非常缓慢。
 例如，在\gls{CV}中，单个像素值可以非常快速地改变。
-如果斑马从左到右移动穿过图像并且它的条纹穿过对应的像素时，该像素将迅速从黑色变为白色，并再次恢复。
-通过比较，指示斑马是否在图像中的特征将根本不改变，并且描述斑马的位置的特征将缓慢地改变。
-因此，我们可能希望规范我们的模型，从而能够学习到随时间变化缓慢的特征。
+如果斑马从左到右移动穿过图像并且它的条纹穿过对应的像素时，该像素将迅速从黑色变为白色，并再次恢复成黑色。
+通过比较，指示斑马是否在图像中的特征将根本不改变，并且描述斑马位置的特征将缓慢地改变。
+因此，我们可能希望\gls{regularize}我们的模型，从而能够学习到那些随时间变化较为缓慢的特征。
 % 484
 
 
-\gls{slow_principle}早于\glssymbol{SFA}，并已被应用于各种模型\citep{Hinton89b,Foldiak89,MobahiCollobertWestonICML2009,Bergstra+Bengio-2009}。
+\gls{slow_principle}早于\gls{SFA}，并已被应用于各种模型~\citep{Hinton89b,Foldiak89,MobahiCollobertWestonICML2009,Bergstra+Bengio-2009}。
 一般来说，我们可以将\gls{slow_principle}应用于可以使用\gls{GD}训练的任何可微分模型。 
 为了引入\gls{slow_principle}，我们可以通过向\gls{cost_function}添加以下项
 \begin{align}
 \label{eqn:137}
 \lambda \sum_t L(f(\Vx^{(t+1)}),f(\Vx^{(t)})),
 \end{align}
-其中$\lambda$是确定慢度正则化的强度的超参数项，$t$是样本时间序列的索引，$f$是需要正则化的特征提取器，$L$是测量$f(\Vx^{(t)})$和$f(\Vx^{(t+1)})$之间的距离的\gls{loss_function}。
-$L$的一个常见选择是平均误差平方。
+其中$\lambda$是确定慢度\gls{regularization}强度的超参数项，$t$是样本时间序列的索引，$f$是需要\gls{regularize}的\gls{feature_extractor}，$L$是测量$f(\Vx^{(t)})$和$f(\Vx^{(t+1)})$之间的距离的\gls{loss_function}。
+$L$的一个常见选择是平均平方误差。
 % 484
 
 
-\glssymbol{SFA}是\gls{slow_principle}中特别有效的应用。
-由于它被应用于线性特征提取器，并且可以通过\gls{closed_form_solution}训练，所以它是高效的。
-像\glssymbol{ICA}的一些变体一样，\glssymbol{SFA}本身不是\gls{generative_model}，只是在输入空间和特征空间之间定义了线性映射，但是没有定义特征空间的先验，因此输入空间中不存在$p(\Vx)$分布。
+\gls{SFA}是\gls{slow_principle}中一个特别高效的应用。
+由于它被应用于线性\gls{feature_extractor}，并且可以通过\gls{closed_form_solution}训练，所以它是高效的。
+像\glssymbol{ICA}的一些变体一样，\glssymbol{SFA}本身不是\gls{generative_model}，只是在输入空间和特征空间之间定义了一个线性映射，但是没有定义特征空间的先验，因此输入空间中不存在$p(\Vx)$分布。
 % 484
 
 
-\glssymbol{SFA}算法\citep{WisSej2002}包括将$f(\Vx;\theta)$定义为线性变换，并求解满足如下约束
+\glssymbol{SFA}算法~\citep{WisSej2002}包括将$f(\Vx;\theta)$定义为线性变换，并求解满足如下约束
 \begin{align}
 \label{eqn:139}
 \SetE_t  f(\Vx^{(t)})_i = 0 
@@ -245,9 +245,10 @@ $L$的一个常见选择是平均误差平方。
 
 % 485
 
-学习特征具有零均值的约束对于使问题具有唯一解是必要的; 否则我们可以向所有特征值添加一个常数，
-并获得具有慢度目标的相等值的不同解。
-特征具有单位方差的约束对于防止所有特征趋近于$0$的病态问题是必要的。
+学习特征具有零均值的约束对于使问题具有唯一解是必要的; 
+否则我们可以向所有特征值添加一个常数，
+并获得具有相等慢度目标值的不同解。
+特征具有单位方差的约束对于防止所有特征趋近于$0$的病态解是必要的。
 与\glssymbol{PCA}类似，\glssymbol{SFA}特征是有序的，其中学习第一特征是最慢的。
 要学习多个特征，我们还必须添加约束
 \begin{align}
@@ -255,8 +256,8 @@ $L$的一个常见选择是平均误差平方。
 \forall i<j,\ \  \SetE_t [f(\Vx^{(t)})_i  f(\Vx^{(t)})_j] = 0.
 \end{align}
 这要求学习的特征必须彼此线性去相关。 
-没有这个约束，所有学习的特征将简单地捕获一个最慢的信号。
-可以想象使用其他机制，如最小化\gls{reconstruction_error}，迫使特征多样化。
+没有这个约束，所有学习到的特征将简单地捕获一个最慢的信号。
+可以想象使用其他机制，如最小化\gls{reconstruction_error}，也可以迫使特征多样化。
 但是由于\glssymbol{SFA}特征的线性，这种去相关机制只能得到一种简单的解。 
 \glssymbol{SFA}问题可以通过线性代数软件获得\gls{closed_form_solution}。
 % 485
@@ -265,31 +266,32 @@ $L$的一个常见选择是平均误差平方。
 
 在运行\glssymbol{SFA}之前，\glssymbol{SFA}通常通过对$\Vx$使用非线性的基扩充来学习非线性特征。
 例如，通常用$\Vx$的二次基扩充来代替原来的$\Vx$，得到一个包含所有$x_ix_j$的向量。
-然后可以通过重复学习线性\glssymbol{SFA}\gls{feature_extractor}，对其输出应用非线性基扩展，然后在该扩展之上学习另一个线性\glssymbol{SFA}\gls{feature_extractor}，来组合线性\glssymbol{SFA}模块以学习深非线性慢\gls{feature_extractor}。
-Linear SFA modules may then be composed to learn deep nonlinear slow feature extractors by repeatedly learning a linear SFA feature extractor, applying a nonlinear basis expansion to its output, and then learning another linear SFA feature extractor on top of that expansion.
+然后可以通过反复地学习一个线性\glssymbol{SFA}\gls{feature_extractor}，对其输出应用非线性基扩展，然后在该扩展之上学习另一个线性\glssymbol{SFA}\gls{feature_extractor}的方式来组合线性\glssymbol{SFA}模块从而学习深度非线性慢\gls{feature_extractor}。
+
 % 485
 
 
-当训练在自然场景的视频的小空间补丁的时候，使用二次基扩展的\glssymbol{SFA}能够学习到与V1皮层中那些复杂细胞类似的许多特征\citep{Berkes-Wiskott-2005}。
-当训练在3-D计算机呈现环境内的随机运动的视频时，深度\glssymbol{SFA}模型能够学习到与大鼠脑中用于导航的神经元学到的类似的特征\citep{franzius2007slowness}。
+当训练自然场景视频的小块空间补丁的时候，使用二次基扩展的\glssymbol{SFA}所学习到的特征与V1皮层中那些复杂细胞的特征有许多共同特性~\citep{Berkes-Wiskott-2005}。
+当训练计算机渲染的3-D环境内随机运动的视频时，深度\glssymbol{SFA}模型能够学习的特征与大鼠脑中用于导航的神经元学到的特征有许多共同特性~\citep{franzius2007slowness}。
 因此从生物学角度上说\glssymbol{SFA}是一个合理的有依据的模型。
 % 485
 
 
 
 \glssymbol{SFA}的一个主要优点是，即使在深度非线性条件下，它依然能够在理论上预测\glssymbol{SFA}能够学习哪些特征。
-为了做出这样的理论预测，必须知道关于配置空间的环境的动态（例如，在3D渲染环境中的随机运动的情况下，理论分析出位置，相机的速度的概率分布）。
-已知潜在因子如何改变的情况下，我们能够理论分析解决表达这些因子的最佳函数。
-在实践中，基于模拟数据的实验上，使用深度\glssymbol{SFA}似乎能够恢复了理论预测的函数。
-相比之下其他学习算法中的\gls{cost_function}高度依赖于特定像素值，使得更难以确定模型将学习什么特征。
+为了做出这样的理论预测，必须知道关于配置空间的环境动力（例如，在3D渲染环境中随机运动的例子中，理论分析是从相机位置、速度的概率分布中入手的）。
+已知潜在因子如何改变的情况下，我们能够通过理论分析解出表达这些因子的最佳函数。
+在实践中，基于模拟数据的实验上，使用深度\glssymbol{SFA}似乎能够恢复理论预测的函数。
+相比之下，在其他学习算法中，\gls{cost_function}高度依赖于特定像素值，使得难以确定模型将学习到什么特征。
 % 486
 
 
-深度\glssymbol{SFA}也已经被用于学习用在对象识别和姿态估计的特征\citep{Franzius2008}。
+深度\glssymbol{SFA}也已经被用于学习用在\gls{object_recognition}和姿态估计的特征~\citep{Franzius2008}。
 到目前为止，\gls{slow_principle}尚未成为任何最先进的技术应用的基础。
 究竟是什么因素限制了其性能也有待研究。
-我们推测，或许慢度先验是太过强势，并且，最好添加这样一个先验使得当前步骤到下一步的预测更加容易，而不是加一个先验使得特征应该近似为一个常数。
-对象的位置是一个有用的特征，无论对象的速度是高还是低。 但\gls{slow_principle}鼓励模型忽略具有高速度的对象的位置。
+我们推测，或许慢度先验是太过强势，并且，最好添加这样一个先验使得当前\gls{time_step}到下一个\gls{time_step}的预测更加容易，而不是加一个先验使得特征近似为一个常数。
+对象的位置是一个有用的特征，无论对象的速度是高还是低。 
+但\gls{slow_principle}鼓励模型忽略具有高速度的对象的位置。
 % 486
 
 
