@@ -555,19 +555,19 @@ $p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构见\figref{fig:bsc}。
 \begin{align}
 \hat{h}_i = \sigma\Bigg(b_i + \Big(\Vv - \sum_{j\neq i} \MW_{:,j}\hat{h}_j\Big)^{\top} {\Vbeta}\MW_{:,i} - \frac{1}{2} \MW_{:,i}^{\top} {\Vbeta} \MW_{:,i}\Bigg). 
 \end{align}
-在这种新的形式中，我们可以将每一步的输入看成$\Vv - \sum_{j\neq i} \MW_{:,j}\hat{h}_j$而不是$\Vv$。
-因此，我们可以把第$i$个单元视作给定其他单元的编码时编码$\Vv$中的剩余误差。
-由此我们可以将\gls{sparse_coding}视作是一个迭代的\gls{AE}，反复的将输入的编码解码，试图逐渐减小重构误差。
+在这种新的形式中，我们可以将$\Vv - \sum_{j\neq i} \MW_{:,j}\hat{h}_j$看做是输入，而不是$\Vv$。
+因此，我们可以把第$i$个单元视作给定其他单元编码时给$\Vv$中的剩余误差编码。
+由此我们可以将\gls{sparse_coding}视作是一个迭代的\gls{AE}，将输入反复地编码解码，试图在每一轮迭代后都能修复重构中的误差。
 % 636
 
 
 在这个例子中，我们已经推导出了每一次更新单个结点的更新规则。
-接下来我们考虑如何同时更新许多结点。
-某些\gls{graphical_models}，比如\glssymbol{DBM}，我们可以同时更新$\hat{\Vh}$中的许多元素。
+如果能够同时更新更多的结点，那是非常好的。
+某些\gls{graphical_models}，比如\glssymbol{DBM}，我们可以同时解出$\hat{\Vh}$中的许多元素。
 不幸的是，\gls{binary_sparse_coding}并不适用这种块更新。
 取而代之的是，我们使用一种称为是\firstgls{damping}的启发式技巧来实现块更新。
 在\gls{damping}方法中，对$\hat{\Vh}$中的每一个元素我们都可以解出最优值，然后对于所有的值都在这个方向上移动一小步。
-这个方法不能保证每一步都能增加$\CalL$，但是对于许多模型来说却很有效。
+这个方法不能保证每一步都能增加$\CalL$，但是对于许多模型都很有效。
 关于在\gls{message_passing}算法中如何选择同步程度以及使用\gls{damping}策略可以参考\citet{koller-book2009} 。
  % 637 head 
 
@@ -578,20 +578,20 @@ $p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构见\figref{fig:bsc}。
 \label{sec:calculus_of_variations}
 % p 637 head   19.4.2 
 
-在继续描述变分学习之前，我们有必要简单地介绍一种变分学习中的重要的数学工具：\firstgls{calculus_of_variations}。
+在继续描述变分学习之前，我们有必要简单地介绍一种变分学习中重要的数学工具：\firstgls{calculus_of_variations}。
 % p 637
 
 
 许多\gls{ML}的技巧是基于寻找一个输入向量$\Vtheta\in\SetR^n$来最小化函数$J(\Vtheta)$，使得它取到最小值。
 这个步骤可以利用多元微积分以及线性代数的知识找到满足$\nabla_{\Vtheta} J(\Vtheta) = 0$的临界点来完成。
-在某些情况下，我们希望能够找出一个最优的函数$f(\Vx)$，比如当我们希望找到一些随机变量的概率密度函数时。
+在某些情况下，我们希望能够找出一个函数$f(\Vx)$，比如当我们希望找到一些随机变量的\gls{PDF}时。
 \gls{calculus_of_variations}能够让我们完成这个目标。
 % p 637
 
 
 
 $f$函数的函数被称为是\firstgls{functional} $J[f]$。
-正如我们许多情况下对一个函数求关于以向量为变量的偏导数一样，我们可以使用\firstgls{functional_derivative}，即对任意一个给定的$\Vx$，对一个\gls{functional} $J[f]$求关于函数$f(\Vx)$的导数，这也被称为\firstgls{variational_derivative}。
+正如我们许多情况下对一个函数求关于以向量为变量的偏导数一样，我们可以使用\firstgls{functional_derivative}，即关于任意特定的$\Vx$值，对一个\gls{functional} $J[f]$求关于函数$f(\Vx)$的导数，这也被称为\firstgls{variational_derivative}。
 \gls{functional} $J$的关于函数$f$在点$\Vx$处的\gls{functional_derivative}被记作$\frac{\delta}{\delta f(x)}J$。
 % p 637
 
