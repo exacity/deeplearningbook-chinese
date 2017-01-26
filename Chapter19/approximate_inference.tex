@@ -584,14 +584,14 @@ $p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构见\figref{fig:bsc}。
 
 许多\gls{ML}的技巧是基于寻找一个输入向量$\Vtheta\in\SetR^n$来最小化函数$J(\Vtheta)$，使得它取到最小值。
 这个步骤可以利用多元微积分以及线性代数的知识找到满足$\nabla_{\Vtheta} J(\Vtheta) = 0$的临界点来完成。
-在某些情况下，我们希望能够找出一个函数$f(\Vx)$，比如当我们希望找到一些随机变量的\gls{PDF}时。
-\gls{calculus_of_variations}能够让我们完成这个目标。
+在某些情况下，我们希望能够解一个函数$f(\Vx)$，比如当我们希望找到一些随机变量的\gls{PDF}时。
+正是\gls{calculus_of_variations}能够让我们完成这个目标。
 % p 637
 
 
 
 $f$函数的函数被称为是\firstgls{functional} $J[f]$。
-正如我们许多情况下对一个函数求关于以向量为变量的偏导数一样，我们可以使用\firstgls{functional_derivative}，即关于任意特定的$\Vx$值，对一个\gls{functional} $J[f]$求关于函数$f(\Vx)$的导数，这也被称为\firstgls{variational_derivative}。
+正如我们许多情况下对一个函数求关于以向量为变量的\gls{partial_derivatives}一样，我们可以使用\firstgls{functional_derivative}，即关于任意特定的$\Vx$值，对一个\gls{functional} $J[f]$求关于函数$f(\Vx)$的导数，这也被称为\firstgls{variational_derivative}。
 \gls{functional} $J$的关于函数$f$在点$\Vx$处的\gls{functional_derivative}被记作$\frac{\delta}{\delta f(x)}J$。
 % p 637
 
