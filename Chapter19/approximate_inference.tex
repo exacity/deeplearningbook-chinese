@@ -837,38 +837,41 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 \label{sec:learned_approximate_inference}
 % 642  end    19.5
 
-我们已经看到了推断可以被视作是一个增加函数$\CalL$的值的优化过程。
+我们已经看到了推断可以被视作是一个增加函数$\CalL$值的优化过程。
 显式地通过迭代方法比如\gls{fixed_point_equation}或者基于梯度的优化算法来执行优化的过程通常是代价昂贵且耗时巨大的。
-通过学习一个近似推断许多推断算法避免了这个问题。
-<bad>具体地说，我们可以将优化过程视作将输入$\Vv$投影到一个近似分布$q^* = \arg\max_q\  \CalL(\Vv,q)$的函数$f$。
-<bad>一旦我们将多步的迭代优化过程看作是一个函数，我们可以用一个近似函数为$\hat{f}(\Vv;{\Vtheta})$的\gls{NN}来近似它。
+通过学习一个近似推断许多推断算法避免了这种代价。
+具体地说，我们可以将优化过程视作将一个输入$\Vv$投影到一个近似分布$q^* = \arg\max_q\  \CalL(\Vv,q)$的一个函数$f$。
+一旦我们将多步的迭代优化过程看作是一个函数，我们可以用一个近似函数为$\hat{f}(\Vv;{\Vtheta})$的\gls{NN}来近似它。
 
 
 \subsection{\glsentrytext{wake_sleep}}
 \label{sec:wake_sleep}
 % 643 head 19.5.1
 
-训练一个可以用$\Vv$来推断$\Vh$的模型的一个主要难点在于我们没有一个有监督的训练集来训练模型。
+训练一个可以用$\Vv$来推断$\Vh$的模型的一个主要难点在于我们没有一个\gls{supervised}训练集来训练模型。
 给定一个$\Vv$，我们无法获知一个合适的$\Vh$。
-从$\Vv$到$\Vh$的映射依赖于模型类型的选择，并且在学习过程中随着${\Vtheta}$的改变而变化。
-\firstgls{wake_sleep}算法\citep{Hinton95,Frey96}通过从模型分布中抽取$\Vv$和$\Vh$的样本来解决这个问题。
+从$\Vv$到$\Vh$的映射依赖于模型族的选择，并且在学习过程中随着${\Vtheta}$的改变而变化。
+\firstgls{wake_sleep}算法~\citep{Hinton95,Frey96}通过从模型分布中抽取$\Vv$和$\Vh$的样本来解决这个问题。
 例如，在\gls{directed_model}中，这可以通过执行从$\Vh$开始并在$\Vv$结束的\gls{ancestral_sampling}来高效地完成。
-然后推断网络可以被训练来执行反向的映射：预测哪一个$\Vh$产生了当前的$\Vv$。
-<bad>这种方法的主要缺点是我们将只能够训练推断网络在模型下具有高概率的$\Vv$值。
-在学习早期，模型分布与数据分布偏差较大，因此推断网络将不具有在类似数据的样本上嘘唏的机会。
+然后这个推断网络可以被训练来执行反向的映射：预测哪一个$\Vh$产生了当前的$\Vv$。
+%<bad>这种方法的主要缺点是我们将只能够训练推断网络在模型下具有高概率的$\Vv$值。
+这种方法的主要缺点是我们将只能在那些在当前模型上有较高概率的$\Vv$值上训练推断网络。
+在学习早期，模型分布与数据分布偏差较大，因此推断网络将不具有在类似数据的样本上学习的机会。
 % 643
 
 
-<bad>在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中，我们看到做梦睡眠在人类和动物中作用的一个可能解释是，做梦可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}中对数\gls{partition_function}负梯度的负相位样本。
-生物做梦的另一个可能的解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推断网络在给定$\Vv$的情况下预测$\Vh$。
+在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中，我们看到做梦睡眠在人类和动物中作用的一个可能解释是，做梦可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}中对数\gls{partition_function}负梯度的负相位样本。
+生物做梦的另一个可能解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推断网络在给定$\Vv$的情况下预测$\Vh$。
 在某些意义上，这种解释比\gls{partition_function}的解释更令人满意。
-如果\gls{monte_carlo}算法仅使用梯度的正相位进行几个步骤，然后仅对梯级的负相位进行几个步骤，那么他们的结果不会很好。
+如果\gls{monte_carlo}算法仅使用梯度的正相位运行几个步骤，然后仅对梯度的负相位运行几个步骤，那么他们的结果通常不会很好。
 人类和动物通常连续清醒几个小时，然后连续睡着几个小时。
 这个时间表如何支持\gls{undirected_model}的\gls{monte_carlo}训练尚不清楚。
 然而，基于最大化$\CalL$的学习算法可以通过长时间调整改进$q$和长期调整${\Vtheta}$来实现。
-如果生物做梦的作用是训练网络来预测$q$，那么这解释了动物如何能够保持清醒几个小时（它们清醒的时间越长，$\CalL$和$\log p(\Vv)$之间的差距越大， 但是$\CalL$将保持下限）并且睡眠几个小时（\gls{generative_model}本身在睡眠期间不被修改）， 而不损害它们的内部模型。
-当然，这些想法纯粹是猜测性的，没有任何坚实的证据表明做梦实现了这些目标之一。
-做梦也可以服务\gls{RL}而不是概率建模，通过从动物的过渡模型采样合成经验，从来训练动物的策略。
+如果生物做梦的作用是训练网络来预测$q$，那么这解释了动物如何能够保持清醒几个小时
+（它们清醒的时间越长，$\CalL$和$\log p(\Vv)$之间的差距越大， 但是$\CalL$仍然是下限）
+并且睡眠几个小时（\gls{generative_model}本身在睡眠期间不被修改）， 而不损害它们的内部模型。
+当然，这些想法纯粹是猜测性的，没有任何确定的证据表明做梦实现了这些目标之一。
+做梦也可以通过从动物的过渡模型（用来训练动物策略）采样合成经验来服务于\gls{RL}而不是概率建模。
 也许睡眠可以服务于一些\gls{ML}社区尚未发现的其他目的。
 % 644 head
 
@@ -879,22 +882,23 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 % 644    19.5.2 
 
 这种\gls{learned}\gls{approximate_inference}策略已经被应用到了其他模型中。
-\citet{Salakhutdinov+Larochelle-2010}证明了在\gls{learned}推断网络中的单一路径相比于在\gls{DBM}中迭代\gls{mean_field}\gls{fixed_point_equation}能够得到更快的推断。
-训练过程基于运行推断网络，然后应用\gls{mean_field}的一步来改进其估计，并训练推断网络来输出这个精细的估计而不是其原始估计。
+\citet{Salakhutdinov+Larochelle-2010}证明了在\gls{learned}推断网络中的单一路径相比于在\gls{DBM}中的迭代\gls{mean_field}\gls{fixed_point_equation}能够得到更快的推断。
+其训练过程基于运行推断网络，然后应用\gls{mean_field}的一步来改进其估计，并训练推断网络来输出这个更精细的估计以代替其原始估计。
 % 644
 
 
-我们已经在\secref{sec:predictive_sparse_decomposition}中已经看到，预测性的稀疏分解模型训练浅层的\gls{encoder}网络以预测输入的\gls{sparse_coding}。
+我们已经在\secref{sec:predictive_sparse_decomposition}中已经看到，预测性的稀疏分解模型训练一个浅层\gls{encoder}网络，从而预测输入的\gls{sparse_coding}。
 这可以被看作是\gls{AE}和\gls{sparse_coding}之间的混合。
 为模型设计概率语义是可能的，其中\gls{encoder}可以被视为执行\gls{learned}近似\glssymbol{MAP}推断。
 由于其浅层的\gls{encoder}，PSD不能实现我们在\gls{mean_field}推断中看到的单元之间的那种竞争。
-然而，该问题可以通过训练深度\gls{encoder}来执行\gls{learned}\gls{approximate_inference}来补救，如ISTA技术\citep{Gregor+LeCun-ICML2010}。
+然而，该问题可以通过训练深度\gls{encoder}实现\gls{learned}\gls{approximate_inference}来补救，如ISTA技术~\citep{Gregor+LeCun-ICML2010}。
 % 644
 
 
 近来\gls{learned}\gls{approximate_inference}已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一\citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
 在这种优美的方法中，不需要为推断网络构造显式的目标。
-反之，推断网络被用来定义$\CalL$，然后调整推断网络的参数来增大$\CalL$。这种模型在\secref{sec:variational_autoencoders}中详细描述。
+反之，推断网络仅仅被用来定义$\CalL$，然后调整推断网络的参数来增大$\CalL$。
+这种模型在\secref{sec:variational_autoencoders}中详细描述。
 % 644
 
 我们可以使用\gls{approximate_inference}来训练和使用大量的模型。
