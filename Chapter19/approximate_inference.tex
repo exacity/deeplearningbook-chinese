@@ -591,7 +591,8 @@ $p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构见\figref{fig:bsc}。
 
 
 $f$函数的函数被称为是\firstgls{functional} $J[f]$。
-正如我们许多情况下对一个函数求关于以向量为变量的\gls{partial_derivatives}一样，我们可以使用\firstgls{functional_derivative}，即关于任意特定的$\Vx$值，对一个\gls{functional} $J[f]$求关于函数$f(\Vx)$的导数，这也被称为\firstgls{variational_derivative}。
+正如我们许多情况下对一个函数求关于以向量的元素为变量的\gls{partial_derivatives}一样，我们可以使用\firstgls{functional_derivative}，
+即在任意特定的$\Vx$值，对一个\gls{functional} $J[f]$求关于函数$f(\Vx)$的导数，这也被称为\firstgls{variational_derivative}。
 \gls{functional} $J$的关于函数$f$在点$\Vx$处的\gls{functional_derivative}被记作$\frac{\delta}{\delta f(x)}J$。
 % p 637
 
@@ -602,23 +603,23 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
 \begin{align}
 	\frac{\delta}{\delta f(\Vx)} \int g(f(\Vx),\Vx)d\Vx = \frac{\partial}{\partial y}g(f(\Vx),\Vx).
 \end{align}
-为了使上述的关系式更加的形象，我们可以把$f(\Vx)$看做是一个有着无穷多元素的向量。
+为了使上述的关系式更加形象，我们可以把$f(\Vx)$看做是一个有着无穷不可数多元素的向量，由一个实数向量$\Vx$表示。
 在这里（看做是一个不完全的介绍），这种关系式中描述的\gls{functional_derivative}和向量$\Vtheta\in\SetR^n$的导数相同：
 \begin{align}
 	\frac{\partial}{\partial \theta_i}\sum_{j}^{}g(\theta_j,j) = \frac{\partial}{\partial \theta_i}g(\theta_i,i).
 \end{align}
-在其他\gls{ML}的文献中的许多结果是利用了更为通用的\firstgls{euler_lagrange_eqn}，
+在其他\gls{ML}文献中的许多结果是利用了更为通用的\firstgls{euler_lagrange_eqn}，
 它能够使得$g$不仅依赖于$f$的导数而且也依赖于$f$的值。
-但是本书中我们不需要完整的讲述这个结果。
+但是本书中我们不需要完整地讲述这个结果。
 % p 637  end
 
 
-为了优化某个函数关于一个向量，我们求出了这个函数关于这个向量的梯度，然后找一个梯度的每一个元素都为$0$的点。
+为了优化某个函数关于一个向量，我们求出了这个函数关于这个向量的梯度，然后找这个梯度中每一个元素都为$0$的点。
 类似的，我们可以通过寻找一个函数使得\gls{functional_derivative}的每个点都等于$0$从而来优化一个\gls{functional}。
 % p 638 head
 
 
-下面讲一个这个过程是如何工作的，我们考虑寻找一个定义在$x\in\SetR$的有最大微分熵的概率密度函数。
+下面讲一个这个过程如何工作的例子，我们考虑寻找一个定义在$x\in\SetR$上的有最大\gls{differential_entropy}的\gls{PDF}。
 我们回过头来看一下一个概率分布$p(x)$的熵，定义如下：
 \begin{align}
 	H[p] = - \SetE_x \log p(x).
@@ -631,11 +632,11 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
 
 
 我们不能简单地仅仅关于函数$p(x)$最大化$H[p]$，因为那样的话结果可能不是一个概率分布。
-为了解决这个问题，我们需要使用一个拉格朗日乘子来添加一个$p(x)$积分值为1的约束。
-同样的，当方差增大时，熵也会无限制的增加。
+为了解决这个问题，我们需要使用一个\gls{lagrange_multi}来添加一个$p(x)$积分值为$1$的约束。
+同样的，当方差增大时，熵也会无限制地增加。
 因此，寻找哪一个分布有最大熵这个问题是没有意义的。
 但是，在给定固定的方差$\sigma^2$时，我们可以寻找一个最大熵的分布。
-最后，这个问题还是无法确定因为在不改变熵的条件下一个分布可以被随意的改变。
+最后，这个问题还是\gls{underdetermined}，因为在不改变熵的条件下一个分布可以被随意地改变。
 为了获得一个唯一的解，我们再加一个约束：分布的均值必须为$\mu$。
 那么这个问题的拉格朗日\gls{functional}可以被写成
 \begin{align}
@@ -646,7 +647,7 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
 % p 638   
 
 
-为了关于$p$最小化拉格朗日乘子，我们令\gls{functional_derivative}等于$0$：
+为了关于$p$最小化\gls{lagrange_multi}，我们令\gls{functional_derivative}等于$0$：
 \begin{align}
 \label{eqn:1952}
 	\forall x,\ \  \frac{\delta}{\delta p(x)} \CalL = \lambda_1 + \lambda_2 x + \lambda_3(x-\mu)^2 - 1 - \log p(x) = 0 .
@@ -663,30 +664,30 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
 % p 638 end 
 
 我们并没有直接假设$p(x)$取这种形式，而是通过最小化这个\gls{functional}从理论上得到了这个$p(x)$的表达式。
-为了完成这个优化问题，我们需要选择$\lambda$的值来确保所有的约束都能够满足。
+为了解决这个最小化问题，我们需要选择$\lambda$的值来确保所有的约束都能够满足。
 我们有很大的选择$\lambda$的自由。
-因为只要约束满足，拉格朗日关于$\lambda$的梯度为$0$。
+因为只要约束满足，拉格朗日关于$\lambda$这个变量的梯度为$0$。
 为了满足所有的约束，我们可以令$\lambda_1 = 1 - \log \sigma\sqrt{2\pi}$,$\lambda_2 = 0$, $\lambda_3 = - \frac{1}{2\sigma^2}$，从而取到
 \begin{align}
 \label{eqn:1954}
 	p(x) = \CalN(x;\mu,\sigma^2).
 \end{align}
-这也是当我们不知道真实的分布时总是使用正态分布的原因。
-因为正态分布拥有最大的熵，<bad>我们通过这个假定来保证了最小可能量的结构。
+这也是当我们不知道真实的分布时总是使用\gls{normal_distribution}的一个原因。
+因为\gls{normal_distribution}拥有最大的熵，我们通过这个假定来保证了最小可能量的结构。
 % 639 head
 
 
 
-当寻找熵的拉格朗日\gls{functional}的临界点并且给定一个固定的方差时，我们只能找到一个对应最大熵的临界点。
-那是否存在一个最小化熵的概率分布函数呢？
-为什么我们无法发现第二个最小值的临界点呢？
+当寻找熵的拉格朗日\gls{functional}的\gls{critical_points}并且给定一个固定的方差时，我们只能找到一个对应最大熵的\gls{critical_points}。
+那最小化熵的\gls{PDF}是什么样的呢？
+为什么我们无法发现对应着\gls{minimum}的第二个\gls{critical_points}呢？
 原因是没有一个特定的函数能够达到最小的熵值。
 当函数把越多的概率密度加到$x = \mu + \sigma$和$x = \mu - \sigma$两个点上和越少的概率密度到其他点上时，他们的熵值会减少，而方差却不变。
-然而任何把所有的权重都放在这两点的函数的积分并不为$1$也不是一个有效地概率分布。
-所以不存在一个最小熵的概率分布函数，就像不存在一个最小的正实数一样。
+然而任何把所有的权重都放在这两点的函数的积分并不为$1$，也不是一个有效的概率分布。
+所以不存在一个最小熵的\gls{PDF}，就像不存在一个最小的正实数一样。
 然而，我们发现存在一个收敛的概率分布的序列，收敛到权重都在两个点上。
 这种情况能够退化为混合\gls{dirac_distribution}。
-因为\gls{dirac_distribution}并不是一个单独的概率分布，所以\gls{dirac_distribution}或者混合\gls{dirac_distribution}并不能对应函数空间的一个点。
+因为\gls{dirac_distribution}并不是一个单独的\gls{PDF}，所以\gls{dirac_distribution}或者混合\gls{dirac_distribution}并不能对应函数空间的一个点。
 所以对我们来说，当寻找一个\gls{functional_derivative}为$0$的函数空间的点时，这些分布是不可见的。
 这就是这种方法的局限之处。
 像\gls{dirac_distribution}这样的分布可以通过其他方法被找到，比如可以被猜到，然后证明它是满足条件的。
