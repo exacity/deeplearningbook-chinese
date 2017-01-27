@@ -488,23 +488,23 @@ Z = \int x^2 dx.
 % 560
 
 
-\gls{undirected_model}的许多有趣的理论结果依赖于$\forall \Vx,\ \tilde{p}(\Vx)>0$这个假设。
-使这个条件满足的一种简单的方式是使用\firstgls{energy_based_model}，其中
+\gls{undirected_model}中许多有趣的理论结果都依赖于$\forall \Vx,\ \tilde{p}(\Vx)>0$这个假设。
+使这个条件满足的一种简单方式是使用\firstall{energy_based_model}，其中
 \begin{align}
 \label{eqn:167}
 \tilde{p}(\RVx) = \exp(-E(\RVx)).
 \end{align}
 $E(\RVx)$被称作是\firstgls{energy_function}。
 对所有的$\RSz$ $\exp(\RSz)$都是正的，这保证了没有一个\gls{energy_function}会使得某一个状态$\RVx$的概率为$0$。
-我们可以很自由的选择那些能够简化学习过程的\gls{energy_function}。
-如果我们直接学习各个\gls{clique_potential}，我们需要利用带约束的优化方法来指定一些特定的最小概率值。
-学习\gls{energy_function}的过程中，我们可以采用无约束的优化方法\footnote{对于某些模型，我们可以仍然使用带约束的优化方法来确保$Z$存在。}。
+我们可以很自由地选择那些能够简化学习过程的\gls{energy_function}。
+如果我们直接学习各个\gls{clique_potential}，我们需要利用\gls{constrained_optimization}方法来任意地指定一些特定的最小概率值。
+学习\gls{energy_function}的过程中，我们可以采用无约束的优化方法\footnote{对于某些模型，我们可以仍然使用\gls{constrained_optimization}方法来确保$Z$存在。}。
 \gls{energy_based_model}中的概率可以无限趋近于$0$但是永远达不到$0$。
 % p 561  head
 
 
 服从\eqnref{eqn:167}形式的任意分布都是\firstgls{boltzmann_distribution}的一个实例。
-正是基于这个原因，我们把许多\gls{energy_based_model}叫做\firstgls{BM}\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
+正是基于这个原因，我们把许多\gls{energy_based_model}叫做\firstgls{BM}~\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
 关于什么时候叫\gls{energy_based_model}，什么时候叫\gls{BM}不存在一个公认的判别标准。
 一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如\gls{mcrbm2}，也涉及到了实值变量。
 虽然\gls{BM}最初的定义既可以包含\gls{latent_variable}也可以不包含\gls{latent_variable}，但是时至今日\gls{BM}这个术语通常用于指拥有\gls{latent_variable}的模型，而没有\gls{latent_variable}的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
@@ -512,15 +512,15 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 
-\gls{undirected_model}中的\gls{clique}对应于\gls{unnormalized_probability_function}的\gls{factor}。 
+\gls{undirected_model}中的\gls{clique}对应于\gls{unnormalized_probability_function}中的\gls{factor}。 
 通过$\exp(a+b) = \exp(a) \exp(b)$，我们发现\gls{undirected_model}中的不同\gls{clique}对应于\gls{energy_function}的不同项。
-换句话说，\gls{energy_based_model}只是一种特殊的\gls{markov_network}：求幂使\gls{energy_function}中的每个项对应于不同\gls{clique}的\gls{factor}。
+换句话说，\gls{energy_based_model}只是一种特殊的\gls{markov_network}：求幂使\gls{energy_function}中的每个项对应于不同\gls{clique}的一个\gls{factor}。
 关于如何从\gls{undirected_model}结构中获得\gls{energy_function}形式的示例参见\figref{fig:example_undirected_2}。
-人们可以将\gls{energy_function}带有多个项的\gls{energy_based_model}视作是\firstgls{product_of_expert}\citep{Hinton99}。
+人们可以将\gls{energy_function}中带有多个项的\gls{energy_based_model}视作是\firstgls{product_of_expert}~\citep{Hinton99}。
 \gls{energy_function}中的每一项对应的是概率分布中的一个\gls{factor}。
-\gls{energy_function}中的每一项都可以看作决定一个软约束是否能够满足的``专家''。
+\gls{energy_function}中的每一项都可以看作决定一个特定的软约束是否能够满足的``专家''。
 %每个专家只执行仅涉及一个随机变量低维投影的约束，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。
-每个专家只执行一个约束，而这个约束仅仅涉及一个随机变量的低维投影，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。
+每个专家只执行一个约束，而这个约束仅仅涉及随机变量的一个低维投影，但是当其结合概率的乘法时，专家们一同构造了复杂的高维约束。
 % 561
 \begin{figure}[!htb]
 \ifOpenSource
@@ -528,7 +528,8 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
-	\caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function} $E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。值得注意的是，我们可以通过取负能量的指数来获得图\ref{fig:example_undirected}中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
+\caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function} $E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。
+值得注意的是，我们可以通过取负能量的指数来获得图\ref{fig:example_undirected}中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
 	\label{fig:example_undirected_2}
 \end{figure}
 
