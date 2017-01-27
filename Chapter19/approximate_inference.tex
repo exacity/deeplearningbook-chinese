@@ -700,7 +700,7 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
 % 639 end            19.4.3 
 
 
-当我们的\gls{graphical_models}包含了连续型\gls{latent_variable}时，我们仍然可以通过最大化$\CalL$进行变分推断和学习。
+当我们的\gls{graphical_models}包含连续型\gls{latent_variable}时，我们仍然可以通过最大化$\CalL$进行变分推断和学习。
 然而，我们需要使用\gls{calculus_of_variations}来实现关于$q(\Vh\mid\Vv)$最大化$\CalL$。
 % 639 end  
 
@@ -708,21 +708,21 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
 % 640 head  
 在大多数情况下，研究者并不需要解决任何\gls{calculus_of_variations}的问题。
 取而代之的是，\gls{mean_field}固定点迭代更新有一种通用的方程。
-如果我们做了\gls{mean_field}的近似：
+如果我们做了\gls{mean_field}近似：
 \begin{align}
 \label{eqn:1955}
 	q(\Vh\mid\Vv) = \prod_i q(h_i \mid\Vv),
 \end{align}
 % 640 mid
-并且对任何的$j\neq i$固定了$q(h_j\mid\Vv)$，那么只需要满足$p$中任何联合分布中的变量不为$0$，我们就可以通过归一化下面这个未归一的分布
+并且对任何的$j\neq i$固定了$q(h_j\mid\Vv)$，那么只需要满足$p$中任何联合分布中变量的概率值不为$0$，我们就可以通过归一化下面这个未归一的分布
 \begin{align}
 	\label{eqn:1956}
 	\tilde{q}(h_i \mid\Vv) = \exp \big(\SetE_{\RVh_{-i}\sim q(\RVh_{-i}\mid\Vv)}	\log \tilde{p}(\Vv,\Vh)\big)
 \end{align}
 % 640 mid
 来得到最优的$q(h_i\mid\Vv)$。
-在这个方程中计算期望就能得到一个$q(h_i\mid\Vv)$的正确表达式。
-我们只有在希望提出一种新形式的变分学习算法时才需要直接推导$q$的函数形式。
+在这个方程中计算期望就能得到一个正确的$q(h_i\mid\Vv)$的表达式。
+我们只有在希望提出一种新形式的变分学习算法时才需要使用\gls{calculus_of_variations}来直接推导$q$的函数形式。
 方程~\eqref{eqn:1956}给出了适用于任何概率模型的\gls{mean_field}近似。
 % 640  
 
@@ -732,15 +732,15 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
 % 640  
 方程~\eqref{eqn:1956}是一个\gls{fixed_point_equation}，对每一个$i$它都被迭代地反复使用直到收敛。
 然而，它还包含着更多的信息。
-我们发现这种\gls{functional}定义的问题的最优解是存在的，无论我们是否能够通过\gls{fixed_point_equation}来解出它。
-这意味着我们可以把一些值当成参数，然后通过优化算法来解决这个问题。
+它还包含了最优解取到的\gls{functional}形式，无论我们是否能够通过\gls{fixed_point_equation}来解出它。
+这意味着我们可以利用方程中的\gls{functional}形式，把其中一些值当成参数，然后通过任何我们想用的优化算法来解决这个问题。
 
 
 % 640  
 我们拿一个简单的概率模型作为例子，其中\gls{latent_variable}满足$\Vh\in\SetR^2$，可见变量只有一个$v$。
-假设$p(\Vh) = \CalN(\Vh;0,\MI)$以及$p(v\mid\Vh) = \CalN(v;\Vw^{\top}\Vh;1)$，我们可以通过把$\Vh$积掉来简化这个模型，结果是关于$v$的高斯分布。
+假设$p(\Vh) = \CalN(\Vh;0,\MI)$以及$p(v\mid\Vh) = \CalN(v;\Vw^{\top}\Vh;1)$，我们可以通过把$\Vh$积掉来简化这个模型，结果是关于$v$的\gls{gaussian_distribution}。
 这个模型本身并不有趣。
-为了说明\gls{calculus_of_variations}如何应用在概率建模之中，我们构造了这个模型。
+只是为了说明\gls{calculus_of_variations}如何应用在概率建模之中，我们才构造了这个模型。
 
 
 
@@ -754,12 +754,12 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
  \propto & \exp \big(-\frac{1}{2} [h_1^2 + h_2^2 + (v-h_1w_1 - h_2w_2)^2]\big)\\
  = & \exp \big( - \frac{1}{2} [h_1^2 + h_2^2 + v^2 + h_1^2w_1^2 + h_2^2w_2^2 - 2vh_1w_1 - 2vh_2w_2 + 2h_1w_1h_2w_2] \big).
 \end{align}
-在上式中，我们发现由于带有$h_1,h_2$乘积的项的存在，真实的后验并不能将$h_1,h_2$分开。
+在上式中，我们发现由于带有$h_1,h_2$乘积项的存在，真实的后验并不能将$h_1,h_2$分开。
 % 641 head 
 
 
 
-展开方程~\eqref{eqn:1956}，我们可以得到
+应用方程~\eqref{eqn:1956}，我们可以得到
 \begin{align}
 \label{eqn:1962}
 & \tilde{q}(h_1\mid\Vv)\\ 
@@ -771,7 +771,8 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
 
 
 % 641 
-从这里，我们可以发现其中我们只需要从$q(h_2\mid \Vv)$中获得两个值：$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2^2]$。
+从这里，我们可以发现其中我们只需要从$q(h_2\mid \Vv)$中获得两个有效值：
+$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2^2]$。
 把这两项记作$\langle h_2 \rangle$和$\langle h_2^2 \rangle$，我们可以得到：
 \begin{align}
 \label{eqn:1966}
@@ -781,10 +782,10 @@ $f$函数的函数被称为是\firstgls{functional} $J[f]$。
 % 641 
 
 
-从这里，我们可以发现$\tilde{q}$形式满足高斯分布。
+从这里，我们可以发现$\tilde{q}$\gls{functional}形式满足\gls{gaussian_distribution}。
 因此，我们可以得到$q(\Vh\mid\Vv) = \CalN(\Vh;\Vmu,\Vbeta^{-1})$，其中$\Vmu$和对角的$\Vbeta$是变分参数，我们可以使用任何方法来优化它。
-有必要说明一下，我们并没有假设$q$是一个高斯分布，这个高斯是使用\gls{calculus_of_variations}来最大化$q$关于$\CalL$\footnote{此处似乎有笔误。}推导出的。
-在不同的模型上应用相同的方法可能会得到不同形式的$q$分布。
+有必要再强调一下，我们并没有假设$q$是一个\gls{gaussian_distribution}，这个高斯的形式是使用\gls{calculus_of_variations}来最大化$q$关于$\CalL$\footnote{此处似乎有笔误。}推导出的。
+在不同的模型上应用相同的方法可能会得到不同\gls{functional}形式的$q$分布。
 % 641
 
 当然，上述模型只是为了说明情况的一个简单例子。
