@@ -2,37 +2,38 @@
 % Translator: Yujun Li 
 \chapter{\glsentrytext{representation_learning}}
 \label{chap:representation_learning}
+% 517 head
 在本章中，首先我们会讨论学习表示是什么意思，以及表示的概念如何有助于深度框架的设计。
-我们探讨学习算法如何在不同任务中共享统计信息，包括使用无监督任务中的信息进行监督任务。
-共享表示有助于处理多模式或多领域，或是将已学到的知识转移到样本很少或没有，但任务表示存在的任务上。
-最后，我们回溯去探讨\gls{representation_learning}成功的原因，从\gls{distributed_representation}\citep{Hinton-et-al-PDP1986}和深度表示的理论优势，到数据生成过程基本假设的更一般概念，特别是观测数据的基本成因。
+我们探讨学习算法如何在不同任务中共享统计信息，包括使用\gls{unsupervised}任务中的信息完成\gls{supervised}任务。
+共享表示有助于处理多模式或多领域，或是将已学到的知识转移到样本很少或没有、但任务表示依然存在的任务上。
+最后，我们回溯去探讨\gls{representation_learning}成功的原因，从\gls{distributed_representation}~\citep{Hinton-et-al-PDP1986}和深度表示的理论优势，最后会讲到\gls{DGP}潜在假设的更一般概念，特别是观测数据的基本成因。
 
 
-很多信息处理任务，非常容易或者非常困难取决于信息是如何表示的。
-这是一个普适于日常生活，普适于计算机科学的基本原则，也普适于机器学习。
-例如，对于人而言，使用长除法计算210除以6非常直观。
-但如果使用罗马数字表示，这个问题就没那么直观了。
-大部分现代人在计算CCX除以VI时，都会将其转化成阿拉伯数字，从而使用位值系统的长除法。
-更具体地，我们可以量化使用合适或不合适表示时，不同操作的渐近运行时间。
-例如，插入一个数字到有序表中的正确位置，如果该数列表示为链表，那么所需时间是$O(n)$；如果该数列表示为红黑树，那么只需要$O(\log n)$的时间。
+很多信息处理任务，非常容易或者非常困难，这取决于信息是如何表示的。
+这是一个普适于日常生活，普适于计算机科学的基本原则，也普适于\gls{ML}。
+例如，对于人而言，可以直接使用长除法计算$210$除以$6$。
+但如果使用罗马数字表示，这个问题就没那么直接了。
+大部分现代人在计算\ENNAME{CCX}除以\ENNAME{VI}时，都会将其转化成阿拉伯数字，从而使用位值系统的长除法。
+更具体地，我们可以使用合适或不合适的表示来量化不同操作的渐近运行时间。
+例如，插入一个数字到有序表中的正确位置，如果该数列表示为链表，那么所需时间是$O(n)$；如果该列表表示为红黑树，那么只需要$O(\log n)$的时间。
 
 % -- 517 --
 
-在机器学习中，如何判断一种表示比另一种表示更好呢？
+在\gls{ML}中，到底是什么因素决定了一种表示比另一种表示更好呢？
 一般而言，一个好的表示可以使随后的学习任务更容易。
 选择什么表示通常取决于随后的学习任务。
+% 518 head 
 
-
-我们可以将\gls{supervised_learning}训练的\gls{feedforward_network}视为一种\gls{representation_learning}。
+我们可以将\gls{supervised_learning}训练的\gls{feedforward_network}视为\gls{representation_learning}的一种形式。
 具体地，网络的最后一层通常是\gls{linear_classifier}，如\gls{softmax_chap15}回归分类器。
-网络的其余部分学习出分类器输入的表示。
-监督准则下的训练自然会使得每个\gls{hidden_layer}（比较接近顶层的\gls{hidden_layer}）的表示趋向于具有使训练任务更容易的性质。
+网络的其余部分学习出该分类器的表示。
+\gls{supervised}准则下的训练自然会使得每个\gls{hidden_layer}（比较接近顶层的\gls{hidden_layer}）的表示趋向于具有使训练任务更容易的性质。
 例如，输入特征线性不可分的类别可能在最后一个\gls{hidden_layer}变成线性可分的。
-原则上，最后一层可以是另一种模型，如\gls{nearest_neighbor}分类\citep{SalakhutdinovR2007-small}。
+原则上，最后一层可以是另一种模型，如\gls{nearest_neighbor}分类器~\citep{SalakhutdinovR2007-small}。
 倒数第二层的特征应该根据最后一层的类型学习不同的性质。
 
 
-\gls{feedforward_network}的监督训练没有明确强加任何条件给学习的中间特征。
+\gls{feedforward_network}的\gls{supervised}训练并没有给学习到的中间特征明确强加任何条件。
 其他的\gls{representation_learning}算法往往会以某种特定的方式明确设计的表示。
 例如，我们想要学习更容易估计密度的表示。
 具有更多独立元素的分布会更容易建模，因此，我们可以设计鼓励表示向量$\Vh$中元素独立的目标函数。
@@ -149,7 +150,7 @@
 
 % -- 521 --
 
-这两个想法都涉及到多个未能完全理解的机器学习算法之间的相互作用。
+这两个想法都涉及到多个未能完全理解的\gls{ML}算法之间的相互作用。
 
 
 第一个想法，\gls{DNN}初始参数的选择对其性能具有很强的\gls{regularization}效果，是最不容易理解的。
@@ -328,7 +329,7 @@
 两个设定使用相同的表示，使得表示可以受益于两个任务的训练数据。
 
 
-如前所述，\gls{unsupervised}\gls{DL}用于\gls{transfer_learning}已经在一些机器学习比赛中取得了成功\citep{UTLC+LISA-2011-small,goodfellow+all-NIPS2011}。
+如前所述，\gls{unsupervised}\gls{DL}用于\gls{transfer_learning}已经在一些\gls{ML}比赛中取得了成功\citep{UTLC+LISA-2011-small,goodfellow+all-NIPS2011}。
 这些比赛中的某一个实验设定如下。
 首先每个参与者获得一个第一种设定（来自分布$P_1$）的数据集，其中含有一些类别的样本。
 参与者必须用这个来学习一个良好的特征空间（将原始输入映射到某种表示），这样当我们将这个学习到的变换用于来自迁移设定（分布$P_2$）的输入时，\gls{linear_classifier}可以在有标记样本很少的训练集上训练，泛化。
