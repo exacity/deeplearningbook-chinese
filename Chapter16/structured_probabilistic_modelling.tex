@@ -562,25 +562,25 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \label{sec:separation_and_d_separation}
 
 \gls{graphical_models}中的边告诉我们哪些变量直接相互作用。
-我们经常需要知道哪些变量间接相互作用。 
+我们经常需要知道哪些变量\emph{间接}相互作用。 
 某些间接相互作用可以通过观察其他变量来启用或禁用。
-更正式地，我们想知道在给定其他变量子集的值的情况下，哪些变量子集彼此条件独立。
+更正式地，我们想知道在给定其他变量子集的值时，哪些变量子集彼此条件独立。
 % 562 end 
 
 
-在\gls{undirected_model}的情况下，识别图中的条件独立性是非常简单的。 
+在\gls{undirected_model}中，识别图中的条件独立性是非常简单的。 
 在这种情况下，图中隐含的条件独立性称为\firstgls{separation}。
-如果图结构显示给定变量$\SetS$的情况下变量$\SetA$与变量$\SetB$无关，
-那么我们声称给定变量$\SetS$时，变量$\SetA$与另一组变量$\SetB$是\gls{separation}的。
+如果图结构显示给定变量集$\SetS$的情况下变量集$\SetA$与变量集$\SetB$无关，
+那么我们声称给定变量集$\SetS$时，变量集$\SetA$与另一组变量集$\SetB$是\gls{separation}的。
 %如果两个变量$\RSa$和$\RSb$通过涉及未观察变量的路径连接，那么这些变量不是\gls{separation}的。
-如果连接两个变量$\RSa$和$\RSb$的路径仅涉及未观察变量，那么这些变量不是\gls{separation}的。
+如果连接两个变量$\RSa$和$\RSb$的连接路径仅涉及未观察变量，那么这些变量不是\gls{separation}的。
 如果它们之间没有路径，或者所有路径都包含可观测的变量，那么它们是\gls{separation}的。
-我们认为仅涉及到未观察到的变量的路径是``活跃''的，将包括观察到的变量的路径称为``非活跃''的。
-% 563
+我们认为仅涉及到未观察到的变量的路径是``活跃''的，将包括可观察变量的路径称为``非活跃''的。
+% 563  head
 
 
 当我们画图时，我们可以通过加阴影来表示观察到的变量。
-\figref{fig:undirected_paths_active}用于描述当以这种方式绘制时\gls{undirected_model}中的活跃和非活跃路径的样子。
+\figref{fig:undirected_paths_active}用于描述当以这种方式绘图时\gls{undirected_model}中的活跃和非活跃路径的样子。
 \figref{fig:example_sep}描述了一个从一个\gls{undirected_model}中读取\gls{separation}信息的例子。
 % 563
 
@@ -596,12 +596,14 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/undirected_paths_inactive}}	
 \fi
-	\caption{(a)随机变量$\RSa$和$\RSb$之间的路径$\RSs$是活跃的，因为$\RSs$是观察不到的。
-	这意味着$\RSa$，$\RSb$之间不是\gls{separation}的。
-	 (b)图中$\RSs$用阴影填充，表示了它是可观察的。
-	 因为$\RSa$和$\RSb$之间的唯一路径通过$\RSs$，并且这条路径是不活跃的，我们可以得出结论，在给定$\RSs$的条件下$\RSa$和$\RSb$是\gls{separation}的。}
-	\label{fig:undirected_paths_active}
+\caption{(a)随机变量$\RSa$和随机变量$\RSb$之间穿过$\RSs$的路径是活跃的，因为$\RSs$是观察不到的。
+这意味着$\RSa$，$\RSb$之间不是\gls{separation}的。
+ (b)图中$\RSs$用阴影填充，表示了它是可观察的。
+因为$\RSa$和$\RSb$之间的唯一路径通过$\RSs$，并且这条路径是不活跃的，
+我们可以得出结论，在给定$\RSs$的条件下$\RSa$和$\RSb$是\gls{separation}的。}
+\label{fig:undirected_paths_active}
 \end{figure}
+% 563 mid
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -609,117 +611,125 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \else
 	\centerline{\includegraphics{Chapter16/figures/example_sep}}
 \fi
-	\caption{一个从无向图中读取\gls{separation}性质的例子。
-		这里$\RSb$用阴影填充，表示它是可观察的。
-		由于$\RSb$挡住了从$\RSa$到$\RSc$的唯一路径，我们说在给定$\RSb$的情况下$\RSa$和$\RSc$是相互\gls{separation}的。
-		观察值$\RSb$同样挡住了从$\RSa$到$\RSd$的一条路径，但是它们之间有另一条路径。
-		因此给定$\RSb$的情况下$\RSa$和$\RSd$不是\gls{separation}的。}
+\caption{从一个无向图中读取\gls{separation}性质的一个例子。
+这里$\RSb$用阴影填充，表示它是可观察的。
+由于$\RSb$挡住了从$\RSa$到$\RSc$的唯一路径，我们说在给定$\RSb$的情况下$\RSa$和$\RSc$是相互\gls{separation}的。
+观察值$\RSb$同样挡住了从$\RSa$到$\RSd$的一条路径，但是它们之间有另一条活跃路径。
+因此给定$\RSb$的情况下$\RSa$和$\RSd$不是\gls{separation}的。}
 	\label{fig:example_sep}
 \end{figure}
+% 563 end
 
 
 
-类似的概念适用于\gls{directed_model}，除了在\gls{directed_model}中，这些概念被称为\firstgls{dseparation}。
-``d''代表``\gls{dependency}''程度。
-有向图中\gls{dseparation}的定义与\gls{undirected_model}的相同：我们认为如果图结构中给定$\SetS$时 $\SetA$与变量集$\SetB$无关，
+类似的概念适用于\gls{directed_model}，只是在\gls{directed_model}中，这些概念被称为\firstgls{dseparation}。
+``d''代表``\gls{dependency}''的意思。
+有向图中\gls{dseparation}的定义与\gls{undirected_model}中\gls{separation}的定义相同：我们认为如果图结构显示给定另外的变量集$\SetS$时 $\SetA$与变量集$\SetB$无关，
 那么给定变量集$\SetS$时，变量集$\SetA$\gls{dseparation}于变量集$\SetB$。
 % 563
 
 
 与\gls{undirected_model}一样，我们可以通过查看图中存在的活跃路径来检查图中隐含的独立性。
-如前所述，如果两个变量之间存在活跃路径，则两个变量是相关的，如果没有活跃路径，则为\gls{dseparation}。
+如前所述，如果两个变量之间存在活跃路径，则两个变量是依赖的，如果没有活跃路径，则为\gls{dseparation}。
 在有向网络中，确定路径是否活跃有点复杂。
 关于在\gls{directed_model}中识别活跃路径的方法可以参见\figref{fig:168}。 
 \figref{fig:169}是从一个图中读取一些属性的例子。
 % 564  head 
 
 
-\begin{figure}[!htb]
-\ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
-\else
-	\centerline{\includegraphics{Chapter16/figures/directed_paths_straight}}	
-\fi
-\ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
-\else
-	\centerline{\includegraphics{Chapter16/figures/directed_paths_out}}
-\fi
-\ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
-\else
-	\centerline{\includegraphics{Chapter16/figures/directed_paths_descendant}}
-\fi
-\ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
-\else
-	\centerline{\includegraphics{Chapter16/figures/directed_paths_v}}		
-\fi
-	\caption{两个随机变量$\RSa$，$\RSb$之间存在的所有种类的长度为$2$的活跃路径。
-		（a）箭头方向从$\RSa$指向$\RSb$的任何路径，反之也成立。
-		如果$\RSs$可以被观察到，这种路径就是阻塞的。
-		在接力赛的例子中，我们已经看到过这种类型的路径。
-		（b）变量$\RSa$和$\RSb$通过\gls{common_cause} $\RSs$相连。
-		举个例子，假设$\RSs$是一个表示是否存在飓风的变量，$\RSa$和$\RSb$表示两个相邻的气象监控区域的风速。
-		如果我们观察到在$\RSa$处有很高的风速，我们可以期望在$b$处也观察到高速的风。
-		如果观察到$\RSs$那么这条路径就被阻塞了。
-		如果我们已经知道存在飓风，那么无论$\RSa$处观察到什么，我们都能期望$\RSb$处有较高的风速。
-		在$\RSa$处观察到一个低于预期的风速并不会改变我们对$\RSb$处风速的期望（已知有飓风的情况下）。
-		然而，如果$\RSs$不被观测到，那么$\RSa$和$\RSb$是依赖的，即路径是活跃的。
-		（c）变量$\RSa$和$\RSb$都是$\RSs$的父节点。
-		这叫做\firstgls{vstructure}或者\firstgls{collider}。
-		根据\firstgls{explaining_away_effect}，\gls{vstructure}导致$\RSa$和$\RSb$是相关的。
-		在这种情况下，当$\RSs$被观测到时路径是活跃的。
-		举个例子，假设$\RSs$是一个表示你的同事不在工作的变量。
-		变量$\RSa$表示他生病了，而变量$\RSb$表示她在休假，但是这两件事同时发生是不太可能的。
-		如果你发现她在休假，那么这个事实足够解释她的缺席了。
-		你可以推断她很可能没有生病。
-		（d）即使$\RSs$的任意后代都被观察到，\gls{explaining_away_effect}也会起作用。
-		举个例子，假设$\RSc$是一个表示你是否收到你同事的报告的一个变量。
-		如果你注意到你还没有收到这个报告，这会增加你估计的她今天不在工作的概率，这反过来又会增加她今天生病或者度假的概率。
-		阻塞\gls{vstructure}中的路径的唯一方法就是共享子节点的后代一个都观察不到。}
-	\label{fig:168}
-\end{figure}
 
 
-\begin{figure}[!htb]
-\centering
-\ifOpenSource
-\includegraphics{figure.pdf}
-\else
-\includegraphics{Chapter16/figures/example_dsep}
-\fi
-\captionsetup{singlelinecheck=off}
-\caption[d-separation example]{从这张图中，我们可以发现一些\gls{dseparation}的性质。这包括了：
-\begin{itemize}
-	\item 给定空集的情况下$\RSa$和$\RSb$是\gls{dseparation}的。
-	\item 给定$\RSc$的情况下$\RSa$和$\RSe$是\gls{dseparation}的。
-	\item 给定$\RSc$的情况下$\RSd$和$\RSe$是\gls{dseparation}的。
-\end{itemize}
-我们还可以发现当我们观察到一些变量的时候，一些变量不再是\gls{dseparation}的：
-\begin{itemize}
-	\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
-	\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
-\end{itemize}
-}
-\label{fig:169}
-\end{figure}
 
-
-重要的是要记住\gls{separation}和\gls{dseparation}只能告诉我们图中隐含的条件独立性。
-不需要表示存在的所有独立性的图。 
+重要的是要记住\gls{separation}和\gls{dseparation}只能告诉我们\emph{图中隐含}的条件独立性。
+图并不需要表示所有存在的独立性。 
 进一步的，使用完全图（具有所有可能的边的图）来表示任何分布总是合法的。
 事实上，一些分布包含不可能用现有图形符号表示的独立性。
-\firstgls{context_specific_independence}指的是取决于网络中一些变量的值的独立性。
+\firstgls{context_specific_independence}指的是取决于网络中一些变量值的独立性。
 例如，考虑一个三个二进制变量的模型：$\RSa$，$\RSb $和$\RSc$。
 假设当$\RSa$是0时，$\RSb$和$\RSc$是独立的， 但是当$\RSa$是1时，$\RSb$确定地等于$\RSc$。
 当$\RSa = 1$时\gls{graphical_models}需要连接$\RSb$和$\RSc$的边。
-当$\RSa = 0$时$\RSb$和$\RSc$不是独立的。
+但是图不能说明当$\RSa = 0$时$\RSb$和$\RSc$不是独立的。
 % 564
 
 一般来说，当独立性不存在的时候，图不会显示独立性。 
 然而，图可能无法显示存在的独立性。
 % 564
+
+
+% 565
+\begin{figure}[!htb]
+	\ifOpenSource
+	\centerline{\includegraphics{figure.pdf}}
+	\else
+	\centerline{\includegraphics{Chapter16/figures/directed_paths_straight}}	
+	\fi
+	\ifOpenSource
+	\centerline{\includegraphics{figure.pdf}}
+	\else
+	\centerline{\includegraphics{Chapter16/figures/directed_paths_out}}
+	\fi
+	\ifOpenSource
+	\centerline{\includegraphics{figure.pdf}}
+	\else
+	\centerline{\includegraphics{Chapter16/figures/directed_paths_descendant}}
+	\fi
+	\ifOpenSource
+	\centerline{\includegraphics{figure.pdf}}
+	\else
+	\centerline{\includegraphics{Chapter16/figures/directed_paths_v}}		
+	\fi
+	\caption{两个随机变量$\RSa$，$\RSb$之间存在的所有种类的长度为$2$的活跃路径。
+（a）箭头方向从$\RSa$指向$\RSb$的任何路径，反之也成立。
+如果$\RSs$可以被观察到，这种路径就是阻塞的。
+在接力赛的例子中，我们已经看到过这种类型的路径。
+（b）变量$\RSa$和$\RSb$通过\gls{common_cause} $\RSs$相连。
+举个例子，假设$\RSs$是一个表示是否存在飓风的变量，$\RSa$和$\RSb$表示两个相邻的气象监控区域的风速。
+如果我们观察到在$\RSa$处有很高的风速，我们可以期望在$b$处也观察到高速的风。
+如果观察到$\RSs$那么这条路径就被阻塞了。
+如果我们已经知道存在飓风，那么无论$\RSa$处观察到什么，我们都能期望$\RSb$处有较高的风速。
+在$\RSa$处观察到一个低于预期的风速并不会改变我们对$\RSb$处风速的期望（已知有飓风的情况下）。
+然而，如果$\RSs$不被观测到，那么$\RSa$和$\RSb$是依赖的，即路径是活跃的。
+（c）变量$\RSa$和$\RSb$都是$\RSs$的父节点。
+这叫做\firstgls{vstructure}或者\firstgls{collider}。
+根据\firstgls{explaining_away_effect}，\gls{vstructure}导致$\RSa$和$\RSb$是相关的。
+在这种情况下，当$\RSs$被观测到时路径是活跃的。
+举个例子，假设$\RSs$是一个表示你的同事不在工作的变量。
+变量$\RSa$表示他生病了，而变量$\RSb$表示她在休假，但是这两件事同时发生是不太可能的。
+如果你发现她在休假，那么这个事实足够解释她的缺席了。
+你可以推断她很可能没有生病。
+（d）即使$\RSs$的任意后代都被观察到，\gls{explaining_away_effect}也会起作用。
+举个例子，假设$\RSc$是一个表示你是否收到你同事的报告的一个变量。
+如果你注意到你还没有收到这个报告，这会增加你估计的她今天不在工作的概率，这反过来又会增加她今天生病或者度假的概率。
+阻塞\gls{vstructure}中的路径的唯一方法就是共享子节点的后代一个都观察不到。}
+\label{fig:168}
+\end{figure}
+% 565  1 page
+
+
+% 566 head
+\begin{figure}[!htb]
+	\centering
+	\ifOpenSource
+	\includegraphics{figure.pdf}
+	\else
+	\includegraphics{Chapter16/figures/example_dsep}
+	\fi
+	\captionsetup{singlelinecheck=off}
+\caption[d-separation example]{从这张图中，我们可以发现一些\gls{dseparation}的性质。这包括了：
+\begin{itemize}
+\item 给定空集的情况下$\RSa$和$\RSb$是\gls{dseparation}的。
+\item 给定$\RSc$的情况下$\RSa$和$\RSe$是\gls{dseparation}的。
+\item 给定$\RSc$的情况下$\RSd$和$\RSe$是\gls{dseparation}的。
+\end{itemize}
+我们还可以发现当我们观察到一些变量的时候，一些变量不再是\gls{dseparation}的：
+\begin{itemize}
+\item 给定$\RSc$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
+\item 给定$\RSd$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
+\end{itemize}
+}
+	\label{fig:169}
+\end{figure}
+% 566 head
 
 \subsection{在\glsentrytext{directed_model}和\glsentrytext{undirected_model}中转换}
 \label{sec:converting_between_undirected_and_directed_graphs}
