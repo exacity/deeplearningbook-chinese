@@ -845,6 +845,8 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 569 mid
 
 
+
+% 569 head
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -863,6 +865,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 在这个例子中，我们根据变量名的字母进行排序。}
 	\label{fig:um_to_dm}
 \end{figure}
+% 569 head
 
 
 
@@ -872,37 +875,41 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 
-\firstgls{factor_graph}是从\gls{undirected_model}中抽样的另一种方法，可以解决\gls{undirected_model}图中表达的模糊性。
+\firstgls{factor_graph}是从\gls{undirected_model}中抽样的另一种方法，它可以解决标准\gls{undirected_model}句法中图表达的模糊性。
 在\gls{undirected_model}中，每个$\phi$函数的范围必须是图中某个\gls{clique}的子集。
 我们无法确定每一个\gls{clique}是否含有一个作用域包含整个\gls{clique}的\gls{factor}－－－比如说一个包含三个结点的\gls{clique}可能对应的是一个有三个结点的\gls{factor}，也可能对应的是三个\gls{factor}并且每个\gls{factor}包含了一对结点，这通常会导致模糊性。
 通过显式地表示每一个$\phi$函数的作用域，\gls{factor_graph}解决了这种模糊性。
 %然而，$\phi$没有必要包含每个\gls{clique}的全部。
 %\gls{factor_graph}明确表示每个$\phi$函数的范围。
-具体来说，\gls{factor_graph}是由包含无向二分图的\gls{undirected_model}的图形表示。
+具体来说，\gls{factor_graph}是一个包含无向二分图的\gls{undirected_model}的图形表示。
 一些节点被绘制为圆形。 
-这些节点对应于随机变量，如在标准\gls{undirected_model}中。
-其余节点绘制为正方形。
+这些节点对应于随机变量，就像在标准\gls{undirected_model}中一样。
+其余节点绘制为方块。
 这些节点对应于\gls{unnormalized_probability_function}的\gls{factor} $\phi$。
-变量和\gls{factor}通过无向边连接。
+变量和\gls{factor}可以通过无向边连接。
 当且仅当变量包含在\gls{unnormalized_probability_function}的\gls{factor}中时，变量和\gls{factor}在图中连接。
 没有\gls{factor}可以连接到图中的另一个\gls{factor}，也不能将变量连接到变量。
 \figref{sec:factor_graphs}给出了一个例子来说明\gls{factor_graph}如何解决无向网络中的模糊性。
 % 570  
 
 
+% 570 head
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 	\centerline{\includegraphics{Chapter16/figures/factor_graph}}	
 \fi
-	\caption{\gls{factor_graph}如何解决无向网络中的模糊性的一个例子。
-		（左）一个包含三个变量的\gls{clique}组成的无向网络。
-		（中）对应这个无向模型的\gls{factor_graph}。这个\gls{factor_graph}有一个包含三个变量的因子。
-		（右）对应这个无向模型的另一种有效的\gls{factor_graph}。这个\gls{factor_graph}包含了三个因子，每个因子只对应两个变量。
-		这个\gls{factor_graph}上进行的表示，推断和学习相比于中图描述的\gls{factor_graph}都要渐进性地廉价，即使它们表示的是同一个无向模型。}
+\caption{\gls{factor_graph}如何解决无向网络中的模糊性的一个例子。
+（左）一个包含三个变量（$\RSa$、$\RSb$和$\RSc$）的\gls{clique}组成的无向网络。
+（中）对应这个无向模型的\gls{factor_graph}。
+这个\gls{factor_graph}有一个包含三个变量的因子。
+（右）对应这个无向模型的另一种有效的\gls{factor_graph}。
+这个\gls{factor_graph}包含了三个因子，每个因子只对应两个变量。
+这个\gls{factor_graph}上进行的表示、推断和学习相比于中图描述的\gls{factor_graph}都要渐进性地廉价，即使它们表示的是同一个无向模型。}
 	\label{fig:factor_graph}
 \end{figure}
+% 570 head
 
 
 \section{从\glsentrytext{graphical_models}中采样}
