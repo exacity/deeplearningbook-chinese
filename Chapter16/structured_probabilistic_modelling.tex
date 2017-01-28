@@ -522,6 +522,9 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 %每个专家只执行仅涉及一个随机变量低维投影的约束，但是当其结合概率的乘法时，专家们合理构造了复杂的高维约束。
 每个专家只执行一个约束，而这个约束仅仅涉及随机变量的一个低维投影，但是当其结合概率的乘法时，专家们一同构造了复杂的高维约束。
 % 561
+
+
+
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -529,22 +532,24 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 	\centerline{\includegraphics{Chapter16/figures/example_undirected}}
 \fi
 \caption{这个图说明通过为每个\gls{clique}选择适当的\gls{energy_function} $E(\RSa,\RSb,\RSc,\RSd,\RSe,\RSf)$可以写作$E_{\RSa,\RSb}(\RSa,\RSb) + E_{\RSb,\RSc}(\RSb,\RSc) + E_{\RSa,\RSd}(\RSa,\RSd)+  E_{\RSb,\RSe}(\RSb,\RSe) + E_{\RSe,\RSf}(\RSe,\RSf)$。
-值得注意的是，我们可以通过取负能量的指数来获得图\ref{fig:example_undirected}中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
+值得注意的是，我们可以通过令$\phi$等于对应负能量的指数来获得图\ref{fig:example_undirected}中的$\phi$函数，比如，$\phi_{\RSa,\RSb}(\RSa,\RSb) = \exp(-E(\RSa,\RSb))$。}
 	\label{fig:example_undirected_2}
 \end{figure}
+%  562 head
 
 
-
-\gls{energy_based_model}定义的一部分无法用\gls{ML}观点来解释：即\eqnref{eqn:167}中的负号。
+\gls{energy_based_model}定义的一部分无法用\gls{ML}观点来解释：即\eqnref{eqn:167}中的``-''符号。
+这个``-''符号可以被包含在$E$的定义之中。
+对于很多$E$函数的选择来说，学习算法可以自由地决定能量的符号。
 这个负号的存在主要是为了保持\gls{ML}文献和物理学文献之间的兼容性。
-概率建模的许多研究最初由统计物理学家做出的，其中$E$是指实际的，物理概念的能量，没有任意的符号。
-诸如``能量''和``\gls{partition_function}''这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
+概率建模的许多研究最初都是由统计物理学家做出的，其中$E$是指实际的、物理概念的能量，没有任意的符号。
+诸如``能量''和``\gls{partition_function}''这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽，尽管最早是从物理学中发现的。
 一些\gls{ML}研究者（例如，\citet{Smolensky86}将负能量称为\firstgls{harmony}）发出了不同的声音，但这些都不是标准惯例。
 % 562  head
 
 
-许多对概率模型进行操作的算法不需要计算$p_{\text{model}}(\Vx)$，而只需要计算$\log p_{\text{model}}(\Vx)$。
-对于具有\gls{latent_variable} $\Vh$的\gls{energy_based_model}，这些算法有时会将该量的负数称为\firstgls{free_energy}：
+许多对概率模型进行操作的算法不需要计算$p_{\text{model}}(\Vx)$，而只需要计算$\log \tilde{p}_{\text{model}}(\Vx)$。
+对于具有\gls{latent_variable} $\Vh$的\gls{energy_based_model}， 这些算法有时会将该量的负数称为\firstgls{free_energy}：
 \begin{align}
 \label{eqn:168}
 \CalF (\Vx) = -\log \sum_{\Vh} \exp(-E(\Vx,\Vh)).
