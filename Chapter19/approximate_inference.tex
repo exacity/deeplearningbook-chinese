@@ -541,7 +541,7 @@ $p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构见\figref{fig:bsc}。
 在\gls{binary_sparse_coding}模型中，我们可以发现\eqnref{eqn:1944}中描述的\gls{recurrent_network}连接包含了根据相邻\gls{hidden_unit}变化值来反复更新当前\gls{hidden_unit}的操作。
 输入层通常给\gls{hidden_unit}发送一个固定的信息$\Vv^{\top}\beta\MW$，然而\gls{hidden_unit}不断地更新互相传送的信息。
 具体地说，当$\hat{h}_i$和$\hat{h}_j$两个单元的权重向量对准时，他们会产生相互抑制。
-这也是一种形式的竞争－－－两个共同解释输入的\gls{hidden_unit}之间，只有一个解释得更好的才被允许继续保持活跃。
+这也是一种形式的竞争——两个共同解释输入的\gls{hidden_unit}之间，只有一个解释得更好的才被允许继续保持活跃。
 在\gls{binary_sparse_coding}的后验分布中，\gls{mean_field}近似为了捕获到更多的\gls{explaining_away}作用，产生了这种竞争。
 事实上，\gls{explaining_away}效应会导致一个\gls{multimodal}的后验分布，以至于我们如果从后验分布中采样，一些样本只有一个结点是活跃的，其他的样本在另一个结点活跃，只有很少的样本能够两者都处于活跃状态。
 不幸的是，\gls{explaining_away}作用无法通过\gls{mean_field}中\gls{factorial}$q$分布来建模，因此建模时\gls{mean_field}近似只能选择一个\gls{mode}。
