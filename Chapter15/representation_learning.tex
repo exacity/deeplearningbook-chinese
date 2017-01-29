@@ -207,40 +207,41 @@
 
 
 除了这些注意事项外，我们现在分析一些\gls{unsupervised_pretraining}改善性能的成功示例，并解释这种改进发生的已知原因。
-\gls{unsupervised_pretraining}通常用来改进分类器，并且从减少测试误差的观点来看是很有意思的。
-然而，\gls{unsupervised_pretraining}还有助于分类以外的任务，并且可以用于改进优化，而不仅仅只是作为正规化项。
-例如，它可以提高\gls{DAE}的训练和测试\gls{reconstruction_error}\citep{Hinton-Science2006}。
+\gls{unsupervised_pretraining}通常用来改进分类器，并且从减少\gls{test_set}误差的观点来看是很有意思的。
+然而，\gls{unsupervised_pretraining}还有助于分类以外的任务，并且可以用于改进优化，而不仅仅只是作为\gls{regularizer}。
+例如，它可以提高\gls{DAE}的训练和测试\gls{reconstruction_error}~\citep{Hinton-Science2006}。
 % 524 head
 
 
-\cite{Erhan+al-2010-small}进行了许多实验来解释\gls{unsupervised_pretraining}的几个成功点。
-对训练误差和测试误差的改进都可以解释为，\gls{unsupervised_pretraining}将参数引入到了可能不会探索的区域。
+\cite{Erhan+al-2010-small}进行了许多实验来解释\gls{unsupervised_pretraining}的几个成功原因。
+对\gls{training_error}和\gls{test_error}的改进都可以解释为，\gls{unsupervised_pretraining}将参数引入到了其它方法可能探索不到的区域。
 \gls{NN}训练是非确定性的，并且每次运行都会收敛到不同的函数。
-训练可以停止在梯度变小的点；也可以\gls{early_stopping}结束训练，以防过拟合；还可以停止在梯度很大，但由于诸如随机性或\gls{hessian}矩阵\gls{poor_conditioning}等问题难以找到合适下降方向的点。
-经过\gls{unsupervised_pretraining}的神经网络会一致地停止在一片相同的区域，但未经过\gls{pretraining}的\gls{NN}会一致地停在另一个区域。
-参看\figref{fig:chap15_isomap}了解这种现象。
-经过\gls{pretraining}的网络到达的区域是较小的，这表明\gls{pretraining}减少了估计过程的方差，这进而又可以降低严重过拟合的风险。
+训练可以停止在梯度很小的点；也可以\gls{early_stopping}结束训练，以防\gls{overfitting}；
+还可以停止在梯度很大，但由于诸如随机性或\gls{hessian}矩阵\gls{poor_conditioning}等问题难以找到合适下降方向的点。
+经过\gls{unsupervised_pretraining}的神经网络会一致地停止在一片相同的函数空间区域，但未经过\gls{pretraining}的\gls{NN}会一致地停在另一个区域。
+\figref{fig:chap15_isomap}可视化了这种现象。
+经过\gls{pretraining}的网络到达的区域是较小的，这表明\gls{pretraining}减少了估计过程的方差，这进而又可以降低严重\gls{overfitting}的风险。
 换言之，\gls{unsupervised_pretraining}将\gls{NN}参数初始化到它们不易逃逸的区域，并且遵循这种初始化的结果更加一致，和没有这种初始化相比，结果很差的可能性更低。
-
+% 524 mid
 
 \cite{Erhan+al-2010-small}也回答了\emph{何时}\gls{pretraining}效果最好——预训练的网络越深，\gls{test_error}的均值和方差下降得越多。
 值得注意的是，这些实验是在训练非常深层网络的现代方法发明和流行（\gls{ReLU}，\gls{dropout}和\gls{batch_normalization}）之前进行的，因此对于\gls{unsupervised_pretraining}与当前方法的结合，我们所知甚少。
+% 524 mid
 
-
-一个重要的问题是\gls{unsupervised_pretraining}是如何作为\gls{regularizer}的。
-一个假设是，\gls{pretraining}鼓励学习算法发现与生成观察数据的根本原因相关的特征。
-这是激励除\gls{unsupervised_pretraining}之外的许多其他算法的重要思想，将会在\secref{sec:semi_supervised_disentangling_of_causal_factors}中进一步讨论。
-
+一个重要的问题是\gls{unsupervised_pretraining}是如何起到\gls{regularizer}作用的。
+一个假设是，\gls{pretraining}鼓励学习算法发现那些与生成观察数据的根本原因相关的特征。
+这也是除\gls{unsupervised_pretraining}之外许多其他算法的重要思想的启发，将会在\secref{sec:semi_supervised_disentangling_of_causal_factors}中进一步讨论。
+% 524 mid  
 
 与\gls{unsupervised_learning}的其他形式相比，\gls{unsupervised_pretraining}的缺点是其使用了两个单独的训练阶段。
-很多\gls{regularization}技术都具有一个优点，允许用户调整单一\gls{hyperparameter}控制\gls{regularization}的强度。
+很多\gls{regularization}技术都具有一个优点，允许用户通过调整单一\gls{hyperparameter}的值来控制\gls{regularization}的强度。
 \gls{unsupervised_pretraining}没有一种明确的方法，调整\gls{unsupervised}阶段\gls{regularization}的强度。
-相反，\gls{unsupervised_pretraining}有许多超参数，但其效果只能之后度量，通常难以提前预测。
-当我们同时执行\gls{unsupervised}和\gls{supervised_learning}而不使用\gls{pretraining}策略时，会有单个超参数（通常是附加到无监督损失的系数）控制无监督目标正则化监督模型的强度。
+相反，\gls{unsupervised_pretraining}有许多\gls{hyperparameter}，但其效果只能之后度量，通常难以提前预测。
+当我们同时执行\gls{unsupervised}和\gls{supervised_learning}而不使用\gls{pretraining}策略时，会有单个\gls{hyperparameter}（通常是附加到\gls{unsupervised}\gls{cost_function}的系数）控制\gls{unsupervised}目标\gls{regularize}\gls{supervised}模型的强度。
 减少该系数，总是能够可预测地获得较少\gls{regularization}强度。
-在\gls{unsupervised_pretraining}的情况下，没有一种灵活适应\gls{regularization}强度的方式——要么监督模型初始化为\gls{pretraining}的参数，要么不是。
+在\gls{unsupervised_pretraining}的情况下，没有一种灵活调整\gls{regularization}强度的方式——要么\gls{supervised}模型初始化为\gls{pretraining}的参数，要么不是。
+% 525 end
 
-% -- 524 --
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -266,14 +267,14 @@
 \end{figure}
 
 
-具有两个单独的训练阶段的另一个缺点是每个阶段都具有自己的超参数。
-第二阶段的性能通常不能在第一阶段期间预测，因此在第一阶段提出超参数和第二阶段根据反馈来更新之间存在较长的延迟。
-最主要的方法是使用监督阶段验证集的误差来挑选\gls{pretraining}阶段的超参数，如\cite{Larochelle-jmlr-2009}中讨论的。
-在实际中，有些超参数，如\gls{pretraining}迭代的次数，很方便在\gls{pretraining}阶段设定，在\gls{unsupervised}目标上使用提前停止。这个方法并不理想，但是计算上比使用监督目标代价小得多。
+具有两个单独的训练阶段的另一个缺点是每个阶段都具有自己的\gls{hyperparameter}。
+第二阶段的性能通常不能在第一阶段期间预测，因此在第一阶段提出\gls{hyperparameter}和第二阶段根据反馈来更新之间存在较长的延迟。
+最主要的方法是使用监督阶段验证集的误差来挑选\gls{pretraining}阶段的\gls{hyperparameter}，如\cite{Larochelle-jmlr-2009}中讨论的。
+在实际中，有些\gls{hyperparameter}，如\gls{pretraining}迭代的次数，很方便在\gls{pretraining}阶段设定，在\gls{unsupervised}目标上使用提前停止。这个方法并不理想，但是计算上比使用监督目标代价小得多。
 
 % -- 525 --
 
-如今，大部分算法已经不使用\gls{unsupervised_pretraining}了，除了在自然语言处理领域，其中单词作为\gls{one_hot}向量的自然表示不能传达相似性信息，并且有非常多的未标记集可用。
+如今，大部分算法已经不使用\gls{unsupervised_pretraining}了，除了在\gls{NLP}领域，其中单词作为\gls{one_hot}向量的自然表示不能传达相似性信息，并且有非常多的未标记集可用。
 在这种情况下，\gls{pretraining}的优点是可以对一个巨大的未标记集合（例如用包含数十亿单词的语料库）进行\gls{pretraining}，学习良好的表示（通常是单词，但也可以是句子），然后使用该表示或\gls{fine_tune}表示，用于训练集样本很少的监督任务。
 这种方法由\cite{CollobertR2008-small}，\cite{Turian+Ratinov+Bengio-2010-small}和\cite{collobert2011natural}开创，至今仍在使用。
 
