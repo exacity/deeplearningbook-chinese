@@ -243,57 +243,61 @@
 % 525 end
 
 
+% 525 head
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter15/figures/isomap_color}}
 \fi
-\caption{不同神经网络的学习轨迹在\emph{函数空间}（并非参数空间，避免从参数向量到函数的多对一映射）的非线性映射。
-不同网络具有不同的随机初始化，并且有的具有\gls{unsupervised_pretraining}，有的没有。
-每个点对应着训练过程中特定时间的一个神经网络。
-该图授权自\cite{Erhan+al-2010-small}。
-函数空间中的坐标是关于每组输入$\Vx$和输出$\Vy$的\gls{infinite}维向量。
-\cite{Erhan+al-2010-small}将很多特定的$\Vx$和$\Vy$连接起来，线性投影到高维空间中。
-然后他们使用\gls{isomap}\citep{Tenenbaum2000-isomap}进行非线性投影。
+\caption{在\emph{函数空间}（并非参数空间，避免从参数向量到函数的多对一映射）不同神经网络的学习轨迹的非线性映射的可视化。
+不同网络采用不同的随机初始化，并且有的使用了\gls{unsupervised_pretraining}，有的没有。
+每个点对应着训练过程中一个特定时间的神经网络。
+经\citet{Erhan+al-2010-small}许可转载此图。
+函数空间中的坐标是关于每组输入$\Vx$和它的一个输出$\Vy$的\gls{infinite}维向量。
+\cite{Erhan+al-2010-small}将很多特定$\Vx$的$\Vy$连接起来，线性投影到高维空间中。
+然后他们使用\gls{isomap}~\citep{Tenenbaum2000-isomap}进行进一步的非线性投影并投到二维空间。
 颜色表示时间。
-所有的网络初始化在上图的中心点附近（对应着输出$\Vy$近似是\gls{uniform_distribution}的函数领域）。
-随着时间迁移，学习向外移动函数到预测更信度更高的点。
+<bad>所有的网络初始化在上图的中心点附近（对应着输出$\Vy$近似是\gls{uniform_distribution}的函数领域）。
+随着时间迁移，学习向外移动函数到预测得更好的点。
 当使用\gls{pretraining}时，训练会一致地收敛到同一个区域；
 而不使用\gls{pretraining}时，训练会收敛到其他不重叠的区域。
-\gls{isomap}试图维持全局相对距离（即体积），因此具有\gls{pretraining}的模型对应的较小区域意味着，基于\gls{pretraining}的\gls{estimator}具有较小的方差。
+\gls{isomap}试图维持全局相对距离（体积因此也保持不变），因此使用\gls{pretraining}的模型对应的较小区域意味着，基于\gls{pretraining}的\gls{estimator}具有较小的方差。
 }
 \label{fig:chap15_isomap}
 \end{figure}
+% 525 head
 
 
+% 525 end 
 具有两个单独的训练阶段的另一个缺点是每个阶段都具有自己的\gls{hyperparameter}。
 第二阶段的性能通常不能在第一阶段期间预测，因此在第一阶段提出\gls{hyperparameter}和第二阶段根据反馈来更新之间存在较长的延迟。
-最主要的方法是使用监督阶段验证集的误差来挑选\gls{pretraining}阶段的\gls{hyperparameter}，如\cite{Larochelle-jmlr-2009}中讨论的。
-在实际中，有些\gls{hyperparameter}，如\gls{pretraining}迭代的次数，很方便在\gls{pretraining}阶段设定，在\gls{unsupervised}目标上使用提前停止。这个方法并不理想，但是计算上比使用监督目标代价小得多。
-
-% -- 525 --
-
-如今，大部分算法已经不使用\gls{unsupervised_pretraining}了，除了在\gls{NLP}领域，其中单词作为\gls{one_hot}向量的自然表示不能传达相似性信息，并且有非常多的未标记集可用。
-在这种情况下，\gls{pretraining}的优点是可以对一个巨大的未标记集合（例如用包含数十亿单词的语料库）进行\gls{pretraining}，学习良好的表示（通常是单词，但也可以是句子），然后使用该表示或\gls{fine_tune}表示，用于训练集样本很少的监督任务。
-这种方法由\cite{CollobertR2008-small}，\cite{Turian+Ratinov+Bengio-2010-small}和\cite{collobert2011natural}开创，至今仍在使用。
+最通用的方法是在\gls{supervised}阶段使用\gls{validation_set}上的误差来挑选\gls{pretraining}阶段的\gls{hyperparameter}，如\cite{Larochelle-jmlr-2009}中讨论的。
+在实际中，有些\gls{hyperparameter}，如\gls{pretraining}迭代的次数，很方便在\gls{pretraining}阶段设定，通过\gls{unsupervised}目标上使用\gls{early_stopping}策略完成。
+这个策略并不理想，但是在计算上比使用\gls{supervised}目标代价小得多。
+% 526 head
 
 
-基于\gls{supervised_learning}的\gls{DL}技术，通过\gls{dropout}或\gls{batch_normalization}来\gls{regularization}，能够在很多任务上达到人类级别的性能，但必须使用极大的标记数据集。
-在中等大小的数据集（例如CIFAR-10和MNIST，每个类大约有5,000个标记的样本）上，这些技术的效果比\gls{unsupervised_pretraining}更好。
-在极小的数据集，例如\gls{alternative_splicing_dataset}，贝叶斯方法要优于基于\gls{unsupervised_pretraining}的方法\citep{Srivastava-master-small}。
+如今，大部分算法已经不使用\gls{unsupervised_pretraining}了，除了在\gls{NLP}领域中单词作为\gls{one_hot}向量的自然表示不能传达相似性信息，并且有非常多的\gls{unlabeled}数据集可用。
+在这种情况下，\gls{pretraining}的优点是可以对一个巨大的\gls{unlabeled}集合（例如用包含数十亿单词的语料库）进行\gls{pretraining}，学习良好的表示（通常是单词，但也可以是句子），然后使用该表示或\gls{fine_tune}它，这种方法适用于训练集样本很少的\gls{supervised}任务。
+这种方法由\cite{CollobertR2008-small}、\cite{Turian+Ratinov+Bengio-2010-small}和\cite{collobert2011natural}开创，至今仍在使用。
+% 526 mid
+
+基于\gls{supervised_learning}的\gls{DL}技术，通过\gls{dropout}或\gls{batch_normalization}来\gls{regularize}，能够在很多任务上达到人类级别的性能，但必须使用极大的\gls{labeled}数据集。
+在中等大小的数据集（例如\ENNAME{CIFAR}-10和\ENNAME{MNIST}，每个类大约有5,000个\gls{labeled}样本）上，这些技术的效果比\gls{unsupervised_pretraining}更好。
+在极小的数据集，例如\gls{alternative_splicing_dataset}，贝叶斯方法要优于基于\gls{unsupervised_pretraining}的方法~\citep{Srivastava-master-small}。
 由于这些原因，\gls{unsupervised_pretraining}已经不如以前流行。
-然而，\gls{unsupervised_pretraining}仍然是深度学习研究历史上的一个重要里程碑，并继续影响当代方法。
-\gls{pretraining}的想法已经推广到\secref{sec:supervised_pretraining}中讨论的\firstgls{supervised_pretraining}，这是\gls{transfer_learning}中非常常用的方法。
-\gls{transfer_learning}中的\gls{supervised_pretraining}流行\citep{Oquab-et-al-CVPR2014,yosinski-nips2014}于在ImageNet数据集上使用\gls{convolutional_network}\gls{pretraining}。
-由于这个原因，实践者们公布了这些网络训练出的参数，就像自然语言任务公布\gls{pretraining}的单词向量一样\citep{collobert2011natural,Mikolov-et-al-ICLR2013}。
+然而，\gls{unsupervised_pretraining}仍然是\gls{DL}研究历史上的一个重要里程碑，并将继续影响当代方法。
+\gls{pretraining}的想法已经推广到\firstgls{supervised_pretraining}，这将在\secref{sec:supervised_pretraining}中讨论，在\gls{transfer_learning}中这是非常常用的方法。
+\gls{transfer_learning}中的\gls{supervised_pretraining}流行~\citep{Oquab-et-al-CVPR2014,yosinski-nips2014}于在\ENNAME{ImageNet}数据集上使用\gls{convolutional_network}\gls{pretraining}。
+由于这个原因，实践者们公布了这些网络训练出的参数，就像自然语言任务公布\gls{pretraining}的单词向量一样~\citep{collobert2011natural,Mikolov-et-al-ICLR2013}。
+% 526 end
 
-% -- 526 --
 
 \section{\glsentrytext{transfer_learning}和\glsentrytext{domain_adaption}}
 \label{sec:transfer_learning_and_domain_adaptation}
-\gls{transfer_learning}和\gls{domain_adaption}指的是利用一个设定（分布$P_1$）中已经学到的内容去改善另一个设定（比如分布$P_2$）中的泛化情况。
-这点概括了上一节提出的想法，在\gls{unsupervised_learning}和\gls{supervised_learning}之间转移表示。
+\gls{transfer_learning}和\gls{domain_adaption}指的是利用一个设定（例如，分布$P_1$）中已经学到的内容去改善另一个设定（比如分布$P_2$）中的\gls{generalization}情况。
+这点概括了上一节提出的想法，在\gls{unsupervised_learning}任务和\gls{supervised_learning}任务之间转移表示。
 
 
 在\firstgls{transfer_learning}中，\gls{learner}必须执行两个或更多个不同的任务，但是我们假设能够解释$P_1$变化的许多因素和学习$P_2$需要抓住的变化相关。
