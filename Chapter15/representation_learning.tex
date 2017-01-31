@@ -298,21 +298,25 @@
 \label{sec:transfer_learning_and_domain_adaptation}
 \gls{transfer_learning}和\gls{domain_adaption}指的是利用一个设定（例如，分布$P_1$）中已经学到的内容去改善另一个设定（比如分布$P_2$）中的\gls{generalization}情况。
 这点概括了上一节提出的想法，在\gls{unsupervised_learning}任务和\gls{supervised_learning}任务之间转移表示。
+%527 head
 
 
 在\firstgls{transfer_learning}中，\gls{learner}必须执行两个或更多个不同的任务，但是我们假设能够解释$P_1$变化的许多因素和学习$P_2$需要抓住的变化相关。
-这通常能够在\gls{supervised_learning}的情况中理解，输入是相同的，但是输出具有不同的性质。
-例如，我们可能在第一种设定中学习了一组视觉类别，比如猫和狗，然后在第二种设定中学习一组不同的视觉类别。
-如果第一种设定（从$P_1$采样）中具有非常多的数据，那么这有助于在$P_2$抽取到的非常少的样本中快速泛化。
-许多视觉类别\emph{共享}一些低级概念，比如边缘，视觉形状，几何变化，照明变化的影响等。
-一般而言，当存在对不同设定或任务有用，且对应多个设定的潜在因素的特征时，\gls{transfer_learning}，\gls{multitask_learning}（\secref{sec:multitask_learning}）和\gls{domain_adaption}可以使用\gls{representation_learning}来实现。
+这通常能够在\gls{supervised_learning}中解释，输入是相同的，但是输出不同的性质。
+例如，我们可能在第一种设定中学习了一组视觉类别，比如猫和狗，然后在第二种设定中学习一组不同的视觉类别，比如蚂蚁和黄蜂。
+如果第一种设定（从$P_1$采样）中具有非常多的数据，那么这有助于在$P_2$抽取到的非常少的样本中快速\gls{generalize}。
+许多视觉类别\emph{共享}一些低级概念，比如边缘、视觉形状、几何变化、光照变化的影响等。
+一般而言，当存在对不同设定或任务有用，且对应多个设定的潜在因素的特征时，\gls{transfer_learning}、\gls{multitask_learning}（\secref{sec:multitask_learning}）和\gls{domain_adaption}可以使用\gls{representation_learning}来实现。
 如\figref{fig:chap7_multi_factor_output}所示，具有共享底层和任务相关上层的学习框架。
-
+% 527 mid
 
 然而，有时不同任务之间共享的不是输入的语义，而是输出的语义。
-例如，语音识别系统需要在输出层产生有效的句子，但是输入附近的较低层可能需要识别相同音素或子音素发音的非常不同的版本（这取决于哪个人正在说话）。
+例如，\gls{SR}系统需要在输出层产生有效的句子，但是输入附近的较低层可能需要识别相同\gls{phoneme}或子\gls{phoneme}发音的非常不同的版本（这取决于说话人）。
 在这样的情况下，共享神经网络的上层（输出附近）和进行任务特定的预处理是有意义的，如\figref{fig:chap15_multi_task_input}所示。
+% 527 mid
 
+
+% 528 head
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -326,72 +330,80 @@
 }
 \label{fig:chap15_multi_task_input}
 \end{figure}
+% 528 head
 
-在\firstgls{domain_adaption}的相关情况下，任务（和最优的输入输出映射）在每个设定之间保持相同，但是\gls{input_distribution}稍有不同。 
-例如，考虑情感分析的任务，包括判断评论是否表达积极或消极情绪。 
-网上的评论来自许多类别。
-在书，视频和音乐等媒体内容上训练的顾客评论情感预测器，被用于分析诸如电视机或智能电话的消费电子产品的评论时，\gls{domain_adaption}情景可能会出现。
-可以想象，存在一个潜在的函数可以判断任何语句是正面的，中性的还是负面的，但是词汇和风格可能会因领域而有差异，使得跨域的泛化训练变得更加困难。
+
+在\firstgls{domain_adaption}的相关情况下，在每个设定之间任务（和最优的输入到输出的映射）都是相同的，但是\gls{input_distribution}稍有不同。 
+例如，考虑情感分析的任务，包括判断一条评论是表达积极的还是消极的情绪。 
+网上的评论有许多类别。
+在书、视频和音乐等媒体内容上训练的顾客评论情感预测器，被用于分析诸如电视机或智能电话的消费电子产品的评论时，\gls{domain_adaption}情景可能会出现。
+可以想象，存在一个潜在的函数可以判断任何语句是正面的、中性的还是负面的，但是词汇和风格可能会因领域而有差异，使得跨域的\gls{generalize}训练变得更加困难。
 简单的\gls{unsupervised_pretraining}（\gls{DAE}）已经能够非常成功地用于\gls{domain_adaption}的情感分析\citep{Glorot+al-ICML-2011}。
+% 527 end 
 
-% -- 527 --
-
+% 528 head
 一个相关的问题是\firstgls{concept_drift}，我们可以将其视为一种\gls{transfer_learning}，因为数据分布随时间而逐渐变化。
 \gls{concept_drift}和\gls{transfer_learning}都可以被视为\gls{multitask_learning}的特定形式。
-短语``\gls{multitask_learning}''通常指\gls{supervised_learning}任务，而\gls{transfer_learning}中更一般的概念也适用于\gls{unsupervised_learning}和\gls{RL}。
-
-在所有这些情况下，目标是利用第一个设定下的数据优势，提取在第二种设定中学习时或直接进行预测时可能有用的信息。
-\gls{representation_learning}的核心思想是相同的表示可能在两种设定中都是有用的。
-两个设定使用相同的表示，使得表示可以受益于两个任务的训练数据。
+``\gls{multitask_learning}''这个术语通常指\gls{supervised_learning}任务，而更广义的\gls{transfer_learning}的概念也适用于\gls{unsupervised_learning}和\gls{RL}。
+% 528 mid
 
 
-如前所述，\gls{unsupervised}\gls{DL}用于\gls{transfer_learning}已经在一些\gls{ML}比赛中取得了成功\citep{UTLC+LISA-2011-small,goodfellow+all-NIPS2011}。
-这些比赛中的某一个实验设定如下。
-首先每个参与者获得一个第一种设定（来自分布$P_1$）的数据集，其中含有一些类别的样本。
-参与者必须用这个来学习一个良好的特征空间（将原始输入映射到某种表示），这样当我们将这个学习到的变换用于来自迁移设定（分布$P_2$）的输入时，\gls{linear_classifier}可以在有标记样本很少的训练集上训练，泛化。
-这个比赛中最引人注目的结果之一是，学习表示的网络架构越深（在第一个设定$P_1$中的数据使用纯无监督的方式学习），在第二个设定（迁移）$P_2$的新类别上学习到的曲线就越好。
-对于深度表示而言，迁移任务只需要较少的标记样本就能明显地渐近泛化性能。
+在所有这些情况下，我们的目标是利用第一个\gls{setting}下的数据，提取那些在第二种\gls{setting}中学习时或直接进行预测时可能有用的信息。
+\gls{representation_learning}的核心思想是相同的表示可能在两种\gls{setting}中都是有用的。
+两个\gls{setting}使用相同的表示，使得表示可以受益于两个任务的训练数据。
+% 528 end
 
-% -- 528 --
+如前所述，\gls{transfer_learning}中\gls{unsupervised}\gls{DL}已经在一些\gls{ML}比赛中取得了成功~\citep{UTLC+LISA-2011-small,goodfellow+all-NIPS2011}。
+这些比赛中的某一个实验配置如下。
+首先每个参与者获得一个第一种\gls{setting}（来自分布$P_1$）的数据集，其中含有一些类别的样本。
+参与者必须用这个来学习一个良好的特征空间（将原始输入映射到某种表示），使得当我们将这个学习到的变换用于来自迁移\gls{setting}（分布$P_2$）的输入时，\gls{linear_classifier}可以在很少\gls{labeled}样本上训练、\gls{generalize}得很好。
+这个比赛中最引人注目的结果之一是，学习表示的网络架构越深（在第一个\gls{setting}$P_1$中的数据使用纯\gls{unsupervised}方式学习），在第二个\gls{setting}（迁移）$P_2$的新类别上学习到的曲线就越好。
+对于深度表示而言，迁移任务只需要较少的\gls{labeled}样本就能获得明显地渐近\gls{generalization}性能。
+% 529 head
+
 
 \gls{transfer_learning}的两种极端形式是\firstgls{one_shot_learning}和\firstgls{zero_shot_learning}，有时也被称为\firstgls{zero_data_learning}。
-只有一个标记样本的迁移任务被称为\gls{one_shot_learning}；没有标记样本的迁移任务被称为\gls{zero_shot_learning}。
+只有一个\gls{labeled}样本的迁移任务被称为\gls{one_shot_learning}；没有\gls{labeled}样本的迁移任务被称为\gls{zero_shot_learning}。
+% 529 mid
+
+因为第一阶段学习出的表示就可以清楚地分离出潜在的类别，所以\gls{one_shot_learning}~\citep{Fei-Fei+al-2006}是可能的。
+在\gls{transfer_learning}阶段，仅需要一个\gls{labeled}样本来推断表示空间中聚集在相同点周围许多可能测试样本的\gls{label}。
+这使得在学习到的表示空间中，对应于不变性的变化因子已经与其他因子完全分离，在区分某些类别的对象时，我们可以学习到哪些因素能够起作用而哪些不会。
+%我们以哪种方式学习到哪些因素具有决定意义。
+% 529 mid
 
 
-因为第一阶段学习出的表示就可以清楚地分离类别，所以\gls{one_shot_learning}\citep{Fei-Fei+al-2006}是可能的。
-在\gls{transfer_learning}阶段，仅需要一个标记样本来推断表示空间中聚集在相同点周围的许多可能的测试样本的标签。
-这使得在学习到的表示空间中，对应于不变性的变化因子已经与其他因子完全分离，在区分某些类别的对象时，我们以哪种方式学习到哪些因素具有决定意义。
+考虑一个\gls{zero_shot_learning}\gls{setting}的例子，\gls{learner}已经读取了大量文本，然后要解决\gls{object_recognition}的问题。
+如果文本足够好地描述了对象，那么即使没有看到某对象的图像，也能识别出该对象的类别。
+例如，已知猫有四条腿和尖尖的耳朵，那么\gls{learner}可以在没有见过猫的情况下猜测该图像中是猫。
+% 529 end
 
-
-考虑一个\gls{zero_shot_learning}设定的例子，\gls{learner}已经读取了大量文本，然后要解决对象识别的问题。
-如果文本足够好地描述了对象，那么即使没有看到某对象的图像，也能识别该对象。
-例如，已知猫有四条腿和尖尖的耳朵，那么\gls{learner}可以在没有见过猫的情况下猜测该图像是猫。
-
-
-只有在训练时使用了额外信息，\gls{zero_data_learning}\citep{Larochelle2008}和\gls{zero_shot_learning}\citep{Palatucci2009,Socher-2013}才是有可能的。
+只有在训练时使用了额外信息，\gls{zero_data_learning}~\citep{Larochelle2008}和\gls{zero_shot_learning}~\citep{Palatucci2009,Socher-2013}才是有可能的。
 我们可以认为\gls{zero_data_learning}场景包含三个随机变量：传统输入$\Vx$，传统输出或目标$\Vy$，以及描述任务的附加随机变量，$T$。
 该模型被训练来估计条件分布$p(\Vy \mid \Vx, T)$，其中$T$是我们希望执行的任务的描述。
 在我们的例子中，读取猫的文本信息然后识别猫，输出是二元变量$y$，$y=1$表示``是''，$y=0$表示``不是''。
 任务变量$T$表示要回答的问题，例如``这个图像中是否有猫？''
 如果训练集包含和$T$在相同空间的\gls{unsupervised}对象样本，我们也许能够推断未知的$T$实例的含义。
-在我们的例子中，没有提前看到猫的图像而去识别猫，拥有一些未标记的文本数据包含句子诸如``猫有四条腿''或``猫有尖耳朵''，对于学习非常有帮助。
+在我们的例子中，没有提前看到猫的图像而去识别猫，拥有一些\gls{unlabeled}文本数据包含句子诸如``猫有四条腿''或``猫有尖耳朵''，对于学习非常有帮助。
+% 530  head
 
-% -- 529 --
 
-\gls{zero_shot_learning}要求$T$被表示为某种泛化的形式。
-例如，$T$不能仅是指示对象类别的\gls{one_hot}。
+\gls{zero_shot_learning}要求$T$被表示为某种\gls{generalization}的形式。
+例如，$T$不能仅是指示对象类别的\gls{one_hot}编码。
 通过使用每个类别词的\gls{word_embeddings}表示，\cite{Socher-2013}提出了对象类别的\gls{distributed_representation}。
+% 530 mid
 
-
-一种类似的现象出现在\gls{machine_translation}中\citep{Klementiev-et-al-COLING2012,Mikolov-et-al-arxiv2013,Gouws-et-al-arxiv2014}：我们已经知道一种语言中的单词，和非语言语料库中学到的词与词之间的关系；另一方面，我们已经翻译了一种语言中的单词与另一种语言中的单词相关的句子。
-即使我们可能没有将语言$X$中的单词$A$翻译成语言$Y$中的单词$B$的标记样本，我们也可以泛化并猜出单词$A$的翻译，这是由于我们已经学习了语言$X$和$Y$的\gls{distributed_representation}，并且通过两种语言相匹配句子组成的训练样本，产生了关联于两个空间的连接（可能是双向的）。
+一种类似的现象出现在\gls{machine_translation}中~\citep{Klementiev-et-al-COLING2012,Mikolov-et-al-arxiv2013,Gouws-et-al-arxiv2014}：我们已经知道一种语言中的单词，还可以学到单一语言语料库中词与词之间的关系；另一方面，我们已经翻译了一种语言中的单词与另一种语言中的单词相关的句子。
+即使我们可能没有将语言$X$中的单词$A$翻译成语言$Y$中的单词$B$的\gls{labeled}样本，我们也可以泛化并猜出单词$A$的翻译，这是由于我们已经学习了语言$X$和$Y$的\gls{distributed_representation}，并且通过两种语言相匹配句子组成的训练样本，产生了关联于两个空间的连接（可能是双向的）。
 如果联合学习三种所有成分（两种表示形式和它们之间的关系），那么这种迁移将会非常成功。
-
+% 530 mid
 
 \gls{zero_shot_learning}是\gls{transfer_learning}的一种特殊形式。
 同样的原理可以解释如何能执行\firstgls{multimodal_learning}，学习两种模态的表示，和一种模态中的观察结果$\Vx$与另一种模态中的观察结果$\Vy$组成的对$(\Vx, \Vy)$之间的关系（通常是一个联合分布）\citep{Srivastava+Salakhutdinov-NIPS2012-small}。
 通过学习所有的三组参数（从$\Vx$到它的表示，从$\Vy$到它的表示，以及两个表示之间的关系），一个表示中的概念被锚定在另一个表示中，反之亦然，从而可以有效地推广到新的对组。
 这个过程如\figref{fig:chap15_maps_between_representations}所示。
+% 530 end
+
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -400,13 +412,13 @@
 \centerline{\includegraphics{Chapter15/figures/maps_between_representations}}
 \fi
 \caption{两个领域$\Vx$和$\Vy$之间的\gls{transfer_learning}能够\gls{zero_shot_learning}。
-标记或未标记样本$\Vx$可以学习表示函数$f_{\Vx}$。
+\gls{labeled}或\gls{unlabeled}样本$\Vx$可以学习表示函数$f_{\Vx}$。
 同样地，样本$\Vy$也可以学习表示函数$f_{\Vy}$。
 上图中$f_{\Vx}$和$f_{\Vy}$旁都有一个向上的箭头，表示作用方向。
 $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中两点的距离，这种度量方式比直接度量$\Vx$空间距离更好。
 同样地，$\Vh_{\Vy}$空间中的相似性度量表示$\Vy$空间中两点的距离。
 这两种相似函数都使用带点的双向箭头表示。
-标记样本（短横水平线）$(\Vx, \Vy)$能够学习表示$f_{\Vx}(\Vx)$和表示$f_{\Vy}(\Vy)$之间的单向或双向映射（实双向箭头）。
+\gls{labeled}样本（短横水平线）$(\Vx, \Vy)$能够学习表示$f_{\Vx}(\Vx)$和表示$f_{\Vy}(\Vy)$之间的单向或双向映射（实双向箭头）。
 \gls{zero_data_learning}可以通过以下方法实现。
 像$\Vx_{\text{test}}$可以和单词$\Vy_{\text{test}}$关联起来，即使该单词没有像。
 因为单词表示$f_{\Vy}(\Vy_{\text{test}})$和像表示$f_{\Vx}(\Vx_{\text{test}})$可以通过表示空间的映射彼此关联。
@@ -441,7 +453,7 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中两点的距离，这�
 
 接下来，让我们看看\gls{semi_supervised_learning}成功的一个简单例子。
 考虑这样的情况，$\RVx$来自一个混合分布，每个$\RVy$值具有一个混合分量，如\figref{fig:chap15_mixture_model}所示。
-如果混合分量很好地分出来了，那么建模$p(\RVx)$可以精确地指出每个分量的方向，每个类一个标记样本的训练集足以精确学习$p(\RVy \mid \RVx)$。
+如果混合分量很好地分出来了，那么建模$p(\RVx)$可以精确地指出每个分量的方向，每个类一个\gls{labeled}样本的训练集足以精确学习$p(\RVy \mid \RVx)$。
 但是更一般地，什么能将$p(\RVy \mid \RVx)$和$p(\RVx)$关联在一起呢？
 
 \begin{figure}[!htb]
@@ -451,7 +463,7 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中两点的距离，这�
 \centerline{\includegraphics{Chapter15/figures/mixture_model_color}}
 \fi
 \caption{混合模型。具有三个混合分量的混合密度示例。混合分量的内在本质是潜在解释因素$y$。
-因为混合分量（例如，图像数据中的自然对象类别）在统计学上是显著的，所以使用无标记的样本无监督建模$p(x)$也能显示解释因素$y$。
+因为混合分量（例如，图像数据中的自然对象类别）在统计学上是显著的，所以使用\gls{unlabeled}样本无监督建模$p(x)$也能显示解释因素$y$。
 }
 \label{fig:chap15_mixture_model}
 \end{figure}
@@ -788,7 +800,7 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 \gls{representation_learning}的大多数策略都会引入一些有助于学习潜在变动因素的线索。
 这些线索可以帮助\gls{learner}将这些观察到的因素与其他因素分开。
 \gls{supervised_learning}提供了非常强的线索：每个观察向量$\Vx$的标签向量$\Vy$通常直接指定了至少一个变化因素。
-更一般地，为了利用丰富的未标记数据，\gls{representation_learning}会使用关于潜在因素的其他不太直接的提示。
+更一般地，为了利用丰富的\gls{unlabeled}数据，\gls{representation_learning}会使用关于潜在因素的其他不太直接的提示。
 这些提示包含一些我们（学习算法的设计者）为了引导\gls{learner}而强加的隐式先验信念。
 诸如\gls{no_free_lunch_theorem}的这些结果表明，正则化策略对于获得良好泛化是很有必要的。
 当不可能找到一个普遍良好的\gls{regularization}策略时，\gls{DL}的一个目标是找到一套相当通用的\gls{regularization}策略，能够适用于各种各样的\glssymbol{AI}任务（类似于人和动物能够解决的任务）。
