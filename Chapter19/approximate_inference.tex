@@ -38,7 +38,7 @@
 	\centerline{\includegraphics[width=0.8\textwidth]{Chapter19/figures/intractable_graphs}}
 \fi
 \caption{\gls{DL}中难以处理的推断问题通常是由于结构化图模型中\gls{latent_variable}的相互作用。
-这些相互作用产生于当\gls{vstructure}的子节点可观察时一个\gls{latent_variable}与另一个\gls{latent_variable}或者更长的激活路径相连。
+这些相互作用产生于一个\gls{latent_variable}与另一个\gls{latent_variable}或者当\gls{vstructure}的子节点可观察时与更长的激活路径相连。
 （左）一个\gls{hidden_unit}存在连接的\firstgls{srbm}~\citep{Osindero+Hinton-2008}。
 由于存在大量\gls{latent_variable}的\gls{clique}，\gls{latent_variable}的直接连接使得后验分布难以处理。
 （中）一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。
@@ -109,7 +109,7 @@
 
 
 因此我们可以将推断问题看做是找一个分布$q$使得$\CalL$最大的过程。
-精确的推断能够通过搜索一组包含分布$p(\Vh\mid\Vv)$的$q$函数族，完美地最大化$\CalL$。
+精确的推断能够在包含分布$p(\Vh\mid\Vv)$的函数族中搜索一个函数，完美地最大化$\CalL$。
 在本章中，我们将会讲到如何通过近似优化寻找分布$q$的方法来推导出不同形式的\gls{approximate_inference}。
 我们可以通过限定分布$q$的形式或者使用并不彻底的优化方法来使得优化的过程更加高效（却更粗略），但是优化的结果是不完美的，因为只能显著地提升$\CalL$而无法彻底地最大化$\CalL$。
 % 625  end
@@ -153,7 +153,7 @@
 
 基于\gls{latent_variable}模型的\gls{SGA}可以被看做是一个\glssymbol{EM}算法的特例，其中\gls{m_step}包括了单次梯度操作。
 \glssymbol{EM}算法的其他变种可以实现多次梯度操作。
-对一些模型族来说，\gls{m_step}甚至可以通过推出理论解直接完成，不同于其他方法，在给定当前$q$的情况下直接求出最优解。
+对一些模型族来说，\gls{m_step}甚至可以通过推出解析解直接完成，不同于其他方法，在给定当前$q$的情况下直接求出最优解。
 % 626 end
 
 
