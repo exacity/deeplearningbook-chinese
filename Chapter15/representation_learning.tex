@@ -393,95 +393,105 @@
 通过使用每个类别词的\gls{word_embeddings}表示，\cite{Socher-2013}提出了对象类别的\gls{distributed_representation}。
 % 530 mid
 
-一种类似的现象出现在\gls{machine_translation}中~\citep{Klementiev-et-al-COLING2012,Mikolov-et-al-arxiv2013,Gouws-et-al-arxiv2014}：我们已经知道一种语言中的单词，还可以学到单一语言语料库中词与词之间的关系；另一方面，我们已经翻译了一种语言中的单词与另一种语言中的单词相关的句子。
-即使我们可能没有将语言$X$中的单词$A$翻译成语言$Y$中的单词$B$的\gls{labeled}样本，我们也可以泛化并猜出单词$A$的翻译，这是由于我们已经学习了语言$X$和$Y$的\gls{distributed_representation}，并且通过两种语言相匹配句子组成的训练样本，产生了关联于两个空间的连接（可能是双向的）。
-如果联合学习三种所有成分（两种表示形式和它们之间的关系），那么这种迁移将会非常成功。
+
+我们还可以在\gls{machine_translation}中发现一种类似的现象~\citep{Klementiev-et-al-COLING2012,Mikolov-et-al-arxiv2013,Gouws-et-al-arxiv2014}：我们已经知道一种语言中的单词，还可以学到单一语言语料库中词与词之间的关系；另一方面，我们已经翻译了一种语言中的单词与另一种语言中的单词相关的句子。
+即使我们可能没有将语言$X$中的单词$A$翻译成语言$Y$中的单词$B$的\gls{labeled}样本，我们也可以\gls{generalized}并猜出单词$A$的翻译，这是由于我们已经学习了语言$X$和$Y$单词的\gls{distributed_representation}，并且通过两种语言句子的匹配对组成的训练样本，产生了关联于两个空间的链接（可能是双向的）。
+如果联合学习三种成分（两种表示形式和它们之间的关系），那么这种迁移将会非常成功。
 % 530 mid
 
 \gls{zero_shot_learning}是\gls{transfer_learning}的一种特殊形式。
-同样的原理可以解释如何能执行\firstgls{multimodal_learning}，学习两种模态的表示，和一种模态中的观察结果$\Vx$与另一种模态中的观察结果$\Vy$组成的对$(\Vx, \Vy)$之间的关系（通常是一个联合分布）\citep{Srivastava+Salakhutdinov-NIPS2012-small}。
-通过学习所有的三组参数（从$\Vx$到它的表示，从$\Vy$到它的表示，以及两个表示之间的关系），一个表示中的概念被锚定在另一个表示中，反之亦然，从而可以有效地推广到新的对组。
+同样的原理可以解释如何能执行\firstgls{multimodal_learning}，学习两种\gls{modality}的表示，和一种\gls{modality}中的观察结果$\Vx$与另一种\gls{modality}中的观察结果$\Vy$组成的对$(\Vx, \Vy)$之间的关系（通常是一个联合分布）\citep{Srivastava+Salakhutdinov-NIPS2012-small}。
+通过学习所有的三组参数（从$\Vx$到它的表示、从$\Vy$到它的表示，以及两个表示之间的关系），一个表示中的概念被锚定在另一个表示中，反之亦然，从而可以有效地推广到新的对组。
 这个过程如\figref{fig:chap15_maps_between_representations}所示。
 % 530 end
 
-
+% page 531
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter15/figures/maps_between_representations}}
 \fi
-\caption{两个领域$\Vx$和$\Vy$之间的\gls{transfer_learning}能够\gls{zero_shot_learning}。
+\caption{两个域$\Vx$和$\Vy$之间的\gls{transfer_learning}能够进行\gls{zero_shot_learning}。
 \gls{labeled}或\gls{unlabeled}样本$\Vx$可以学习表示函数$f_{\Vx}$。
 同样地，样本$\Vy$也可以学习表示函数$f_{\Vy}$。
-上图中$f_{\Vx}$和$f_{\Vy}$旁都有一个向上的箭头，表示作用方向。
-$\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中两点的距离，这种度量方式比直接度量$\Vx$空间距离更好。
-同样地，$\Vh_{\Vy}$空间中的相似性度量表示$\Vy$空间中两点的距离。
+<bad>上图中$f_{\Vx}$和$f_{\Vy}$旁都有一个向上的箭头，表示作用方向。
+并且箭头的类型表示使用了哪一种函数。
+$\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的距离，这种度量方式比直接度量$\Vx$空间的距离更好。
+同样地，$\Vh_{\Vy}$空间中的相似性度量表示$\Vy$空间中任意点对之间的距离。
 这两种相似函数都使用带点的双向箭头表示。
-\gls{labeled}样本（短横水平线）$(\Vx, \Vy)$能够学习表示$f_{\Vx}(\Vx)$和表示$f_{\Vy}(\Vy)$之间的单向或双向映射（实双向箭头）。
+\gls{labeled}样本（短横水平线）$(\Vx, \Vy)$能够学习表示$f_{\Vx}(\Vx)$和表示$f_{\Vy}(\Vy)$之间的单向或双向映射（实双向箭头），以及这些表示之间如何锚定。
 \gls{zero_data_learning}可以通过以下方法实现。
-像$\Vx_{\text{test}}$可以和单词$\Vy_{\text{test}}$关联起来，即使该单词没有像。
-因为单词表示$f_{\Vy}(\Vy_{\text{test}})$和像表示$f_{\Vx}(\Vx_{\text{test}})$可以通过表示空间的映射彼此关联。
-尽管像和单词没有匹配在一起，但是它们的特征向量$f_{\Vx}(\Vx_{\text{test}})$和$f_{\Vy}(\Vy_{\text{test}})$互相关联。
-上图受启发自Hrant Khachatrian的建议。
+像$\Vx_{\text{test}}$可以和单词$\Vy_{\text{test}}$关联起来，即使该单词没有像，仅仅是因为单词表示$f_{\Vy}(\Vy_{\text{test}})$和像表示$f_{\Vx}(\Vx_{\text{test}})$可以通过表示空间的映射彼此关联。
+这种方法有效的原因是，尽管像和单词没有匹配成队，但是它们各自的特征向量$f_{\Vx}(\Vx_{\text{test}})$和$f_{\Vy}(\Vy_{\text{test}})$互相关联。
+上图受启发自\ENNAME{Hrant Khachatrian}的建议。
 }
 \label{fig:chap15_maps_between_representations}
 \end{figure}
+% page 531
 
-% -- 530 --
 
 \section{\glsentrytext{semi_supervised}解释因果关系}
 \label{sec:semi_supervised_disentangling_of_causal_factors}
+% 532 head
+
 \gls{representation_learning}的一个重要问题是``什么原因能够使一个表示比另一个表示更好？''
 一种假设是，理想表示中的特征对应到观测数据的根本成因，特征空间中不同的特征或方向对应着不同的原因，从而表示能够区分这些原因。
 这个假设激励我们去寻找表示$p(\Vx)$的更好方法。
 如果$\Vy$是$\Vx$的重要成因之一，那么这种表示也可能是计算$p(\Vy \mid \Vx)$的一种良好表示。
-至少从20世纪90年代以来，这个想法已经指导了大量的\gls{DL}研究工作\citep{Becker92,hinton1999unsupervised}。
-关于\gls{semi_supervised_learning}可以超过纯\gls{supervised_learning}的其他论点，请读者参考\cite{Chapelle-2006}的\secref{sec:historical_trends_in_deep_learning}。
+从至少20世纪90年代以来，这个想法已经指导了大量的\gls{DL}研究工作~\citep{Becker92,hinton1999unsupervised}。
+关于\gls{semi_supervised_learning}可以超过纯\gls{supervised_learning}的其他论点，请读者参考\cite{Chapelle-2006}的第1.2节。
+% 532 head
 
-
-在\gls{representation_learning}的其他方法中，我们大多关注易于建模的表示——例如，数据稀疏或是各项独立的情况。
-能够清楚地分离出潜在因素的表示可能并不易于建模。
-然而，该假设的激励\gls{semi_supervised_learning}使用无监督\gls{representation_learning}的一个更深层原因是，对于很多人工智能任务而言，有两个相随的特点：一旦我们能够获得观察结果基本成因的解释，那么将会很容易分离出个体属性。
-具体来说，如果表示向量$\Vh$表示观察值$\Vx$的很多根本因素，输出向量$\Vy$是最为重要的原因之一，那么从$\Vh$预测$\Vy$会很容易。
-
+在\gls{representation_learning}的其他方法中，我们大多关注易于建模的表示——例如，数据稀疏或是各项之间相互独立的情况。
+能够清楚地分离出潜在因素的表示可能并不一定易于建模。
+<bad>然而，该假设的激励\gls{semi_supervised_learning}使用\gls{unsupervised}\gls{representation_learning}的一个更深层原因是，对于很多\gls{AI}任务而言，有两个相随的特点：一旦我们能够获得观察结果基本成因的解释，那么将会很容易分离出个体属性。
+具体来说，如果表示向量$\Vh$表示观察值$\Vx$的很多根本因素，并且输出向量$\Vy$是最为重要的原因之一，那么从$\Vh$预测$\Vy$会很容易。
+% 532 mid 
 
 首先，让我们看看$p(\RVx)$的\gls{unsupervised_learning}无助于学习$p(\RVy\mid\RVx)$时，\gls{semi_supervised_learning}为何失败。
-考虑一种情况，$p(\RVx)$是均匀分布的，我们希望学习$f(\Vx) = \SetE[\RVy \mid \Vx]$。
-显然，仅仅观察训练集的值$\Vx$不能给我们关于$p(\RVy \mid \RVx)$的任何信息。
-
+例如，考虑一种情况，$p(\RVx)$是均匀分布的，我们希望学习$f(\Vx) = \SetE[\RVy \mid \Vx]$。
+显然，仅仅观察\gls{training_set}的值$\Vx$不能给我们关于$p(\RVy \mid \RVx)$的任何信息。
+% 532 mid 
 
 接下来，让我们看看\gls{semi_supervised_learning}成功的一个简单例子。
 考虑这样的情况，$\RVx$来自一个混合分布，每个$\RVy$值具有一个混合分量，如\figref{fig:chap15_mixture_model}所示。
-如果混合分量很好地分出来了，那么建模$p(\RVx)$可以精确地指出每个分量的方向，每个类一个\gls{labeled}样本的训练集足以精确学习$p(\RVy \mid \RVx)$。
+如果混合分量很好地分出来了，那么建模$p(\RVx)$可以精确地指出每个分量的位置，每个类一个\gls{labeled}样本的\gls{training_set}足以精确学习$p(\RVy \mid \RVx)$。
 但是更一般地，什么能将$p(\RVy \mid \RVx)$和$p(\RVx)$关联在一起呢？
+% 532 mid-end
 
+
+% 533 head
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centerline{\includegraphics{Chapter15/figures/mixture_model_color}}
 \fi
-\caption{混合模型。具有三个混合分量的混合密度示例。混合分量的内在本质是潜在解释因素$y$。
-因为混合分量（例如，图像数据中的自然对象类别）在统计学上是显著的，所以使用\gls{unlabeled}样本无监督建模$p(x)$也能显示解释因素$y$。
+\caption{混合模型。具有三个混合分量的混合密度示例。
+混合分量的内在本质是潜在\gls{explanatory_factor}$y$。
+因为混合分量（例如，图像数据中的自然对象类别）在统计学上是显著的，所以仅仅使用\gls{unlabeled}样本\gls{unsupervised}建模$p(x)$也能揭示\gls{explanatory_factor}$y$。
 }
 \label{fig:chap15_mixture_model}
 \end{figure}
+% 533 head
 
-如果$\RVy$与$\RVx$的成因之一非常相关，那么$p(\RVx)$和$p(\RVy \mid \RVx)$也会紧密关联，试图找到变化根本因素的无监督\gls{representation_learning}可能会有助于\gls{semi_supervised_learning}。
 
-% -- 532 --
+如果$\RVy$与$\RVx$的成因之一非常相关，那么$p(\RVx)$和$p(\RVy \mid \RVx)$也会紧密关联，试图找到变化\gls{underlying}因素的\gls{unsupervised}\gls{representation_learning}可能会有助于\gls{semi_supervised_learning}。
+% -- 532 end
 
+% 533 mid
 假设$\RVy$是$\RVx$的成因之一，让$\RVh$代表所有这些成因。
-真实的生成过程可以被认为是根据这个\gls{directed_graphical_model}结构化出来的，其中$\RVh$是$\RVx$的因素：
+真实的生成过程可以被认为是根据这个\gls{directed_graphical_model}结构化出来的，其中$\RVh$是$\RVx$的父节点：
 \begin{equation}
 	p(\RVh, \RVx) = p(\RVx \mid \RVh) p(\RVh).
 \end{equation}
+% 533 mid
 因此，数据的边缘概率是
 \begin{equation}
-	p(\Vx) = \SetE_{\RVh} p(\Vx \mid \Vh),
+	p(\Vx) = \SetE_{\RVh} p(\Vx \mid \Vh).
 \end{equation}
-从这个直观的观察，我们得出结论，$\RVx$最好可能的模型（从广义的观点）是会表示上述``真实''结构的，其中$\Vh$作为\gls{latent_variable}解释$\Vx$代表的观察变动。
+从这个直观的观察，我们得出结论，$\RVx$最好可能的模型（从广义的观点）是会表示上述``真实''结构的，其中$\Vh$作为\gls{latent_variable}解释$\Vx$中可观察的变化。
 上文讨论的``理想''的\gls{representation_learning}应该能够反映出这些\gls{latent}因子。
 如果$\RVy$是其中之一（或是紧密关联于其中之一），那么将很容易从这种表示中预测$\RVy$。
 我们会看到给定$\RVx$下$\RVy$的条件分布通过\gls{bayes_rule}关联到上式中的分量：
@@ -490,13 +500,13 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中两点的距离，这�
 \end{equation}
 因此边缘概率$p(\RVx)$和条件概率$p(\RVy \mid \RVx)$密切相关，前者的结构信息应该有助于学习后者。
 因此，在这些假设情况下，\gls{semi_supervised_learning}应该能提高性能。
+% 533 end
 
+关于这个事实的一个重要的研究问题是，大多数观察是由极其大量的\gls{underlying}成因形成的。
+假设$\RVy = \RSh_i$，但是\gls{unsupervised}\gls{learner}并不知道是哪一个$\RSh_i$。
+对于一个\gls{unsupervised}\gls{learner}暴力求解就是学习一种表示，这种表示能够捕获\emph{所有}合理的重要生成因子$\RSh_j$，并将它们彼此区分开来，因此不管$\RSh_i$是否关联于$\RVy$，从$\RVh$预测$\RVy$都是容易的。
+% -- 534 head
 
-一个重要的研究问题是，大多数观察是由极其大量的潜在成因形成的。
-假设$\RVy = \RSh_i$，但是\gls{unsupervised_learning}并不知道哪一个是$\RSh_i$。
-暴力求解\gls{unsupervised_learning}是学习一种表示，捕获\emph{所有}合理的重要生成因子$\RSh_j$，并将它们彼此区分开来，因此不管$\RSh_i$是否关联于$\RVy$，从$\RVh$预测$\RVy$都是容易的。
-
-% -- 533 --
 
 在实践中，暴力求解是不可行的，因为不可能捕获影响观察的所有或大多数变化。
 例如，在视觉场景中，表示是否应该对背景中的所有最小对象进行编码？
