@@ -29,6 +29,8 @@
 % 623 end
 
 
+
+% 624 head
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -46,6 +48,8 @@
 举个例子，\gls{PPCA}的图结构如右图所示，然而由于其条件分布的特殊性质（带有相互正交基向量的线性高斯条件分布）依然能够进行简单的推断。}
 \label{fig:intractable_graphs}
 \end{figure}
+% 624 head
+
 
 
 \section{推断是一个优化问题}
@@ -64,7 +68,7 @@
 这个下界叫做\firstall{ELBO}。
 这个下界的另一个常用名字是负\firstgls{variational_free_energy}。
 具体地，这个\gls{ELBO}是这样定义的：
-
+% 625 head 
 \begin{align}
 \CalL(\Vv,{\Vtheta},q) = \log p(\Vv;{\Vtheta}) - D_{\text{KL}}(q(\Vh\mid\Vv) \Vert p(\Vh\mid\Vv;{\Vtheta})).
 \end{align}
@@ -78,7 +82,7 @@
 % 625
 
 
-令人吃惊的是，对某些分布$q$，$\CalL$可以被化得更简单。
+令人吃惊的是，对某些分布$q$，计算$\CalL$可以变得更简单。
 通过简单的代数运算我们可以把$\CalL$重写成一个更加简单的形式：
 
 \begin{align}
