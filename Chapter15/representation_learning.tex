@@ -510,19 +510,22 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 
 在实践中，暴力求解是不可行的，因为不可能捕获影响观察的所有或大多数变化。
 例如，在视觉场景中，表示是否应该对背景中的所有最小对象进行编码？
-一个有据可查的心理学现象是，人们不会察觉到环境中和他们所在进行的任务并不紧紧相关的变化——具体例子可参考\cite{simons1998failure}。
+根据一个有据可查的心理学现象，人们不会察觉到环境中和他们所在进行的任务并不立刻相关的变化——具体例子可参考\cite{simons1998failure}。
 \gls{semi_supervised_learning}的一个重要研究前沿是确定每种情况下要编码的对象。
-目前，处理大量潜在原因的两个主要策略是，同时使用\gls{unsupervised_learning}和\gls{supervised_learning}，使模型捕获最相关的变动因素，或是使用纯\gls{unsupervised_learning}学习更大规模的表示。
+目前，处理大量\gls{underlying}原因的两个主要策略是，同时使用\gls{unsupervised_learning}和\gls{supervised_learning}信号，从而使得模型捕获最相关的变动因素，或是使用纯\gls{unsupervised_learning}学习更大规模的表示。
+% 534 mid
 
-
-\gls{unsupervised_learning}的一个新兴策略是修改确定哪些潜在因素最为关键的定义。
-之前，\gls{AE}和\gls{generative_model}被训练来优化类似于\gls{mean_squared_error}的固定标准。
+<bad>\gls{unsupervised_learning}的一个新兴策略是修改确定哪些\gls{underlying}因素最为关键的定义。
+之前，\gls{AE}和\gls{generative_model}被训练来优化一个类似于\gls{mean_squared_error}的固定标准。
 这些固定标准确定了哪些因素是突出的。
-例如，图像像素的\gls{mean_squared_error}隐式地指定，一个潜在因素只有在其显著地改变大量像素的亮度时，才是重要影响因素。
+例如，图像像素的\gls{mean_squared_error}隐式地指定，一个\gls{underlying}因素只有在其显著地改变大量像素的亮度时，才是重要影响因素。
 如果我们希望解决的问题涉及到小对象的交互，那么这将有可能遇到问题。
 如\figref{fig:chap15_pingpong}所示，在机器人任务中，\gls{AE}未能学习到编码小乒乓球。
 同样是这个机器人，它可以成功地与更大的对象进行交互（例如棒球，\gls{mean_squared_error}在这种情况下很突出）。
+% 534 mid
 
+
+% 535 head
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -540,22 +543,24 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 }
 \label{fig:chap15_pingpong}
 \end{figure}
+% 535 head
 
+% 534 end
 还有一些其他的突出性的定义。
 例如，如果一组像素具有高度可识别的模式，那么即使该模式不涉及到极端的亮度或暗度，该模式还是会被认为非常突出。
-实现这样一种定义突出的方法是使用最近开发的\firstgls{generative_adversarial_networks}\citep{Goodfellow-et-al-NIPS2014-small}。
+实现这样一种定义``突出''的方法是使用最近提出的\firstgls{generative_adversarial_networks}~\citep{Goodfellow-et-al-NIPS2014-small}。
 在这种方法中，\gls{generative_model}被训练来愚弄\gls{feedforward_classifier}。
-\gls{feedforward_classifier}尝试将来自生成模型的所有样本识别为假的，并将来自训练集合的所有样本识别为真的。
+\gls{feedforward_classifier}尝试将来自\gls{generative_model}的所有样本识别为假的，并将来自\gls{training_set}的所有样本识别为真的。
 在这个框架中，\gls{feedforward_network}能够识别出的任何结构化模式都是非常突出的。
-\gls{generative_adversarial_networks}会在第20.10.4节中更详细地介绍。
-就现在的讨论而言，知道它能学习出什么是突出就可以了。
-\cite{lotter2015unsupervised}表明，生成人类头部头像的模型在训练时使用\gls{mean_squared_error}往往会忽视耳朵，但是对抗式框架学习能够成功地生成耳朵。
-因为耳朵与周围的皮肤相比不是非常明亮或黑暗，所以根据\gls{mean_squared_error}它们不是特别突出，但是它们高度可识别的形状和一致的位置意味着前向网络能够轻易地学习出如何检测它们，从而使得它们在生成式对抗框架下是高度突出的。
-如\figref{fig:chap15_manface}所示。
+\gls{generative_adversarial_networks}会在\setref{sec:generative_adversarial_networks}中更详细地介绍。
+为了叙述方便，知道它能\emph{学习}出如何决定什么是突出就可以了。
+\cite{lotter2015unsupervised}表明，生成人类头部头像的模型在使用\gls{mean_squared_error}训练时往往会忽视耳朵，但是\gls{adversarial}式框架学习能够成功地生成耳朵。
+因为耳朵与周围的皮肤相比不是非常明亮或黑暗，所以根据\gls{mean_squared_error}损失它们不是特别突出，但是它们高度可识别的形状和一致的位置意味着\gls{feedforward_network}能够轻易地学习出如何检测它们，从而使得它们在\gls{generative_adversarial_framework}下是高度突出的。
+\figref{fig:chap15_manface}给了一些样例图片。
 \gls{generative_adversarial_networks}只是确定应该表示哪些因素的一小步。
-我们期望未来的研究能够发现更好的方式来确定表示哪些因素，并且根据任务来发展表示不同因素的机制。
+我们期望未来的研究能够发现更好的方式来确定表示哪些因素，并且根据任务来开发表示不同因素的机制。
+% -- 535 mid
 
-% -- 534 --
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -583,15 +588,18 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 \label{fig:chap15_manface}
 \end{figure}
 
-正如\cite{Janzing-et-al-ICML2012}指出，学习潜在因素的好处是，如果真实的生成过程中$\RVx$是结果，$\RVy$是原因，那么建模$p(\RVx \mid \RVy)$对于$p(\RVy)$的变化是鲁棒的。
+% 535 head
+正如\cite{Janzing-et-al-ICML2012}指出，学习\gls{underlying}因素的好处是，如果真实的生成过程中$\RVx$是结果，$\RVy$是原因，那么建模$p(\RVx \mid \RVy)$对于$p(\RVy)$的变化是鲁棒的。
 如果因果关系被逆转，这是不对的，因为根据\gls{bayes_rule}，$p(\RVx \mid \RVy)$将会对$p(\RVy)$的变化十分敏感。
-很多时候，我们考虑不同领域（例如时间不稳定性或任务性质的变化）上分布的变化时，\emph{因果机制是保持不变的}（``宇宙定律不变''），而潜在因素的边缘分布是会变化的。
-因此，通过学习试图恢复成因向量$\RVh$和$p(\RVx \mid \RVh)$的\gls{generative_model}，可以期望最后的模型对所有种类的变化有更好的泛化和鲁棒性。
+很多时候，我们考虑分布的变化（由于不同领域、时间不稳定性或任务性质的变化）时，\emph{因果机制是保持不变的}（``宇宙定律不变''），而\gls{underlying}因素的边缘分布是会变化的。
+因此，通过学习试图恢复成因向量$\RVh$和$p(\RVx \mid \RVh)$的\gls{generative_model}，我们可以期望最后的模型对所有种类的变化有更好的\gls{generalization}和鲁棒性。
+% 536 mid
 
-% -- 535 --
 
 \section{\glsentrytext{distributed_representation}}
 \label{sec:distributed_representation}
+% 536 end
+
 \gls{distributed_representation}的概念——由很多因素组合而成的表示，彼此可以分开设置——是\gls{representation_learning}最重要的工具之一。
 \gls{distributed_representation}非常强大，因为他们能用具有$k$个值的$n$个特征去描述$k^n$个不同的概念。
 正如我们在本书中看到的，具有多个\gls{hidden_unit}的\gls{NN}和具有多个\gls{latent_variable}的概率模型都利用了\gls{distributed_representation}的策略。
