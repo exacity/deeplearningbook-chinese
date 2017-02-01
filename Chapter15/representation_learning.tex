@@ -395,7 +395,7 @@
 
 
 我们还可以在\gls{machine_translation}中发现一种类似的现象~\citep{Klementiev-et-al-COLING2012,Mikolov-et-al-arxiv2013,Gouws-et-al-arxiv2014}：我们已经知道一种语言中的单词，还可以学到单一语言语料库中词与词之间的关系；另一方面，我们已经翻译了一种语言中的单词与另一种语言中的单词相关的句子。
-即使我们可能没有将语言$X$中的单词$A$翻译成语言$Y$中的单词$B$的\gls{labeled}样本，我们也可以\gls{generalized}并猜出单词$A$的翻译，这是由于我们已经学习了语言$X$和$Y$单词的\gls{distributed_representation}，并且通过两种语言句子的匹配对组成的训练样本，产生了关联于两个空间的链接（可能是双向的）。
+即使我们可能没有将语言$X$中的单词$A$翻译成语言$Y$中的单词$B$的\gls{labeled}样本，我们也可以\gls{generalize}并猜出单词$A$的翻译，这是由于我们已经学习了语言$X$和$Y$单词的\gls{distributed_representation}，并且通过两种语言句子的匹配对组成的训练样本，产生了关联于两个空间的链接（可能是双向的）。
 如果联合学习三种成分（两种表示形式和它们之间的关系），那么这种迁移将会非常成功。
 % 530 mid
 
@@ -552,7 +552,7 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 在这种方法中，\gls{generative_model}被训练来愚弄\gls{feedforward_classifier}。
 \gls{feedforward_classifier}尝试将来自\gls{generative_model}的所有样本识别为假的，并将来自\gls{training_set}的所有样本识别为真的。
 在这个框架中，\gls{feedforward_network}能够识别出的任何结构化模式都是非常突出的。
-\gls{generative_adversarial_networks}会在\setref{sec:generative_adversarial_networks}中更详细地介绍。
+\gls{generative_adversarial_networks}会在\secref{sec:generative_adversarial_networks}中更详细地介绍。
 为了叙述方便，知道它能\emph{学习}出如何决定什么是突出就可以了。
 \cite{lotter2015unsupervised}表明，生成人类头部头像的模型在使用\gls{mean_squared_error}训练时往往会忽视耳朵，但是\gls{adversarial}式框架学习能够成功地生成耳朵。
 因为耳朵与周围的皮肤相比不是非常明亮或黑暗，所以根据\gls{mean_squared_error}损失它们不是特别突出，但是它们高度可识别的形状和一致的位置意味着\gls{feedforward_network}能够轻易地学习出如何检测它们，从而使得它们在\gls{generative_adversarial_framework}下是高度突出的。
@@ -600,22 +600,24 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 \label{sec:distributed_representation}
 % 536 end
 
-\gls{distributed_representation}的概念——由很多因素组合而成的表示，彼此可以分开设置——是\gls{representation_learning}最重要的工具之一。
+\gls{distributed_representation}的概念——由很多元素组合的表示，这些元素之间可以设置成可分离的——是\gls{representation_learning}最重要的工具之一。
 \gls{distributed_representation}非常强大，因为他们能用具有$k$个值的$n$个特征去描述$k^n$个不同的概念。
 正如我们在本书中看到的，具有多个\gls{hidden_unit}的\gls{NN}和具有多个\gls{latent_variable}的概率模型都利用了\gls{distributed_representation}的策略。
 我们现在再介绍一个观察结果。
-许多\gls{DL}算法基于的假设是，\gls{hidden_unit}能够学习出解释数据的潜在因果因素，见\secref{sec:semi_supervised_disentangling_of_causal_factors}中的讨论。
-这种方法在\gls{distributed_representation}上是自然的，因为表示空间中的每个方向都对应着不同底层配置变量的值。
+许多\gls{DL}算法基于的假设是，\gls{hidden_unit}能够学习表示出解释数据的\gls{underlying}因果因素，就像\secref{sec:semi_supervised_disentangling_of_causal_factors}中讨论的一样。
+这种方法在\gls{distributed_representation}上是自然的，因为表示空间中的每个方向都对应着一个不同的\gls{underlying}配置变量的值。
+%  537 head
 
-% -- 536 --
 
 $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$种配置，每一种都对应输入空间中的一个不同区域，如\figref{fig:chap15_distributed}所示。
-这可以与\emph{符号表示}相比较，其中输入关联到单一符号或类别。
-如果字典中有$n$个符号，那么可以想象有$n$个特征监测器，分别监测相关类别的存在。
+这可以与\emph{\gls{symbolic_representation}}相比较，其中输入关联到单一符号或类别。
+如果字典中有$n$个符号，那么可以想象有$n$个特征监测器，每个特征探测器监测相关类别的存在。
 在这种情况下，只有表示空间中$n$个不同配置才有可能在输入空间中刻画$n$个不同的区域，如\figref{fig:chap15_nondistributed}所示。
-这样的符号表示也被称为\gls{one_hot}表示，因为它可以表示成各位排斥的$n$维二元向量（其中只有一位是激活的）。
-符号表示是更广泛的非\gls{distributed_representation}中的一个具体示例，可以包含很多条目，但是每个条目没有显著意义的单独控制作用。
+这样的\gls{symbolic_representation}也被称为\gls{one_hot}表示，因为它可以表示成各位排斥的$n$维二元向量（其中只有一位是激活的）。
+\gls{symbolic_representation}是更广泛的\gls{nondistributed_representation}类中的一个具体示例，可以包含很多条目，但是每个条目没有显著意义的单独控制作用。
+% 537 mid
 
+% 538 1 page
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -624,25 +626,27 @@ $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$�
 \fi
 \caption{图示基于\gls{distributed_representation}的学习算法如何将输入空间分割成多个区域。
 这个例子具有二元变量$h_1$，$h_2$，$h_3$。
-每个特征定义为学习到的线性变换的输出阀值。
+每个特征通过为学习到的线性变换设定输出阀值而定义。
 每个特征将$\SetR^2$分成两个半平面。
-让$h_i^+$表示输入点$h_i=1$的集合；$h_i^-$表示输入点$h_i=0$的集合。
+令$h_i^+$表示输入点$h_i=1$的集合；$h_i^-$表示输入点$h_i=0$的集合。
 在这个图示中，每条线代表着一个$h_i$的决策边界，对应的箭头指向边界的$h_i^+$区域。
-整个表示在这些半平面的每个重合区域都指定一个唯一值。
-例如，表示$[1,1,1]^\top$对应着区域$h_1^+ \cap h_2^+ \cap h_3^+$。
+整个表示在这些半平面的每个相交区域都指定一个唯一值。
+例如，表示值为$[1,1,1]^\top$对应着区域$h_1^+ \cap h_2^+ \cap h_3^+$。
 可以将以上表示和\figref{fig:chap15_nondistributed}中的\gls{nondistributed_representation}进行比较。
-在输入维度是$d$的一般情况下，\gls{distributed_representation}通过半空间（而不是半平面）分割$\SetR^d$。
-具有$n$个特征的\gls{distributed_representation}分配唯一码给$O(n^d)$个不同区域，而具有$n$个样本的\gls{nearest_neighbor}算法只能分配唯一码给$n$个不同区域。
+在输入维度是$d$的一般情况下，\gls{distributed_representation}通过半空间（而不是半平面）的交叉分割$\SetR^d$。
+具有$n$个特征的\gls{distributed_representation}给$O(n^d)$个不同区域分配唯一的编码，而具有$n$个样本的\gls{nearest_neighbor}算法只能给$n$个不同区域分配唯一的编码。
 因此，\gls{distributed_representation}能够比\gls{nondistributed_representation}多分配指数级的区域。
-注意并非所有的$\Vh$值都是可取的（例如，以上例子没有$\Vh=\mathbf{0}$），在分布式表示上的\gls{linear_classifier}不能向每个相邻区域分配不同的类别标识；
+注意并非所有的$\Vh$值都是可取的（这个例子中没有$\Vh=\mathbf{0}$），在\gls{distributed_representation}上的\gls{linear_classifier}不能向每个相邻区域分配不同的类别标识；
 甚至深度线性阀值网络的\glssymbol{VC}维只有$O(w\log w)$（其中$w$是权重数目）\citep{sontag1998vc}。
 强表示层和弱分类器层的组合是一个强\gls{regularizer}。
-试图学习``人''和``非人''概念的分类器不需要分配不同的类别给``戴眼镜的女人''和``没有戴眼镜的男人''。
+试图学习``人''和``非人''概念的分类器不需要给表示为``戴眼镜的女人''和``没有戴眼镜的男人''的输入分配不同的类别。
 容量限制鼓励每个分类器关注少数几个$h_i$，鼓励$\Vh$以线性可分的方式学习表示这些类别。
 }
 \label{fig:chap15_distributed}
 \end{figure}
+% 538 1 page
 
+% 539 head
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -650,64 +654,69 @@ $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$�
 \centerline{\includegraphics{Chapter15/figures/non_distributed}}
 \fi
 \caption{图示\gls{nearest_neighbor}算法如何将输入空间分成不同区域。
-\gls{nearest_neighbor}算法是一个基于非分布表示的学习算法的示例。
-不同的非分布式算法可以具有不同的几何形状，但是它们通常将输入空间分成区域，\emph{每个区域具有不同的参数}。
-非分布式方法的优点是，给定足够的参数，它能够拟合一个训练集，而不需要复杂的优化算法。
+\gls{nearest_neighbor}算法是一个基于\gls{nondistributed_representation}的学习算法的示例。
+不同的\gls{nondistributed}算法可以具有不同的几何形状，但是它们通常将输入空间分成区域，\emph{每个区域具有不同的参数}。
+\gls{nondistributed}方法的优点是，给定足够的参数，它能够拟合一个\gls{training_set}，而不需要复杂的优化算法。
 因为它直接为每个区域\emph{独立地}设置不同的参数。
-缺点是，非\gls{distributed_representation}的模型需要基于平滑先验的假设来泛化，因此学习波峰波谷多于样本的复杂函数时，该方法是不可行的。
-对比\gls{distributed_representation}\figref{fig:chap15_distributed}。
+缺点是，\gls{nondistributed_representation}的模型只能通过平滑先验来局部地\gls{generalize}，因此学习波峰波谷多于样本的复杂函数时，该方法是不可行的。
+和\gls{distributed_representation}对比，可以参照\figref{fig:chap15_distributed}。
 }
 \label{fig:chap15_nondistributed}
 \end{figure}
+% 539 head
 
-以下是基于非\gls{distributed_representation}的学习算法的示例：
+
+% 537 mid
+以下是基于\gls{nondistributed_representation}的学习算法的示例：
 \begin{itemize}
 	\item 聚类算法，包含$k$-均值算法：每个输入点恰好分配到一个类别。
 
-	\item $k$-最近邻算法：给定一个输入，一个或几个模板或原型样本与之关联。
-	在$k > 1$的情况下，多个值被用来描述每个输入，但是它们不能彼此分开控制，因此这不能算真正的\gls{distributed_representation}。
+	\item $k$-\gls{nearest_neighbor}算法：给定一个输入，一个或几个模板或原型样本与之关联。
+	在$k >  1$ 的情况下，每个输入都使用多个值来描述，但是它们不能彼此分开控制，因此这不能算真正的\gls{distributed_representation}。
 
-	\item 决策树：给定输入时，只有叶节点（和从根到叶节点的路径上的点）是被激活的。
+	\item \gls{decision_tree}：给定输入时，只有一个叶节点（和从根到该叶节点路径上的点）是被激活的。
 
-	\item 高斯混合和专家混合：模板（聚类中心）或专家关联一个激活的\emph{程度}。
-	和$k$-最近邻算法一样，每个输入用多个值表示，但是这些值不能轻易地彼此分开控制。
+	\item \gls{gauss_mixture}和\gls{mixture_of_experts}：模板（聚类中心）或专家关联一个激活的\emph{程度}。
+	和$k$-\gls{nearest_neighbor}算法一样，每个输入用多个值表示，但是这些值不能轻易地彼此分开控制。
 
-	\item 具有高斯核（或其他相似局部核）的\gls{kernel_machines}：尽管每个``\gls{support_vectors}''或模板样本的激活程度是连续值，但仍然会出现和高斯混合相同的问题。
+	\item 具有\gls{gaussian_kernel} （或其他类似的\gls{local_kernel}）的\gls{kernel_machines}： 尽管每个``\gls{support_vectors}''或模板样本的激活程度是连续值，但仍然会出现和\gls{gauss_mixture}相同的问题。
+% 537 end
 
 	\item 基于\gls{n_gram}的语言或翻译模型：根据后缀的树结构划分上下文集合（符号序列）。
-	例如，叶节点可能对应于最后两个单词$w_1$和$w_2$。
+	例如，一个叶节点可能对应于最后两个单词$w_1$和$w_2$。
 	树上的每个叶节点分别估计单独的参数（有些共享也是可能的）。
 \end{itemize}
-
-% -- 537 --
-
-对于这些非分布式算法中的部分而言，有些输出并非是恒定的，而是在相邻区域之间内插。
-参数（或样本）的数量和可定义区域的数量之间保持线性关系。
+% -- 539 mid  
 
 
-将\gls{distributed_representation}和符号表示区分开来的一个重要概念是，由不同概念之间的\emph{共享属性而产生的泛化}。
+对于这些\gls{nondistributed}算法中的部分而言，有些输出并非是恒定的，而是在相邻区域之间内插。
+参数（或样本）的数量和它们能够定义区域的数量之间保持线性关系。
+% -- 539 mid  
+
+将\gls{distributed_representation}和\gls{symbolic_representation}区分开来的一个重要概念是，由不同概念之间的\emph{共享属性而产生的\gls{generalization}}。
 作为纯符号，``猫''和``狗''之间的距离和任意其他两种符号的距离一样。
 然而，如果将它们与有意义的\gls{distributed_representation}相关联，那么关于猫的很多特点可以推广到狗，反之亦然。
-例如，我们的\gls{distributed_representation}可能会包含诸如``是否具有皮毛''或``腿的数目''这类在``猫''和``狗''的嵌入上具有相同值的项。
-正如\secref{sec:neural_language_models}所讨论的，作用于单词\gls{distributed_representation}的神经语言模型比其他直接对单词\gls{one_hot}表示进行操作的模型泛化得更好。
-\gls{distributed_representation}具有丰富的\emph{相似性空间}，语义上相近的概念（或输入）在距离上接近，这是纯粹的符号表示所缺少的特点。
+例如，我们的\gls{distributed_representation}可能会包含诸如``具有皮毛''或``腿的数目''这类在``猫''和``狗''的嵌入上具有相同值的项。
+正如\secref{sec:neural_language_models}所讨论的，作用于单词\gls{distributed_representation}的神经语言模型比其他直接对单词\gls{one_hot}表示进行操作的模型\gls{generalize}得更好。
+\gls{distributed_representation}具有丰富的\emph{相似性空间}，语义上相近的概念（或输入）在距离上接近，这是纯粹的\gls{symbolic_representation}所缺少的特点。
+% -- 540 head
 
-% -- 539 --
 
-何时使用\gls{distributed_representation}能够具有统计优势，以及为什么具有统计优势？
+在学习算法中使用\gls{distributed_representation}何时以及为什么具有统计优势？
 当一个明显复杂的结构可以用较少参数紧致地表示时，\gls{distributed_representation}具有统计上的优点。
-一些传统的非分布式学习算法仅仅在平滑假设的情况下泛化能力比较好，也就是说如果$u\approx v$，那么学习到的目标函数$f$通常具有$f(u) \approx f(v)$的性质。
-有许多方法来形式化这样一个假设，其结果是如果我们有一个样本$(x,y)$，并且我们知道$f(x) \approx y$，那么我们可以选取一个估计器$\hat{f}$近似地满足这些限制，并且当我们移动到附近的输入$x + \epsilon$，尽可能少地发生改变。
-这个假设是非常有用的，但是它会承受\gls{curse_of_dimensionality}：
-在很多不同区域上增加或减少很多次学习出一个目标函数\footnote{我们可能会想要学习一个能够区分指数级数量区域的函数：在$d$-维空间中，每维至少有两个不同的值。我们想要函数$f$区分这$2^d$个不同的区域，需要$O(2^d)$个训练样本}，我们可能需要至少和可区分区域数量一样多的样本。
+一些传统的\gls{nondistributed}学习算法仅仅在平滑假设的情况下能够\gls{generalize}，也就是说如果$u\approx v$，那么学习到的目标函数$f$通常具有$f(u) \approx f(v)$的性质。
+有许多方法来形式化这样一个假设，但其结果是如果我们有一个样本$(x,y)$，并且我们知道$f(x) \approx y$，那么我们可以选取一个估计器$\hat{f}$近似地满足这些限制，并且当我们移动到附近的输入$x + \epsilon$时，尽可能少地发生改变。
+这个假设是非常有用的，但是它会遭受\gls{curse_of_dimensionality}：
+学习出一个目标函数，它能够在很多不同区域上增加或减少很多次
+\footnote{我们可能会想要学习一个能够区分指数级数量区域的函数：在$d$-维空间中，每维至少有两个不同的值。我们想要函数$f$区分这$2^d$个不同的区域，需要$O(2^d)$个训练样本}，我们可能需要至少和可区分区域数量一样多的样本。
 可以将每一个区域视为类别或符号：通过让每个符号（或区域）具有单独的自由度，我们可以学习出从符号映射到值的任意解码器。
 然而，这不能推广到新区域的新符号上。
-
+% -- 540 mid
 
 如果我们幸运的话，除了平滑之外，目标函数可能还有一些其他规律。
 例如，具有\gls{max_pooling}的\gls{convolutional_network}
 可以不考虑对象在图像中的位置（即使对象的空间变换不对应输入空间的平滑变换），而识别出对象。
-
+% -- 540 mid
 
 让我们检查\gls{distributed_representation}学习算法的一个特殊情况，它通过对输入的线性函数进行阀值处理来提取二元特征。
 该表示中的每个二元特征将$\SetR^d$分成一对半空间，如\figref{fig:chap15_distributed}所示。
@@ -718,13 +727,13 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 	\sum_{j=0}^d \binom{n}{j} = O(n^d)。
 \end{equation}
 因此，我们会发现输入大小呈指数级增长，\gls{hidden_unit}的数量呈多项式级增长。
+% -- 541 head
 
-% -- 540 --
 
 这提供了一个几何说法来解释\gls{distributed_representation}的泛化能力：$O(nd)$个参数（空间$\SetR^d$中的$n$个线性阀值特征）能够明确表示输入空间中$O(n^d)$个区域。
 如果我们没有对数据做任何假设，并且每个区域具有唯一的符号表示，每个符号使用单独的参数去识别$\SetR^d$中的对应区域，那么指定$O(n^d)$个区域需要$O(n^d)$个样本。
 更一般地，我们对\gls{distributed_representation}中的每个特征使用非线性的可能连续的特征提取器，代替线性阀值单元，更加有利于体现\gls{distributed_representation}的优势。
-在这种情况下，如果$k$个参数的参数变换可以学习输入空间中的$r$个区域（$k\ll r$），如果学习这样的表示有助于感兴趣的任务，那么我们可以将这种方式潜在地推广到比非分布式设定更好的表示，我们只需要$O(r)$个样本来获得相同的特征，并将输入空间相关联地划分成$r$个区域。
+在这种情况下，如果$k$个参数的参数变换可以学习输入空间中的$r$个区域（$k\ll r$），如果学习这样的表示有助于感兴趣的任务，那么我们可以将这种方式潜在地推广到比\gls{nondistributed}设定更好的表示，我们只需要$O(r)$个样本来获得相同的特征，并将输入空间相关联地划分成$r$个区域。
 使用较少的参数来表示模型意味着我们只需拟合较少的参数，因此只需要更少的训练样本去获得良好的泛化。
 
 
