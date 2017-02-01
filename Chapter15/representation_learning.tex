@@ -229,7 +229,7 @@
 % 524 mid
 
 一个重要的问题是\gls{unsupervised_pretraining}是如何起到\gls{regularizer}作用的。
-一个假设是，\gls{pretraining}鼓励学习算法发现那些与生成观察数据的根本原因相关的特征。
+一个假设是，\gls{pretraining}鼓励学习算法发现那些与生成观察数据的潜在原因相关的特征。
 这也是除\gls{unsupervised_pretraining}之外许多其他算法的重要思想的启发，将会在\secref{sec:semi_supervised_disentangling_of_causal_factors}中进一步讨论。
 % 524 mid  
 
@@ -436,7 +436,7 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 % 532 head
 
 \gls{representation_learning}的一个重要问题是``什么原因能够使一个表示比另一个表示更好？''
-一种假设是，理想表示中的特征对应到观测数据的根本成因，特征空间中不同的特征或方向对应着不同的原因，从而表示能够区分这些原因。
+一种假设是，理想表示中的特征对应到观测数据的潜在成因，特征空间中不同的特征或方向对应着不同的原因，从而表示能够区分这些原因。
 这个假设激励我们去寻找表示$p(\Vx)$的更好方法。
 如果$\Vy$是$\Vx$的重要成因之一，那么这种表示也可能是计算$p(\Vy \mid \Vx)$的一种良好表示。
 从至少20世纪90年代以来，这个想法已经指导了大量的\gls{DL}研究工作~\citep{Becker92,hinton1999unsupervised}。
@@ -446,7 +446,7 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 在\gls{representation_learning}的其他方法中，我们大多关注易于建模的表示——例如，数据稀疏或是各项之间相互独立的情况。
 能够清楚地分离出潜在因素的表示可能并不一定易于建模。
 <bad>然而，该假设的激励\gls{semi_supervised_learning}使用\gls{unsupervised}\gls{representation_learning}的一个更深层原因是，对于很多\gls{AI}任务而言，有两个相随的特点：一旦我们能够获得观察结果基本成因的解释，那么将会很容易分离出个体属性。
-具体来说，如果表示向量$\Vh$表示观察值$\Vx$的很多根本因素，并且输出向量$\Vy$是最为重要的原因之一，那么从$\Vh$预测$\Vy$会很容易。
+具体来说，如果表示向量$\Vh$表示观察值$\Vx$的很多潜在因素，并且输出向量$\Vy$是最为重要的原因之一，那么从$\Vh$预测$\Vy$会很容易。
 % 532 mid 
 
 首先，让我们看看$p(\RVx)$的\gls{unsupervised_learning}无助于学习$p(\RVy\mid\RVx)$时，\gls{semi_supervised_learning}为何失败。
