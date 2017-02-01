@@ -10,14 +10,14 @@
 \secref{sec:challenges_motivating_deep_learning}涵盖了一些传统\gls{ML}技术观点，这些技术对\gls{DL}的发展有着深远影响。
 
 首先，我们将介绍学习算法的定义，并介绍一个简单的示例：\gls{linear_regression}算法。
-接下来，我们会探讨拟合训练数据和寻找能够泛化到新数据的参数有哪些不同。
+接下来，我们会探讨拟合训练数据和泛化到新数据之间有哪些不同的挑战。
 大部分\gls{ML}算法都有\emph{超参数}（必须在学习算法外设定）；我们将讨论如何使用额外的数据设置超参数。
-\gls{ML}本质上属于应用统计学，更多关注于如何用计算机统计地估计复杂函数，不太关注这些函数的置信区间；因此我们会探讨两种统计学的主要方法：频率估计和\gls{bayesian_inference}。
+\gls{ML}本质上属于应用统计学，更多关注于如何用计算机统计地估计复杂函数，不太关注为这些函数提供置信区间；因此我们会探讨两种统计学的主要方法：频率估计和\gls{bayesian_inference}。
 大部分\gls{ML}算法可以分成\gls{supervised_learning}和\gls{unsupervised_learning}两类；我们将探讨不同的分类，并为每类提供一些简单的\gls{ML}算法作为示例。
 大部分\gls{DL}算法都基于\gls{SGD}求解。
 我们将介绍如何组合不同的算法部分，例如优化算法、\gls{cost_function}、模型和\gls{dataset}，来建立一个\gls{ML}算法。
 最后在\secref{sec:challenges_motivating_deep_learning}，我们会介绍一些限制传统\gls{ML}泛化能力的因素。
-这些挑战促进了\gls{DL}的发展，以解决这些问题。
+这些挑战促进了解决这些问题的\gls{DL}算法的发展。
 
 % -- 95 --
 
@@ -44,7 +44,7 @@
 通常\gls{ML}任务定义为\gls{ML}系统该如何处理\firstgls{example:chap5}。
 \gls{example:chap5}是指我们从某些希望\gls{ML}系统处理的对象或事件中收集到的已经量化的\firstgls{feature}的集合。
 我们通常会将\gls{example:chap5}表示成一个向量$\Vx\in\SetR^n$，其中向量的每一个元素$x_i$是一个\gls{feature}。
-例如，一张图片的\gls{feature}通常是指这张图片的像素。
+例如，一张图片的\gls{feature}通常是指这张图片的像素值。
 
 % -- 96 --
 
@@ -62,7 +62,7 @@
     对象识别同时也是计算机识别人脸的基本技术，可用于标记相片集中的人脸\citep{Taigman-et-al-CVPR2014}，有助于计算机更自然地和用户交互。
     
     \item \textbf{输入缺失分类}：
-    当输入向量的每个度量不被保证的时候，分类问题将会更有挑战。
+    当输入向量的每个度量不被保证的时候，分类问题将会变得更有挑战性。
     为了解决分类任务，学习算法只需要定义\emph{一个}从输入向量映射到输出类别的函数。
     当一些输入可能丢失时，学习算法必须学习\emph{一组}函数，而不是单个分类函数。
     每个函数对应着分类具有不同缺失输入子集的$\Vx$。
@@ -74,7 +74,7 @@
     
 % -- 97 --
 
-    \item \textbf{回归}：这类任务中，计算机程序会给定输入预测数值。
+    \item \textbf{回归}：这类任务中，计算机程序会对给定输入预测数值。
     为了解决这个问题，学习算法会输出函数$f:\SetR^n \to \SetR$。
     除了返回结果的形式不一样外，这类问题和分类问题是很像的。
     这类任务的一个示例是预测投保人的索赔金额（用于设置保险费），或者预测证券未来的价格。
@@ -91,7 +91,7 @@
     这通常适用于自然语言，如将英语译成法语。
     最近，\gls{DL}已经开始在这个任务上产生重要影响\citep{Sutskever-et-al-NIPS2014,Bahdanau-et-al-ICLR2015-small}。
 
-    \item \textbf{结构化输出}：结构化输出任务涉及到输出是不同元素之间重要关系的向量（或者是含多个值的其他数据结构）的任务。
+    \item \textbf{结构化输出}：结构化输出任务的输出是向量或者其他包含多个值的数据结构，并且构成输出的这些不同元素间具有重要关系。
     这是一个很大的范畴，包括上面\gls{transcribe}任务和翻译任务在内的很多其他任务。
     例如语法分析——映射自然语言句子到语法结构树，并标记树的节点为动词，名词，副词等等。
     参考\cite{Collobert-AISTATS2011}应用\gls{DL}到语法分析。
@@ -130,7 +130,7 @@
     要做好这样的任务（当我们讨论\gls{performance_measures} $P$时，我们会明确定义任务是什么），算法需要学习观测到的数据的结构。
     算法必须知道什么情况下\gls{example:chap5}聚堆出现，什么情况下不太可能出现。
     以上描述的大多数任务都要求学习算法至少能隐式地抓住概率分布的结构。
-    密度分布可以让我们显式地抓住该分布。
+    密度估计可以让我们显式地抓住该分布。
     原则上，我们可以在该分布上计算以便解决其他任务。
     例如，如果我们通过密度估计得到了概率分布$p(\Vx)$，我们可以用该分布解决缺失值填补任务。
     如果$x_i$的值是缺失的，但是其他的变量值$\Vx_{-i}$已知，那么我们可以得到条件概率分布$p(x_i\mid\Vx_{-i})$。
@@ -159,7 +159,7 @@
 % -- 100 --
 
 通常，我们会更加关注\gls{ML}算法在未观测数据上的性能如何，因为这将决定其在现实生活中的性能如何。
-因此，我们将训练\gls{ML}系统的训练集数据中的一部分作为\firstgls{test_set}数据评估系统性能。
+因此，我们使用测试数据来评估系统性能，同训练机器学习系统的数据分开。
 
 \gls{performance_measures}的选择或许看上去简单且客观，但是选择一个与系统理想表现对应的\gls{performance_measures}通常是很难的。
 
@@ -205,7 +205,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 
 \gls{unsupervised_learning}和\gls{supervised_learning}不是严格定义的术语。
 它们之间界线通常是模糊的。
-大部分\gls{ML}技术可以用于这两个任务。
+很多\gls{ML}技术可以用于这两个任务。
 例如，概率的链式法则表明对于向量$\RVx\in\SetR^n$，联合分布可以分解成
 \begin{equation}
     p(\RVx) = \prod_{i=1}^n p(\RSx_i \mid \RSx_1,\dots,\RSx_{i-1}) .
@@ -405,7 +405,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 
 \gls{training_set}和\gls{test_set}数据通过\gls{dataset}上被称为\firstgls{DGP}的概率分布生成。
 通常，我们会做一系列假设，被统称为\firstgls{iid}。
-该假设是说，每个\gls{dataset}中的\gls{example:chap5}都是彼此\firstgls{independent}，并且\gls{training_set}和\gls{test_set}是\firstgls{id}，其上数据采样自相同的分布。
+该假设是说，每个\gls{dataset}中的\gls{example:chap5}都是彼此\firstgls{independent}，并且\gls{training_set}和\gls{test_set}是\firstgls{id}，采样自相同的分布。
 这个假设使我们能够在单个样本上用概率分布描述数据生成过程。
 然后相同的分布可以用来生成每一个训练\gls{example:chap5}和每一个测试\gls{example:chap5}。
 我们将这个共享的潜在分布称为\firstgls{DGD}，记作$p_{\text{data}}$。
