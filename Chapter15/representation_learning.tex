@@ -604,7 +604,7 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 \gls{distributed_representation}非常强大，因为他们能用具有$k$个值的$n$个特征去描述$k^n$个不同的概念。
 正如我们在本书中看到的，具有多个\gls{hidden_unit}的\gls{NN}和具有多个\gls{latent_variable}的概率模型都利用了\gls{distributed_representation}的策略。
 我们现在再介绍一个观察结果。
-许多\gls{DL}算法基于的假设是，\gls{hidden_unit}能够学习表示出解释数据的\gls{underlying}因果因素，就像\secref{sec:semi_supervised_disentangling_of_causal_factors}中讨论的一样。
+许多\gls{DL}算法基于的假设是，\gls{hidden_unit}能够学习表示出解释数据的\gls{underlying}\gls{causal_factor}，就像\secref{sec:semi_supervised_disentangling_of_causal_factors}中讨论的一样。
 这种方法在\gls{distributed_representation}上是自然的，因为表示空间中的每个方向都对应着一个不同的\gls{underlying}配置变量的值。
 %  537 head
 
@@ -705,11 +705,13 @@ $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$�
 在学习算法中使用\gls{distributed_representation}何时以及为什么具有统计优势？
 当一个明显复杂的结构可以用较少参数紧致地表示时，\gls{distributed_representation}具有统计上的优点。
 一些传统的\gls{nondistributed}学习算法仅仅在平滑假设的情况下能够\gls{generalize}，也就是说如果$u\approx v$，那么学习到的目标函数$f$通常具有$f(u) \approx f(v)$的性质。
-有许多方法来形式化这样一个假设，但其结果是如果我们有一个样本$(x,y)$，并且我们知道$f(x) \approx y$，那么我们可以选取一个估计器$\hat{f}$近似地满足这些限制，并且当我们移动到附近的输入$x + \epsilon$时，尽可能少地发生改变。
-这个假设是非常有用的，但是它会遭受\gls{curse_of_dimensionality}：
-学习出一个目标函数，它能够在很多不同区域上增加或减少很多次
-\footnote{我们可能会想要学习一个能够区分指数级数量区域的函数：在$d$-维空间中，每维至少有两个不同的值。我们想要函数$f$区分这$2^d$个不同的区域，需要$O(2^d)$个训练样本}，我们可能需要至少和可区分区域数量一样多的样本。
-可以将每一个区域视为类别或符号：通过让每个符号（或区域）具有单独的自由度，我们可以学习出从符号映射到值的任意解码器。
+有许多方法来形式化这样一个假设，但其结果是如果我们有一个样本$(x,y)$，并且我们知道$f(x) \approx y$，那么我们可以选取一个\gls{estimator}$\hat{f}$近似地满足这些限制，并且当我们移动到附近的输入$x + \epsilon$时，$\hat{f}$尽可能少地发生改变。
+显然这个假设是非常有用的，但是它会遭受\gls{curse_of_dimensionality}：
+学习出一个能够在很多不同区域上增加或减少很多次的目标函数
+\footnote{一般来说，我们可能会想要学习一个函数，这个函数在指数级数量区域的值都是不同的：在$d$-维空间中，为了区分每一维，至少有两个不同的值。
+我们想要函数$f$区分这$2^d$个不同的区域，需要$O(2^d)$量级的训练样本}，
+我们可能需要至少和可区分区域数量一样多的样本。
+可以将每一个区域视为一个类别或符号：通过让每个符号（或区域）具有单独的自由度，我们可以学习出从符号映射到值的任意\gls{decoder}。
 然而，这不能推广到新区域的新符号上。
 % -- 540 mid
 
@@ -720,43 +722,45 @@ $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$�
 
 让我们检查\gls{distributed_representation}学习算法的一个特殊情况，它通过对输入的线性函数进行阀值处理来提取二元特征。
 该表示中的每个二元特征将$\SetR^d$分成一对半空间，如\figref{fig:chap15_distributed}所示。
-$n$个半空间的指数级数量的交集确定了该\gls{distributed_representation}学习能够区分多少区域。
+$n$个相应半空间的指数级数量的交集确定了该\gls{distributed_representation}\gls{learner}能够区分多少区域。
 空间$\SetR^d$中的$n$个超平面的排列组合能够生成多少区间？
-通过应用关于超平面交集的一般结果\citep{Zaslavsky-1975}，我们可以展示\citep{Pascanu+et+al-ICLR2014b}这个二元特征表示能够区分的空间数量是
+通过应用关于超平面交集的一般结果~\citep{Zaslavsky-1975}，我们发现~\citep{Pascanu+et+al-ICLR2014b}这个二元特征表示能够区分的空间数量是
 \begin{equation}
-	\sum_{j=0}^d \binom{n}{j} = O(n^d)。
+	\sum_{j=0}^d \binom{n}{j} = O(n^d).
 \end{equation}
-因此，我们会发现输入大小呈指数级增长，\gls{hidden_unit}的数量呈多项式级增长。
+因此，我们会发现关于输入大小呈指数级增长，关于\gls{hidden_unit}的数量呈多项式级增长。
 % -- 541 head
 
 
-这提供了一个几何说法来解释\gls{distributed_representation}的泛化能力：$O(nd)$个参数（空间$\SetR^d$中的$n$个线性阀值特征）能够明确表示输入空间中$O(n^d)$个区域。
-如果我们没有对数据做任何假设，并且每个区域具有唯一的符号表示，每个符号使用单独的参数去识别$\SetR^d$中的对应区域，那么指定$O(n^d)$个区域需要$O(n^d)$个样本。
-更一般地，我们对\gls{distributed_representation}中的每个特征使用非线性的可能连续的特征提取器，代替线性阀值单元，更加有利于体现\gls{distributed_representation}的优势。
-在这种情况下，如果$k$个参数的参数变换可以学习输入空间中的$r$个区域（$k\ll r$），如果学习这样的表示有助于感兴趣的任务，那么我们可以将这种方式潜在地推广到比\gls{nondistributed}设定更好的表示，我们只需要$O(r)$个样本来获得相同的特征，并将输入空间相关联地划分成$r$个区域。
-使用较少的参数来表示模型意味着我们只需拟合较少的参数，因此只需要更少的训练样本去获得良好的泛化。
+这提供了\gls{distributed_representation}\gls{generalization}能力的一种几何解释：$O(nd)$个参数（空间$\SetR^d$中的$n$个线性阀值特征）能够明确表示输入空间中$O(n^d)$个不同区域。
+如果我们没有对数据做任何假设，并且每个区域使用唯一的符号来表示，每个符号使用单独的参数去识别$\SetR^d$中的对应区域，那么指定$O(n^d)$个区域需要$O(n^d)$个样本。
+<bad>更一般地，我们对\gls{distributed_representation}中的每个特征使用非线性的、可能连续的\gls{feature_extractor}，代替\gls{linear_threshold_units}，更加有利于体现\gls{distributed_representation}的优势。
+<bad>在这种情况下，如果带有$k$个参数的参数化变换可以学习输入空间中的$r$个区域（$k\ll r$），如果学习这样的表示有助于感兴趣的任务，那么我们可以将这种方式潜在地推广到比\gls{nondistributed}\gls{setting}更好的表示，我们只需要$O(r)$个样本来获得相同的特征，并将输入空间相关联地划分成$r$个区域。
+使用较少的参数来表示模型意味着我们只需拟合较少的参数，因此只需要更少的训练样本去获得良好的\gls{generalization}。
+% -- 541 mid
 
-
-另一个解释基于\gls{distributed_representation}的模型泛化能力更好的说法是，尽管能够明确地编码这么多不同的区域，但它们的容量仍然是很有限的。
-例如，线性阀值单位的\gls{NN}的\glssymbol{VC}维仅为$O(w\log w)$，其中$w$是权重的数目\citep{sontag1998vc}。
+另一个解释基于\gls{distributed_representation}的模型\gls{generalization}能力更好的说法是，尽管能够明确地编码这么多不同的区域，但它们的\gls{capacity}仍然是很有限的。
+例如，\gls{linear_threshold_units}\gls{NN}的\glssymbol{VC}维仅为$O(w\log w)$， 其中$w$是权重的数目~\citep{sontag1998vc}。
 这种限制出现的原因是，虽然我们可以为表示空间分配非常多的唯一码，但是我们不能完全使用所有的码空间，也不能使用\gls{linear_classifier}学习出从表示空间$\Vh$到输出$\Vy$的任意函数映射。
-因此使用与\gls{linear_classifier}相结合的\gls{distributed_representation}传达了一种先验信念，待识别的类在$\Vh$代表的潜在因素的函数下是线性可分的。
-我们通常想要学习类别，例如所有绿色对象的所有图像集合，或是汽车的所有图像集合，但不会是需要非线性XOR逻辑的类别。
+因此使用与\gls{linear_classifier}相结合的\gls{distributed_representation}传达了一种先验信念，待识别的类在$\Vh$代表的\gls{underlying}\gls{causal_factor}的函数下是线性可分的。
+我们通常想要学习类别，例如所有绿色对象的图像集合，或是所有汽车图像集合，但不会是需要非线性\ENNAME{XOR}逻辑的类别。
 例如，我们通常不会将数据划分成所有红色汽车和绿色卡车作为一个集合，所有绿色汽车和红色卡车作为另一个集合。
+% -- 542 head
 
-% -- 541 --
 
 到目前为止讨论的想法都是抽象的，但是它们可以通过实验验证。
-\cite{Zhou-et-al-ICLR2015}发现，在ImageNet和Places基准数据集上训练的深度\gls{convolutional_network}中的\gls{hidden_unit}学习到的特征通常是可以解释的，对应人类自然分配的标签。
-在实践中，\gls{hidden_unit}并不能总是学习出具有简单名称的事物，但有趣的是，这些会在计算机视觉深度网络的顶层附近出现。
+\cite{Zhou-et-al-ICLR2015}发现，在\ENNAME{ImageNet}和\ENNAME{Places}基准数据集上训练的深度\gls{convolutional_network}中的\gls{hidden_unit}学习到的特征通常是可以解释的，对应人类自然分配的\gls{label}。
+在实践中，\gls{hidden_unit}并不能总是学习出具有简单语言学名称的事物，但有趣的是，这些会在\gls{CV}深度网络的顶层附近出现。
 这些特征的共同之处在于，我们可以想象\emph{学习其中的每个特征不需要知道所有其他特征的所有配置}。
-\cite{radford2015unsupervised}展示生成模型可以学习人脸图像的表示，在表示空间中的不同方向捕获不同的潜在变化因素。
+\cite{radford2015unsupervised}发现\gls{generative_model}可以学习人脸图像的表示，在表示空间中的不同方向捕获不同的\gls{underlying}变化因素。
 \figref{fig:chap15_generative_glasses}展示表示空间中的一个方向对应着该人是男性还是女性，而另一个方向对应着该人是否戴着眼镜。
 这些特征都是自动发现的，而非先验固定的。
-没有必要为\gls{hidden_unit}分类器提供标签：只要该任务需要这样的特征，\gls{GD}就能在感兴趣的目标函数上自然地学习出语义上有趣的特征。
+没有必要为\gls{hidden_unit}分类器提供\gls{label}：只要该任务需要这样的特征，\gls{GD}就能在感兴趣的\gls{objective_function}上自然地学习出语义上有趣的特征。
 我们可以学习出男性和女性之间的区别，或者是眼镜的存在与否，而不必通过涵盖所有这些值组合的样本来表征其他$n-1$个特征的所有配置。
-这种形式的统计可分离性质能够泛化到训练期间从未见过的人。
+这种形式的统计可分离性质能够\gls{generalize}到训练期间从未见过的新人的特征。
+% 543 head
 
+% 542 end
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -771,14 +775,14 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 \includegraphics[width=0.3\textwidth]{Chapter15/figures/woman_with_glasses}
 \end{tabular}
 \fi
-\caption{以上生成模型学习\gls{distributed_representation}，能够从戴眼镜的概念中区分性别的概念。
+\caption{以上\gls{generative_model}学习\gls{distributed_representation}，能够从戴眼镜的概念中区分性别的概念。
 如果我们从一个戴眼镜的男人的概念表示向量开始，然后减去一个没戴眼镜的男人的概念表示向量，最后加上一个没戴眼镜的女人的概念表示向量，那么我们会得到一个戴眼镜的女人的概念表示向量。
-生成模型将所有这些表示向量正确解码为可被识别为正确类别的图像。
+\gls{generative_model}将所有这些表示向量正确地解码为可被识别为正确类别的图像。
 图片转载许可自\cite{radford2015unsupervised}。
 }
 \label{fig:chap15_generative_glasses}
 \end{figure}
-% -- 542 --
+% 542 end
 
 
 \section{得益于深度的指数增益}
@@ -786,60 +790,64 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 我们已经在\secref{sec:universal_approximation_properties_and_depth}中看到，\gls{MLP}是通用的近似器，一些函数能够用指数级小的\gls{deep_network}（相比于浅层网络）表示。
 缩小模型规模能够提高统计效率。
 在本节中，我们描述如何将类似结果更一般地应用于其他具有分布式隐藏表示的模型。
+% 543 mid
 
-
-在\secref{sec:distributed_representation}中，我们看到了一个\gls{generative_model}的示例，能够学习人脸图像的解释性因素，包括性别以及是否佩戴眼镜。
-完成这个任务的\gls{generative_model}基于一个\gls{DNN}。
-浅层网络（例如线性网络）不能学习出这些抽象解释因素和图像像素之间的复杂关系。
-在这个任务和其他\glssymbol{AI}任务中，彼此几乎独立，但仍然对应到有意义输入的因素，很有可能是高度抽象的，并且和输入呈高度非线性的关系。
+在\secref{sec:distributed_representation}中，我们看到了一个\gls{generative_model}的示例，能够学习人脸图像的\gls{underlying}\gls{explanatory_factor}，包括性别以及是否佩戴眼镜。
+完成这个任务的\gls{generative_model}是基于一个\gls{DNN}的。
+浅层网络（例如线性网络）不能学习出这些抽象\gls{explanatory_factor}和图像像素之间的复杂关系。
+<bad>在这个任务和其他\glssymbol{AI}任务中，彼此几乎独立，但仍然对应到有意义输入的因素，很有可能是高度抽象的，并且和输入呈高度非线性的关系。
 我们认为这需要\emph{深度}\gls{distributed_representation}，需要许多非线性组合来获得较高级的特征（被视为输入的函数）或因素（被视为生成原因）。
+% 543 mid
 
-
-许多不同设置已经证明，
-非线性和重用特征层次结构的组合来组织计算，可以使\gls{distributed_representation}获得指数级加速之外，还可以获得统计效率的指数级提升。
-许多只有一个\gls{hidden_layer}的网络（例如，具有饱和非线性，布尔门，和/积，或\glssymbol{RBF}单元的网络）都可以被视为通用近似器。
-在给定足够多\gls{hidden_unit}的情况下，通用近似器可以在任意非零允错级别近似一大类函数（包括所有连续函数）。
+在许多不同\gls{setting}中已经证明，
+非线性和重用特征层次结构的组合来组织计算，可以获得统计效率的指数级提升，这种在指数级提升使用\gls{distributed_representation}获得的指数级提升中也是顶级的。
+%可以使\gls{distributed_representation}获得指数级加速之外，还可以获得统计效率的指数级提升。
+许多只有一个\gls{hidden_layer}的网络（例如，具有饱和非线性，布尔门，和/积，或\glssymbol{RBF}单元的网络）都可以被视为\gls{universal_approximator}。
+在给定足够多\gls{hidden_unit}的情况下，这个模型族是一个\gls{universal_approximator}，可以在任意非零允错级别近似一大类函数（包括所有连续函数）。
 然而，\gls{hidden_unit}所需的数量可能会非常大。
-关于深层架构的表达能力的理论结果表明，有些函数族可以有效地通过深度$k$层的网络架构表示，但是深度不够（深度为2或$k-1$）时会需要指数级（相对于输入大小而言）的\gls{hidden_unit}。
+关于深层架构表达能力的理论结果表明，有些函数族可以高效地通过深度$k$层的网络架构表示，但是深度不够（深度为2或$k-1$）时会需要指数级（相对于输入大小而言）的\gls{hidden_unit}。
+% -- 543 end
 
-% -- 543 --
 
+% 544 head
 在\secref{sec:universal_approximation_properties_and_depth}中，我们看到确定性\gls{feedforward_network}是函数的\gls{universal_approximator}。
-许多具有\gls{latent_variable}的单个\gls{hidden_layer}的\gls{structured_probabilistic_models}（包括\gls{RBM}，\gls{DBN}）是概率分布的\gls{universal_approximator}\citep{LeRoux-Bengio-2007-TR,Montufar-2011,Montufar-et-al-NIPS2014,Krause-et-al-ICML2013}。
+许多具有\gls{latent_variable}的单个\gls{hidden_layer}的\gls{structured_probabilistic_models}（包括\gls{RBM}，\gls{DBN}）是概率分布的\gls{universal_approximator}~\citep{LeRoux-Bengio-2007-TR,Montufar-2011,Montufar-et-al-NIPS2014,Krause-et-al-ICML2013}。
 
-
+% 544 mid
 在\secref{sec:universal_approximation_properties_and_depth}中，我们看到足够深的\gls{feedforward_network}会比深度不够的网络具有指数级优势。
 这样的结果也能从诸如概率模型的其他模型中获得。
-\firstgls{sum_product_network}，或\glssymbol{sum_product_network}\citep{Poon+Domingos-2011}是这样的一种概率模型。
+\firstgls{sum_product_network}，或\glssymbol{sum_product_network}~\citep{Poon+Domingos-2011}是这样的一种概率模型。
 这些模型使用多项式电路来计算一组\gls{RV}的\gls{PD}。
 \cite{Delalleau+Bengio-2011-small}表明存在一种\gls{PD}，对\glssymbol{sum_product_network}的最小深度有要求，以避免模型规模呈指数级增长。
 后来，\cite{Martens+Medabalimi-arxiv2014}表明，任意两个有限深度的\glssymbol{sum_product_network}之间都会存在显著差异，并且一些使\glssymbol{sum_product_network}易于处理的约束可能会限制其表示能力。
+% 544 mid
 
-
-另一个有趣的进展是，一套和卷积网络相关的\gls{deep_circuit}族的表达能力的理论结果，即使让\gls{shadow_circuit}只去近似\gls{deep_circuit}计算的函数，也能突出反映\gls{deep_circuit}的指数级优势\citep{Cohen-et-al-arXiv2015}。
+另一个有趣的进展是，一系列和\gls{convolutional_net}相关的\gls{deep_circuit}族表达能力的理论结果，即使让\gls{shadow_circuit}只去近似\gls{deep_circuit}计算的函数，也能突出反映\gls{deep_circuit}的指数级优势~\citep{Cohen-et-al-arXiv2015}。
 相比之下，以前的理论工作只研究了\gls{shadow_circuit}必须精确复制特定函数的情况。
-
+% 544 mid
 
 \section{提供发现潜在原因的线索}
 \label{sec:providing_clues_to_discover_underlying_causes}
-我们回到最初的问题之一来结束本章：什么原因能够使一个表示比另一个表示更好？
-首先在\secref{sec:semi_supervised_disentangling_of_causal_factors}中介绍的一个答案是，一个理想的表示能够区分生成数据的变化的潜在因果因素，特别是那些与我们的应用相关的因素。
-\gls{representation_learning}的大多数策略都会引入一些有助于学习潜在变动因素的线索。
-这些线索可以帮助\gls{learner}将这些观察到的因素与其他因素分开。
-\gls{supervised_learning}提供了非常强的线索：每个观察向量$\Vx$的标签向量$\Vy$通常直接指定了至少一个变化因素。
-更一般地，为了利用丰富的\gls{unlabeled}数据，\gls{representation_learning}会使用关于潜在因素的其他不太直接的提示。
-这些提示包含一些我们（学习算法的设计者）为了引导\gls{learner}而强加的隐式先验信念。
-诸如\gls{no_free_lunch_theorem}的这些结果表明，正则化策略对于获得良好泛化是很有必要的。
-当不可能找到一个普遍良好的\gls{regularization}策略时，\gls{DL}的一个目标是找到一套相当通用的\gls{regularization}策略，能够适用于各种各样的\glssymbol{AI}任务（类似于人和动物能够解决的任务）。
+% 544 end
 
-% -- 544 --
+我们回到最初的问题之一来结束本章：什么原因能够使一个表示比另一个表示更好？
+首先在\secref{sec:semi_supervised_disentangling_of_causal_factors}中介绍的一个答案是，一个理想的表示能够区分生成数据变化的\gls{underlying}\gls{causal_factor}，特别是那些与我们的应用相关的因素。
+\gls{representation_learning}的大多数策略都会引入一些有助于学习\gls{underlying}变动因素的线索。
+这些线索可以帮助\gls{learner}将这些观察到的因素与其他因素分开。
+\gls{supervised_learning}提供了非常强的线索：每个观察向量$\Vx$的\gls{label}$\Vy$，它通常直接指定了至少一个变化因素。
+更一般地，为了利用丰富的\gls{unlabeled}数据，\gls{representation_learning}会使用关于\gls{underlying}因素的其他不太直接的提示。
+这些提示包含一些我们（学习算法的设计者）为了引导\gls{learner}而强加的隐式先验信念。
+诸如\gls{no_free_lunch_theorem}的这些结果表明，\gls{regularization}策略对于获得良好\gls{generalization}是很有必要的。
+当不可能找到一个普遍良好的\gls{regularization}策略时，\gls{DL}的一个目标是找到一套相当通用的\gls{regularization}策略，能够适用于各种各样的\glssymbol{AI}任务（类似于人和动物能够解决的任务）。
+% 545 head
+
 
 在此，我们提供了一些通用\gls{regularization}策略的列表。
-该列表显然是不详尽的，但是给出了一些学习算法是如何发现潜在因素特征的具体示例。
-该列表由\cite{Bengio-Courville-Vincent-TPAMI-2012}中\secref{sec:why_probability}提出，这里进行了部分拓展。
+该列表显然是不详尽的，但是给出了一些学习算法是如何发现对应着\gls{underlying}因素的特征的具体示例。
+该列表由\cite{Bengio-Courville-Vincent-TPAMI-2012}中第3.1节提出，这里进行了部分拓展。
 \begin{itemize}
 	\item \emph{平滑}：假设对于单位$\Vd$和小量$\epsilon$有$f(\Vx + \epsilon \Vd) \approx f(\Vx)$。
-	这个假设允许\gls{learner}从训练样本泛化到输入空间中附近的点。
+	这个假设允许\gls{learner}从训练样本\gls{generalize}到输入空间中附近的点。
 	许多\gls{ML}算法都利用了这个想法，但它不能克服\gls{curse_of_dimensionality}难题。
 
 
@@ -848,55 +856,56 @@ $n$个半空间的指数级数量的交集确定了该\gls{distributed_represent
 	大多数简单的学习算法不会做平滑假设，而会做线性假设。
 	这些假设实际上是不同的——具有很大权重的线性函数在高维空间中可能不是非常平滑的。
 	参看\cite{Goodfellow-2015-adversarial}了解关于线性假设局限性的进一步讨论。
+% 545 mid
+
+	\item \emph{多个\gls{explanatory_factor}}：许多\gls{representation_learning}算法受以下假设的启发，数据是由多个\gls{underlying}\gls{explanatory_factor}生成的，并且给定每一个因素的状态，大多数任务都能轻易解决。
+	\secref{sec:semi_supervised_disentangling_of_causal_factors}描述了这种观点如何通过\gls{representation_learning}启发\gls{semi_supervised_learning}的。
+	学习$p(\Vx)$的结构要求学习出一些对建模$p(\Vy\mid\Vx)$同样有用的特征，因为它们都涉及到相同的\gls{underlying}\gls{explanatory_factor}。
+	\secref{sec:distributed_representation}介绍了这种观点如何启发\gls{distributed_representation}的使用，表示空间中\gls{separate}方向对应着\gls{separate}变化因素。
 
 
-	\item \emph{多个解释因素}：许多\gls{representation_learning}算法受激励于这样的假设，数据是由多个潜在解释性因素生成的，并且给定每一个因素的状态，大多数任务都能轻易解决。
-	\secref{sec:semi_supervised_disentangling_of_causal_factors}描述了这种观点如何通过\gls{representation_learning}促进\gls{semi_supervised_learning}的。
-	学习$p(\Vx)$的结构要求学习出一些对建模$p(\Vy\mid\Vx)$同样有用的特征，因为它们都涉及到相同的潜在解释因素。
-	\secref{sec:distributed_representation}介绍了这种观点如何激发\gls{distributed_representation}的使用，表示空间中不同的方向对应着不同的变化因素。
+	\item \emph{\gls{causal_factor}}：该模型认为学习到的表示所描述的变量是观察数据$\Vx$的成因，而并非反过来。
+	正如\secref{sec:semi_supervised_disentangling_of_causal_factors}中讨论的，这对于\gls{semi_supervised_learning}是有利的，当\gls{underlying}成因上的分布发生改变，或者我们应用模型到一个新的任务上时，学习到的模型都会更加鲁棒。
 
+% -- 546 head
 
-	\item \emph{因果因素}：该模型认为学习到的表示所描述的变量是观察数据$\Vx$的成因，而并非反过来。
-	正如\secref{sec:semi_supervised_disentangling_of_causal_factors}中讨论的，这对于\gls{semi_supervised_learning}是有利的，当潜在成因上的分布发生改变，或者我们应用模型到一个新的任务上时，学习到的模型都会更加鲁棒。
-
-% -- 545 --
-
-	\item \emph{深度，或者解释因素的层次组织}：层次结构的简单概念能够定义高级抽象概念。
+	\item \emph{深度，或者\gls{explanatory_factor}的层次组织}：高级抽象概念能够通过将简单概念层次化来定义。
 	从另一个角度来看，深层架构表达了我们认为任务应该由多个程序步骤完成的观念，每一个步骤回溯到先前步骤完成处理的输出。
 
 
 	\item \emph{任务间共享因素}：
 	当多个对应到不同变量$\RSy_i$的任务共享相同的输入$\RVx$时，或者当每个任务关联到全局输入$\RVx$的子集或者函数$f^{(i)}(\RVx)$时，我们会假设每个变量$\RSy_i$关联到来自相关因素$\RVh$公共池的不同子集。
 	因为这些子集有重叠，所以通过共享的中间表示$ P(\RVh \mid \RVx)$来学习所有的$P(\RSy_i \mid \RVx)$能够使任务间共享统计信息。
-
+% -- 546 mid
 
 	\item \emph{\gls{manifold}}：概率质量集中，并且集中区域是局部连通的，且占据很小的体积。
 	在连续情况下，这些区域可以用比数据所在原始空间低很多维的低维\gls{manifold}来近似。
 	很多\gls{ML}算法只在这些\gls{manifold}上有效\citep{Goodfellow-2015-adversarial}。
-	一些\gls{ML}算法，特别是\gls{AE}，会试图学习\gls{manifold}的结构。
+	一些\gls{ML}算法，特别是\gls{AE}，会试图显式地学习\gls{manifold}的结构。
 
 
-	\item \emph{自然聚类}：很多\gls{ML}算法假设输入空间中的每个连通\gls{manifold}都是一个单独的类。
+	\item \emph{自然聚类}：很多\gls{ML}算法假设输入空间中每个连通\gls{manifold}可以被分配一个单独的类。
 	数据分布在许多个不连通的\gls{manifold}上，但相同\gls{manifold}上数据的类别是相同的。
-	这个假设激励了各种学习算法，包括\gls{tangent_propagation}，\gls{double_backprop}，\gls{manifold_tangent_classifier}和\gls{adversarial_training}。
+	<bad>这个假设激励了各种学习算法，包括\gls{tangent_propagation}、\gls{double_backprop}、\gls{manifold_tangent_classifier}和\gls{adversarial_training}。
 
 
-	\item \emph{时间和空间相干性}：慢特征分析和相关的算法假设，最重要的解释因素随时间变化很缓慢，或者至少假设预测真实的解释因素比预测诸如像素值这类原始观察会更容易些。
+	\item \emph{时间和空间相干性}：\gls{SFA}和相关的算法假设，最重要的\gls{explanatory_factor}随时间变化很缓慢，或者至少假设预测真实的\gls{underlying}\gls{explanatory_factor}比预测诸如像素值这类原始观察会更容易些。
 	参考\secref{sec:slow_feature_analysis}，进一步了解这个方法。
 
 
-	\item \emph{稀疏性}：假设大部分特征和大部分输入不相关——在表示猫的图像时，没有必要使用大象的特征。
-	因此，我们可以强加一个先验，任何可以解释为``存在''或``不存在''的特征在大多数样本中都是不需要的。
+	\item \emph{稀疏性}：假设大部分特征和大部分输入不相关——在表示猫的图像时，没有必要使用象鼻的特征。
+	因此，我们可以强加一个先验，任何可以解释为``存在''或``不存在''的特征在大多数时间都是不存在的。
 
-% -- 546 --
+% -- 547 head --
 
 	\item \emph{简化因素依赖性}：在良好的高级表示中，因素会通过简单的依赖相互关联。
-	边缘独立可能是最简单的，$P(\RVh) = \prod_i P(\RVh_i)$。线性依赖或浅层\gls{AE}也是合理的假设。
-	这可以在许多物理定律中看出来，在学习到的表示上使用线性预测器或分解先验。
+	边缘独立可能是最简单的，$P(\RVh) = \prod_i P(\RVh_i)$。
+	但是线性依赖或浅层\gls{AE}所能表示的依赖关系也是合理的假设。
+	这可以在许多物理定律中看出来，并且可以假设，在学习到表示的顶层插入线性预测器或\gls{factorized}先验。
 \end{itemize}
 
 
-\gls{representation_learning}的概念将所有的\gls{DL}形式联系到了一起。
+\gls{representation_learning}的概念将许多\gls{DL}形式联系到了一起。
 \gls{feedforward_network}和\gls{recurrent_network}，\gls{AE}和深度概率模型都在学习和使用表示。
 学习最佳表示仍然是一个令人兴奋的研究方向。
 
