@@ -2,12 +2,13 @@
 % Translator: Yujun Li 
 \chapter{面对\glsentrytext{partition_function}}
 \label{chap:confronting_the_partition_function}
+% 597
 在\secref{sec:undirected_models}中，我们看到许多概率模型（通常被称为\gls{undirected_graphical_model}）由未归一化的\gls{PD} $\tilde{p}(\RVx, \theta)$所定义。
 我们必须通过除以\gls{partition_function} $Z(\Vtheta)$来归一化$\tilde{p}$，以获得有效的\gls{PD}：
 \begin{equation}
 	p(\RVx; \Vtheta) = \frac{1}{Z(\Vtheta)} \tilde{p}(\RVx; \Vtheta).
 \end{equation}
-\gls{partition_function}是未归一化概率的积分（对于连续变量）或求和（对于离散变量）：
+\gls{partition_function}是未归一化概率所有状态的积分（对于连续变量）或求和（对于离散变量）：
 \begin{equation}
 	\int \tilde{p}(\Vx) \mathrm{d} \Vx
 \end{equation}
@@ -22,23 +23,25 @@
 
 正如我们将在\chapref{chap:deep_generative_models}看到的，有些\gls{DL}模型设计成具有易于处理的归一化常数，或设计成能够在不涉及计算$p(\RVx)$的情况下使用。
 然而，其他模型会直接面对难处理的\gls{partition_function}的挑战。
-在本章中，我们会介绍用于训练和估计具有难以处理\gls{partition_function}的模型的技术。
+在本章中，我们会介绍用于训练和评估具有难以处理\gls{partition_function}的模型的技术。
+% -- 597 end
 
-% -- 597 --
 
 \section{对数似然梯度}
 \label{sec:the_log_likelihood_gradient}
-通过最大似然学习无向模型特别困难的原因在于\gls{partition_function}取决于参数。
+通过\gls{maximum_likelihood}学习\gls{undirected_model}特别困难的原因在于\gls{partition_function}依赖于参数。
 对数似然相对于参数的梯度具有一项对应于\gls{partition_function}的梯度：
 \begin{equation}
 	\nabla_{\Vtheta} \log p(\RVx; \Vtheta) = \nabla_{\Vtheta} \log \tilde{p}(\RVx; \Vtheta) -
 \nabla_{\Vtheta} \log Z(\Vtheta).
 \end{equation}
+% 598 head
+
+这是学习过程中非常著名的\firstgls{positive_phase}和\firstgls{negative_phase}的分解。
 
 
-这是非常著名的学习的\firstgls{positive_phase}和\firstgls{negative_phase}的分解。
 对于大多数感兴趣的\gls{undirected_model}而言，\gls{negative_phase}是困难的。
-没有\gls{latent_variable}或\gls{latent_variable}之间很少相互作用的模型通常会有一个可解的\gls{positive_phase}。
+没有\gls{latent_variable}或\gls{latent_variable}之间很少相互作用的模型通常会有一个易于求解的\gls{positive_phase}。
 \glssymbol{RBM}是一个具有简单\gls{positive_phase}和困难\gls{negative_phase}的典型模型，具有在给定可见单位的情况下彼此条件独立的\gls{hidden_unit}。
 \gls{latent_variable}之间具有复杂相互作用的困难\gls{positive_phase}将主要在\chapref{chap:approximate_inference}中讨论。
 本章主要探讨\gls{negative_phase}困难的情况。
@@ -75,11 +78,11 @@
 \begin{equation}
 	=\SetE_{\RVx \sim p(\RVx)} \nabla_{\Vtheta} \log \tilde{p} (\RVx).
 \end{equation}
+% -- 598 end
 
-% -- 598 --
 
 这个推导对离散$\Vx$进行求和，对连续$\Vx$进行积分也会出现类似结果。
-面对连续版本的推导过程中，我们使用在积分符号下微分的\gls{leibniz_rule}，得到等式
+面对连续版本的推导过程中，我们使用在积分符号下微分\gls{leibniz_rule}，得到等式
 \begin{equation}
 	\nabla_{\Vtheta} \int \tilde{p} (\RVx) \mathrm{d} \Vx  = \int \nabla_{\Vtheta} 
 \tilde{p} (\RVx) \mathrm{d} \Vx.
@@ -87,31 +90,32 @@
 该等式只适用于$\tilde{p}$和$\nabla_{\Vtheta} \tilde{p} (\RVx)$上的一些特定正则条件。
 在测度理论术语中，这些条件是：
 （1）对每一个$\Vtheta$而言，未归一化分布$\tilde{p}$必须是$\Vx$的\gls{lebesgue_integrable}函数。
-（2）对于所有的$\Vtheta$和几乎所有的$\Vx$，导数$\nabla_{\Vtheta} \tilde{p}(\RVx)$必须存在。
+（2）对于所有的$\Vtheta$和几乎所有$\Vx$，梯度$\nabla_{\Vtheta} \tilde{p}(\RVx)$必须存在。
 （3）对于所有的$\Vtheta$和几乎所有的$\Vx$，在$\max_i | \frac{\partial}{\partial \theta_i } \tilde{p} (\RVx) | \leq R(\Vx)$ 的情况下，必须存在能够限制住$\nabla_{\Vtheta} \tilde{p}(\RVx)$的可积函数$R(\Vx)$。
 幸运的是，大多数感兴趣的\gls{ML}模型都具有这些性质。
-
+% 599 mid
 
 这个等式
 \begin{equation}
 \label{eq:18.15}
 	\nabla_{\Vtheta} \log Z = \SetE_{\RVx \sim p(\RVx)} \nabla_{\Vtheta} \log \tilde{p}(\RVx)
 \end{equation}
-是使用各种\gls{monte_carlo}方法近似最大化，具有难求解\gls{partition_function}模型的似然的基础。
-
+是使用各种\gls{monte_carlo}方法近似最大化（具有难求解\gls{partition_function}模型的）似然的基础。
+% 599 mid
 
 \gls{monte_carlo}方法为学习\gls{undirected_model}提供了直观的框架，我们能够在其中考虑\gls{positive_phase}和\gls{negative_phase}。
-在\gls{positive_phase}中，我们从数据中抽取$\Vx$来增加$\log \tilde{p}(\RVx)$。
+在\gls{positive_phase}中，我们对于数据中抽取的$\Vx$增加$\log \tilde{p}(\RVx)$。
 在\gls{negative_phase}中，我们通过减少从模型分布中采样的$\log \tilde{p}(\RVx)$来降低\gls{partition_function}。
+% 599 mid
 
+在\gls{DL}文献中，经常会看到用\gls{energy_function}（等式\eqnref{eqn:167}）来参数化$\log \tilde{p}$。
+在这种情况下，\gls{positive_phase}可以解释为压低训练样本的能量，\gls{negative_phase}可以解释为提高模型抽出的样本的能量，如\figref{fig:chap18_pos_and_neg_phase}所示。
+% 599 mid
 
-在\gls{DL}文献中，经常会看到用\gls{energy_function}（\eqnref{eqn:167}）来参数化$\log \tilde{p}$。
-在这种情况下，\gls{positive_phase}可以解释为压低训练样本的能量，\gls{negative_phase}可以解释为提高模型采样的能量，如\figref{fig:chap18_pos_and_neg_phase}所示。
-
-
-\section{随机最大似然和\glsentrytext{contrastive_divergence}}
+\section{随机\glsentrytext{maximum_likelihood}和\glsentrytext{contrastive_divergence}}
 \label{sec:stochastic_maximum_likelihood_and_contrastive_divergence}
-实现\eqnref{eq:18.15}最简单的方法是，每次需要计算梯度时，\gls{burn_in}随机初始化的一组\gls{markov_chain}。
+% 599 end
+实现方程\eqnref{eq:18.15}一个很简单的方法是，每次需要计算梯度时，\gls{burn_in}随机初始化的一组\gls{markov_chain}。
 当使用\gls{SGD}进行学习时，这意味着\gls{markov_chain}必须在每次梯度步骤中\gls{burn_in}。
 这种方法引导下的训练过程如\algref{alg:naive_cd}所示。
 内循环中\gls{burn_in}\gls{markov_chain}的计算代价过高，导致这个过程在实际中是不可行的，
