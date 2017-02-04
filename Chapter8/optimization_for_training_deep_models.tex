@@ -317,7 +317,7 @@
 优化通常是一个极其困难的任务。
 通常，\gls{ML}会小心设计\gls{objective_function}和约束，以确保优化问题是凸的，
 从而避免一般优化问题的复杂度。
-在训练\gls{NN}时，我们肯定会遇到一般的非凸情况。
+在训练\gls{NN}时，我们肯定会遇到一般的\gls{nonconvex}情况。
 即使是\gls{convex_optimization}，也并非没有任何问题。
 在这一节中，我们会总结几个训练\gls{deep_model}时会涉及到的主要挑战。
 % -- 275 mid
@@ -383,7 +383,7 @@
 % -- 277 head
 
 
-对于非凸函数时，如\gls{NN}，有可能会存在多个\gls{local_minima}。
+对于\gls{nonconvex}函数时，如\gls{NN}，有可能会存在多个\gls{local_minima}。
 事实上，几乎所有的\gls{deep_model}基本上都会有非常多的\gls{local_minima}。
 然而，我们会发现这并不是主要问题。
 % -- 277 mid
@@ -407,7 +407,7 @@
 
 这些\gls{model_identifiability}问题意味着\gls{NN}\gls{cost_function}具有非常多、甚至无限多的\gls{local_minima}。
 然而，所有这些由于不可辨识性问题产生的\gls{local_minima}都有相同的\gls{cost_function}值。
-因此，这些\gls{local_minima}并非是非凸所带来的问题。
+因此，这些\gls{local_minima}并非是\gls{nonconvex}所带来的问题。
 % -- 277 mid
 
 
@@ -435,50 +435,59 @@
 
 \subsection{高原、\glsentrytext{saddle_points}和其他平坦区域}
 \label{sec:plateaus_saddle_points_and_other_flat_regions}
-对于很多高维非凸函数而言，局部极小值（或极大值）事实上都远少于另一类梯度为零的点：\gls{saddle_points}。
-\gls{saddle_points}附近的某些点比\gls{saddle_points}有更大的损失，而其他点则有更小的损失。
+对于很多高维\gls{nonconvex}函数而言，\gls{local_minima}（以及\gls{maxima}）事实上都远少于另一类梯度为零的点：\gls{saddle_points}。
+\gls{saddle_points}附近的某些点比\gls{saddle_points}有更大的\gls{cost}，而其他点则有更小的\gls{cost}。
 在\gls{saddle_points}处，\gls{hessian}矩阵同时具有正负特征值。
-位于正特征值对应的特征向量方向的点比\gls{saddle_points}有更大的损失，反之，位于负特征值对应的特征向量方向的点有更小的损失。
-我们可以将\gls{saddle_points}视为\gls{cost_function}某个横截面上的局部极小值，同时也可以视为\gls{cost_function}某个横截面上的局部极大值。
-如\figref{fig:chap4_saddle_3d_color}所示。
+位于正特征值对应的特征向量方向的点比\gls{saddle_points}有更大的\gls{cost}，反之，位于负特征值对应的特征向量方向的点有更小的\gls{cost}。
+我们可以将\gls{saddle_points}视为\gls{cost_function}某个横截面上的\gls{local_minimum}，同时也可以视为\gls{cost_function}某个横截面上的\gls{local_maximum}。
+\figref{fig:chap4_saddle_3d_color}给了一个示例。
+% 278 mid
 
-多类随机函数表现出以下性质：低维空间中，局部极小值很普遍。
-在更高维空间中，局部极小值很少，而\gls{saddle_points}则很常见。
-对于这类函数$f:\SetR^n \to \SetR$而言，\gls{saddle_points}和局部极小值的数目比率期望随$n$指数级增长。
-直觉上理解这种现象，我们可以观察到\gls{hessian}矩阵在局部极小点处只有正特征值。
+
+多类随机函数表现出以下性质：低维空间中，\gls{local_minima}很普遍。
+在更高维空间中，\gls{local_minima}很罕见，而\gls{saddle_points}则很常见。
+对于这类函数$f:\SetR^n \to \SetR$而言，\gls{saddle_points}和\gls{local_minima}的数目比率的期望随$n$指数级增长。
+直觉上理解这种现象，我们可以观察到\gls{hessian}矩阵在\gls{local_minimum}处只有正特征值。
 而在\gls{saddle_points}处，\gls{hessian}矩阵则同时具有正负特征值。
 试想一下，每个特征值的正负号由抛硬币决定。
-在一维情况下，很容易抛硬币得到正面朝上一次而获取局部极小值。
+在一维情况下，很容易抛硬币得到正面朝上一次而获取\gls{local_minimum}。
 在$n$-维空间中，指数级不太可能$n$次抛掷硬币都得到正面朝上。
-参看\cite{Dauphin-et-al-NIPS2014-small}，回顾相关理论工作。
+具体可以参看\cite{Dauphin-et-al-NIPS2014-small}，它回顾了相关的理论工作。
+% -- 278 end
 
-% -- 278 --
 
-很多随机函数一个惊人性质是，当我们到达损失较低的区间时，\gls{hessian}矩阵的特征值为正的可能性更大。
-和抛硬币类比，这意味着如果我们处于低损失的\gls{critical_points}时，抛掷硬币正面朝上$n$次的概率更大。
-换言之，局部极小值具有低损失的可能性比高损失要大得多。
-具有高损失的\gls{critical_points}更有可能是\gls{saddle_points}。
-具有极高损失的\gls{critical_points}就很可能是局部极大点了。
+很多随机函数一个惊人性质是，当我们到达\gls{cost}较低的区间时，\gls{hessian}矩阵的特征值为正的可能性更大。
+和抛硬币类比，这意味着如果我们处于低\gls{cost}的\gls{critical_points}时，抛掷硬币正面朝上$n$次的概率更大。
+这也意味着，\gls{local_minima}具有低\gls{cost}的可能性比高\gls{cost}要大得多。
+具有高\gls{cost}的\gls{critical_points}更有可能是\gls{saddle_points}。
+具有极高\gls{cost}的\gls{critical_points}就很可能是\gls{local_maxima}了。
+% -- 279 head
+
 
 以上现象出现在许多类随机函数中。
 那么是否在\gls{NN}中也有发生呢？
-\cite{Baldi89}从理论上证明，不具非线性的浅层\gls{AE}（\chapref{chap:autoencoders}中将介绍的训练输入到输出的前馈网络）只有全局极小值和\gls{saddle_points}，没有损失比全局极小值更大的局部极小值。
+\cite{Baldi89}从理论上证明，不具非线性浅层\gls{AE}（\chapref{chap:autoencoders}中将介绍的一种将输出训练为输入拷贝的\gls{feedforward_network}）只有\gls{global_minima}和\gls{saddle_points}，没有\gls{cost}比\gls{global_minima}更大的\gls{local_minima}。
 他们还发现这些结果能够扩展到不具非线性的更深层网络上，不过没有证明。
-这类网络的输出是其输入的线性函数，但它们仍然有助于分析非线性\gls{NN}模型，因为它们的\gls{loss_function}是关于参数的非凸函数。
+这类网络的输出是其输入的线性函数，但它们仍然有助于分析非线性\gls{NN}模型，因为它们的\gls{loss_function}是关于参数的\gls{nonconvex}函数。
 这类网络本质上是多个矩阵组合在一起。
-\cite{Saxe-et-al-ICLR13}精确解析了这类网络中的完整学习动态，表明这些模型的学习能够捕捉，训练具有非线性激励函数的\gls{deep_model}中的许多定性特征。
-\cite{Dauphin-et-al-NIPS2014-small}实验表明，真实的网络也会有包含很多高损失\gls{saddle_points}的\gls{loss_function}。
-\cite{Choromanska-et-al-AISTATS2015}理论证明了另一类和\gls{NN}相关的高维随机函数也满足这种情况。
+<bad>\cite{Saxe-et-al-ICLR13}精确解析了这类网络中的完整学习动态，表明这些模型的学习能够捕捉到许多在训练具有非线性\gls{activation_function}的\gls{deep_model}时观察到的定性特征。
+\cite{Dauphin-et-al-NIPS2014-small}通过实验表明，真实的\gls{NN}也会有包含很多高\gls{cost}\gls{saddle_points}的\gls{loss_function}。
+\cite{Choromanska-et-al-AISTATS2015}证明了一个理论结果，另一类和\gls{NN}相关的高维随机函数也满足这种情况。
+% -- 279 mid
 
-训练算法时的\gls{saddle_points}扩散会有哪些影响呢？
+
+训练算法中\gls{saddle_points}扩散会有哪些影响呢？
 对于只使用梯度信息的一阶优化算法而言，情况是不明的。
 \gls{saddle_points}附近的梯度通常会非常小。
 另一方面，实验中\gls{GD}似乎可以在许多情况下逃离\gls{saddle_points}。
-\cite{GoodfellowOptimization15}可视化了最新\gls{NN}的几个学习轨迹，如\figref{fig:chap8_plot_atmu_relu_5}所示。
-这些可视化显示权重都为零的\gls{saddle_points}附近，\gls{cost_function}都是平坦的。
+\cite{GoodfellowOptimization15}可视化了最新\gls{NN}的几个学习轨迹，\figref{fig:chap8_plot_atmu_relu_5}给了一个例子。
+这些可视化显示突出的\gls{saddle_points}附近，\gls{cost_function}都是平坦的，权重都为零。
 但是他们也展示了\gls{GD}轨迹能够迅速逸出该区间。
-\cite{GoodfellowOptimization15}还认为，或许可以解析地表明连续时间的\gls{GD}会逃离，而不是吸引，附近的\gls{saddle_points}，但是对于\gls{GD}更现实的使用，情况或许是不同的。
+\cite{GoodfellowOptimization15}还认为，或许可以解析地表明连续时间的\gls{GD}会逃离，而不是被吸引到附近的\gls{saddle_points}，但是对于\gls{GD}更现实的使用，情况或许是不同的。
+% -- 279 mid
 
+
+% 280 head
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -486,44 +495,53 @@
 \centerline{\includegraphics{Chapter8/figures/plot_atmu_relu_5}}
 \fi
 \caption{\gls{NN}\gls{cost_function}的可视化。
-这些可视化对应用于真实对象识别和自然语言处理任务的前馈神经网络、卷积网络和\gls{recurrent_network}而言是类似的。
+这些可视化对应用于真实\gls{object_recognition}和\gls{NLP}任务的\gls{feedforward_neural_network}、\gls{convolutional_network}和\gls{recurrent_network}而言是类似的。
 令人惊讶的是，这些可视化通常不会显示出很多明显的障碍。
-大约2012年，在\gls{SGD}开始成功训练非常大的模型之前，\gls{NN}\gls{cost_function}的表面通常被认为有更多的非凸结构（相比这些投影所显示的）。
-该投影所显示的主要障碍是初始参数附近的高代价\gls{saddle_points}，但如由蓝色路径所示，\glssymbol{SGD}训练轨迹能轻易地逃脱该鞍点。
-大多数训练时间花费在横穿\gls{cost_function}的相对平坦峡谷，可能由于梯度中的高噪声、或该区域中\gls{hessian}矩阵的不良条件数，或者简单地需要经过间接的弧路径环绕图中可见的高``山'' 。
+大约2012年，在\gls{SGD}开始成功训练非常大的模型之前，相比这些投影所显示的\gls{NN}\gls{cost_function}的表面通常被认为有更多的\gls{nonconvex}结构。
+该投影所显示的主要障碍是初始参数附近的高\gls{cost}\gls{saddle_points}，但如由蓝色路径所示，\glssymbol{SGD}训练轨迹能轻易地逃脱该鞍点。
+大多数训练时间花费在横穿\gls{cost_function}中相对平坦的峡谷，可能由于梯度中的高噪声、或该区域中\gls{hessian}矩阵的\gls{poor_conditioning}，或者需要经过间接的弧路径绕过图中可见的高``山'' 。
 图经\citet{GoodfellowOptimization15}许可改编。
 }
 \label{fig:chap8_plot_atmu_relu_5}
 \end{figure}
+% 280 head
 
+
+% -- 279 end
 对于\gls{newton_method}而言，显然\gls{saddle_points}会是一个问题。
 \gls{GD}旨在朝``下坡路''移动，而非明确寻求\gls{critical_points}。
 而\gls{newton_method}的目标是寻求梯度为零的点。
 没有适当的修改，\gls{newton_method}会跳进一个\gls{saddle_points}。
-高维空间中\gls{saddle_points}的扩散或许解释了为什么二阶方法不能成功替换\gls{GD}用于\gls{NN}训练中。
+高维空间中\gls{saddle_points}的扩散或许解释了在\gls{NN}训练中为什么\gls{second_order_method}无法成功取代\gls{GD}。
 \cite{Dauphin-et-al-NIPS2014-small}介绍了二阶优化的\firstgls{saddle_free_newton_method}，并表明和传统算法相比有显著改进。
-二阶方法仍然难以扩展到大型\gls{NN}，但是如果这类无鞍算法能够扩展的话，还是很有希望的。
+\gls{second_order_method}仍然难以扩展到大型\gls{NN}，但是如果这类无鞍算法能够扩展的话，还是很有希望的。
+% -- 280 mid
 
-% -- 279 --
 
-除了极小点和\gls{saddle_points}，还存在其他梯度为零的点。
-例如从优化的角度看与\gls{saddle_points}很相似的极大点，很多算法不会收敛到极大点，然而未修改的\gls{newton_method}会。
-和极小点一样，许多类的随机函数的极大点在高维空间中也是指数级稀少。
+除了\gls{minima}和\gls{saddle_points}，还存在其他梯度为零的点。
+例如从优化的角度看与\gls{saddle_points}很相似的\gls{maxima}，很多算法不会收敛到\gls{maxima}，然而未修改的\gls{newton_method}会。
+和\gls{minima}一样，许多类的随机函数的\gls{maxima}在高维空间中也是指数级稀少。
+% -- 280 mid
 
-也可能会有恒值的宽而平坦的区域。
+
+也可能会有恒值的、宽且平坦的区域。
 在这些区间，梯度和\gls{hessian}矩阵都是零。
-这种退化的情形是所有数值优化算法的主要问题。
-在凸问题中，一个宽而平的区间肯定包含全局极小值，但是对于一般的优化问题而言，
-这样的区域可能会对应着目标方程中一个较高的值。
+这种退化的情形是所有\gls{nume_optimization}算法的主要问题。
+在凸问题中，一个宽而平的区间肯定包含\gls{global_minima}，但是对于一般的优化问题而言，
+这样的区域可能会对应着\gls{objective_function}中一个较高的值。
+% -- 280 end
 
-% -- 280 --
 
 \subsection{悬崖和梯度爆炸}
 \label{sec:cliffs_and_exploding_gradients}
+% 281 head
 多层\gls{NN}通常有像悬崖一样的斜率较大区域，如\figref{fig:chap8_cliff}所示。
 这是由于几个较大的权重相乘导致的。
 遇到斜率极大的悬崖结构时，梯度更新会很大程度地改变参数值，通常会跳过这类悬崖结构。
+% 281 head
 
+
+% 281 end
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -536,13 +554,16 @@
 图经 \citet{Pascanu+al-ICML2013-small}许可改编。}
 \label{fig:chap8_cliff}
 \end{figure}
+% 281 end
 
 
 不管我们是从上还是从下接近悬崖，情况都很糟糕，但幸运的是可以用使用\secref{sec:clipping_gradients}介绍的启发式\firstgls{gradient_clipping}来避免其主要缺点。
-基本想法源自考虑到梯度并没有指明最佳步长，只是说明在无限小区域内的最佳方向。
-当传统的\gls{GD}算法提议更新很大一步时，启发式\gls{gradient_clipping}会干涉去减小步长，从而使其不太可能走出梯度很大的悬崖区域。
-悬崖结构在\gls{RNN}的\gls{cost_function}中很常见，因为这类模型会涉及到多个时间步长因素的相乘。
+其基本想法源自考虑到梯度并没有指明最佳步长，只是说明在无限小区域内的最佳方向。
+当传统的\gls{GD}算法提议更新很大一步时，启发式\gls{gradient_clipping}会干涉去减小步长，从而使其不太可能走出梯度近似为\gls{steepest}方向的悬崖区域。
+悬崖结构在\gls{RNN}的\gls{cost_function}中很常见，因为这类模型会涉及到多个因素的相乘，每个因素对应了一个\gls{time_step}。
 因此，长期时间序列会产生大量相乘。
+% 281 mid
+
 
 \subsection{\glsentrytext{long_term_dependency}}
 \label{sec:long_term_dependencies}
@@ -1123,9 +1144,9 @@ AdaGrad在某些\gls{DL}模型上效果不错，但不是全部。
 
 \subsection{RMSProp}
 \label{sec:rmsprop}
-\textbf{RMSProp}算法\citep{Hinton-ipam2012}修改AdaGrad以在非凸设定下效果更好，改变梯度积累为指数加权的移动均值。
+\textbf{RMSProp}算法\citep{Hinton-ipam2012}修改AdaGrad以在\gls{nonconvex}设定下效果更好，改变梯度积累为指数加权的移动均值。
 AdaGrad旨在应用于凸问题时快速收敛。
-当应用于非凸函数训练\gls{NN}时，学习轨迹可能穿过了很多不同的结构，最终到达一个局部是凸碗的区域。
+当应用于\gls{nonconvex}函数训练\gls{NN}时，学习轨迹可能穿过了很多不同的结构，最终到达一个局部是凸碗的区域。
 AdaGrad根据平方梯度的整个历史收缩\gls{learning_rate}，可能使得\gls{learning_rate}在达到这样的凸结构前就变得太小了。
 RMSProp使用指数衰减平均以丢弃遥远过去的历史，使其能够在找到凸碗状结构后快速收敛，
 它就像一个初始化于该碗状结构的AdaGrad算法实例。
@@ -1279,7 +1300,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 % -- 303 --
 
 在\secref{sec:plateaus_saddle_points_and_other_flat_regions}，我们讨论了\gls{newton_method}只适用于\gls{hessian}是正定的情况。
-在\gls{DL}中，\gls{objective_function}的表面通常具有非凸的很多特点，如\gls{saddle_points}。
+在\gls{DL}中，\gls{objective_function}的表面通常具有\gls{nonconvex}的很多特点，如\gls{saddle_points}。
 因此使用\gls{newton_method}是有问题的。
 如果\gls{hessian}矩阵的特征值并不都是正的，例如，靠近\gls{saddle_points}处，\gls{newton_method}实际上会导致更新朝错误的方向移动。
 这种情况可以通过正则化\gls{hessian}来避免。
@@ -1620,9 +1641,9 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 % -- 313 --
 
-在非凸问题中，优化轨迹的路径可以非常复杂，经过了许多不同的区域。
+在\gls{nonconvex}问题中，优化轨迹的路径可以非常复杂，经过了许多不同的区域。
 包括参数空间中遥远过去的点，可能与当前点在\gls{cost_function}上相隔很大的障碍，看上去不像一个有用的行为。
-其结果是，当应用Polyak平均于非凸问题时，通常会使用指数衰减计算平均值：
+其结果是，当应用Polyak平均于\gls{nonconvex}问题时，通常会使用指数衰减计算平均值：
 \begin{equation}
     \hat{\Vtheta}^{(t)} = \alpha \hat{\Vtheta}^{(t-1)} + (1-\alpha) \Vtheta^{(t)} .
 \end{equation}
@@ -1757,7 +1778,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 \begin{equation}
     J^{(i)}(\Vtheta) = \SetE_{\theta' \sim \mathcal{N}(\Vtheta'; \Vtheta, \sigma^{(i)2})} J(\Vtheta')
 \end{equation}
-这个方法的直觉是有些非凸函数在模糊后会近似凸的。
+这个方法的直觉是有些\gls{nonconvex}函数在模糊后会近似凸的。
 在许多情况下，这种模糊保留了关于全局极小值的足够信息，我们可以通过逐步求解更少模糊的问题来求解全局极小值。
 这种方法有三种可能失败的方式。
 首先，它可能成功地定义了一连串\gls{cost_function}，并从开始的一个凸函数起（逐一地）沿着函数链最佳轨迹逼近全局最小值，但可能需要非常多的逐步\gls{cost_function}，整个过程的成本仍然很高。
