@@ -320,27 +320,33 @@
 在训练\gls{NN}时，我们肯定会遇到一般的非凸情况。
 即使是\gls{convex_optimization}，也并非没有任何问题。
 在这一节中，我们会总结几个训练\gls{deep_model}时会涉及到的主要挑战。
+% -- 275 mid
 
-\subsection{病态}
+
+\subsection{\glsentrytext{ill_conditioning}}
 \label{sec:ill_conditioning}
 在优化凸函数时，会遇到一些挑战。
-这其中最突出的是\gls{hessian}矩阵$\MH$的病态（ill-conditioning）。
-这是数值优化，\gls{convex_optimization}或其他形式的优化中普遍存在的问题，更多细节请参看\secref{sec:beyond_the_gradient_jacobian_and_hessian_matrices}。
+这其中最突出的是\gls{hessian}矩阵$\MH$的\gls{ill_conditioning}。
+这是\gls{nume_optimization}、\gls{convex_optimization}或其他形式的优化中普遍存在的问题，更多细节请参看\secref{sec:beyond_the_gradient_jacobian_and_hessian_matrices}。
+% -- 275 mid
 
-病态问题一般被认为存在于\gls{NN}训练过程中。
-病态体现在\gls{SGD}会``卡''在某些情况，此时即使很小的更新步长也会增加\gls{cost_function}。
+\gls{ill_conditioning}问题一般被认为存在于\gls{NN}训练过程中。
+\gls{ill_conditioning}体现在\gls{SGD}会``卡''在某些情况，此时即使很小的更新步长也会增加\gls{cost_function}。
+% -- 275 mid
 
-回顾\eqnref{eq:4.9}，\gls{cost_function}的二阶系列展开预测\gls{GD}中的$-\epsilon\Vg$会增加
+回顾方程\eqnref{eq:4.9}，\gls{cost_function}的二阶\gls{taylor}级数展开预测\gls{GD}中的$-\epsilon\Vg$会增加
 \begin{equation}
     \frac{1}{2} \epsilon^2 \Vg^\top \MH\Vg - \epsilon\Vg^\top\Vg
 \end{equation}
-到损失中。
-当$\frac{1}{2} \epsilon^2 \Vg^\top\MH\Vg$超过$\epsilon\Vg^\top\Vg$时，梯度的病态会成为问题。
-判断病态是否不利于\gls{NN}训练任务，我们可以检测梯度平方范数$\Vg^\top\Vg$和$\Vg^\top \MH\Vg$。
+到代价中。
+当$\frac{1}{2} \epsilon^2 \Vg^\top\MH\Vg$超过$\epsilon\Vg^\top\Vg$时，梯度的\gls{ill_conditioning}会成为问题。
+判断\gls{ill_conditioning}是否不利于\gls{NN}训练任务，我们可以监测平方梯度范数$\Vg^\top\Vg$和$\Vg^\top \MH\Vg$。
 在很多情况中，梯度范数不会在训练过程中显著缩小，但是$\Vg^\top\MH\Vg$的增长会超过一个数量级。
 其结果是尽管梯度很强，学习会变得非常缓慢，因为\gls{learning_rate}必须收缩以弥补更强的曲率。
 如\figref{fig:chap8_grad_norm_increases}所示，成功训练的\gls{NN}中，梯度显著增加。
+% -- 276 head
 
+% -- 276 end
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -348,72 +354,84 @@
 \centerline{\includegraphics{Chapter8/figures/grad_norm_increases_color}}
 \fi
 \caption{\gls{GD}通常不会到达任何类型的\gls{critical_points}。
-此示例中，在用于对象检测的卷积网络的整个训练期间， 梯度范数持续增加。
+此示例中，在用于对象检测的\gls{convolutional_network}的整个训练期间， 梯度范数持续增加。
 (左)各个梯度计算的范数如何随时间分布的散点图。
 为了提高可读性，每\gls{epoch}仅绘制一个梯度范数。 
 我们将所有梯度范数的移动平均绘制为实曲线。
 梯度范数明显随时间增加，而不是如我们所期望的那样随训练过程收敛到\gls{critical_points}而减小。
 (右)尽管梯度递增，训练过程却相当成功。 
-验证集上的分类误差可以降低到较低水平。
+\gls{validation_set}上的分类误差可以降低到较低水平。
 }
 \label{fig:chap8_grad_norm_increases}
 \end{figure}
+% -- 276 end
 
 
-% -- 275 --
+% -- 276 mid
+尽管\gls{ill_conditioning}存在于包括\gls{NN}训练的其他情况中，有些适用于其他情况的解决\gls{ill_conditioning}的技术并不适用于\gls{NN}。
+例如，\gls{newton_method}在解决带有\gls{poor_conditioning}的\gls{hessian}矩阵的\gls{convex_optimization}问题时，是一个非常优秀的工具，
+但是我们将会在以下小节中说明\gls{newton_method}运用在\gls{NN}前需要很大的改动。
 
-尽管病态存在于包括\gls{NN}训练的其他情况中，有些适用于其他情况的解决病态的技术并不适用于\gls{NN}。
-例如，牛顿法在解决糟糕条件的\gls{hessian}矩阵时，是一个非常优秀的工具，
-但是我们将会在以下小节中说明牛顿法运用在\gls{NN}前需要很大的改动。
 
+% -- 276 mid
 \subsection{\glsentrytext{local_minima}}
 \label{sec:local_minima}
-\gls{convex_optimization}问题的一个突出特点是其可以归约为寻找一个局部极小值的问题。
-任何一个局部极小值都是全局最小值。
-有些凸函数的底部是一个平坦的区域，而不是单一的全局最小点，但该平坦区域中的任意点都是可行最优解。
+\gls{convex_optimization}问题的一个突出特点是其可以归约为寻找一个\gls{local_minimum}的问题。
+任何一个\gls{local_minimum}都是\gls{global_minimum}。
+有些凸函数的底部是一个平坦的区域，而不是单一的\gls{global_minimum}，但该平坦区域中的任意点都是一个可以接受的解。
 优化一个凸问题时，若发现了任何形式的\gls{critical_points}，我们都会知道已经找到了一个很好的解。
+% -- 277 head
 
-% -- 276 --
 
-对于非凸函数时，如\gls{NN}，有可能会存在多个局部极小值。
-事实上，几乎所有的\gls{deep_model}基本上都会有非常多的局部极小值。
-然而，我们会发现这并不是一个严重的问题。
+对于非凸函数时，如\gls{NN}，有可能会存在多个\gls{local_minima}。
+事实上，几乎所有的\gls{deep_model}基本上都会有非常多的\gls{local_minima}。
+然而，我们会发现这并不是主要问题。
+% -- 277 mid
+
 
 由于\firstgls{model_identifiability}问题，\gls{NN}和任意具有多个等效参数化\gls{latent_variable}的模型都会具有多个局部极小值。
-如果一个足够大的\gls{training_set}可以唯一确定一组模型参数，那么该模型被称为可辨认的。
-带有\gls{latent_variable}的模型通常是不可辨认的，因为通过批次交换\gls{latent_variable}我们能得到等价的模型。
-例如，考虑\gls{NN}的第一层，我们可以交换单元$i$和单元$j$的传入权重向量，传出权重向量而得到等价的模型。
-如果\gls{NN}有$m$层，每层有$n$个单元，那么会有$n!^m$方式重新排布\gls{hidden_unit}。
+如果一个足够大的\gls{training_set}可以唯一确定一组模型参数，那么该模型被称为\gls{identifiable}。
+带有\gls{latent_variable}的模型通常是不\gls{identifiable}，因为通过相互交换\gls{latent_variable}我们能得到等价的模型。
+例如，考虑\gls{NN}的第一层，我们可以交换单元$i$和单元$j$的传入权重向量、传出权重向量而得到等价的模型。
+如果\gls{NN}有$m$层，每层有$n$个单元，那么会有$n!^m$种排列\gls{hidden_unit}的方式。
 这种不可辨认性被称为\firstgls{weight_space_symmetry}。
+% -- 277 mid
 
-包括权重空间对称性，很多\gls{NN}还有其他导致不可辨认的原因。
+
+除了\gls{weight_space_symmetry}，很多\gls{NN}还有其他导致不可辨认的原因。
 例如，在任意\gls{rectified_linear}网络或者\gls{maxout}网络中，
-我们可以放大传入权重和\gls{bias_aff} $\alpha$倍，然后缩小传出权重$\frac{1}{\alpha}$倍，而保持模型等价。
-这意味着，如果\gls{cost_function}不包括如权重衰减这种直接依赖于权重而非模型输出的项，那么\gls{rectified_linear}网络或者\gls{maxout}网络的每一个局部极小解都在等价局部极小解的$(m\times n)$维双曲线上。
+我们可以将传入权重和\gls{bias_aff}乘以 $\alpha$倍，然后将传出权重乘以$\frac{1}{\alpha}$倍，而保持模型等价。
+这意味着，如果\gls{cost_function}不包括如\gls{weight_decay}这种直接依赖于权重而非模型输出的项，那么\gls{rectified_linear}网络或者\gls{maxout}网络的每一个\gls{local_minimum}都在等价的\gls{local_minima}的$(m\times n)$维双曲线上。
+% -- 277 mid
 
-这些\gls{model_identifiability}问题意味着\gls{NN}\gls{cost_function}具有非常多，甚至无限多的局部极小解。
-然而，所有这些由于不可辨识性问题产生的局部极小解都有相同的\gls{cost_function}值。
-因此，这些局部极小解并非是非凸所带来的问题。
 
-如果局部极小解和全局极小解相差很大时，那么此时多个局部极小解会带来很大的隐患。
-我们可以构建没有\gls{hidden_unit}的小规模\gls{NN}，其局部极小值和全局极小值相差很远\citep{Sontag-cs89,Brady89,Gori-pami91}。
-如果偏差严重的局部极小值是常见的，那么这将给基于梯度的优化算法带来极大的问题。
+这些\gls{model_identifiability}问题意味着\gls{NN}\gls{cost_function}具有非常多、甚至无限多的\gls{local_minima}。
+然而，所有这些由于不可辨识性问题产生的\gls{local_minima}都有相同的\gls{cost_function}值。
+因此，这些\gls{local_minima}并非是非凸所带来的问题。
+% -- 277 mid
 
-% -- 277 --
 
-对于实际中感兴趣的网络，是否存在大量偏差严重的局部极小值，优化算法是否会碰到这些局部极小值，都是尚未解决的公开问题。
-多年来，大多数从业者认为局部极小值是困扰\gls{NN}优化的常见问题。
+如果\gls{local_minima}相比\gls{global_minimum}拥有很大的\gls{cost}，\gls{local_minima}会带来很大的隐患。
+我们可以构建没有\gls{hidden_unit}的小规模\gls{NN}，其\gls{local_minima}的\gls{cost}比\gls{global_minimum}的\gls{cost}大很多~\citep{Sontag-cs89,Brady89,Gori-pami91}。
+如果具有很大\gls{cost}的\gls{local_minima}是常见的，那么这将给基于梯度的优化算法带来极大的问题。
+% -- 277 end
+
+
+<bad>对于实际中感兴趣的网络，是否存在大量\gls{cost}很高的\gls{local_minima}，优化算法是否会碰到这些\gls{local_minima}，都是尚未解决的公开问题。
+多年来，大多数从业者认为\gls{local_minima}是困扰\gls{NN}优化的常见问题。
 如今，情况有所变化。
 这个问题仍然是学术界的热点问题，但是学者们现在猜想，对于足够大的\gls{NN}而言，
-大部分局部极小值都具有很小的\gls{cost_function}，我们能不能找到真正的全局极小值并不重要，而是需要在参数空间中找到一个具有很少损失的点\citep{Saxe-et-al-ICLR13,Dauphin-et-al-NIPS2014-small,GoodfellowOptimization15,Choromanska-et-al-AISTATS2015}。
+大部分\gls{local_minima}都具有很小的\gls{cost_function}，我们能不能找到真正的\gls{global_minimum}并不重要，而是需要在参数空间中找到一个具有很少（但不是最小）\gls{cost}的点~\citep{Saxe-et-al-ICLR13,Dauphin-et-al-NIPS2014-small,GoodfellowOptimization15,Choromanska-et-al-AISTATS2015}。
+% 278 head
 
-很多从业者将\gls{NN}优化中的所有困难都归结于局部极小值。
-我们鼓励从业者要仔细测试特定的问题。
-一种能够排除局部极小值是主要问题的检测方法是画出梯度范数随时间的变化。
-如果梯度范数没有缩小到一个微小的值，那么该问题既不是局部极小值，也不是其他形式的\gls{critical_points}。
-这种消极的测试可以排除局部极小值是造成问题的原因。
-在高维空间中，很难正面证明并非是局部极小值导致的问题。
-许多并非局部极小值的结构也具有很小的梯度。
+很多从业者将\gls{NN}优化中的所有困难都归结于\gls{local_minima}。
+我们鼓励从业者要仔细分析特定的问题。
+一种能够排除\gls{local_minima}是主要问题的检测方法是画出梯度范数随时间的变化。
+如果梯度范数没有缩小到一个微小的值，那么该问题既不是\gls{local_minima}，也不是其他形式的\gls{critical_points}。
+%这种消极的测试可以排除局部极小值是造成问题的原因。
+在高维空间中，很难正面证明是\gls{local_minima}导致的问题。
+许多并非\gls{local_minima}的结构也具有很小的梯度。
+% 278 mid
 
 \subsection{高原、\glsentrytext{saddle_points}和其他平坦区域}
 \label{sec:plateaus_saddle_points_and_other_flat_regions}
@@ -478,10 +496,10 @@
 \label{fig:chap8_plot_atmu_relu_5}
 \end{figure}
 
-对于牛顿法而言，显然\gls{saddle_points}会是一个问题。
+对于\gls{newton_method}而言，显然\gls{saddle_points}会是一个问题。
 \gls{GD}旨在朝``下坡路''移动，而非明确寻求\gls{critical_points}。
-而牛顿法的目标是寻求梯度为零的点。
-没有适当的修改，牛顿法会跳进一个\gls{saddle_points}。
+而\gls{newton_method}的目标是寻求梯度为零的点。
+没有适当的修改，\gls{newton_method}会跳进一个\gls{saddle_points}。
 高维空间中\gls{saddle_points}的扩散或许解释了为什么二阶方法不能成功替换\gls{GD}用于\gls{NN}训练中。
 \cite{Dauphin-et-al-NIPS2014-small}介绍了二阶优化的\firstgls{saddle_free_newton_method}，并表明和传统算法相比有显著改进。
 二阶方法仍然难以扩展到大型\gls{NN}，但是如果这类无鞍算法能够扩展的话，还是很有希望的。
@@ -489,7 +507,7 @@
 % -- 279 --
 
 除了极小点和\gls{saddle_points}，还存在其他梯度为零的点。
-例如从优化的角度看与\gls{saddle_points}很相似的极大点，很多算法不会收敛到极大点，然而未修改的牛顿法会。
+例如从优化的角度看与\gls{saddle_points}很相似的极大点，很多算法不会收敛到极大点，然而未修改的\gls{newton_method}会。
 和极小点一样，许多类的随机函数的极大点在高维空间中也是指数级稀少。
 
 也可能会有恒值的宽而平坦的区域。
@@ -618,7 +636,7 @@
 \gls{objective_function}可能有诸如病态条件或不连续导数的问题，使得梯度为\gls{objective_function}提供好模型的区间非常小。
 在这些情况下，步长为$\epsilon$的\gls{GD}可能定义了一个寻求解法的合理的短路经，但是我们只能计算步长为$\delta \ll \epsilon$的局部下降方向。
 在这些情况下，局部下降或许能 定义一个寻求解法的路径，但是该路径包含很多次更新，因此遵循该路径会带来很高的计算代价。
-有时，\gls{objective_function}有一个宽而平的区域，或是我们试图寻求精确的\gls{critical_points}（通常只发生于显示求解\gls{critical_points}的方法，如牛顿法），局部信息不能为我们提供任何指导。
+有时，\gls{objective_function}有一个宽而平的区域，或是我们试图寻求精确的\gls{critical_points}（通常只发生于显示求解\gls{critical_points}的方法，如\gls{newton_method}），局部信息不能为我们提供任何指导。
 在这些情况下，局部下降不能定义寻求解法的路径。
 在其他情况下，局部移动可能太过贪心化，朝着\gls{GD}方向移动，却远离了任何解决方案，如\figref{fig:chap8_bad_global}所示，或者是沿着一个不必要的长路径到达解决方法，如\figref{fig:chap8_plot_atmu_relu_5}所示。
 目前，我们还不了解这些问题中的哪一个与\gls{NN}优化难题最相关，这是研究领域的热点方向。
@@ -1005,7 +1023,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 如果权重太小，那么当激励值在\gls{minibatch}上前向传播于网络时，激励值的范围会缩小。
 通过重复识别具有不可接受的激励小值的第一层，并提高其权重，最终有可能得到一个全部都是合理初始激励的网络。
 如果学习在这点上仍然很慢，观测下梯度的范围或标准差可能也会有所帮助。
-这个过程原则上是自动的，且通常计算量低于基于验证集误差的\gls{hyperparameter}优化，因为它是基于初始模型在单批数据上的行为反馈，而不是在验证集上训练模型的反馈。
+这个过程原则上是自动的，且通常计算量低于基于\gls{validation_set}误差的\gls{hyperparameter}优化，因为它是基于初始模型在单批数据上的行为反馈，而不是在\gls{validation_set}上训练模型的反馈。
 由于这个协议很长时间都被启发式使用，最近\cite{mishkin2015all}更正式地确定，研究了该协议。
 
 目前为止，我们关注在权重的初始化上。
@@ -1232,14 +1250,14 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 
 % -- 302 --
 
-\subsection{牛顿方法}
+\subsection{\glsentrytext{newton_method}}
 \label{sec:newton_method}
 在\secref{sec:gradient_based_optimization}，我们介绍了二阶梯度方法。
 与一阶方法相比，二阶方法使用二阶导数改进了优化。
-最广泛使用的二阶方法是牛顿法。
-我们现在更详细地描述牛顿法，重点在其应用于\gls{NN}的训练。
+最广泛使用的二阶方法是\gls{newton_method}。
+我们现在更详细地描述\gls{newton_method}，重点在其应用于\gls{NN}的训练。
 
-牛顿法是基于二阶泰勒级数展开在某点$\Vtheta_0$附近来近似$J(\Vtheta)$的优化方法，其忽略了高阶导数：
+\gls{newton_method}是基于二阶泰勒级数展开在某点$\Vtheta_0$附近来近似$J(\Vtheta)$的优化方法，其忽略了高阶导数：
 \begin{equation}
     J(\Vtheta) \approx J(\Vtheta_0) + (\Vtheta - \Vtheta_0)^\top \nabla_{\Vtheta}   
     J(\Vtheta_0) + \frac{1}{2} (\Vtheta - \Vtheta_0)^\top \MH(\Vtheta - \Vtheta_0),
@@ -1250,33 +1268,33 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 \label{eq:8.27}
     \Vtheta^* = \Vtheta_0 - \MH^{-1}\nabla_{\Vtheta} J(\Vtheta_0).
 \end{equation}
-因此，对于局部的二次函数（具有正定的$\MH$），用$\MH^{-1}$重新调整梯度，牛顿法会直接跳到极小值。
-如果\gls{objective_function}是凸的但非二次的（有高阶项），该更新会是迭代的，得到和牛顿法相关的算法，如\algref{alg:newton}所示。
+因此，对于局部的二次函数（具有正定的$\MH$），用$\MH^{-1}$重新调整梯度，\gls{newton_method}会直接跳到极小值。
+如果\gls{objective_function}是凸的但非二次的（有高阶项），该更新会是迭代的，得到和\gls{newton_method}相关的算法，如\algref{alg:newton}所示。
 
-对于非二次的表面，只要\gls{hessian}保持正定，牛顿法能够迭代地使用。
+对于非二次的表面，只要\gls{hessian}保持正定，\gls{newton_method}能够迭代地使用。
 这意味着一个两步迭代过程。
 首先，更新或计算\gls{hessian}逆（通过更新二阶近似）。
 其次，根据\eqnref{eq:8.27}更新参数。
 
 % -- 303 --
 
-在\secref{sec:plateaus_saddle_points_and_other_flat_regions}，我们讨论了牛顿法只适用于\gls{hessian}是正定的情况。
+在\secref{sec:plateaus_saddle_points_and_other_flat_regions}，我们讨论了\gls{newton_method}只适用于\gls{hessian}是正定的情况。
 在\gls{DL}中，\gls{objective_function}的表面通常具有非凸的很多特点，如\gls{saddle_points}。
-因此使用牛顿法是有问题的。
-如果\gls{hessian}矩阵的特征值并不都是正的，例如，靠近\gls{saddle_points}处，牛顿法实际上会导致更新朝错误的方向移动。
+因此使用\gls{newton_method}是有问题的。
+如果\gls{hessian}矩阵的特征值并不都是正的，例如，靠近\gls{saddle_points}处，\gls{newton_method}实际上会导致更新朝错误的方向移动。
 这种情况可以通过正则化\gls{hessian}来避免。
 常用的正则化策略包括在\gls{hessian}矩阵对角线上增加常数$\alpha$。
 正则化更新变为
 \begin{equation}
     \Vtheta^* = \Vtheta_0 - [ H( f(\Vtheta_0)) + \alpha \MI  ]^{-1} \nabla_{\Vtheta} f(\Vtheta_0).
 \end{equation}
-这个正则化策略用于牛顿法的近似，例如Levenberg-Marquardt算法\citep{Levenberg44,Marquardt63}，只要\gls{hessian}矩阵的负特征值仍然相对接近零，就会效果很好。
+这个正则化策略用于\gls{newton_method}的近似，例如Levenberg-Marquardt算法\citep{Levenberg44,Marquardt63}，只要\gls{hessian}矩阵的负特征值仍然相对接近零，就会效果很好。
 在曲率有更极端方向的情况下，$\alpha$的值必须足够大，以抵消负特征值。
-然而，如果$\alpha$持续增加，\gls{hessian}矩阵会变得由对角矩阵$\alpha \MI$主导，通过牛顿法所选择的方向会收敛到普通梯度除以$\alpha$。
-当很强的负曲率存在时，$\alpha$可能需要特别大，以至于牛顿法比选择合适\gls{learning_rate}的\gls{GD}的步长更小。
+然而，如果$\alpha$持续增加，\gls{hessian}矩阵会变得由对角矩阵$\alpha \MI$主导，通过\gls{newton_method}所选择的方向会收敛到普通梯度除以$\alpha$。
+当很强的负曲率存在时，$\alpha$可能需要特别大，以至于\gls{newton_method}比选择合适\gls{learning_rate}的\gls{GD}的步长更小。
 
 \begin{algorithm}[ht]
-\caption{目标为$J(\Vtheta)= \frac{1}{m} \sum_{i=1}^m L(f(\Vx^{(i)};\Vtheta), y^{(i)})$的牛顿法}
+\caption{目标为$J(\Vtheta)= \frac{1}{m} \sum_{i=1}^m L(f(\Vx^{(i)};\Vtheta), y^{(i)})$的\gls{newton_method}}
 \label{alg:newton}
 \begin{algorithmic}
 \REQUIRE 初始参数$\Vtheta_{0}$
@@ -1294,11 +1312,11 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 \end{algorithm}
 
 
-除了\gls{objective_function}的某些特征带来的挑战，如\gls{saddle_points}，牛顿法用于训练大型\gls{NN}还受限于其显著的计算负担。
-\gls{hessian}矩阵中元素树木是参数数量的平方，因此，如果参数数目为$k$（甚至是在非常小的\gls{NN}中$k$也可能是百万级别），牛顿法需要计算$k\times k$矩阵的逆，计算复杂度为$O(k^3)$。
+除了\gls{objective_function}的某些特征带来的挑战，如\gls{saddle_points}，\gls{newton_method}用于训练大型\gls{NN}还受限于其显著的计算负担。
+\gls{hessian}矩阵中元素树木是参数数量的平方，因此，如果参数数目为$k$（甚至是在非常小的\gls{NN}中$k$也可能是百万级别），\gls{newton_method}需要计算$k\times k$矩阵的逆，计算复杂度为$O(k^3)$。
 另外，由于参数将每次更新都会改变，每次训练迭代都需要计算\gls{hessian}矩阵的逆。
-其结果是，只有参数很少的网络才能在实际中用牛顿法训练。
-在本节的剩余部分，我们将讨论一些试图保持牛顿法优点，同时避免计算障碍的替代算法。
+其结果是，只有参数很少的网络才能在实际中用\gls{newton_method}训练。
+在本节的剩余部分，我们将讨论一些试图保持\gls{newton_method}优点，同时避免计算障碍的替代算法。
 
 \subsection{\glsentrytext{CG}}
 \label{sec:conjugate_gradients}
@@ -1347,7 +1365,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 两个方向$\Vd_t$和$\Vd_{t-1}$被称为共轭的，如果$\Vd_t^\top \MH \Vd_{t-1} = 0$，其中$\MH$是\gls{hessian}矩阵。
 
 适应共轭的直接方法会涉及到$\MH$特征向量的计算以选择$\beta_t$。
-这将无法满足我们发展对于大问题比牛顿法更加计算可行的方法的目标。
+这将无法满足我们发展对于大问题比\gls{newton_method}更加计算可行的方法的目标。
 我们能不进行这些计算而得到共轭方向么？
 幸运的是这个问题的答案是肯定的。
 
@@ -1412,15 +1430,15 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 
 \subsection{\glsentrytext{BFGS}}
 \label{sec:bfgs}
-\textbf{Broyden-Fletcher-Goldfarb-Shanno}（\textbf{\gls{BFGS}}）算法具有牛顿法的一些优点，但没有牛顿法的计算负担。
+\textbf{Broyden-Fletcher-Goldfarb-Shanno}（\textbf{\gls{BFGS}}）算法具有\gls{newton_method}的一些优点，但没有\gls{newton_method}的计算负担。
 在这方面，\gls{BFGS}和CG很像。
 然而，\gls{BFGS}使用了一个更直接的方法近似牛顿更新。回顾牛顿更新由下式给出
 \begin{equation}
     \Vtheta^* = \Vtheta_0 - \MH^{-1} \nabla_{\Vtheta} J(\Vtheta_0),
 \end{equation}
 其中，$\MH$是$J$相对于$\Vtheta$的\gls{hessian}矩阵在$\Vtheta_0$处的估计。
-运动牛顿法的主要计算难点在于计算\gls{hessian}逆$\MH^{-1}$。
-拟牛顿法所采用的方法（\gls{BFGS}是其中最突出的）是用矩阵$\MM_t$近似逆，迭代地低秩更新精度以更好近似$\MH^{-1}$。
+运动\gls{newton_method}的主要计算难点在于计算\gls{hessian}逆$\MH^{-1}$。
+拟\gls{newton_method}所采用的方法（\gls{BFGS}是其中最突出的）是用矩阵$\MM_t$近似逆，迭代地低秩更新精度以更好近似$\MH^{-1}$。
 
 % -- 307 --
 
@@ -1587,7 +1605,7 @@ $\hat{y}$的更新值为
 当一个变量的值很大程度地影响另一个变量的最优值时，坐标下降不是一个很好的方法，如函数$f(\Vx)=(x_1 - x_2)^2+\alpha(x_1^2 + x_2^2)$，其中$\alpha$是正值常数。
 第一项鼓励两个变量具有相似的值，而第二项鼓励它们接近零。
 解是两者都为零。
-牛顿法可以一步解决这个问题，因为它是一个正定二次问题。
+\gls{newton_method}可以一步解决这个问题，因为它是一个正定二次问题。
 但是，对于小值$\alpha$而言，坐标下降会使进展非常缓慢，因为第一项不允许单个变量变为和其他变量当前值显著不同的值。
 
 
