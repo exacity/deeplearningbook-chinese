@@ -1334,7 +1334,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 
 
 除了\gls{objective_function}的某些特征带来的挑战，如\gls{saddle_points}，\gls{newton_method}用于训练大型\gls{NN}还受限于其显著的计算负担。
-\gls{hessian}矩阵中元素树木是参数数量的平方，因此，如果参数数目为$k$（甚至是在非常小的\gls{NN}中$k$也可能是百万级别），\gls{newton_method}需要计算$k\times k$矩阵的逆，计算复杂度为$O(k^3)$。
+\gls{hessian}矩阵中元素数目是参数数量的平方，因此，如果参数数目为$k$（甚至是在非常小的\gls{NN}中$k$也可能是百万级别），\gls{newton_method}需要计算$k\times k$矩阵的逆，计算复杂度为$O(k^3)$。
 另外，由于参数将每次更新都会改变，每次训练迭代都需要计算\gls{hessian}矩阵的逆。
 其结果是，只有参数很少的网络才能在实际中用\gls{newton_method}训练。
 在本节的剩余部分，我们将讨论一些试图保持\gls{newton_method}优点，同时避免计算障碍的替代算法。
