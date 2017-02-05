@@ -532,7 +532,7 @@
 % -- 280 end
 
 
-\subsection{悬崖和梯度爆炸}
+\subsection{悬崖和\glsentrytext{explode_gradient}}
 \label{sec:cliffs_and_exploding_gradients}
 % 281 head
 多层\gls{NN}通常有像悬崖一样的斜率较大区域，如\figref{fig:chap8_cliff}所示。
@@ -565,16 +565,17 @@
 % 281 mid
 
 
+% 281 end
 \subsection{\glsentrytext{long_term_dependency}}
 \label{sec:long_term_dependencies}
-当计算图变得非常之深时，\gls{NN}优化算法必须克服的另一个难题出现了。
-多层前馈网络会有这么深的计算图。
-\chapref{chap:sequence_modeling_recurrent_and_recursive_nets}会介绍的循环网络会在很长的时间序列的每个时间点上重复应用相同的操作，因此也会有很深的计算图。
+当\gls{computational_graph}变得非常之深时，\gls{NN}优化算法必须克服的另一个难题出现了。
+多层\gls{feedforward_network}会有非常深的\gls{computational_graph}。
+\chapref{chap:sequence_modeling_recurrent_and_recursive_nets}会介绍的\gls{recurrent_network}会在很长的时间序列的每个\gls{time_step}上重复应用相同的操作，因此也会有很深的\gls{computational_graph}。
 反复使用相同的参数产生了尤为突出的困难。
+% 282 head
 
-% -- 281 --
 
-例如，假设某个计算图中包含一条重复与矩阵$\MW$相乘的路径。
+例如，假设某个\gls{computational_graph}中包含一条反复与矩阵$\MW$相乘的路径。
 那么$t$步后，相当于和$\MW^t$相乘。
 假设$\MW$有特征值分解$\MW = \MV \text{diag}(\Vlambda) \MV^{-1}$。
 在这种简单的情况下，很容易看到
@@ -582,48 +583,65 @@
   \MW^t = (\MV \text{diag}(\Vlambda) \MV^{-1})^t = \MV\text{diag}(\Vlambda)^t  \MV^{-1}.
 \end{equation}
 当特征值$\lambda_i$不在$1$附近时，若在量级上大于$1$则会爆炸；若小于$1$时则会消失。
-\textbf{梯度消失（或弥散）问题}（\textbf{vanishing gradient problem}）和\textbf{梯度爆炸问题}（\textbf{exploding gradient problem}）是指该计算图上的梯度也会因为$\text{diag}(\Vlambda)^t$大幅度变化。
-消失的梯度使得难以知道参数朝哪个方向移动能够改进\gls{cost_function}，而爆炸梯度会使得学习不稳定。
-之前描述的诱发梯度截断的悬崖结构便是爆炸梯度现象的一个例子。
+\firstgls{vanish_explode_gradient}是指该\gls{computational_graph}上的梯度也会因为$\text{diag}(\Vlambda)^t$大幅度变化。
+\gls{vanish_gradient}使得难以知道参数朝哪个方向移动能够改进\gls{cost_function}，而\gls{explode_gradient}会使得学习不稳定。
+之前描述的促使使用\gls{gradient_clipping}的悬崖结构便是\gls{explode_gradient}现象的一个例子。
+% 282 mid
 
-此处描述的每个时间点重复与$\MW$相乘非常类似于寻求矩阵$\MW$的最大特征值及对应的特征向量的\firstgls{power_method}。
-从这个观点来看，$\Vx^\top\MW^t$最终会丢弃$\Vx$中所有与$\MW$的主特征向量垂直的成分。
 
-循环网络在每个时间步上使用相同的矩阵$\MW$，而前馈网络并没有。
-因而即使是非常深层的前馈网络也能很大程度上避免梯度消失和爆炸问题\citep{Sussillo14}。
+此处描述的每个\gls{time_step}重复与$\MW$相乘非常类似于寻求矩阵$\MW$的最大特征值及对应特征向量的\firstgls{power_method}。
+从这个观点来看，$\Vx^\top\MW^t$最终会丢弃$\Vx$中所有与$\MW$的主特征向量正交的成分。
+% 282 mid
 
-在循环网络已经被更详细地描述了之后，我们将会在\secref{sec:the_challenge_of_long_term_dependencies}进一步讨论循环网络训练中的挑战。
+
+\gls{recurrent_network}在每个\gls{time_step}上使用相同的矩阵$\MW$，而\gls{feedforward_network}并没有。
+因而即使是非常深层的\gls{feedforward_network}也能很大程度上避免\gls{vanish_explode_gradient}~\citep{Sussillo14}。
+% 282 mid
+
+
+在\gls{recurrent_network}已经被更详细地描述了之后，我们将会在\secref{sec:the_challenge_of_long_term_dependencies}进一步讨论\gls{recurrent_network}训练中的挑战。
+% 282 mid
 
 \subsection{非精确梯度}
 \label{sec:inexact_gradients}
 大多数优化算法的出发点都是我们知道精确的梯度或是\gls{hessian}矩阵。
-在实践中，通常这些量会有\gls{noise}，甚至是有偏的估计。
-几乎每一个\gls{DL}算法都需要基于采样的估计，至少使用了小批训练样本计算梯度。
+在实践中，通常这些量会有\gls{noise}，甚至是\gls{biased}的估计。
+几乎每一个\gls{DL}算法都需要基于采样的估计，至少使用了训练样本的\gls{minibatch}来计算梯度。
+% 282 end
 
-% -- 282 --
 
-在其他情况，我们希望最小化的\gls{objective_function}实际上是不可解的。
-当\gls{objective_function}不可解时，通常其梯度也是不可解的。
+在其他情况，我们希望最小化的\gls{objective_function}实际上是难以处理的。
+当\gls{objective_function}不可解时，通常其梯度也是难以处理的。
 在这种情况下，我们只能近似梯度。
 这些问题主要出现在第三部分中更高级的模型中。
-例如，对比散度是用来近似波尔兹曼机不可解对数似然梯度的一种技术。
+例如，\gls{contrastive_divergence}是用来近似\gls{BM}中难以处理的对数似然梯度的一种技术。
+% 283 head
+
 
 各种\gls{NN}优化算法的设计都考虑到了梯度估计的欠完整性。
-我们可以选择比真实\gls{loss_function}更容易估计的替代\gls{loss_function}来避免这个问题。
+我们可以选择比真实\gls{loss_function}更容易估计的\gls{surrogate_loss_function}来避免这个问题。
+% 283 mid
+
 
 \subsection{局部和全局结构间的弱对应}
 \label{sec:poor_correspondence_between_local_and_global_structure}
-迄今为止，我们讨论的许多问题都是关于\gls{loss_function}在单点的性质——若$J(\Vtheta)$在当前点$\Vtheta$是\gls{poor_conditioning}，或者$\Vtheta$在悬崖中，或者$\Vtheta$是一个隐藏下降梯度的\gls{saddle_points}，那么会很难更新当前步。
+迄今为止，我们讨论的许多问题都是关于\gls{loss_function}在单个点的性质——若$J(\Vtheta)$在当前点$\Vtheta$有着\gls{poor_conditioning}，或者$\Vtheta$在悬崖中，或者$\Vtheta$是一个隐藏下降梯度的\gls{saddle_points}，那么会很难更新当前步。
+% 283 mid
 
-如果其方向在局部改进了很多，但是并没有指向损失低得多的遥远区域，那么有可能在单点处克服以上所有困难，但仍然表现不佳。
+
+如果其方向在局部改进了很多，但是并没有指向\gls{cost}低得多的遥远区域，那么有可能在单点处克服以上所有困难，但仍然表现不佳。
+% 283 mid
+
 
 \cite{GoodfellowOptimization15}认为大部分训练的运行时间取决于到达解决方案的轨迹的长度。 
 如\figref{fig:chap8_plot_atmu_relu_5}所示，学习轨迹将花费大量的时间探寻一个围绕山形结构的宽弧。
+% 283 mid
 
-大多数优化研究的难点集中于训练是否到达了全局最小值，局部最小值，或是\gls{saddle_points}，但在实践中\gls{NN}不会到达任何一种\gls{critical_points}。
+
+大多数优化研究的难点集中于训练是否到达了\gls{global_minimum}、\gls{local_minimum}，或是\gls{saddle_points}，但在实践中\gls{NN}不会到达任何一种\gls{critical_points}。
 \figref{fig:chap8_grad_norm_increases}表明\gls{NN}通常不会到达梯度很小的区域。
 甚至，这些\gls{critical_points}不是必然存在的。
-例如，\gls{loss_function} $-\log p(y\mid\Vx;\Vtheta)$没有全局极小点，而是当模型更自信时会逐渐趋向某个值。    
+例如，\gls{loss_function} $-\log p(y\mid\Vx;\Vtheta)$ 可以没有\gls{global_minimum}，而是当模型更自信时会逐渐趋向某个值。    
 对于具有离散标签$y$和softmax分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类\gls{training_set}上的每个样本，则负对数似然可以任意地趋近于零，但是不可能实际达到零值。
 同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无限大——如果$f(\Vtheta)$能够正确预测所有的\gls{training_set}目标$y$，学习算法会无边界地增加$\beta$。
 如\figref{fig:chap8_bad_global}所示，即使没有局部极小值和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的\gls{cost_function}值。
@@ -983,9 +1001,11 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 它们也有助于避免在每层线性成分的前向或反向传播中丢失信号——矩阵中更大的值在矩阵乘法中有更大的输出。
 如果初始权重太大，那么会在前向传播或反向传播中产生爆炸的值。
 在循环网络中，很大的权重也可能导致\firstgls{chaos}（对于输入中很小的扰动非常敏感，导致确定性前向传播过程表现随机）。
-在一定程度上，梯度爆炸问题可以通过梯度截断来缓解（执行\gls{GD}步骤之前设置梯度的阈值）。
+在一定程度上，梯度爆炸问题可以通过\gls{gradient_clipping}来缓解（执行\gls{GD}步骤之前设置梯度的阈值）。
 较大的权重也会产生使得激励函数饱和的值，导致饱和单元的梯度完全丢失。
 这些竞争因素决定了权重的理想初始大小。
+
+
 
 关于如何初始化网络，正则化和优化有非常不同的视角。
 优化视角建议权重应该足够大以成功传播信息，但是正则化希望其小一点。
@@ -997,6 +1017,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 这个先验表明，单元间彼此互不交互比交互更有可能。
 只有在目标方程的似然项表达出对交互很强的偏好时，单元才会交互。
 另一方面，如果我们初始化$\Vtheta_0$为很大的值，那么我们的先验指定了哪些单元应互相交互，以及它们应如何交互。
+
 
 有些启发式方法可用于选择权重的初始大小。
 一种初始化$m$个输入和$n$输出的全连接层的权重的启发式方法是从分布$U(-\frac{1}{\sqrt{m}}, \frac{1}{\sqrt{m}})$中采样权重，
@@ -1419,7 +1440,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 \STATE 初始化 $g_0 = 0$
 \STATE 初始化 $t = 1$
 \WHILE{没有达到停止\gls{criterion}}
-    \STATE 初始化梯度 $\Vg_{t} = 0$
+    \STATE 初始化梯度 ${\Vg}_{t} = 0$
     \STATE 计算梯度：$\Vg_{t} \leftarrow
          \frac{1}{m}\nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
     \STATE 计算 $\beta_{t} = \frac{(\Vg_{t}-\Vg_{t-1})^\top \Vg_{t}}{\Vg_{t-1}^\top \Vg_{t-1}}$  (Polak-Ribi\`{e}re)
