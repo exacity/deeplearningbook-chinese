@@ -4,23 +4,23 @@
 \label{chap:autoencoders}
 \firstgls{AE}是\gls{NN}的一种，经过训练后能尝试将输入复制到输出。
 \firstgls{AE}内部有一个\gls{hidden_layer} $\Vh$，可以产生\firstgls{code}表示输入。
-该网络可以看作由两部分组成：一个\gls{encoder}函数$ \Vh = f(\Vx)$和一个生成\gls{reconstruction}的\gls{decoder} $\Vr=g(\Vh)$。
+该网络可以看作由两部分组成：一个由函数$ \Vh = f(\Vx)$表示的\gls{encoder}和一个生成\gls{reconstruction}的\gls{decoder} $\Vr=g(\Vh)$。
 \figref{fig:chap14_autoencoder}展示了这种架构。
-如果一个\gls{AE}学会简单地设置$g(f(\Vx)) =\Vx$，那么这个\gls{AE}就不会特别有用。
-相反，\gls{AE}应该被设计成不能学会完美地复制。
-这通常需要强加一些约束，使\gls{AE}只能近似地复制，并只能复制类似训练数据的输入。
-这些约束强制模型划定输入数据不同方面的主次顺序，因此它往往能学习到数据的有用特性。
+如果一个\gls{AE}只是简单地学会将处处设置为$g(f(\Vx)) =\Vx$，那么这个\gls{AE}就没什么特别的用处。。
+相反，我们不应该将\gls{AE}设计成输入到输出完美复制。
+这通常需要向\gls{AE}强加一些约束，使它只能近似地复制，并只能复制与训练数据相似的输入。
+这些约束强制模型考虑输入数据的哪些部分需要被优先复制，因此它往往能学习到数据的有用特性。
 
 
-现代\gls{AE}将\gls{encoder}和\gls{decoder}的思想推广，将其中的确定函数推广为随机映射$p_{\text{encoder}} (\Vh \mid \Vx)$和$p_{\text{decoder}}(\Vx \mid \Vh)$。
+现代\gls{AE}将\gls{encoder}和\gls{decoder}的概念推而广之，将其中的确定函数推广为随机映射$p_{\text{encoder}} (\Vh \mid \Vx)$和$p_{\text{decoder}}(\Vx \mid \Vh)$。
 
 
 数十年间，\gls{AE}的想法一直是\gls{NN}历史景象的一部分~\citep{Lecun-these87,Bourlard88,hinton1994amd-small}。
 传统\gls{AE}被用于\gls{dimensionality_reduction}或特征学习。
-近年来，\gls{AE}与\gls{latent_variable}模型理论的联系将\gls{AE}带到了生成建模的前沿，我们将在\chapref{chap:deep_generative_models}看到更多细节。
-\gls{AE}可以被看作是\gls{feedforward_network}的一种特殊情况，并且可以使用完全相同的技术进行训练，通常使用\gls{minibatch}\gls{GD}法（基于\gls{back_propagation}计算的梯度）。
-不像一般的\gls{feedforward_network}，\gls{AE}也可以使用\firstgls{recirculation}训练\citep{Hinton+McClelland-NIPS1987}，这是一种基于比较原始输入和\gls{reconstruction}输入激活的学习算法。
-相比\gls{back_propagation}算法，\gls{recirculation}算法从生物学上看似更有道理，但很少用于\gls{ML}。
+近年来，\gls{AE}与\gls{latent_variable}模型理论的联系将\gls{AE}带到了生成式建模的前沿，我们将在\chapref{chap:deep_generative_models}揭示更多细节。
+\gls{AE}可以被看作是\gls{feedforward_network}的一个特例，并且可以使用完全相同的技术进行训练，通常使用\gls{minibatch}\gls{GD}法（梯度基于\gls{back_propagation}计算）。
+不同于一般的\gls{feedforward_network}，\gls{AE}也可以使用\firstgls{recirculation}训练\citep{Hinton+McClelland-NIPS1987}，这种学习算法基于比较原始输入的激活和\gls{reconstruction}输入的激活。
+相比\gls{back_propagation}算法，\gls{recirculation}算法更具生物学意义，但很少用于\gls{ML}应用。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -39,7 +39,7 @@
 \section{\glsentrytext{undercomplete}\glsentrytext{AE}}
 \label{sec:undercomplete_autoencoders}
 将输入复制到输出听起来没什么用，但我们通常不关心\gls{decoder}的输出。
-相反，我们希望通过训练\gls{AE}对输入进行复制的任务使$\Vh$获得有用的特性。
+相反，我们希望通过训练\gls{AE}对输入进行复制使$\Vh$获得有用的特性。
 
 
 从\gls{AE}获得有用特征的一种方法是限制$\Vh$的维度比$\Vx$小，这种\gls{code}维度小于输入维度的\gls{AE}称为\firstgls{undercomplete}\gls{AE}。
@@ -50,25 +50,25 @@
 \begin{align}
     L(\Vx, g(f(\Vx))),
 \end{align}
-其中$L$是一个\gls{loss_function}，衡量$g(f(\Vx))$与$\Vx$的不相似性，如\gls{mean_squared_error}。
+其中$L$是一个\gls{loss_function}，惩罚$g(f(\Vx))$与$\Vx$的差异，如\gls{mean_squared_error}。
 
 
-当\gls{decoder}是线性的且$L$是\gls{mean_squared_error}，\gls{undercomplete}的\gls{AE}会学习出与\glssymbol{PCA}相同生成子空间。
-在这种情况下，\gls{AE}学到了训练数据的主元子空间（执行复制任务的副效用）。
+当\gls{decoder}是线性的且$L$是\gls{mean_squared_error}，\gls{undercomplete}的\gls{AE}会学习出与\glssymbol{PCA}相同的生成子空间。
+这种情况下，\gls{AE}在训练来执行复制任务的同时学到了训练数据的主元子空间。
 
 
-因此拥有非线性编码函数$f$和非线性\gls{decoder}函数$g$的\gls{AE}能够学习出更强大的\glssymbol{PCA}非线性推广。
-不幸的是，如果\gls{encoder}和\gls{decoder}被赋予太大的\gls{capacity}，\gls{AE}会执行复制任务而捕捉不到任何有关数据分布的有用信息。
-从理论上说，我们可以想象只有一维\gls{code}的\gls{AE}，但具有一个非常强大的非线性\gls{encoder}，能够将每个训练数据$\Vx^{(i)}$表示为\gls{code} $~i$。
-\gls{decoder}可以学习将这些整数索引映射回特定训练样本的值。
-这种特定情形不会在实践中发生，但它清楚地说明，如果\gls{AE}的\gls{capacity}太大，那训练来执行复制任务的\gls{AE}可能无法学习到数据集的任何有用信息。
+因此拥有非线性\gls{encoder}函数$f$和非线性\gls{decoder}函数$g$的\gls{AE}能够学习出更强大的\glssymbol{PCA}非线性推广。
+不幸的是，如果\gls{encoder}和\gls{decoder}被赋予过大的\gls{capacity}，\gls{AE}会执行复制任务而捕捉不到任何有关数据分布的有用信息。
+从理论上说，我们可以设想这样一个\gls{AE}，它只有一维\gls{code}，但它具有一个非常强大的非线性\gls{encoder}，能够将每个训练数据$\Vx^{(i)}$表示为\gls{code} $~i$。
+而\gls{decoder}可以学习将这些整数索引映射回特定训练样本的值。
+这种特定情形不会在实际情况中发生，但它清楚地说明，如果\gls{AE}的\gls{capacity}太大，那训练来执行复制任务的\gls{AE}可能无法学习到数据集的任何有用信息。
 
 % -- 494 --
 
 \section{正则\glsentrytext{AE}}
 \label{sec:regularized_autoencoders}
 \gls{code}维数小于输入维数的\gls{undercomplete}\gls{AE}可以学习数据分布最显著的特征。
-我们已经看到，如果这类\gls{AE}被赋予过大的\gls{capacity}，它就不能学到任何有用的信息。
+我们已经知道，如果赋予这类\gls{AE}过大的\gls{capacity}，它就不能学到任何有用的信息。
 
 
 如果隐藏\gls{code}的维数允许与输入相等，或隐藏\gls{code}维数大于输入的\firstgls{overcomplete}情况下，会发生类似的问题。
@@ -76,15 +76,15 @@
 
 
 理想情况下，根据要建模的数据分布的复杂性，选择合适的\gls{code}维数和\gls{encoder}、\gls{decoder}\gls{capacity}，就可以成功训练任意架构的\gls{AE}。
-正则\gls{AE}提供这样做的可能。
-正则\gls{AE}使用的\gls{loss_function}可以鼓励模型学习其他特性（除了将输入复制到输出），而不用限制使用浅层的\gls{encoder}和\gls{decoder}以及小的\gls{code}维数来限制模型的\gls{capacity}。
+正则\gls{AE}提供这样的能力。
+正则\gls{AE}使用的\gls{loss_function}可以鼓励模型学习其他特性（除了将输入复制到输出），而不必限制使用浅层的\gls{encoder}和\gls{decoder}以及小的\gls{code}维数来限制模型的\gls{capacity}。
 这些特性包括\gls{sparse}\gls{representation}、\gls{representation}的小导数、以及对噪声或输入缺失的鲁棒性。
-即使模型\gls{capacity}大到足够学习一个简单的复制功能，非线性且\gls{overcomplete}的正则\gls{AE}仍然能学到一些与数据分布相关的有用信息。
+即使模型\gls{capacity}大到足以学习一个无意义的恒等函数，非线性且\gls{overcomplete}的正则\gls{AE}仍然能够从数据中学到一些关于数据分布的有用信息。
 
 
 除了这里所描述的方法（\gls{regularization}\gls{AE}最自然的解释），几乎任何带有\gls{latent_variable}并配有一个\gls{inference}过程（计算给定输入的\gls{latent}表示）的\gls{generative_model}，都可以看作是\gls{AE}的一种特殊形式。
-强调与\gls{AE}联系的两个生成建模方法是\gls{helmholtz_machine}~\citep{Hinton95}的衍生模型，如\gls{VAE}（\secref{sec:variational_autoencoders}）和\gls{GSN}（\secref{sec:generative_stochastic_networks}）。
-这些模型能自然地学习大\gls{capacity}、对输入\gls{overcomplete}的有用编码，而不需要\gls{regularization}。
+强调与\gls{AE}联系的两个生成式建模方法是\gls{helmholtz_machine}~\citep{Hinton95}的衍生模型，如\gls{VAE}（\secref{sec:variational_autoencoders}）和\gls{GSN}（\secref{sec:generative_stochastic_networks}）。
+这些变种（或衍生）\gls{AE}能够学习出高\gls{capacity}且\gls{overcomplete}的模型，进而发现输入数据中有用的结构信息，并且也无需对模型进行\gls{regularization}。
 这些\gls{code}显然是有用的，因为这些模型被训练为近似训练数据的最大概率而不是将输入复制到输出。
 
 % -- 495 --
@@ -98,18 +98,18 @@
 其中$g(\Vh)$是\gls{decoder}的输出，通常$\Vh$是\gls{encoder}的输出，即$\Vh = f(\Vx)$。
 
 
-\gls{sparse}\gls{AE}通常用于学习特征，以便用于其他任务如分类。
+\gls{sparse}\gls{AE}一般用来学习特征，以便用于像分类这样的任务。
 \gls{sparse}\gls{regularization}的\gls{AE}必须反映训练数据集的独特统计特征，而不是简单地充当恒等函数。
 以这种方式训练，执行附带\gls{sparse}惩罚的复制任务可以得到能学习有用特征的模型。
 
 
 我们可以简单地将惩罚项$\Omega(\Vh)$视为加到\gls{feedforward_network}的正则项，这个\gls{feedforward_network}的主要任务是将输入复制到输出（\gls{unsupervised_learning}的目标），并尽可能地根据这些\gls{sparse}特征执行一些\gls{supervised_learning}任务（根据\gls{supervised_learning}的目标）。
-不像其他正则项如\gls{weight_decay}，这个\gls{regularization}没有直观的贝叶斯解释。
+不像其它正则项如\gls{weight_decay}——没有直观的贝叶斯解释。。
 如\secref{sec:maximum_a_posteriori_map_estimation}描述，\gls{weight_decay}和其他正则惩罚可以被解释为一个\glssymbol{MAP}近似贝叶斯\gls{inference}，\gls{regularization}的惩罚对应于模型参数的先验概率分布。
 这种观点认为，\gls{regularization}的最大似然对应最大化$p(\Vtheta \mid \Vx)$， 相当于最大化$\log p(\Vx \mid \Vtheta) + \log p(\Vtheta)$。 $\log p(\Vx \mid \Vtheta)$即通常的数据似然项，参数的对数先验项$\log p(\Vtheta)$则包含了对$\Vtheta$特定值的偏好。
 这种观点在\secref{sec:bayesian_statistics}有所描述。
 正则\gls{AE}不适用这样的解释是因为正则项取决于数据，因此根据定义上（从文字的正式意义）来说，它不是一个先验。
-我们仍可以认为这些正则项隐式地表达了对函数的偏好。
+虽然如此，我们仍可以认为这些正则项隐式地表达了对函数的偏好。
 
 % -- 496 --
 
@@ -163,15 +163,15 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 
 \subsection{\glsentrytext{DAE}}
 \label{sec:sub_denoising_autoencoders}
-除了向\gls{cost_function}增加一个惩罚项，我们也可以改变\gls{reconstruction_error}项得到一个能学到有用信息的\gls{AE}。
+除了向\gls{cost_function}增加一个惩罚项，我们也可以通过改变\gls{reconstruction_error}项来获得一个能学到有用信息的\gls{AE}。
 
 
 传统的\gls{AE}最小化以下目标
 \begin{align}
     L(\Vx, g(f(\Vx))),
 \end{align}
-其中$L$是一个\gls{loss_function}，衡量$g(f(\Vx))$与$\Vx$的不相似性，如它们不相似度的$L^2$范数。
-如果模型被赋予足够的\gls{capacity}，$L$仅仅鼓励$g \circ  f$学成一个恒等函数。
+其中$L$是一个\gls{loss_function}，惩罚$g(f(\Vx))$与$\Vx$的差异，如它们彼此差异的$L^2$范数。
+如果模型被赋予过大的\gls{capacity}，$L$仅仅使得$g \circ  f$学成一个恒等函数。
 
 
 相反，\firstall{DAE}最小化 
@@ -217,18 +217,18 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 
 回忆\secref{sec:universal_approximation_properties_and_depth}，其中提到加深\gls{feedforward_network}有很多优势。
 这些优势也同样适用于\gls{AE}，因为它也属于\gls{feedforward_network}。
-此外，\gls{encoder}和\gls{decoder}自身都是一个\gls{feedforward_network}，因此这两个部分也能各自从深度中获得好处。
+此外，\gls{encoder}和\gls{decoder}各自都是一个\gls{feedforward_network}，因此这两个部分也能各自从深度结构中获得好处。
 
 
 \gls{universal_approximation_theorem}保证至少有一层\gls{hidden_layer}且\gls{hidden_unit}足够多的\gls{feedforward_neural_network}能以任意精度近似任意函数（在很大范围里），这是非平凡深度的一个主要优点。
-这意味着单层\gls{hidden_layer}的\gls{AE}在数据范围能表示任意接近数据的恒等函数。
+这意味着具有单\gls{hidden_layer}的\gls{AE}能表示在数据域内任意逼近数据的恒等函数。
 但是，从输入到\gls{code}的映射是浅层的。
 这意味这我们不能任意添加约束，比如约束\gls{code}\gls{sparse}。
 \gls{encoder}至少包含一层额外\gls{hidden_layer}的深度\gls{AE}能够在给定足够多\gls{hidden_unit}的情况，以任意精度近似任何从输入到\gls{code}的映射。
 
 % -- 499 --
 
-深度可以指数地减少表示某些函数的计算成本。
+深度可以指数地降低表示某些函数的计算成本。
 深度也能指数地减少学习一些函数所需的训练数据量。
 读者可以参考\secref{sec:universal_approximation_properties_and_depth}巩固深度在\gls{feedforward_network}中的优势。
 
@@ -241,7 +241,7 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 
 \section{随机\glsentrytext{encoder}和\glsentrytext{decoder}}
 \label{sec:stochastic_encoders_and_decoders}
-\gls{AE}仅仅是一个\gls{feedforward_network}，可以使用与传统\gls{feedforward_network}相同的\gls{loss_function}和输出单元。
+\gls{AE}本质上是一个\gls{feedforward_network}，可以使用与传统\gls{feedforward_network}相同的\gls{loss_function}和输出单元。
 
 
 如\secref{sec:other_output_types}中描述，设计\gls{feedforward_network}的输出单元和\gls{loss_function}普遍策略是定义一个输出分布$p(\Vy \mid \Vx) $并最小化负对数似然$-\log p(\Vy \mid \Vx)$。
@@ -253,14 +253,14 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 给定一个隐藏\gls{code} $\Vh$，我们可以认为\gls{decoder}提供了一个条件分布$p_{\text{model}}(\Vx \mid \Vh)$。
 接着我们根据最小化$-\log p_{\text{decoder}}(\Vx \mid \Vh)$来训练\gls{AE}。
 \gls{loss_function}的具体形式视$p_{\text{decoder}}$的形式而定。
-就传统的\gls{feedforward_network}来说，我们通常使用线性输出单元参数化高斯分布的均值（如果$\Vx$是实的）。
+就传统的\gls{feedforward_network}来说，我们通常使用线性输出单元参数化高斯分布的均值（如果$\Vx$是实值的）。
 在这种情况下，负对数似然对应\gls{mean_squared_error}\gls{criterion}。
-类似地，二值$\Vx$对应参数由\ENNAME{sigmoid}单元确定的\gls{bernoulli_distribution}，离散的$\Vx$对应\ENNAME{softmax}分布等等。
+类似地，二值$\Vx$对应参数由\ENNAME{sigmoid}单元确定的\gls{bernoulli_distribution}，离散的$\Vx$对应\ENNAME{softmax}分布，以此类推。
 为了便于计算概率分布，我们通常认为输出变量与给定$\Vh$是条件独立的，但一些技术（如混合密度输出）可以解决输出相关的建模。
 
 % -- 500 --
 
-为了更彻底地区别之前看到的\gls{feedforward_network}，我们也可以将\textbf{编码函数}(encoding function)~$f(\Vx)$的概念推广为\textbf{编码分布}(encoding distribution)~$ p_{\text{encoder}}(\Vh \mid \Vx)$， 如\figref{fig:chap14_stochastic-autoencoder}中所示。
+为了更彻底地与我们之前了解到的\gls{feedforward_network}相区别，我们也可以将\textbf{编码函数}(encoding function)~$f(\Vx)$的概念推广为\textbf{编码分布}(encoding distribution)~$ p_{\text{encoder}}(\Vh \mid \Vx)$， 如\figref{fig:chap14_stochastic-autoencoder}中所示。
 
 \begin{figure}[!htb]
 \ifOpenSource
