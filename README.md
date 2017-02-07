@@ -53,8 +53,8 @@
 | [第十二章 应用](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork, @futianfan | @wheaio | @corenel |  |
 | [第十三章 线性因子模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | @ZhiweiYang |  |  |
 | [第十四章 自动编码器](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter14_autoencoders/) | @swordyork | @zizhan, ljl | @Seaball, @huangpingchun | @huangpingchun |
-| [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 |  | @futianfan |  |
-| [第十六章 深度学习中的结构化概率模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter16_structured_probabilistic_modelling/) | @futianfan | |  |  |
+| [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 | @cnscottzheng | @futianfan |  |
+| [第十六章 深度学习中的结构化概率模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter16_structured_probabilistic_modelling/) | @futianfan | @cnscottzheng |  |  |
 | [第十七章 蒙特卡罗方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter17_monte_carlo_methods/) | @futianfan | @zhangyafeikimi |  |  |
 | [第十八章 面对配分函数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter18_confronting_the_partition_function/) | @liber145 | | @tankeco |  |
 | [第十九章 近似推断](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter19_approximate_inference/) | @futianfan | |  |  |
@@ -80,7 +80,7 @@ TODO
 @tttwwy @tankeco @fairmiracle @GageGao @huangpingchun @MaHongP @acgtyrant @yanhuibin315 @Buttonwood @titicacafz 
 @weijy026a @RuiZhang1993 @zymiboxpay @xingkongliang @oisc @tielei @yuduowu @Qingmu @HC-2016 @xiaomingabc 
 @bengordai @Bojian @JoyFYan @minoriwww @khty2000 @gump88 @zdx3578 @PassStory @imwebson @wlbksy @roachsinai @Elvinczp 
-@endymecy name:YUE-DaJiong @9578577 @linzhp
+@endymecy name:YUE-DaJiong @9578577 @linzhp @cnscottzheng @germany-zhu  @zhangyafeikimi
 
 
 注意

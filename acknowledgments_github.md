@@ -163,6 +163,9 @@
 
 2017年2月4日
 ---------------
- - @zhangyafeikimi==> Chapter8，"树木"=>"数目"
+ - @zhangyafeikimi ==> Chapter8，"树木"=>"数目"
 
 
+2017年2月7日
+ - @germany-zhu  ==> Chapter1, 语音术语
+ - @kangqf ==> Chapter8, loccal_minima 笔误
