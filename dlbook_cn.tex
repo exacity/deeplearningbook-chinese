@@ -46,6 +46,8 @@
 \renewcommand*{\ALG@name}{算法}
 \makeatother
 
+
+
 \usepackage[pdfpagelabels=true,
 pdffitwindow=false,
 pdfview=FitH,
@@ -55,9 +57,15 @@ breaklinks=true,
 colorlinks=false,
 bookmarks=true,
 hidelinks=true,
+bookmarksnumbered=true,
+bookmarksopen=true,
+bookmarksopenlevel=1,
+bookmarksdepth=1,
 plainpages=true]{hyperref}
 
+
 \usepackage{zref-abspage}
+\setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
 
 
@@ -67,7 +75,7 @@ plainpages=true]{hyperref}
 \setlength\emergencystretch{1.5em}
 
 % my command
-\newcommand{\firstgls}[1]{\textbf{\gls{#1}}(\glsdesc{#1})}
+\newcommand{\firstgls}[1]{\textbf{\gls{#1}}~(\glsdesc{#1})}
 \newcommand{\firstacr}[1]{\textbf{\gls{#1}}~(\glssymbol{#1})}
 \newcommand{\glsacr}[1]{\gls{#1}~(\glssymbol{#1})}
 \newcommand{\firstall}[1]{\textbf{\gls{#1}}~(\glsdesc{#1}, \glssymbol{#1})}
