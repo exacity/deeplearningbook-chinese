@@ -700,10 +700,11 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 \section{实值数据上的\glsentrytext{BM}}
 \label{sec:boltzmann_machines_for_real_valued_data}
-虽然\gls{BM}最初是为二值数据而开发的，但是许多应用，例如图像和音频建模似乎需要表示实值概率分布的能力。
-在一些情况下，可以将区间$[0,1]$中的实值数据视为表示二值变量的期望。
-例如， \citet{Hinton-PoE-2000}将训练集中灰度图像的像素值视为定义$[0,1]$概率值。
-每个像素定义二值变量为$1$的概率，并且二值像素都彼此独立地被采样。
+虽然\gls{BM}最初是为二值数据而开发的，但是许多应用，例如图像和音频建模似乎需要表示实值上的概率分布的能力。
+在一些情况下，我们可以将区间$[0,1]$中的实值数据视为表示二值变量的期望。
+例如， \citet{Hinton-PoE-2000}将训练集中灰度图像的像素值视为定义$[0,1]$间的概率值。
+每个像素定义二值变量为$1$的概率，并且二值像素的采样
+都彼此独立。
 这是评估灰度图像数据集上二值模型的常见过程。
 然而，这种方法理论上并不特别令人满意，并且以这种方式独立采样的二值图像具有噪声表象。
 在本节中，我们介绍概率密度定义在实值数据上的\gls{BM}。
@@ -730,7 +731,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 % -- 667 --
 
-这里$f$封装所有的参数，但不包括模型中的随机变量。
+此处$f$封装所有的参数，但不包括模型中的随机变量。
 因为$f$的唯一作用是归一化分布，并且我们选择的任何可作为\gls{partition_function}的\gls{energy_function}都能起到这个作用，所以我们可以忽略$f$。
 
 如果我们在\gls{energy_function}中包含\eqnref{eq:2039log}中涉及$\Vv$的所有项（其符号被翻转），并且不添加任何其他涉及$\Vv$的项，那么我们的\gls{energy_function}就能表示想要的条件分布$p(\Vv  \mid  \Vh)$。
@@ -763,11 +764,11 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 % -- 668 --
 
-在这个推导中，我们没有在可见单元上包括\gls{bias_aff}项，但不难添加\gls{bias_aff}。
+在这个推导中，我们没有在可见单元上添加\gls{bias_aff}项，但添加这样的\gls{bias_aff}是容易的。
 \gls{GBRBM}参数化一个最终变化的来源是如何处理精度矩阵的选择。
 它可以被固定为常数（可能基于数据的边缘精度估计）或学习出来。
 它也可以是标量乘以单位矩阵，或者是一个对角矩阵。
-在此上下文中，由于一些操作需要反转矩阵，我们通常不允许非对角的精度矩阵。
+在此情况下，由于一些操作需要反转矩阵，我们通常不允许非对角的精度矩阵。
 在接下来的章节中，我们将看到其他形式的\gls{BM}，它们允许对协方差结构建模，并使用各种技术避免反转精度矩阵。
 
 
@@ -822,16 +823,16 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 \glssymbol{contrastive_divergence}和\glssymbol{persistent_contrastive_divergence}需要从$\Vx,\Vh^{(m)},\Vh^{(c)}$的联合分布中采样，这在标准\glssymbol{RBM}中可以通过\gls{gibbs_sampling}在条件分布上采样实现。
 但是，在\glssymbol{mcrbm}中，从$ p_{\text{mc}}(\Vx  \mid \Vh^{(m)}, \Vh^{(c)}) $中抽样需要在学习的每个迭代计算$(\MC^{\,\text{mc}})^{-1}$。
 这对于更大的观察数据可能是不切实际的计算负担。
- <BAD>\citet{Ranzato2010b-short}通过使用\glssymbol{mcrbm}自由能上的哈密尔顿（混合）\gls{monte_carlo}~\citep{Neal93b}直接从边缘$p(\Vx)$采样，避免了直接从条件$  p_{\text{mc}}(\Vx  \mid \Vh^{(m)}, \Vh^{(c)}) $抽样。
+\citet{Ranzato2010b-short}通过使用\glssymbol{mcrbm}自由能上的哈密尔顿（混合）\gls{monte_carlo}~\citep{Neal93b}直接从边缘$p(\Vx)$采样，避免了直接从条件$  p_{\text{mc}}(\Vx  \mid \Vh^{(m)}, \Vh^{(c)}) $抽样。
 
  % -- 670 --
  
 \paragraph{\gls{mpot}}
 \glsacr{mpot}模型~\citep{ranzato+mnih+hinton:2010-short}以类似\glssymbol{mcrbm}扩展\glssymbol{crbm}的方式扩展PoT模型~\citep{Welling2003a-small}。
 通过添加类似\gls{gaussian_rbm}中\gls{hidden_unit}的非零高斯均值来实现。
-与\glssymbol{mcrbm}一样，观察值上的PoT条件分布是多元高斯（具有非对角的协方差）分布; 然而，不同于\glssymbol{mcrbm}，隐藏变量的补充条件分布是由条件独立的\gls{gamma_distribution}给出。
+与\glssymbol{mcrbm}一样，观察值上的PoT条件分布是多元高斯（具有非对角的协方差）分布; 然而，不同于\glssymbol{mcrbm}，隐藏变量的互补条件分布是由条件独立的\gls{gamma_distribution}给出。
 \gls{gamma_distribution} $\CalG(k, \theta)$是关于正实数且均值为$k\theta$的概率分布。
-简单地了解\gls{gamma_distribution}足够让我们理解\glssymbol{mpot}模型的基本思想。
+我们只需简单地了解\gls{gamma_distribution}就足以理解\glssymbol{mpot}模型的基本思想。
 
 \glssymbol{mpot}的\gls{energy_function}为：
 \begin{align}
@@ -853,15 +854,15 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 
 % -- 671 --
 
-\gls{ssrbm}有两类\gls{hidden_unit}：二值\textbf{尖峰}(spike)单元$\Vh$和实值\textbf{平板}(slab)单元$\Vs$。
+\gls{ssrbm}有两类\gls{hidden_unit}：二值\textbf{尖峰}(spike)单元$\RVh$和实值\textbf{平板}(slab)单元$\RVs$。
 条件于\gls{hidden_unit}的可见单元均值由$(\Vh \odot \Vs)\MW^\top$给出。
 换句话说，每一列$\MW_{:,i}$定义当$h_i=1$时可出现在输入中的分量。
-相应的尖峰变量$h_i$确定该分量是否存在。
-如果存在的话，相应的平板变量$s_i$确定该分量的强度。
+相应的尖峰变量$\RSh_i$确定该分量是否存在。
+如果存在的话，相应的平板变量$\RSs_i$确定该分量的强度。
 当尖峰变量激活时，相应的平板变量将沿着$\MW_{:,i}$定义的轴的输入增加方差。
 这允许我们对输入的协方差建模。
 幸运的是，使用\gls{gibbs_sampling}的\gls{contrastive_divergence}和\gls{persistent_contrastive_divergence}仍然适用。
-没有必要对任何矩阵求逆。
+此处无需对任何矩阵求逆。
 
 形式上，\glssymbol{ssrbm}模型通过其\gls{energy_function}定义：
 \begin{align}
@@ -877,7 +878,7 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 
 
 利用\gls{energy_function}定义的联合分布，能相对容易地导出\glssymbol{ssrbm}条件分布。
-例如，通过边缘化平板变量$\Vs$，给定二值尖峰变量$\Vh$，关于观察的条件分布由下式给出
+例如，通过边缘化平板变量$\Vs$，给定二值尖峰变量$\Vh$，关于观察量的条件分布由下式给出
 \begin{align}
  p_{\text{ss}} (\Vx  \mid  \Vh) &= \frac{1}{P(\Vh)} \frac{1}{Z} \int \exp\{ -E(\Vx, \Vs, \Vh) \} d\Vs \\
  &= \CalN \Bigg( \Vx\,; \MC_{\Vx \mid \Vh}^{\,\text{ss}} \sum_i \MW_{:,i}\mu_i h_i, 
@@ -887,21 +888,21 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 -\sum_i \alpha_i^{-1} h_i \MW_{:,i}\MW_{:,i}^\top)^{-1}$。
 最后的等式只有在协方差矩阵$\MC_{\Vx \mid \Vh}^{\,\text{ss}} $正定时成立。
 
-由尖峰变量选通意味着$\Vh \odot \Vs$上的真实边缘分布是稀疏的。
+由尖峰变量选通意味着$\RVh \odot \RVs$上的真实边缘分布是稀疏的。
 这不同于\gls{sparse_coding}，其中来自模型的样本在编码中``几乎从不''（在测度理论意义上）包含零，并且需要\glssymbol{MAP}\gls{inference}来强加稀疏性。
 
 % -- 672 --
 
-相比\glssymbol{mcrbm}和\glssymbol{mpot}模型，\glssymbol{ssrbm}以明显不同的方式参数化观察的条件协方差。
-\glssymbol{mcrbm}和\glssymbol{mpot}都通过 $\big( \sum_j h_j^{(c)} \Vr^{(j)} \Vr^{(j)\top} + \MI \big)^{-1}$建模观察的协方差结构，使用 $\Vh_j > 0$的\gls{hidden_unit}的激活来对方向$\Vr^{(j)}$的条件协方差施加约束。
+相比\glssymbol{mcrbm}和\glssymbol{mpot}模型，\glssymbol{ssrbm}以明显不同的方式参数化观察量的条件协方差。
+\glssymbol{mcrbm}和\glssymbol{mpot}都通过 $\big( \sum_j h_j^{(c)} \Vr^{(j)} \Vr^{(j)\top} + \MI \big)^{-1}$建模观察量的协方差结构，使用 $\Vh_j > 0$的\gls{hidden_unit}的激活来对方向$\Vr^{(j)}$的条件协方差施加约束。
 <BAD>相反，\glssymbol{ssrbm}使用隐藏尖峰激活$h_i = 1$来指定观察的条件协方差，以沿着由相应权重向量指定的方向捏合精度矩阵。
-\glssymbol{ssrbm}条件协方差非常类似于由不同模型给出的：概率主成分分析的乘积（PoPPCA）~\citep{Williams2002}。
+\glssymbol{ssrbm}条件协方差与一个不同模型给出的类似：概率主成分分析的乘积（PoPPCA）~\citep{Williams2002}。
 在\gls{overcomplete}的设定下，\glssymbol{ssrbm}参数化的稀疏激活仅允许在稀疏激活$h_i$的所选方向上有显著方差（高于由$\VLambda^{-1}$给出的近似方差）。
 <BAD>在\glssymbol{mcrbm}或\glssymbol{mpot}模型中，\gls{overcomplete}的表示意味着，要在捕获观察空间中特定方向的变化需要在该方向上的正交投影下去除潜在的所有约束。
 这表明这些模型不太适合于\gls{overcomplete}设定。
 
 \gls{ssrbm}的主要缺点是参数的一些设置会对应于非正定的协方差矩阵。
-这种协方差矩阵在离均值更远的值上放置更大的未归一化概率，导致所有可能结果上的积分发散。
+这种协方差矩阵会在离均值更远的值上放置更大的未归一化概率，导致所有可能结果上的积分发散。
 通常这个问题可以通过简单的启发式技巧来避免。
 理论上还没有任何令人满意的解决方法。
 使用约束优化来显式地避免概率未定义的区域（不过分保守是很难做到的），并且这还会阻止模型到达参数空间的高性能区域。
@@ -909,8 +910,8 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 定性地，\glssymbol{ssrbm}的卷积变体能产生自然图像的优秀样本。
 \figref{fig:chap16_fig-ssrbm}中展示了一些样例。
 
-\glssymbol{ssrbm}允许几个扩展。
-包括高阶交互和平板变量的平均池化\citep{courville-al-ieee14} 使得模型能够在标注数据稀缺时为分类器学习到出色的特征。
+\glssymbol{ssrbm}允许几个扩展，
+包括平板变量的高阶交互和平均池化\citep{courville-al-ieee14} 使得模型能够在标注数据稀缺时为分类器学习到出色的特征。
 向\gls{energy_function}添加一项能防止\gls{partition_function}在\gls{sparse_coding}模型下变得不确定，如尖峰和平板\gls{sparse_coding}\citep{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013}，也称为S3C。
 
 % -- 673 --
@@ -923,27 +924,27 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 \citet{Desjardins-2008} 表明这种方法应用于\glssymbol{RBM}时效果很好。
 
 深度卷积网络通常需要池化操作，使得每个连续层的空间大小减小。
-前馈卷积网络通常使用池化函数，例如要池化元素的最大值。
+前馈卷积网络通常使用池化函数，例如池化元素的最大值。
 目前尚不清楚如何将其推广到基于能量设定的模型。
-我们可以在$n$个二值检测器单元$\Vd$上引入二值池化单元$p$，强制$p = \max_i d_i$，并且当违反约束时将\gls{energy_function}设置为$\infty$。
-因为它需要评估$2^n$个不同的能量设置来计算归一化常数，这种方式不能很好地扩展，。
-对于小的$3\times3$池化区域，每个池化单元需要评估$2^9 = 512$个\gls{energy_function}。
+我们可以在$n$个二值检测器单元$\RVd$上引入二值池化单元$\RSp$，强制$p = \max_i d_i$，并且当违反约束时将\gls{energy_function}设置为$\infty$。
+因为它需要评估$2^n$个不同的能量设置来计算归一化常数，这种方式不能很好地扩展。
+对于小的$3\times3$池化区域，每个池化单元需要评估$2^9 = 512$个\gls{energy_function}！
 
 
 ~\citet{HonglakL2009} 针对这个问题，开发了一个称为\textbf{概率最大池化}(probabilistic max pooling)的解决方案（不要与``随机池化''混淆，``随机池化''是用于隐含地构建卷积前馈网络集成的技术）。
 概率最大池化背后的策略是约束检测器单元，使得一次最多只有一个可以处于活动状态。
-<BAD>这意味着仅存在$n + 1$个总状态（$n$个检测器单元中某一个状态为开和一个对应于所有检测器单元关闭的附加状态）。
+这意味着仅存在$n + 1$个总状态（$n$个检测器单元中某一个状态为开和一个对应于所有检测器单元关闭的附加状态）。
 当且仅当检测器单元中的一个开启时，池化单元打开。
 所有单元的状态关闭时，能量被分配为零。
-<BAD>我们可以认为这是用$n + 1$个状态的单个变量描述模型，或者等价地具有$n + 1$个变量的模型，除了$n+1$个联合分配的变量之外的能量赋为$\infty$。
+我们可以认为这是在用包含$n + 1$个状态的单个变量来描述模型，或者等价地具有$n + 1$个变量的模型，除了$n+1$个联合分配的变量之外的能量赋为$\infty$。
 
-虽然高效的概率最大池化确实能强迫检测器单元互斥，这在某些情景下可能是有用的正则化约束或在其他情景下是对模型容量有害的限制。
+虽然高效的概率最大池化确实能强迫检测器单元互斥，这在某些情景下可能是有用的正则化约束而在其他情景下是对模型容量有害的限制。
 它也不支持重叠池化区域。
 从前馈卷积网络获得最佳性能通常需要重叠的池化区域，因此这种约束可能大大降低了\gls{convolutional_bm}的性能。
 
 \citet{HonglakL2009} 证明概率最大池化可以用于构建卷积\gls{DBM}\footnote{该论文将模型描述为``深度信仰网络''，但因为它可以被描述为纯无向模型（具有易处理逐层\gls{meanfield}不动点更新），所以它最适合\gls{DBM}的定义。}。
 该模型能够执行诸如填补输入缺失部分的操作。
-虽然在理论上有吸引力，让这种模型在实践中工作是具有挑战性的，作为分类器通常不如通过\gls{supervised}训练的传统卷积网络。
+虽然这种模型在理论上有吸引力，让它在实践中工作是具有挑战性的，作为分类器通常不如通过\gls{supervised}训练的传统卷积网络。
 
 % -- 674 --
 
@@ -953,7 +954,7 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 此外，许多卷积网络按与输入大小成比例地缩放池化区域来实现尺寸不变性，但缩放\gls{BM}池化区域是不优雅的。
 传统的卷积神经网络可以使用固定数量的池化单元并且动态地增加它们池化区域的大小，以此获得可变大小输入的固定尺寸的表示。
 对于\gls{BM}，大型池化区域对于朴素的方法变得很昂贵。
- \citet{HonglakL2009} 的方法使得每个检测器单元在相同的池化区域中互斥，解决了计算问题，但仍然不允许可变大小的池化区域。
+ \citet{HonglakL2009} 的方法使得每个检测器单元在相同的池化区域中互斥，解决了计算问题，但仍然不允许大小可变的池化区域。
 例如，假设我们在学习边缘检测器时，检测器单元上具有$2 \times 2$的概率最大池化。
 这强制约束在每个$2 \times 2$的区域中只能出现这些边中的一条。
 如果我们随后在每个方向上将输入图像的大小增加50\%， 则期望边缘的数量会相应地增加。
@@ -972,19 +973,19 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 \label{sec:boltzmann_machines_for_structured_or_sequential_outputs}
 
 在结构化输出场景中，我们希望训练可以从一些输入$\Vx$映射到一些输出$\Vy$的模型，$\Vy$的不同条目彼此相关，并且必须遵守一些约束。
-例如，在语音合成任务中，$\Vy$是波形，并且整个波形必须听起来像连贯的发音。
+例如，在语音合成任务中，$\Vy$是波形，并且整个波形听起来必须像连贯的发音。
 
 表示$\Vy$中的条目之间关系的自然方式是使用概率分布$p(\RVy  \mid  \Vx)$。
-扩展到建模条件分布的\gls{BM}，可以支持这种概率模型。
+扩展到建模条件分布的\gls{BM}可以支持这种概率模型。
 
-使用\gls{BM}条件建模的相同工具不仅可以用于结构化输出任务，而且可以用于序列建模。 
-在后一种情况下，模型必须估计变量序列上的概率分布$p(\RVx^{(1)}, \dots, \RVx^{（\tau）})$，而不仅仅是将输入$\Vx$映射到输出$\Vy$。
-为完成这个任务，条件\gls{BM}可以表示$p(\RVx^{（\tau）}  \mid  \RVx^{(1)}, \dots, \RVx^{（\tau-1）})$形式的\gls{factor}。
+使用\gls{BM}条件建模的相同工具不仅可以用于结构化输出任务，还可以用于序列建模。 
+在后一种情况下，模型必须估计变量序列上的概率分布$p(\RVx^{(1)}, \dots, \RVx^{(\tau)})$，而不仅仅是将输入$\Vx$映射到输出$\Vy$。
+为完成这个任务，条件\gls{BM}可以表示$p(\RVx^{(\tau)}  \mid  \RVx^{(1)}, \dots, \RVx^{(\tau-1)})$形式的\gls{factor}。
 
 视频游戏和电影工业中一个重要序列建模任务是建模用于渲染3-D人物骨架关节角度的序列。 
 这些序列通常通过记录角色移动的运动捕获系统收集。
-人物运动的概率模型允许生成新的，之前没见过的，但真实的动画。
-为了解决这个序列建模任务，\citet{Taylor+2007} 针对小的$m$引入了条件\glssymbol{RBM}建模$p(\Vx^{（t）}  \mid  \Vx^{(t-1)}, \dots, \Vx^{（t-m）})$。
+人物运动的概率模型允许生成新的（之前没见过的）但真实的动画。
+为了解决这个序列建模任务，\citet{Taylor+2007} 针对小的$m$引入了条件\glssymbol{RBM}建模$p(\Vx^{(t)}  \mid  \Vx^{(t-1)}, \dots, \Vx^{(t-m)})$。
 该模型是$p(\Vx^{(t)})$上的\glssymbol{RBM}，其\gls{bias_aff}参数是$\Vx$前面$m$个值的线性函数。
 当我们条件于$\Vx^{(t-1)}$的不同值和更早的变量时， 我们会得到一个关于$\RVx$的新\glssymbol{RBM}。
 \glssymbol{RBM}关于$\RVx$的权重不会改变，但是条件于不同的过去值， 我们可以改变\glssymbol{RBM}中的不同\gls{hidden_unit}处于活动状态的概率。
@@ -999,7 +1000,7 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 \gls{loss_function}不直接应用于\glssymbol{RNN}输出。
 相反，它应用于\glssymbol{RBM}。
 这意味着我们必须使用\gls{contrastive_divergence}或相关算法关于\glssymbol{RBM}参数进行近似的微分。
-然后可以使用通常的\gls{BPTT}算法通过\glssymbol{RNN}\gls{back_propagation}该近似梯度。
+然后才可以使用通常的\gls{BPTT}算法通过\glssymbol{RNN}\gls{back_propagation}该近似梯度。
 
 % -- 676 --
 
@@ -1009,9 +1010,9 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 
 \gls{BM}可以用不同的训练\gls{criterion}扩展。
 我们专注于训练为大致最大化生成标准$\log p(\Vv)$的\gls{BM}。
-相反，旨在最大化$\log p(y \mid \Vx)$来训练判别的\glssymbol{RBM}也是有可能的\citep{Larochelle+Bengio-2008-small}。
+相反，旨在最大化$\log p(y \mid \Vv)$来训练判别的\glssymbol{RBM}也是有可能的\citep{Larochelle+Bengio-2008-small}。
 当使用生成性和判别性标准的线性组合时，该方法通常表现最好。
-不幸的是，至少使用现有的方法来看，\glssymbol{RBM}似乎并不如\glssymbol{MLP}那样强大的监督学习器。
+不幸的是，至少使用现有的方法来看，\glssymbol{RBM}似乎并不如\glssymbol{MLP}那样的监督学习器强大。
 
 在实践中使用的大多数\gls{BM}在其\gls{energy_function}中仅具有二阶相互作用，意味着它们的\gls{energy_function}是许多项的和，并且每个单独项仅包括两个随机变量之间的乘积。
 这种项的一个例子是$v_iW_{i,j}h_j$。
@@ -1025,9 +1026,9 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 当这些掩码变量设置为零时，它们消除可见单元对\gls{hidden_unit}的影响。
 这允许将与分类问题不相关的可见单元从估计类别的\gls{inference}路径中移除。
 
-更一般来说，\gls{BM}框架是一个丰富的模型空间，允许比迄今为止已经探索的更多的模型结构。
-开发新形式的\gls{BM}需要比开发新的神经网络层更多细心和创造性，因为它通常很难找到一个\gls{energy_function}（保持\gls{BM}所需的所有不同的条件分布的可解性）。
-尽管需要努力，但该领域仍对创新开放。
+更一般地说，\gls{BM}框架是一个丰富的模型空间，允许比迄今为止已经探索的更多的模型结构。
+开发新形式的\gls{BM}需要比开发新的神经网络层更多细心和创造性，因为它通常很难找到一个能保持\gls{BM}所需的所有不同条件分布的可解性的\gls{energy_function}。
+尽管这需要努力，该领域仍对创新开放。
 
 % -- 677 --
 
