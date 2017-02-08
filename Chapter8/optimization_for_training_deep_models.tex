@@ -125,7 +125,7 @@
 % 270 mid
 
 
-\subsection{批算法和\gls{minibatch}算法}
+\subsection{\gls{batch}算法和\gls{minibatch}算法}
 \label{sec:batch_and_minibatch_algorithms}
 \gls{ML}算法和一般优化算法不同的一点是，\gls{ML}算法的\gls{objective_function}通常可以分解为训练样本上的求和。
 %\gls{ML}优化算法通常使用整个\gls{cost_function}中的一部分项去更新其参数。
@@ -273,7 +273,7 @@
 
 
 在$\Vx$和$y$是离散时，以上的等价性很容易得到。
-在这种情况下，\gls{generalization_error}（\eqnref{eq:8.2}可以表示为
+在这种情况下，\gls{generalization_error}\eqnref{eq:8.2}可以表示为
 \begin{equation}
 \label{eq:8.7}
     J^*(\Vtheta) = \sum_{\Vx} \sum_y p_{\text{data}}(\Vx, y) L(f(\Vx; \Vtheta),y),
@@ -1562,7 +1562,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 \label{sec:optimization_strategies_and_meta_algorithms}
 许多优化技术并非真正的算法，而是一般化的模板，可以特定产生算法，或是并入到很多不同的算法中。
 
-\subsection{\glsentrytext{batch_normalization}}
+\subsection{\glsentrytext{Batch_normalization}}
 \label{sec:batch_normalization}
 \gls{batch_normalization}\citep{Ioffe+Szegedy-2015}是优化\gls{DNN}中最激动人心的最新创新之一。
 实际上它并不是一个优化算法，而是一个自适应的重新参数化的方法，试图解决训练非常深层模型的困难。
