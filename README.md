@@ -53,7 +53,7 @@
 | [第十二章 应用](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork, @futianfan | @wheaio | @corenel |  |
 | [第十三章 线性因子模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | @ZhiweiYang |  |  |
 | [第十四章 自动编码器](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter14_autoencoders/) | @swordyork | @zizhan, ljl | @Seaball, @huangpingchun | @huangpingchun |
-| [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 | @cnscottzheng | @futianfan |  |
+| [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 | @cnscottzheng | |  |
 | [第十六章 深度学习中的结构化概率模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter16_structured_probabilistic_modelling/) | @futianfan | @cnscottzheng |  |  |
 | [第十七章 蒙特卡罗方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter17_monte_carlo_methods/) | @futianfan | @zhangyafeikimi |  |  |
 | [第十八章 面对配分函数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter18_confronting_the_partition_function/) | @liber145 | | @tankeco |  |
@@ -90,7 +90,6 @@ TODO
  - 由于版权问题，我们不能将图片和bib上传，请见谅。
  - Due to copyright issues, we would not upload figures and the bib file.
  - 可用于学习研究目的，不得用于任何商业行为。谢谢！
- - 大约每周release一个版本，[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.4-alpha/dlbook_cn_v0.4-alpha.pdf)文件每天更新。
  - 大家不要watch啊，邮箱可能会炸。
  - **先不要打印，这一版不值得打印，浪费钱** 打印版仅供学习参考和找茬纠错，正式出版后，希望大家多多支持纸质正版书籍。
 
