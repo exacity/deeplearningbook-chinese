@@ -342,7 +342,7 @@
 当$\frac{1}{2} \epsilon^2 \Vg^\top\MH\Vg$超过$\epsilon\Vg^\top\Vg$时，梯度的\gls{ill_conditioning}会成为问题。
 判断\gls{ill_conditioning}是否不利于\gls{NN}训练任务，我们可以监测平方梯度范数$\Vg^\top\Vg$和$\Vg^\top \MH\Vg$。
 在很多情况中，梯度范数不会在训练过程中显著缩小，但是$\Vg^\top\MH\Vg$的增长会超过一个数量级。
-其结果是尽管梯度很强，学习会变得非常缓慢，因为\gls{learning_rate}必须收缩以弥补更强的曲率。
+其结果是尽管梯度很强，学习会变得非常缓慢，因为\gls{learning_rate}必须收缩以弥补更强的\gls{curvature}。
 如\figref{fig:chap8_grad_norm_increases}所示，成功训练的\gls{NN}中，梯度显著增加。
 % -- 276 head
 
@@ -716,14 +716,14 @@
 \section{基本算法}
 \label{sec:basic_algorithms}
 之前我们已经介绍了\gls{GD}（\secref{sec:gradient_based_optimization}），即沿着整个\gls{training_set}梯度下降的方向。
-这可以使用\gls{SGD}很大程度地加速，沿着随机挑选的\gls{minibatch}数据的\gls{GD}方向，请参看\secref{sec:stochastic_gradient_descent_chap5}和\secref{sec:batch_and_minibatch_algorithms}。
+这可以使用\gls{SGD}很大程度地加速，沿着随机挑选的\gls{minibatch}数据的梯度下降方向，就像\secref{sec:stochastic_gradient_descent_chap5}和\secref{sec:batch_and_minibatch_algorithms}中讨论的一样。
 % 286 head
 
 
 \subsection{\glsentrytext{SGD}}
 \label{sec:stochastic_gradient_descent_chap8}
-\gls{SGD}（SGD）及其变种很可能是一般\gls{ML}中用得最多的优化算法，特别是在\gls{DL}中。
-如\secref{sec:batch_and_minibatch_algorithms}讨论，通过计算独立同分布地从\gls{DGD}中抽取的$m$个\gls{minibatch}样本的梯度均值，我们可以得到梯度的\gls{unbiased}估计。
+\gls{SGD}（\glssymbol{SGD}）及其变种很可能是一般\gls{ML}中用得最多的优化算法，特别是在\gls{DL}中。
+如\secref{sec:batch_and_minibatch_algorithms}中讨论的，通过计算独立同分布地从\gls{DGD}中抽取的$m$个\gls{minibatch}样本的梯度均值，我们可以得到梯度的\gls{unbiased}估计。
 % 286 mid
 
 
@@ -738,8 +738,8 @@
 \begin{algorithmic}
 \REQUIRE \gls{learning_rate} $\epsilon_k$
 \REQUIRE 初始参数$\Vtheta$
-\WHILE{没有达到停止\gls{criterion}}
-    \STATE 从\gls{training_set}中采包含$m$个样本$\{ \Vx^{(1)},\dots, \Vx^{(m)}\}$ 的\gls{minibatch}，对应目标为$\Vy^{(i)}$。
+\WHILE{停止\gls{criterion}未满足}
+    \STATE 从\gls{training_set}中采包含$m$个样本$\{ \Vx^{(1)},\dots, \Vx^{(m)}\}$ 的\gls{minibatch}，其中$\Vx^{(i)}$对应目标为$\Vy^{(i)}$。
     \STATE 计算梯度估计： $\hat{\Vg} \leftarrow + 
          \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$
     \STATE 应用更新：$\Vtheta \leftarrow \Vtheta - \epsilon \hat{\Vg}$
@@ -756,8 +756,8 @@
 % 286 mid
 
 
-这是因为\glssymbol{SGD}梯度估计引入的噪源（$m$个训练样本的随机采样）并不会在极小值处消失。
-相比之下，当我们使用\gls{batch}\gls{GD}到达极小值时，整个\gls{cost_function}的真实梯度会变得很小，甚至为$\mathbf{0}$，因此\gls{batch}\gls{GD}可以使用固定的\gls{learning_rate}。
+这是因为\glssymbol{SGD}中梯度估计引入的噪源（$m$个训练样本的随机采样）并不会在\gls{minimum}处消失。
+相比之下，当我们使用\gls{batch}\gls{GD}到达\gls{minimum}时，整个\gls{cost_function}的真实梯度会变得很小，之后为$\mathbf{0}$，因此\gls{batch}\gls{GD}可以使用固定的\gls{learning_rate}。
 保证\glssymbol{SGD}收敛的一个充分条件是
 \begin{equation}
 \label{eq:8.12}
@@ -771,7 +771,7 @@
 % 287 head
 
 
-实践中，一般会线性衰减\gls{learning_rate}到第$\tau$次迭代：
+实践中，一般会线性衰减\gls{learning_rate}直到第$\tau$次迭代：
 \begin{equation}
 \label{eq:8.14}
     \epsilon_k = (1-\alpha) \epsilon_0 + \alpha \epsilon_\tau
@@ -783,34 +783,34 @@
 
 \gls{learning_rate}可通过试验和误差来选取，通常最好的选择方法是画出\gls{objective_function}值随时间变化的学习曲线。
 与其说是科学，这更是一门艺术，关于这个问题的大多数指导都应该被怀疑地看待。
-使用线性时间表时，参数选择为$\epsilon_0$，$\epsilon_\tau$，$\tau$。  
-通常$\tau$被设为需要反复遍历训练样本几百次的迭代次数。
-通常$\epsilon_\tau$应设为大约$1\%$的$\epsilon_0$。
+使用线性策略时，需要选择的参数为$\epsilon_0$，$\epsilon_\tau$，$\tau$。  
+通常$\tau$被设为需要反复遍历\gls{training_set}几百次的迭代次数。
+通常$\epsilon_\tau$应设为大约$\epsilon_0$的$1\%$。
 主要问题是如何设置$\epsilon_0$。
 若$\epsilon_0$太大，学习曲线将会剧烈振荡，\gls{cost_function}值通常会明显增加。
-温和的振荡是良好的，特别是训练于随机\gls{cost_function}上，例如由信号丢失引起的\gls{cost_function}。
-如果\gls{learning_rate}太慢，那么学习进程会缓慢。
-如果初始\gls{learning_rate}太低，那么学习可能会卡在一个相当高的损失值。
-通常，就总训练时间和最终损失值而言，最优初始\gls{learning_rate}会高于大约迭代100步后输出最好效果的\gls{learning_rate}。
+<bad>温和的振荡是良好的，尤其是在随机\gls{cost_function}上训练时，例如由信号丢失引起的\gls{cost_function}。
+如果\gls{learning_rate}太小，那么学习进程会缓慢。
+如果初始\gls{learning_rate}太低，那么学习可能会卡在一个相当高的\gls{cost}值。
+通常，就总训练时间和最终\gls{cost}值而言，最优初始\gls{learning_rate}会高于大约迭代最初$100$步后输出最好效果的\gls{learning_rate}。
 因此，通常最好是检测最早的几轮迭代，使用一个高于此时效果最佳\gls{learning_rate}的\gls{learning_rate}，但又不能太高以致严重的不稳定性。  
 % 287 mid
 
 
-\glssymbol{SGD}和相关的\gls{minibatch}或在线基于梯度的优化的最重要的性质是每一步更新的计算时间不会随着训练样本数目而增加。
+\glssymbol{SGD}和相关的\gls{minibatch}或在线基于梯度的优化方法的最重要性质是每一步更新的计算时间不会随着训练样本数目而增加。
 即使训练样本数目非常大时，这也能收敛。
 对于足够大的数据集，\glssymbol{SGD}可能会在处理整个\gls{training_set}之前就收敛到最终\gls{test_set}误差的某个固定容差范围内。
 % 287 mid
 
 % 287 end
-研究优化算法的收敛率，一般会衡量\firstgls{excess_error} $J(\Vtheta) - \min_{\Vtheta} J(\Vtheta)$，即当前\gls{cost_function}超出最低可能损失的量。
-\glssymbol{SGD}应用于凸问题时，$k$步迭代后的额外误差量级是$O(\frac{1}{\sqrt{k}})$，在强凸情况下是$O(\frac{1}{k})$。
+研究优化算法的收敛率，一般会衡量\firstgls{excess_error} $J(\Vtheta) - \min_{\Vtheta} J(\Vtheta)$，即当前\gls{cost_function}超出最低可能\gls{cost}的量。
+\glssymbol{SGD}应用于凸问题时，$k$步迭代后的\gls{excess_error}量级是$O(\frac{1}{\sqrt{k}})$，在强凸情况下是$O(\frac{1}{k})$。
 除非假定额外的条件，否则这些界限不能进一步改进。
 \gls{batch}\gls{GD}在理论上比\gls{SGD}有更好的收敛率。
-然而，Cram\'er-Rao界限\citep{Cramer-1946,Rao-1945}指出，\gls{generalization_error}的下降速度不会快于$O(\frac{1}{k})$。
-\cite{bottou-bousquet-2008-small}由此认为对于\gls{ML}任务，不值得探寻收敛快于$O(\frac{1}{k})$的优化算法——更快的收敛可能对应着过拟合。
+然而，Cram\'er-Rao界限~\citep{Cramer-1946,Rao-1945}指出，\gls{generalization_error}的下降速度不会快于$O(\frac{1}{k})$。
+\cite{bottou-bousquet-2008-small}由此认为对于\gls{ML}任务，不值得探寻收敛快于$O(\frac{1}{k})$的优化算法——更快的收敛可能对应着\gls{overfitting}。
 此外，渐近分析掩盖了\gls{SGD}在少量更新步之后的很多优点。
-对于大数据集，SGD初始快速更新只需非常少量样本计算梯度的能力远远超过了其缓慢的渐近收敛。
-本章剩余部分介绍的大多数算法都实现了实践中有用的好处，但是丢失了常数倍$O(\frac{1}{k})$的渐近分析。
+对于大数据集，\glssymbol{SGD}只需非常少量样本计算梯度从而实现初始快速更新，远远超过了其缓慢的渐近收敛。
+本章剩余部分介绍的大多数算法在实践中都受益于这种性质，<bad>但是丢失了常数倍$O(\frac{1}{k})$的渐近分析。
 我们也可以权衡\gls{batch}\gls{GD}和\gls{SGD}两者的优点，在学习过程中逐渐增大\gls{minibatch}的大小。
 % 288 mid
 
@@ -820,8 +820,8 @@
 
 \subsection{\glsentrytext{momentum}}
 \label{sec:momentum}
-虽然\gls{SGD}仍然是非常受欢迎的优化方法，但\gls{learning_rate}有时会很慢。
-\gls{momentum}方法\citep{polyak1964some}旨在加速学习，特别是处理高曲率，小但一致的梯度，或是带\gls{noise}的梯度。
+虽然\gls{SGD}仍然是非常受欢迎的优化方法，但其学习过程有时会很慢。
+\gls{momentum}方法~\citep{polyak1964some}旨在加速学习，特别是处理高\gls{curvature}、小但一致的梯度，或是带\gls{noise}的梯度。
 \gls{momentum}算法积累了之前梯度指数级衰减的移动平均，并且继续沿该方向移动。
 \gls{momentum}的效果如\figref{fig:chap8_momentum}所示。
 % 288 mid
@@ -851,7 +851,7 @@
 从形式上看，\gls{momentum}算法引入了变量$\Vv$充当速度的角色——它代表参数在参数空间移动的方向和速度。
 速度被设为负梯度的指数衰减平均。
 名称\firstgls{momentum}来自物理类比，根据牛顿运动定律，负梯度是移动参数空间中粒子的力。
-\gls{momentum}在物理学上是质量乘以速度。
+\gls{momentum}在物理学上定义为质量乘以速度。
 在\gls{momentum}学习算法中，我们假设是单位质量，因此速度向量$\Vv$也可以看作是粒子的\gls{momentum}。
 \gls{hyperparameter}$\alpha\in[0,1)$决定了之前梯度的贡献衰减得有多快。
 更新规则如下：
@@ -862,7 +862,7 @@
 \Vtheta \leftarrow \Vtheta  + \Vv .
 \end{equation}
 速度$\Vv$累积了梯度元素$\nabla_{\Vtheta}( \frac{1}{m} \sum_{i=1}^m L( \Vf(\Vx^{(i)}; \Vtheta), \Vy^{(i)} )  )$。
-相对于$\epsilon$的$\alpha$越大，之前梯度对现在方向的影响也越大。
+相对于$\epsilon$，$\alpha$越大，之前梯度对现在方向的影响也越大。
 带\gls{momentum}的\glssymbol{SGD}算法如\algref{alg:momentum}所示。
 % 289 end
 
@@ -1384,9 +1384,9 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
     \Vtheta^* = \Vtheta_0 - [ H( f(\Vtheta_0)) + \alpha \MI  ]^{-1} \nabla_{\Vtheta} f(\Vtheta_0).
 \end{equation}
 这个正则化策略用于\gls{newton_method}的近似，例如Levenberg-Marquardt算法\citep{Levenberg44,Marquardt63}，只要\gls{hessian}矩阵的负特征值仍然相对接近零，就会效果很好。
-在曲率有更极端方向的情况下，$\alpha$的值必须足够大，以抵消负特征值。
+在\gls{curvature}有更极端方向的情况下，$\alpha$的值必须足够大，以抵消负特征值。
 然而，如果$\alpha$持续增加，\gls{hessian}矩阵会变得由对角矩阵$\alpha \MI$主导，通过\gls{newton_method}所选择的方向会收敛到普通梯度除以$\alpha$。
-当很强的负曲率存在时，$\alpha$可能需要特别大，以至于\gls{newton_method}比选择合适\gls{learning_rate}的\gls{GD}的步长更小。
+当很强的负\gls{curvature}存在时，$\alpha$可能需要特别大，以至于\gls{newton_method}比选择合适\gls{learning_rate}的\gls{GD}的步长更小。
 
 \begin{algorithm}[ht]
 \caption{目标为$J(\Vtheta)= \frac{1}{m} \sum_{i=1}^m L(f(\Vx^{(i)};\Vtheta), y^{(i)})$的\gls{newton_method}}
