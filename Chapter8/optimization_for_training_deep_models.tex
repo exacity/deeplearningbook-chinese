@@ -633,18 +633,18 @@
 % 283 mid
 
 
-\cite{GoodfellowOptimization15}认为大部分训练的运行时间取决于到达解决方案的轨迹的长度。 
+\cite{GoodfellowOptimization15}认为大部分训练的运行时间取决于到达解决方案的轨迹长度。 
 如\figref{fig:chap8_plot_atmu_relu_5}所示，学习轨迹将花费大量的时间探寻一个围绕山形结构的宽弧。
 % 283 mid
 
 
 大多数优化研究的难点集中于训练是否到达了\gls{global_minimum}、\gls{local_minimum}，或是\gls{saddle_points}，但在实践中\gls{NN}不会到达任何一种\gls{critical_points}。
 \figref{fig:chap8_grad_norm_increases}表明\gls{NN}通常不会到达梯度很小的区域。
-甚至，这些\gls{critical_points}不是必然存在的。
+甚至，这些\gls{critical_points}不是必要存在的。
 例如，\gls{loss_function} $-\log p(y\mid\Vx;\Vtheta)$ 可以没有\gls{global_minimum}，而是当模型更自信时会逐渐趋向某个值。    
-对于具有离散标签$y$和softmax分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类\gls{training_set}上的每个样本，则负对数似然可以任意地趋近于零，但是不可能实际达到零值。
-同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无限大——如果$f(\Vtheta)$能够正确预测所有的\gls{training_set}目标$y$，学习算法会无边界地增加$\beta$。
-如\figref{fig:chap8_bad_global}所示，即使没有\gls{local_minima}和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的\gls{cost_function}值。
+对于具有离散的$y$和\ENNAME{softmax}分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类\gls{training_set}上的每个样本，则负对数似然可以任意地趋近于零，但是不可能实际达到零值。
+同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无限大——如果$f(\Vtheta)$能够正确预测所有\gls{training_set}中的目标$y$，学习算法会无边界地增加$\beta$。
+\figref{fig:chap8_bad_global}给出了一个失败的例子，即使没有\gls{local_minima}和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的\gls{cost_function}值。
 % 283 end
 
 
@@ -656,10 +656,10 @@
 \centerline{\includegraphics{Chapter8/figures/bad_global_color}}
 \fi
 \caption{如果局部表面没有指向全局解，基于局部下坡移动的优化可能就会失败。
-这里我们提供一个例子，说明即使在没有\gls{saddle_points}或\gls{local_minima}的情况下，会如何失败。
-此例中的\gls{cost_function}仅包含朝向低值而不是极小值的渐近线。
-在这种情况下，困难的主要原因是初始化在``山''的错误一侧，并且无法遍历。
-在高维空间中，学习算法通常可以环绕这样的高山，但是与之关联的轨迹可能会很长，并且导致过长的训练时间，如\figref{fig:chap8_plot_atmu_relu_5}所示。
+这里我们提供一个例子，说明即使在没有\gls{saddle_points}或\gls{local_minima}的情况下，优化过程也会如何失败。
+此例中的\gls{cost_function}仅包含朝向低值而不是\gls{minima}的渐近线。
+在这种情况下，造成这种困难的主要原因是初始化在``山''的错误一侧，并且无法遍历。
+在高维空间中，学习算法通常可以环绕过这样的高山，但是相关的轨迹可能会很长，并且导致过长的训练时间，如\figref{fig:chap8_plot_atmu_relu_5}所示。
 }
 \label{fig:chap8_bad_global}
 \end{figure}
@@ -667,28 +667,30 @@
 
 
 
-未来的研究需要进一步探索影响学习轨迹长度和更好地表征训练过程结果的因素。
+未来的研究需要进一步探索影响学习轨迹长度和更好地描述训练过程结果的因素。
 % 284 mid
 
-许多现有研究方法在求解局部结构复杂的问题时，旨在寻求良好的初始点，而不是开发非局部范围更新的算法。
+许多现有研究方法在求解具有困难全局结构的问题时，旨在寻求良好的初始点，而不是开发非局部范围更新的算法。
 % 284 mid
 
+
+% 284 mid
 \gls{GD}和基本上所有有效训练\gls{NN}的学习算法，都是基于局部较小更新。
 先前的小节主要集中于为何这些局部范围更新的正确方向难以计算。
-我们也许能计算\gls{objective_function}的一些性质，如近似的有偏梯度或正确方向估计的方差。
-在这些情况下，局部下降或许能或许不能定义到达有效解的短路径，我们并不能真的遵循局部下降的路径。
-\gls{objective_function}可能有诸如病态条件或不连续导数的问题，使得梯度为\gls{objective_function}提供好模型的区间非常小。
-在这些情况下，步长为$\epsilon$的\gls{GD}可能定义了一个寻求解法的合理的短路经，但是我们只能计算步长为$\delta \ll \epsilon$的局部下降方向。
-在这些情况下，局部下降或许能 定义一个寻求解法的路径，但是该路径包含很多次更新，因此遵循该路径会带来很高的计算代价。
-有时，\gls{objective_function}有一个宽而平的区域，或是我们试图寻求精确的\gls{critical_points}（通常只发生于显示求解\gls{critical_points}的方法，如\gls{newton_method}），局部信息不能为我们提供任何指导。
-在这些情况下，局部下降不能定义寻求解法的路径。
-在其他情况下，局部移动可能太过贪心化，朝着\gls{GD}方向移动，却远离了任何解决方案，如\figref{fig:chap8_bad_global}所示，或者是沿着一个不必要的长路径到达解决方法，如\figref{fig:chap8_plot_atmu_relu_5}所示。
-目前，我们还不了解这些问题中的哪一个与\gls{NN}优化难题最相关，这是研究领域的热点方向。
+<bad>我们也许能计算\gls{objective_function}的一些性质，如近似的有偏梯度或正确方向估计的方差。
+在这些情况下，局部下降或许能或许不能定义到达有效解的合理的较短路径，我们并不能真的遵循局部下降的路径。
+\gls{objective_function}可能有诸如\gls{poor_conditioning}或不连续梯度的问题，使得梯度为\gls{objective_function}提供较好近似的区间非常小。
+在这些情况下，步长为$\epsilon$的局部下降可能定义了一个寻求解法的合理的短路经，但是我们只能计算步长为$\delta \ll \epsilon$的局部下降方向。
+在这些情况下，局部下降或许能定义一个寻求解法的路径，但是该路径包含很多次更新，因此遵循该路径会带来很高的计算代价。
+有时，比如说当\gls{objective_function}有一个宽而平的区域，或是我们试图寻求精确的\gls{critical_points}（通常来说后一种情况只发生于显式求解\gls{critical_points}的方法，如\gls{newton_method}）时，局部信息不能为我们提供任何指导。
+在这些情况下，\gls{local_descent}不能定义寻求解法的路径。
+在其他情况下，局部移动可能太过贪心，朝着下坡方向移动，却远离了任何解决方案，如\figref{fig:chap8_bad_global}所示，或者是沿着一个不必要的长路径到达解决方法，如\figref{fig:chap8_plot_atmu_relu_5}所示。
+目前，我们还不了解这些问题中的哪一个与\gls{NN}优化中的难点最相关，这是研究领域的热点方向。
 % 285 head
 
 
-不管哪个问题最重要，如果存在一个区域，我们遵循局部下降便能合理地直接到达解决方案，并且我们能够在该良好区域上初始化学习，那么这些问题都可以避免。
-最后一个观点建议研究选择良好的初始点以使用传统优化算法。
+不管哪个问题最重要，如果存在一个区域，我们遵循\gls{local_descent}便能合理地直接到达解决方案，并且我们能够在该良好区域上初始化学习，那么这些问题都可以避免。
+最后一个观点建议研究选择良好的初始点从而能够使用传统优化算法。
 % 285 mid
 
 
@@ -700,11 +702,11 @@
 
 
 一些理论结果仅适用于\gls{NN}的单元输出离散值的情况。
-然而，大多数\gls{NN}单元输出平稳的增值，使得局部搜索求解优化可行。
+然而，大多数\gls{NN}单元输出光滑的增值，使得局部搜索求解优化可行。
 一些理论结果表明，存在某类问题是不可解的，但很难判断一个特定问题是否属于该类。
 其他结果表明，寻求给定规模的网络的一个解决方案是不可解的，
-但在实践中，我们可以通过一个有很多对应于可接受解决方案的参数设定的更大的\gls{NN}，很容易地找到一个解决方案。
-此外，在\gls{NN}训练中，我们通常不关注函数的精确极小值，而只关注将其值下降到足够小以获得一个很好的\gls{generalization_error}。
+<bad>但在实践中，我们可以通过使用一个拥有更多对应于可接受解的参数的更大的\gls{NN}，很容易地找到一个解决方案。
+此外，在\gls{NN}训练中，我们通常不关注某个函数的精确\gls{minimum}，而只关注将其值下降到足够小以获得一个很好的\gls{generalization_error}。
 关于优化算法能否达到这个目标的理论分析是极其困难的。
 因此， 研究优化算法性能上更现实的界限仍然是\gls{ML}研究中的一个重要目标。
 % 285 end
