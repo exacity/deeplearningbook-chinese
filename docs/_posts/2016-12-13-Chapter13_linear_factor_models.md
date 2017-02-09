@@ -223,18 +223,20 @@ $L$的一个常见选择是平均平方误差。
 <!-- % 484 -->
 
 
-SFA算法~{cite?}包括将$f(\Vx;\theta)$定义为线性变换，并求解满足如下约束
+
+SFA算法~{cite?}包括将$f(\Vx;\theta)$定义为线性变换，并求解如下优化问题
 \begin{align}
-\SetE_t  f(\Vx^{(t)})_i = 0 
+	\min_{\Vtheta} \SetE_t  (f(\Vx^{(t+1)})_i - f(\Vx^{(t)})_i  )^2
+\end{align}
+并且满足下面的约束：
+\begin{align}
+	\SetE_t  f(\Vx^{(t)})_i = 0 
 \end{align}
 以及
 \begin{align}
-\SetE_t [ f(\Vx^{(t)})_i^2 ] =1 
+	\SetE_t [ f(\Vx^{(t)})_i^2 ] =1. 
 \end{align}
-的优化问题
-\begin{align}
-\min_{\Vtheta} \SetE_t  (f(\Vx^{(t+1)})_i - f(\Vx^{(t)})_i  )^2.
-\end{align}
+
 
 <!-- % 485 -->
 

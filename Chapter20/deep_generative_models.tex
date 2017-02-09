@@ -1038,7 +1038,7 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 
 传统的神经网络对一些输入变量$\Vx$的施加确定性变换。
 当开发\gls{generative_model}时，我们经常希望扩展\gls{NN}以实现$\Vx$的随机变换。
-这样做的一个直接方法是用额外输入$\Vz$（从一些简单的概率分布采样得到，如均匀或\gls{gaussian_distribution}）来增强神经网络。
+这样做的一个直接方法是使用额外输入$\Vz$（从一些简单的概率分布采样得到，如均匀或\gls{gaussian_distribution}）来增强神经网络。
 神经网络在内部仍可以继续执行确定性计算，但是函数$f(\Vx,\Vz)$对于不能访问$\Vz$的观察者来说将是随机的。
 假设$f$是连续可微的，我们可以像往常一样使用\gls{back_propagation}计算训练所需的梯度。
 
@@ -1047,22 +1047,22 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
  \RSy \sim \CalN(\mu, \sigma^2).
 \end{align}
 因为$\RSy$的单个样本不是由函数产生的，而是由一个采样过程产生，它的输出会随我们的每次查询变化，所以取$\RSy$相对于其分布的参数$\mu$和$\sigma^2$的导数似乎是违反直觉的。
-然而，我们可以将采样过程重写，对基本随机变量$\RSz \sim \CalN(\RSz;0,1)$进行转换以从期望的分布获得样本：
+然而，我们可以将采样过程重写，对基本随机变量$\RSz \sim \CalN(z;0,1)$进行转换以从期望的分布获得样本：
 \begin{align}
  y = \mu + \sigma z.
 \end{align}
 
-现在我们将其视为具有额外输入$\RSz$的确定性操作，通过采样操作来\gls{back_propagation}。
+现在我们将其视为具有额外输入$\RSz$的确定性操作，可以通过采样操作来\gls{back_propagation}。
 至关重要的是，额外输入是一个随机变量，其分布不是任何我们想对其计算导数的变量的函数。
-如果我们可以用相同的$\RSz$值再次重复采样操作，结果会告诉我们$\mu$或$\sigma$的微小变化会如何改变输出。
+如果我们可以用相同的$\RSz$值再次重复采样操作，结果会告诉我们$\mu$或$\sigma$的微小变化将会如何改变输出。
 
 % -- 678 --
 
 能够通过该采样操作\gls{back_propagation}允许我们将其并入更大的图中。
 我们可以在采样分布的输出之上构建图元素。
 例如，我们可以计算一些损失函数$J(y)$的导数。
-<BAD>我们还可以构建输出是采样操作的输入或参数的图元素。
-例如，我们可以通过$\mu = f(\Vx; \Vtheta)$和$\sigma = g(\Vx; \Vtheta)$构建一个更大的图。
+我们还可以构建这样的图元素，其输出是采样操作的输入或参数。
+例如，我们可以通过$\mu = f(\Vx; \Vtheta)$和$\sigma = g(\Vx; \Vtheta)$构建更大的图。
 在这个增强图中，我们可以通过这些函数的\gls{back_propagation}导出$\nabla_{\Vtheta} J(y)$。
 
 在该高斯采样示例中使用的原理能更广泛地应用。
@@ -1076,19 +1076,19 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
  \Vy = f(\Vz; \Vomega),
 \end{align}
 其中$\Vz$是随机性的来源。
-只要$f$几乎处处是连续可微的，我们就可以使用传统工具（例如应用于$f$的\gls{back_propagation}算法）计算$\RSy$相对于$\Vomega$的导数。
+只要$f$是几乎处处连续可微的，我们就可以使用传统工具（例如应用于$f$的\gls{back_propagation}算法）计算$\RSy$相对于$\Vomega$的导数。
 至关重要的是，$\Vomega$不能是$\Vz$的函数，且$\Vz$不能是$\Vomega$的函数。
-这种技术通常被称为\firstgls{reparametrization_trick}，\textbf{随机\gls{back_propagation}}(stochastic back-propagation)或\textbf{扰动分析}(perturbation analysis)。
+这种技术通常被称为\firstgls{reparametrization_trick}、\textbf{随机\gls{back_propagation}}(stochastic back-propagation)或\textbf{扰动分析}(perturbation analysis)。
 
 
 要求$f$是连续可微的，当然需要$\Vy$是连续的。
-如果我们希望通过产生离散值样本的采样过程进行\gls{back_propagation}，则可以使用\gls{RL}算法（如\ENNAME{REINFORCE}算法\citep{Williams-1992}的变体）来估计$\Vomega$上的梯度，将在\secref{sec:back_propagating_through_discrete_stochastic_operations}中讨论。
+如果我们希望通过产生离散值样本的采样过程进行\gls{back_propagation}，则可以使用\gls{RL}算法（如\ENNAME{REINFORCE}算法\citep{Williams-1992}的变体）来估计$\Vomega$上的梯度，这将在\secref{sec:back_propagating_through_discrete_stochastic_operations}中讨论。
 
-在神经网络应用中，我们通常选择从一些简单的分布中采样$\Vz$，如单位均匀或单位\gls{gaussian_distribution}，并通过网络的确定性部分重塑其输入来实现更复杂的分布。
+在神经网络应用中，我们通常选择从一些简单的分布中采样$\Vz$，如单位均匀分布或单位\gls{gaussian_distribution}分布，并通过网络的确定性部分重塑其输入来实现更复杂的分布。
 
 通过随机操作扩展梯度或优化的想法可追溯到二十世纪中叶~\citep{Price-1958,Bonnet-1964}，并且首先在\gls{RL}~\citep{Williams-1992}的情景下用于机器学习。
 最近，它已被应用于变分近似~\citep{Opper+Archambeau-2009} 和随机生成神经网络~\citep{bengio2013estimating,Kingma-arxiv2013,Kingma+Welling-arxiv2014,Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014,Goodfellow-et-al-NIPS2014-small}。
-许多网络，如\gls{DAE}或使用\gls{dropout}的正则化网络，也被自然地设计为将噪声作为输入，而不需要任何特殊的重参数化以使噪声与模型无关。
+许多网络，如\gls{DAE}或使用\gls{dropout}的正则化网络，也被自然地设计为将噪声作为输入，而不需要任何特殊的重参数化就能使噪声独立于模型。
 
 % -- 679 --
 
@@ -1122,7 +1122,7 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
  J(\Vy^{(i)}) \frac{\partial\log p(\Vy^{(i)})}{\partial \Vomega}. \label{eq:sum_prob}
 \end{align}
 \eqnref{eq:sum_exp}依赖于$J$不直接引用$\Vomega$的假设。
-扩展该方法来放松这个假设是简单的。
+放松这个假设来扩展该方法是简单的。
 \eqnref{eq:sum_log}利用对数的导数规则，
 $\frac{\partial\log p(\Vy)}{\partial \Vomega} = \frac{1}{p(\Vy)}
 \frac{\partial p(\Vy)}{\partial \Vomega}$。
@@ -1174,9 +1174,9 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 
 % -- 681 --
 
-在\gls{RL}背景下引入的\gls{variance_reduction}方法\citep{Sutton-et-al-2000,Weaver+Tao-UAI2001}， \citet{Dayan-1990}t推广了二值奖励的前期工作。
+在\gls{RL}背景下引入的\gls{variance_reduction}方法\citep{Sutton-et-al-2000,Weaver+Tao-UAI2001}， \citet{Dayan-1990}推广了二值奖励的前期工作。
 参见\citet{bengio2013estimating}、\citet{Mnih+Gregor-ICML2014}、\citet{Ba+Mnih-arxiv2014}、\citet{Mnih2014}或 \citet{Xu-et-al-ICML2015} 中在深度学习的背景下使用减少方差的\ENNAME{REINFORCE}算法的现代例子。
-<BAD>除了使用与输入相关的基线$b(\Vomega)$，\citet{Mnih+Gregor-ICML2014} 发现，可以在训练期间调整$（J(\Vy)) - b(\Vomega)）$的尺度（即除以训练期间的移动平均估计的标准差 ），作为一种适应性学习速率，可以抵消训练过程中该量大小发生的重要变化的影响。
+除了使用与输入相关的基线$b(\Vomega)$，\citet{Mnih+Gregor-ICML2014}发现可以在训练期间调整$（J(\Vy)) - b(\Vomega)）$的尺度（即除以训练期间的移动平均估计的标准差 ），即作为一种适应性学习速率，可以抵消训练过程中该量大小发生的重要变化的影响。
 \citet{Mnih+Gregor-ICML2014} 称之为启发式\textbf{方差归一化}(variance normalization)。
 
 基于\ENNAME{REINFORCE}的估计器可以被理解为将$\Vy$的选择与$J(\Vy)$的对应值相关联来估计梯度。
