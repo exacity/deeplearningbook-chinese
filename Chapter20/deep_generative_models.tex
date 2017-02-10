@@ -1186,14 +1186,14 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 \label{sec:directed_generative_nets}
 
 如\chapref{chap:structured_probabilistic_models_for_deep_learning}所讨论的，\gls{directed_graphical_model}构成了一类突出的\gls{graphical_model}。
-虽然\gls{directed_graphical_model}在更大的机器学习社区中非常流行，但在较小的深度学习社区中，它们直到约2013年都掩盖在\gls{undirected_model}（如\glssymbol{RBM}）的光彩之下。
+虽然\gls{directed_graphical_model}在更大的机器学习社区中非常流行，但在较小的深度学习社区中，大约直到2013年它们都掩盖在\gls{undirected_model}（如\glssymbol{RBM}）的光彩之下。
 
 在本节中，我们回顾一些传统上与深度学习社区相关的标准\gls{directed_graphical_model}。
 
 我们已经描述过部分有向的模型——\gls{DBN}。
 我们还描述过可以被认为是浅度有向\gls{generative_model}的\gls{sparse_coding}模型。
 尽管在样本生成和密度估计方面表现不佳，在深度学习的背景下它们通常被用作特征学习器。
-我们现在描述多种深度完全有向的模型。
+我们接下来描述多种深度完全有向的模型。
 
 % -- 682 --
 
@@ -1206,8 +1206,8 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
  p(s_i) = \sigma \Bigg( \sum_{j<i} W_{j,i} s_j + b_i \Bigg).
 \end{align}
 
-\gls{sigmoid_bn}最常见的结构是被分为许多层的结构，其中\gls{ancestral_sampling}通过一系列许多\gls{hidden_layer}进行，然后最终生成可见层。
-这种结构与\gls{DBN}非常相似，除了在采样过程开始时的单元彼此独立， 而不是从\gls{RBM}采样。
+\gls{sigmoid_bn}最常见的结构是被分为许多层的结构，其中\gls{ancestral_sampling}通过一系列多个\gls{hidden_layer}进行，然后最终生成可见层。
+这种结构与\gls{DBN}非常相似，但它们在采样过程开始时的单元彼此独立，而不是从\gls{RBM}采样。
 这种结构由于各种原因而令人感兴趣。
 一个原因是该结构是可见单元上概率分布的通用近似，即在足够深的情况下，可以任意良好地近似二值变量的任何概率分布（即使各个层的宽度受限于可见层的维度 ）\citep{Sutskever+Hinton-2008}。
 
@@ -1220,7 +1220,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 
 在\gls{sigmoid_bn}中执行\gls{inference}的一种方法是构造专用于\gls{sigmoid_bn}的不同下界 \citep{Saul+96}。
 这种方法只适用于非常小的网络。
-另一种方法是使用的学习好\gls{inference}机制，如\secref{sec:learned_approximate_inference}中描述的。
+另一种方法是使用的学习好的\gls{inference}机制，如\secref{sec:learned_approximate_inference}中描述的。
 \gls{helmholtz_machine} \citep{Dayan-et-al-1995,dayan1996varieties} 结合了一个\gls{sigmoid_bn}与一个预测\gls{hidden_unit}上\gls{meanfield}分布参数的\gls{inference}网络。
 \gls{sigmoid_bn}的现代方法\citep{Gregor-et-al-ICML2014,Mnih+Gregor-ICML2014} 仍然使用这种\gls{inference}网络的方法。
 因为\gls{latent_variable}的离散本质，这些技术仍然是困难的。
@@ -1230,7 +1230,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 \gls{sigmoid_bn}的一种特殊情况是没有\gls{latent_variable}的情况。
 在这种情况下学习是高效的，因为没有必要将\gls{latent_variable}边缘化到似然之外。
 一系列称为\gls{auto_regressive_network}的模型将这个完全可见的\gls{BN}泛化到其他类型的变量（除二值变量）和其他结构（除对数线性关系）的条件分布。
-\gls{auto_regressive_network}在\secref{sec:auto_regressive_networks}中描述。
+\gls{auto_regressive_network}将在\secref{sec:auto_regressive_networks}中描述。
 
 
 \subsection{可微\glsentrytext{generator_network}}
@@ -1238,12 +1238,12 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 
 许多\gls{generative_model}基于使用可微\firstgls{generator_network}的想法。
 这种模型使用可微函数$g(\Vz;\Vtheta^{(g)})$将\gls{latent_variable} $\RVz$的样本变换为样本$\RVx$或样本$\RVx$上的分布，可微函数通常可以由神经网络表示。
-这类模型包括将\gls{generator_network}与\gls{inference}网络配对的\gls{VAE};将\gls{generator_network}与判别器网络配对的\gls{GAN}; 和孤立地训练\gls{generator_network}的技术。
+这类模型包括将\gls{generator_network}与\gls{inference}网络配对的\gls{VAE}、将\gls{generator_network}与判别器网络配对的\gls{GAN}，以及孤立地训练\gls{generator_network}的技术。
 
 
 \gls{generator_network}本质上仅是用于生成样本的参数化计算过程，其中的体系结构提供了从中采样的可能分布族以及选择这些族内分布的参数。
 
-作为示例，从具有均值$\Vmu$和协方差$\VSigma$的正态分布绘制样本的标准过程是将来自零均值和单位协方差的正态分布的样本$\Vz$馈送到非常简单的\gls{generator_network}中。 这个\gls{generator_network} 只包含一个仿射层：
+作为示例，从具有均值$\Vmu$和协方差$\VSigma$的正态分布绘制样本的标准过程是将来自零均值和单位协方差的正态分布的样本$\Vz$馈送到非常简单的\gls{generator_network}中。 这个\gls{generator_network}只包含一个仿射层：
 \begin{align}
  \Vx = g(\Vz) = \Vmu + \ML \Vz ,
 \end{align}
@@ -1255,11 +1255,11 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 在这种情况下，$g(z)$由累积分布函数$F(x) = \int_{-\infty}^{x} p(v) dv$的反函数给出。
 如果我们能够指定$p(x)$，在$x$上积分，并取所得函数的反函数，我们不用通过机器学习就能从$p(x)$进行采样。
 
-为了从更复杂的分布（难以直接指定，难以积分或难以求所得积分的反函数）中生成样本，我们使用\gls{feedforward_network}来表示非线性函数$g$的参数族，并使用训练数据来\gls{inference}参数以选择所期望的函数。
+为了从更复杂的分布（难以直接指定、难以积分或难以求所得积分的反函数）中生成样本，我们使用\gls{feedforward_network}来表示非线性函数$g$的参数族，并使用训练数据来\gls{inference}参数以选择所期望的函数。
 
 我们可以认为$g$提供了变量的非线性变化，将$\RVz$上的分布变换成$\RVx$上想要的分布。
 
-回想\eqnref{eqn:3.47}，对于可求反的、可微的、连续的$g$，
+回想\eqnref{eqn:3.47}，对于可求反函数的、可微的、连续的$g$，
 \begin{align}
  p_z(\Vz) = p_x(g(\Vz)) \Big | \det (\frac{\partial g}{\partial \Vz}) \Big |.
 \end{align}
@@ -1276,19 +1276,19 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 \end{align}
 在这种情况下， 我们使用$g$来定义$p(\Vx  \mid  \RVz)$时， 我们通过边缘化$\Vz$来对$\Vx$施加分布：
 \begin{align}
- p(\Vx) = \SetE_z p(\Vx  \mid  \Vz).
+ p(\Vx) = \SetE_{\Vz} p(\Vx  \mid  \Vz).
 \end{align}
 
-两种方法都定义了一个分布$p_g(\Vx)$， 并允许我们使用\secref{sec:back_propagation_through_random_operations}中的\gls{reparametrization_trick}训练$p_g$的各种评估\gls{criterion}。
+两种方法都定义了一个分布$p_g(\Vx)$， 并允许我们使用\secref{sec:back_propagation_through_random_operations}中的\gls{reparametrization_trick}来训练$p_g$的各种评估\gls{criterion}。
 
 % -- 685 --
 
-制定\gls{generator_network}的两种不同方法（发出条件分布的参数相对直接发射样品 ）具有互补的优缺点。
+表示\gls{generator_network}的两种不同方法（发出条件分布的参数相对直接发射样品 ）具有互补的优缺点。
 当\gls{generator_network}在$\Vx$上定义条件分布时，它不但能生成连续数据，也能生成离散数据。
 当\gls{generator_network}直接提供采样时，它只能产生连续的数据（我们可以在前向传播中引入离散化，但这样做意味着模型不再能够使用\gls{back_propagation}进行训练）。
 直接采样的优点是，我们不再被迫使用条件分布（可以容易地写出来并由人类设计者进行代数操作的形式）。
 
-基于可微分\gls{generator_network}的方法是由分类可微分前馈网络中\gls{GD}的成功应用推动的。
+基于可微\gls{generator_network}的方法是由分类可微前馈网络中\gls{GD}的成功应用而推动的。
 在\gls{supervised_learning}的背景中，基于梯度训练学习的深度前馈网络在给定足够的\gls{hidden_unit}和足够的训练数据的情况下，在实践中似乎能保证成功。
 这个同样的方案能成功转移到生成式建模上吗？
 
@@ -1301,7 +1301,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 具体来说，训练数据是计算机渲染的椅子图。
 \gls{latent_variable} $\Vz$是渲染引擎的参数，描述了椅子模型的选择、椅子的位置以及影响图像渲染的其他配置细节。
 使用这种合成的生成数据，卷积网络能够学习将图像内容的描述$\Vz$映射到渲染图像的近似$\Vx$。
-这表明现代可微\gls{generator_network}具有足够的模型容量，足以成为良好的\gls{generative_model}，并且现代优化算法具有拟合它们的能力。
+这表明当现代可微\gls{generator_network}具有足够的模型容量时，足以成为良好的\gls{generative_model}，并且现代优化算法具有拟合它们的能力。
 困难在于当每个$\Vx$的$\Vz$的值不是固定的且在每次训练前是未知时，如何训练\gls{generator_network}。
 
 

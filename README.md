@@ -46,7 +46,7 @@
 | [第五章 机器学习基础](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter5_machine_learning_basics/) | @liber145 | @wheaio, @ZhiweiYang | @fairmiracle, @linzhp |  |
 | [第六章 深度前馈网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter6_deep_feedforward_networks/) | @KevinLee1110 | @angrymidiao | @minoriwww |  |
 | [第七章 深度学习的正则化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter7_regularization/) | @swordyork | @TonyHan0915 | @dfcv24 |  |
-| [第八章 深度模型中的优化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter8_optimization_for_training_deep_models/) | @liber145 | @zhangyafeikimi |  |  |
+| [第八章 深度模型中的优化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter8_optimization_for_training_deep_models/) | @liber145 | @zhangyafeikimi | @codeVerySlow |  |
 | [第九章 卷积神经网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter9_convolutional_networks/) | @KevinLee1110 | @TonyHan0915, @zhaoyu611, @corenel | @zhiding |  |
 | [第十章 序列建模：循环和递归网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter10_sequence_modeling_rnn/) | @swordyork | lc, ljl, @ZhiweiYang | @zhaoyu611 |  |
 | [第十一章 实用方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter11_practical_methodology/) | @liber145 | @wheaio, @angrymidiao |  |  |
