@@ -963,7 +963,7 @@
 % 291 end
 
 
-\subsection{Nesterov动量}
+\subsection{\glsentrytext{nmomentum}}
 \label{sec:nesterov_momentum}
 受Nesterov加速梯度算法\citep{Nesterov83b,Nesterov03}启发，\cite{sutskeverimportance}提出了\gls{momentum}算法的一个变种。
 这种情况的更新规则如下：
@@ -976,16 +976,16 @@
     \Vtheta \leftarrow \Vtheta + \Vv ,
 \end{equation}
 其中参数$\alpha$和$\epsilon$发挥了和标准\gls{momentum}方法中类似的作用。 
-Nesterov动量和标准\gls{momentum}之间的区别体现在梯度计算上。
-Nesterov动量中，梯度计算在施加当前速度之后。
-因此，Nesterov动量可以解释为往标准\gls{momentum}方法中添加了一个\emph{校正因子}。
-完整的Nesterov动量算法如\algref{alg:nesterov}所示。
+\gls{nmomentum}和标准\gls{momentum}之间的区别体现在梯度计算上。
+\gls{nmomentum}中，梯度计算在施加当前速度之后。
+因此，\gls{nmomentum}可以解释为往标准\gls{momentum}方法中添加了一个\emph{校正因子}。
+完整的\gls{nmomentum}算法如\algref{alg:nesterov}所示。
 % 292 mid
 
 
 % 292 head
 \begin{algorithm}[ht]
-\caption{使用Nesterov\gls{momentum}的\gls{SGD}(\glssymbol{SGD})}
+\caption{使用\gls{nmomentum}的\gls{SGD}(\glssymbol{SGD})}
 \label{alg:nesterov}
 \begin{algorithmic}
 \REQUIRE  \gls{learning_rate} $\epsilon$， \gls{momentum}参数 $\alpha$
@@ -1006,33 +1006,35 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 
 
 % 292 mid
-在凸\gls{batch}梯度的情况下，Nesterov动量将额外误差收敛率从$O(1/k)$（$k$步后）改进到$O(1/k^2)$，如\cite{Nesterov83b}所示。
-不幸的是，在随机梯度的情况下，Nesterov动量没有改进收敛率。
+在凸\gls{batch}梯度的情况下，\gls{nmomentum}将\gls{excess_error}收敛率从$O(1/k)$（$k$步后）改进到$O(1/k^2)$，如\cite{Nesterov83b}所示。
+不幸的是，在随机梯度的情况下，\gls{nmomentum}没有改进收敛率。
 % 292 mid
 
 
 \section{参数初始化策略}
 \label{sec:parameter_initialization_strategies}
 有些优化算法本质上是非迭代的，只是求解一个解点。
-其他有些优化算法本质上是迭代的，但是应用于这一类的优化问题时，能和初始值无关地在可接受的时间内收敛到可接受的解。
+有些其它优化算法本质上是迭代的，但是应用于这一类的优化问题时，能和初始值无关地在可接受的时间内收敛到可接受的解。
 \gls{DL}训练算法通常没有这两种奢侈的性质。
 \gls{DL}模型的训练算法通常是迭代的，因此要求使用者指定一些开始迭代的初始点。
 此外，训练\gls{deep_model}是一个足够困难的问题，以至于大多数算法都很大程度地受到初始化选择的影响。
 初始点能够决定算法是否收敛，有些初始点十分不稳定，使得该算法会遭遇数值困难，并完全失败。
-当学习收敛时，初始点可以决定学习收敛得多块，以及是否收敛到一个损失高或低的点。
-此外，差不多损失的点可以具有区别极大的\gls{generalization_error}，初始点也可以影响泛化。
+当学习收敛时，初始点可以决定学习收敛得多块，以及是否收敛到一个\gls{cost}高或低的点。
+此外，差不多\gls{cost}的点可以具有区别极大的\gls{generalization_error}，初始点也可以影响\gls{generalization}。
 % 293 head
 
 
-现代的初始化策略是简单的，启发式的。
+现代的初始化策略是简单的、启发式的。
 设定改进的初始化策略是一项困难的任务，因为\gls{NN}优化至今还未被很好理解。
 大多数初始化策略基于在\gls{NN}初始化时实现一些很好的性质。
 然而，我们并没有很好地理解这些性质中的哪些会在学习开始进行后的哪些情况下得以保持。
-进一步的难点是，有些初始点从优化的观点看或许是有利的，但是从泛化的观点看是不利的。
-我们对于初始点如何影响泛化的理解是相当原始的，几乎没有提供如何选择初始点的任何指导。
+进一步的难点是，有些初始点从优化的观点看或许是有利的，但是从\gls{generalization}的观点看是不利的。
+我们对于初始点如何影响\gls{generalization}的理解是相当原始的，几乎没有提供如何选择初始点的任何指导。
+% 293 mid
+
 
 也许完全确知的唯一特性是初始参数需要在不同单元间``破坏对称性''。
-如果具有相同激励函数的两个\gls{hidden_unit}连接到相同的输入，那么这些单元必须具有不同的初始参数。
+如果具有相同\gls{activation_function}的两个\gls{hidden_unit}连接到相同的输入，那么这些单元必须具有不同的初始参数。
 如果它们具有相同的初始参数，然后应用到确定性损失和模型的确定性学习算法将一直以相同的方式更新这两个单元。
 即使模型或训练算法能够使用随机性为不同的单元计算不同的更新（例如具备信息丢失的训练），通常来说，最好还是初始化每个单元使其和其他单元计算不同的函数。
 这或许有助于确保没有输入模式丢失在前向传播的零空间中，没有梯度模式丢失在反向传播的零空间中。
@@ -1040,36 +1042,41 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 我们可以明确地搜索一大组彼此互不相同的基函数，但这经常会导致明显的计算代价。  
 例如，如果我们有和输出一样多的输入，我们可以使用Gram-Schmidt正交化于初始的权重矩阵，保证每个单元计算彼此非常不同的函数。
 在高维空间上使用高熵分布来随机初始化，计算代价小并且不太可能分配单元计算彼此相同的函数。
+% 293 mid
+
 
 通常情况下，我们可以为每个单元的\gls{bias_aff}设置启发式挑选的常数，仅随机初始化权重。
 额外的参数——例如编码预测条件方差的参数——通常和偏差一样设置为启发式选择的常数。
+% 293 end
+
 
 我们几乎总是初始化模型的权重为高斯或均匀分布中随机抽取的值。
 高斯或均匀分布的选择似乎不会有很大的差别，但也没有被详尽地研究。
-然而，初始分布的大小确实对优化过程的结果和网络泛化能力都有很大的影响。
+然而，初始分布的大小确实对优化过程的结果和网络\gls{generalize}能力都有很大的影响。
+% 294 head
 
-% -- 293 --
 
 更大的初始权重具有更强的破坏对称性的作用，有助于避免冗余的单元。
 它们也有助于避免在每层线性成分的前向或反向传播中丢失信号——矩阵中更大的值在矩阵乘法中有更大的输出。
 如果初始权重太大，那么会在前向传播或反向传播中产生爆炸的值。
 在循环网络中，很大的权重也可能导致\firstgls{chaos}（对于输入中很小的扰动非常敏感，导致确定性前向传播过程表现随机）。
 在一定程度上，梯度爆炸问题可以通过\gls{gradient_clipping}来缓解（执行\gls{GD}步骤之前设置梯度的阈值）。
-较大的权重也会产生使得激励函数饱和的值，导致饱和单元的梯度完全丢失。
+较大的权重也会产生使得\gls{activation_function}饱和的值，导致饱和单元的梯度完全丢失。
 这些竞争因素决定了权重的理想初始大小。
+% 294 mid
 
 
-
-关于如何初始化网络，正则化和优化有非常不同的视角。
-优化视角建议权重应该足够大以成功传播信息，但是正则化希望其小一点。
-诸如\gls{SGD}这类对权重较小的增量更新，趋于停止在更靠近的初始参数的区域（不管是由于卡在低梯度的区域，还是由于触发了基于过拟合 的提前停止准则）的优化算法倾向于最终参数应接近于初始参数。
-回顾\secref{sec:early_stopping}，在某些模型上，提前停止的\gls{GD}等价于权重衰减。
-在一般情况下，提前停止的\gls{GD}和权重衰减不同，但是提供了一个宽松的类比去考虑初始化的影响。
+关于如何初始化网络，\gls{regularization}和优化有非常不同的视角。
+优化视角建议权重应该足够大以成功传播信息，但是\gls{regularization}希望其小一点。
+诸如\gls{SGD}这类对权重较小的增量更新，趋于停止在更靠近的初始参数的区域（不管是由于卡在低梯度的区域，还是由于触发了基于\gls{overfitting} 的\gls{early_stopping}准则）的优化算法倾向于最终参数应接近于初始参数。
+回顾\secref{sec:early_stopping}，在某些模型上，\gls{early_stopping}的\gls{GD}等价于\gls{weight_decay}。
+在一般情况下，\gls{early_stopping}的\gls{GD}和\gls{weight_decay}不同，但是提供了一个宽松的类比去考虑初始化的影响。
 我们可以将初始化参数$\Vtheta$为$\Vtheta_0$类比于强置均值为$\Vtheta_0$的高斯先验$p(\Vtheta)$。
 从这个角度来看，选择$\Vtheta_0$接近$0$是有道理的。
 这个先验表明，单元间彼此互不交互比交互更有可能。
 只有在目标方程的似然项表达出对交互很强的偏好时，单元才会交互。
 另一方面，如果我们初始化$\Vtheta_0$为很大的值，那么我们的先验指定了哪些单元应互相交互，以及它们应如何交互。
+% 294 end
 
 
 有些启发式方法可用于选择权重的初始大小。
@@ -1081,11 +1088,11 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 这后一种启发式方法初始化所有的层，折衷于使其具有相同激励方差和使其具有相同梯度方差之间。
 该式由不含非线性的链式矩阵乘法网络的假设推导得出。
 现实的\gls{NN}显然会违反这个假设，但很多设计于线性模型的策略在其非线性对应中效果也不错。
+% 295 head
 
-% -- 294 --
 
-\cite{Saxe-et-al-ICLR13}建议初始化随机正交矩阵，仔细挑选负责每一层非线性缩放或\textbf{增益}（\textbf{gain}）因子$g$。
-他们得到了用于不同类型非线性激励函数的特定缩放因子。
+\cite{Saxe-et-al-ICLR13}推荐初始化随机正交矩阵，仔细挑选负责每一层非线性缩放或\textbf{增益}（\textbf{gain}）因子$g$。
+他们得到了用于不同类型非线性\gls{activation_function}的特定缩放因子。
 这种初始化方案也是受启发于不含非线性的矩阵相乘序列的\gls{deep_network}。
 在该模型下，这个初始化方案保证了达到收敛所需的训练迭代总数独立于深度。
 
@@ -1094,6 +1101,8 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 这种方法的一个重要观点是，在前馈网络中，激励和梯度会在每一步前向或反向传播中增加或缩小，遵循随机游动行为。
 这是因为前馈网络在每一层使用了不同的权重矩阵。
 如果该随机游动调整到保持范数，那么前馈网络能够很大程度地避免相同权重矩阵用于每层的梯度消失和爆炸问题，如\secref{sec:long_term_dependencies}所述。
+% 295 end
+
 
 不幸的是，这些初始权权重的最佳准则往往不会带来最佳效果。
 这可能有三种不同的原因。
@@ -1101,8 +1110,8 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 其次，初始化时强加的性质可能在学习开始进行后不能保持。
 最后，该标准可能成功提高了优化速度，但意外地增大了\gls{generalization_error}。
 在实践中，我们通常需要将权重范围视为\gls{hyperparameter}，其最优值大致接近，但并不完全等于理论预测。
+% 296 head
 
-% -- 295 --
 
 数值范围准则的一个缺点是，设置所有的初始权重具有相同的标准差，例如$\frac{1}{\sqrt{m}}$，会使得层很大时每个单一权重会变得极其小。
 \cite{martens2010hessian-small}提出了一种被称为\firstgls{sparse_initialization}的替代方案，每个单元初始化为恰好有$k$个非零权重。
@@ -1110,6 +1119,8 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 稀疏初始化有助于实现单元之间在初始化时更具多样性。
 但是，它也非常偏好于具有很大高斯值的权重。
 因为\gls{GD}需要很长时间缩小``不正确''的大值，这个初始化方案可能会导致单元问题，例如\gls{maxout}单元有几个过滤器，必须互相之间仔细调整。
+% 296 mid
+
 
 计算资源允许的话，将每层权重的初始数值范围设为\gls{hyperparameter}通常是个好主意，使用\secref{sec:automatic_hyperparameter_optimization_algorithms}介绍的\gls{hyperparameter}搜索算法，如随机搜索，挑选这些数值范围。
 是否选择使用密集或稀疏初始化也可以设为一个\gls{hyperparameter}。
@@ -1120,27 +1131,35 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 如果学习在这点上仍然很慢，观测下梯度的范围或标准差可能也会有所帮助。
 这个过程原则上是自动的，且通常计算量低于基于\gls{validation_set}误差的\gls{hyperparameter}优化，因为它是基于初始模型在单批数据上的行为反馈，而不是在\gls{validation_set}上训练模型的反馈。
 由于这个协议很长时间都被启发式使用，最近\cite{mishkin2015all}更正式地确定，研究了该协议。
+% 296 mid
+
 
 目前为止，我们关注在权重的初始化上。
 幸运的是，其他参数的初始化通常更容易。
+% 296 end
 
-% -- 296 --
 
 设置\gls{bias_aff}的方法必须和设置权重的方法协调。
 设置\gls{bias_aff}为零通常在大多数权重初始化方案中是可行的。
 有些我们可能设置\gls{bias_aff}为非零值的情况：
+% 297 head
+
 \begin{itemize}
 \item 如果\gls{bias_aff}是作为输出单元，那么初始化\gls{bias_aff}以获取正确的输出边缘统计通常是有利的。
 要做到这一点，我们假设初始权重足够小，该单元的输出仅由\gls{bias_aff}决定。
-这说明设置\gls{bias_aff}为应用于\gls{training_set}上输出边缘统计的激励函数的逆。
+这说明设置\gls{bias_aff}为应用于\gls{training_set}上输出边缘统计的\gls{activation_function}的逆。
 例如，如果输出是类上的分布，且该分布是高度偏态分布，第$i$类的边缘概率由某个向量$\Vc$的第$i$个元素给定，那么我们可以通过求解方程$\text{softmax}(\Vb)=\Vc$来设置偏置向量$\Vb$。
 这不仅适用于分类器，也适用于我们将在第III部分遇到的模型，例如\gls{AE}和波尔兹曼机。
 这些模型拥有输出类似于输入数据$\Vx$的网络层，非常有助于初始化这些层的偏置以匹配$\Vx$上的边缘分布。
+% 297 mid
+
 
 \item 有时，我们可能想要选择\gls{bias_aff}以避免初始化引起太大饱和。
 例如，我们可能会将ReLU的\gls{hidden_unit}设为$0.1$而非$0$，以避免ReLU在初始化时饱和。
 尽管这种方法不符合不希望偏置具有很强输入的权重初始化准则。
 例如，不建议使用随机游走初始化\citep{Sussillo14}。
+% 297 mid
+
 
 \item 有时，一个单元会控制其他单元能否参与到方程中。
 在这种情况下，我们有一个单元输出$u$，另一个单元$h\in[0,1]$，那么我们可以将$h$视作闸门，以决定$uh\approx 1$还是$uh\approx 0$。
@@ -1148,6 +1167,8 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 否则，$u$没有机会学习。
 例如，\cite{Jozefowicz-et-al-ICML2015}提议设置LSTM模型遗忘门的\gls{bias_aff}为$1$，如\secref{sec:the_long_short_term_memory_and_other_gated_rnns}所述。
 \end{itemize}
+% 297 end
+
 
 另一种常见类型的参数是方差或精确度参数。
 例如，我们用以下模型进行带条件方差估计的线性回归
@@ -1157,8 +1178,8 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 其中$\beta$是精确度参数。
 通常我们能安全地初始化方差或精确度参数为$1$。
 另一种方法假设初始权重足够接近零，设置偏置可以忽略权重的影响，然后设定偏置以产生输出的正确边缘均值，并设置\gls{training_set}输出的边缘方差的方差参数。
+% 298 head
 
-% -- 297 --
 
 除了这些初始化模型参数的简单固定或随机方法，还有可能使用\gls{ML}初始化模型参数。
 本书第III部分讨论的常用策略是初始化监督模型的参数为无监督模型训练于相同的输入上学习出的参数。
@@ -1166,6 +1187,8 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 即使是运行监督训练在一个不相关的任务上，有时也能得到一个比随机初始化具有更快收敛率的初始值。
 这些初始化策略有些能够得到更快的收敛率和更好的\gls{generalization_error}，因为它们编码了模型初始参数分布的信息。
 其他策略显然效果不错的原因主要在于它们设置参数为正确的数值范围，或是设置不同单元计算互相不同的函数。
+% 298 mid
+
 
 \section{具有自适应\glsentrytext{learning_rate}的算法}
 \label{sec:algorithms_with_adaptive_learning_rates}
@@ -1175,7 +1198,7 @@ Nesterov动量中，梯度计算在施加当前速度之后。
 在这种情况下，自然会问有没有其他方法。
 如果我们相信方向敏感度有些轴对齐，那么每个参数设置不同的\gls{learning_rate}，在整个学习过程中自动适应这些\gls{learning_rate}便是有道理的。
 
-\textbf{delta-bar-delta}算法\citep{jacobs1988}是一个早期的在训练时适应模型参数单独\gls{learning_rate}的启发式方法。
+\firstgls{dbd}算法\citep{jacobs1988}是一个早期的在训练时适应模型参数单独\gls{learning_rate}的启发式方法。
 该方法基于一个很简单的想法，如果损失对于某个给定模型参数的偏导保持相同的符号，那么\gls{learning_rate}应该增加。如果对于该参数的偏导变化了符号，那么\gls{learning_rate}应减小。
 当然，这种方法只能应用于全\gls{batch}优化中。
 
@@ -1573,7 +1596,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 在其他层不改变的假设下，梯度用于如何更新每一个参数。
 在实践中，我们同时更新所有层。
 当我们进行更新时，可能会发生一些意想不到的结果，这是因为许多组合在一起的函数同时改变时，计算更新的假设是其他函数保持不变。
-举一个简单的例子，假设我们有一个\gls{DNN}，每一层只有一个单元，并且在每个\gls{hidden_layer}不使用激励函数：$\hat{y} = xw_1 w_2 w_3 \dots w_l$。
+举一个简单的例子，假设我们有一个\gls{DNN}，每一层只有一个单元，并且在每个\gls{hidden_layer}不使用\gls{activation_function}：$\hat{y} = xw_1 w_2 w_3 \dots w_l$。
 这里，$w_i$表示用于层$i$的权重。层$i$的输出是$h_i = h_{i-1} w_i$。
 输出$\hat{y}$是输入$x$的线性函数，但是权重$w_i$的非线性函数。
 假设我们的\gls{cost_function} $\hat{y}$上的梯度为$1$，所以我们希望稍稍降低$\hat{y}$。
@@ -1599,7 +1622,7 @@ $\hat{y}$的更新值为
 \gls{batch_normalization}提出了一种几乎可以重新参数化所有\gls{deep_network}的优雅方法。
 重新参数化显著减少了多层之间协调更新的问题。
 \gls{batch_normalization}可应用于网络的任何输入层或\gls{hidden_layer}。
-设$\MH$是需要标准化的某层的\gls{minibatch}激励函数，布置为设计矩阵，每个样本的激励出现在矩阵的每一行中。
+设$\MH$是需要标准化的某层的\gls{minibatch}\gls{activation_function}，布置为设计矩阵，每个样本的激励出现在矩阵的每一行中。
 标准化$\MH$，我们替代它为
 \begin{equation}
 \MH' = \frac{\MH - \Vmu}{\Vsigma},
@@ -1646,7 +1669,7 @@ $\hat{y}$的更新值为
 在这个示例中，容易学习的代价是使得底层网络没有用。
 在我们的线性示例中，较低层不再有任何有害的影响，但它们也不再有任何有益的影响。
 这是因为我们已经标准化了一阶和二阶统计量，这是线性网络可以影响的所有因素。
-在具有非线性激励函数的\gls{DNN}中，较低层可以进行数据的非线性变换，所以它们仍然是有用的。
+在具有非线性\gls{activation_function}的\gls{DNN}中，较低层可以进行数据的非线性变换，所以它们仍然是有用的。
 \gls{batch_normalization}仅标准化每个单元的均值和方差，以稳定化学习，但允许单元和单个单元的非线性统计量之间的关系发生变化。
 
 由于网络的最后一层能够学习线性变换，实际上我们可能希望移除一层内单元之间的所有线性关系。
@@ -1664,12 +1687,12 @@ $\hat{y}$的更新值为
 在新参数中，$\Vgamma \MH' + \Vbeta$的均值仅由$\Vbeta$确定。
 新参数很容易通过\gls{GD}来学习。
 
-大多数\gls{NN}层会采取形式$\phi(\MX\MW+ \Vb)$，其中$\phi$是某个固定的非线性激励函数，如\gls{rectified_linear}变换。
+大多数\gls{NN}层会采取形式$\phi(\MX\MW+ \Vb)$，其中$\phi$是某个固定的非线性\gls{activation_function}，如\gls{rectified_linear}变换。
 自然想到是否我们应该应用\gls{batch_normalization}于输入$\MX$，或是变换值$\MX\MW+\Vb$。
 \cite{Ioffe+Szegedy-2015}推荐后者。
 更具体地，$\MX\MW+\Vb$应替换为$\MX\MW$的标准化形式。
 偏置项应被忽略，因为参数$\Vbeta$会加入\gls{batch_normalization}重新参数化，它是冗余的。
-一层的输入通常是前一层的非线性激励函数，如\gls{rectified_linear}函数，的输出。
+一层的输入通常是前一层的非线性\gls{activation_function}，如\gls{rectified_linear}函数，的输出。
 因此，输入的统计量更符合非高斯，而更不服从线性操作的标准化。
 
 \chapref{chap:convolutional_networks}所述的卷积网络，在特征映射中每个空间位置同样地标准化$\Vmu$和$\Vsigma$是很重要的，能使特征映射的统计量不因空间位置而保持相同。
@@ -1690,7 +1713,7 @@ $\hat{y}$的更新值为
     J(\MH, \MW) = \sum_{i,j} |H_{i,j}| + \sum_{i,j} \left( \MX - \MW^\top \MH \right)_{i,j}^2 .
 \end{equation}
 该函数描述了一种被称为\gls{sparse_coding}的学习问题，其目标是寻求一个权重矩阵$\MW$，可以线性解码激励值矩阵$\MH$以重构\gls{training_set}$\MX$。
-\gls{sparse_coding}的大多数应用还涉及到权重衰减或$\MW$列范数的约束，以免极小$\MH$和极大$\MW$的病态解。
+\gls{sparse_coding}的大多数应用还涉及到\gls{weight_decay}或$\MW$列范数的约束，以免极小$\MH$和极大$\MW$的病态解。
 
 函数$J$不是凸的。
 然而，我们可以将训练算法的输入分成两个集合：字典参数$\MW$和编码表示$\MH$。
@@ -1772,7 +1795,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 为什么\gls{greedy_supervised_pretraining}会有帮助呢？
 最初由\cite{Bengio-nips-2006}提出的假说是，其有助于更好地指导深层结构的中间层的学习。
-一般情况下，\gls{pretraining}在优化和泛化两边面都是有帮助的。
+一般情况下，\gls{pretraining}在优化和\gls{generalization}两边面都是有帮助的。
 
 另一个与监督\gls{pretraining}有关的方法扩展了迁移学习的想法：\cite{yosinski-nips2014}在一组任务上\gls{pretraining}了$8$层权重的深度卷积网络（1000个ImageNet对象类的子集），然而用该网络的前$k$层初始化同样规模的网络。
 然后第二个网络的所有层（上层随机初始化）联合训练以执行不同的任务（1000个ImageNet对象类的另一个子集），但训练样本少于第一个任务。
@@ -1799,12 +1822,12 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 改进优化的最好方法并不总是改进优化算法。
 相反，\gls{deep_model}中优化的许多改进来自于设计易于优化的模型。
 
-原则上，我们可以使用呈锯齿非单调模式上上下下的激励函数，但是，这将使优化极为困难。
+原则上，我们可以使用呈锯齿非单调模式上上下下的\gls{activation_function}，但是，这将使优化极为困难。
 在实践中，\emph{选择一族容易优化的模型比使用一个强大的优化算法更重要}。
 \gls{NN}学习在过去30年的大多数进步主要来自于改变模型族，而非改变优化过程。
 1980年代用于训练\gls{NN}的带\gls{momentum}的\gls{SGD}，仍然是现代\gls{NN}应用中的前沿算法。
 
-具体来说，现代\gls{NN}的\emph{设计选择}体现在层之间的线性变换，几乎处处可导的激励函数，和大部分定义域都有明显的梯度。
+具体来说，现代\gls{NN}的\emph{设计选择}体现在层之间的线性变换，几乎处处可导的\gls{activation_function}，和大部分定义域都有明显的梯度。
 特别地，创新的模型，如\glssymbol{LSTM}，\gls{ReLU}和\gls{maxout}单元都比先前的模型（如基于\gls{sigmoid}单元的\gls{deep_network}）使用更多的线性函数。
 这些模型都具有简化优化的性质。
 如果线性变换的\gls{jacobian}具有相对合理的奇异值，那么梯度能够流经很多层。
