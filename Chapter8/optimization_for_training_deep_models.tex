@@ -834,13 +834,13 @@
 \else
 \centerline{\includegraphics{Chapter8/figures/momentum_color}}
 \fi
-\caption{\gls{momentum}的主要目的是解决两个问题：\gls{hessian}矩阵的不良条件数和随机梯度的方差。 
+\caption{\gls{momentum}的主要目的是解决两个问题：\gls{hessian}矩阵的\gls{poor_conditioning}和随机梯度的方差。 
 我们通过此图说明\gls{momentum}如何克服这两个问题的第一个。
-轮廓线描绘了一个二次\gls{loss_function}（具有不良条件数的\gls{hessian}矩阵）。
+轮廓线描绘了一个二次\gls{loss_function}（具有\gls{poor_conditioning}的\gls{hessian}矩阵）。
 横跨轮廓的红色路径表示\gls{momentum}学习规则所遵循的路径，它使该函数最小化。
-我们在每个步骤画一个箭头，指示\gls{GD}将在该点采取的步骤。
-我们可以看到，一个条件数较差的二次\gls{objective_function}看起来像一个长而窄的山谷或陡峭的峡谷。
-\gls{momentum}正确地纵向穿过峡谷，而梯度步骤则会浪费时间在峡谷的窄轴上来回移动。
+我们在该路径的每个步骤画一个箭头，表示\gls{GD}将在该点采取的步骤。
+我们可以看到，一个\gls{poor_conditioning}的二次\gls{objective_function}看起来像一个长而窄的山谷或具有陡峭边的峡谷。
+\gls{momentum}正确地纵向穿过峡谷，而普通的梯度步骤则会浪费时间在峡谷的窄轴上来回移动。
 比较\figref{fig:chap4_poor_conditioning_color}，它也显示了没有\gls{momentum}的\gls{GD}的行为。
 }
 \label{fig:chap8_momentum}
@@ -889,7 +889,7 @@
 
 % 289 end
 之前，步长只是梯度范数乘以\gls{learning_rate}。
-现在，步长取决于梯度序列的大小和排列。
+现在，步长取决于梯度\emph{序列}的大小和排列。
 当许多连续的梯度指向相同的方向时，步长最大。
 如果\gls{momentum}算法总是观测到梯度$\Vg$，那么它会在方向$-g$上不停加速，直到达到最后速度的步长为
 \begin{equation}
@@ -901,9 +901,9 @@
 
 
 在实践中，$\alpha$的一般取值为$0.5$，$0.9$和$0.99$。
-和\gls{learning_rate}一样，$\alpha$也会随着时间变化。 
+和\gls{learning_rate}一样，$\alpha$也会随着时间不断调整。 
 一般初始值是一个较小的值，随后会慢慢变大。
-随着时间推移改变$\alpha$没有收缩$\epsilon$更重要。
+随着时间推移调整$\alpha$没有收缩$\epsilon$更重要。
 % 290 mid
 
 
@@ -918,15 +918,15 @@
 \begin{equation}
     \Vf(t) = \frac{\partial^2}{\partial t^2} \Vtheta(t) .
 \end{equation}
-与其将其视为位置的二阶微分方程，我们不如引入表示粒子在时间$t$处速度的变量$\Vv(t)$，将牛顿动力学重写为一阶微分方程：
+与其将其视为位置的二阶\gls{differential_equation}，我们不如引入表示粒子在时间$t$处速度的变量$\Vv(t)$，将牛顿动力学重写为一阶\gls{differential_equation}：
 \begin{equation}
     \Vv(t) = \frac{\partial}{\partial t} \Vtheta(t) ,
 \end{equation}
 \begin{equation}
     \Vf(t) = \frac{\partial}{\partial t} \Vv(t) .
 \end{equation}
-由此，\gls{momentum}算法包括由数值模拟求解微分方程。
-求解微分方程的一个简单数值方法是欧拉方法，通过在每个梯度方向上小且有限的步来简单模拟该等式定义的动力学。
+由此，\gls{momentum}算法包括由数值模拟求解\gls{differential_equation}。
+求解\gls{differential_equation}的一个简单数值方法是欧拉方法，通过在每个梯度方向上小且有限的步来简单模拟该等式定义的动力学。
 % 290 mid
 
 
@@ -941,7 +941,7 @@
 
 另一个力也是必要的。
 如果\gls{cost_function}的梯度是唯一的力，那么粒子可能永远不会停下来。
-想象一下，假设冰面没有摩擦，一个冰球从山谷的一端下滑，上升到另一端，永远来回振荡。
+想象一下，假设理想情况下冰面没有摩擦，一个冰球从山谷的一端下滑，上升到另一端，永远来回振荡。
 要解决这个问题，我们添加另一个正比于$-\Vv(t)$的力。
 在物理术语中，此力对应于粘性阻力，就像粒子必须通过一个抵抗介质，如糖浆。
 这会导致粒子随着时间推移逐渐失去能量，最终收敛到\gls{local_minimum}。
