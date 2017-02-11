@@ -1317,7 +1317,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 为了从模型生成样本，\glssymbol{VAE}首先从编码分布$p_{\text{model}}(\Vz)$中采样$\Vz$。
 然后使样本通过可微\gls{generator_network} $g(\Vz)$。
 最后，从分布$p_{\text{model}}(\Vx;g(\Vz)) = p_{\text{model}}(\Vx  \mid  \Vz)$ 中采样$\Vx$。
-然而在训练期间，近似\gls{inference}网络（或\gls{encoder}）$q(\Vz  \mid  \Vx)$用于获得$\Vz$，$p_{\text{model}}(\Vx  \mid  \Vz)$则被视为\gls{decoder}网络。
+然而在训练期间，近似\gls{inference}网络（或\gls{encoder}）$q(\Vz  \mid  \Vx)$用于获得$\Vz$，而$p_{\text{model}}(\Vx  \mid  \Vz)$则被视为\gls{decoder}网络。
 
 
 \gls{VAE}背后的关键思想是，它们可以通过最大化与数据点$\Vx$相关联的变分下界$\CalL(q)$来训练：
@@ -1330,14 +1330,14 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 \end{align}
 在\eqnref{eq:var_lower}中，我们将第一项视为\gls{latent_variable}的近似后验下可见和隐藏变量的联合对数似然性（正如\glssymbol{EM}一样，不同的是我们使用近似而不是精确后验）。
 第二项则可视为近似后验的熵。
-当$q$被选择为\gls{gaussian_distribution}，其中噪声被添加到预测平均值时，最大化该熵项促进增加该噪声的标准偏差。
+当$q$被选择为\gls{gaussian_distribution}，其中噪声被添加到预测平均值时，最大化该熵项促使该噪声标准偏差的增加。
 更一般地，这个熵项鼓励变分后验将高概率质量置于可能已经产生$\Vx$的许多$\Vz$值上，而不是坍缩到单个估计最可能值的点。
-在\eqnref{eq:var_kl}，我们将第一项视为在其他\gls{AE}中出现的重构对数似然。
+在\eqnref{eq:var_kl}中，我们将第一项视为在其他\gls{AE}中出现的重构对数似然。
 第二项试图使近似后验分布$q(\RVz  \mid  \Vx)$和模型先验$p_{\text{model}}(\Vz)$彼此接近。
 
 
 变分\gls{inference}和学习的传统方法是通过优化算法\gls{inference} $q$，通常是迭代不动点方程（\secref{sec:variational_inference_and_learning}）。
-这些方法是缓慢的，并且通常需要以闭解形式计算$\SetE_{\RVz \sim q} \log p_{\text{model}} (\Vz, \Vx)$。
+这些方法是缓慢的，并且通常需要以闭解形式计算$\SetE_{\RVz \sim q} \log p_{\text{model}} (\Vz, \Vx)$。 % mistake ???
 \gls{VAE}背后的主要思想是训练产生$q$参数的参数编码器（有时也称为\gls{inference}网络或识别模型）。
 只要$\Vz$是连续变量，我们就可以通过从$q(\Vz  \mid  \Vx) = q(\Vz; f(\Vx; \Vtheta))$中采样$\Vz$的样本\gls{back_propagation}，以获得相对于$\Vtheta$的梯度。
 学习则仅包括相对于\gls{encoder}和\gls{decoder}的参数最大化$\CalL$。
@@ -1349,30 +1349,30 @@ $\CalL$中的所有期望都可以通过\gls{monte_carlo}采样来近似。
 它也获得了出色的结果，是生成式建模中的最先进方法之一。
 它的主要缺点是从在图像上训练的\gls{VAE}中采样的样本往往有些模糊。
 这种现象的原因尚不清楚。
-一种可能性是模糊性是最大似然的固有效应，因为最小化$D_{\text{KL}}(p_{\text{data}} ||p_{\text{model}} )$。
+一种可能性是模糊性是最大似然的固有效应，因为我们需要最小化$D_{\text{KL}}(p_{\text{data}} ||p_{\text{model}} )$。
 如\figref{fig:chap3_kl_direction_color}所示，这意味着模型将为训练集中出现的点分配高的概率，但也可能为其他点分配高的概率。
 还有其他原因可以导致模糊图像。
 模型选择将概率质量置于模糊图像而不是空间的其他部分的部分原因是实际使用的\gls{VAE}通常在$p_{\text{model}}(\Vx; g(\Vz))$使用\gls{gaussian_distribution}。
-<BAD>最大化这种分布似然性的下界与训练具有\gls{mean_squared_error}的传统\gls{AE}类似，这意味着它会忽略由少量像素导致特征或亮度微小变化的像素。
+最大化这种分布似然性的下界与训练具有\gls{mean_squared_error}的传统\gls{AE}类似，这意味着它倾向于忽略由少量像素表示的特征或其中亮度变化微小的像素。
 如\citet{Theis2015d}和\citet{Huszar-arXiv2015}指出的，该问题不是\glssymbol{VAE}特有的，而是与优化对数似然或$D_{\text{KL}}(p_{\text{data}} ||p_{\text{model}} )$的\gls{generative_model}共享的。
 现代\glssymbol{VAE}模型另一个麻烦的问题是，它们倾向于仅使用$\Vz$维度中的小子集，就像\gls{encoder}不能够将具有足够局部方向的输入空间变换到边缘分布与分解前匹配的空间。
 
 
 \glssymbol{VAE}框架可以直接扩展到大范围的模型架构。
 相比\gls{BM}，这是关键的优势，因为\gls{BM}需要非常仔细地设计模型来保持易解性。
-\glssymbol{VAE}可以与多种可微算子族一起良好工作。
+\glssymbol{VAE}可以与广泛的可微算子族一起良好工作。
 一个特别复杂的\glssymbol{VAE}是\textbf{深度循环注意写者}(DRAW)模型\citep{Gregor2015}。
 DRAW使用一个循环编码器和循环解码器并结合\gls{attention_mechanism}。
 DRAW模型的生成过程包括顺序访问不同的小图像块并绘制这些点处的像素值。
-还可以通过在\glssymbol{VAE}框架内使用循环编码器和解码器来定义变分\glssymbol{RNN}\citep{Chung-et-al-NIPS2015}来扩展\glssymbol{VAE}以生成序列。
+我们还可以通过在\glssymbol{VAE}框架内使用循环编码器和解码器来定义变分\glssymbol{RNN}\citep{Chung-et-al-NIPS2015}来扩展\glssymbol{VAE}以生成序列。
 从传统\glssymbol{RNN}生成样本仅在输出空间涉及非确定性操作。
-<BAD>变分\glssymbol{RNN}也具有由\glssymbol{VAE}\gls{latent_variable}捕获的潜在更抽象层的随机变化性。
+而变分\glssymbol{RNN}还具有由\glssymbol{VAE}\gls{latent_variable}捕获的潜在更抽象层的随机变化性。
 
 % -- 688 --
 
 \glssymbol{VAE}框架已不仅仅扩展到传统的变分下界，还有\textbf{重要加权\gls{AE}}(importance-weighted autoencoder)\citep{burda2015importance}的目标：
 \begin{align}
- \CalL_k(\Vx, q) = \SetE_{\Vz^{(1)},\dots,\Vz^{(k)} \sim q(\Vz  \mid  \Vx)}
+ \CalL_k(\Vx, q) = \SetE_{\RVz^{(1)},\dots,\RVz^{(k)} \sim q(\Vz  \mid  \Vx)}
  \Bigg[ \log \frac{1}{k} \sum_{i=1}^k 
  \frac{p_{\text{model}}(\Vx, \Vz^{(i)})}{q(\Vz^{(i)}  \mid  \Vx)} \Bigg].
 \end{align}
@@ -1383,13 +1383,13 @@ DRAW模型的生成过程包括顺序访问不同的小图像块并绘制这些�
 
 \gls{VAE}与\glssymbol{MPDBM}和其他涉及通过近似\gls{inference}图的\gls{back_propagation}方法有一些有趣的联系 \citep{Goodfellow-et-al-NIPS2013,Stoyanov2011,brakel13a}。
 这些以前的方法需要诸如\gls{meanfield}不动点方程的\gls{inference}过程来提供计算图。
-\gls{VAE}被定义为任意计算图，这使得它能适用于更广泛的概率模型族，因为不需要将模型的选择限制到具有易处理的\gls{meanfield}不动点方程的那些模型。
+\gls{VAE}被定义为任意计算图，这使得它能适用于更广泛的概率模型族，因为它不需要将模型的选择限制到具有易处理的\gls{meanfield}不动点方程的那些模型。
 \gls{VAE}还具有增加模型对数似然边界的优点，而\glssymbol{MPDBM}和相关模型的\gls{criterion}更具启发性，并且除了使近似\gls{inference}的结果准确外很少有概率的解释。
-\gls{VAE}的一个缺点是它仅针对一个问题学习\gls{inference}网络，给定$\Vx$ \gls{inference} $\Vz$。
+\gls{VAE}的一个缺点是它仅针对一个问题学习\gls{inference}网络，即给定$\Vx$ \gls{inference} $\Vz$。
 较老的方法能够在给定任何其他变量子集的情况下对任何变量子集执行近似\gls{inference}，因为\gls{meanfield}不动点方程指定如何在所有这些不同问题的计算图之间共享参数。
 
 
-\gls{VAE}的一个非常好的特性是，同时训练参数编码器与\gls{generator_network}的组合迫使模型学习编码器可以捕获可预测的坐标系。
+\gls{VAE}的一个非常好的特性是，同时训练参数编码器与\gls{generator_network}的组合迫使模型学习一个编码器可以捕获的可预测的坐标系。
 这使得它成为一个优秀的\gls{manifold_learning}算法。
 \figref{fig:chap20_kingma-vae-2d-faces-manifold}展示了由\gls{VAE}学到的低维流形的例子。
 图中所示的情况之一，算法发现了存在于面部图像中两个独立的变化因素：旋转角和情绪表达。
@@ -1407,7 +1407,7 @@ DRAW模型的生成过程包括顺序访问不同的小图像块并绘制这些�
 \fi
 \caption{由\gls{VAE}学习的高维\gls{manifold}在2维坐标系中的示例\citep{Kingma+Welling-ICLR2014}。
 我们可以在纸上直接绘制两个可视化的维度，因此可以使用2维\gls{latent}编码训练模型来了解模型的工作原理（即使我们认为数据\gls{manifold}的固有维度要高得多）。
-所示的图像不是来自训练集的样本，而是仅仅通过改变2维``编码''$\Vz$，由模型$p(\Vx \mid \Vz)$实际生成的图像$\Vx$（每个图像对应于``编码''$\Vz$位于2维均匀网格的不同选择）。
+图中所示的图像不是来自训练集的样本，而是仅仅通过改变2维``编码''$\Vz$，由模型$p(\Vx \mid \Vz)$实际生成的图像$\Vx$（每个图像对应于``编码''$\Vz$位于2维均匀网格的不同选择）。
 (左)\ENNAME{Frey}人脸\gls{manifold}的2维映射。 其中一个维度（水平）已发现大致对应于面部的旋转，而另一个（垂直）对应于情绪表达。
 (右)MNIST\gls{manifold}的2维映射。
 }
@@ -1434,7 +1434,7 @@ DRAW模型的生成过程包括顺序访问不同的小图像块并绘制这些�
 \begin{align}
  g^* = \underset{g}{\argmin} \, \underset{d}{\max}~ v(g, d).
 \end{align}
-$v$的默认选择为
+$v$的默认选择是
 \begin{align}
  v(\Vtheta^{(g)}, \Vtheta^{(d)}) = \SetE_{\RVx \sim p_{\text{data}}} 
  \log d(\Vx) + \SetE_{\Vx \sim p_{\text{model}}} \log (1 - d(\Vx)).
@@ -1449,11 +1449,11 @@ $v$的默认选择为
 当$\max_d v(g,d)$在$\Vtheta^{(g)}$中是凸的（例如，在\gls{PDF}的空间中直接执行优化的情况）时，该过程保证收敛并且是渐近一致的。
 
 
-不幸的是，在实践中由神经网络表示的$g$和$d$以及$\max_d v(g, d)$不是凸的时，\glssymbol{GAN}中的学习可能是困难的。
-\citet{Goodfellow-ICLR2015} 认为不收敛可能会导致\glssymbol{GAN}欠拟合的问题。
+不幸的是，在实践中由神经网络表示的$g$和$d$以及$\max_d v(g, d)$不凸时，\glssymbol{GAN}中的学习可能是困难的。
+\citet{Goodfellow-ICLR2015} 认为不收敛可能会引起\glssymbol{GAN}的欠拟合问题。
 一般来说，同时对两个玩家的成本梯度下降不能保证达到平衡。
 例如，考虑价值函数$v(a,b) = ab$，其中一个玩家控制$a$并产生成本$ab$，而另一玩家控制$b$并接收成本$-ab$。
-如果我们将每个玩家建模为无穷小的梯度步骤，每个玩家以另一个玩家为代价降低自己的成本，则$a$和$b$进入稳定的圆形轨道，而不是到达原点处的平衡点。
+如果我们将每个玩家建模为无穷小的梯度步骤，每个玩家以另一个玩家为代价降低自己的成本，则$a$和$b$进入稳定的圆形轨迹，而不是到达原点处的平衡点。
 注意，极小极大化游戏的平衡不是$v$的局部最小值。
 相反，它们是同时最小化的两个玩家成本的点。
 这意味着它们是$v$的鞍点，相对于第一个玩家的参数是局部最小值，而相对于第二个玩家的参数是局部最大值。
@@ -1462,17 +1462,17 @@ $v$的默认选择为
  
 \citet{Goodfellow-ICLR2015} 确定了另一种替代的形式化收益公式，其中博弈不再是零和，每当判别器最优时， 具有与最大似然学习相同的预期梯度。
 因为最大似然训练收敛，这种\glssymbol{GAN}博弈的重述在给定足够的样本时也应该收敛。
-不幸的是，这种替代的形式化似乎没有提高实践中的收敛，可能是由于判别器的次优性或围绕期望梯度的高方差。
+不幸的是，这种替代的形式化似乎并没有提高实践中的收敛，可能是由于判别器的次优性或围绕期望梯度的高方差。
 
 % -- 691 --
 
-在实际的实验中，\glssymbol{GAN}博弈的最佳表现形式既不是零和也不等价于最大似然，而是\citet{Goodfellow-et-al-NIPS2014-small}引入的带有启发式动机的不同形式化。
+在真实实验中，\glssymbol{GAN}博弈的最佳表现形式既不是零和也不等价于最大似然，而是\citet{Goodfellow-et-al-NIPS2014-small}引入的带有启发式动机的不同形式化。
 在这种最佳性能的形式中，生成器旨在增加判别器发生错误的对数概率，而不是旨在降低判别器进行正确预测的对数概率。
 这种重述仅仅是观察的结果，即使在判别器确信地拒绝所有生成器样本的情况下，它也能导致生成器代价函数的导数相对于判别器的对数保持很大。
 
 稳定\glssymbol{GAN}学习仍然是一个开放的问题。
 幸运的是，当仔细选择模型架构和超参数时，\glssymbol{GAN}学习效果很好。
-\citet{radford2015unsupervised}设计了一个深度卷积\glssymbol{GAN}（DCGAN），在图像合成的任务上表现非常好，并表明其\gls{latent}表示空间能捕获到变化的重要因素，如\figref{fig:chap15_generative_glasses}所示。
+\citet{radford2015unsupervised}设计了一个深度卷积\glssymbol{GAN}（DCGAN），在图像合成的任务上表现非常好，并表明其\gls{latent}的表示空间能捕获到变化的重要因素，如\figref{fig:chap15_generative_glasses}所示。
 \figref{fig:chap20_lsun_small}展示了DCGAN生成器生成的图像示例。
  
 \begin{figure}[!htb]
@@ -1488,14 +1488,14 @@ $\vcenter{\hbox{
 }}$
 \fi
 \caption{在LSUN数据集上训练后，由\glssymbol{GAN}生成的图像。
-(左)由DCGAN模型生成的卧室图像，经\citet{radford2015unsupervised}许可重制。
-(右)由LAPGAN模型生成的教堂图像，经 \citet{denton2015deep}许可重制。
+(左)由DCGAN模型生成的卧室图像，经\citet{radford2015unsupervised}许可转载。
+(右)由LAPGAN模型生成的教堂图像，经 \citet{denton2015deep}许可转载。
 }
 \label{fig:chap20_lsun_small}
 \end{figure}
 
 \glssymbol{GAN}学习问题也可以通过将生成过程分成许多级别的细节来简化。
-我们可以训练有条件的\glssymbol{GAN}\citep{mirza2014conditional}，可以学习从分布$p(\Vx \mid \Vy)$中采样，而不是简单地从边缘分布$p(\Vx)$中采样。
+我们可以训练有条件的\glssymbol{GAN}\citep{mirza2014conditional}，并学习从分布$p(\Vx \mid \Vy)$中采样，而不是简单地从边缘分布$p(\Vx)$中采样。
 \citet{denton2015deep} 表明一系列的条件\glssymbol{GAN}可以被训练为先生成非常低分辨率的图像，然后增量地向图像添加细节。
 由于使用拉普拉斯金字塔来生成包含不同细节水平的图像，这种技术被称为\ENNAME{LAPGAN}模型。
 \ENNAME{LAPGAN}生成器不仅能够欺骗判别器网络，而且能够欺骗人类观察者，实验主体将高达40％的网络输出识别为真实数据。
@@ -1503,7 +1503,7 @@ $\vcenter{\hbox{
 
 
 \glssymbol{GAN}训练过程中一个不寻常的能力是它可以拟合向训练点分配零概率的概率分布。
-<BAD>\gls{generator_network}学习跟踪其点在某种程度上类似于训练点的流形，而不是最大化特定点的对数概率。
+\gls{generator_network}学习跟踪其点在某种程度上类似于训练点的流形，而不是最大化特定点的对数概率。
 有点矛盾的是，这意味着模型可以将负无穷大的对数似然分配给测试集，同时仍然表示人类观察者判断为能捕获生成任务本质的流形。
 这不是明显的优点或缺点，并且只要向\gls{generator_network}最后一层所有生成的值添加高斯噪声，就可以保证\gls{generator_network}向所有点分配非零概率。
 以这种方式添加高斯噪声的\gls{generator_network}从相同分布的采样，即使用\gls{generator_network}参数化条件\gls{gaussian_distribution}的均值所获得的分布。
@@ -1512,7 +1512,7 @@ $\vcenter{\hbox{
 
 \gls{dropout}似乎在判别器网络中很重要。
 特别地，在计算\gls{generator_network}的梯度时，单元应当被随机地丢弃。
-使用权重除以二的确定性版本判别器的梯度似乎不是那么有效。
+使用权重除以二的确定性版本的判别器的梯度似乎不是那么有效。
 同样，从不使用\gls{dropout}似乎会产生不良的结果。
 
 
@@ -1531,7 +1531,7 @@ $\vcenter{\hbox{
 \gls{generative_moment_matching_network}使用称为\firstgls{moment_matching}的技术训练。
 \gls{moment_matching}背后的基本思想是以如下的方式训练生成器——令模型生成的样本的许多统计量尽可能与训练集中的样本相似。
 在此情景下，\firstgls{moment}是对随机变量不同幂的期望。
-例如，第一\gls{moment}是均值，第二\gls{moment}是平方值的均值，等等。
+例如，第一\gls{moment}是均值，第二\gls{moment}是平方值的均值，以此类推。
 多维情况下，随机向量的每个元素可以被升高到不同的幂， 因此使得\gls{moment}可以是任意数量的形式 %？
 \begin{align}
  \SetE_{\Vx} \prod_i x_i^{n_i},
@@ -1542,12 +1542,12 @@ $\vcenter{\hbox{
 在第一次检查时，这种方法似乎在计算上是不可行的。
 例如，如果我们想匹配形式为$x_ix_j$的所有\gls{moment}，那么我们需要最小化在$\Vx$的维度上是二次的多个值之间的差。
 此外，甚至匹配所有第一和第二\gls{moment}将仅足以拟合多变量\gls{gaussian_distribution}，其仅捕获值之间的线性关系。
-我们对神经网络的野心是捕获复杂的非线性关系，这将需要更多的\gls{moment}。
+我们使用神经网络的野心是捕获复杂的非线性关系，这将需要更多的\gls{moment}。
 \glssymbol{GAN}通过使用动态更新的判别器避免了穷举所有\gls{moment}的问题，该判别器自动将其注意力集中在\gls{generator_network}最不匹配的统计量上。
 
 
-相反，可以通过最小化一个被称为\firstall{MMD}\citep{scholkopf2002learning,gretton2012kernel}的\gls{cost_function}来训练\gls{generative_moment_matching_network}。
-该\gls{cost_function}通过向核函数定义的特征空间隐式映射， 在无限维空间中测量第一\gls{moment}的误差，使得对无限维向量的计算变得可行。
+相反，我们可以通过最小化一个被称为\firstall{MMD}\citep{scholkopf2002learning,gretton2012kernel}的\gls{cost_function}来训练\gls{generative_moment_matching_network}。
+该\gls{cost_function}通过向核函数定义的特征空间隐式映射，在无限维空间中测量第一\gls{moment}的误差，使得对无限维向量的计算变得可行。
 当且仅当所比较的两个分布相等时，\glssymbol{MMD}代价为零。
 
 从可视化方面看，来自\gls{generative_moment_matching_network}的样本有点令人失望。
@@ -1556,8 +1556,8 @@ $\vcenter{\hbox{
 接下来， \gls{AE}的编码器用于将整个训练集转换到编码空间。
 然后训练\gls{generator_network}以生成编码样本， 这些编码样本可以经解码器映射到视觉上令人满意的样本。
 
-与\glssymbol{GAN}不同，\gls{cost_function}仅针对来自训练集和\gls{generator_network}的一批实例来定义。
-不可能将训练更新作为仅一个训练样本或仅来自\gls{generator_network}的一个样本的函数。
+与\glssymbol{GAN}不同，\gls{cost_function}仅关于一批同时来自训练集和\gls{generator_network}的实例定义。
+我们不可能将训练更新作为一个训练样本或仅来自\gls{generator_network}的一个样本的函数。
 这是因为必须将\gls{moment}计算为许多样本的经验平均值。
 当批量大小太小时，\glssymbol{MMD}可能低估采样分布的真实变化量。
 有限的批量大小都不足以大到完全消除这个问题， 但是更大的批量大小减少了低估的量。
@@ -1577,17 +1577,17 @@ $\vcenter{\hbox{
 用于识别任务的卷积网络具有从图像到网络顶部的某些概括层（通常是类标签）的信息流。
 当该图像通过网络向上流动时， 随着图像的表示变得对于有害变换保持不变，信息也被丢弃。
 在\gls{generator_network}中，情况恰恰相反。
-要生成图像的表示通过网络传播时必须添加丰富的详细信息， 最后产生图像的最终表示，这个最终表示当然是带有所有细节的壮丽图像本身（具有对象位置、姿势、纹理以及明暗）。
+要生成图像的表示通过网络传播时必须添加丰富的详细信息， 最后产生图像的最终表示，这个最终表示当然是带有所有细节的精细图像本身（具有对象位置、姿势、纹理以及明暗）。
 在卷积识别网络中丢弃信息的主要机制是池化层。
 而\gls{generator_network}似乎需要添加信息。
-我们不能将池化层求逆后放入\gls{generator_network}，因为大多数池化函数不可逆。
+由于大多数池化函数不可逆，我们不能将池化层求逆后放入\gls{generator_network}。
 更简单的操作是仅仅增加表示的空间大小。
 似乎可接受的方法是使用\citet{dosovitskiy2015learning}引入的``去池化''。
 该层对应于某些简化条件下\gls{max_pooling}的逆操作。
 首先，\gls{max_pooling}操作的步幅被约束为等于池化区域的宽度。
 其次，每个池化区域内的最大输入被假定为左上角的输入。
 最后，假设每个池化区域内所有非最大的输入为零。
-这些是非常强和不现实的假设，但他们允许求逆\gls{max_pooling}算子。
+这些是非常强和不现实的假设，但它们允许我们对\gls{max_pooling}算子求逆。
 逆去池化的操作分配一个零张量，然后将每个值从输入的空间坐标$i$复制到输出的空间坐标$i \times k$。
 整数值$k$定义池化区域的大小。
 即使驱动去池化算子定义的假设是不现实的， 后续层也能够学习补偿其不寻常的输出， 所以由整体模型生成的样本在视觉上令人满意。
@@ -1601,7 +1601,7 @@ $\vcenter{\hbox{
 这些模型的图结构是完全图。
 它们可以通过概率的链式法则分解观察变量上的联合概率，从而获得形如$P(x_d \mid x_{d-1},\dots, x_1)$条件概率的乘积。
 这样的模型被称为\textbf{完全可见的贝叶斯网络}(fully-visible Bayes networks, FVBN)，并成功地以许多形式使用，首先是对每个条件分布\gls{logistic_regression}~\citep{Frey98} ，然后是带有\gls{hidden_unit}的神经网络~\citep{Bengio+Bengio-NIPS2000,Larochelle+Murray-2011-small}。
-在某些形式的\gls{auto_regressive_network}中， 例如在\secref{sec:nade}中描述的\glssymbol{NADE}~\citep{Larochelle+Murray-2011-small}，我们可以引入\gls{parameter_sharing}的一种形式，能带来统计优点（较少的唯一参数）和计算优势 （较少计算量）。
+在某些形式的\gls{auto_regressive_network}中， 例如在\secref{sec:nade}中描述的\glssymbol{NADE}~\citep{Larochelle+Murray-2011-small}，我们可以引入\gls{parameter_sharing}的一种形式，它能带来统计优点（较少的唯一参数）和计算优势 （较少计算量）。
 这是深度学习中反复出现的主题——\emph{特征重用}的另一个实例。
 
 
@@ -1626,7 +1626,7 @@ $\vcenter{\hbox{
 \label{fig:chap20_fvbn}
 \end{figure}
 
-如果变量是连续的，\gls{linear_auto_regressive_network}只是表示多元\gls{gaussian_distribution}的另一种方式， 只能捕获观察变量之间的线性成对相互作用。
+如果变量是连续的，\gls{linear_auto_regressive_network}只是表示多元\gls{gaussian_distribution}的另一种方式， 只能捕获观察变量之间线性的成对相互作用。
  
 \gls{linear_auto_regressive_network}本质上是线性分类方法在生成式建模上的推广。
 因此，它们具有与线性分类器相同的优缺点。
@@ -1639,19 +1639,19 @@ $\vcenter{\hbox{
 \label{sec:neural_auto_regressive_networks}
 
 \gls{neural_auto_regressive_network} \citep{Bengio+Bengio-trnn2000,Bengio+Bengio-NIPS2000}具有与逻辑\gls{auto_regressive_network}相同的从左到右的\gls{graphical_model}（\figref{fig:chap20_fvbn}），但在该\gls{graphical_model}结构内采用不同的条件分布参数。
-新的参数化更强大，可以根据需要随意增加容量，并允许近似任意联合分布。
+新的参数化更强大，它可以根据需要随意增加容量，并允许近似任意联合分布。
 新的参数化还可以引入深度学习中常见的参数共享和特征共享原理来改进泛化能力。
 设计这些模型的动机是避免传统表格\gls{graphical_model}引起的\gls{curse_of_dimensionality}，并与\figref{fig:chap20_fvbn}共享相同的结构。
 在表格离散概率模型中，每个条件分布由概率表表示，其中所涉及的变量的每个可能配置都具有一个条目和一个参数。
 通过使用神经网络，可以获得两个优点：
 \begin{enumerate}
- \item 通过具有$(i-1) \times k$个输入和$k$个输出的神经网络（如果变量是离散的并有$k$个值，使用\gls{one_hot}编码）参数化每个$P(x_i  \mid  x_{i-1}, \dots, x_1)$，让我们不需要指数量级参数（和样本）的情况下估计条件概率， 然而仍然能够捕获随机变量之间的高阶依赖性。
+ \item 通过具有$(i-1) \times k$个输入和$k$个输出的神经网络（如果变量是离散的并有$k$个值，使用\gls{one_hot}编码）参数化每个$P(x_i  \mid  x_{i-1}, \dots, x_1)$，让我们不需要指数量级参数（和样本）的情况下就能估计条件概率， 然而仍然能够捕获随机变量之间的高阶依赖性。
 
- \item 代替用于预测每个$x_i$的不同神经网络，如\figref{fig:chap20_neural_autoregressive}所示的从左到右连接，允许将所有神经网络合并成一个。
+ \item 不需要对预测每个$x_i$使用不同的神经网络，如\figref{fig:chap20_neural_autoregressive}所示的从左到右连接，允许将所有神经网络合并成一个。
  等价地，它意味着为预测$x_i$所计算的\gls{hidden_layer}特征可以重新用于预测$x_{i+k}~(k > 0)$。
  因此\gls{hidden_unit}被\emph{组织}成第$i$组中的所有单元仅依赖于输入值 $x_1, \dots, x_i$的特定的组。
  用于计算这些\gls{hidden_unit}的参数被联合优化以改进对序列中所有变量的预测。
- 这是\emph{重复使用原理}的一个实例，是从循环和卷积网络架构到多任务和迁移学习的场景中反复出现的深度学习原理。
+ 这是\emph{重用原理}的一个实例，这是从循环和卷积网络架构到多任务和迁移学习的场景中反复出现的深度学习原理。
 
 \end{enumerate}
 
@@ -1668,8 +1668,8 @@ $\vcenter{\hbox{
 \end{figure}
 
 
-使神经网络的输出预测$x_i$条件分布的\emph{参数}，每个$P(x_i  \mid  x_{i-1}, \dots, x_1)$就可以表示一个条件分布，如在\secref{sec:linear_units_for_gaussian_output_distributions}中讨论的。
-虽然原始\gls{neural_auto_regressive_network}最初是在纯粹离散多变量数据（带有\ENNAME{sigmoid}输出的\ENNAME{Bernoulli}变量或\ENNAME{softmax}输出的\ENNAME{multinoulli}变量）的背景下评估，但我们可以自然地将这样的模型扩展到连续变量或同时涉及离散和连续变量的联合分布。
+如在\secref{sec:linear_units_for_gaussian_output_distributions}中讨论的，使神经网络的输出预测$x_i$条件分布的\emph{参数}，每个$P(x_i  \mid  x_{i-1}, \dots, x_1)$就可以表示一个条件分布。
+虽然原始\gls{neural_auto_regressive_network}最初是在纯粹离散多变量数据（带有\ENNAME{sigmoid}输出的\ENNAME{Bernoulli}变量或\ENNAME{softmax}输出的\ENNAME{Multinoulli}变量）的背景下评估，但我们可以自然地将这样的模型扩展到连续变量或同时涉及离散和连续变量的联合分布。
 
 % -- 698 --
 
@@ -1680,11 +1680,11 @@ $\vcenter{\hbox{
 与\citet{Bengio+Bengio-NIPS2000}的原始\gls{neural_auto_regressive_network}中的连接相同，但\glssymbol{NADE}引入了附加的\gls{parameter_sharing}方案，如\figref{fig:chap20_NADE}所示。
 不同组$j$的\gls{hidden_unit}的参数是共享的。
 
-从第$i$个输入$x_i$到第$j$组\gls{hidden_unit}的第$k$个元素$h_k^{(j)}$的权重$W_{j,k,i}^{'}$是组内共享的：
+从第$i$个输入$x_i$到第$j$组\gls{hidden_unit}的第$k$个元素$h_k^{(j)} ~(j \geq i)$的权重$W_{j,k,i}^{'}$是组内共享的：
 \begin{align}
  W_{j,k,i}^{'} = W_{k,i}.
 \end{align}
-其余的$j<i$的权重为零。
+其余$j<i$的权重为零。
 
 
 \begin{figure}[!htb]
@@ -1703,9 +1703,9 @@ $\vcenter{\hbox{
 
 % -- 699 --
 
-<BAD>\citet{Larochelle+Murray-2011-small} 选择了这种共享方案，使得\glssymbol{NADE}模型中的正向传播与在\gls{meanfield}\gls{inference}中执行的计算宽松地相似，以填充\glssymbol{RBM}中缺失的输入。
+\citet{Larochelle+Murray-2011-small} 选择了这种共享方案，使得\glssymbol{NADE}模型中的正向传播与在\gls{meanfield}\gls{inference}中执行的计算大致相似，以填充\glssymbol{RBM}中缺失的输入。
 这个\gls{meanfield}\gls{inference}对应于运行具有共享权重的循环网络，并且该\gls{inference}的第一步与\glssymbol{NADE}中的相同。
-使用\glssymbol{NADE}唯一的区别是，连接\gls{hidden_unit}到输出的输出权重独立于连接输入单元和\gls{hidden_unit}的权重进行参数化。
+使用\glssymbol{NADE}的唯一区别是，连接\gls{hidden_unit}到输出的输出权重独立于连接输入单元和\gls{hidden_unit}的权重进行参数化。
 在\glssymbol{RBM}中，隐藏到输出的权重是输入到隐藏权重的转置。
 \glssymbol{NADE}架构可以扩展为不仅仅模拟\gls{meanfield}循环\gls{inference}的一个\gls{time_step}，而是$k$步。
 这种方法称为\glssymbol{NADE}-$k$\citep{Raiko-et-al-2014}。
@@ -1719,8 +1719,8 @@ $\vcenter{\hbox{
 为了减少这种困难， \citet{Benigno-et-al-NIPS2013-small}在后向传播阶段使用伪梯度代替平均值上的梯度。
 
 另一个非常有趣的神经自回归架构的扩展摆脱了为观察到的变量选择任意顺序的需要\citep{Uria+al-ICML2014}。
-<BAD>在\gls{auto_regressive_network}中，想法是训练网络以能够通过随机采样顺序来处理任何顺序，并将信息提供给指定哪些输入被观察的\gls{hidden_unit}（在条件条的右侧），以及哪些是被预测并因此被认为缺失的（在条件条的左侧）。
-这是很好的，因为它允许人们非常高效地使用训练好的\gls{auto_regressive_network}来\emph{执行任何\gls{inference}问题}（即从给定任何变量的子集，从任何子集上的概率分布预测或采样）。
+在\gls{auto_regressive_network}中，该想法是训练网络以能够通过随机采样顺序来处理任何顺序，并将信息提供给指定哪些输入被观察的\gls{hidden_unit}（在条件条的右侧），以及哪些是被预测并因此被认为是缺失的（在条件条的左侧）。
+这是不错的性质，因为它允许人们非常高效地使用训练好的\gls{auto_regressive_network}来\emph{执行任何\gls{inference}问题}（即从给定任何变量的子集，从任何子集上的概率分布预测或采样）。
 最后，由于变量的许多顺序是可能的（对于$n$个变量是$n!$），并且变量的每个顺序$o$产生不同的$p(\RVx \mid o)$，我们可以组成许多$o$值模型的集成：
 \begin{align}
  p_{\text{ensemble}}(\RVx) = \frac{1}{k} \sum_{i=1}^k p(\RVx  \mid  o^{(i)}).
@@ -1743,15 +1743,14 @@ $\vcenter{\hbox{
 这些联系表明某些类型的\gls{AE}以某些方式学习数据分布。
 我们还没有讨论如何从这样的模型中采样。
 
-
 某些类型的\gls{AE}，例如\gls{VAE}，明确地表示概率分布并且允许直接的\gls{ancestral_sampling}。
-大多数其他类型的\gls{AE}需要\glssymbol{mcmc}采样。
+而大多数其他类型的\gls{AE}则需要\glssymbol{mcmc}采样。
 
 \gls{CAE}被设计为恢复数据流形切面的估计。
 这意味着使用注入噪声的重复编码和解码将引起沿着流形表面的随机游走\citep{Rifai-icml2012-small,Mesnil-et-al-LW2012}。
 这种流形扩散技术是\gls{markov_chain}的一种。
 
-还有可以从任何\gls{DAE}中采样的更通用的\gls{markov_chain}。
+更一般的\gls{markov_chain}还可以从任何\gls{DAE}中采样。
 
 % -- 701 --
 
@@ -1760,7 +1759,7 @@ $\vcenter{\hbox{
 
 上述讨论留下了一个开放问题——注入什么噪声和从哪获得\gls{markov_chain}（可以根据\gls{AE}估计的分布生成样本）。
 \citet{Bengio-et-al-NIPS2013-small} 展示了如何构建这种用于\textbf{广义\gls{DAE}}(generalized denoising autoencoder)的\gls{markov_chain}。
-广义\gls{DAE}由去噪分布指定，用于对给定损坏输入后，对干净输入的估计进行采样。
+广义\gls{DAE}由去噪分布指定，给定损坏输入后，对干净输入的估计进行采样。
 
 根据估计分布生成的\gls{markov_chain}的每个步骤由以下子步骤组成，如\figref{fig:chap20_dae_markov_chain}所示：
 \begin{enumerate}
@@ -1791,7 +1790,7 @@ $\vcenter{\hbox{
 \subsection{夹合与条件采样}
 \label{sec:clamping_and_conditional_sampling}
 
-与\gls{BM}类似，\gls{DAE}及其推广（例如下面描述的\glssymbol{GSN}）可用于从条件分布$p(\RVx_f  \mid  \RVx_o)$中采样，只需夹合\emph{观察}单元$\RVx_f$并在给定$\RVx_f$和采好的 \gls{latent_variable}（如果有的话）下仅重采样\emph{自由}单元$\RVx_o$。
+与\gls{BM}类似，\gls{DAE}及其推广（例如下面描述的\glssymbol{GSN}）可用于从条件分布$p(\RVx_f  \mid  \RVx_o)$中采样，只需夹合\emph{观察}单元$\RVx_f$并在给定$\RVx_f$和采好的\gls{latent_variable}（如果有的话）下仅重采样\emph{自由}单元$\RVx_o$。
 例如，\glssymbol{MPDBM}可以被解释为\gls{DAE}的一种形式，并且能够采样丢失的输入。
 \glssymbol{GSN}随后将\glssymbol{MPDBM}中的一些想法推广以执行相同的操作~\citep{Bengio-et-al-ICML-2014}。
 \citet{Alain-et-al-arxiv2015} 从\citet{Bengio-et-al-ICML-2014}的命题1中发现了一个缺失条件，即转移算子（由从链的一个状态到下一个状态的随机映射定义）应该满足\firstgls{detailed_balance}的属性， 表明无论转移算子正向或反向运行，\gls{markov_chain}都将保持平衡。
@@ -1812,16 +1811,16 @@ $\vcenter{\hbox{
 
 \subsection{回退训练过程}
 \label{sec:walk_back_training_procedure}
-回退训练程序由\citet{Bengio-et-al-NIPS2013-small} 等人提出，作为一种加速\gls{DAE}生成训练收敛的方法。
+回退训练过程由\citet{Bengio-et-al-NIPS2013-small} 等人提出，作为一种加速\gls{DAE}生成训练收敛的方法。
 不像执行一步编码-解码重建，该过程有代替的多个随机编码-解码步骤组成（如在生成\gls{markov_chain}中），以训练样本初始化（正如在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中描述的\gls{contrastive_divergence}算法），并惩罚最后的概率重建（或沿途的所有重建）。
 
-<BAD>$k$个步骤的训练与一个步骤的训练是等价的（在实现相同稳态分布的意义上），但是实际上可以更有效地去除来自数据的伪模式。
+训练$k$个步骤与训练一个步骤是等价的（在实现相同稳态分布的意义上），但是实际上可以更有效地去除来自数据的伪模式。
 
 % -- 703 --
 
 \section{\glsentrytext{GSN}}
 \label{sec:generative_stochastic_networks}
-\firstall{GSN} \citep{Bengio-et-al-ICML-2014} 是\gls{DAE}的推广，除可见变量（通常表示为$\Vx$）之外，在生成\gls{markov_chain}中还包括\gls{latent_variable} $\Vh$。
+\firstall{GSN} \citep{Bengio-et-al-ICML-2014} 是\gls{DAE}的推广，除可见变量（通常表示为$\RVx$）之外，在生成\gls{markov_chain}中还包括\gls{latent_variable} $\RVh$。
 
 \glssymbol{GSN}由两个条件概率分布参数化， 指定\gls{markov_chain}的一步：
 \begin{enumerate}
@@ -1842,23 +1841,23 @@ $\vcenter{\hbox{
 通过将$\RVx^{(0)} = \Vx$ 夹合到观察到的样本并且在一些后续\gls{time_step}处使生成$\Vx$的概率最大化，即最大化$\log p(\RVx^{(k)} = \Vx  \mid  \RVh^{(k)})$， 其中给定$\RVx^{(0)} = \Vx$后，$\RVh^{(k)}$从链中采样。
 为了估计相对于模型其他部分的$\log p(\RVx^{(k)} = \Vx  \mid  \RVh^{(k)})$的梯度，\citet{Bengio-et-al-ICML-2014}使用了在\secref{sec:back_propagation_through_random_operations}中介绍的\gls{reparametrization_trick}。
 
-回退训练程序（在\secref{sec:walk_back_training_procedure}中描述）可以改善训练\glssymbol{GSN}的收敛性\citep{Bengio-et-al-ICML-2014} 。
+回退训练过程（在\secref{sec:walk_back_training_procedure}中描述）可以用来改善训练\glssymbol{GSN}的收敛性\citep{Bengio-et-al-ICML-2014} 。
 
 
 \subsection{判别\glssymbol{GSN}}
 \label{sec:discriminant_gsns}
-\glssymbol{GSN}的原始公式\citep{Bengio-et-al-ICML-2014} 用于\gls{unsupervised_learning}和对观察数据$\RVx$的$p(\RVx)$的隐式建模，但是修改框架以优化$p(\RVy  \mid  \Vx)$是可能的。
+\glssymbol{GSN}的原始公式\citep{Bengio-et-al-ICML-2014} 用于\gls{unsupervised_learning}和对观察数据$\RVx$的$p(\RVx)$的隐式建模，但是我们可以修改框架来优化$p(\RVy  \mid  \Vx)$。
 
 
 例如， \citet{Zhou+Troyanskaya-ICML2014} 以如下方式推广\glssymbol{GSN}，只\gls{back_propagation}输出变量上的重建对数概率，并保持输入变量固定。
 他们将这种方式成功应用于建模序列（蛋白质二级结构），并在\gls{markov_chain}的转换算子中引入（一维）卷积结构。
 重要的是要记住，对于\gls{markov_chain}的每一步，我们需要为每个层生成新序列，并且该序列用于在下一\gls{time_step}计算其他层的值（例如下面一个和上面一个）的输入。
 
-<BAD>因此，\gls{markov_chain}确实不只是输出变量（与更高层的\gls{hidden_layer}相关联），并且输入序列仅用于条件化该链，其中\gls{back_propagation}使得它能够学习输入序列如何地条件化由\gls{markov_chain}隐含表示的输出分布。
+因此，\gls{markov_chain}确实不只是输出变量（与更高层的\gls{hidden_layer}相关联），并且输入序列仅用于条件化该链，其中\gls{back_propagation}使得它能够学习输入序列如何条件化由\gls{markov_chain}隐含表示的输出分布。
 因此这是在结构化输出中使用\glssymbol{GSN}的一个例子。
 
 \citet{Zohrer+Pernkopf-NIPS2014-small} 引入了一个混合模型，通过简单地添加（使用不同的权重）监督和非监督成本即$\RVy$和$\RVx$的重建对数概率， 组合了监督目标（如上面的工作）和无监督目标（如原始的\glssymbol{GSN}）。
-\citet{Larochelle+Bengio-2008-small}以前在\glssymbol{RBM}就提出了这样的混合标准。
+\citet{Larochelle+Bengio-2008-small}以前在\glssymbol{RBM}中就提出了这样的混合标准。
 他们展示了在这种方案下分类性能的提升。
 
 % -- 705 --
@@ -1908,18 +1907,18 @@ $\vcenter{\hbox{
 评估\gls{generative_model}的另一个微妙之处是，评估指标往往是自身困难的研究问题。 
 可能很难确定模型是否被公平比较。
 例如，假设我们使用\glssymbol{AIS}来估计$\log Z$以便为我们刚刚发明的新模型计算$\log \tilde{p}(\Vx) - \log Z$。
-\glssymbol{AIS}的计算经济的实现可能无法找到模型分布的几种模式并低估$Z$，这将导致我们高估$\log p(\Vx)$。
+\glssymbol{AIS}计算经济的实现可能无法找到模型分布的几种模式并低估$Z$，这将导致我们高估$\log p(\Vx)$。
 因此可能难以判断高似然估计是否是良好模型或不好的\glssymbol{AIS}实现导致的结果。
  
-机器学习的其他领域通常允许在数据预处理中的有一些变化。
+机器学习的其他领域通常允许在数据预处理中有一些变化。
 例如，当比较对象识别算法的准确性时，通常可接受的是对每种算法略微不同地预处理输入图像（基于每种算法具有何种输入要求）。
-而因为预处理的变化，会导致生成建模的不同，甚至非常小和微妙的变化也是完全不可接受的。
+而因为预处理的变化，会导致生成式建模的不同，甚至非常小和微妙的变化也是完全不可接受的。
 对输入数据的任何更改都会改变要捕获的分布，并从根本上改变任务。
 例如，将输入乘以$0.1$将人为地将概率增加$10$倍。
 
 % -- 707 --
 
-预处理的问题通常在基于MNIST数据集上的\gls{generative_model}产生，MNIST数据集是非常受欢迎的生成性建模基准之一。
+预处理的问题通常在基于MNIST数据集上的\gls{generative_model}产生，MNIST数据集是非常受欢迎的生成式建模基准之一。
 MNIST由灰度图像组成。
 一些模型将MNIST图像视为实向量空间中的点，而其他模型将其视为二值。
 还有一些将灰度值视为二值样本的概率。
@@ -1932,9 +1931,9 @@ MNIST由灰度图像组成。
 这三个方案中的每一个都会产生极不相同的似然数，并且当比较不同的模型时，两个模型使用相同的二值化方案来训练和评估是重要的。
 事实上，应用单个随机二值化步骤的研究者共享包含随机二值化结果的文件，使得基于二值化步骤的不同输出的结果没有差别。
 
-因为能够从数据分布生成真实样本是\gls{generative_model}的目标之一，所以实践者通常通过视觉检查样本来评估\gls{generative_model}。
-在最好的情况下，不是由研究人员本身，而是由不知道样品来源的实验受试者完成 \citep{denton2015deep}。
-不幸的是，非常差的概率模型可能产生非常好的样本。
+因为从数据分布生成真实样本是\gls{generative_model}的目标之一，所以实践者通常通过视觉检查样本来评估\gls{generative_model}。
+在最好的情况下，这不是由研究人员本身，而是由不知道样品来源的实验受试者完成 \citep{denton2015deep}。
+不幸的是，非常差的概率模型可能会产生非常好的样本。
 验证模型是否仅复制一些训练示例的常见做法如\figref{fig:chap16_fig-ssrbm}所示。
 该想法是根据在$\Vx$空间中的欧几里得距离，为一些生成的样本显示它们在训练集中的最近邻。
 此测试旨在检测模型过拟合训练集并仅再现训练实例的情况。
@@ -1970,4 +1969,4 @@ MNIST由灰度图像组成。
 为了让模型理解表示在给定训练数据中的大千世界，训练具有\gls{hidden_unit}的\gls{generative_model}是一种有力方法。
 通过学习模型$p_{\text{model}}(\Vx)$和表示$p_{\text{model}}(\Vh  \mid  \Vx)$，\gls{generative_model}可以解答$\Vx$输入变量之间关系的许多\gls{inference}问题， 并且可以在层次的不同层对$\Vh$求期望来提供表示$\Vx$的许多不同方式。
 \gls{generative_model}承诺为\glssymbol{AI}系统提供它们需要理解的、所有不同直观概念的框架，让它们有能力在面对不确定性的情况下推理这些概念。
-我们希望我们的读者将找到增强这些方法的新方式，并继续探究学习和智能背后原理的旅程。
+我们希望我们的读者将找到增强这些方法的新途径，并继续探究学习和智能背后原理的旅程。
