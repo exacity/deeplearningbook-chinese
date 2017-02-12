@@ -1037,7 +1037,7 @@
 如果具有相同\gls{activation_function}的两个\gls{hidden_unit}连接到相同的输入，那么这些单元必须具有不同的初始参数。
 如果它们具有相同的初始参数，然后应用到确定性损失和模型的确定性学习算法将一直以相同的方式更新这两个单元。
 即使模型或训练算法能够使用随机性为不同的单元计算不同的更新（例如具备信息丢失的训练），通常来说，最好还是初始化每个单元使其和其他单元计算不同的函数。
-这或许有助于确保没有输入模式丢失在前向传播的零空间中，没有梯度模式丢失在反向传播的零空间中。
+这或许有助于确保没有输入模式丢失在\gls{forward_propagation}的零空间中，没有梯度模式丢失在\gls{backward_propagation}的零空间中。
 每个单元计算不同函数的目标促使了参数的随机初始化。
 我们可以明确地搜索一大组彼此互不相同的基函数，但这经常会导致明显的计算代价。  
 例如，如果我们有和输出一样多的输入，我们可以使用Gram-Schmidt正交化于初始的权重矩阵，保证每个单元计算彼此非常不同的函数。
@@ -1057,9 +1057,9 @@
 
 
 更大的初始权重具有更强的破坏对称性的作用，有助于避免冗余的单元。
-它们也有助于避免在每层线性成分的前向或反向传播中丢失信号——矩阵中更大的值在矩阵乘法中有更大的输出。
-如果初始权重太大，那么会在前向传播或反向传播中产生爆炸的值。
-在循环网络中，很大的权重也可能导致\firstgls{chaos}（对于输入中很小的扰动非常敏感，导致确定性前向传播过程表现随机）。
+它们也有助于避免在每层线性成分的前向或\gls{backward_propagation}中丢失信号——矩阵中更大的值在矩阵乘法中有更大的输出。
+如果初始权重太大，那么会在\gls{forward_propagation}或\gls{backward_propagation}中产生爆炸的值。
+在循环网络中，很大的权重也可能导致\firstgls{chaos}（对于输入中很小的扰动非常敏感，导致确定性\gls{forward_propagation}过程表现随机）。
 在一定程度上，梯度爆炸问题可以通过\gls{gradient_clipping}来缓解（执行\gls{GD}步骤之前设置梯度的阈值）。
 较大的权重也会产生使得\gls{activation_function}饱和的值，导致饱和单元的梯度完全丢失。
 这些竞争因素决定了权重的理想初始大小。
@@ -1096,11 +1096,12 @@
 这种初始化方案也是受启发于不含非线性的矩阵相乘序列的\gls{deep_network}。
 在该模型下，这个初始化方案保证了达到收敛所需的训练迭代总数独立于深度。
 
-增加缩放因子$g$将网络推向网络前向传播时激励范数增加，反向传播时梯度范数增加的区域。
+
+增加缩放因子$g$将网络推向网络\gls{forward_propagation}时激励范数增加，\gls{backward_propagation}时梯度范数增加的区域。
 \cite{Sussillo14}表明，正确设置缩放因子足以训练深达$1000$层的网络，不需要使用正交初始化。
-这种方法的一个重要观点是，在前馈网络中，激励和梯度会在每一步前向或反向传播中增加或缩小，遵循随机游动行为。
-这是因为前馈网络在每一层使用了不同的权重矩阵。
-如果该随机游动调整到保持范数，那么前馈网络能够很大程度地避免相同权重矩阵用于每层的梯度消失和爆炸问题，如\secref{sec:long_term_dependencies}所述。
+这种方法的一个重要观点是，在\gls{feedforward_network}中，激励和梯度会在每一步\gls{forward_propagation}或\gls{backward_propagation}中增加或缩小，遵循随机游动行为。
+这是因为\gls{feedforward_network}在每一层使用了不同的权重矩阵。
+如果该随机游动调整到保持范数，那么\gls{feedforward_network}能够很大程度地避免相同权重矩阵用于每层的\gls{vanish_explode_gradient}，如\secref{sec:long_term_dependencies}所述。
 % 295 end
 
 
@@ -1126,7 +1127,7 @@
 是否选择使用密集或稀疏初始化也可以设为一个\gls{hyperparameter}。
 替代地，我们可以手动搜索最优初始范围。
 一个好的挑选初始数值范围的经验法则是观测单个\gls{minibatch}数据上的激励或梯度的范围或标准差。
-如果权重太小，那么当激励值在\gls{minibatch}上前向传播于网络时，激励值的范围会缩小。
+如果权重太小，那么当激励值在\gls{minibatch}上\gls{forward_propagation}于网络时，激励值的范围会缩小。
 通过重复识别具有不可接受的激励小值的第一层，并提高其权重，最终有可能得到一个全部都是合理初始激励的网络。
 如果学习在这点上仍然很慢，观测下梯度的范围或标准差可能也会有所帮助。
 这个过程原则上是自动的，且通常计算量低于基于\gls{validation_set}误差的\gls{hyperparameter}优化，因为它是基于初始模型在单批数据上的行为反馈，而不是在\gls{validation_set}上训练模型的反馈。
@@ -1165,13 +1166,13 @@
 在这种情况下，我们有一个单元输出$u$，另一个单元$h\in[0,1]$，那么我们可以将$h$视作闸门，以决定$uh\approx 1$还是$uh\approx 0$。
 在这种情形下，我们希望设置\gls{bias_aff} $h$，使得在初始化的大多数情况下$h\approx 1$。
 否则，$u$没有机会学习。
-例如，\cite{Jozefowicz-et-al-ICML2015}提议设置LSTM模型遗忘门的\gls{bias_aff}为$1$，如\secref{sec:the_long_short_term_memory_and_other_gated_rnns}所述。
+例如，\cite{Jozefowicz-et-al-ICML2015}提议设置\glssymbol{LSTM}模型遗忘门的\gls{bias_aff}为$1$，如\secref{sec:the_long_short_term_memory_and_other_gated_rnns}所述。
 \end{itemize}
 % 297 end
 
 
 另一种常见类型的参数是方差或精确度参数。
-例如，我们用以下模型进行带条件方差估计的线性回归
+例如，我们用以下模型进行带条件方差估计的\gls{linear_regression}
 \begin{equation}
     p(y\mid\Vx) = \mathcal{N} (y \mid \Vw^\top \Vx + b, 1/\beta) ,
 \end{equation}
@@ -1198,24 +1199,31 @@
 在这种情况下，自然会问有没有其他方法。
 如果我们相信方向敏感度有些轴对齐，那么每个参数设置不同的\gls{learning_rate}，在整个学习过程中自动适应这些\gls{learning_rate}便是有道理的。
 
+
+
 \firstgls{dbd}算法\citep{jacobs1988}是一个早期的在训练时适应模型参数单独\gls{learning_rate}的启发式方法。
 该方法基于一个很简单的想法，如果损失对于某个给定模型参数的偏导保持相同的符号，那么\gls{learning_rate}应该增加。如果对于该参数的偏导变化了符号，那么\gls{learning_rate}应减小。
 当然，这种方法只能应用于全\gls{batch}优化中。
+% 298 mid
+
 
 最近，一些增量（或者基于\gls{minibatch}）的算法被提出适应模型参数的\gls{learning_rate}。
 这节将简要回顾一些这种算法。
+% 298 end
 
-% -- 298 --
 
-\subsection{AdaGrad}
+% 299 head
+\subsection{\glsentrytext{adagrad}}
 \label{sec:adagrad}
-\textbf{AdaGrad}算法，如\algref{alg:ada_grad}所示，独立地适应所有模型参数的\gls{learning_rate}，放缩每个参数反比于其所有梯度历史平方值总和的平方根\citep{Duchi+al-2011}。
+\firstgls{adagrad}算法，如\algref{alg:ada_grad}所示，独立地适应所有模型参数的\gls{learning_rate}，放缩每个参数反比于其所有梯度历史平方值总和的平方根\citep{Duchi+al-2011}。
 具有损失最大偏导的参数相应地有一个快速下降的\gls{learning_rate}，而具有小偏导的参数在\gls{learning_rate}上有相对较小的下降。
 净效果是在参数空间中更为平缓的倾斜方向会取得更大的进步。
+% 299 head
 
-在\gls{convex_optimization}背景中，AdaGrad算法具有一些令人满意的理论性质。
+
+在\gls{convex_optimization}背景中，\gls{adagrad} 算法具有一些令人满意的理论性质。
 然而，经验上已经发现，对于训练\gls{DNN}模型而言，\emph{从训练开始时}积累梯度平方会导致有效\gls{learning_rate}过早和过量的减小。
-AdaGrad在某些\gls{DL}模型上效果不错，但不是全部。
+\gls{adagrad}在某些\gls{DL}模型上效果不错，但不是全部。
 
 
 \begin{algorithm}[ht]
@@ -1242,7 +1250,7 @@ AdaGrad在某些\gls{DL}模型上效果不错，但不是全部。
 \subsection{RMSProp}
 \label{sec:rmsprop}
 \textbf{RMSProp}算法\citep{Hinton-ipam2012}修改AdaGrad以在\gls{nonconvex}设定下效果更好，改变梯度积累为指数加权的移动均值。
-AdaGrad旨在应用于凸问题时快速收敛。
+\gls{adagrad}旨在应用于凸问题时快速收敛。
 当应用于\gls{nonconvex}函数训练\gls{NN}时，学习轨迹可能穿过了很多不同的结构，最终到达一个局部是凸碗的区域。
 AdaGrad根据平方梯度的整个历史收缩\gls{learning_rate}，可能使得\gls{learning_rate}在达到这样的凸结构前就变得太小了。
 RMSProp使用指数衰减平均以丢弃遥远过去的历史，使其能够在找到凸碗状结构后快速收敛，
@@ -1600,7 +1608,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 这里，$w_i$表示用于层$i$的权重。层$i$的输出是$h_i = h_{i-1} w_i$。
 输出$\hat{y}$是输入$x$的线性函数，但是权重$w_i$的非线性函数。
 假设我们的\gls{cost_function} $\hat{y}$上的梯度为$1$，所以我们希望稍稍降低$\hat{y}$。
-然后反向传播算法可以计算梯度$\Vg = \nabla_{\Vw} \hat{y}$。
+然后\gls{backward_propagation}算法可以计算梯度$\Vg = \nabla_{\Vw} \hat{y}$。
 想想我们在更新$\Vw \leftarrow \Vw - \epsilon \Vg$时会发生什么。
 近似$\hat{y}$的一阶泰勒级数会预测$\hat{y}$的值下降$\epsilon \Vg^\top \Vg$。
 如果我们希望$\hat{y}$下降$0.1$，那么梯度中的一阶信息表明我们应设置\gls{learning_rate}$\epsilon$为$\frac{0.1}{\Vg^\top \Vg}$。
@@ -1786,7 +1794,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 (c)我们只保留原始网络的输入到隐藏层，并丢弃隐藏到输出层。 
 我们将第一层\gls{hidden_layer}的输出作为输入发送到另一监督单隐层\glssymbol{MLP}（使用与第一个网络相同的目标训练），从而可以添加第二层\gls{hidden_layer}。 
 这可以根据需要重复多层。
-(d)所得架构的另一种描绘，可视为前馈网络。 
+(d)所得架构的另一种描绘，可视为\gls{feedforward_network}。 
 为了进一步改进优化，我们可以联合地\gls{fine_tuning}所有层（仅在该过程的结束或者该过程的每个阶段）。
 }
 \label{fig:chap8_deep_sup}
