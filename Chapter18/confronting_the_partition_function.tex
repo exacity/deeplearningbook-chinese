@@ -3,8 +3,8 @@
 \chapter{面对\glsentrytext{partition_function}}
 \label{chap:confronting_the_partition_function}
 % 597
-在\secref{sec:undirected_models}中，我们看到许多概率模型（通常被称为\gls{undirected_graphical_model}）由未归一化的\gls{PD} $\tilde{p}(\RVx, \theta)$所定义。
-我们必须通过除以\gls{partition_function} $Z(\Vtheta)$来归一化$\tilde{p}$，以获得有效的\gls{PD}：
+在\secref{sec:undirected_models}中，我们看到许多概率模型（通常\gls{undirected_graphical_model}）由一个未归一化的\gls{PD} $\tilde{p}(\RVx, \theta)$定义。
+我们必须通过除以\gls{partition_function} $Z(\Vtheta)$来归一化$\tilde{p}$，以获得一个有效的\gls{PD}：
 \begin{equation}
 	p(\RVx; \Vtheta) = \frac{1}{Z(\Vtheta)} \tilde{p}(\RVx; \Vtheta).
 \end{equation}
@@ -18,12 +18,12 @@
 \end{equation}
 
 
-对于很多有趣的模型而言，以上计算难以处理。
+对于很多有趣的模型而言，以上积分或求和难以计算。
 
 
-正如我们将在\chapref{chap:deep_generative_models}看到的，有些\gls{DL}模型设计成具有易于处理的归一化常数，或设计成能够在不涉及计算$p(\RVx)$的情况下使用。
-然而，其他模型会直接面对难处理的\gls{partition_function}的挑战。
-在本章中，我们会介绍用于训练和评估具有难以处理\gls{partition_function}的模型的技术。
+正如我们将在\chapref{chap:deep_generative_models}看到的，有些\gls{DL}模型被设计成具有一个易于处理的归一化常数，或被设计成能够在不涉及计算$p(\RVx)$的情况下使用。
+然而，其他一些模型会直接面对难以计算的\gls{partition_function}的挑战。
+在本章中，我们会介绍用于训练和评估具有难以计算\gls{partition_function}的模型的技术。
 % -- 597 end
 
 
@@ -37,14 +37,13 @@
 \end{equation}
 % 598 head
 
-这是学习过程中非常著名的\firstgls{positive_phase}和\firstgls{negative_phase}的分解。
+这是机器学习中非常著名的\firstgls{positive_phase}和\firstgls{negative_phase}的分解。
 
 
 对于大多数感兴趣的\gls{undirected_model}而言，\gls{negative_phase}是困难的。
-没有\gls{latent_variable}或\gls{latent_variable}之间很少相互作用的模型通常会有一个易于求解的\gls{positive_phase}。
-\glssymbol{RBM}是一个具有简单\gls{positive_phase}和困难\gls{negative_phase}的典型模型，具有在给定可见单位的情况下彼此条件独立的\gls{hidden_unit}。
-\gls{latent_variable}之间具有复杂相互作用的困难\gls{positive_phase}将主要在\chapref{chap:approximate_inference}中讨论。
-本章主要探讨\gls{negative_phase}困难的情况。
+没有\gls{latent_variable}或\gls{latent_variable}之间很少相互作用的模型通常会有一个易于计算的\gls{positive_phase}。
+\glssymbol{RBM}的\gls{hidden_unit}在给定可见单元的情况下彼此条件独立，是一个典型的具有简单\gls{positive_phase}和困难\gls{negative_phase}的模型。
+\gls{positive_phase}计算困难，\gls{latent_variable}之间具有复杂相互作用的情况将主要在\chapref{chap:approximate_inference}中讨论。本章主要探讨\gls{negative_phase}计算中的难点。
 
 
 让我们进一步分析$\log Z$的梯度：
@@ -62,7 +61,7 @@
 \end{equation}
 
 
-对于保证所有的$\RVx$都有$p(\RVx) > 0$的模型，我们用$\exp(\log \tilde{p}(\RVx))$代替$\tilde{p}(\RVx)$：
+对于保证所有的$\RVx$都有$p(\RVx) > 0$的模型，我们可以用$\exp(\log \tilde{p}(\RVx))$代替$\tilde{p}(\RVx)$：
 \begin{equation}
 	\frac{ \sum_{\RVx} \nabla_{\Vtheta} \exp (\log \tilde{p} (\RVx)) }{ Z }
 \end{equation}
@@ -81,17 +80,17 @@
 % -- 598 end
 
 
-这个推导对离散$\Vx$进行求和，对连续$\Vx$进行积分也会出现类似结果。
-面对连续版本的推导过程中，我们使用在积分符号下微分\gls{leibniz_rule}，得到等式
+上述推导对离散的$\Vx$进行求和，对连续的$\Vx$进行积分也可以得到类似结果。
+在连续版本的推导中，使用在积分符号內取微分的\gls{leibniz_rule}可以得到等式
 \begin{equation}
 	\nabla_{\Vtheta} \int \tilde{p} (\RVx) \mathrm{d} \Vx  = \int \nabla_{\Vtheta} 
 \tilde{p} (\RVx) \mathrm{d} \Vx.
 \end{equation}
 该等式只适用于$\tilde{p}$和$\nabla_{\Vtheta} \tilde{p} (\RVx)$上的一些特定正则条件。
-在测度理论术语中，这些条件是：
+在测度论术语中，这些条件是：
 （1）对每一个$\Vtheta$而言，未归一化分布$\tilde{p}$必须是$\Vx$的\gls{lebesgue_integrable}函数。
 （2）对于所有的$\Vtheta$和几乎所有$\Vx$，梯度$\nabla_{\Vtheta} \tilde{p}(\RVx)$必须存在。
-（3）对于所有的$\Vtheta$和几乎所有的$\Vx$，在$\max_i | \frac{\partial}{\partial \theta_i } \tilde{p} (\RVx) | \leq R(\Vx)$ 的情况下，必须存在能够限制住$\nabla_{\Vtheta} \tilde{p}(\RVx)$的可积函数$R(\Vx)$。
+（3）对于所有的$\Vtheta$和几乎所有的$\Vx$，必须存在一个可积函数$R(\Vx)$使得$\max_i | \frac{\partial}{\partial \theta_i } \tilde{p} (\RVx) | \leq R(\Vx)$。
 幸运的是，大多数感兴趣的\gls{ML}模型都具有这些性质。
 % 599 mid
 
@@ -100,12 +99,12 @@
 \label{eq:18.15}
 	\nabla_{\Vtheta} \log Z = \SetE_{\RVx \sim p(\RVx)} \nabla_{\Vtheta} \log \tilde{p}(\RVx)
 \end{equation}
-是使用各种\gls{monte_carlo}方法近似最大化（具有难求解\gls{partition_function}模型的）似然的基础。
+是使用各种\gls{monte_carlo}方法近似最大化（具有难计算\gls{partition_function}模型的）似然的基础。
 % 599 mid
 
 \gls{monte_carlo}方法为学习\gls{undirected_model}提供了直观的框架，我们能够在其中考虑\gls{positive_phase}和\gls{negative_phase}。
-在\gls{positive_phase}中，我们对于数据中抽取的$\Vx$增加$\log \tilde{p}(\RVx)$。
-在\gls{negative_phase}中，我们通过减少从模型分布中采样的$\log \tilde{p}(\RVx)$来降低\gls{partition_function}。
+在\gls{positive_phase}中，我们增大从数据中采样得到的$\log \tilde{p}(\RVx)$。
+在\gls{negative_phase}中，我们通过降低从模型分布中采样的$\log \tilde{p}(\RVx)$来降低\gls{partition_function}。
 % 599 mid
 
 在\gls{DL}文献中，经常会看到用\gls{energy_function}（等式\eqnref{eqn:167}）来参数化$\log \tilde{p}$。
@@ -115,7 +114,7 @@
 \section{随机\glsentrytext{maximum_likelihood}和\glsentrytext{contrastive_divergence}}
 \label{sec:stochastic_maximum_likelihood_and_contrastive_divergence}
 % 599 end
-实现方程\eqnref{eq:18.15}一个很简单的方法是，每次需要计算梯度时，\gls{burn_in}随机初始化的一组\gls{markov_chain}。
+一个实现方程\eqnref{eq:18.15}的朴素方法是，每次需要计算梯度时，\gls{burn_in}随机初始化的一组\gls{markov_chain}。
 当使用\gls{SGD}进行学习时，这意味着\gls{markov_chain}必须在每次梯度步骤中\gls{burn_in}。
 这种方法引导下的训练过程如\algref{alg:naive_cd}所示。
 内循环中\gls{burn_in}\gls{markov_chain}的计算代价过高，导致这个过程在实际中是不可行的，
@@ -123,7 +122,7 @@
 
 % -- 599 --
 \begin{algorithm}[ht]
-\caption{一种朴素的\glssymbol{mcmc}算法，使用梯度上升最大化具有难解\gls{partition_function}的对数似然。}
+\caption{一种朴素的\glssymbol{mcmc}算法，使用梯度上升最大化具有难以计算\gls{partition_function}的对数似然。}
 \label{alg:naive_cd}
 \begin{algorithmic}
 \STATE 设步长 $\epsilon$ 为一个小正数。
@@ -144,10 +143,10 @@
 \end{algorithm}
 
 
-我们可以将\glssymbol{mcmc}方法视为在两种力之间平衡最大似然，一种力增大数据发生概率的模型分布，另一种力减小模型样本发生概率的模型分布。
+我们可以将\glssymbol{mcmc}方法视为在两种力之间平衡最大似然，一种力拉高数据出现时的模型分布，一种拉低模型采样出现时的模型分布。
 \figref{fig:chap18_pos_and_neg_phase}展示了这个过程。
 这两种力分别对应最大化$\log \tilde{p}$和最小化$\log Z$。
-还有一些对\gls{negative_phase}的近似。
+对于\gls{negative_phase}会有一些近似。
 这些近似都可以理解为使\gls{negative_phase}更容易计算，但是也可能将其推向错误的位置。
 
 \begin{figure}[!htb]
@@ -156,7 +155,12 @@
 \else
 \centerline{\includegraphics{Chapter18/figures/pos_and_neg_phase_color}}
 \fi
-\caption{\algref{alg:naive_cd}角度的``\gls{positive_phase}''和``\gls{negative_phase}''。（左）<bad>在\gls{positive_phase}中，我们从数据分布中采样，然后push up到它们的未经归一化的概率上。这意味着在push on up越多的地方数据点的概率越高。（右）在\gls{negative_phase}中，我们从模型分布中采样，然后push down到它们的未经归一化的概率上。这与\gls{positive_phase}的作用相反，给未经归一化概率处处添加了一个大常数。当数据分布和模型分布相等时，\gls{positive_phase}push up数据点和\gls{negative_phase}push down 数据点的机会相等。此时，不再有任何的梯度（期望上说），训练也必须停止。}
+\caption{\algref{alg:naive_cd}角度的``\gls{positive_phase}''和``\gls{negative_phase}''。
+（左）<bad>在\gls{positive_phase}中，我们从数据分布中采样，然后推高它们未归一化的概率。这意味着概率越高的数据点未归一化的概率被推高得越多。
+（右）在\gls{negative_phase}中，我们从模型分布中采样，然后压低它们未归一化的概率。
+这与\gls{positive_phase}的倾向相反，给未归一化的概率处处添加了一个大常数。
+当数据分布和模型分布相等时，\gls{positive_phase}推高数据点和\gls{negative_phase}压低数据点的机会相等。
+此时，不再有任何的梯度（期望上说），训练也必须停止。}
 \label{fig:chap18_pos_and_neg_phase}
 \end{figure}
 
@@ -166,9 +170,9 @@
 因为\gls{negative_phase}减少了这些点的概率，它们一般被认为代表了模型不正确的信念。
 在文献中，它们经常被称为``幻觉''或``幻想粒子''。
 事实上，\gls{negative_phase}已经被作为人类和其他动物做梦的一种可能解释\citep{CrickMitchison83}。
-这个想法是说，大脑维持着世界的概率模型，并且在醒着经历真实事件时会遵循$\log \tilde{p}$的梯度，在睡觉时会遵循$\log \tilde{p}$的梯度最小化$\log Z$，其经历的样本采样自当前的模型。
+这个想法是说，大脑维持着世界的概率模型，并且在醒着经历真实事件时会遵循$\log \tilde{p}$的梯度，在睡觉时会遵循$\log \tilde{p}$的负梯度最小化$\log Z$，其经历的样本采样自当前的模型。
 这个视角解释了具有\gls{positive_phase}和\gls{negative_phase}的大多数算法，但是它还没有被神经科学实验证明是正确的。
-在\gls{ML}模型中，通常有必要同时使用\gls{positive_phase}和\gls{negative_phase}，而不是分为清醒和REM睡眠时期。
+在\gls{ML}模型中，通常有必要同时使用\gls{positive_phase}和\gls{negative_phase}，而不是按不同时间阶段分为清醒和REM睡眠时期。
 正如我们将在\secref{sec:learned_approximate_inference}中看到的，一些其他\gls{ML}算法出于其他原因从模型分布中采样，这些算法也能提供睡觉做梦的解释。
 
 
@@ -212,7 +216,7 @@
 \glssymbol{contrastive_divergence}未能定性地实现真实\gls{negative_phase}的主要原因是，它不能抑制远离真实训练样本的高概率区域。
 这些区域在模型上具有高概率，但是在数据生成区域上具有低概率，被称为\firstgls{spurious_modes}。
 \figref{fig:chap18_spurious_mode}解释了这种现象发生的原因。
-基本上，除非$k$非常大，否则远离数据分布的模型分布中的模态不会被\gls{markov_chain}在初始化的训练点中探索。
+基本上，除非$k$非常大，否则远离数据分布的模型分布中的模态不会被在训练数据中初始化的\gls{markov_chain}访问到。
 
 
 % -- 602 --
@@ -223,7 +227,17 @@
 \else
 \centerline{\includegraphics{Chapter18/figures/spurious_mode_color}}
 \fi
-\caption{一个\gls{spurious_modes}。说明\gls{contrastive_divergence}（\algref{alg:cd}）的\gls{negative_phase}为何无法压缩\gls{spurious_modes}的例子。一个\gls{spurious_modes}指的是一个在模型分布中出现数据分布中却不存在的模式。由于\gls{contrastive_divergence}从数据点中初始化它的\gls{markov_chain}然后运行\gls{markov_chain}了仅仅几步，不太可能到达模型中离数据点较远的模式。这意味着从模型中采样时，我们有时候会得到一些与数据并不相似的样本。这也意味着由于在这些模式上浪费了一些概率质量，模型很难把较高的概率质量集中于正确的模式上。出于可视化的目的，这个图使用了某种程度上说更加简单的距离的概念——在$\SetR$的数轴上\gls{spurious_modes}与正确的模式有很大的距离。这对应着基于局部移动$\SetR$上的单个变量$x$的\gls{markov_chain}。对于大部分深度概率模型来说，\gls{markov_chain}是基于\gls{gibbs_sampling}的，并且对于单个变量产生非局部的移动但是无法同时移动所有的变量。对于这些问题来说，考虑edit距离比欧式距离通常更好。然而，高维空间的edit距离很难在二维空间作图展示。}
+\caption{一个\gls{spurious_modes}。
+说明\gls{contrastive_divergence}（\algref{alg:cd}）的\gls{negative_phase}为何无法抑制\gls{spurious_modes}的例子。
+一个\gls{spurious_modes}指的是一个在模型分布中出现数据分布中却不存在的模式。
+由于\gls{contrastive_divergence}从数据点中初始化它的\gls{markov_chain}然后仅仅运行了几步\gls{markov_chain}，不太可能到达模型中离数据点较远的模式。
+这意味着从模型中采样时，我们有时候会得到一些与数据并不相似的样本。
+这也意味着由于在这些模式上浪费了一些概率质量，模型很难把较高的概率质量集中于正确的模式上。
+出于可视化的目的，这个图使用了某种程度上说更加简单的距离的概念——在$\SetR$的数轴上\gls{spurious_modes}与正确的模式有很大的距离。
+这对应着基于局部移动$\SetR$上的单个变量$x$的\gls{markov_chain}。
+对于大部分深度概率模型来说，\gls{markov_chain}是基于\gls{gibbs_sampling}的，并且对于单个变量产生非局部的移动但是无法同时移动所有的变量。
+对于这些问题来说，考虑edit距离比欧式距离通常更好。
+然而，高维空间的编辑距离很难在二维空间作图展示。}
 \label{fig:chap18_spurious_mode}
 \end{figure}
 
@@ -242,11 +256,11 @@
 
 % -- 603 --
 
-\glssymbol{contrastive_divergence}算法可以被理解为惩罚具有\gls{markov_chain}的模型，当输入来自数据时，\gls{markov_chain}会迅速改变。
-这意味着使用\glssymbol{contrastive_divergence}估计训练有点类似于训练\gls{AE}。
+\glssymbol{contrastive_divergence}算法可以被理解为惩罚具有快速改变来自数据的输入的\gls{markov_chain}的模型。
+这意味着使用\glssymbol{contrastive_divergence}训练有点类似于训练\gls{AE}。
 即使\glssymbol{contrastive_divergence}估计比一些其他训练方法具有更大偏差，但是它有助于\gls{pretraining}之后会堆叠起来的浅层模型。
 这是因为堆栈中最早的模型会受激励复制更多的信息到其\gls{latent_variable}，使其可用于随后的模型。
-这应该更多地被认为是\glssymbol{contrastive_divergence}训练中经常可利用的副作用，而不是原本的设计优势。
+这应该更多地被认为是\glssymbol{contrastive_divergence}训练中经常可利用的副产品，而不是原本的设计优势。
 
 
 \cite{sutskever2010convergence-small}表明，\glssymbol{contrastive_divergence}的更新方向不是任何函数的梯度。
@@ -260,9 +274,9 @@
 因此，来自先前模型分布的样本将非常接近于来自当前模型分布的样本，因此用这些样本初始化的\gls{markov_chain}将不需要花费很多时间来完成混合。
 
 
-因为每个\gls{markov_chain}在整个学习过程中不断更新，而不是在每个梯度步骤中重新开始，\gls{markov_chain}可以自由探索很远，以找到所有模型的模态。
-因此，\glssymbol{SML}比\glssymbol{contrastive_divergence}具有更强的鲁棒性，以免形成具有\gls{spurious_modes}的模型。
-此外，因为有可能存储所有采样变量的状态，无论是可见的还是\gls{latent}的，\glssymbol{SML}为\gls{hidden_unit}和可见单元都提供了初始值。
+因为每个\gls{markov_chain}在整个学习过程中不断更新，而不是在每个梯度步骤中重新开始，\gls{markov_chain}可以自由探索很远，以找到模型的所有模态。 
+因此，\glssymbol{SML}比\glssymbol{contrastive_divergence}更不容易形成具有\gls{spurious_modes}的模型。
+此外，因为可以存储所有采样变量的状态，无论是可见的还是\gls{latent}的，\glssymbol{SML}为\gls{hidden_unit}和可见单元都提供了初始值。
 \glssymbol{contrastive_divergence}只能为可见单元提供初始化，因此\gls{deep_model}需要进行\gls{burn_in}步骤。
 \glssymbol{SML}能够有效地训练\gls{deep_model}。
 \cite{Marlin10Inductive-small}将\glssymbol{SML}与本章中提出的许多其他标准方法进行比较。
@@ -270,7 +284,7 @@
 
 % -- 604 --
 \begin{algorithm}[ht]
-\caption{\gls{SML}/\gls{persistent_contrastive_divergence}算法，使用梯度上升作为优化程序。}
+\caption{\gls{SML}/\gls{persistent_contrastive_divergence}算法，使用梯度上升作为优化过程。}
 \label{alg:sml}
 \begin{algorithmic}
 \STATE 设步长 $\epsilon$ 为一个小正数。
@@ -292,19 +306,17 @@
 \end{algorithm}
 
 
-如果随机梯度算法移动模型的速率可以比\gls{markov_chain}在迭代步中混合更快，那么\glssymbol{SML}容易变得不准确。
-如果$k$太小或$\epsilon$太大，那么这有可能发生。
+在$k$太小或$\epsilon$太大时，随机梯度算法移动模型的速率比\gls{markov_chain}在迭代步中混合更快，此时\glssymbol{SML}容易变得不准确。
 不幸的是，这些值的容许范围与问题有很大关联。
 现在还没有方法能够正式地测试\gls{markov_chain}是否能够在迭代步骤之间成功混合。
 主观地，如果学习速率对于Gibbs步骤数目而言太大的话，那么
 梯度步骤中\gls{negative_phase}采样的方差会比不同\gls{markov_chain}中\gls{negative_phase}采样的方差更大。
-例如，MNIST上训练的模型在一个步骤中采样$7$秒;
-那么，学习过程将会强烈地让模型学习对应于$7$秒的模态，并且模型可能会在下一步骤中采样$9$秒。
+例如，一个MNIST模型在一个步骤中只采样得到了$7$，然后学习过程将会极大降低$7$出现的概率，在下一个步骤中，模型可能会只采样得到$9$。
 
 
 从使用\glssymbol{SML}训练的模型中评估采样必须非常小心。
 在模型训练完之后，有必要从一个随机起点初始化的新\gls{markov_chain}抽取样本。
-用于训练的连续负相链中的样本受到了模型最近几个版本的影响，会使模型看起来具有比其实际更大的容量。
+用于训练的连续负相链中的样本受到了模型最近几个版本的影响，会使模型看起来具有比其实际更大的\gls{capacity}。
 
 % -- 605 --
 
@@ -327,7 +339,7 @@
 	\Vtheta = \Vtheta^{\text{(slow)}} + \Vtheta^{\text{(fast)}}.
 \end{equation}
 现在的参数是以前的两倍多，逐位相加定义原始模型的参数。
-参数的快速复制用更大的学习速率来训练，从而使其快速响应学习的\gls{negative_phase}，并使\gls{markov_chain}探索新的值域。
+快速参数用更大的学习速率来训练，从而使其快速响应学习的\gls{negative_phase}，并使\gls{markov_chain}探索新的区域。
 这能够使\gls{markov_chain}快速混合，尽管这种效应只会发生在学习期间快速权重可以自由改变的时候。
 通常，在短时间地将快速权重设为大值并保持足够长时间，使\gls{markov_chain}改变模式之后，我们会对快速权重使用显著的权重衰减，促使它们收敛到小值。
 
@@ -379,7 +391,7 @@
 % -- 607 --
 
 这看起来似乎是一个没有道理的策略，但可以证明最大化伪似然的估计是渐近一致的\citep{Mase1995}。
-当然，在数据集不接近大采样极限的情况下，伪可能性可能表现出与最大似然估计不同的结果。
+当然，在数据集不接近大采样极限的情况下，伪似然可能表现出与最大似然估计不同的结果。
 
 
 可以用\firstgls{generalized_pseudolikelihood_estimator}以计算复杂度的增加换取最大似然偏离的下降\citep{Huang02}。
@@ -396,7 +408,7 @@
 对于完全联合分布$p(\RVx)$模型的任务（例如密度估计和采样），\gls{pseudolikelihood}通常效果不好。
 对于在训练期间只需要使用条件分布的任务而言，它的效果比最大似然更好，例如填充少量的缺失值。
 如果数据具有规则结构，使得$\SetS$索引集可以被设计为表现最重要的相关性质，同时略去相关性可忽略的变量，那么广义伪似然策略将会非常有效。
-例如，在自然图像中，空间中相隔很远的像素也具有弱相关性，因此广义伪似然可以应用于每个$\SetS$集是小的空间定位窗口的情况。
+例如，在自然图像中，空间中相隔很远的像素也具有弱相关性，因此广义伪似然可以应用于每个$\SetS$集是小的局部空间窗口的情况。
 
 
 伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中介绍的\gls{variational_inference}。这是因为$\tilde{p}$出现在了分母中。
@@ -410,8 +422,8 @@
 但是，如果每个样本只计算一个随机选择的条件，那么广义伪似然和类似标准仍然可以很好地运行，从而使计算代价降低到和\glssymbol{SML}差不多的程度\citep{Goodfellow-et-al-NIPS2013}。
 
 
-虽然\gls{pseudolikelihood}估计没有显式地最小化$\log Z$，但是它可以被认为具有类似于\gls{negative_phase}的东西。
-每个条件分布的分母会使得学习算法降低，所有仅具有一个变量不同于训练样本的状态的概率。
+虽然\gls{pseudolikelihood}估计没有显式地最小化$\log Z$，但是我们仍然认为它具有类似\gls{negative_phase}的效果。
+每个条件分布的分母会使得学习算法降低所有仅具有一个变量不同于训练样本的状态的概率。
 
 
 了解\gls{pseudolikelihood}的渐近效率理论分析，请参看\cite{Marlin11-small}。
@@ -597,7 +609,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 并且如上所述，$p_{\text{noise}}$应易于估计（以便评估$p_{\text{joint}}$）和抽样（以生成训练数据），那么\glssymbol{NCE}就易于使用。
 
 
-\glssymbol{NCE}能够非常成功地应用于\gls{RV}较少的问题，即使这些\gls{RV}取到很大的值，它也很有效。
+\glssymbol{NCE}能够非常成功地应用于\gls{RV}较少的问题，但即使\gls{RV}很多时，它也很有效。
 例如，它已经成功地应用于给定单词上下文建模单词的条件分布\citep{Mnih2013}。
 虽然单词可以采样自一个很大的词汇表，但是只能采样一个单词。
 
@@ -607,7 +619,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 当\gls{logistic_regression}分类器发现某个变量的取值不大可能时，它会拒绝这个\gls{noise}样本。
 这意味着在$p_{\text{model}}$学习了基本的边缘统计之后，学习速率会大大减慢。
 想象一个使用非结构化高斯\gls{noise}作为$p_{\text{noise}}$来学习面部图像的模型。
-如果$p_{\text{model}}$学习了眼睛，而没有学习任何其他面部特征，如嘴， 它会拒绝几乎所有的非结构化\gls{noise}样本。
+如果$p_{\text{model}}$学会了眼睛，就算没有学习任何其他面部特征，如嘴， 它也会拒绝几乎所有的非结构化\gls{noise}样本。
 
 
 $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限制。
@@ -633,7 +645,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 
 \section{估计\glsentrytext{partition_function}}
 \label{sec:estimating_the_partition_function}
-尽管本章中的大部分内容都在避免计算与\gls{undirected_graphical_model}相关的难求解\gls{partition_function} $Z(\Vtheta)$，但在本节中我们将会讨论几种直接估计\gls{partition_function}的方法。
+尽管本章中的大部分内容都在避免计算与\gls{undirected_graphical_model}相关的难以计算\gls{partition_function} $Z(\Vtheta)$，但在本节中我们将会讨论几种直接估计\gls{partition_function}的方法。
 
 % -- 614 --
 
@@ -746,7 +758,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 这些中间分布是从哪里来的呢？
 正如最先的\gls{proposal_distribution} $p_0$是一种设计选择，分布序列$p_{\eta_1} \dots p_{\eta_{n-1}}$也是如此。
 也就是说，它们可以被特别设计为特定的问题领域。
-中间分布的一个通用目标和流行选择是使用目标分布$p_1$的加权几何平均，起始分布（其\gls{partition_function}是已知的）为$p_0$：
+中间分布的一个通用和流行选择是使用目标分布$p_1$的加权几何平均，起始分布（其\gls{partition_function}是已知的）为$p_0$：
 \begin{equation}
 	p_{\eta_j} \propto p_1^{\eta_j} p_0^{1-\eta_j}.
 \end{equation}
