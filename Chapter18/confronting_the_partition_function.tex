@@ -3,7 +3,7 @@
 \chapter{面对\glsentrytext{partition_function}}
 \label{chap:confronting_the_partition_function}
 % 597
-在\secref{sec:undirected_models}中，我们看到许多概率模型（通常\gls{undirected_graphical_model}）由一个未归一化的\gls{PD} $\tilde{p}(\RVx, \theta)$定义。
+在\secref{sec:undirected_models}中，我们看到许多概率模型（通常是\gls{undirected_graphical_model}）由一个未归一化的\gls{PD} $\tilde{p}(\RVx, \theta)$定义。
 我们必须通过除以\gls{partition_function} $Z(\Vtheta)$来归一化$\tilde{p}$，以获得一个有效的\gls{PD}：
 \begin{equation}
 	p(\RVx; \Vtheta) = \frac{1}{Z(\Vtheta)} \tilde{p}(\RVx; \Vtheta).
@@ -114,7 +114,7 @@
 \section{随机\glsentrytext{maximum_likelihood}和\glsentrytext{contrastive_divergence}}
 \label{sec:stochastic_maximum_likelihood_and_contrastive_divergence}
 % 599 end
-一个实现方程\eqnref{eq:18.15}的朴素方法是，每次需要计算梯度时，\gls{burn_in}随机初始化的一组\gls{markov_chain}。
+实现\eqnref{eq:18.15}的一个朴素方法是，每次需要计算梯度时，\gls{burn_in}随机初始化的一组\gls{markov_chain}。
 当使用\gls{SGD}进行学习时，这意味着\gls{markov_chain}必须在每次梯度步骤中\gls{burn_in}。
 这种方法引导下的训练过程如\algref{alg:naive_cd}所示。
 内循环中\gls{burn_in}\gls{markov_chain}的计算代价过高，导致这个过程在实际中是不可行的，
@@ -182,7 +182,7 @@
 
 % -- 601 --
 \begin{algorithm}[ht]
-\caption{\gls{contrastive_divergence}算法，使用梯度上升作为优化程序。}
+\caption{\gls{contrastive_divergence}算法，使用梯度上升作为优化过程。}
 \label{alg:cd}
 \begin{algorithmic}
 \STATE 设步长 $\epsilon$ 为一个小正数。
