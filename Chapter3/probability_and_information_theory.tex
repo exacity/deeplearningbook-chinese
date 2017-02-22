@@ -5,16 +5,17 @@
 
 本章我们讨论概率论和信息论。
 
-概率论是用于表示不确定性\gls{statement}(statement)的数学框架。%statement要不要换一下说法
+概率论是用于表示不确定性\gls{statement}(statement)的数学框架。
+%(statement要不要换一下说法)
 它不仅提供了量化不确定性的方法，也提供了用于导出新的不确定性\gls{statement}的公理。
-在\gls{AI}领域，我们主要以两种方式来使用概率论。
-首先，概率法则告诉我们\glssymbol{AI}系统应该如何推理，所以我们设计一些算法来计算或者近似由概率论导出的表达式。
+在\gls{AI}领域，概率论主要有两种用途。
+首先，概率法则告诉我们\glssymbol{AI}系统如何推理，据此我们设计一些算法来计算或者估算由概率论导出的表达式。
 其次，我们可以用概率和统计从理论上分析我们提出的\glssymbol{AI}系统的行为。
 
 概率论是众多科学和工程学科的基本工具。
 我们提供这一章是为了保证那些背景是软件工程而较少接触概率论的读者也可以理解本书的内容。
 
-概率论使我们能够作出不确定的\gls{statement}以及在不确定性存在的情况下推理，而信息论使我们能够量化\gls{PD}中的不确定性总量。
+概率论使我们能够作出不确定的\gls{statement}以及在不确定性存在的情况下进行推理，而信息论使我们能够量化\gls{PD}中的不确定性总量。
 
 如果你已经对概率论和信息论很熟悉了，那么你可能会希望跳过除了\ref{sec:structured_probabilistic_models_chap3}节以外的整章内容，而在这一节中我们会介绍用来描述机器学习中\gls{structured_probabilistic_models}的图。
 如果你对这些主题完全没有任何的先验知识，本章对于完成深度学习的研究项目来说已经足够，但我们还是建议你能够参考一些额外的资料，例如\cite{Jaynes03}。
@@ -25,11 +26,12 @@
 \label{sec:why_probability}
 
 计算机科学的许多分支处理的大部分都是完全确定的实体。
-程序员通常可以安全地假定CPU将完美地执行每个机器指令。
-硬件错误确实会发生，但它们足够罕见，以至于大部分软件应用并不需要被设计为考虑这些因素的影响。
-鉴于很多计算机科学家和软件工程师在一个相对干净和确定的环境中工作，机器学习对于概率论的大量使用不得不令人吃惊。
+程序员通常可以安全地假定CPU将完美地执行每条机器指令。
+硬件错误确实会发生，但它们罕见到大部分软件应用在设计时并不需要考虑这些因素的影响。
+鉴于许多计算机科学家和软件工程师在一个相对干净和确定的环境中工作，机器学习对于概率论的大量使用是很令人吃惊的。
 
 这是因为机器学习必须始终处理不确定量，有时也可能需要处理随机(非确定性)量。
+%(这里uncertain和stochastic有什么区别？)
 不确定性和随机性可能来自多个方面。
 研究人员至少从20世纪80年代开始就对使用概率论来量化不确定性提出了令人信服的论据。
 这里提出的许多论点都是根据\cite{Pearl88}总结或启发得到的。
@@ -42,7 +44,7 @@
 \begin{enumerate}
 \item 被建模系统内在的随机性。
 例如，大多数\gls{quantum_mechanics}的解释，都将\gls{subatomic}(subatomic)粒子的动力学描述为概率性的。
-我们还可以假定有随机动力学，并为此建立理论方案，例如一个假想的纸牌游戏，我们假设纸牌真正混洗成随机顺序。
+我们还可以创建一些我们假设具有随机动力学的理论情境，例如一个假想的纸牌游戏，在这个游戏中我们假设纸牌真正混洗成了随机顺序。
 
 \item 不完全观测。
 即使是确定的系统，当我们不能观测到所有驱动系统行为的变量时，该系统也会呈现随机性。
@@ -58,10 +60,10 @@
 
 % -- 52 --  
 
-在很多情况下，使用一些简单而不确定的原则要比复杂而确定的原则更为实用，即使真实的规则是确定的并且我们的模型系统对适应复杂规则具有很好的\gls{fidelity}(fidelity)。
-例如，简单的原则``多数鸟儿都会飞''可以很容易应用并且使用广泛，而正式的规则，``除了那些非常小的还没学会飞翔的幼鸟，生病或是受伤失去了飞翔能力的鸟，不会飞的鸟类包括食火鸟(cassowary)、鸵鸟(ostrich)、几维(kiwi，一种新西兰产的无翼鸟)……等等，鸟儿会飞''，很难应用、维持和沟通，毕竟这方面的努力还是很脆弱，容易失败。
+在很多情况下，使用一些简单而不确定的规则要比复杂而确定的规则更为实用，即使真正的规则是确定的并且我们建模的系统可以足够逼真地容纳复杂的规则。
+例如，简单的原则``多数鸟儿都会飞''可以很容易描述并且使用广泛，而正式的规则，``除了那些非常小的还没学会飞翔的幼鸟，生病或是受伤失去了飞翔能力的鸟，不会飞的鸟类包括食火鸟(cassowary)、鸵鸟(ostrich)、几维(kiwi，一种新西兰产的无翼鸟)……等等，鸟儿会飞''，很难应用、维持和沟通，毕竟这方面的努力还是很脆弱，容易失败。
 
-尽管我们明确需要一种表示和推理不确定性的方法，但是概率论能够提供所有我们想要的\gls{AI}领域的工具并不是那么显然。
+尽管我们的确需要一种用以对不确定性进行表示和推理的方法，但是概率论并不能明显地提供我们在\gls{AI}领域需要的所有工具。
 概率论最初的发展是为了分析事件发生的频率。
 可以很容易地看出概率论，对于像在扑克牌游戏中抽出一手特定的牌这种事件的研究中，是如何使用的。
 这类事件往往是重复的。
@@ -71,22 +73,22 @@
 在医生诊断病人的情况下，我们用概率来表示一种\firstgls{degree_of_belief}，其中1表示非常肯定病人患有流感而0表示非常肯定病人没有流感。
 前面一种概率，直接与事件发生的频率相联系，被称为\firstgls{frequentist_probability}；而后者，涉及到确定性水平，被称为\firstgls{bayesian_probability}。
 
-如果我们要列出一些，我们期望关于不确定性的常识推理具有的性质，那么满足这些属性的唯一一点就是将\gls{bayesian_probability}和\gls{frequentist_probability}视为等同的。
+如果要列出一些关于不确定性的常识推理中我们希望其具有的性质，那么满足这些性质的唯一一点就是将\gls{bayesian_probability}和\gls{frequentist_probability}视为等同的。
 例如，如果我们要在扑克牌游戏中根据玩家手上的牌计算她能够获胜的概率，我们和医生情境使用完全相同的公式，就是我们依据病人的某些症状计算她是否患病的概率。
-有关为什么一些小的常识假设能够导出相同的公理的细节必须深入了解这两种概率，参见\cite{Ramsey1926}。
+有关为什么一些小的常识假设能够导出相同公理的细节必须深入了解这两种概率，参见\cite{Ramsey1926}。
 
 % -- 53 --
 
 概率可以被看作是用于处理不确定性的逻辑扩展。
-逻辑提供了一套形式化的规则在给定某些命题是真或假的假设下，判断另外一些命题是真的还是假的。
-概率论提供了一套形式化的规则在给定一些命题的\gls{likelihood}(likelihood)后，计算其他命题为真的\gls{likelihood}。
+逻辑提供了一套形式化的规则，可以在给定某些命题是真或假的假设下，判断另外一些命题是真的还是假的。
+概率论提供了一套形式化的规则，可以在给定一些命题的\gls{likelihood}(likelihood)后，计算其他命题为真的\gls{likelihood}。
 
 \section{\glsentrytext{RV}}
 \label{sec:random_variables}
 
 \firstgls{RV}是可以随机地取不同值的变量。
-我们通常用打印机体的小写字母来表示\gls{RV}本身，而用脚本字体中的小写字母来表示\gls{RV}能够取到的值。
-例如，$x_1$和$x_2$都是\gls{RV} $\mathrm{x}$可能的取值。
+我们通常用无格式字体(plain typeface)中的小写字母来表示\gls{RV}本身，而用手写体中的小写字母来表示\gls{RV}能够取到的值。
+例如，$x_1$和$x_2$都是\gls{RV}$\mathrm{x}$可能的取值。
 对于向量值变量，我们会将\gls{RV}写成$\mathbf{x}$，它的一个值为$\bm{x}$。
 就其本身而言，一个\gls{RV}只是对可能的状态的描述；它必须伴随着一个\gls{PD}来指定每个状态的可能性。
 
@@ -160,7 +162,7 @@ $\frac{1}{k}$是正的，因为$k$是一个正整数。我们也可以看出
 
 \gls{PDF} $p(x)$并没有直接对特定的状态给出概率，相对的，它给出了落在面积为$\delta x$ 的无限小的区域内的概率为$p(x)\delta x$。
 
-我们可以对\gls{PDF}求积分来获得点集的真实分布律。
+我们可以对\gls{PDF}求积分来获得点集的真实概率质量。
 特别地，$x$落在集合$\mathbb{S}$中的概率可以通过$p(x)$对这个集合求积分来得到。
 在单变量的例子中，$x$落在区间$[a, b]$的概率是$\int_{[a,b]} p(x)dx$。
 
@@ -209,7 +211,7 @@ P(\RSy = y\mid \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)}
 我们不能计算给定在永远不会发生的事件上的\gls{conditional_probability}。
 
 这里需要注意的是，不要把\gls{conditional_probability}和计算当采用某个动作后会发生什么相混淆。
-假定某个人说德语，那么他可能是德国人的\gls{conditional_probability}是非常高的，但是如果是随机选择的一个人会说德语，他的国籍是不变的。
+假定某个人说德语，那么他是德国人的\gls{conditional_probability}是非常高的，但是如果随机选择的一个人会说德语，他的国籍不会因此而改变。
 计算一个行动的后果被称为\firstgls{intervention_query}。
 \gls{intervention_query}属于\firstgls{causal_modeling}的范畴，我们不在本书中讨论。
 
@@ -287,7 +289,7 @@ p(\RSx = x \mid \RSz = z) p(\RSy = y \mid \RSz = z).
 \gls{covariance}的绝对值如果很大则意味着变量值变化很大并且它们同时距离各自的均值很远。
 如果\gls{covariance}是正的，那么两个变量都倾向于同时取得相对较大的值。
 如果\gls{covariance}是负的，那么其中一个变量倾向于取得相对较大的值的同时，另一个变量倾向于取得相对较小的值，反之亦然。
-其他的衡量指标如\firstgls{correlation}将每个变量的贡献归一化，为了只衡量变量的相关性，而不受变量大小的分别影响。
+其他的衡量指标如\firstgls{correlation}将每个变量的贡献归一化，为了只衡量变量的相关性而不受变量大小的影响。
 
 \gls{covariance}和相关性是有联系的，但实际上不同的概念。
 它们是有联系的，因为两个变量如果相互独立那么它们的\gls{covariance}为零，如果两个变量的\gls{covariance}不为零那么它们一定是相关的。
@@ -335,7 +337,7 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 \subsection{\glsentrytext{multinoulli_distribution}}
 \label{sec:multinoulli_distribution}
 
-\firstgls{multinoulli_distribution}或者\firstgls{categorical_distribution}是指在具有$k$个不同状态的单个离散型\gls{RV}上的分布，$k$是有限的。
+\firstgls{multinoulli_distribution}或者\firstgls{categorical_distribution}是指在具有$k$个不同状态的单个离散型\gls{RV}上的分布，其中$k$是一个有限值。
 \footnote{``multinoulli''这个术语是最近被Gustavo Lacerdo发明、被\cite{MurphyBook2012}推广的。
 \gls{multinoulli_distribution}是\firstgls{multinomial_distribution}的一个特例。
 \gls{multinomial_distribution}是$\{0,\ldots, n\}^k$中的向量的分布，用于表示当对\gls{multinoulli_distribution}采样$n$次时$k$个类中的每一个被访问的次数。
@@ -350,8 +352,8 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 
 \gls{bernoulli_distribution}和\gls{multinoulli_distribution}足够用来描述在它们领域内的任意分布。
 它们能够描述这些分布，不是因为它们特别强大，而是因为它们的领域很简单；
-它们可以对那些，能够将所有的状态进行标号的离散型\gls{RV}，进行建模。
-当处理的是连续型\gls{RV}时，会有不可数无限多的状态，所以任何通过少量参数描述的\gls{PD}都必须在分布上采用严格的极限。
+它们可以对那些，能够将所有的状态进行枚举的离散型\gls{RV}，进行建模。
+当处理的是连续型\gls{RV}时，会有不可数无限多的状态，所以任何通过少量参数描述的\gls{PD}都必须在分布上加以严格的限制。
 
 \subsection{\glsentrytext{gaussian_distribution}}
 \label{sec:gaussian_distribution}
@@ -371,7 +373,9 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 \centerline{\includegraphics{Chapter3/figures/normal_color}}
 \fi
 \captionsetup{singlelinecheck=off}
-\caption[.]{\gls{normal_distribution}。\gls{normal_distribution} $\CalN(x; \mu, \sigma^2)$呈现经典的``钟形曲线''的形状，其中中心峰的$x$坐标由$\mu$给出，峰的宽度受$\sigma$控制。在这个示例中，我们展示的是\firstgls{standard_normal_distribution}，其中$\mu=0, \sigma = 1$。}
+\caption[.]{\gls{normal_distribution}。
+\gls{normal_distribution} $\CalN(x; \mu, \sigma^2)$呈现经典的``钟形曲线''的形状，其中中心峰的$x$坐标由$\mu$给出，峰的宽度受$\sigma$控制。
+在这个示例中，我们展示的是\firstgls{standard_normal_distribution}，其中$\mu=0, \sigma = 1$。}
 \label{fig:chap3_normal_color}
 \end{figure}
 
@@ -380,7 +384,7 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 分布的\gls{standard_error}用$\sigma$表示，\gls{variance}用$\sigma^2$表示。
 
 当我们要对\gls{PDF}求值时，我们需要对$\sigma$平方并且取倒数。
-当我们需要经常对不同参数下的\gls{PDF}求值时，一种更高效的使用参数描述分布的方式是使用参数$\beta \in (0, \infty)$，来控制分布的\firstgls{precision}或者方差的倒数：
+当我们需要经常对不同参数下的\gls{PDF}求值时，一种更高效的使用参数描述分布的方式是使用参数$\beta \in (0, \infty)$，来控制分布的\firstgls{precision}(用方差的倒数来表示)：
 \begin{equation}
 \CalN(x; \mu, \beta^{-1}) = \sqrt{\frac{\beta}{2\pi}} \exp \left(  -\frac{1}{2}\beta (x-\mu)^2 \right).
 \label{eq:3.22}
@@ -393,7 +397,7 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 
 第一，我们想要建模的很多分布真实情况是比较接近\gls{normal_distribution}的。
 \firstgls{central_limit_theorem}说明很多独立\gls{RV}的和近似服从\gls{normal_distribution}。
-这意味着在实际中，很多复杂系统都可以被成功建模成\gls{normal_distribution}的噪声，即使系统可以被分解成具有更多结构化行为的各个部分。
+这意味着在实际中，很多复杂系统都可以被成功地建模成\gls{normal_distribution}的噪声，即使系统可以被分解成一些更结构化的部分。
 
 第二，在具有相同方差的所有可能的\gls{PD}中，\gls{normal_distribution}在实数上具有最大的不确定性。
 我们因此可以认为\gls{normal_distribution}是对模型加入的先验知识量最少的分布。
@@ -444,9 +448,9 @@ p(x; \lambda) = \lambda \bm{1}_{x\ge 0} \exp(-\lambda x).
 \begin{equation}
 p(x) = \delta(x-\mu).
 \end{equation}
-\gls{dirac_delta_function}被定义成除了0以外的其他点的值都为0，但是积分为1。
+\gls{dirac_delta_function}被定义成在除了0以外的所有点的值都为0，但是积分为1。
 \gls{dirac_delta_function}不像普通函数一样对$x$的每一个值都有一个实数值的输出，它是一种不同类型的数学对象，被称为\firstgls{generalized_function}，\gls{generalized_function}是依据积分性质定义的数学对象。
-我们可以把\gls{dirac_delta_function}想成一系列函数的极限点，这一系列函数把除$\mu$以外的所有点的概率密度越变越小。
+我们可以把\gls{dirac_delta_function}想成一系列函数的极限点，这一系列函数把除0以外的所有点的概率密度越变越小。
 
 % -- 63 --
 
@@ -457,7 +461,7 @@ p(x) = \delta(x-\mu).
 \hat{p}(\bm{x}) = \frac{1}{m} \sum_{i=1}^m \delta(\bm{x} - \bm{x}^{(i)})
 \end{equation}
 \gls{empirical_distribution}将概率密度$\frac{1}{m}$赋给$m$个点$\bm{x}^{(1)}, \ldots, \bm{x}^{(m)}$中的每一个，这些点是给定的数据集或者采样的集合。
-\gls{dirac_delta_function}只对定义连续型\gls{RV}的\gls{empirical_distribution}是必要的。
+只在定义连续型\gls{RV}的经验分布时，\gls{dirac_delta_function}才是必要的。
 对于离散型\gls{RV}，情况更加简单：\gls{empirical_distribution}可以被定义成一个\gls{multinoulli_distribution}，对于每一个可能的输入，其概率可以简单地设为在训练集上那个输入值的\firstgls{empirical_frequency}。
 
 当我们在训练集上训练模型时，我们可以认为从这个训练集上得到的\gls{empirical_distribution}指明了我们采样来源的分布。
@@ -508,7 +512,9 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 \else
 \centerline{\includegraphics{Chapter3/figures/mog_color}}
 \fi
-\caption{来自\gls{GMM}的样本。在这个示例中，有三个组件。从左到右，第一个组件具有\gls{isotropic}的协方差矩阵，这意味着它在每个方向上具有相同的方差。 第二个组件具有对角的协方差矩阵，这意味着它可以沿着每个轴的对齐方向单独控制方差。
+\caption{来自\gls{GMM}的样本。
+在这个示例中，有三个组件。
+从左到右，第一个组件具有\gls{isotropic}的协方差矩阵，这意味着它在每个方向上具有相同的方差。 第二个组件具有对角的协方差矩阵，这意味着它可以沿着每个轴的对齐方向单独控制方差。
 该示例中，沿着$x_2$轴的方差要比沿着$x_1$轴的方差大。 第三个组件具有满秩的协方差矩阵，使它能够沿着任意基的方向单独地控制方差。}
 \label{fig:chap3_mog_color}
 \end{figure}
@@ -610,14 +616,15 @@ P(\RSx \mid \RSy) = \frac{P(\RSx) P(\RSy \mid \RSx)}{P(\RSy)}.
 在\ref{sec:continuous_variables_and_probability_density_functions}节中，我们已经看到连续型向量值\gls{RV} $\RVx$落在某个集合$\SetS$ 中的概率是通过$p(\bm{x})$对集合$\SetS$积分得到的。
 对于集合$\SetS$的一些选择可能会引起悖论。
 例如，构造两个集合$\SetS_1$和$\SetS_2$使得$p(\bm{x}\in \SetS_1) + p(\bm{x}\in \SetS_2)>1$并且$\SetS_1 \cap \SetS_2 = \emptyset$是可能的。
-这些集合通常是大量使用了实数的无限精度来构造的，例如通过构造分形形状(fractal-shaped)的集合或者是通过有理数相关集合的平移来定义的集合。
-\footnote{Banach-Tarski定理给出了这类集合的一个有趣的例子。}
+这些集合通常是大量使用了实数的无限精度来构造的，例如通过构造分形形状(fractal-shaped)的集合或者是通过有理数相关集合的变换定义的集合。
+\footnote{Banach-Tarski定理给出了这类集合的一个有趣的例子。
+译者注：我们这里把``the set of rational numbers''翻译成``有理数相关集合''，理解为``一些有理数组成的集合''，如果直接用后面的翻译读起来会比较拗口。}
 \gls{measure_theory}的一个重要贡献就是提供了一些集合的特征使得我们我们在计算概率时不会遇到悖论。
 在本书中，我们只对描述相对简单的集合进行积分，所以\gls{measure_theory}的这个方面不会成为一个相关考虑。
 
 % -- 68 --
 
-对于我们的目的，\gls{measure_theory}更多的是用来描述那些适用于$\SetR^n$上的大多数点的定理的，而不是只适用于一些小的情况。
+对于我们的目的，\gls{measure_theory}更多的是用来描述那些适用于$\SetR^n$上的大多数点，却不适用于一些边界情况的定理。
 \gls{measure_theory}提供了一种严格的方式来描述那些非常微小的点集。
 这种集合被称为``\firstgls{measure_zero}''的。
 我们不会在本书中给出这个概念的正式定义。
@@ -627,11 +634,11 @@ P(\RSx \mid \RSy) = \frac{P(\RSx) P(\RSy \mid \RSx)}{P(\RSy)}.
 可数多个零测度集的并仍然是零测度的(所以所有有理数构成的集合测度为零)。
 
 另外一个有用的\gls{measure_theory}中的术语是``\firstgls{almost_everywhere}''。
-某个性质如果是几乎处处都成立的，那么它在整个空间中除了测度为零的集合以外都是成立的。
+某个性质如果是几乎处处都成立的，那么它在整个空间中除了一个测度为零的集合以外都是成立的。
 因为这些例外只在空间中占有极其微小的量，它们在多数应用中都可以被放心地忽略。
 概率论中的一些重要结果对于离散值成立但对于连续值只能是``几乎处处''成立。
 
-连续型\gls{RV}的另一技术细节，涉及到处理那种相互之间是彼此的确定性函数的连续型变量。
+连续型\gls{RV}的另一技术细节，涉及到处理那种相互之间有确定性函数关系的连续型变量。
 假设我们有两个\gls{RV} $\RVx$和$\RVy$满足$\bm{y} = g(\bm{x})$，其中$g$是可逆的、连续可微的函数。
 可能有人会想$p_y(\bm{y}) = p_x(g^{-1}(\bm{y}))$。
 但实际上这并不对。
@@ -717,7 +724,7 @@ H(\RSx) = \SetE_{\RSx \sim P}[I(x)] = -\SetE_{\RSx \sim P}[\log P(x)],
 \end{equation}
 也记作$H(P)$。
 换言之，一个分布的\gls{Shannon_entropy}是指遵循这个分布的事件所产生的期望信息总量。
-它给出了对，依据\gls{PD} $P$生成的符号，进行编码所需的比特数的平均意义上的下界(如果对数的底是2的话，否则单位有所不同)。
+它给出了对依据\gls{PD} $P$生成的符号进行编码所需的比特数的平均意义上的下界(当对数底数不是2时，单位将有所不同)。
 那些接近确定性的分布(输出几乎可以确定)具有较低的熵；那些接近\gls{uniform_distribution}的\gls{PD}具有较高的熵。
 图\ref{fig:chap3_entropy_demo_color}给出了一个说明。
 当$\RSx$是连续的，\gls{Shannon_entropy}被称为\firstgls{differential_entropy}。
@@ -747,7 +754,7 @@ H(\RSx) = \SetE_{\RSx \sim P}[I(x)] = -\SetE_{\RSx \sim P}[\log P(x)],
 D_{\text{KL}}(P||Q) = \SetE_{\RSx \sim P} \left [  \log \frac{P(x)}{Q(x)} \right ] = \SetE_{\RSx \sim P} [\log P(x) - \log Q(x)].
 \end{equation}
 
-在离散型变量的情况下，\gls{KL_divergence}衡量的是，当我们使用一种被设计成能够使得\gls{PD} $Q$ 产生的消息的长度最小的编码时，发送包含由\gls{PD} $P$产生的符号的消息时，所需要的额外信息量(如果我们使用底数为2的对数时信息量用比特衡量，但在机器学习中，我们通常用奈特和自然对数。)
+在离散型变量的情况下，\gls{KL_divergence}衡量的是，当我们使用一种被设计成能够使得\gls{PD} $Q$ 产生的消息的长度最小的编码，发送包含由\gls{PD} $P$产生的符号的消息时，所需要的额外信息量(如果我们使用底数为2的对数时信息量用比特衡量，但在机器学习中，我们通常用奈特和自然对数。)
 
 \gls{KL_divergence}有很多有用的性质，最重要的是它是非负的。
 \gls{KL_divergence}为0当且仅当$P$和$Q$在离散型变量的情况下是相同的分布，或者在连续型变量的情况下是``几乎处处''相同的。
@@ -788,7 +795,7 @@ D_{\text{KL}}(P||Q) = \SetE_{\RSx \sim P} \left [  \log \frac{P(x)}{Q(x)} \right
 \begin{equation}
 H(P, Q) = -\SetE_{\RSx\sim P} \log Q(x).
 \end{equation}
-针对$Q$最小化互信息等价于最小化\gls{KL_divergence}，因为$Q$并不参与被省略的那一项。
+针对$Q$最小化\gls{cross_entropy}等价于最小化\gls{KL_divergence}，因为$Q$并不参与被省略的那一项。
 
 当计算这些量时，经常会遇到$0\log 0$这个表达式。
 按照惯例，在信息论中，我们对于这个表达式这样处理$\lim_{x \to 0} x\log x = 0$。
@@ -802,30 +809,30 @@ H(P, Q) = -\SetE_{\RSx\sim P} \log Q(x).
 通常，这些\gls{PD}涉及到的直接相互作用都是介于非常少的变量之间的。
 使用单个函数来描述整个\gls{joint_probability_distribution}是非常低效的(无论是计算还是统计)。
 
-代替使用单一的函数来表示\gls{PD}，我们可以把\gls{PD}分割成许多因子的乘积形式。
+代替使用单一的函数来表示\gls{PD}，我们可以把\gls{PD}分解成许多因子的乘积形式。
 例如，假设我们有三个\gls{RV} $\RSa, \RSb$和$\RSc$，并且$\RSa$影响$\RSb$的取值，$\RSb$影响$\RSc$的取值，但是$\RSa$和$\RSc$在给定$\RSb$时是条件独立的。
 我们可以把全部三个变量的\gls{PD}重新表示为两个变量的\gls{PD}的连乘形式：
 \begin{equation}
 p(\RSa, \RSb, \RSc) = p(\RSa)p(\RSb\mid \RSa)p(\RSc\mid\RSb).
 \end{equation}
 
-这种因子分解可以极大地减少用来描述一个分布的参数的数量。
+这种\gls{factorization}可以极大地减少用来描述一个分布的参数的数量。
 每个因子使用的参数数目是它的变量数目的指数倍。
-这意味着，如果我们能够找到一种使每个因子分布具有更少变量的因子分解方法，我们就能极大地降低表示联合分布的成本。
+这意味着，如果我们能够找到一种使每个因子分布具有更少变量的分解方法，我们就能极大地降低表示联合分布的成本。
 
-我们可以用图来描述这种因子分解。
+我们可以用图来描述这种\gls{factorization}。
 这里我们使用的是图论中的``图''的概念：由一些可以通过边互相连接的顶点的集合构成。
-当我们用图来表示这种\gls{PD}的因子分解，我们把它称为\firstgls{structured_probabilistic_model}或者\firstgls{graphical_model}。
+当我们用图来表示这种\gls{PD}的\gls{factorization}，我们把它称为\firstgls{structured_probabilistic_model}或者\firstgls{graphical_model}。
 
 有两种主要的\gls{structured_probabilistic_models}：有向的和无向的。
 两种图模型使用图$\CalG$，其中图的每个节点对应着一个\gls{RV}，连接两个\gls{RV}的边意味着\gls{PD}可以表示成这两个\gls{RV}之间的直接作用。
 
-\firstgls{directed}模型使用带有有向边的图，它们用\gls{conditional_probability}分布来表示因子分解，就像上面的例子。
+\firstgls{directed}模型使用带有有向边的图，它们用\gls{conditional_probability}分布来表示\gls{factorization}，就像上面的例子。
 特别地，有向模型对于分布中的每一个\gls{RV} $\RSx_i$都包含着一个影响因子，这个组成$\RSx_i$\gls{conditional_probability}的影响因子被称为$\RSx_i$的双亲，记为$Pa_\CalG(\RSx_i)$：
 \begin{equation}
 p(\RVx) = \prod_i p(\RSx_i \mid Pa_\CalG(\RSx_i)).
 \end{equation}
-图\ref{fig:chap3_directed}给出了一个有向图的例子以及它表示的\gls{PD}的因子分解。
+图\ref{fig:chap3_directed}给出了一个有向图的例子以及它表示的\gls{PD}的\gls{factorization}。
 % fig 3.7
 \begin{figure}[!htb]
 \ifOpenSource
@@ -834,20 +841,21 @@ p(\RVx) = \prod_i p(\RSx_i \mid Pa_\CalG(\RSx_i)).
 \centerline{\includegraphics{Chapter3/figures/directed}}
 \fi
 \captionsetup{singlelinecheck=off}
-\caption[.]{关于随机变量$\RSa, \RSb, \RSc, \RSd$和$\RSe$的有向图模型。这幅图对应的概率分布可以分解为
+\caption[.]{关于随机变量$\RSa, \RSb, \RSc, \RSd$和$\RSe$的有向图模型。
+这幅图对应的概率分布可以分解为
 \begin{equation}
 p(\RSa, \RSb, \RSc, \RSd, \RSe) = p(\RSa) p(\RSb \mid \RSa) p(\RSc \mid \RSa, \RSb) p(\RSd \mid \RSb) p(\RSe \mid \RSc).
 \end{equation}
-该图模型使我们能够快速看出此分布的一些性质。例如，$\RSa$和$\RSc$直接相互影响，但$\RSa$和$\RSe$只有通过$\RSc$间接相互影响。
-}
+该图模型使我们能够快速看出此分布的一些性质。
+例如，$\RSa$和$\RSc$直接相互影响，但$\RSa$和$\RSe$只有通过$\RSc$间接相互影响。}
 \label{fig:chap3_directed}
 \end{figure}
 
 
 % -- 74 --
 
-\firstgls{undirected}模型使用带有无向边的图，它们将因子分解表示成一堆函数；不像有向模型那样，这些函数通常不是任何类型的\gls{PD}。
-$\CalG$中任何全部相连的节点构成的集合被称为团。
+\firstgls{undirected}模型使用带有无向边的图，它们将\gls{factorization}表示成一堆函数；不像有向模型那样，这些函数通常不是任何类型的\gls{PD}。
+$\CalG$中任何满足两两之间有边连接的顶点的集合被称为团。
 无向模型中的每个团$\CalC^{(i)}$都伴随着一个因子$\phi^{(i)}(\CalC^{(i)})$。
  这些因子仅仅是函数，并不是\gls{PD}。
  每个因子的输出都必须是非负的，但是并没有像\gls{PD}中那样要求因子的和或者积分为1。
@@ -859,7 +867,7 @@ $\CalG$中任何全部相连的节点构成的集合被称为团。
 \begin{equation}
 p(\RVx) = \frac{1}{Z} \prod_i \phi^{(i)} \left (\CalC^{(i)} \right).
 \end{equation}
-图\ref{fig:chap3_undirected}给出了一个无向图的例子以及它表示的\gls{PD}的因子分解。
+图\ref{fig:chap3_undirected}给出了一个无向图的例子以及它表示的\gls{PD}的\gls{factorization}。
 % fig 3.8
 \begin{figure}[!htb]
 \ifOpenSource
@@ -868,24 +876,25 @@ p(\RVx) = \frac{1}{Z} \prod_i \phi^{(i)} \left (\CalC^{(i)} \right).
 \centerline{\includegraphics{Chapter3/figures/undirected}}
 \fi
 \captionsetup{singlelinecheck=off}
-\caption[.]{关于随机变量$\RSa, \RSb, \RSc, \RSd$和$\RSe$的无向图模型。这幅图对应的概率分布可以分解为
+\caption[.]{关于随机变量$\RSa, \RSb, \RSc, \RSd$和$\RSe$的无向图模型。
+这幅图对应的概率分布可以分解为
 \begin{equation}
 p(\RSa, \RSb, \RSc, \RSd, \RSe) = \frac{1}{Z} \phi^{(1)} (\RSa, \RSb, \RSc) \phi^{(2)}(\RSb, \RSd) \phi^{(3)} (\RSc, \RSe).
 \end{equation}
-该图模型使我们能够快速看出此分布的一些性质。例如，$\RSa$和$\RSc$直接相互影响，但$\RSa$和$\RSe$只有通过$\RSc$间接相互影响。
-}
+该图模型使我们能够快速看出此分布的一些性质。
+例如，$\RSa$和$\RSc$直接相互影响，但$\RSa$和$\RSe$只有通过$\RSc$间接相互影响。}
 \label{fig:chap3_undirected}
 \end{figure}
 
 
 % -- 75 --
 
-请记住，这些图模型表示的因子分解仅仅是描述\gls{PD}的一种语言。
+请记住，这些图模型表示的\gls{factorization}仅仅是描述\gls{PD}的一种语言。
 它们不是互相排斥的\gls{PD}族。
 有向或者无向不是\gls{PD}的特性；它是\gls{PD}的一种特殊\firstgls{description}所具有的特性，但是任何的\gls{PD}都可以用两种方式进行描述。
 
-在本书第\ref{part:applied_math_and_machine_learning_basics}部分和第\ref{part:deep_networks_modern_practices}部分中， 我们使用\gls{structured_probabilistic_models}仅仅是作为一门语言，来描述不同的机器学习算法选择表示的直接的概率关系。
-一直到研究课题的讨论之前，不会需要用到\gls{structured_probabilistic_models}的深入理解。
+在本书第\ref{part:applied_math_and_machine_learning_basics}部分和第\ref{part:deep_networks_modern_practices}部分中， 我们仅仅将\gls{structured_probabilistic_models}视作一门语言，来描述不同的机器学习算法选择表示的直接的概率关系。
+在研究课题的讨论之前，都不要求对\gls{structured_probabilistic_models}深入理解。
 在第\ref{part:deep_learning_research}部分的研究课题中，我们会更为详尽地探讨\gls{structured_probabilistic_models}。
 
 本章复习了概率论中与深度学习最为相关的一些基本概念。
