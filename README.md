@@ -28,7 +28,7 @@
  - 负责人也就是对应的翻译者。
  - 我们需要有人简单地阅读，最好是刚入门或者想入门的同学。有什么翻得不明白的地方可以直接指出，不用给出意见。或者可以对语句不通顺的地方提出修改意见。每章至少3人。
  - 我们也需要有人进行中英对比，最好能排除少翻错翻的情况。最好是时间充足、能中英对应阅读、细心的同学。每章至少2人。
- - 相关方向的校对者则需要纠正译者的错误理解。大家不要谦虚，阅读过相关论文的同学可以作为相关方向的人士。每章至少1人。
+ - ~~ 相关方向的校对者则需要纠正译者的错误理解。大家不要谦虚，阅读过相关论文的同学可以作为相关方向的人士。每章至少1人。~~ 这个目前来不及了，暂时搁置。
 
 我们会在纸质版正式出版的时候，在书中致谢，正式感谢各位作出贡献的同学！
 
@@ -37,28 +37,28 @@
  1. 点开下表中对应的章节
  2. 选取网页中的词语或语句，跳出来Annotate，点击就行了。需要注册一个帐号，注意批注得公开我们才能看到。
 
-| 章节 | 负责人 | 简单阅读 | 中英对比 | 相关方向 | <p style='white-space:nowrap;'>进度 </p>|
-| ------------ | ------------ | ------------ |  ------------ | ------------ | ------------ |
-| [第一章 前言](https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | lc, @SiriusXDJ, @corenel | @linzhp |  | <p style='white-space:nowrap;'>完成合并</p> |
-| [第二章 线性代数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | @SiriusXDJ, @angrymidiao | @badpoem |  | <p style='white-space:nowrap;'>等待合并</p> |
-| [第三章 概率与信息论](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/) | @KevinLee1110 | @SiriusXDJ | @kkpoker |  | <p style='white-space:nowrap;'>等待合并</p> |
-| [第四章 数值计算](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter4_numerical_computation/) | @swordyork | @zhangyafeikimi | @quasi-jing, @hengqujushi | @hengqujushi | <p style='white-space:nowrap;'>等待合并</p> |
-| [第五章 机器学习基础](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter5_machine_learning_basics/) | @liber145 | @wheaio, @ZhiweiYang | @fairmiracle, @linzhp |  | <p style='white-space:nowrap;'>等待合并</p> |
-| [第六章 深度前馈网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter6_deep_feedforward_networks/) | @KevinLee1110 | @angrymidiao | @minoriwww，@linzhp |  |  <p style='white-space:nowrap;'>需要校对</p> |
-| [第七章 深度学习的正则化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter7_regularization/) | @swordyork | @TonyHan0915 | @dfcv24 |  |  <p style='white-space:nowrap;'>需要校对</p> |
-| [第八章 深度模型中的优化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter8_optimization_for_training_deep_models/) | @liber145 | @zhangyafeikimi | @codeVerySlow, @huangpingchun |  |  <p style='white-space:nowrap;'>需要校对</p> |
-| [第九章 卷积神经网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter9_convolutional_networks/) | @KevinLee1110 | @TonyHan0915, @zhaoyu611, @corenel | @zhiding |  |  <p style='white-space:nowrap;'>等待合并</p> |
-| [第十章 序列建模：循环和递归网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter10_sequence_modeling_rnn/) | @swordyork | lc, ljl, @ZhiweiYang | @zhaoyu611, @yinruiqing |  |  <p style='white-space:nowrap;'>等待合并</p> |
-| [第十一章 实用方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter11_practical_methodology/) | @liber145 | @wheaio, @angrymidiao |  |  | <p style='white-space:nowrap;'>需要校对</p> |
-| [第十二章 应用](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork, @futianfan | @wheaio | @corenel |  |  <p style='white-space:nowrap;'>等待合并</p> |
-| [第十三章 线性因子模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | @ZhiweiYang |  |  | <p style='white-space:nowrap;'>需要校对</p> |
-| [第十四章 自编码器](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter14_autoencoders/) | @swordyork | @zizhan, ljl | @Seaball, @huangpingchun | @huangpingchun |  <p style='white-space:nowrap;'>等待合并</p> |
-| [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 | @cnscottzheng | |  | <p style='white-space:nowrap;'>需要校对</p> |
-| [第十六章 深度学习中的结构化概率模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter16_structured_probabilistic_modelling/) | @futianfan | @cnscottzheng |  |  | <p style='white-space:nowrap;'>需要校对</p> |
-| [第十七章 蒙特卡罗方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter17_monte_carlo_methods/) | @futianfan | @zhangyafeikimi |  |  | <p style='white-space:nowrap;'>需要校对</p> |
-| [第十八章 面对配分函数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter18_confronting_the_partition_function/) | @liber145 | | @tankeco |  | <p style='white-space:nowrap;'>需要校对</p> |
-| [第十九章 近似推断](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter19_approximate_inference/) | @futianfan | |  |  | <p style='white-space:nowrap;'>需要校对</p> |
-| [第二十章 深度生成模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter20_deep_generative_models/) | @swordyork | | @endymecy | @endymecy |<p style='white-space:nowrap;'>需要校对</p> |
+| 章节 | 负责人 | 简单阅读 | 中英对比 | 进度 |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| [第一章 前言](https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | lc, @SiriusXDJ, @corenel | @linzhp | 完成合并 |
+| [第二章 线性代数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | @SiriusXDJ, @angrymidiao | @badpoem | 等待合并 |
+| [第三章 概率与信息论](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/) | @KevinLee1110 | @SiriusXDJ | @kkpoker |  等待合并 |
+| [第四章 数值计算](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter4_numerical_computation/) | @swordyork | @zhangyafeikimi | @quasi-jing, @hengqujushi | 等待合并 |
+| [第五章 机器学习基础](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter5_machine_learning_basics/) | @liber145 | @wheaio, @ZhiweiYang | @fairmiracle, @linzhp | 等待合并 |
+| [第六章 深度前馈网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter6_deep_feedforward_networks/) | @KevinLee1110 | @angrymidiao | @minoriwww，@linzhp | 需要校对 |
+| [第七章 深度学习的正则化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter7_regularization/) | @swordyork | @TonyHan0915 | @dfcv24 | 需要校对 |
+| [第八章 深度模型中的优化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter8_optimization_for_training_deep_models/) | @liber145 | @zhangyafeikimi | @codeVerySlow, @huangpingchun | 需要校对 |
+| [第九章 卷积神经网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter9_convolutional_networks/) | @KevinLee1110 | @TonyHan0915, @zhaoyu611, @corenel | @zhiding | 等待合并 |
+| [第十章 序列建模：循环和递归网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter10_sequence_modeling_rnn/) | @swordyork | lc, ljl, @ZhiweiYang | @zhaoyu611, @yinruiqing | 等待合并 |
+| [第十一章 实用方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter11_practical_methodology/) | @liber145 | @wheaio, @angrymidiao |  | 需要校对 |
+| [第十二章 应用](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork, @futianfan | @wheaio | @corenel | 等待合并 |
+| [第十三章 线性因子模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | @ZhiweiYang |  | 需要校对 |
+| [第十四章 自编码器](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter14_autoencoders/) | @swordyork | @zizhan, ljl | @Seaball, @huangpingchun | 等待合并 |
+| [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 | @cnscottzheng | | 需要校对 |
+| [第十六章 深度学习中的结构化概率模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter16_structured_probabilistic_modelling/) | @futianfan | @cnscottzheng |  | 需要校对 |
+| [第十七章 蒙特卡罗方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter17_monte_carlo_methods/) | @futianfan | @zhangyafeikimi |  | 需要校对 |
+| [第十八章 面对配分函数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter18_confronting_the_partition_function/) | @liber145 | | @tankeco | 需要校对 |
+| [第十九章 近似推断](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter19_approximate_inference/) | @futianfan | |  | 需要校对 |
+| [第二十章 深度生成模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter20_deep_generative_models/) | @swordyork | | @endymecy | 需要校对 |
 
 
 TODO
