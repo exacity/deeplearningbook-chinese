@@ -1,0 +1,102 @@
+{'user': 'acct:badpoem@hypothes.is', 'text': 'deep learning algorithms. 此处考虑语义对比应该加回算法二字。改为深度学习算法。', 'origin_text': '线性代数对于理解和从事机器学习算法相关工作是很有必要的，尤其对于  !!!深度学习!!!  而言。因此，在我们开始介绍深度学习之前，我们集中探讨一些必备的', 'time': '2017-01-25T08:10'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'If you have previous experience with these concepts\n如果你已经了解这些概念', 'origin_text': '知识。如果你已经很熟悉线性代数，那么你可以轻松地跳过本章。  !!!如果你先前接触过本章的内容!!!  ，但是需要一份索引表来回顾一些重要公式，那么我们推荐\\emph{', 'time': '2017-01-25T08:13'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'types\n类', 'origin_text': '数知识。标量、向量、矩阵和张量学习线性代数，会涉及以下几  !!!个!!!  数学概念：  标量：一个标量就是一个单独的数，不同于线性代', 'time': '2017-01-25T08:14'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'which are usually arrays of multiple numbers\n通常是多个数字的序列', 'origin_text': '  标量：一个标量就是一个单独的数，不同于线性代数中大多数概念  !!!会涉及到多个数!!!  。  我们用斜体表示标量。标量通常赋予小写的变量名称。  当', 'time': '2017-01-25T08:16'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '被赋予', 'origin_text': '数中大多数概念会涉及到多个数。  我们用斜体表示标量。标量通常  !!!赋予!!!  小写的变量名称。  当我们介绍标量时，会明确它们是哪种类型的数', 'time': '2017-01-25T08:16'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'then the vector lies in the set formed by taking the Cartesian product of R n times\n那么该向量属于实数集R的n次笛卡尔乘积构成的集合中', 'origin_text': '如果每个元素都属于ℝR\\SetR，并且该向量有nn\\Sn个元素，  !!!那么该向量属于实数集ℝR\\SetR笛卡尔乘积nn\\Sn次!!!  ，表示为ℝnRn\\SetR^n。  当我们需要明确表示向量中的', 'time': '2017-01-25T08:20'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'Sometimes we need to index a set of elements of a vector\n有时我们需要指明向量中的元素构成的集合', 'origin_text': '向量看作空间中的点，每个元素是不同的坐标轴上的坐标。      !!!有时我们需要指定向量中某个集合的元素!!!  。  在这种情况下，我们定义一个包含这些索引的集合，然后将该集', 'time': '2017-01-25T08:22'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '指明集合的补集', 'origin_text': '1,3,6}，然后写作xSxS\\Vx_S。我  们用符号−−-  !!!表示集合的补集中的索引!!!  。  比如x−1x−1\\Vx_{-1}表示xx\\Vx中除x1x', 'time': '2017-01-25T08:23'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '以不加粗的斜体形式使用其名称', 'origin_text': 'R^{m\\times n}。  我们在表示矩阵中的元素时，通常  !!!使用其名称以不加粗的斜体形式!!!  ，索引用逗号间隔。  比如，A1,1A1,1\\SA_{1,1}', 'time': '2017-01-25T08:24'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'We can identify allof the numbers with vertical coordinateiby writing a “:” for the horizontalcoordinate\n我们可以通过使用":"表示水平坐标，以表示垂直坐标i中的所有元素', 'origin_text': 'm,nAm,n\\SA_{m,n}表示AA\\MA右下的元素。    !!!我们表示垂直坐标ii\\Si中的所有元素时，用”:”表示水平坐标。!!!    比如，Ai,:Ai,:\\MA_{i,:}表示AA\\MA中垂', 'time': '2017-01-25T08:26'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'but donot convert anything to lower case\n但不必将矩阵的变量名称小写化', 'origin_text': '引，而不是单个元素。  在这种情况下，我们在表达式后面接下标，  !!!但不需要写作小写字母!!!  。  比如，f(A)i,jf(A)i,jf(\\MA)_{i,j', 'time': '2017-01-25T08:28'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'an array of numbers 一列数字', 'origin_text': '张量：在某些情况下，我们会讨论不只两维坐标的数组。  一般地，  !!!一组数组中的元素!!!  分布在若干维坐标的规则网格中，我们将其称之为张量。  我们使用', 'time': '2017-01-25T08:29'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '我们通过将向量元素作为行矩阵写在文本行中，然后使用转置操作将其变为标准列向量，来定义一个向量', 'origin_text': '列的矩阵。对应地，向量的转置可以看作是只有一行的矩阵。有时，  !!!我们将向量表示成行矩阵的转置，写在行中，然后使用转置将其变为标准的列向量!!!  ，比如x=[x1,x2,x3]⊤x=[x1,x2,x3]⊤\\Vx', 'time': '2017-01-25T08:36'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'deﬁne a matrix withbcopied intoeach row\n定义一个将向量b复制到每一行生成的矩阵', 'origin_text': '矩阵AA\\MA的每一行相加。这个速记方法使我们无需在加法操作前  !!!定义复制向量bb\\Vb到矩阵的每一行!!!  。这种隐式地复制向量bb\\Vb到很多位置的方式，被称为广播。', 'time': '2017-01-25T08:37'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '虽然词汇为速记，但是写作简写似乎更流畅', 'origin_text': '}。换言之，向量bb\\Vb和矩阵AA\\MA的每一行相加。这个  !!!速记!!!  方法使我们无需在加法操作前定义复制向量bb\\Vb到矩阵的每一行。', 'time': '2017-01-25T08:39'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'We can write the matrix product just by placing two or more matricestogether\n我们可以通过将两个或多个矩阵并列放置以书写矩阵乘法', 'origin_text': '矩阵CC\\MC的形状是m×pm×p\\Sm\\times \\Sp。  !!!矩阵乘积可以作用于两个或多个并在一起的矩阵!!!  ，例如C=AB.C=AB.\\begin{equation} ', 'time': '2017-01-25T08:40'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'b属于R^m', 'origin_text': '\\MA\\in \\SetR^{m\\times n}是一个已知矩阵，  !!!b!!!  b\\Vb是一个已知向量，xx\\Vx是一个我们要求解的未知向量。', 'time': '2017-01-25T08:42'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'x属于R^n', 'origin_text': '{m\\times n}是一个已知矩阵，bb\\Vb是一个已知向量，  !!!x!!!  x\\Vx是一个我们要求解的未知向量。向量xx\\Vx的每一个元素', 'time': '2017-01-25T08:42'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '方程', 'origin_text': '_m.\\end{gather}矩阵向量乘积符号为这种形式的  !!!等式!!!  提供了更紧凑的表示。单位矩阵和逆矩阵线性代数提供了被', 'time': '2017-01-25T08:42'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '为具有大多数值的矩阵A求解式2.11\n这里表达的应该是A可能有很多不同的数值，对于其中存在矩阵逆的A，可以通过矩阵逆来求解2.11', 'origin_text': '逆矩阵线性代数提供了被称为矩阵逆的强大工具，使我们能够解析地  !!!求解具有多值矩阵AA\\MA的\\eqn?!!!  。为了描述矩阵逆，我们首先需要定义单位矩阵的概念。任意向量', 'time': '2017-01-25T08:46'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '在大多数软件应用程序中实际使用', 'origin_text': '矩阵A−1A−1\\MA^{-1}主要是作为理论工具使用的，并不会  !!!在实际中使用于大多数软件应用程序中!!!  。这是因为逆矩阵A−1A−1\\MA^{-1}在数字计算机上只能', 'time': '2017-01-25T08:47'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '但是，对于方程组而言，\nHowever出现在此处而不是后面。\nthe system of equations 方程组', 'origin_text': '在，那么\\eqn?肯定对于每一个向量bb\\Vb恰好存在一个解。  !!!对系统方程而言!!!  ，对于某些bb\\Vb的值，有可能不存在解，或者存在无限多个解。', 'time': '2017-01-25T08:53'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '此处没有However。\n以及此处应该有一个短句：对于特定的向量b（for a particular b）', 'origin_text': '言，对于某些bb\\Vb的值，有可能不存在解，或者存在无限多个解。  !!!然而，!!!  存在多于一个解但是少于无限多个解的情况是不可能发生的；因为如果x', 'time': '2017-01-25T08:54'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '如前所言，应为 方程组', 'origin_text': '多个解的情况是不可能发生的；因为如果xx\\Vx和yy\\Vy都是某  !!!系统方程!!!  的解，则z=αx+(1−α)yz=αx+(1−α)y\\begi', 'time': '2017-01-25T08:55'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '为了分析\nTo analyse', 'origin_text': 'n}（其中αα\\alpha取任意实数）也是该系统方程的解。  !!!分析!!!  方程有多少个解，我们可以将AA\\MA的列向量看作是从原点（元素都', 'time': '2017-01-25T08:55'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '标量系数', 'origin_text': '性组合。形式上，某个集合中向量的线性组合，是指每个向量乘以对应  !!!系数!!!  之后的和，即：∑iciv(i).∑iciv(i).\\begin', 'time': '2017-01-25T09:00'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '矩阵逆', 'origin_text': '方阵或者是一个奇异的方阵，该方程仍然可能有解。但是我们不能使用  !!!逆矩阵!!!  去求解。目前为止，我们已经讨论了逆矩阵左乘。我们也可以定义逆', 'time': '2017-01-25T09:17'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'L2范数', 'origin_text': '              当p=2p=2p=2时，  !!!L2!!!  L2L^2被称为欧几里得范数。它表示从原点出发到向量xx\\Vx', 'time': '2017-01-25T09:53'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'discriminate between elements that are exactlyzero and elements that are small but nonzero\n区分恰好是零的元素和非零小值的元素', 'origin_text': '受欢迎，因为它在原点附近增长得十分缓慢。在某些机器学习应用中，  !!!区分元素值恰好是零还是非零小值!!!  是很重要的。在这些情况下，我们更倾向于使用在各个位置斜率相同，', 'time': '2017-01-25T09:58'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'turn to 转向', 'origin_text': '，区分元素值恰好是零还是非零小值是很重要的。在这些情况下，我们  !!!更倾向于!!!  使用在各个位置斜率相同，同时保持简单的数学形式的函数：L1L1L', 'time': '2017-01-25T10:02'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '向量', 'origin_text': '术语在数学意义上是不对的。向量的非零元素的数目不是范数，因为对  !!!标量!!!  放缩αα\\alpha倍不会改变该向量非零的数目。因此，L1L1', 'time': '2017-01-25T10:05'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '非零元素', 'origin_text': '素的数目不是范数，因为对标量放缩αα\\alpha倍不会改变该向量  !!!非零!!!  的数目。因此，L1L1L^1范数经常作为表示非零元素数目的替代', 'time': '2017-01-25T10:06'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'magnitude在这里写成大小就好了。翻译成幅度有些别扭。', 'origin_text': 'nfty范数，也被称为max 范数。这个范数表示向量中具有最大  !!!幅度!!!  的元素的绝对值：‖x‖∞=maxi|xi|.‖x‖∞=maxi', 'time': '2017-01-25T10:11'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '方阵', 'origin_text': 'iag}(\\Vv)\\Vx=\\Vv \\odot \\Vx。计算对角  !!!矩阵!!!  的逆矩阵也很高效。对角矩阵的逆矩阵存在，当且仅当对角元素都是非', 'time': '2017-01-25T10:16'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '在很多情况下', 'origin_text': 'iag}([1/v_1,\\dots,1/v_n]^\\top)。  !!!在很多情况!!!  ，我们可以根据任意矩阵导出一些通用的机器学习算法；但通过将一些矩', 'time': '2017-01-25T10:17'}
+{'user': 'acct:binfengjia@hypothes.is', 'text': '此处应该是第i个特征向量vi', 'origin_text': '察$\\MA$拉伸单位圆的方式，我们可以看到它能够将$\\Vv^{(  !!!2)!!!  }$方向的空间拉伸到$\\lambda_i$。\t}\\end{fig', 'time': '2017-01-25T15:01'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '产生', 'origin_text': '性而更好地理解，这些属性是通用的，而不是由我们选择表示它们的方式  !!!引起!!!  的。例如，整数可以分解为质数。我们可以用十进制或二进制', 'time': '2017-01-26T01:37'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '距离度量矩阵', 'origin_text': '函数生成元素时，对称矩阵经常会出现。例如，如果AA\\MA是一个  !!!表示距离的矩阵!!!  ，Ai,jAi,j\\MA_{i,j}表示点iii到点jjj的距离', 'time': '2017-01-26T01:37'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '一组向量的线性组合', 'origin_text': 'equation}一般而言，这种操作被称为线性组合。形式上，  !!!某个集合中向量的线性组合!!!  ，是指每个向量乘以对应系数之后的和，即：∑iciv(i).∑i', 'time': '2017-01-26T01:37'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '质因数', 'origin_text': '不是由我们选择表示它们的方式引起的。例如，整数可以分解为  !!!质数!!!  。我们可以用十进制或二进制等不同方式表示整数121212，但质', 'time': '2017-01-26T01:46'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '但是12=2*3*3总是成立的', 'origin_text': '质数。我们可以用十进制或二进制等不同方式表示整数121212，  !!!但质因数分解永远是对的12=2×3×3!!!  12=2×3×312=2\\times 3\\times 3。从这', 'time': '2017-01-26T01:48'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'a left eigenvector 做特征向量', 'origin_text': 'bda被称为这个特征向量对应的特征值。（类似地，我们也可以定义  !!!左奇异向量!!!   v⊤A=λv⊤v⊤A=λv⊤\\Vv^\\top\\MA=\\lamb', 'time': '2017-01-26T01:52'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'right eigenvectors\n右特征向量', 'origin_text': 'op\\MA=\\lambda \\Vv^\\top，但是通常我们更关注  !!!右奇异向量!!!  ）。如果vv\\Vv是AA\\MA的特征向量，那么任何放缩后的向', 'time': '2017-01-26T01:52'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '连接成', 'origin_text': '_1, \\dots , \\lambda_n }。我们将特征向量  !!!连接!!!  一个矩阵，使得每一列是一个特征向量：V=[v(1),…,v(n)', 'time': '2017-01-26T02:04'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '特征分解存在，但是会涉及到复数', 'origin_text': '每一个矩阵都可以分解成特征值和特征向量。在某些情况下，特征分解  !!!会!!!  涉及到复数，而非实数。幸运的是，在本书中我们通常只需要探讨一类', 'time': '2017-01-26T02:07'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '分解', 'origin_text': '征分解会涉及到复数，而非实数。幸运的是，在本书中我们通常只需要  !!!探讨!!!  一类有简单分解的矩阵。具体地，每个实对称矩阵都可以分解成实特征', 'time': '2017-01-26T02:08'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '那么在由这些特征向量得到的生成子空间中', 'origin_text': '特征分解可能并不唯一。如果两个或多个特征向量拥有相同的特征值，  !!!那么这组特征向量生成子空间中!!!  ，任意一组正交向量都是该特征值对应的特征向量。因此，我们可以使', 'time': '2017-01-26T02:18'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '“不应该是作为Q的特征向量，而是直接构成Q啊”。\n我们可以等价地从这些特征向量中构成Q作为替代', 'origin_text': '成子空间中，任意一组正交向量都是该特征值对应的特征向量。因此，  !!!我们可以使用任意一组正交向量作为QQ\\MQ的特征向量!!!  。按照惯例，我们通常按降序排列ΛΛ\\VLambda的条目。在', 'time': '2017-01-26T02:20'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '元素', 'origin_text': '的特征向量。按照惯例，我们通常按降序排列ΛΛ\\VLambda的  !!!条目!!!  。在该约定下，特征分解唯一当且仅当所有的特征值都是唯一的。', 'time': '2017-01-26T02:20'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '与特征分解同类型的信息', 'origin_text': '，将矩阵分解为奇异向量和奇异值。通过奇异值分解，我们会得到一些  !!!类似特征分解的信息!!!  。然而，奇异值分解有更广泛的应用。每个实数矩阵都有一个奇异值', 'time': '2017-01-26T02:34'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '定义', 'origin_text': '.\\end{equation}计算伪逆的实际算法没有基于这个  !!!式子!!!  ，而是使用下面的公式：A+=VD+U⊤.A+=VD+U⊤.\\b', 'time': '2017-01-26T02:58'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '特别', 'origin_text': '的列数多于行数时，使用伪逆求解线性方程是众多可能解法中的一种。  !!!具体!!!  地，x=A+yx=A+y\\Vx=\\MA^+\\Vy是方程所有可行解', 'time': '2017-01-26T03:00'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '因为已经说没有解了，所以后面不应该说x是解。写作“通过伪逆得到的x使得Ax和y的欧几里得距离||Ax-y||2最小”', 'origin_text': '当矩阵AA\\MA的行数多于列数时，可能没有解。在这种情况下，  !!!通过伪逆得到的xx\\Vx是使得AxAx\\MA\\Vx和yy\\Vy的欧几里得距离‖Ax−y‖2‖Ax−y‖2\\norm{\\MA\\Vx-\\Vy}_2最小的解!!!  。迹运算迹运算返回的是矩阵对角元素的和：Tr(A)=∑', 'time': '2017-01-26T03:05'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '有用', 'origin_text': '{i,i}.\\end{equation}迹运算因为很多原因而  !!!受到关注!!!  。若不使用求和符号，有些矩阵运算很难描述，而通过矩阵乘法和迹运', 'time': '2017-01-26T03:13'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'a square matrix composed of many factors\n多个矩阵乘积得到的方阵的迹', 'origin_text': '=\\Tr(\\MA^\\top).\\end{equation}  !!!多个矩阵乘积的迹!!!  ，和将这些矩阵中最后一个挪到最前面之后乘积的迹是相同的。当然，', 'time': '2017-01-26T03:26'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '因为这里只有一个矩阵，所以没有相乘。改为“参与矩阵乘法”', 'origin_text': '。行列式等于矩阵特征值的乘积。行列式的绝对值可以用来衡量矩阵  !!!相乘!!!  后空间扩大或者缩小了多少。如果行列式是000,那么空间至少沿着', 'time': '2017-01-26T03:32'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '参与矩阵乘法', 'origin_text': '完全收缩了，使其失去了所有的体积。如果行列式是111,那么矩阵  !!!相乘!!!  没有改变空间体积。实例：主成分分析主成分分析是一个简单的', 'time': '2017-01-26T03:32'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '这里有一个问题，不是翻译上的而是叙述上的。按照之前正交矩阵的定义，列向量之间不仅需要是正交的，而且应该是标准正交的。那这样的话这里即使l=n 也并非正交矩阵啊', 'origin_text': '了使编码问题简单一些，PCA限制DD\\MD的列向量为彼此正交的（  !!!注意，除非l=nl=nl=n，否则严格上DD\\MD不是一个正交矩阵!!!  ）。目前为止所描述的问题，可能会有多个解。因为如果我们按比', 'time': '2017-01-26T03:46'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'turn into 变为', 'origin_text': '们限制DD\\MD中所有列向量都有单位范数。为了将这个基本想法  !!!放进!!!  我们能够实现的算法，首先我们需要明确如何根据每一个输入xx\\Vx', 'time': '2017-01-26T03:48'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '向量微积分', 'origin_text': 'c^\\top\\Vc\\end{equation}我们可以通过  !!!线性代数微积分!!!  来求解这个最优化问题（如果你不清楚怎么做，请参考\\sec?）∇', 'time': '2017-01-26T03:54'}
+{'user': 'acct:badpoem@hypothes.is', 'text': ' such that 使得', 'origin_text': 'etR^{m\\times n}是将描述点的向量堆叠在一起的矩阵，  !!!例如!!!  Xi,:=x(i)⊤Xi,:=x(i)⊤\\MX_{i,:}=\\V', 'time': '2017-01-26T04:03'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '概率论', 'origin_text': '的基础数学学科之一。另一门在机器学习中无处不在的重要数学学科是  !!!概率学!!!  ，我们将在下章探讨。               ', 'time': '2017-01-26T04:10'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '此处应该是i，而不是2', 'origin_text': '察$\\MA$拉伸单位圆的方式，我们可以看到它能够将$\\Vv^{(  !!!2!!!  )}$方向的空间拉伸到$\\lambda_i$。\t}\\end{fi', 'time': '2017-01-26T04:15'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '应该是拉伸了lamda_i倍', 'origin_text': '位圆的方式，我们可以看到它能够将$\\Vv^{(2)}$方向的空间  !!!拉伸到$\\lambda_i$!!!  。\t}\\end{figure}\\begin{figure}[!h', 'time': '2017-01-26T04:15'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '此处集中写一个不归属于翻译问题的错误。是式子（如定义、定理）等的索引。在v4.0-alpha中，有一些索引出了问题，比如图2,2被建立了索引，这是不应该的，再比如式子2.80的上一行提到了式2.55，但是这个索引是不对的，应该是2.52。并且现在的索引和原书中也不完全一致。因为这个问题比较大，而且涉及比较多，所以于此统一指出，而不在后面细究每一个索引是否有问题。', 'origin_text': '                              !!!线性代数!!!  作为数学的一个分支，广泛用于科学和工程中。然而，因为线性代数主', 'time': '2017-01-26T06:07'}
+{'user': 'acct:showgood163@hypothes.is', 'text': '在原本中，标量是小写字母，矢量是小写加粗字母，矩阵是大写斜体字母，张量是大写正体字母。在译文中，格式不太合适。', 'origin_text': '本章跳过了很多重要但是对于理解深度学习非必需的线性代数知识。  !!!标量、向量、矩阵和张量!!!  学习线性代数，会涉及以下几个数学概念：  标量：一个标', 'time': '2017-02-07T02:58'}
+{'user': 'acct:angrymidiao@hypothes.is', 'text': '“', 'origin_text': '确它们是哪种类型的数。  比如，在定义实数标量时，我们可能会说  !!!”!!!  让s∈ℝs∈R\\Ss \\in \\SetR表示一条线的斜率”；在定', 'time': '2017-02-09T13:08'}
+{'user': 'acct:angrymidiao@hypothes.is', 'text': '“', 'origin_text': ' \\SetR表示一条线的斜率”；在定义自然数标量时，我们可能会说  !!!”!!!  让n∈ℕn∈N\\Sn\\in\\SetN表示元素的数目”。', 'time': '2017-02-09T13:08'}
+{'user': 'acct:angrymidiao@hypothes.is', 'text': 'i行j列', 'origin_text': 'MA)_{i,j}表示函数fff作用在AA\\MA上输出的矩阵的第  !!!(i,j)(i,j)(i,j)!!!  个元素。    张量：在某些情况下，我们会讨论不只', 'time': '2017-02-09T13:18'}
+{'user': 'acct:angrymidiao@hypothes.is', 'text': '合理', 'origin_text': 'A和BB\\MB的矩阵乘积是第三个矩阵CC\\MC。为了使乘法定义  !!!良好!!!  ，矩阵AA\\MA的列数必须和矩阵BB\\MB的行数相等。如果矩阵', 'time': '2017-02-09T13:24'}
+{'user': 'acct:angrymidiao@hypothes.is', 'text': '在放缩后的末尾', 'origin_text': '及到xx\\Vx中每个元素的放缩，如果DD\\MD是瘦长型矩阵，那么  !!!放缩后末尾!!!  添加一些零；如果DD\\MD是胖宽型矩阵，那么放缩后去掉最后一些元', 'time': '2017-02-09T14:34'}
+{'user': 'acct:angrymidiao@hypothes.is', 'text': '在放缩后', 'origin_text': '矩阵，那么放缩后末尾添加一些零；如果DD\\MD是胖宽型矩阵，那么  !!!放缩后!!!  去掉最后一些元素。对称矩阵是转置和自己相等的矩阵：A=', 'time': '2017-02-09T14:34'}
+{'user': 'acct:zhzhang@hypothes.is', 'text': '一个二', 'origin_text': 'Sx_6外所有元素构成的向量。        矩阵：矩阵是  !!!二!!!  维数组，其中的每一个元素被两个索引而非一个所确定。  我们通常', 'time': '2017-02-11T17:58'}
+{'user': 'acct:zhzhang@hypothes.is', 'text': '令', 'origin_text': '它们是哪种类型的数。  比如，在定义实数标量时，我们可能会说”  !!!让!!!  s∈Rs∈R\\Ss \\in \\SetR表示一条线的斜率”；在定义', 'time': '2017-02-11T20:09'}
+{'user': 'acct:zhzhang@hypothes.is', 'text': '令', 'origin_text': '\\SetR表示一条线的斜率”；在定义自然数标量时，我们可能会说”  !!!让!!!  n∈Nn∈N\\Sn\\in\\SetN表示元素的数目”。', 'time': '2017-02-11T20:10'}
+{'user': 'acct:zhzhang@hypothes.is', 'text': '“-”', 'origin_text': 'S={1,3,6}，然后写作xSxS\\Vx_S。我  们用符号  !!!−!!!  −-表示集合的补集中的索引。  比如x−1x−1\\Vx_{-1', 'time': '2017-02-11T20:12'}
+
+=============================   Replies   =============================
+
+{'user': 'acct:badpoem@hypothes.is', 'text': '好的。那这样翻译为多值矩阵就没问题了。', 'time': '2017-03-01T01:44'}
+{'user': 'acct:liber145@hypothes.is', 'text': '额，我觉得原文是想说 求解式2.11式，矩阵A是固定的，它比较难解的原因在于A有多个数（如果是一元一次方程的话，那就不需要矩阵逆这样的操作了），而矩阵逆可以轻松解决这个问题。 如果注重A是非固定的，可以有其他可能取值，感觉没有表达这个意思。。', 'time': '2017-02-28T17:11'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的，改成你那样的。', 'time': '2017-02-28T16:54'}
+{'user': 'acct:liber145@hypothes.is', 'text': '刚看到邮件，才发现你已经回复了！', 'time': '2017-02-28T16:51'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '嗯呐 我觉得交换顺序了就没问题了 有了单位范数和彼此正交的限制，这里的“否则”二字才能成立', 'time': '2017-02-28T06:56'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '是因为当时我在理解的时候花了一些时间，所以我修改的目的在于强调这个“生成子空间”是由提到的拥有相同特征值的向量得到的。这样子', 'time': '2017-02-28T06:50'}
+{'user': 'acct:badpoem@hypothes.is', 'text': 'allows us to analytically solve equation 2.11 for many values of A 原文是这样的。所以我的理解还是在于A有多种可能的取值。', 'time': '2017-02-28T06:46'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '我觉得我对张量的理解好像有一点问题TAT。就按照你提出这个吧', 'time': '2017-02-28T06:42'}
+{'user': 'acct:badpoem@hypothes.is', 'text': '我觉得这样表达就没问题了。因为后面有使用集合来指代这里的a set of elements 所以我按照那个样子断句的。', 'time': '2017-02-28T06:35'}
+{'user': 'acct:liber145@hypothes.is', 'text': '嗯，顺序上有些问题。紧接着下面一段提到了D中向量是单位向量。这两个限制条件是独立的。\n\n现打算将这两段换个先后顺序，你看如何。', 'time': '2017-02-28T04:53'}
+{'user': 'acct:liber145@hypothes.is', 'text': '赞！多谢细致地帮忙校对，真是太感谢了！', 'time': '2017-02-28T04:34'}
+{'user': 'acct:liber145@hypothes.is', 'text': '噢！对的。多谢指正啊！', 'time': '2017-02-28T04:05'}
+{'user': 'acct:liber145@hypothes.is', 'text': '感觉直接说 一个向量集的生成子空间 挺顺的。暂时打算翻译为 “那么在这组特征向量的生成子空间中 ”，或者你有什么其他看法。', 'time': '2017-02-28T04:03'}
+{'user': 'acct:liber145@hypothes.is', 'text': '赞语序！', 'time': '2017-02-28T03:21'}
+{'user': 'acct:liber145@hypothes.is', 'text': '嗯，我觉得这里只是说明 A 作为矩阵，含有很多个数。', 'time': '2017-02-28T03:18'}
+{'user': 'acct:liber145@hypothes.is', 'text': '这个翻译得比之前好多啦！', 'time': '2017-02-28T03:02'}
+{'user': 'acct:liber145@hypothes.is', 'text': '嗯，单独翻译感觉这样挺好的。那块前面有个 array 我给翻译成 数组 了，所以这里也想用数组。\n\n现打算翻译成“一个数组的元素”，你看这样如何。', 'time': '2017-02-28T03:00'}
+{'user': 'acct:liber145@hypothes.is', 'text': '额，这里断句不太一样，我偏向于 a set of elements | of | a vector，你的好像是 a set | of | elements of a vector. \n\n现打算翻译为“有时我们需要指定向量中的一些元素”，你看如何。', 'time': '2017-02-28T02:34'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的，谢啦！', 'time': '2017-02-08T01:58'}
+{'user': 'acct:liber145@hypothes.is', 'text': '嗯，字体格式也是需要注意的。可以具体说下哪些地方需要修改的么，我一时半会儿没找到。', 'time': '2017-02-08T01:50'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。', 'time': '2017-02-08T01:40'}
+{'user': 'acct:liber145@hypothes.is', 'text': '赞！', 'time': '2017-02-08T01:39'}
+{'user': 'acct:liber145@hypothes.is', 'text': 'OK，谢谢啦！新版英文中缩了一个式子，tex版本中已修正过来。', 'time': '2017-02-08T01:38'}

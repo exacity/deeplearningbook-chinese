@@ -40,7 +40,7 @@
 | 章节 | 负责人 | 简单阅读 | 中英对比 | 进度 |
 | ------------ | ------------ | ------------ | ------------ | ------------ |
 | [第一章 前言](https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | lc, @SiriusXDJ, @corenel | @linzhp | 完成合并 |
-| [第二章 线性代数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | @SiriusXDJ, @angrymidiao | @badpoem | 等待合并 |
+| [第二章 线性代数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | @SiriusXDJ | @badpoem | 完成合并 |
 | [第三章 概率与信息论](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/) | @KevinLee1110 | @SiriusXDJ | @kkpoker |  等待合并 |
 | [第四章 数值计算](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter4_numerical_computation/) | @swordyork | @zhangyafeikimi | @quasi-jing, @hengqujushi | 等待合并 |
 | [第五章 机器学习基础](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter5_machine_learning_basics/) | @liber145 | @wheaio, @ZhiweiYang | @fairmiracle, @linzhp | 等待合并 |
