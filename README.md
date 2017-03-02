@@ -65,7 +65,7 @@ TODO
 ---------
 
  1. 语句通顺
- 2. 排版，见issue [#35](https://github.com/exacity/deeplearningbook-chinese/issues/35)
+ 2. 排版
 
 实在有问题，请发邮件至`echo c3dvcmQueW9ya0BnbWFpbC5jb20K | base64 -d`。
 
@@ -80,7 +80,7 @@ TODO
 @weijy026a @RuiZhang1993 @zymiboxpay @xingkongliang @oisc @tielei @yuduowu @Qingmu @HC-2016 @xiaomingabc 
 @bengordai @Bojian @JoyFYan @minoriwww @khty2000 @gump88 @zdx3578 @PassStory @imwebson @wlbksy @roachsinai @Elvinczp 
 @endymecy name:YUE-DaJiong @9578577 @linzhp @cnscottzheng @germany-zhu  @zhangyafeikimi @showgood163
-
+@kangqf @NeutronT @badpoem @kkpoker @Seaball @wheaio @angrymidiao @ZhiweiYang @corenel @zhaoyu611 @SiriusXDJ @dfcv24 
 
 注意
 -----------
