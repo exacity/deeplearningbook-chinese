@@ -1,0 +1,70 @@
+{'user': 'acct:Cherish@hypothes.is', 'text': '均涉及', 'origin_text': '                  许多深度学习的研究前沿  !!!涉及到了!!!  构建输入的概率模型pmodel(x)pmodel(x)p_{\\t', 'time': '2017-02-18T03:18'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '在给定任一变量的前提下，该模型可以通过概率推断预测其环境中的其他任何变量', 'origin_text': 'l(x)p_{\\text{model}}(\\Vx)。原则上说，  !!!给定任何其他变量的情况下，这样的模型可以使用概率推断来预测其环境中的任何变量!!!  。许多这样的模型还具有潜变量 hh\\Vh，其中pmodel(x', 'time': '2017-02-18T07:41'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '描述了一种基于潜变量的最简单的概率模型', 'origin_text': '基于潜变量的分布式表示继承了表示学习的所有优点。在本章中，  !!!我们描述了一些带有潜变量的最简单的概率模型!!!  ：线性因子模型。这些模型有时被用来构建混合块模型~{cite?', 'time': '2017-02-18T07:41'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '同时，也介绍了', 'origin_text': '块模型~{cite?}或者更大的深度概率模型~{cite?}。  !!!他们还展示了!!!  构建生成模型所需的许多基本方法，更先进的深层模型也将在此基础上进', 'time': '2017-02-18T07:55'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '基本方法', 'origin_text': '的深度概率模型~{cite?}。他们还展示了构建生成模型所需的  !!!许多基本方法!!!  ，更先进的深层模型也将在此基础上进一步扩展。线性因子模型通', 'time': '2017-02-18T07:55'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '在此基础上，深层模型将得到进一步扩展', 'origin_text': '~{cite?}。他们还展示了构建生成模型所需的许多基本方法，  !!!更先进的深层模型也将在此基础上进一步扩展!!!  。线性因子模型通过使用随机线性解码器函数来定义，该函数通过', 'time': '2017-02-18T07:57'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '通过', 'origin_text': '法，更先进的深层模型也将在此基础上进一步扩展。线性因子模型  !!!通过使用!!!  随机线性解码器函数来定义，该函数通过对hh\\Vh的线性变换以及添', 'time': '2017-02-18T07:58'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '有趣的是，通过这些模型我们能够发现一些符合简单联合分布的解释性因子。', 'origin_text': '数通过对hh\\Vh的线性变换以及添加噪声来生成xx\\Vx。  !!!这些模型很有趣，因为它们使得我们能够发现一些拥有简单联合分布的解释性因子!!!  。 线性解码器的简单性使得它们成为了最早被广泛研究的对潜变量建', 'time': '2017-02-18T08:02'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '基于', 'origin_text': '解释性因子。 线性解码器的简单性使得它们成为了最早被广泛研究的  !!!对!!!  潜变量建模的模型。线性因子模型描述如下的数据生成过程。 ', 'time': '2017-02-18T08:13'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '利用线性因子模型描述数据生成过程', 'origin_text': '的简单性使得它们成为了最早被广泛研究的对潜变量建模的模型。  !!!线性因子模型描述如下的数据生成过程!!!  。 首先，我们从一个分布中抽取解释性因子hh\\Vhh∼p(h', 'time': '2017-02-18T08:16'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '因此易于从中采样', 'origin_text': '(hi)p(\\Vh) = \\prod_{i}^{}p(h_i)，  !!!所以很容易从中采样!!!  。接下来，在给定因子的情况下，我们对实值的可观察变量进行抽样', 'time': '2017-02-18T08:21'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '服从以方差为单位矩阵', 'origin_text': '的选择上有所不同。因子分析~{cite?}中，潜变量的先验  !!!是一个方差为单位矩阵!!!  的高斯分布h∼\ue23a(h;0,I),h∼N(h;0,I),\\beg', 'time': '2017-02-18T08:26'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '在给定h的条件下观察值Xi', 'origin_text': 'athbf{0},\\MI),\\end{align}同时，假定  !!!观察值xixix_i在给定hh\\Vh的条件下!!!  是条件独立的。具体的说，噪声可以被假设为是从对角协方差矩阵的高', 'time': '2017-02-18T08:33'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '具体来说', 'origin_text': '假定观察值xixix_i在给定hh\\Vh的条件下是条件独立的。  !!!具体的说!!!  ，噪声可以被假设为是从对角协方差矩阵的高斯分布中抽出的，协方差矩', 'time': '2017-02-18T08:33'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '可以假设噪声', 'origin_text': 'xixix_i在给定hh\\Vh的条件下是条件独立的。具体的说，  !!!噪声可以被假设为!!!  是从对角协方差矩阵的高斯分布中抽出的，协方差矩阵为ψ=diag(', 'time': '2017-02-18T08:34'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '作轻微调整', 'origin_text': 'n}为了将PCA引入到概率框架中，我们可以对因子分析模型  !!!进行轻微修改!!!  ，使条件方差σ2iσi2\\sigma_i^2等于同一个值。在这', 'time': '2017-02-18T08:37'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '利用了一种观察现象', 'origin_text': '数WW\\MW和σ2σ2\\sigma^2。这个概率PCA模型  !!!利用了这样一种观察到的现象!!!  ：除了一些小且剩余的至多为σ2σ2\\sigma^2的重构误差 ，', 'time': '2017-02-18T08:38'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '维', 'origin_text': 'ow{} 0时， 概率PCA所定义的密度函数在WW\\MW的ddd  !!!维列!!!  生成空间周围非常尖锐。这导致模型会为没有在一个超空间附近聚集的', 'time': '2017-02-18T08:40'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '维', 'origin_text': '期望等于将x−bx−b\\Vx - \\Vb投影到WW\\MW的ddd  !!!列的!!!  生成空间，与PCA一样。当σ→0σ→0\\sigma\\xri', 'time': '2017-02-18T08:40'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '超空间', 'origin_text': 'W\\MW的ddd维列生成空间周围非常尖锐。这导致模型会为没有在  !!!一个超空间!!!  附近聚集的数据分配非常低的概率独立分量分析独立', 'time': '2017-02-18T08:41'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '潜在信号', 'origin_text': 'te?}。它是一种建模线性因子的方法，旨在将观察到的信号分离成  !!!许多潜在信号!!!  ，这些潜在信号通过伸缩并叠加可以恢复成观察数据。这些信号是完全', 'time': '2017-02-18T08:44'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '伸缩和叠加', 'origin_text': '子的方法，旨在将观察到的信号分离成许多潜在信号，这些潜在信号通过  !!!伸缩并叠加!!!  可以恢复成观察数据。这些信号是完全独立的，而不是仅仅彼此不相关', 'time': '2017-02-18T08:44'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '它的目的并非', 'origin_text': ')，我们可以尽可能恢复接近独立的潜在因子。这是一种常用的方法，  !!!它并不是!!!  用来捕捉高级别的抽象因果因子，而是恢复已经混合在一起的低级别信号', 'time': '2017-02-18T08:48'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '去掉“每个”', 'origin_text': '混合在一起的低级别信号。在该设置中，每个训练样本对应一个时刻，  !!!每个!!!  xixix_i是一个传感器对混合信号的观察值，并且每个hihih', 'time': '2017-02-18T08:50'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '传感器', 'origin_text': '号。在该设置中，每个训练样本对应一个时刻，每个xixix_i是  !!!一个传感器!!!  对混合信号的观察值，并且每个hihih_i是单个原始信号的一个估', 'time': '2017-02-18T08:50'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '去掉“并且每个”', 'origin_text': '对应一个时刻，每个xixix_i是一个传感器对混合信号的观察值，  !!!并且每个!!!  hihih_i是单个原始信号的一个估计。例如，我们可能有nnn', 'time': '2017-02-18T08:51'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '估计', 'origin_text': '传感器对混合信号的观察值，并且每个hihih_i是单个原始信号的  !!!一个估计!!!  。例如，我们可能有nnn个人同时说话。 如果我们具有放置在不', 'time': '2017-02-18T08:54'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '如果我们在不同位置放置n个不同的麦克风', 'origin_text': '个原始信号的一个估计。例如，我们可能有nnn个人同时说话。   !!!如果我们具有放置在不同位置的nnn个不同的麦克风!!!  ，则ICA可以检测每个麦克风的音量变化，并且分离信号，使得每个h', 'time': '2017-02-18T08:57'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '放置在受试者头部的多个电极传感器', 'origin_text': '通常用于脑电图的神经科学，一种用于记录源自大脑的电信号的技术。  !!!放置在对象的头部上的许多电极传感器!!!  用于测量来自身体的许多电信号。实验者通常仅对来自大脑的信号感兴', 'time': '2017-02-18T09:01'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '多种电信号', 'origin_text': '号的技术。放置在对象的头部上的许多电极传感器用于测量来自身体的  !!!许多电信号!!!  。实验者通常仅对来自大脑的信号感兴趣，但是来自受试者的心脏和眼', 'time': '2017-02-18T09:01'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '心脏', 'origin_text': '许多电信号。实验者通常仅对来自大脑的信号感兴趣，但是来自受试者  !!!的心脏!!!  和眼睛的信号强到足以混淆在受试者的头皮处进行的测量。信号到达电', 'time': '2017-02-18T09:02'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '其', 'origin_text': '自大脑的信号感兴趣，但是来自受试者的心脏和眼睛的信号强到足以混淆  !!!在受试者的!!!  头皮处进行的测量。信号到达电极，并且混合在一起，因此为了分离源', 'time': '2017-02-18T09:02'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '的测量结果', 'origin_text': '趣，但是来自受试者的心脏和眼睛的信号强到足以混淆在受试者的头皮处  !!!进行的测量!!!  。信号到达电极，并且混合在一起，因此为了分离源于心脏与源于大脑', 'time': '2017-02-18T09:03'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '正交矩阵', 'origin_text': '昂贵且数值不稳定的操作。ICA的一些变种通过将WW\\MW约束为  !!!正交!!!  来避免这个有问题的操作。ICA的所有变种要求p(h)p(h', 'time': '2017-02-18T09:06'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '该', 'origin_text': '不稳定的操作。ICA的一些变种通过将WW\\MW约束为正交来避免  !!!这个有问题的!!!  操作。ICA的所有变种要求p(h)p(h)p(\\Vh)是非', 'time': '2017-02-18T09:06'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '均要求', 'origin_text': 'W\\MW约束为正交来避免这个有问题的操作。ICA的所有变种  !!!要求!!!  p(h)p(h)p(\\Vh)是非高斯的。这是因为如果p(h)p', 'time': '2017-02-18T09:10'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '“定义”后加逗号', 'origin_text': '分析经常在学习稀疏特征时使用。按照我们对生成模型这个术语的  !!!定义!!!  ICA的许多变种不是生成模型。在本书中，生成模型可以直接表示p', 'time': '2017-02-18T09:13'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '没有', 'origin_text': '。ICA的许多变种仅知道如何在xx\\Vx和hh\\Vh之间变换，  !!!但没有!!!  任何表示p(h)p(h)p(\\Vh)的方式，因此也无法确定p(x', 'time': '2017-02-18T09:14'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '这就是', 'origin_text': '这是在没有显式表示p(h)p(h)p(\\Vh)的情况下完成的。  !!!这是!!!  为什么ICA更多用作分离信号的分析工具，而不是用于生成数据或估计', 'time': '2017-02-18T09:15'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '多被用作分离信号的分析', 'origin_text': '示p(h)p(h)p(\\Vh)的情况下完成的。这是为什么ICA  !!!更多用作分离信号的分析工具!!!  ，而不是用于生成数据或估计其密度。正如PCA可以推广到\\c', 'time': '2017-02-18T09:18'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '也可以', 'origin_text': '正如PCA可以推广到\\chap?中描述的非线性自编码器，ICA  !!!可以!!!  推广到非线性生成模型，其中我们使用非线性函数fff来生成观测数据', 'time': '2017-02-18T09:18'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '首先', 'origin_text': '（编码器）完美逆作用的解码器相关联，所以可以直接从模型生成样本（  !!!通过首先!!!  从p(h)p(h)p(\\Vh)采样，然后使用解码器）。IC', 'time': '2017-02-18T09:23'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '鼓励组内依赖关系、抑制组间依赖关系', 'origin_text': '(\\Vh)采样，然后使用解码器）。ICA的另一个推广是通过  !!!在组内鼓励统计依赖关系在组之间抑制依赖关系来!!!  学习特征组。当相关单元的组被选为不重叠时，这被称为独立子空间分', 'time': '2017-02-18T09:25'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '这种方法应用于自然图像时，可以', 'origin_text': '元组形成一定程度的重叠。这能够鼓励相邻的单元学习类似的特征。  !!!当应用于自然图像时，这种地质ICA方法!!!  学习Gabor滤波器，从而使得相邻特征具有相似的定向、位置或频率', 'time': '2017-02-18T09:28'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '不同', 'origin_text': '有相似的定向、位置或频率。在每个区域内出现类似Gabor函数的  !!!许多不同!!!  相位存在抵消作用，使得在小区域上的池化产生了平移不变性。慢', 'time': '2017-02-18T09:28'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '学习', 'origin_text': '变性。慢特征分析慢特征分析是使用来自时间信号的信息  !!!来学习!!!  不变特征的线性因子模型~{cite?}。慢特征分析的想法源', 'time': '2017-02-18T09:38'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '不发生改变', 'origin_text': '为白色，并再次恢复成黑色。通过比较，指示斑马是否在图像中的特征  !!!将根本不改变!!!  ，并且描述斑马位置的特征将缓慢地改变。因此，我们可能希望正则化', 'time': '2017-02-18T09:40'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '将模型正则化', 'origin_text': '不改变，并且描述斑马位置的特征将缓慢地改变。因此，我们可能希望  !!!正则化我们的模型!!!  ，从而能够学习到那些随时间变化较为缓慢的特征。慢原则早于慢', 'time': '2017-02-18T09:40'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '可以向', 'origin_text': '于可以使用梯度下降训练的任何可微分模型。 为了引入慢原则，我们  !!!可以通过向!!!  代价函数添加以下项λ∑tL(f(x(t+1)),f(x(t))', 'time': '2017-02-18T09:41'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '均方误差', 'origin_text': '^{(t+1)})之间的距离的损失函数。LLL的一个常见选择是  !!!平均平方误差!!!  。慢特征分析是慢原则中一个特别高效的应用。由于它被应用于', 'time': '2017-02-18T09:43'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '并不', 'origin_text': '闭式解训练，所以它是高效的。像ICA的一些变体一样，SFA本身  !!!不是!!!  生成模型，只是在输入空间和特征空间之间定义了一个线性映射，但是没', 'time': '2017-02-18T09:47'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '变种', 'origin_text': '提取器，并且可以通过闭式解训练，所以它是高效的。像ICA的一些  !!!变体!!!  一样，SFA本身不是生成模型，只是在输入空间和特征空间之间定义了', 'time': '2017-02-18T09:47'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '但并不', 'origin_text': '身不是生成模型，只是在输入空间和特征空间之间定义了一个线性映射，  !!!但是没有!!!  定义特征空间的先验，因此输入空间中不存在p(x)p(x)p(\\V', 'time': '2017-02-18T09:49'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '来说', 'origin_text': '经元学到的特征有许多共同特性~{cite?}。因此从生物学角度  !!!上说!!!  SFA是一个合理的有依据的模型。SFA的一个主要优点是，即', 'time': '2017-02-18T10:02'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '这些潜在因子', 'origin_text': '）。已知潜在因子如何改变的情况下，我们能够通过理论分析解出表达  !!!这些因子!!!  的最佳函数。在实践中，基于模拟数据的实验上，使用深度SFA似乎', 'time': '2017-02-18T10:03'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '学习', 'origin_text': '，使得难以确定模型将学习到什么特征。深度SFA也已经被用于  !!!学习用在!!!  对象识别和姿态估计的特征~{cite?}。到目前为止，慢原则尚', 'time': '2017-02-18T10:04'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '仍', 'origin_text': '尚未成为任何最先进的技术应用的基础。究竟是什么因素限制了其性能  !!!也!!!  有待研究。我们推测，或许慢度先验是太过强势，并且，最好添加这样', 'time': '2017-02-18T10:09'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '太过强势', 'origin_text': '究竟是什么因素限制了其性能也有待研究。我们推测，或许慢度先验  !!!是太过强势!!!  ，并且，最好添加这样一个先验使得当前时间步到下一个时间步的预测更', 'time': '2017-02-18T10:10'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '严格来说', 'origin_text': '子模型，已作为一种无监督特征学习和特征提取机制得到了广泛研究。  !!!严格地说!!!  ，术语”稀疏编码”是指在该模型中推断hh\\Vh值的过程，而”稀疏', 'time': '2017-02-18T10:13'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '其他大多数', 'origin_text': '的过程，但是通常这两个概念都可以用术语”稀疏编码”描述。像  !!!大多数其他!!!  线性因子模型一样，它使用了线性的解码器加上噪音的方式获得一个xx', 'time': '2017-02-18T10:14'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '包括', 'origin_text': '择一个峰值很尖锐且接近000的分布~{cite?}。常见的选择  !!!包括了!!!  可分解的Laplace，Cauchy或者可分解的Student-', 'time': '2017-02-18T10:14'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '在此', 'origin_text': '中，我们将ββ\\beta视为超参数。通常将其设置为111，因为  !!!其在此!!!  优化问题中λλ\\lambda的作用类似，没有必要使用两个超参数。', 'time': '2017-02-18T10:20'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '去掉“时”', 'origin_text': '差，而不是编码器中的泛化误差。当稀疏编码用作分类器的特征提取器  !!!时!!!  ，而不是使用参数化的函数来预测编码值时，基于优化的稀疏编码模型的', 'time': '2017-02-18T10:23'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '可得到', 'origin_text': '来预测编码值时，基于优化的稀疏编码模型的编码过程中较小的泛化误差  !!!可导致!!!  更好的泛化能力。{Coates2011b}证明了在对象识别任务', 'time': '2017-02-18T10:24'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '先通过', 'origin_text': '个缺点是它不直接通过非参数编码器进行反向传播，这使得我们很难采用  !!!先使用!!!  无监督方式预训练稀疏编码模型然后使用监督方式对其进行微调的方法。', 'time': '2017-02-18T10:26'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '后通过', 'origin_text': '行反向传播，这使得我们很难采用先使用无监督方式预训练稀疏编码模型  !!!然后使用!!!  监督方式对其进行微调的方法。允许近似导数的稀疏编码模型的修改版', 'time': '2017-02-18T10:26'}
+{'user': 'acct:Cherish@hypothes.is', 'text': '这种现象发生的原因', 'origin_text': '够很好地重构数据并为分类器提供有用的特征时，也会发生这种情况。  !!!这种现象原因!!!  是每个单独的特征可以很好地被学习到，但是隐含编码值的因子先验会导', 'time': '2017-02-18T10:27'}
+
+=============================   Replies   =============================
+

@@ -51,7 +51,7 @@
 | [第十章 序列建模：循环和递归网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter10_sequence_modeling_rnn/) | @swordyork | lc, ljl, @ZhiweiYang | @zhaoyu611, @yinruiqing | 等待合并 |
 | [第十一章 实用方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter11_practical_methodology/) | @liber145 | @wheaio, @angrymidiao |  | 需要校对 |
 | [第十二章 应用](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork, @futianfan | @wheaio | @corenel | 等待合并 |
-| [第十三章 线性因子模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | @ZhiweiYang |  | 需要校对 |
+| [第十三章 线性因子模型](https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | htx | @ZhiweiYang | 完成合并 |
 | [第十四章 自编码器](https://exacity.github.io/deeplearningbook-chinese/Chapter14_autoencoders/) | @swordyork |  | @Seaball, @huangpingchun | 完成合并 |
 | [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 | @cnscottzheng | | 需要校对 |
 | [第十六章 深度学习中的结构化概率模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter16_structured_probabilistic_modelling/) | @futianfan | @cnscottzheng |  | 需要校对 |
