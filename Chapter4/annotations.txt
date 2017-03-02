@@ -1,0 +1,27 @@
+{'user': 'acct:EmisXXY@hypothes.is', 'text': '一组两两正交的特征向量', 'origin_text': '为Hessian矩阵是实对称的，我们可以将其分解成一组实特征值和  !!!特征向量的正交!!!  。在特定方向dd\\Vd上的二阶导数可以写成d⊤Hdd⊤Hd\\V', 'time': '2017-01-26T09:31'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '直接“计算机”如何？感觉加个数字很别扭。', 'origin_text': '括优化（找到最小化或最大化函数值的参数）和线性方程组的求解。对  !!!数字计算机!!!  来说实数无法在有限内存下精确表示，因此仅仅计算涉及实数的函数也是', 'time': '2017-02-02T08:26'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '改成“这里通常是指迭代法，而不是直接给出解析解的直接法。”如何？', 'origin_text': '           机器学习算法通常需要大量的数值计算。  !!!这通常是指通过迭代地更新解来解决数学问题的算法，而不是解析地提供正确解的符号表达。!!!  常见的操作包括优化（找到最小化或最大化函数值的参数）和线性方程', 'time': '2017-02-02T08:33'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '改为“因此即使是计算实数域上的函数也是困难的。”如何？', 'origin_text': '性方程组的求解。对数字计算机来说实数无法在有限内存下精确表示，  !!!因此仅仅计算涉及实数的函数也是困难的!!!  。上溢和下溢在数字计算机上实现连续数学的根本困难是，我们', 'time': '2017-02-02T08:37'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '还是很烦“数字”两个字。', 'origin_text': '表示，因此仅仅计算涉及实数的函数也是困难的。上溢和下溢在  !!!数字计算机!!!  上实现连续数学的根本困难是，我们需要通过有限数量的位模式来表示无', 'time': '2017-02-02T08:37'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '改为“连续数学在计算机上的根本困难是”如何？', 'origin_text': '确表示，因此仅仅计算涉及实数的函数也是困难的。上溢和下溢  !!!在数字计算机上实现连续数学的根本困难是!!!  ，我们需要通过有限数量的位模式来表示无限多的实数。这意味着我们', 'time': '2017-02-02T08:40'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': 'bit patterns是CS的一个专有名词，常见的译法就是“位模式”吗？感觉有些拗口。', 'origin_text': '在数字计算机上实现连续数学的根本困难是，我们需要通过有限数量的  !!!位模式!!!  来表示无限多的实数。这意味着我们在计算机中表示实数时，几乎总会', 'time': '2017-02-02T08:42'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '原文并没有因果关系，建议改成“舍入误差会导致一些问题，特别是许多操作复合时，即使是理论上可行的算法，如果在设计时，没有考虑最小化累积舍入误差，在实践时也可能导致算法失效。”', 'origin_text': '时，几乎总会引入一些近似误差。在许多情况下，这仅仅是舍入误差。  !!!如果在理论上可行的算法没有被设计为最小化舍入误差的累积，可能就会在实践中失效，因此舍入误差会导致一些问题（特别是许多操作复合时）。!!!  一种特别的毁灭性舍入误差是下溢。当接近零的数被四舍五入为零', 'time': '2017-02-02T09:09'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '改为“下溢是一种极端的舍入误差。”如何？', 'origin_text': '中失效，因此舍入误差会导致一些问题（特别是许多操作复合时）。  !!!一种特别的毁灭性舍入误差是下溢!!!  。当接近零的数被四舍五入为零时发生下溢。许多函数在其参数为零', 'time': '2017-02-02T09:12'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '上溢是另外一种极端的舍入误差', 'origin_text': '−∞-\\infty，进一步的算术运算会使其变成非数字）。  !!!另一个极具破坏力的数值错误形式是上溢!!!  。当大量级的数被近似为∞∞\\infty或−∞−∞-\\infty', 'time': '2017-02-02T09:17'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '改为“表示”或者“表征”更好吧？', 'origin_text': '学习中许多常见的数值不稳定的表达式。病态条件数条件数  !!!表明!!!  函数相对于输入的微小变化而变化的快慢程度。输入被轻微扰动而迅速', 'time': '2017-02-02T09:28'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '去掉这个“是”', 'origin_text': '快慢程度。输入被轻微扰动而迅速改变的函数对于科学计算来说是可能  !!!是!!!  有问题的，因为输入中的舍入误差可能导致输出的巨大变化。考虑函', 'time': '2017-02-02T09:29'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '此处有误，不严谨。参见https://pan.baidu.com/s/1dFl7vC9', 'origin_text': '可能是有问题的，因为输入中的舍入误差可能导致输出的巨大变化。  !!!考虑函数f(x)=A−1xf(x)=A−1xf(\\Vx) = \\MA^{-1} \\Vx。当A∈ℝn×nA∈Rn×n\\MA \\in \\SetR^{n \\times n} 具有特征值分解时，其条件数!!!  为maxi,j\xa0∣∣∣∣λiλj∣∣∣∣.maxi,j\xa0|λi', 'time': '2017-02-12T09:50'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '或者还有处于非常平坦区域之中的鞍点', 'origin_text': '度学习的背景下，我们优化的函数可能含有许多不是最优的局部极小点，  !!!或许多被非常平坦的区域包围的鞍点!!!  。尤其是当输入是多维的时候，所有这些都将使优化变得困难。因此', 'time': '2017-02-12T10:03'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '但并不需要在所有情况下都是最小的。', 'origin_text': '有这些都将使优化变得困难。因此，我们通常寻找fff非常小的值，  !!!但在任何形式意义下并不一定是最小!!!  。见\\fig?的例子。\\begin{figure}[!htb', 'time': '2017-02-12T10:08'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '多元函数', 'origin_text': '能接受这样的解。}\\end{figure}我们经常最小化  !!!具有多维输入的函数!!!  ：f:ℝn→ℝf:Rn→Rf: \\SetR^n \\rightar', 'time': '2017-02-12T10:13'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '多元函数', 'origin_text': '使”最小化”的概念有意义，输出必须是一维的(标量)。针对  !!!具有多维输入的函数!!!  ，我们需要用到偏导数的概念。偏导数 ∂∂xif(x)∂∂xif', 'time': '2017-02-12T10:13'}
+
+=============================   Replies   =============================
+
+{'user': 'acct:swordyork@hypothes.is', 'text': '多谢，应该是特征向量的正交基。漏了个基。', 'time': '2017-03-02T08:55'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '为与原书一致，可能原作者为了更通俗。', 'time': '2017-03-02T08:52'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '他后面说当存在特征值分解时，而且本书定义的是特征值之比，不是奇异值之比。所以我们仍延续书中写法。', 'time': '2017-03-02T08:48'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '确实有问题，多谢！', 'time': '2017-03-02T08:36'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '这个我保持原样，我觉得涉及实数和实数域有区别。比如int(x)或1/int(x)就是涉及实数但不是实数域。', 'time': '2017-03-02T08:33'}
+{'user': 'acct:swordyork@hypothes.is', 'text': 'ok，今天能合并好，多谢！', 'time': '2017-02-07T10:45'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '你好，此处得加数字，因为作者此处要突出数字计算机的缺陷——实数无法在有限内存下精确表示。\n与模拟计算机相对https://en.wikipedia.org/wiki/Analog_computer', 'time': '2017-02-07T10:42'}
