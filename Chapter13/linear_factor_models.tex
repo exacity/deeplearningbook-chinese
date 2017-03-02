@@ -6,7 +6,7 @@
 
 
 
-许多深度学习的研究前沿涉及到了构建输入的概率模型$p_{\text{model}}(\Vx)$。
+许多深度学习的研究前沿均涉及构建输入的概率模型$p_{\text{model}}(\Vx)$。
 原则上说，给定任何其他变量的情况下，这样的模型可以使用概率推断来预测其环境中的任何变量。
 许多这样的模型还具有\gls{latent_variable} $\Vh$，其中$p_{\text{model}}(\Vx) = \SetE_{\Vh} p_{\text{model}}(\Vx\mid\Vh)$。
 这些\gls{latent_variable}提供了表示数据的另一种方式。
@@ -14,17 +14,18 @@
 % 479
 
 
-在本章中，我们描述了一些带有\gls{latent_variable}的最简单的概率模型：\firstgls{linear_factor}。
+在本章中，我们描述了一些基于\gls{latent_variable}的最简单的概率模型：\firstgls{linear_factor}。
 这些模型有时被用来构建混合块模型~\citep{Hinton-nips95,ghahramani96em,Roweis+Saul+Hinton-2002}或者更大的深度概率模型~\citep{tang2012deep}。
-他们还展示了构建\gls{generative_model}所需的许多基本方法，更先进的深层模型也将在此基础上进一步扩展。
+同时，也介绍了构建\gls{generative_model}所需的许多基本方法，在此基础上更先进的深层模型也将得到进一步扩展。
 % 479
 
 
-\gls{linear_factor}通过使用随机线性\gls{decoder}函数来定义，该函数通过对$\Vh$的线性变换以及添加噪声来生成$\Vx$。
+\gls{linear_factor}通过随机线性\gls{decoder}函数来定义，该函数通过对$\Vh$的线性变换以及添加噪声来生成$\Vx$。
 % 479
 
 
-这些模型很有趣，因为它们使得我们能够发现一些拥有简单联合分布的解释性因子。 
+有趣的是，通过这些模型我们能够发现一些符合简单联合分布的解释性因子。
+%这些模型很有趣，因为它们使得我们能够发现一些拥有简单联合分布的解释性因子。 
 线性\gls{decoder}的简单性使得它们成为了最早被广泛研究的对\gls{latent_variable}建模的模型。
 % 479
 
@@ -35,7 +36,7 @@
 \label{eqn:131}
 \RVh \sim p(\Vh),
 \end{align}
-其中$p(\Vh)$是一个\gls{factorial}分布，满足$p(\Vh) = \prod_{i}^{}p(h_i)$，所以很容易从中采样。
+其中$p(\Vh)$是一个\gls{factorial}分布，满足$p(\Vh) = \prod_{i}^{}p(h_i)$，所以易于从中采样。
 接下来，在给定因子的情况下，我们对实值的可观察变量进行抽样
 \begin{align}
 \label{eqn:132}
@@ -69,8 +70,8 @@
 \label{eqn:133}
 \RVh \sim \CalN(\Vh; \mathbf{0},\MI),
 \end{align}
-同时，假定观察值$x_i$在给定$\Vh$的条件下是\firstgls{conditional_independent}的。
-具体的说，噪声可以被假设为是从对角协方差矩阵的高斯分布中抽出的，\gls{covariance_matrix}为$\Vpsi = \text{diag}(\Vsigma^2)$，其中$\Vsigma^2 = [\sigma_1^2,\sigma_2^2,\ldots,\sigma_n^2]^{\top}$表示一个向量，每个元素表示一个变量的方差。
+同时，假定在给定$\Vh$的条件下观察值$x_i$是\firstgls{conditional_independent}的。
+具体来说，可以假设噪声是从对角协方差矩阵的高斯分布中抽出的，\gls{covariance_matrix}为$\Vpsi = \text{diag}(\Vsigma^2)$，其中$\Vsigma^2 = [\sigma_1^2,\sigma_2^2,\ldots,\sigma_n^2]^{\top}$表示一个向量，每个元素表示一个变量的方差。
 % 480
 
 
@@ -102,9 +103,9 @@
 % 481
 
 
-这个\firstgls{PPCA}模型利用了这样一种观察到的现象：除了一些小且剩余的至多为$\sigma^2$的\firstgls{reconstruction_error} ，数据中的大多数变化可以由\gls{latent_variable} $\Vh$描述。
+这个\firstgls{PPCA}模型利用了这样一种观察现象：除了一些小且剩余的至多为$\sigma^2$的\firstgls{reconstruction_error} ，数据中的大多数变化可以由\gls{latent_variable} $\Vh$描述。
 通过\citet{tipping99mixtures}的研究可以发现，当$\sigma \xrightarrow{} 0$的时候，\gls{PPCA}退化为\glssymbol{PCA}。
-在这种情况下，给定$\Vx$情况下$\Vh$的条件期望等于将$\Vx - \Vb$投影到$\MW$的$d$列的生成空间，与\glssymbol{PCA}一样。
+在这种情况下，给定$\Vx$情况下$\Vh$的条件期望等于将$\Vx - \Vb$投影到$\MW$的$d$列所生成的空间上，与\glssymbol{PCA}一样。
 % 481
 
 当$\sigma\xrightarrow{} 0$时， \gls{PPCA}所定义的密度函数在$\MW$的$d$维列生成空间周围非常尖锐。
@@ -119,7 +120,7 @@
 
 
 \firstall{ICA}是最古老的\gls{representation_learning}算法之一~\citep{Herault+Ans-1984,Jutten+Herault-91,Comon94,Hyvarinen-1999,Hyvarinen-2001,Hinton-ICA-2001,Teh-2003}。
-它是一种建模线性因子的方法，旨在将观察到的信号分离成许多潜在信号，这些潜在信号通过伸缩并叠加可以恢复成观察数据。
+它是一种建模线性因子的方法，旨在将观察到的信号分离成许多潜在信号，这些潜在信号通过伸缩和叠加可以恢复成观察数据。
 这些信号是完全独立的，而不是仅仅彼此不相关\footnote{\secref{sec:expectation_variance_and_covariance}讨论了不相关变量和独立变量之间的差异。}。
 % 481
 
@@ -137,10 +138,10 @@
 这是一种常用的方法，它并不是用来捕捉高级别的抽象因果因子，而是恢复已经混合在一起的低级别信号。
 在该设置中，每个训练样本对应一个时刻，每个$x_i$是一个传感器对混合信号的观察值，并且每个$h_i$是单个原始信号的一个估计。
 例如，我们可能有$n$个人同时说话。 
-如果我们具有放置在不同位置的$n$个不同的麦克风，则\glssymbol{ICA}可以检测每个麦克风的音量变化，并且分离信号，使得每个$h_i$仅包含一个人清楚地说话。
+如果我们在不同位置放置$n$个不同的麦克风，则\glssymbol{ICA}可以检测每个麦克风的音量变化，并且分离信号，使得每个$h_i$仅包含一个人清楚地说话。
 这通常用于脑电图的神经科学，一种用于记录源自大脑的电信号的技术。
-放置在对象的头部上的许多电极传感器用于测量来自身体的许多电信号。
-实验者通常仅对来自大脑的信号感兴趣，但是来自受试者的心脏和眼睛的信号强到足以混淆在受试者的头皮处进行的测量。
+放置在受试者头部上的许多电极传感器用于测量来自身体的多种电信号。
+实验者通常仅对来自大脑的信号感兴趣，但是来自受试者心脏和眼睛的信号强到足以混淆在受试者的头皮处的测量结果。
 信号到达电极，并且混合在一起，因此为了分离源于心脏与源于大脑的信号，并且将不同脑区域中的信号彼此分离\glssymbol{ICA}是必要的。
 % 482 mid 
 
@@ -154,7 +155,7 @@
 % 482 mid
 
 
-\glssymbol{ICA}的所有变种要求$p(\Vh)$是非高斯的。
+\glssymbol{ICA}的所有变种均要求$p(\Vh)$是非高斯的。
 这是因为如果$p(\Vh)$是具有高斯分量的独立先验，则$\MW$是不可识别的。
 对于许多$\MW$值，我们可以在$p(\Vx)$上获得相同的分布。 
 这与其他\gls{linear_factor}有很大的区别，例如\gls{PPCA}和\gls{FA}通常要求$p(\Vh)$是高斯的，以便使模型上的许多操作具有\gls{closed_form_solution}。
@@ -165,15 +166,15 @@
 
 
 
-按照我们对\gls{generative_model}这个术语的定义\glssymbol{ICA}的许多变种不是\gls{generative_model}。
+按照我们对\gls{generative_model}这个术语的定义，\glssymbol{ICA}的许多变种不是\gls{generative_model}。
 在本书中，\gls{generative_model}可以直接表示$p(\Vx)$，也可以认为是从$p(\Vx)$中抽取样本。
-\glssymbol{ICA}的许多变种仅知道如何在$\Vx$和$\Vh$之间变换，但没有任何表示$p(\Vh)$的方式，因此也无法确定$p(\Vx)$。
+\glssymbol{ICA}的许多变种仅知道如何在$\Vx$和$\Vh$之间变换，没有任何表示$p(\Vh)$的方式，因此也无法确定$p(\Vx)$。
 例如，许多\glssymbol{ICA}变量旨在增加$\Vh = \MW^{-1}\Vx$的样本峰度，因为高峰度说明了$p(\Vh)$是非高斯的，但这是在没有显式表示$p(\Vh)$的情况下完成的。
-这是为什么\glssymbol{ICA}更多用作分离信号的分析工具，而不是用于生成数据或估计其密度。
+这就是为什么\glssymbol{ICA}多被用作分离信号的分析工具，而不是用于生成数据或估计其密度。
 % 483 head
 
 
-正如\glssymbol{PCA}可以推广到\chapref{chap:autoencoders}中描述的非线性\gls{AE}，\glssymbol{ICA}可以推广到非线性\gls{generative_model}，其中我们使用非线性函数$f$来生成观测数据。
+正如\glssymbol{PCA}可以推广到\chapref{chap:autoencoders}中描述的非线性\gls{AE}，\glssymbol{ICA}也可以推广到非线性\gls{generative_model}，其中我们使用非线性函数$f$来生成观测数据。
 关于非线性\glssymbol{ICA}最初的工作可以参考\citet{hyvarinen1999nonlinear}，它和\gls{ensemble_learning}的成功结合可以参见\citet{roberts2001independent,lappalainen2000nonlinear}。
 \glssymbol{ICA}的另一个非线性扩展是\firstall{NICE}方法~\citep{Dinh-et-al-arxiv2014}，这个方法堆叠了一系列可逆变换（在\gls{encoder}阶段），从而能够高效地计算每个变换的\gls{jacobian}行列式。
 这使得我们能够精确地计算似然，并且像\glssymbol{ICA}一样，\glssymbol{NICE}尝试将数据变换到具有可分解边缘分布的空间。
@@ -182,7 +183,7 @@
 % 483
 
 
-\glssymbol{ICA}的另一个推广是通过在组内鼓励统计依赖关系在组之间抑制依赖关系来学习特征组。
+\glssymbol{ICA}的另一个推广是通过鼓励组内统计依赖关系、抑制组间依赖关系来学习特征组。
 当相关单元的组被选为不重叠时，这被称为\firstgls{ISA}。
 还可以向每个\gls{hidden_unit}分配空间坐标，并且空间上相邻的单元组形成一定程度的重叠。
 这能够鼓励相邻的单元学习类似的特征。
@@ -204,26 +205,26 @@
 其基本思想是，与场景中起描述作用的单个量度相比，场景的重要特性通常变化得非常缓慢。
 例如，在\gls{CV}中，单个像素值可以非常快速地改变。
 如果斑马从左到右移动穿过图像并且它的条纹穿过对应的像素时，该像素将迅速从黑色变为白色，并再次恢复成黑色。
-通过比较，指示斑马是否在图像中的特征将根本不改变，并且描述斑马位置的特征将缓慢地改变。
-因此，我们可能希望\gls{regularize}我们的模型，从而能够学习到那些随时间变化较为缓慢的特征。
+通过比较，指示斑马是否在图像中的特征将不发生改变，并且描述斑马位置的特征将缓慢地改变。
+因此，我们可能希望将模型\gls{regularize}，从而能够学习到那些随时间变化较为缓慢的特征。
 % 484
 
 
 \gls{slow_principle}早于\gls{SFA}，并已被应用于各种模型~\citep{Hinton89b,Foldiak89,MobahiCollobertWestonICML2009,Bergstra+Bengio-2009}。
 一般来说，我们可以将\gls{slow_principle}应用于可以使用\gls{GD}训练的任何可微分模型。 
-为了引入\gls{slow_principle}，我们可以通过向\gls{cost_function}添加以下项
+为了引入\gls{slow_principle}，我们可以向\gls{cost_function}添加以下项
 \begin{align}
 \label{eqn:137}
 \lambda \sum_t L(f(\Vx^{(t+1)}),f(\Vx^{(t)})),
 \end{align}
 其中$\lambda$是确定慢度\gls{regularization}强度的超参数项，$t$是样本时间序列的索引，$f$是需要\gls{regularize}的\gls{feature_extractor}，$L$是测量$f(\Vx^{(t)})$和$f(\Vx^{(t+1)})$之间的距离的\gls{loss_function}。
-$L$的一个常见选择是平均平方误差。
+$L$的一个常见选择是\gls{mean_squared_error}。
 % 484
 
 
 \gls{SFA}是\gls{slow_principle}中一个特别高效的应用。
 由于它被应用于线性\gls{feature_extractor}，并且可以通过\gls{closed_form_solution}训练，所以它是高效的。
-像\glssymbol{ICA}的一些变体一样，\glssymbol{SFA}本身不是\gls{generative_model}，只是在输入空间和特征空间之间定义了一个线性映射，但是没有定义特征空间的先验，因此输入空间中不存在$p(\Vx)$分布。
+像\glssymbol{ICA}的一些变种一样，\glssymbol{SFA}本身并不是\gls{generative_model}，只是在输入空间和特征空间之间定义了一个线性映射，但是没有定义特征空间的先验，因此输入空间中不存在$p(\Vx)$分布。
 % 484
 
 
@@ -275,7 +276,7 @@ $L$的一个常见选择是平均平方误差。
 
 当训练自然场景视频的小块空间补丁的时候，使用二次基扩展的\glssymbol{SFA}所学习到的特征与V1皮层中那些复杂细胞的特征有许多共同特性~\citep{Berkes-Wiskott-2005}。
 当训练计算机渲染的3-D环境内随机运动的视频时，深度\glssymbol{SFA}模型能够学习的特征与大鼠脑中用于导航的神经元学到的特征有许多共同特性~\citep{franzius2007slowness}。
-因此从生物学角度上说\glssymbol{SFA}是一个合理的有依据的模型。
+因此从生物学角度上来说\glssymbol{SFA}是一个合理的有依据的模型。
 % 485
 
 
@@ -290,8 +291,8 @@ $L$的一个常见选择是平均平方误差。
 
 深度\glssymbol{SFA}也已经被用于学习用在\gls{object_recognition}和姿态估计的特征~\citep{Franzius2008}。
 到目前为止，\gls{slow_principle}尚未成为任何最先进的技术应用的基础。
-究竟是什么因素限制了其性能也有待研究。
-我们推测，或许慢度先验是太过强势，并且，最好添加这样一个先验使得当前\gls{time_step}到下一个\gls{time_step}的预测更加容易，而不是加一个先验使得特征近似为一个常数。
+究竟是什么因素限制了其性能仍有待研究。
+我们推测，或许慢度先验太过强势，并且，最好添加这样一个先验使得当前\gls{time_step}到下一个\gls{time_step}的预测更加容易，而不是加一个先验使得特征近似为一个常数。
 对象的位置是一个有用的特征，无论对象的速度是高还是低。 
 但\gls{slow_principle}鼓励模型忽略具有高速度的对象的位置。
 % 486
@@ -317,7 +318,7 @@ p(\Vx\mid \Vh) = \CalN
 
 
 关于$p(\Vh)$分布通常选择一个峰值很尖锐且接近$0$的分布~\citep{Olshausen+Field-1996}。
-常见的选择包括了可分解的Laplace，Cauchy或者可分解的Student-t分布。
+常见的选择包括可分解的Laplace，Cauchy或者可分解的Student-t分布。
 例如，以稀疏惩罚系数$\lambda$为参数的Laplace先验可以表示为
 \begin{align}
 \label{eqn:1313}
@@ -361,7 +362,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 
 为了训练模型而不仅仅是进行推断，我们交替迭代关于$\Vh$和$\MW$的最小化过程。
 在本文中，我们将$\beta$视为超参数。
-通常将其设置为$1$，因为其在此优化问题中$\lambda$的作用类似，没有必要使用两个超参数。 
+通常将其设置为$1$，因为其在此优化问题的作用与$\lambda$类似，没有必要使用两个超参数。 
 原则上，我们还可以将$\beta$作为模型的参数，并学习它。
 我们在这里已经放弃了一些不依赖于$\Vh$但依赖于$\beta$的项。
 要学习$\beta$，必须包含这些项，否则$\beta$将退化为$0$。
@@ -383,9 +384,9 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 对于与训练数据差异很大的异常$\Vx$，所学习的参数化\gls{encoder}可能无法找到对应精确重建的$\Vh$或稀疏的编码。
 对于\gls{sparse_coding}模型的绝大多数形式，推断问题是凸的，优化过程将总是找到最优编码（除非出现退化的情况，例如重复的权重向量）。
 显然，稀疏和重构成本仍然可以在不熟悉的点上升，但这归因于\gls{decoder}权重中的\gls{generalization_error}，而不是\gls{encoder}中的\gls{generalization_error}。
-当\gls{sparse_coding}用作分类器的\gls{feature_extractor}时，而不是使用参数化的函数来预测编码值时，基于优化的\gls{sparse_coding}模型的编码过程中较小的\gls{generalization_error}可导致更好的泛化能力。
+当\gls{sparse_coding}用作分类器的\gls{feature_extractor}时，而不是使用参数化的函数来预测编码值时，基于优化的\gls{sparse_coding}模型的编码过程中较小的\gls{generalization_error}可以得到更好的\gls{generalization}能力。
 \citet{Coates2011b}证明了在\gls{object_recognition}任务中\gls{sparse_coding}特征比基于参数化的\gls{encoder}（线性-\gls{sigmoid}\gls{AE}）的特征拥有更好的泛化能力。
-受他们的工作启发，\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}表明一种\gls{sparse_coding}的变体在其中极少标签（每类20个或更少标签）的情况中比相同情况下的其他\gls{feature_extractor}拥有更好的泛化能力。
+受他们的工作启发，\citet{Goodfeli-et-al-TPAMI-Deep-PrePrint-2013-small}表明一种\gls{sparse_coding}的变体在其中极少标签（每类20个或更少标签）的情况中比相同情况下的其他\gls{feature_extractor}拥有更好的\gls{generalization}能力。
 % 488 
 
 
@@ -398,7 +399,7 @@ p(h_i)\propto \frac{1}{(1+\frac{h_i^2}{\nu})^{\frac{\nu+1}{2}}}.
 
 像其他\gls{linear_factor}一样，\gls{sparse_coding}经常产生糟糕的样本，如\figref{fig:s3c_samples}所示。
 即使当模型能够很好地重构数据并为分类器提供有用的特征时，也会发生这种情况。
-<bad>这种现象原因是每个单独的特征可以很好地被学习到，但是隐含编码值的\gls{factorial}先验会导致模型包括每个生成的样本中所有特征的随机子集。
+<bad>这种现象发生的原因是每个单独的特征可以很好地被学习到，但是隐含编码值的\gls{factorial}先验会导致模型包括每个生成的样本中所有特征的随机子集。
 这促使人们在深度模型中的最深层以及一些复杂成熟的浅层模型上施加一个非\gls{factorial}分布。
 
 \begin{figure}[!htb]
