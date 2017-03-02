@@ -6,7 +6,7 @@
 \firstgls{AE}内部有一个\gls{hidden_layer} $\Vh$，可以产生\firstgls{code}表示输入。
 该网络可以看作由两部分组成：一个由函数$ \Vh = f(\Vx)$表示的\gls{encoder}和一个生成\gls{reconstruction}的\gls{decoder} $\Vr=g(\Vh)$。
 \figref{fig:chap14_autoencoder}展示了这种架构。
-如果一个\gls{AE}只是简单地学会将处处设置为$g(f(\Vx)) =\Vx$，那么这个\gls{AE}就没什么特别的用处。。
+如果一个\gls{AE}只是简单地学会将处处设置为$g(f(\Vx)) =\Vx$，那么这个\gls{AE}就没什么特别的用处。
 相反，我们不应该将\gls{AE}设计成输入到输出完全相等。
 这通常需要向\gls{AE}强加一些约束，使它只能近似地复制，并只能复制与训练数据相似的输入。
 这些约束强制模型考虑输入数据的哪些部分需要被优先复制，因此它往往能学习到数据的有用特性。
@@ -104,7 +104,7 @@
 
 
 我们可以简单地将惩罚项$\Omega(\Vh)$视为加到\gls{feedforward_network}的正则项，这个\gls{feedforward_network}的主要任务是将输入复制到输出（\gls{unsupervised_learning}的目标），并尽可能地根据这些\gls{sparse}特征执行一些\gls{supervised_learning}任务（根据\gls{supervised_learning}的目标）。
-不像其它正则项如\gls{weight_decay}——没有直观的贝叶斯解释。。
+不像其它正则项如\gls{weight_decay}——没有直观的贝叶斯解释。
 如\secref{sec:maximum_a_posteriori_map_estimation}描述，\gls{weight_decay}和其他正则惩罚可以被解释为一个\glssymbol{MAP}近似贝叶斯\gls{inference}，\gls{regularization}的惩罚对应于模型参数的先验概率分布。
 这种观点认为，\gls{regularization}的最大似然对应最大化$p(\Vtheta \mid \Vx)$， 相当于最大化$\log p(\Vx \mid \Vtheta) + \log p(\Vtheta)$。 $\log p(\Vx \mid \Vtheta)$即通常的数据似然项，参数的对数先验项$\log p(\Vtheta)$则包含了对$\Vtheta$特定值的偏好。
 这种观点在\secref{sec:bayesian_statistics}有所描述。
@@ -221,7 +221,7 @@ p_{\text{model}}(h_i) = \frac{\lambda}{2} e^{-\lambda | h_i |},
 
 
 \gls{universal_approximation_theorem}保证至少有一层\gls{hidden_layer}且\gls{hidden_unit}足够多的\gls{feedforward_neural_network}能以任意精度近似任意函数（在很大范围里），这是非平凡深度（至少有一层\gls{hidden_layer}）的一个主要优点。
-这意味着具有单\gls{hidden_layer}的\gls{AE}在数据域内能表示任意逼近数据的恒等函数。
+这意味着具有单\gls{hidden_layer}的\gls{AE}在数据域内能表示任意近似数据的恒等函数。
 但是，从输入到\gls{code}的映射是浅层的。
 这意味这我们不能任意添加约束，比如约束\gls{code}\gls{sparse}。
 深度\gls{AE}（\gls{encoder}至少包含一层额外\gls{hidden_layer}）在给定足够多的\gls{hidden_unit}的情况下，能以任意精度近似任何从输入到\gls{code}的映射。
