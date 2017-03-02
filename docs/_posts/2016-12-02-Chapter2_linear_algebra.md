@@ -92,7 +92,7 @@ share: false
 (\MA^\top)_{i,j}= \SA_{j,i}.
 \end{equation}
 
-\begin{figure}[!htb]
+\begin{figure}[!bht]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
@@ -583,7 +583,7 @@ $L^1$范数可以简化如下：
 在这里，矩阵$\MA$有两个标准正交的特征向量，对应特征值为$\lambda_1$的$\Vv^{(1)}$以及对应特征值为$\lambda_2$的$\Vv^{(2)}$。
 （左）我们画出了所有的单位向量$\Vu\in\SetR^2$的集合，构成一个单位圆。
 （右）我们画出了所有的$\MA\Vu$点的集合。
-通过观察$\MA$拉伸单位圆的方式，我们可以看到它能够将$\Vv^{(i)}$方向的空间拉伸了$\lambda_i$倍。	}
+通过观察$\MA$拉伸单位圆的方式，我们可以看到它将$\Vv^{(i)}$方向的空间拉伸了$\lambda_i$倍。	}
 \end{figure}
 
 <!-- % -- 41 -- -->
