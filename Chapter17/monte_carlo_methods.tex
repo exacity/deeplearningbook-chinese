@@ -61,7 +61,7 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \end{align}
 % 582
 
-此外，根据\firstgls{law_of_large_numbers}，如果样本$\Vx^{(i)}$独立且服从同一分布，那么其平均值几乎必然收敛到期望值，即
+此外，根据\firstgls{law_of_large_numbers}，如果样本$\Vx^{(i)}$是\gls{iid_chap18}的，那么其平均值几乎必然收敛到期望值，即
 \begin{align}
 \lim_{n\xrightarrow{}\infty} \hat{s}_n = s,
 \end{align}
@@ -118,7 +118,7 @@ p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 这个方差可以表示为
 \begin{align}
 \label{eqn:variance_of_is}
-\Var [\hat{s}_q] = \Var [\frac{p(\RVx)f(\RVx)}{q(\RVx)}]/n.
+\Var [\hat{s}_q] = \Var \left[\frac{p(\RVx)f(\RVx)}{q(\RVx)}\right]/n.
 \end{align}
 当$q$取到
 \begin{align}
@@ -443,8 +443,8 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 \else
     \centering
     \begin{tabular}{cc}
-    \includegraphics[width=0.45\figwidth]{Chapter17/figures/fig-adversarial}
     \includegraphics[width=0.45\figwidth]{Chapter17/figures/fig-dbm-bad-mixing}
+    \includegraphics[width=0.45\figwidth]{Chapter17/figures/fig-adversarial}    
     \end{tabular}
 \fi
 \caption{深度概率模型中一个\gls{mixing}缓慢问题的例证。
@@ -455,7 +455,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
 但是对于吉布斯链来说从分布的一个\gls{mode}转移到另一个仍然是很困难的，比如说改变数字。
 （右）从\gls{generative_adversarial_networks}中抽出的连续原始样本。
 因为\gls{ancestral_sampling}生成的样本之间互相独立，所以不存在\gls{mixing}问题。
-{译者注：此处左右好像搞反了。}}
+{译者注：原书此处左右搞反了。}} %??
 \label{fig:chap17_fig-dbm-bad-mixing}
 \end{figure}
 % 593 end
