@@ -60,7 +60,6 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \SetE[\hat{s}_n] = \frac{1}{n}\sum_{i=1}^{n}\SetE[f(\Vx^{(i)})] = \frac{1}{n}\sum_{i=1}^{n}s = s.
 \end{align}
 % 582
-
 此外，根据\firstgls{law_of_large_numbers}，如果样本$\Vx^{(i)}$是\gls{iid_chap18}的，那么其平均值几乎必然收敛到期望值，即
 \begin{align}
 \lim_{n\xrightarrow{}\infty} \hat{s}_n = s,
@@ -79,7 +78,8 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 这使得我们可以利用\gls{normal_distribution}的累积密度函数来估计$\hat{s}_n$的置信区间。
 % 583
 
-以上的所有结论都依赖于我们可以从基准分布$p(\RVx)$中轻易的采样，但是这个假设并不是一直成立的。
+
+以上的所有结论都依赖于我们可以从基准分布$p(\RVx)$中轻易地采样，但是这个假设并不是一直成立的。
 当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在\secref{sec:importance_sampling_chap17}会讲到。
 一种更加通用的方式是使用一个趋近于目标分布估计的序列。
 这就是\gls{mcmc}方法（见\secref{sec:markov_chain_monte_carlo_methods}）。
@@ -120,20 +120,18 @@ p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 \label{eqn:variance_of_is}
 \Var [\hat{s}_q] = \Var \left[\frac{p(\RVx)f(\RVx)}{q(\RVx)}\right]/n.
 \end{align}
-当$q$取到
+方差想要取到最小值，$q$需要满足
 \begin{align}
-q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z}
+q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z},
 \end{align}
-时，方差达到最小值。
 % 584
-
-
 在这里$Z$表示归一化常数，选择适当的$Z$使得$q^*(\Vx)$之和或者积分为$1$。
 一个好的\gls{importance_sampling}分布会把更多的权重放在被积函数较大的地方。
 事实上，当$f(\Vx)$的正负符号不变时，$\Var[\hat{s}_{q^*}]=0$， 这意味着当使用最优的$q$分布时，\emph{只需要采一个样本就足够了}。
 当然，这仅仅是因为计算$q^*$的时候已经解决了所有的问题。
 所以这种只需要采一个样本的方法往往是实践中无法实现的。
 % 584
+
 
 对于\gls{importance_sampling}来说任意$q$分布都是可行的（从得到一个期望上正确的值的角度来说），$q^*$指的是最优的$q$分布（从得到最小方差的角度上考虑）。
 从$q^*$中采样往往是不可行的，但是其他仍然能降低方差的$q$的选择还是可行的。
@@ -154,6 +152,7 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z}
 所以这种估计也被叫做渐进性无偏的。
 % 585
 
+
 尽管一个好的$q$分布的选择可以显著地提高\gls{monte_carlo}估计的效率，反之一个糟糕的$q$分布选择则会使效率更糟糕。
 我们回过头来看看方程~\eqref{eqn:variance_of_is}会发现，如果存在一个$q$使得$\frac{p(\Vx)f(\Vx)}{q(\Vx)}$很大，那么这个估计的方差也会很大。
 当$q(\Vx)$很小，而$f(\Vx)$和$p(\Vx)$都较大并且无法抵消$q$时，这种情况会非常明显。
@@ -163,8 +162,10 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 另一方面，当$q(\Vx^{(i)})\ll p(\Vx^{(i)}) \vert f(\Vx^{(i)})\vert $的时候， 样本会很少被采到，其对应的权值却会非常大。
 正因为后一个事件是很少发生的，这些样本很难被采到，通常使得对$s$的估计出现了典型的\gls{underestimation}，很难被整体的\gls{overestimation}抵消。
 这样的不均匀情况在高维数据屡见不鲜，因为在高维度分布中联合分布的动态域通常非常大。
-% 585
+% 585 end
 
+
+% 585 end
 尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}的应用中仍然扮演着重要的角色，包括\gls{DL}算法。
 比方说，\gls{importance_sampling}被应用于加速训练具有大规模词汇的神经网络\gls{language_model}的过程中（见\secref{sec:importance_sampling_chap12}）或者其他有着大量输出结点的\gls{NN}中。
 此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见\secref{sec:estimating_the_partition_function}）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见\secref{sec:variational_autoencoders}）。
@@ -222,11 +223,13 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 我们的目标就是$q^{(t)}(x)$收敛到$p(x)$。
 % 587 
 
+
 因为我们已经用正整数$x$重定义了这个问题，我们可以用一个向量$\Vv$来描述这个概率分布$q$，并且满足
 \begin{align}
 q(\RSx = i) = v_i.
 \end{align}
 % 587
+
 
 然后我们考虑更新单一的\gls{markov_chain}，从状态$x$到新状态$x'$。
 单一状态转移到$x'$的概率可以表示为
@@ -248,13 +251,13 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 \Vv^{(t)} = \MA \Vv^{(t-1)}.
 \end{align}
 % 588   head
-
 重复地使用\gls{markov_chain}来更新就相当于重复地乘上矩阵$\MA$。
 换一句话说，我们可以认为这一过程就是关于$\MA$的指数变化：
 \begin{align}
 \Vv^{(t)} = \MA^{t} \Vv^{(0)}.
 \end{align}
 % 588
+
 
 矩阵$\MA$有一种特殊的结构，因为它的每一列都代表了一个概率分布。
 这样的矩阵被称作是\firstgls{stochastic_matrix}。
@@ -264,15 +267,13 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 \Vv^{(t)} = (\MV \text{diag}(\Vlambda)\MV^{-1})^{t} \Vv^{(0)} = \MV \text{diag}(\Vlambda)^t \MV^{-1} \Vv^{(0)}.
 \end{align}
 % 588
-
-
 这个过程导致了所有的不等于$1$的特征值都衰减到$0$。
 在一些额外的较为宽松的假设下，我们可以保证矩阵$\MA$只有一个特征值为$1$。
 所以这个过程收敛到\firstgls{stationary_distribution}，有时也叫做\firstgls{equilibrium_distribution}。
 收敛时，我们得到
 \begin{align}
 \label{eqn:1723}
-\Vv ' = \MA \Vv = \Vv .
+\Vv ' = \MA \Vv = \Vv,
 \end{align}
 这个条件也适用于收敛之后的每一步。
 这就是特征向量方程。
@@ -289,7 +290,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 在这种情况下，一些研究者把这种\gls{markov_chain}叫做\firstgls{harris_chain}，但是这两种情况我们都用\gls{markov_chain}来表示。
 通常情况下，在一些宽松的条件下，一个带有转移算子$T$的\gls{markov_chain}都会收敛到一个固定点，这个固定点可以写成如下形式：
 \begin{align}
-q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx).
+q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \end{align}
 这个方程的离散版本就是方程~\eqref{eqn:1723}。	
 当$\RVx$离散时，这个期望对应着求和，而当$\RVx$连续时，这个期望对应的是积分。
