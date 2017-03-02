@@ -16,7 +16,7 @@
 面向的读者
 --------------------
 
-请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.4-alpha/dlbook_cn_v0.4-alpha.pdf)阅读。
+请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.4-alpha/dlbook_cn_v0.4-alpha.pdf.zip)阅读(已打包为zip，貌似现在不能上传PDF)。
 虽然这一版准确性有所提高，但我们仍然建议英文好的同学或研究者直接阅读[原版](http://www.deeplearningbook.org/)。
 
 
