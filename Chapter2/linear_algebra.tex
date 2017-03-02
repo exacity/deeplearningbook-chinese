@@ -22,7 +22,7 @@
 
 学习线性代数，会涉及以下几类数学概念：
 \begin{itemize}
-    \item \firstgls{scalar}：一个标量就是一个单独的数，不同于线性代数中大部分概念通常是多个数字的序列。
+    \item \firstgls{scalar}：一个标量就是一个单独的数，它不同于线性代数中研究的其他大部分对象（通常是多个数的数组）。
     我们用斜体表示标量。标量通常被赋予小写的变量名称。
     当我们介绍标量时，会明确它们是哪种类型的数。
     比如，在定义实数标量时，我们可能会说``令$\Ss \in \SetR$表示一条线的斜率''；在定义自然数标量时，我们可能会说``令$\Sn\in\SetN$表示元素的数目''。
@@ -36,8 +36,8 @@
     向量中的元素可以通过带脚标的斜体表示。
     向量$\Vx$的第一个元素是$\Sx_1$，第二个元素是$\Sx_2$，等等。
     我们也会注明存储在向量中的元素是什么类型的。
-    如果每个元素都属于$\SetR$，并且该向量有$\Sn$个元素，那么该向量属于实数集$\SetR$的$\Sn$次笛卡尔乘积构成的集合，表示为$\SetR^n$。
-    当我们需要明确表示向量中的元素时，我们会将元素排列成一个方括号包围的纵柱：
+    如果每个元素都属于$\SetR$，并且该向量有$\Sn$个元素，那么该向量属于实数集$\SetR$的$\Sn$次笛卡尔乘积构成的集合，记为$\SetR^n$。
+    当我们需要明确表示向量中的元素时，我们会将元素排列成一个方括号包围的纵列：
     \begin{equation}
         \Vx=\begin{bmatrix} \Sx_1   \\  
                             \Sx_2   \\ 
@@ -45,9 +45,9 @@
                             \Sx_n 
                 \end{bmatrix}.
     \end{equation}
-    我们可以把向量看作空间中的点，每个元素是不同的坐标轴上的坐标。
+    我们可以把向量看作空间中的点，每个元素是不同坐标轴上的坐标。
     
-    有时我们需要指定向量中的一些元素。
+    有时我们需要\gls{index}向量中的一些元素。
     在这种情况下，我们定义一个包含这些元素\gls{index}的集合，然后将该集合写在脚标处。
     比如，指定$\Sx_1$，$\Sx_3$和$\Sx_6$，我们定义集合$S=\{1,3,6\}$，然后写作$\Vx_S$。我
     们用符号－表示集合的补集中的\gls{index}。
@@ -60,8 +60,8 @@
     比如，$\SA_{1,1}$表示$\MA$左上的元素，$\SA_{m,n}$表示$\MA$右下的元素。
     我们通过用``:''表示水平坐标，以表示垂直坐标$\Si$中的所有元素。
     比如，$\MA_{i,:}$表示$\MA$中垂直坐标$i$上的一横排元素。
-    这也被称为$\MA$的第$i$\firstgls{row}。
-    同样地，$\MA_{:,i}$表示$\MA$的第$i$\firstgls{column}。
+    这也被称为$\MA$的第$i$~\firstgls{row}。
+    同样地，$\MA_{:,i}$表示$\MA$的第$i$~\firstgls{column}。
     当我们需要明确表示矩阵中的元素时，我们将它们写在用方括号包围起来的数组中：
     \begin{equation}
         \begin{bmatrix}
@@ -75,9 +75,9 @@
 
 % -- 30 --
 
-    \item \firstgls{tensor}：在某些情况下，我们会讨论不只两维坐标的数组。
+    \item \firstgls{tensor}：在某些情况下，我们会讨论坐标超过两维的数组。
     一般地，一个数组中的元素分布在若干维坐标的规则网格中，我们将其称之为张量。
-    我们使用这种字体$\TSA$来表示张量``A''。
+    我们使用字体$\TSA$来表示张量``A''。
     张量$\TSA$中坐标为$(i,j,k)$的元素记作$\TEA_{i,j,k}$。
 \end{itemize}
 
@@ -90,7 +90,15 @@
 (\MA^\top)_{i,j}= \SA_{j,i}.
 \end{equation}
 
-\begin{figure}[!htb]
+向量可以看作是只有一列的矩阵。
+对应地，向量的转置可以看作是只有一行的矩阵。
+有时，我们通过将向量元素作为行矩阵写在文本行中，然后使用转置操作将其变为标准的列向量，来定义一个向量，比如$\Vx=[\Sx_1, \Sx_2, \Sx_3]^\top$.
+
+
+标量可以看作是只有一个元素的矩阵。
+因此，标量的转置等于它本身，$\Sa=\Sa^\top$。
+
+\begin{figure}[!hbt]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
@@ -100,21 +108,13 @@
 \label{fig:chap2_transpose}
 \end{figure}
 
-向量可以看作是只有一列的矩阵。
-对应地，向量的转置可以看作是只有一行的矩阵。
-有时，我们通过将向量元素作为行矩阵写在文本行中，然后使用转置操作将其变为标准的列向量，来定义一个向量，比如$\Vx=[\Sx_1, \Sx_2, \Sx_3]^\top$.
-
-
-标量可以看作是只有一个元素的矩阵。
-因此，标量的转置等于它本身，$\Sa=\Sa^\top$。
-
 % -- 31 --
 
 只要矩阵的形状一样，我们可以把两个矩阵相加。
 两个矩阵相加是指对应位置的元素相加，比如$\MC=\MA+\MB$，其中$\SC_{i,j}= \SA_{i,j}+\SB_{i,j}$。
 
 
-标量和矩阵相乘，或是和矩阵相加时，我们将其与矩阵的每个元素相乘或相加，比如$\MD = \Sa \cdot \MB + \Sc$，其中$\SD_{i,j} = \Sa\cdot  \SB_{i,j} + \Sc$。
+标量和矩阵相乘，或是和矩阵相加时，我们只需将其与矩阵的每个元素相乘或相加，比如$\MD = \Sa \cdot \MB + \Sc$，其中$\SD_{i,j} = \Sa\cdot  \SB_{i,j} + \Sc$。
 
 
 在深度学习中，我们也使用一些不那么常规的符号。
@@ -146,7 +146,7 @@
 
 
 需要注意的是，两个矩阵的标准乘积\emph{不是}指两个矩阵中对应元素的乘积。
-不过，那样的矩阵操作确实是存在的，被称为\firstgls{element_wise_product}或者\firstgls{hadamard_product}，表示为$\MA\odot\MB$。
+不过，那样的矩阵操作确实是存在的，被称为\firstgls{element_wise_product}或者\firstgls{hadamard_product}，记为$\MA\odot\MB$。
 
 
 两个相同维数的向量$\Vx$和$\Vy$的\firstgls{dot_product}可看作是矩阵乘积$\Vx^\top\Vy$。
@@ -155,16 +155,10 @@
 
 矩阵乘积运算有许多有用的性质，从而使矩阵的数学分析更加方便。
 比如，矩阵乘积服从分配律：
-
-
 \begin{equation}
     \MA(\MB+\MC)=\MA\MB +\MA\MC.
 \end{equation}
-
-
 矩阵乘积也服从结合律：
-
-
 \begin{equation}
 \MA(\MB\MC)=(\MA\MB)\MC.
 \end{equation}
@@ -173,10 +167,8 @@
 % -- 32 --
 
 
-不同于标量乘积，矩阵乘积并不满足交换律（$\MA\MB=\MB\MA$的情况并非总是满足）。
+不同于标量乘积，矩阵乘积\emph{并不}满足交换律（$\MA\MB=\MB\MA$的情况并非总是满足）。
 然而，两个向量的\firstgls{dot_product}满足交换律：
-
-
 \begin{equation}
 \label{eq:2.8}
 \Vx^\top\Vy=\Vy^\top\Vx.
@@ -184,13 +176,9 @@
 
 
 矩阵乘积的转置有着简单的形式：
-
-
 \begin{equation}
 (\MA\MB)^\top=\MB^\top\MA^\top.
 \end{equation}
-
-
 利用向量乘积是标量，标量转置是自身的事实，我们可以证明\eqnref{eq:2.8}：
 \begin{equation}
     \Vx^\top \Vy = \left(\Vx^\top \Vy \right)^\top = \Vy^\top \Vx.
@@ -201,8 +189,6 @@
 
 
 现在我们已经知道了足够多的线性代数符号，可以表达下列线性方程组：
-
-
 \begin{equation}
 \label{eq:2.11}
 \MA\Vx=\Vb
@@ -237,7 +223,8 @@
 \label{sec:identity_and_inverse_atrices}
 
 
-线性代数提供了被称为\firstgls{matrix_inverse}的强大工具，使我们能够解析地求解具有多值矩阵$\MA$的\eqnref{eq:2.11}。
+线性代数提供了被称为\firstgls{matrix_inverse}的强大工具。
+对于大多数矩阵$\MA$，我们都能通过\gls{matrix_inverse}解析地求解\eqnref{eq:2.11}。
 
 
 为了描述矩阵逆，我们首先需要定义\firstgls{identity_matrix}的概念。
@@ -247,11 +234,8 @@
 \begin{equation}
     \forall \Vx \in \SetR^{\Sn}, \MI_{\Sn} \Vx = \Vx.
 \end{equation}
-
-
 单位矩阵的结构很简单：所有沿主对角线的元素都是$1$，而所有其他位置的元素都是$0$。
-如\figref{fig:chap2_empty2}所示。
-
+如\figref{fig:chap2_empty2}所示的例子。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -270,8 +254,9 @@
 \end{figure}
 
 
-矩阵$\MA$的\firstgls{matrix_inverse}记作$\MA^{-1}$，定义为如下的矩阵
+矩阵$\MA$的\firstgls{matrix_inverse}记作$\MA^{-1}$，其定义的矩阵满足如下条件
 \begin{equation} \MA^{-1}\MA = \MI_{\Sn}. \end{equation}
+
 现在我们可以通过以下步骤求解\eqnref{eq:2.11}：
 \begin{gather}
 \MA\Vx=\Vb \\
@@ -281,7 +266,7 @@
 \end{gather}
 
 
-当然，这取决于能否找到一个逆矩阵$\MA^{-1}$。
+当然，这取决于我们能否找到一个逆矩阵$\MA^{-1}$。
 在接下来的章节中，我们会讨论逆矩阵$\MA^{-1}$存在的条件。
 
 
@@ -308,7 +293,7 @@
 
 
 为了分析方程有多少个解，我们可以将$\MA$的列向量看作是从\firstgls{origin}（元素都是零的向量）出发的不同方向，确定有多少种方法可以到达向量$\Vb$。
-在这个观点中，向量$\Vx$中的每个元素表示我们应该沿着这些方向走多远，即$\Sx_{\Si}$表示我们需要沿着第$\Si$个向量的方向走多远：
+在这个观点下，向量$\Vx$中的每个元素表示我们应该沿着这些方向走多远，即$\Sx_{\Si}$表示我们需要沿着第$\Si$个向量的方向走多远：
 \begin{equation}
 \MA \Vx = \sum_i x_i \MA_{:,i}.
 \end{equation}
@@ -324,7 +309,7 @@
 这个特殊的\gls{span}被称为$\MA$的\firstgls{column_space}或者$\MA$的\firstgls{range}。
 
 
-为了让方程$\MA \Vx=\Vb$对于任意的向量$\Vb \in \SetR^m$都有解的话，我们要求$\MA$的列空间构成整个$\SetR^{\Sm}$。
+为了使方程$\MA \Vx=\Vb$对于任意向量$\Vb \in \SetR^m$都存在解，我们要求$\MA$的列空间构成整个$\SetR^{\Sm}$。
 如果$\SetR^m$中的某个点不在$\MA$的列空间中，那么该点对应的$\Vb$会使得该方程没有解。
 矩阵$\MA$的列空间是整个$\SetR^m$的要求，意味着$\MA$至少有$m$列，即$n\geq m$。
 否则，$\MA$列空间的维数会小于$m$。
@@ -345,7 +330,7 @@
 换言之，虽然该矩阵有$2$列，但是它的列空间仍然只是一条线，不能涵盖整个$\SetR^2$空间。
 
 
-正式地，这种冗余被称为\firstgls{linear_dependence}。
+正式地说，这种冗余被称为\firstgls{linear_dependence}。
 如果一组向量中的任意一个向量都不能表示成其他向量的线性组合，那么这组向量被称为\firstgls{linearly_independent}。
 如果某个向量是一组向量中某些向量的线性组合，那么我们将这个向量加入到这组向量后不会增加这组向量的\gls{span}。
 这意味着，如果一个矩阵的\gls{column_space}涵盖整个$\SetR^m$，那么该矩阵必须包含至少一组$m$个线性无关的向量。
@@ -393,7 +378,7 @@
 
 
 范数（包括$L^p$范数）是将向量映射到非负值的函数。
-直观上来说，向量$\Vx$的范数是衡量从原点到点$\Vx$的距离。
+直观上来说，向量$\Vx$的范数衡量从原点到点$\Vx$的距离。
 更严格地说，范数是满足下列性质的任意函数：
 \begin{itemize}
 \item $f(\Vx) = 0 \Rightarrow \Vx = \mathbf{0}$ 
@@ -404,15 +389,15 @@
 
 当$p=2$时，$L^2$范数被称为\firstgls{euclidean_norm}。
 它表示从原点出发到向量$\Vx$确定的点的欧几里得距离。
-$L^2$范数十分频繁地出现在机器学习中，经常简化表示为$\norm{x}$，略去了下标$2$。
+$L^2$范数在机器学习中出现地十分频繁，经常简化表示为$\norm{x}$，略去了下标$2$。
 平方$L^2$范数也经常用来衡量向量的大小，可以简单地通过\gls{dot_product} $\Vx^\top\Vx$计算。
 
 
 平方$L^2$范数在数学和计算上都比$L^2$范数本身更方便。
 例如，平方$L^2$范数对$\Vx$中每个元素的导数只取决于对应的元素，而$L^2$范数对每个元素的导数却和整个向量相关。
 但是在很多情况下，平方$L^2$范数也可能不受欢迎，因为它在原点附近增长得十分缓慢。
-在某些机器学习应用中，区分恰好是零的元素和非零小值的元素是很重要的。
-在这些情况下，我们转向使用在各个位置斜率相同，同时保持简单的数学形式的函数：$L^1$范数。
+在某些机器学习应用中，区分恰好是零的元素和非零但值很小的元素是很重要的。
+在这些情况下，我们转而使用在各个位置斜率相同，同时保持简单的数学形式的函数：$L^1$范数。
 $L^1$范数可以简化如下：
 \begin{equation}
     \norm{\Vx}_1 = \sum_i  |x_i|.
@@ -423,7 +408,7 @@ $L^1$范数可以简化如下：
 
 有时候我们会统计向量中非零元素的个数来衡量向量的大小。
 有些作者将这种函数称为``$L^0$范数''，但是这个术语在数学意义上是不对的。
-向量的非零元素的数目不是范数，因为对向量放缩$\alpha$倍不会改变该向量非零元素的数目。
+向量的非零元素的数目不是范数，因为对向量缩放$\alpha$倍不会改变该向量非零元素的数目。
 因此，$L^1$范数经常作为表示非零元素数目的替代函数。
 
 
@@ -431,20 +416,20 @@ $L^1$范数可以简化如下：
 % -- 37 --
 
 
-另外一个经常在机器学习中出现的范数是$L^\infty$范数，也被称为\firstgls{max_norm}。
-这个范数表示向量中具有最大大小的元素的绝对值：
+另外一个经常在机器学习中出现的范数是$L^\infty$范数，也被称为~\firstgls{max_norm}。
+这个范数表示向量中具有最大幅值的元素的绝对值：
 \begin{equation}
     \norm{\Vx}_\infty = \max_i |x_i|.
 \end{equation}
 
 
-有时候我们可能也需要衡量矩阵的大小。
+有时候我们可能也希望衡量矩阵的大小。
 在深度学习中，最常见的做法是使用\firstgls{frobenius_norm}，
 \begin{equation}
     \norm{\MA}_F = \sqrt{\sum_{i,j} A_{i,j}^2}, 
 %%lyj 原文是\norm{A}_F ...
 \end{equation}
-类似于向量的$L^2$范数。
+其类似于向量的$L^2$范数。
 
 
 两个向量的\firstgls{dot_product}可以用范数来表示。
@@ -467,18 +452,18 @@ $L^1$范数可以简化如下：
 形式上，矩阵$\MD$是对角矩阵，当且仅当对于所有的$i\neq j$，$\SD_{i,j}=0$。
 我们已经看到过一个对角矩阵：单位矩阵，对角元素全部是$1$。
 我们用$\text{diag}(\Vv)$表示一个对角元素由向量$\Vv$中元素给定的对角方阵。
-对角矩阵受到关注，部分原因是对角矩阵的乘法计算很高效。
+对角矩阵受到关注的部分原因是对角矩阵的乘法计算很高效。
 计算乘法$\text{diag}(\Vv)\Vx$，我们只需要将$\Vx$中的每个元素$x_i$放大$v_i$倍。
 换言之，$\text{diag}(\Vv)\Vx=\Vv \odot \Vx$。
 计算对角方阵的逆矩阵也很高效。
 对角方阵的逆矩阵存在，当且仅当对角元素都是非零值，在这种情况下，$\text{diag}(\Vv)^{-1}=\text{diag}([1/v_1,\dots,1/v_n]^\top)$。
-在很多情况下，我们可以根据任意矩阵导出一些通用的机器学习算法；但通过将一些矩阵限制为对角矩阵，我们可以得到计算代价较低的（并且描述语言较少的）算法。
+在很多情况下，我们可以根据任意矩阵导出一些通用的机器学习算法；但通过将一些矩阵限制为对角矩阵，我们可以得到计算代价较低的（并且简明扼要的）算法。
 
 
 不是所有的对角矩阵都是方阵。
 长方形的矩阵也有可能是对角矩阵。
-长方形对角矩阵没有逆矩阵，但我们仍然可以很快地计算它们的乘法。
-对于一个长方形对角矩阵$\MD$而言，乘法$\MD\Vx$会涉及到$\Vx$中每个元素的放缩，如果$\MD$是瘦长型矩阵，那么在放缩后的末尾添加一些零；如果$\MD$是胖宽型矩阵，那么在放缩后去掉最后一些元素。
+非方阵的对角矩阵没有逆矩阵，但我们仍然可以高效地计算它们的乘法。
+对于一个长方形对角矩阵$\MD$而言，乘法$\MD\Vx$会涉及到$\Vx$中每个元素的缩放，如果$\MD$是瘦长型矩阵，那么在缩放后的末尾添加一些零；如果$\MD$是胖宽型矩阵，那么在缩放后去掉最后一些元素。
 
 
 % -- 38 --
@@ -503,7 +488,7 @@ $L^1$范数可以简化如下：
 如果这些向量不仅互相正交，并且范数都为$1$，那么我们称它们是\firstgls{orthonormal}。
 
 
-\firstgls{orthogonal_matrix}是指行向量是标准正交的，列向量是标准正交的方阵：
+\firstgls{orthogonal_matrix}是指行向量和列向量是分别标准正交的方阵：
 \begin{equation}
     \MA^\top\MA=\MA\MA^\top=\MI.
 \end{equation}
@@ -512,7 +497,7 @@ $L^1$范数可以简化如下：
     \MA^{-1}=\MA^\top,
 \end{equation}
 所以正交矩阵受到关注是因为求逆计算代价小。
-需要注意正交矩阵的定义。
+我们需要注意正交矩阵的定义。
 反直觉地，正交矩阵的行向量不仅是正交的，还是标准正交的。
 对于行向量或列向量互相正交但不是标准正交的矩阵没有对应的专有术语。
 
@@ -537,7 +522,7 @@ $L^1$范数可以简化如下：
 \firstgls{eigendecomposition}是使用最广的矩阵分解之一，即我们将矩阵分解成一组特征向量和特征值。
 
 
-方阵$\MA$的\firstgls{eigenvector}是指与$\MA$相乘后相当于对该向量进行放缩的非零向量$\Vv$：
+方阵$\MA$的\firstgls{eigenvector}是指与$\MA$相乘后相当于对该向量进行缩放的非零向量$\Vv$：
 \begin{equation}
     \MA\Vv=\lambda \Vv.
 \end{equation}
@@ -545,13 +530,13 @@ $L^1$范数可以简化如下：
 （类似地，我们也可以定义\firstgls{left_Evector} $\Vv^\top\MA=\lambda \Vv^\top$，但是通常我们更关注\firstgls{right_Evector}）。
 
 
-如果$\Vv$是$\MA$的特征向量，那么任何放缩后的向量$s\Vv$($s\in \SetR$，$s\neq 0$)也是$\MA$的特征向量。
+如果$\Vv$是$\MA$的特征向量，那么任何缩放后的向量$s\Vv$~($s\in \SetR$，$s\neq 0$)也是$\MA$的特征向量。
 此外，$s\Vv$和$\Vv$有相同的特征值。
 基于这个原因，通常我们只考虑单位特征向量。
 
 
 假设矩阵$\MA$有$n$个线性无关的特征向量$\{\Vv^{(1)}, \dots, \Vv^{(n)}\}$，对应着特征值$\{\lambda_1, \dots , \lambda_n \}$。
-我们将特征向量连接成一个矩阵，使得每一列是一个特征向量：$V=[\Vv^{(1)}, \dots, \Vv^{(n)}]$.
+我们将特征向量连接成一个矩阵，使得每一列是一个特征向量：$\MV=[\Vv^{(1)}, \dots, \Vv^{(n)}]$.
 类似地，我们也可以将特征值连接成一个向量$\Vlambda = [\lambda_1, \dots , \lambda_n]^\top$。
 因此$\MA$的\firstgls{eigendecomposition}可以记作
 \begin{equation}
@@ -574,7 +559,7 @@ $L^1$范数可以简化如下：
 其中$\MQ$是$\MA$的特征向量组成的正交矩阵，$\VLambda$是对角矩阵。
 特征值$\Lambda_{i,i}$对应的特征向量是矩阵$\MQ$的第$i$列，记作$\MQ_{:,i}$。
 因为$\MQ$是正交矩阵，我们可以将$\MA$看作是沿方向$\Vv^{(i)}$延展$\lambda_i$倍的空间。
-如\figref{fig:chap2_eigen_ellipse}所示。
+如\figref{fig:chap2_eigen_ellipse}所示的例子。
 
 % -- 40 --
 
@@ -595,7 +580,7 @@ $L^1$范数可以简化如下：
 在这里，矩阵$\MA$有两个\gls{orthonormal}的特征向量，对应特征值为$\lambda_1$的$\Vv^{(1)}$以及对应特征值为$\lambda_2$的$\Vv^{(2)}$。
 （左）我们画出了所有的单位向量$\Vu\in\SetR^2$的集合，构成一个单位圆。
 （右）我们画出了所有的$\MA\Vu$点的集合。
-通过观察$\MA$拉伸单位圆的方式，我们可以看到它能够将$\Vv^{(i)}$方向的空间拉伸了$\lambda_i$倍。	}
+通过观察$\MA$拉伸单位圆的方式，我们可以看到它将$\Vv^{(i)}$方向的空间拉伸了$\lambda_i$倍。	}
 \label{fig:chap2_eigen_ellipse}
 \end{figure}
 
@@ -618,12 +603,12 @@ $L^1$范数可以简化如下：
 
 
 
-\section{\gls{SVD}}
+\section{\glsentrytext{SVD}}
 \label{sec:singular_value_decomposition}
 
 在\secref{sec:eigendecomposition}，我们探讨了如何将矩阵分解成特征向量和特征值。
 还有另一种分解矩阵的方法，被称为\firstall{SVD}，将矩阵分解为\firstgls{Svector}和\firstgls{Svalue}。
-通过\gls{SVD}，我们会得到一些与\gls{eigendecomposition}同类型的信息。
+通过\gls{SVD}，我们会得到一些与\gls{eigendecomposition}相同类型的信息。
 然而，\gls{SVD}有更广泛的应用。
 每个实数矩阵都有一个\gls{SVD}，但不一定都有\gls{eigendecomposition}。
 例如，非方阵的矩阵没有\gls{eigendecomposition}，这时我们只能使用\gls{SVD}。
@@ -645,12 +630,12 @@ $L^1$范数可以简化如下：
 
 % -- 42 --
 
-这些矩阵每一个都拥有特殊的结构。
-矩阵$\MU$和$\MV$都是正交矩阵，矩阵$\MD$是对角矩阵。
+这些矩阵中的每一个经定义后都拥有特殊的结构。
+矩阵$\MU$和$\MV$都被定义为正交矩阵，而矩阵$\MD$被定义为对角矩阵。
 注意，矩阵$\MD$不一定是方阵。
 
 
-对角矩阵$\MD$对角线上的元素被称为矩阵$\MA$的\gls{Svalue}。
+对角矩阵$\MD$对角线上的元素被称为矩阵$\MA$的\firstgls{Svalue}。
 矩阵$\MU$的列向量被称为\firstgls{left_Svector}，矩阵$\MV$的列向量被称\firstgls{right_Svector}。
 
 
@@ -678,14 +663,14 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 \begin{equation}
     \Vx=\MB\Vy.
 \end{equation}
-是否存在一个唯一的映射，将$\MA$映射到$\MB$，取决于问题的形式。
+取决于问题的形式，我们可能无法设计一个唯一的映射将$\MA$映射到$\MB$。
 
 
 如果矩阵$\MA$的行数大于列数，那么上述方程可能没有解。
 如果矩阵$\MA$的行数小于列数，那么上述矩阵可能有多个解。
 
 
-\firstgls{Moore}使我们能够解决这类问题。
+\firstgls{Moore}使我们在这类问题上取得了一定的进展。
 矩阵$\MA$的伪逆定义为：
 \begin{equation}
     \MA^+ = \lim_{a \searrow 0} (\MA^\top\MA + \alpha \MI)^{-1} \MA^\top.
@@ -726,20 +711,21 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 \end{equation}
 
 
-用迹运算表示表达式，我们可以使用很多有用的等式来操纵表达式。
+用迹运算表示表达式，我们可以使用很多有用的等式巧妙地处理表达式。
 例如，迹运算在转置运算下是不变的：
 \begin{equation}
     \Tr(\MA)=\Tr(\MA^\top).
 \end{equation}
 
 
-多个矩阵乘积得到的方阵的迹，和将这些矩阵中最后一个挪到最前面之后乘积的迹是相同的。
+多个矩阵相乘得到的方阵的迹，和将这些矩阵中的最后一个挪到最前面之后相乘的迹是相同的。
 当然，我们需要考虑挪动之后矩阵乘积依然定义良好：
 \begin{equation}
 \Tr(\MA\MB\MC)=\Tr(\MC\MA\MB)= \Tr(\MB\MC\MA).
 \end{equation}
 或者更一般地，
-\begin{equation}
+\begin{equation} 
+\label{eq:2.52}
 \Tr(\prod_{i=1}^n \MF^{(i)})= \Tr(\MF^{(n)} \prod_{i=1}^{n-1} \MF^{(i)}).
 \end{equation}
 即使循环置换后矩阵乘积得到的矩阵形状变了，迹运算的结果依然不变。
@@ -747,7 +733,7 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 \begin{equation} 
     \Tr(\MA\MB)= \Tr(\MB\MA)
 \end{equation}
-即使$\MA\MB \in \SetR^{m\times m}$和$\MB\MA \in \SetR^{n\times n}$。
+尽管$\MA\MB \in \SetR^{m\times m}$和$\MB\MA \in \SetR^{n\times n}$。
 
 
 % -- 44 --
@@ -764,7 +750,7 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 行列式等于矩阵特征值的乘积。
 行列式的绝对值可以用来衡量矩阵参与矩阵乘法后空间扩大或者缩小了多少。
 如果行列式是$0$，那么空间至少沿着某一维完全收缩了，使其失去了所有的体积。
-如果行列式是$1$，那么矩阵参与矩阵乘法没有改变空间体积。
+如果行列式是$1$，那么这个转换保持空间体积不变。
 
 
 
@@ -787,17 +773,17 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 
 
 \glssymbol{PCA}由我们选择的解码函数而定。
-具体地，为了简化解码器，我们使用矩阵乘法将编码映射回$\SetR^n$，即$g(\Vc)=\MD\Vc$，其中$\MD\in \SetR^{n\times l}$ 是解码矩阵。
+具体地，为了简化解码器，我们使用矩阵乘法将编码映射回$\SetR^n$，即$g(\Vc)=\MD\Vc$，其中$\MD\in \SetR^{n\times l}$是定义解码的矩阵。
 
 % -- 45 --
 
 目前为止所描述的问题，可能会有多个解。
 因为如果我们按比例地缩小所有点对应的编码向量$c_i$，那么我们只需按比例放大$\MD_{:,i}$，即可保持结果不变。
-为了让问题有唯一解，我们限制$\MD$中所有列向量都有\gls{unit_norm}。
+为了使问题有唯一解，我们限制$\MD$中所有列向量都有\gls{unit_norm}。
 
 
 计算这个解码器的最优编码可能是一个困难的问题。
-为了使编码问题简单一些，\glssymbol{PCA}限制$\MD$的列向量为彼此正交的（注意，除非$l=n$，否则严格上$\MD$不是一个正交矩阵）。
+为了使编码问题简单一些，\glssymbol{PCA}限制$\MD$的列向量彼此正交（注意，除非$l=n$，否则严格意义上$\MD$不是一个正交矩阵）。
 
 
 为了将这个基本想法变为我们能够实现的算法，首先我们需要明确如何根据每一个输入$\Vx$得到一个最优编码$\Vc^*$。
@@ -805,8 +791,7 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 我们使用范数来衡量它们之间的距离。
 在\glssymbol{PCA}算法中，我们使用$L^2$范数：
 \begin{equation}
-\label{eq:2.52}
-\Vc^* = \underset{\Vc}{\arg\min} \norm{\Vx-g(\Vc)}_2.
+ \Vc^* = \underset{\Vc}{\arg\min} \norm{\Vx-g(\Vc)}_2.
 \end{equation}
 
 
@@ -815,8 +800,6 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 \begin{equation}
 \Vc^* = \argmin_{\Vc} \norm{\Vx - g(\Vc)}_2^2.
 \end{equation}
-
-
 该最小化函数可以简化成
 \begin{equation}
 (\Vx-g(\Vc))^\top(\Vx-g(\Vc))
@@ -846,7 +829,7 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 \begin{equation}
     = \underset{\Vc}{\arg\min} -2\Vx^\top\MD\Vc + \Vc^\top\MI_l\Vc
 \end{equation}
-(矩阵$\MD$有正交和单位范数约束)
+(矩阵$\MD$的正交性和单位范数约束)
 \begin{equation}
     = \underset{\Vc}{\arg\min} -2\Vx^\top\MD\Vc + \Vc^\top\Vc
 \end{equation}
@@ -861,12 +844,13 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 
 
 这使得算法很高效：最优编码$\Vx$只需要一个矩阵-向量乘法操作。
-我们使用该编码函数去编码向量：
+为了编码向量，我们使用编码函数：
 \begin{equation}
     f(\Vx)=\MD^\top\Vx.
 \end{equation}
 进一步使用矩阵乘法，我们也可以定义\glssymbol{PCA}重构操作：
 \begin{equation}
+\label{eq:2.67}
     r(\Vx)=g(f(\Vx)) = \MD\MD^\top \Vx.
 \end{equation}
 
@@ -876,16 +860,16 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 因为我们用相同的矩阵$\MD$对所有点进行解码，我们不能再孤立地看待每个点。
 反之，我们必须最小化所有维数和所有点上的误差矩阵的\gls{frobenius_norm}：
 \begin{equation}
-    \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{ 限制在 } \MD^\top\MD = \MI_l.
+\label{eq:2.68}
+    \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{ subject to } \MD^\top\MD = \MI_l.
 \end{equation}
 
 为了推导用于寻求$\MD^*$的算法，我们首先考虑$l=1$的情况。
 在这种情况下，$\MD$是一个单一向量$\Vd$。
-将\eqnref{eq:2.67}代入\eqnref{eq:2.68}，简化$\MD$为$\Vd$，问题化为
+将\eqnref{eq:2.67}代入\eqnref{eq:2.68}，简化$\MD$为$\Vd$，问题简化为
 \begin{equation}
-\label{eq:2.67}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd\Vd^\top \Vx^{(i)}}_2^2
-    \text{ 限制在 } \norm{\Vd}_2 = 1.
+    \text{ subject to } \norm{\Vd}_2 = 1.
 \end{equation}
 
 % -- 47 --
@@ -895,25 +879,24 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 将该标量放在左边的写法更为传统。
 于是我们通常写作如下：
 \begin{equation}
-\label{eq:2.68}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vd^\top \Vx^{(i)}\Vd}_2^2
-        \text{ 限制在 } \norm{\Vd}_2 = 1,
+        \text{ subject to } \norm{\Vd}_2 = 1,
 \end{equation}
 或者，考虑到标量的转置和自身相等，我们也可以写作：
 \begin{equation}
     \Vd^* = \underset{\Vd}{\arg\min} \sum_i \norm{\Vx^{(i)} - \Vx^{(i)\top}\Vd\Vd}_2^2
-        \text{ 限制在 } \norm{\Vd}_2 = 1.
+        \text{ subject to } \norm{\Vd}_2 = 1.
 \end{equation}
 读者应该对这些重排写法慢慢熟悉起来。
 
 
 此时，使用单一矩阵来重述问题，比将问题写成求和形式更有帮助。
 这有助于我们使用更紧凑的符号。
-让$\MX\in\SetR^{m\times n}$是将描述点的向量堆叠在一起的矩阵，使得$\MX_{i,:}=\Vx^{(i)^\top}$。
+将表示各点的向量堆叠成一个矩阵，记为$\MX\in\SetR^{m\times n}$，其中$\MX_{i,:}=\Vx^{(i)^\top}$。
 原问题可以重新表述为：
 \begin{equation}
     \Vd^* = \underset{\Vd}{\arg\min} \norm{\MX - \MX\Vd\Vd^\top}_F^2
-        \text{ 限制在 } \Vd^\top \Vd = 1.
+        \text{ subject to } \Vd^\top \Vd = 1.
 \end{equation}
 暂时不考虑约束，我们可以将\gls{frobenius_norm}简化成下面的形式：
 \begin{equation}
@@ -946,25 +929,25 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 
 此时，我们再来考虑约束条件:
 \begin{equation}
-    = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
-    \text{ 限制在 } \Vd^\top \Vd = 1
+    \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd\Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top\Vd\Vd^\top )
+    \text{ subject to } \Vd^\top \Vd = 1
 \end{equation}
 \begin{equation}
     = \underset{\Vd}{\arg\min} \, - 2\Tr(\MX^\top\MX \Vd \Vd^\top) + \Tr(\MX^\top\MX\Vd\Vd^\top )
-    \text{ 限制在 } \Vd^\top \Vd = 1
+    \text{ subject to } \Vd^\top \Vd = 1
 \end{equation}
  (因为约束条件)
  \begin{equation}
      = \underset{\Vd}{\arg\min} \, - \Tr(\MX^\top\MX \Vd\Vd^\top)
-     \text{ 限制在 } \Vd^\top \Vd = 1
+     \text{ subject to } \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
      = \underset{\Vd}{\arg\max} \, \Tr(\MX^\top\MX \Vd\Vd^\top)
-     \text{ 限制在 } \Vd^\top \Vd = 1
+     \text{ subject to } \Vd^\top \Vd = 1
  \end{equation}
  \begin{equation}
      = \underset{\Vd}{\arg\max} \, \Tr(\Vd^\top\MX^\top\MX \Vd)
-     \text{ 限制在 } \Vd^\top \Vd = 1
+     \text{ subject to } \Vd^\top \Vd = 1 .
  \end{equation}
 
 
@@ -973,11 +956,11 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 
 
 以上推导特定于$l=1$的情况， 仅得到了第一个主成分。
-更一般地，当我们希望得到主成分的基时，矩阵$\MD$由几个最大的特征值对应的的$l$个特征向量组成。
+更一般地，当我们希望得到主成分的基时，矩阵$\MD$由前$l$个最大的特征值对应的特征向量组成。
 这个结论可以通过归纳法证明，我们建议将此证明作为练习。
 
 
-线性代数是学习深度学习所必须掌握的基础数学学科之一。
+线性代数是理解深度学习所必须掌握的基础数学学科之一。
 另一门在机器学习中无处不在的重要数学学科是概率论，我们将在下章探讨。
 
 
