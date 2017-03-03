@@ -556,7 +556,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
 这种新的二维的卷积模型并不是将输入的频谱当作一个长的向量，而是当成是一个图像，其中一个轴对应着时间，另一个轴对应的是谱分量的频率。
 % 448
 
-另一个重要的至今仍然活跃的推动，是完全抛弃了\glssymbol{HMM}的\gls{end_to_end}\gls{DL}\gls{SR}系统。
+完全抛弃\glssymbol{HMM}并转向研究\gls{end_to_end}\gls{DL}\gls{SR}系统是至今仍然活跃的另一个重要推动。
 这个领域第一个主要的突破是\citet{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}\gls{RNN}（见\secref{sec:the_long_short_term_memory_and_other_gated_rnns}），使用了帧－\gls{phoneme}排列的\glssymbol{MAP}推断，就像\citet{chapter-gradient-document-2001}以及CTC框架~\citep{Graves-et-al-2006,Graves-book2012}中一样。
 一个深度\gls{RNN}~\citep{Graves-et-al-ICASSP2013}每个\gls{time_step}的各层都有状态变量，两种\gls{unfolded_graph}的方式导致两种不同深度：一种是普通的根据层的堆叠衡量的深度，另一种根据时间\gls{unfolding}衡量的深度。
 这个工作把TIMIT数据集上\gls{phoneme}的错误率记录降到了的新低$17.7$\%。
