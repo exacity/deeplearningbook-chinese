@@ -8,29 +8,32 @@
 尝试这些操作都需要大量时间，因此确定正确做法，而不盲目猜测是尤为重要的。
 
 
-本书的大部分内容都是关于不同的\gls{ML}模型、训练算法和目标函数。
+本书的大部分内容都是关于不同的\gls{ML}模型、训练算法和\gls{objective_function}。
 这可能给人一种印象，那就是成为\gls{ML}专家的最重要因素是了解各种各样的\gls{ML}技术，熟悉各种不同的数学。
-在实践中，正确使用一个普通算法通常比草率使用一个不清楚的算法效果更好。
+在实践中，正确使用一个普通算法通常比草率地使用一个不清楚的算法效果更好。
 正确应用一个算法需要掌握一些相当简单的方法。
 本章的许多建议都来自\cite{ng-lecture-advice}。
+
 
 我们建议实践中参考以下几个设计流程：
 \begin{itemize}
 \item 确定目标——使用什么\gls{error_metric}，并为此\gls{error_metric}指定目标值。
 这些目标和\gls{error_metric}应由该应用旨在解决的问题决定。
+% -- 409 end
 
-% -- 409 --
 
 \item 尽快建立一个\gls{end_to_end}的工作流程，包括合适的\gls{performance_metrics}的估计。
+% 410 head
 
 \item 搭建系统，确定性能瓶颈。
-检查哪个部分的性能差于预期，以及是否是因为\gls{overfitting}，\gls{underfitting}，或者数据或软件缺陷造成的。
+检查哪个部分的性能差于预期，以及是否是因为\gls{overfitting}、\gls{underfitting}，或者数据或软件缺陷造成的。
 
-\item 根据具体观察反复地逐步改动，如收集新数据、调整\gls{hyperparameter}，或改进算法。
+\item 根据具体观察反复地进行增量式的改动，如收集新数据、调整\gls{hyperparameter}，或改进算法。
 \end{itemize}
 
-我们将使用街景地址号码\gls{transcription_system}\citep{Goodfellow+et+al-ICLR2014a}作为一个正在运行的示例。
-该应用的目标是添加建筑物到谷歌地图。
+
+我们将使用街景地址号码\gls{transcription_system}\citep{Goodfellow+et+al-ICLR2014a}作为一个运行示例。
+该应用的目标是将建筑物添加到谷歌地图。
 街景车拍摄建筑物，并记录与每张建筑照片相关的GPS坐标。
 \gls{convolutional_network}识别每张照片上的地址号码，由谷歌地图数据库在正确的位置添加该地址。
 这个商业应用如何开发的流程是一个遵循我们倡导的设计方法的很好的示例。
@@ -44,12 +47,15 @@
 \label{sec:performance_metrics}
 确定目标，即使用什么\gls{error_metric}，是必要的第一步，因为\gls{error_metric}将指导接下来的所有工作。
 同时我们也应该了解大概能得到什么级别的目标性能。
+% 410 mid
+
 
 值得注意的是对于大多数应用而言，不可能实现绝对零误差。
 即使你有无限的训练数据，并且恢复了真正的\gls{PD}，\gls{bayes_error}仍定义了能达到的最小\gls{error_rate}。
 这是因为输入特征可能无法包含输出变量的完整信息，或是因为系统可能本质上是随机的。
 当然我们还会受限于有限的训练数据。
 
+% 410 end
 训练数据的数量会因为各种原因受到限制。
 当目标是打造现实世界中最好的产品或服务时，通常需要收集更多的数据，但必须确定进一步减少误差的价值，并与收集更多数据的成本做权衡。
 数据收集会耗费时间、金钱，或带来人体痛苦（例如，收集人体医疗测试数据）。
@@ -59,13 +65,13 @@
 
 如何确定合理的性能期望？
 在学术界，通常我们可以根据先前公布的\gls{benchmarks}结果来估计预期\gls{error_rate}。
-在现实世界中，一个应用的\gls{error_rate}有必要是安全的，具有成本效益的，或吸引消费者的。
+在现实世界中，一个应用的\gls{error_rate}有必要是安全的、具有成本效益的，或吸引消费者的。
 一旦你确定了想要达到的\gls{error_rate}，那么你的设计将由如何达到这个\gls{error_rate}来指导。
 % 411 mid
 
 
 除了需要考虑\gls{performance_metrics}之外，另一个需要考虑的是度量的选择。
-我们有几种不同的\gls{performance_metrics}，可以用来度量含有\gls{ML}应用的性能。
+我们有几种不同的\gls{performance_metrics}，可以用来度量一个含有\gls{ML}成分的完整应用的有效性。
 这些\gls{performance_metrics}通常不同于训练模型的\gls{cost_function}。 
 如\secref{sec:the_performance_measure_p}所述，我们通常会度量一个系统的\gls{accuracy}，或等价的\gls{error_rate}。
 
@@ -87,8 +93,8 @@
 显然，正确率很难描述这种系统的性能。
 解决这个问题的方法是度量\firstgls{precision}和\firstgls{recall}。
 \gls{precision}是模型报告的检测是正确的比率，而\gls{recall}则是真实事件被检测到的比率。
-检测器永远报告没有患者，可能会有一个完美的\gls{precision}，但\gls{recall}为零。
-而报告每个人都是患者的检测器可能有很高的\gls{recall}，但是\gls{precision}很低（在我们的例子是$0.0001\%$，每一百万人只有一人患病）。
+检测器永远报告没有患者，会得到一个完美的\gls{precision}，但\gls{recall}为零。
+而报告每个人都是患者的检测器会得到一个完美的\gls{recall}，但是\gls{precision}会等于人群中患有该病的比例（在我们的例子是$0.0001\%$，每一百万人只有一人患病）。
 当使用\gls{precision}和\gls{recall}时，通常会画\gls{prcurve}，y轴表示\gls{precision}，x轴表示\gls{recall}。
 如果检测到的事件发生了，那么分类器会返回一个比较高的值。
 例如，我们将\gls{feedforward_network}设计为检测一种疾病，估计一个医疗结果由特征$\Vx$表示的人患病的概率为$\hat{y} = P(y=1\mid\Vx)$。
@@ -100,48 +106,49 @@
 	F = \frac{2pr}{p+r}.
 \end{equation}
 另一种方法是报告\gls{prcurve}下方的总面积。
+% -- 412 head
 
-% -- 411 --
 
 在一些应用中，\gls{ML}系统可能会拒绝做出判断。
 \gls{ML}算法能够估计对判断的置信度，会是非常有用的，特别是在错误判断会有严重危害，而人工操作员能够偶尔接管的情况下。
 街景\gls{transcription_system}可以作为这种情况的一个示例。
-该任务是转录照片上的地址号码，以关联到地图上拍摄照片的位置。
+该任务是转录照片上的地址号码，以关联到地图上拍摄照片的位置。%??  翻译的很有问题
 因为如果地图是不精确的，那么地图的价值会严重下降。
 因此只在转录正确的情况下添加地址十分重要。
 如果\gls{ML}系统认为它不太能像人一样正确地转录，那么最好办法当然是让人来转录照片。
-当然，我们有必要让\gls{ML}系统大量降低需要人工操作处理的图片，这样它才是有用的。
+当然，只有当\gls{ML}系统能够大量降低需要人工操作处理的图片时，它才是有用的。
 在这种情况下，一种自然的\gls{performance_measures}是\firstgls{coverage}。
 \gls{coverage}是\gls{ML}系统能够产生响应的样本所占的比率。
-有可能权衡\gls{coverage}和\gls{precision}。
+我们可以在\gls{coverage}和\gls{precision}做出权衡。
 一个系统总可以通过拒绝处理任意样本的方式来达到$100\%$的\gls{precision}，但是\gls{coverage}降到了$0\%$。
-对于街景任务，该项目的目标是达到人类转录的\gls{precision}，同时保持$95\%$的\gls{coverage}。
+对于街景任务，该项目的目标是达到人类级别的转录\gls{precision}，同时保持$95\%$的\gls{coverage}。
 这项任务的人类级别性能是$98\%$的\gls{precision}。
-
+% 412 end
 
 还有许多其他的\gls{performance_measures}。
-例如，我们可以度量点击率、收集用户满意度调查，等等。
+例如，我们可以度量点击率、收集用户满意度调查等等。
 许多专业的应用领域也有特定的标准。
+% 412 end
 
-
-最重要的是首先要确定改进哪个\gls{performance_measures}，然后集中提高\gls{performance_measures}。
+最重要的是首先要确定改进哪个\gls{performance_measures}，然后专心提高\gls{performance_measures}。
 如果没有明确的目标，那么我们很难判断\gls{ML}系统上的改动是否有所改进。
 
-% -- 412 --
+% -- 412 end
 
 \section{默认的\glsentrytext{baseline}模型}
 \label{sec:default_baseline_models}
 确定\gls{performance_metrics}和目标后，任何实际应用的下一步是尽快建立一个合理的\gls{end_to_end}系统。
-本节给出了一些建议，在不同情况下使用哪种算法作为第一个\gls{baseline}方法。
+本节给出了一些关于在不同情况下使用哪种算法作为第一个\gls{baseline}方法推荐。
 在本节中，我们提供了关于不同情况下使用哪种算法作为第一\gls{baseline}方法的推荐。
 值得注意的是，\gls{DL}研究进展迅速，所以本书出版后很快可能会有更好的默认算法。
-
+% 413 head 
 
 根据问题的复杂性，项目开始时可能无需使用\gls{DL}。
 如果可以只需正确选择几个线性权重来解决问题，那么项目可以开始于一个简单的统计模型，如\gls{logistic_regression}。
 
 
 如果问题属于``\glssymbol{AI}-可完成''类的，如\gls{object_recognition}、\gls{SR}、\gls{machine_translation}等等，那么项目开始于一个合适的\gls{DL}模型，效果会比较好。
+% 413 mid 
 
 
 首先，根据数据的结构选择一类合适的模型。
@@ -233,7 +240,7 @@
 
 \subsection{手动调整\glsentrytext{hyperparameter}}
 \label{sec:manual_hyperparameter_tuning}
-手动设置\gls{hyperparameter}，我们必须了解\gls{hyperparameter}，训练误差，\gls{generalization_error}和计算资源（内存和运行时间）之间的关系。
+手动设置\gls{hyperparameter}，我们必须了解\gls{hyperparameter}、训练误差、\gls{generalization_error}和计算资源（内存和运行时间）之间的关系。
 这需要切实了解\chapref{chap:machine_learning_basics}学习算法的有效容量。
 
 手动搜索\gls{hyperparameter}的目标通常是最小化受限于运行时间和内存预算的\gls{generalization_error}。
@@ -356,7 +363,7 @@
 \subsection{自动\glsentrytext{hyperparameter}优化算法}
 \label{sec:automatic_hyperparameter_optimization_algorithms}
 理想的学习算法应该是只需要输入一个数据集，就可以输出学习的函数，而不需要手动调整\gls{hyperparameter}。
-一些流行的学习算法，如逻辑回归和支持向量机，流行的部分原因是这类算法只有一到两个\gls{hyperparameter}需要调整，它们也能表现出不错的性能。
+一些流行的学习算法，如\gls{logistic_regression}和\gls{SVM}，流行的部分原因是这类算法只有一到两个\gls{hyperparameter}需要调整，它们也能表现出不错的性能。
 有些情况下，所需调整的\gls{hyperparameter}数量较少时，神经网络可以表现出不错的性能；但\gls{hyperparameter}数量有几十甚至更多时，效果会提升得更加明显。
 当用户有一个很好的初始值，例如由在相同类型的应用和架构上具有经验的人确定初始值，或者用户在相似问题上，具有几个月甚至几年的神经网络\gls{hyperparameter}调整经验，那么手动调整\gls{hyperparameter}能有很好的效果。
 然而，对于很多应用而言，这些起点都不可用。
