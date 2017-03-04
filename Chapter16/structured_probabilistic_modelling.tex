@@ -54,7 +54,7 @@
 分类问题可以把这样一个来自高维分布的数据作为输入，然后用一个类别的标签来概括它——这个标签可以是照片中是什么物品，一段语音中说的是哪个单词，也可以是一段文档描述的是哪个话题。
 分类的这个过程丢弃了输入数据中的大部分信息，然后给出了一个单个值的输出（或者是一个输出值的概率分布）。
 这个分类器通常可以忽略输入数据的很多部分。
-举个例子，当我们识别一个照片中是哪一个物品的时候，我们通常可以忽略图片的背景。
+举个例子，当我们识别一个照片中是哪一个物品时，我们通常可以忽略图片的背景。
 % 550  ok
 
 
@@ -156,7 +156,7 @@
 
 例如，我们想要对接力跑步比赛中一个队伍完成比赛的时间进行建模。
 假设这个队伍有三名成员：Alice， Bob和Carol。
-在比赛开始的时候，Alice拿着接力棒，开始跑第一段距离。
+在比赛开始时，Alice拿着接力棒，开始跑第一段距离。
 在跑完她的路程以后，她把棒递给了Bob。
 然后Bob开始跑，再把棒给Carol，Carol跑最后一棒。
 我们可以用连续变量来建模他们每个人完成的时间。
@@ -177,7 +177,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 
 \gls{structured_probabilistic_models}为随机变量之间的直接作用提供了一个正式的建模框架。
 这种方式大大减少了模型的参数个数以致于模型只需要更少的数据来进行有效的估计。
-这些更轻便的模型在模型存储，模型推断以及从模型中采样的时候有着更小的计算开销。
+这些更轻便的模型在模型存储，模型推断以及从模型中采样时有着更小的计算开销。
 % 554 head  
 
 
@@ -313,7 +313,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 % 556 end
 
 
-\gls{directed_model}显然适用于当存在一个很明显的理由来描述每一个箭头的时候。
+\gls{directed_model}显然适用于当存在一个很明显的理由来描述每一个箭头时。
 \gls{directed_model}中，经常存在我们理解的具有因果关系以及因果关系有明确方向的情况下。
 接力赛的例子就是一个这样的情况。
 之前运动员的表现影响了后面运动员的完成时间，而后面运动员却不会影响前面运动员的完成时间。
@@ -321,7 +321,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 
 
 然而并不是所有情况的相互作用都有一个明确的方向关系。
-当相互的作用并没有本质性的指向，或者是明确的双向相互作用的时候，使用\gls{undirected_model}更加合适。
+当相互的作用并没有本质性的指向，或者是明确的双向相互作用时，使用\gls{undirected_model}更加合适。
 % 557 
 
 
@@ -434,7 +434,7 @@ p(\RVx) = \frac{1}{Z}\tilde{p}(\RVx),
 \begin{align}
 Z = \int \tilde{p}(\RVx)d\RVx.
 \end{align}
-当函数$\phi$固定的时候，我们可以把$Z$当成是一个常数。
+当函数$\phi$固定时，我们可以把$Z$当成是一个常数。
 值得注意的是如果函数$\phi$带有参数时，那么$Z$是这些参数的一个函数。
 在相关文献中为了节省空间忽略控制$Z$的变量而直接写$Z$是一个常用的方式。
 归一化常数$Z$被称作是\gls{partition_function}，一个从统计物理学中借鉴的术语。
@@ -452,7 +452,7 @@ Z = \int \tilde{p}(\RVx)d\RVx.
 % 559 end
 %在设计\gls{undirected_model}时我们必须牢记在心的一个要点是设置一些\gls{factor}使得$Z$不存在这样的方法也是有可能的。
 在设计\gls{undirected_model}时我们必须牢记在心的一个要点是设定一些使得$Z$不存在的\gls{factor}也是有可能的。
-当模型中的一些变量是连续的，且在$\tilde{p}$在其定义域上的积分发散的时候这种情况就会发生。
+当模型中的一些变量是连续的，且在$\tilde{p}$在其定义域上的积分发散时这种情况就会发生。
 例如， 当我们需要对一个单独的标量变量$\RSx\in\SetR$建模，并且这个包含一个点的\gls{clique_potential}定义为$\phi(x) = x^2$时。
 在这种情况下，
 \begin{align}
@@ -650,7 +650,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 但是图不能说明当$\RSa = 0$时$\RSb$和$\RSc$不是独立的。
 % 564
 
-一般来说，当独立性不存在的时候，图不会显示独立性。 
+一般来说，当独立性不存在时，图不会显示独立性。 
 然而，图可能无法显示存在的独立性。
 % 564
 
@@ -722,7 +722,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \item 给定$\RSc$的情况下$\RSa$和$\RSe$是\gls{dseparation}的。
 \item 给定$\RSc$的情况下$\RSd$和$\RSe$是\gls{dseparation}的。
 \end{itemize}
-我们还可以发现当我们观察到一些变量的时候，一些变量不再是\gls{dseparation}的：
+我们还可以发现当我们观察到一些变量时，一些变量不再是\gls{dseparation}的：
 \begin{itemize}
 \item 给定$\RSc$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
 \item 给定$\RSd$的情况下$\RSa$和$\RSb$不是\gls{dseparation}的。
@@ -959,7 +959,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 理论上最简单的方法是\firstgls{gibbs_sampling}。
 假设我们在一个$n$维向量的随机变量$\RVx$上有一个\gls{graphical_models}。 
 我们迭代地访问每个变量$x_i$，在给定其他变量的条件下从$p(\RSx_i \mid \RSx_{-i})$中抽样。
-由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$的时候我们可以等价地仅对$\RSx_i$的邻居条件化。
+由于\gls{graphical_models}的\gls{separation}性质，抽取$x_i$时我们可以等价地仅对$\RSx_i$的邻居条件化。
 不幸的是，在我们遍历\gls{graphical_models}一次并采样所有$n$个变量之后，我们仍然无法得到一个来自$p(\RVx)$的客观样本。
 相反，我们必须重复该过程并使用它们邻居的更新值对所有$n$个变量重新取样。
 在多次重复之后，该过程渐近地收敛到正确的目标分布。
@@ -1129,7 +1129,7 @@ NP中的问题仅仅需要确定问题是否有解决方案，并找到一个解
 传统的\gls{graphical_models}具有非常少的连接，并且每个变量的连接选择可以单独设计。
 模型结构的设计与推断算法的选择紧密相关。
 \gls{graphical_models}的传统方法通常旨在保持精确推断的可追踪性。
-当这个约束太强的时候，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的\gls{approximate_inference}算法。
+当这个约束太强时，我们可以采用一种流行的被称为是\firstgls{loopy_belief_propagation}的\gls{approximate_inference}算法。
 这两种方法通常在稀疏连通图上有很好的效果。
 相比之下，在\gls{DL}中使用的模型倾向于将每个可见单元$\RSv_i$连接到非常多的\gls{hidden_unit} $\RSh_j$上，从而使得$\RVh$可以获得一个$\RSv_i$的\gls{distributed_representation}（也可能是其他几个可观察变量）。
 \gls{distributed_representation}具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，

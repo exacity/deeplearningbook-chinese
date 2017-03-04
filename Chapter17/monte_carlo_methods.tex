@@ -128,7 +128,7 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z},
 在这里$Z$表示归一化常数，选择适当的$Z$使得$q^*(\Vx)$之和或者积分为$1$。
 一个好的\gls{importance_sampling}分布会把更多的权重放在被积函数较大的地方。
 事实上，当$f(\Vx)$的正负符号不变时，$\Var[\hat{s}_{q^*}]=0$， 这意味着当使用最优的$q$分布时，\emph{只需要采一个样本就足够了}。
-当然，这仅仅是因为计算$q^*$的时候已经解决了所有的问题。
+当然，这仅仅是因为计算$q^*$时已经解决了所有的问题。
 所以这种只需要采一个样本的方法往往是实践中无法实现的。
 % 584
 
@@ -140,7 +140,7 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z},
 
 
 另一种方法是采用\firstgls{biased_importance_sampling}，这种方法有一个优势，即不需要归一化的$p$或$q$分布。
-在处理离散变量的时候，\gls{biased_importance_sampling}估计可以表示为
+在处理离散变量时，\gls{biased_importance_sampling}估计可以表示为
 \begin{align}
 \label{eqn:bis}
 \hat{s}_{\text{BIS}} & = \frac{\sum_{i=1}^{n} \frac{p(\Vx^{(i)})}{q(\Vx^{(i)})} f(\Vx^{(i)})}{\sum_{i=1}^{n}\frac{p(\Vx^{(i)})}{q(\Vx^{(i)})}} \\
@@ -157,9 +157,9 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z},
 我们回过头来看看方程~\eqref{eqn:variance_of_is}会发现，如果存在一个$q$使得$\frac{p(\Vx)f(\Vx)}{q(\Vx)}$很大，那么这个估计的方差也会很大。
 当$q(\Vx)$很小，而$f(\Vx)$和$p(\Vx)$都较大并且无法抵消$q$时，这种情况会非常明显。
 $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布中容易地采样。
-当$\Vx$是高维数据的时候，$q$分布的简单性使得它很难于$p$或者$p\vert f\vert$相匹配。
-当$q(\Vx^{(i)})\gg p(\Vx^{(i)}) \vert f(\Vx^{(i)})\vert $的时候，\gls{importance_sampling}采到了很多无用的样本（权值之和很小或趋于零）。
-另一方面，当$q(\Vx^{(i)})\ll p(\Vx^{(i)}) \vert f(\Vx^{(i)})\vert $的时候， 样本会很少被采到，其对应的权值却会非常大。
+当$\Vx$是高维数据时，$q$分布的简单性使得它很难于$p$或者$p\vert f\vert$相匹配。
+当$q(\Vx^{(i)})\gg p(\Vx^{(i)}) \vert f(\Vx^{(i)})\vert $时，\gls{importance_sampling}采到了很多无用的样本（权值之和很小或趋于零）。
+另一方面，当$q(\Vx^{(i)})\ll p(\Vx^{(i)}) \vert f(\Vx^{(i)})\vert $时， 样本会很少被采到，其对应的权值却会非常大。
 正因为后一个事件是很少发生的，这些样本很难被采到，通常使得对$s$的估计出现了典型的\gls{underestimation}，很难被整体的\gls{overestimation}抵消。
 这样的不均匀情况在高维数据屡见不鲜，因为在高维度分布中联合分布的动态域通常非常大。
 % 585 end
@@ -169,7 +169,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}的应用中仍然扮演着重要的角色，包括\gls{DL}算法。
 比方说，\gls{importance_sampling}被应用于加速训练具有大规模词汇的神经网络\gls{language_model}的过程中（见\secref{sec:importance_sampling_chap12}）或者其他有着大量输出结点的\gls{NN}中。
 此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见\secref{sec:estimating_the_partition_function}）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见\secref{sec:variational_autoencoders}）。
-采用\gls{SGD}训练模型参数的时候\gls{importance_sampling}可以用来改进对\gls{cost_function}梯度的估计，尤其是针对于分类器模型的训练中一小部分错误分类样本产生的\gls{cost_function}。
+采用\gls{SGD}训练模型参数时\gls{importance_sampling}可以用来改进对\gls{cost_function}梯度的估计，尤其是针对于分类器模型的训练中一小部分错误分类样本产生的\gls{cost_function}。
 在这种情况下更加频繁地采集这些困难的样本可以降低梯度估计的方差\citep{Hinton06}。
 % 586 
 
@@ -423,7 +423,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 % 592
 
 通过寻找一些高度依赖变量的组以及分块同时更新块（组）中的变量，这个问题有时候可以被解决的。
-然而不幸的是，当依赖关系很复杂的时候，从这些组中采样的过程从计算角度上说是难以处理的。
+然而不幸的是，当依赖关系很复杂时，从这些组中采样的过程从计算角度上说是难以处理的。
 归根结底，\gls{markov_chain}最初就是被提出来解决这个问题，即从大量变量中采样的问题。
 % 592
 
@@ -513,7 +513,7 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 \subsection{深度也许会有助于\glsentrytext{mixing}}
 \label{sec:depth_may_help_mixing}
 
-当我们从\gls{latent_variable}模型$p(\Vh,\Vx)$中采样的时候，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码得非常好，那么从$p(\Vx \mid \Vh)$中采样的时候，并不会太大地改变$\Vx$，那么\gls{mixing}结果会很糟糕。
+当我们从\gls{latent_variable}模型$p(\Vh,\Vx)$中采样时，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码得非常好，那么从$p(\Vx \mid \Vh)$中采样时，并不会太大地改变$\Vx$，那么\gls{mixing}结果会很糟糕。
 解决这个问题的一种方法是使得$\Vh$成为一种将$\Vx$编码为$\Vh$的深度表达，从而使得\gls{markov_chain}在$\Vh$空间中更容易\gls{mixing}。
 <bad> 在许多\gls{representation_learning}算法诸如\gls{AE}和\glssymbol{RBM}中，$\Vh$的边缘分布相比于关于$\Vx$的原始数据分布，通常表现为更加均匀、更趋近于\gls{unimodal}。
 值得指出的是，这些方法往往利用所有可用的表达空间并尽量减小\gls{reconstruction_error}。

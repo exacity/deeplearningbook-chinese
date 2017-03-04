@@ -104,7 +104,7 @@
 
 
 这个\firstgls{PPCA}模型利用了这样一种观察现象：除了一些微小残余的\firstgls{reconstruction_error}（至多为$\sigma^2$），数据中的大多数变化可以由\gls{latent_variable} $\Vh$描述。
-通过\citet{tipping99mixtures}的研究我们可以发现，当$\sigma \xrightarrow{} 0$的时候，\gls{PPCA}退化为\glssymbol{PCA}。
+通过\citet{tipping99mixtures}的研究我们可以发现，当$\sigma \xrightarrow{} 0$时，\gls{PPCA}退化为\glssymbol{PCA}。
 在这种情况下，给定$\Vx$情况下$\Vh$的条件期望等于将$\Vx - \Vb$投影到$\MW$的$d$列所生成的空间上，与\glssymbol{PCA}一样。
 % 481
 

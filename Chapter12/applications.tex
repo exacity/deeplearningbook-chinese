@@ -103,7 +103,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 然而在\glssymbol{GPU}中，大多数可写内存位置并不会被高速缓存，所以计算某个值两次往往会比计算一次然后从内存中读取更快。
 \glssymbol{GPU}代码是天生多线程的，不同线程之间必须仔细协调好。
 例如，如果能够把数据\firstgls{coalesced}起来，那么涉及内存的操作一般会更快。
-当几个线程同时需要读/写一个值的时候，像这样的\gls{coalesced}会作为一次内存操作出现。
+当几个线程同时需要读/写一个值时，像这样的\gls{coalesced}会作为一次内存操作出现。
 不同的\glssymbol{GPU}可能采用不同的\gls{coalesced}读/写数据的方式。
 通常来说，如果在$n$个线程中，线程$i$访问的是第$i+j$处的内存，其中$j$是$2$的某个幂的倍数，那么内存操作就易于\gls{coalesced}。
 具体的设定在不同的\glssymbol{GPU}型号中有所区别。
@@ -237,7 +237,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 类似的，我们可以使用称为\firstgls{gater}的神经网络来选择在给定当前输入的情况下将使用几个\firstgls{expert_network}中的哪一个来计算输出。
 这个想法的第一个版本被称为\firstgls{mixture_of_experts}\citep{Nowlan90,Jacobs-nc91}，其中\gls{gater}为每个专家输出一个概率或权重（通过非线性的\gls{softmax}获得），并且最终输出由各个专家输出的加权组合获得。
 在这种情况下，使用\gls{gater}不会降低计算成本，但如果每个样本的\gls{gater}选择单个专家，我们就会获得一个特殊的\firstgls{hard_mixture_of_experts}~\citep{collobert:2001:rr01-12,collobert:2002}，这可以加速推断和训练。
-当\gls{gater}决策的数量很小的时候，这个策略效果会很好，因为它不是组合的。
+当\gls{gater}决策的数量很小时，这个策略效果会很好，因为它不是组合的。
 但是当我们想要选择不同的单元或参数子集时，不可能使用``软开关''，因为它需要枚举（和计算输出）所有的\gls{gater}配置。
 为了解决这个问题，许多工作探索了几种方法来训练组合的\gls{gater}。
 \citet{bengio-arxiv13-condcomp}提出使用\gls{gater}概率梯度的若干估计器，而\citet{Bacon-et-al-RLDM2015,BengioE-et-al-arXiv2015}使用\gls{RL}技术（\firstgls{policy_gradient}）来学习一种条件的\gls{dropout}形式（作用于\gls{hidden_unit}块），减少了实际的计算成本，而不会对近似的质量产生负面影响。
