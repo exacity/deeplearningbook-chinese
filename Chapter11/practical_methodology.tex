@@ -4,7 +4,7 @@
 \label{chap:practical_methodology}
 成功地使用深度学习技术，不仅仅需要知道存在哪些算法和解释他们为何会有效的原理。
 一个优秀的机器学习实践者还需要知道如何针对具体应用挑选一个合适的算法以及如何监控，并根据实验反馈改进机器学习系统。
-在\gls{ML}系统的日常开发中，实践者需要决定是否收集更多的数据、增加或减少模型容量、添加或删除\gls{regularization}功能、改进模型的优化、改进模型的近似推断，或调试模型的软件实现。
+在\gls{ML}系统的日常开发中，实践者需要决定是否收集更多的数据、增加或减少模型\gls{capacity}、添加或删除\gls{regularization}功能、改进模型的优化、改进模型的近似推断，或调试模型的软件实现。
 尝试这些操作都需要大量时间，因此确定正确做法，而不盲目猜测是尤为重要的。
 
 
@@ -212,82 +212,96 @@
 如果\gls{training_set}上的性能是可接受的，那么我们开始度量\gls{test_set}上的性能。
 如果\gls{test_set}上的性能也是可以接受的，那么就顺利完成了。
 如果\gls{test_set}上的性能比\gls{training_set}的要差得多，那么收集更多的数据是最有效的解决方案之一。
-这时主要的考虑是收集更多数据的代价和可行性，其他方法降低测试误差的代价和可行性，和增加数据数量能否显著提升\gls{test_set}性能。
+这时主要的考虑是收集更多数据的代价和可行性，其他方法降低\gls{test_error}的代价和可行性，和增加数据数量能否显著提升\gls{test_set}性能。
 在拥有百万甚至上亿用户的大型网络公司，收集大型数据集是可行的，并且这样做的成本可能比其他方法要少很多，所以答案几乎总是收集更多的训练数据。
 例如，收集大型\gls{labeled}数据集是解决\gls{object_recognition}问题的主要因素之一。
 在其他情况下，如医疗应用，收集更多的数据可能代价很高或者不可行。
-一个替代收集更多数据的简单方法是降低模型规模或是改进\gls{regularization}，如调整\gls{hyperparameter}，如权重衰减系数，或是加入\gls{regularization}策略，如\gls{dropout}。
+一个替代收集更多数据的简单方法是降低模型规模或是改进\gls{regularization}，如调整\gls{hyperparameter}，如\gls{weight_decay}系数，或是加入\gls{regularization}策略，如\gls{dropout}。%?? 这句结构太乱
 如果调整\gls{regularization}\gls{hyperparameter}后，\gls{training_set}性能和\gls{test_set}性能之间的差距还是不可接受，那么收集更多的数据是可取的。
+% 415 mid
+
 
 在决定是否收集更多的数据时，也需要确定收集多少数据。
 如\figref{fig:chap5_training_size_grows}所示，绘制曲线显示\gls{training_set}规模和\gls{generalization_error}之间的关系是很有帮助的。
 根据走势延伸曲线，可以预测还需要多少训练数据来达到一定的性能。
 通常，加入总数目一小部分的样本不会对\gls{generalization_error}产生显著的影响。
 因此，建议在对数尺度上考虑\gls{training_set}的大小，例如在新的实验上倍增样本数目。
+% 415 mid
+
 
 如果收集更多的数据是不可行的，那么改进\gls{generalization_error}的唯一方法是改进学习算法本身。
 这属于研究领域，并非对应用实践者的建议。
 
 \section{选择\glsentrytext{hyperparameter}}
 \label{sec:selecting_hyperparameters}
-大部分\gls{DL}算法都有许多\gls{hyperparameter}来控制算法。
+大部分\gls{DL}算法都有许多\gls{hyperparameter}来控制不同方面的算法表现。
 有些\gls{hyperparameter}会影响算法运行的时间和存储成本。
 有些\gls{hyperparameter}会影响学习到的模型质量，以及在新输入上推断正确结果的能力。
+% -- 415 -end
 
-% -- 415 --
 
 有两种选择\gls{hyperparameter}的基本方法：手动选择和自动选择。
 手动选择\gls{hyperparameter}需要了解\gls{hyperparameter}做了些什么，以及\gls{ML}模型如何取得良好的\gls{generalization}。
 自动选择\gls{hyperparameter}算法大大减少了解这些想法的需要，但它们往往需要更高的计算成本。
+% 416 head
+
 
 \subsection{手动调整\glsentrytext{hyperparameter}}
 \label{sec:manual_hyperparameter_tuning}
-手动设置\gls{hyperparameter}，我们必须了解\gls{hyperparameter}、训练误差、\gls{generalization_error}和计算资源（内存和运行时间）之间的关系。
-这需要切实了解\chapref{chap:machine_learning_basics}学习算法的有效容量。
+手动设置\gls{hyperparameter}，我们必须了解\gls{hyperparameter}、\gls{training_error}、\gls{generalization_error}和计算资源（内存和运行时间）之间的关系。
+这需要切实了解一个学习算法有效\gls{capacity}的基础概念，如\chapref{chap:machine_learning_basics}中描述的一样。
+% 416 mid
+
 
 手动搜索\gls{hyperparameter}的目标通常是最小化受限于运行时间和内存预算的\gls{generalization_error}。
 我们不去探讨如何确定各种\gls{hyperparameter}对运行时间和内存的影响，因为这高度依赖于平台。
 
-手动搜索\gls{hyperparameter}的主要目标是调整模型的有效容量以匹配任务的复杂性。
-有效容量受限于三个因素：模型的表示容量，学习算法成功最小化训练模型成本函数的能力，以及\gls{cost_function}和训练过程\gls{regularization}模型的程度。
+
+手动搜索\gls{hyperparameter}的主要目标是调整模型的有效\gls{capacity}以匹配任务的复杂性。
+有效\gls{capacity}受限于三个因素：模型的表示\gls{capacity}，学习算法成功最小化训练模型\gls{cost_function}的能力，以及\gls{cost_function}和训练过程\gls{regularize}模型的程度。
 具有更多网络层，每层有更多\gls{hidden_unit}的模型具有较高的表达能力——能够表示更复杂的函数。
-然而，如果训练算法不能找到合适的函数来最小化训练代价，或是如果\gls{regularization}项，如权重衰减，排除了这些函数，那么模型就不能学习到所有这些函数。
+然而，如果训练算法不能找到合适的函数来最小化训练\gls{cost}，或是如果\gls{regularization}项，如\gls{weight_decay}，排除了这些函数，那么模型就不能学习到所有这些函数。%??  还是太乱
+% 416 mid
+
 
 当\gls{generalization_error}以某个\gls{hyperparameter}为变量，作为函数绘制出来时，通常会表现为U形曲线，如\figref{fig:chap5_generalization_vs_capacity}所示。
-在某个极端情况下，\gls{hyperparameter}对应着低容量，并且\gls{generalization_error}由于训练误差较大而很高。
+在某个极端情况下，\gls{hyperparameter}对应着低\gls{capacity}，并且\gls{generalization_error}由于\gls{training_error}较大而很高。
 这便是\gls{underfitting}的情况。
-另一种极端情况，\gls{hyperparameter}对应着高容量，并且\gls{generalization_error}由于训练误差和测试误差之间的差距较大而很高。
-最优的模型容量位于曲线中间的某个位置，能够达到最低可能的\gls{generalization_error}，由中等的\gls{generalization_error}和中等的训练误差相加构成。
+另一种极端情况，\gls{hyperparameter}对应着高\gls{capacity}，并且\gls{generalization_error}由于\gls{training_error}和\gls{test_error}之间的差距较大而很高。
+最优的模型\gls{capacity}位于曲线中间的某个位置，能够达到最低可能的\gls{generalization_error}，由某个中等的\gls{generalization_error}和某个中等的\gls{training_error}相加构成。
+% -- 416 end
 
 
-% -- 416 --
 
 \gls{hyperparameter}数值太大时，会发生\gls{overfitting}。
-例如，中间层\gls{hidden_unit}数量太大时，会发生\gls{overfitting}。
+例如，中间层\gls{hidden_unit}太大时，会发生\gls{overfitting}。%??  原文不符
 因为\gls{hidden_unit}数量增多提高了模型\gls{capacity}。
-\gls{hyperparameter}数值太小时，也会发生\gls{overfitting}。
-例如，权重衰减系数为零时，学习算法具有最大的有效容量，容易\gls{overfitting}。
+有些\gls{hyperparameter}数值太小时，也会发生\gls{overfitting}。
+例如，\gls{weight_decay}系数为零时，学习算法具有最大的有效\gls{capacity}，容易\gls{overfitting}。%??  原文不符   这一段好像偏差较大
+% 417 head
+
 
 并非每个\gls{hyperparameter}都能对应着完整的U形曲线。
-很多\gls{hyperparameter}是离散的，如中间层单元数目或是\gls{maxout_unit}中线性元件的数目，这种情况只能沿曲线探索离散的点。
+很多\gls{hyperparameter}是离散的，如中间层单元数目或是\gls{maxout_unit}中线性元件的数目，这种情况只能沿曲线探索一些点。
 有些\gls{hyperparameter}是二值的。
-通常这些\gls{hyperparameter}用来指定是否使用学习算法中的一些可选部分，如预处理步骤减去均值，除以标准差，标准化输入特征。
+通常这些\gls{hyperparameter}用来指定是否使用学习算法中的一些可选部分，如预处理步骤减去均值，除以标准差，归一化输入特征。
 这些\gls{hyperparameter}只能探索曲线上的两点。
-其他一些\gls{hyperparameter}可能会限制其探索曲线某部分的最大值或最小值。
-例如，权重衰减系数最小是零。
-这意味着，如果权重衰减系数为零时模型\gls{underfitting}，那么我们将无法通过修改权重衰减系数探索\gls{overfitting}区域。
-换言之，有些\gls{hyperparameter}只能减少模型容量。
-
+其他一些\gls{hyperparameter}可能会限制其探索曲线某部分的最大值或最小值。%??    
+例如，\gls{weight_decay}系数最小是零。
+这意味着，如果\gls{weight_decay}系数为零时模型\gls{underfitting}，那么我们将无法通过修改\gls{weight_decay}系数探索\gls{overfitting}区域。
+换言之，有些\gls{hyperparameter}只能减少模型\gls{capacity}。
+% 417 mid
 
 
 \gls{learning_rate}可能是最重要的\gls{hyperparameter}。
 如果你只有时间调整一个\gls{hyperparameter}，那就调整\gls{learning_rate}。
-相比其他\gls{hyperparameter}，它以一种更复杂的方式控制模型的有效容量——当\gls{learning_rate}适合优化问题时，模型的有效容量最高，此时\gls{learning_rate}既不是特别大也不是特别小。
-\gls{learning_rate}关于训练误差具有U形曲线，在\figref{fig:chap11_lr}所示。
-当\gls{learning_rate}过大时，梯度下降可能会不经意地增加而非减少训练误差。
+相比其他\gls{hyperparameter}，它以一种更复杂的方式控制模型的有效\gls{capacity}——当\gls{learning_rate}适合优化问题时，模型的有效\gls{capacity}最高，此时\gls{learning_rate}是\emph{正确}的，既不是特别大也不是特别小。
+\gls{learning_rate}关于\gls{training_error}具有U形曲线，在\figref{fig:chap11_lr}所示。
+当\gls{learning_rate}过大时，\gls{GD}可能会不经意地增加而非减少\gls{training_error}。
 在理想化的二次情况下，如果\gls{learning_rate}是最佳值的两倍大时，会发生这种情况\citep{LeCun+98backprop-small}。
-当\gls{learning_rate}太小，训练不仅慢，还有可能永久停留在一个很高的训练误差。
-关于这种情况，我们知之甚少（不会发生于一个凸损失函数中）。
+当\gls{learning_rate}太小，训练不仅慢，还有可能永久停留在一个很高的\gls{training_error}。
+关于这种情况，我们知之甚少（不会发生于一个凸\gls{loss_function}中）。
+% 417 end
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -303,28 +317,30 @@
 \label{fig:chap11_lr}
 \end{figure}
 
-调整\gls{learning_rate}外的其他参数时，需要同时监测训练误差和测试误差，以判断您的模型是否\gls{overfitting}或\gls{underfitting}，然后适当调整其容量。
+% 417 end
+调整\gls{learning_rate}外的其他参数时，需要同时监测\gls{training_error}和\gls{test_error}，以判断您的模型是否\gls{overfitting}或\gls{underfitting}，然后适当调整其\gls{capacity}。
 
-如果\gls{training_set}错误率大于目标\gls{error_rate}，那么只能增加模型容量以改进模型。
+
+如果\gls{training_set}错误率大于目标\gls{error_rate}，那么只能增加模型\gls{capacity}以改进模型。
 如果没有使用\gls{regularization}，并且确信优化算法正确运行，那么有必要添加更多的网络层或\gls{hidden_unit}。
 然而，令人遗憾的是，这增加了模型的计算代价。
+% 418 head
 
-% -- 417 --
 
 如果\gls{test_set}错误率大于目标\gls{error_rate}，那么可以采取两个方法。
-测试误差是训练误差和测试误差之间差距与训练误差的总和。
-寻找最佳的测试误差需要权衡这些数值。
-当训练误差较小（因此容量较大），测试误差主要取决于训练误差和测试误差之间的差距时，通常神经网络效果最好。
-此时目标是缩小这一差距，使训练误差的增长速率不快于差距减小的速率。
-要减少差距，我们可以改变\gls{regularization}\gls{hyperparameter}，以减少有效的模型容量，如添加\gls{dropout}或权重衰减。
+\gls{test_error}是\gls{training_error}和\gls{test_error}之间差距与\gls{training_error}的总和。
+寻找最佳的\gls{test_error}需要权衡这些数值。
+当\gls{training_error}较小（因此\gls{capacity}较大），\gls{test_error}主要取决于\gls{training_error}和\gls{test_error}之间的差距时，通常神经网络效果最好。
+此时目标是缩小这一差距，使\gls{training_error}的增长速率不快于差距减小的速率。
+要减少差距，我们可以改变\gls{regularization}\gls{hyperparameter}，以减少有效的模型\gls{capacity}，如添加\gls{dropout}或\gls{weight_decay}。
 通常，最佳性能来自\gls{regularization}得很好的大规模模型，比如使用\gls{dropout}的神经网络。
 
-大部分\gls{hyperparameter}可以通过推理其是否增加或减少模型容量来设置。如表\ref{tab:hyperparameter_effect}所示部分示例。
+大部分\gls{hyperparameter}可以通过推理其是否增加或减少模型\gls{capacity}来设置。如表\ref{tab:hyperparameter_effect}所示部分示例。
 
 手动调整\gls{hyperparameter}时，不要忘记最终目标：提升\gls{test_set}性能。
 加入\gls{regularization}只是实现这个目标的一种方法。
-只要训练误差低，随时都可以通过收集更多的训练数据来减少\gls{generalization_error}。
-实践中能够确保学习有效的的暴力方法就是不断提高模型容量和\gls{training_set}的大小，直到解决问题。
+只要\gls{training_error}低，随时都可以通过收集更多的训练数据来减少\gls{generalization_error}。
+实践中能够确保学习有效的的暴力方法就是不断提高模型\gls{capacity}和\gls{training_set}的大小，直到解决问题。
 这种做法增加了训练和推断的计算代价，所以只有在拥有足够资源时才是可行的。
 原则上，这种做法可能会因为优化难度提高而失败，但对于许多问题而言，优化似乎并没有成为一个显著的障碍，当然，前提是选择了合适的模型。
 
@@ -340,7 +356,7 @@
  & \\
 \hline
 卷积核宽度 & 增加 & 增加卷积核宽度会增加模型的参数数量。&
-较宽的卷积核导致较窄的输出尺寸，除非使用隐式零填充减少此影响，否则会降低模型容量。 
+较宽的卷积核导致较窄的输出尺寸，除非使用隐式零填充减少此影响，否则会降低模型\gls{capacity}。 
 较宽的卷积核需要更多的内存存储参数，并会增加运行时间，但较窄的输出会降低内存代价。
 \\
 \hline
@@ -488,7 +504,7 @@
 
 在大多数情况下，我们不能提前知道算法的预期行为。
 事实上，使用\gls{ML}的整个出发点是，它会发现一些我们自己无法发现的有用行为。
-如果我们在一个\emph{新}的分类任务上训练一个神经网络，它达到$5\%$的测试误差，我们没法直接知道这是期望的结果，还是次优的结果。
+如果我们在一个\emph{新}的分类任务上训练一个神经网络，它达到$5\%$的\gls{test_error}，我们没法直接知道这是期望的结果，还是次优的结果。
 
 另一个难点是，大部分\gls{ML}模型有多个自适应的部分。
 如果一个部分失效了，其他部分仍然可以自适应，并获得大致可接受的性能。
@@ -530,12 +546,12 @@
 将图像排序，确定置信度最高的错误，显示系统的裁剪有问题。
 修改检测系统裁剪更宽的图像，从而使整个系统获得更好的性能，但是转录网络需要能够处理地址号码中位置和范围更大变化的情况。
 
-\emph{根据训练和测试误差检测软件}：
+\emph{根据训练和\gls{test_error}检测软件}：
 往往很难确定底层软件是否是正确实现。
-训练和测试误差能够提供一些线索。
-如果训练误差较低，但是测试误差较高，那么很有可能训练过程是在正常运行，但模型由于算法原因\gls{overfitting}了。
-另一种可能是，测试误差没有被正确地度量，可能是由于训练后保存模型再重载去度量\gls{test_set}时出现问题，或者是因为测试数据和训练数据预处理的方式不同。
-如果训练和测试误差都很高，那么很难确定是软件错误，还是模型由于算法原因\gls{underfitting}。
+训练和\gls{test_error}能够提供一些线索。
+如果\gls{training_error}较低，但是\gls{test_error}较高，那么很有可能训练过程是在正常运行，但模型由于算法原因\gls{overfitting}了。
+另一种可能是，\gls{test_error}没有被正确地度量，可能是由于训练后保存模型再重载去度量\gls{test_set}时出现问题，或者是因为测试数据和训练数据预处理的方式不同。
+如果训练和\gls{test_error}都很高，那么很难确定是软件错误，还是模型由于算法原因\gls{underfitting}。
 这种情况需要进一步的测试，如下面所述。
 
 % -- 425 --
@@ -657,7 +673,7 @@
 
 最后，性能提升的最后几个百分点来自调整\gls{hyperparameter}。
 这主要包括在保持一些计算代价限制的同时加大模型的规模。
-因为训练误差和测试误差保持几乎相等，所以明确表明性能不足是由\gls{underfitting}造成的，数据集本身也存在一些问题。
+因为\gls{training_error}和\gls{test_error}保持几乎相等，所以明确表明性能不足是由\gls{underfitting}造成的，数据集本身也存在一些问题。
 
 
 总体来说，转录项目是非常成功的，可以比人工速度更快，代价更低地转录数以亿计的地址。

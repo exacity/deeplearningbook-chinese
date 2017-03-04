@@ -304,7 +304,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 这些样本服从同一分布，但是两个连续的样本之间存在强烈的相关性。
 所以一个有限的序列无法完全表达\gls{equilibrium_distribution}。
 一种解决这个问题的方法是每隔$n$个样本返回一个样本，从而使得我们对于\gls{equilibrium_distribution}的统计量的估计不会被\glssymbol{mcmc}方法的样本之间的相关性所干扰。
-所以\gls{markov_chain}在计算上是非常昂贵的，主要源于达到\gls{equilibrium_distribution}前需要\gls{burn_in}的时间以及在达到\gls{equilibrium_distribution}之后从一个样本转移到另一个完全无关的样本所需要的时间。
+所以\gls{markov_chain}在计算上是代价很高的，主要源于达到\gls{equilibrium_distribution}前需要\gls{burn_in}的时间以及在达到\gls{equilibrium_distribution}之后从一个样本转移到另一个完全无关的样本所需要的时间。
 如果我们想要得到完全独立的样本，那么我们需要同时并行的运行多个\gls{markov_chain}。
 这种方法使用了额外的并行计算来消除潜在因素的干扰。
 使用一条\gls{markov_chain}来生成所有样本的策略和（使用多条\gls{markov_chain}）每条\gls{markov_chain}只产生一个样本的策略是两种极端。
@@ -419,7 +419,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 % 592
 
 在实际问题中，这种挑战更加地艰巨因为在实际问题中我们不能仅仅关注在两个\gls{mode}之间的转移而是需要关注在多个\gls{mode}之间地转移。
-如果由于\gls{mode}之间\gls{mixing}困难导致几个这样的转移是很艰难的，那么得到一些可靠的覆盖大部分\gls{mode}的样本集合的代价是很昂贵的，同时\gls{markov_chain}收敛到它的\gls{stationary_distribution}的过程也会非常缓慢。
+如果由于\gls{mode}之间\gls{mixing}困难导致几个这样的转移是很艰难的，那么得到一些可靠的覆盖大部分\gls{mode}的样本集合的代价是很高的，同时\gls{markov_chain}收敛到它的\gls{stationary_distribution}的过程也会非常缓慢。
 % 592
 
 通过寻找一些高度依赖变量的组以及分块同时更新块（组）中的变量，这个问题有时候可以被解决的。
