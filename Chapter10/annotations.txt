@@ -1,0 +1,83 @@
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '这里指', 'origin_text': '的不同部分共享参数。参数共享使得模型能够扩展到不同形式的样本（  !!!如!!!  不同的长度）并进行泛化。如果我们在每个时间点都有一个单独的参数', 'time': '2017-02-20T07:21'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '。', 'origin_text': '有语言规则。相比之下，循环神经网络在几个时间步内共享相同的权重  !!!，不需要分别学习句子每个位置的所有语言规则。!!!  一个相关的想法是使用跨越1维时间序列的卷积。这种卷积方', 'time': '2017-02-20T07:31'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '在1维时间序列上使用卷积', 'origin_text': '需要分别学习句子每个位置的所有语言规则。一个相关的想法是  !!!使用跨越1维时间序列的卷积!!!  。这种卷积方法是时延神经网络的基础{cite?}。卷积操作允', 'time': '2017-02-20T07:33'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '在时间上', 'origin_text': '种卷积方法是时延神经网络的基础{cite?}。卷积操作允许网络  !!!跨越时间!!!  共享参数，但是浅层的。卷积的输出是一个序列，其中输出中的每一项', 'time': '2017-02-20T07:34'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '输入的函数', 'origin_text': '但是浅层的。卷积的输出是一个序列，其中输出中的每一项是相邻几项  !!!的函数!!!  。参数共享的概念体现在每个时间步中使用的相同卷积核。循环神经', 'time': '2017-02-20T07:36'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '前一项输出', 'origin_text': '相同卷积核。循环神经网络以不同的方式共享参数。输出的每一项是  !!!输出前一项!!!  的函数。输出的每一项对先前的输出应用相同的更新规则而产生。这', 'time': '2017-02-20T07:42'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '这种循环方式', 'origin_text': '项的函数。输出的每一项对先前的输出应用相同的更新规则而产生。  !!!这种循环!!!  导致参数通过很深的计算图共享。为简单起见，我们说的RNN是指', 'time': '2017-02-20T07:49'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '实际', 'origin_text': '到ττ\\tau）包含向量x(t)x(t)\\Vx^{(t)}。在  !!!实践!!!  中，循环网络通常在序列的minibatch上操作，并且minib', 'time': '2017-02-20T07:50'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '小批量(%不知道翻译是否准确)', 'origin_text': 't)x(t)\\Vx^{(t)}。在实践中，循环网络通常在序列的  !!!minibatch!!!  上操作，并且minibatch的每项具有不同序列长度ττ\\tau', 'time': '2017-02-20T07:51'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '有时仅表示序列中的位置', 'origin_text': '来简化记号。此外，时间步索引不必是字面上现实世界中流逝的时间，  !!!也可以是序列中的位置!!!  。RNN也可以应用于跨越两个维度的空间数据（如图像），并且当应', 'time': '2017-02-20T07:53'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '两个', 'origin_text': '现实世界中流逝的时间，也可以是序列中的位置。RNN也可以应用于  !!!跨越两个!!!  维度的空间数据（如图像），并且当应用于涉及时间的数据时，该网络可', 'time': '2017-02-20T07:54'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': 'RNNs\n', 'origin_text': '步索引不必是字面上现实世界中流逝的时间，也可以是序列中的位置。  !!!RNN!!!  也可以应用于跨越两个维度的空间数据（如图像），并且当应用于涉及时', 'time': '2017-02-20T07:54'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '思想', 'origin_text': '提是将整个序列提供给网络之前能观察到整个序列。本章将计算图的  !!!想法!!!  扩展到包括周期。这些周期代表变量自身的值在未来某一时间步对自身', 'time': '2017-02-20T07:56'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '概要', 'origin_text': '计算结构的方式，如那些涉及将输入和参数映射到输出和损失的计算。  !!!综合!!!  的介绍请参考\\sec?。本节，我们对展开递归或循环计算得到的重', 'time': '2017-02-20T08:04'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '当', 'origin_text': 'u-1次应用这个定义可以展开这个图。例如，如果我们对式\\eq?  !!!关于!!!  τ=3τ=3\\tau = 3展开，可以得到：s(3)=f(s(', 'time': '2017-02-20T08:08'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '结构属性', 'origin_text': '\\end{align}如\\fig?所示，典型RNN会增加额外的  !!!架构!!!  ，如读取状态信息hh\\Vh进行预测的输出层。\\begin{fi', 'time': '2017-02-20T08:22'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '\\textbf{h}', 'origin_text': '}如\\fig?所示，典型RNN会增加额外的架构，如读取状态信息  !!!h!!!  h\\Vh进行预测的输出层。\\begin{figure}[!ht', 'time': '2017-02-20T08:23'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': 'summary的翻译需要进一步斟酌', 'origin_text': '\\Vh^{(t)}作为过去序列（直到ttt）与任务相关方面的有损  !!!摘要!!!  。此摘要一般而言一定是有损的，因为其映射任意长度的序列(x(t', 'time': '2017-02-20T08:25'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '时间$t$', 'origin_text': '模中使用的RNN，通常给定前一个词预测下一个词，可能没有必要存储  !!!t!!!  tt前输入序列中的所有信息；而仅仅存储足够预测句子其余部分的信息', 'time': '2017-02-20T08:31'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '步长', 'origin_text': '式包括以下几种：\\begin{enumerate}+\xa0每个时间  !!!步!!!  都有输出，并且隐藏单元之间有循环连接的循环网络，如\\fig?所示', 'time': '2017-02-20T11:43'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '步长', 'origin_text': '身值的影响。这样的计算图允许我们定义循环神经网络。然后，我们  !!!描述!!!  许多构建、训练和使用循环神经网络的不同方式。本章将简要介绍循', 'time': '2017-02-20T11:43'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '离散变量的常规表示方式', 'origin_text': '损失函数。我们假定输出是离散的，如用于预测词或字符的RNN。  !!!一种代表离散变量的自然方式!!!  是把输出oo\\Vo作为每个离散变量可能值的非标准化对数概率。然', 'time': '2017-02-20T12:05'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '隐层到隐层', 'origin_text': '藏的循环连接）。例如，它不能模拟通用图灵机。因为这个网络缺少  !!!隐藏到隐藏!!!  的循环，它要求输出单元捕捉用于预测未来的关于过去的所有信息。因', 'time': '2017-02-20T12:39'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '。在展开图上使用反向传播称为通过时间的反向传播(Back Propagation Through Time)。', 'origin_text': 'c?中的推广反向传播算法应用于展开的计算图，而不需要特殊化的算法  !!!。!!!  由反向传播计算得到的梯度，并结合任何通用的基于梯度的技术就可以训', 'time': '2017-02-21T01:02'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '节点序列', 'origin_text': 'MU,\\MV,\\MW, \\Vb和cc\\Vc，以及以ttt为索引的  !!!顺序节点!!!  x(t),h(t),o(t)x(t),h(t),o(t)\\Vx^', 'time': '2017-02-21T01:04'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '损失函数', 'origin_text': '类似，原则上循环网络几乎可以使用任何损失。但必须根据任务来选择  !!!损失!!!  。如前馈网络，我们通常希望将RNN的输出解释为一个概率分布，并', 'time': '2017-02-21T07:39'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '作为', 'origin_text': '必须根据任务来选择损失。如前馈网络，我们通常希望将RNN的输出  !!!解释为!!!  一个概率分布，并且我们通常使用与分布相关联的交叉熵来定义损失。', 'time': '2017-02-21T07:40'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '获得', 'origin_text': 'n}将整个序列yy\\Vy的联合分布分解为一系列单步的概率预测是  !!!捕获!!!  关于整个序列完整联合分布的一种方法。当我们不把过去的yy\\Vy', 'time': '2017-02-21T07:48'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '应当加粗', 'origin_text': '构的图模型。该RNN完全图的解释基于排除并忽略模型中的隐藏单元  !!!~h(t)!!!  h(t)\\Vh^{(t)}。更有趣的是，将隐藏单元~h(', 'time': '2017-02-21T10:45'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': 'textbf{h}', 'origin_text': '解耦。遥远过去的变量y(i)y(i)y^{(i)}可以通过其对  !!!h!!!  h\\Vh的影响来影响变量y(t)y(t)y^{(t)}。该图的', 'time': '2017-02-21T11:21'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '过去', 'origin_text': '{(t)}节点可以用作过去和未来之间的中间量，从而将它们解耦。  !!!遥远过去!!!  的变量y(i)y(i)y^{(i)}可以通过其对hh\\Vh的影响', 'time': '2017-02-21T11:21'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '前提是', 'origin_text': '\\emph{优化}参数可能变得困难。在循环网络中使用的参数共  !!!享依赖于!!!  相同参数可用于不同时间步的假设。等效地，假设给定时刻ttt的变', 'time': '2017-02-22T00:49'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '同样的', 'origin_text': '循环网络中使用的参数共享依赖于相同参数可用于不同时间步的假设。  !!!等效地!!!  ，假设给定时刻ttt的变量后，时刻t+1t+1t +1变量的条件', 'time': '2017-02-22T00:50'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '继续生成或停止生成', 'origin_text': '模型中引入一个额外的Bernoulli输出，表示在每个时间步决定  !!!继续或停止!!!  。相比向词汇表增加一个额外符号，这种方法更普遍，因为它适用于任', 'time': '2017-02-22T01:50'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': 'x应该加粗', 'origin_text': '训练集中，我们将该符号作为序列的一个额外成员，即紧跟每个训练样本  !!!x(τ)!!!  x(τ)\\Vx^{(\\tau)}之后。另一种选择是在模型', 'time': '2017-02-22T01:54'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': 'RNNs', 'origin_text': 'fellow+et+al-ICLR2014a}。基于上下文的  !!!RNN!!!  序列建模上一节描述了没有输入xx\\Vx时，关于随机变量序列y', 'time': '2017-02-22T03:06'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '向量时', 'origin_text': '只使用单个向量xx\\Vx作为输入。当xx\\Vx是一个固定大小的  !!!向量!!!  ，我们可以简单地将其看作产生yy\\Vy序列RNN的额外输入。将', 'time': '2017-02-22T03:18'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '个人认为图中隐层的s(...)应改为h(...)', 'origin_text': 'res/conditional_rnn}}\\fi\\caption  !!!{将固定长度的向量$\\Vx$映射到序列$\\MY$上分布的RNN。这类RNN适用于很多任务如图注，其中单个图像作为模型的输入，然后产生描述图像的词序列。观察到的输出序列的每个元素$\\Vy^{(t)}$同时用作输入（对于当前时间步）和训练期间的目标（对于前一时间步）。}!!!  \\end{figure}\\begin{figure}[!htb]', 'time': '2017-02-22T03:23'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '是通过', 'origin_text': '每个隐藏单元向量h(t)h(t)\\Vh^{(t)}之间的相互作用  !!!通过!!!  新引入的权重矩阵RR\\MR参数化的，这是只包含yyy序列的模型所', 'time': '2017-02-22T03:27'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '加粗\n', 'origin_text': '）。}\\end{figure}RNN可以接收向量序列  !!!x(t)!!!  x(t)\\Vx^{(t)}作为输入，而不是仅接收单个向量xx\\V', 'time': '2017-02-22T05:23'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '我们想依赖\\emph{整个输入序列}预测输出$y^{(t)}$', 'origin_text': '去的yy\\Vy值信息影响当前状态的模型。然而，在许多应用中，  !!!我们要输出的y(t)!!!  y(t)\\Vy^{(t)}的预测可能依赖于整个输入序列。例如，', 'time': '2017-02-24T13:31'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '常规RNN', 'origin_text': '定大小的窗口（这是前馈网络、卷积网络或具有固定大小的先行缓存器的  !!!RNN!!!  必须要做的）。\\begin{figure}[!htb]\\', 'time': '2017-02-24T13:23'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': 'RNNs\n', 'origin_text': '这个想法可以自然扩展到2维输入，如图像，由\\emph{四个}  !!!RNN!!!  组成，每一个沿着四个方向中的一个计算：上、下、左、右。如果RN', 'time': '2017-02-24T13:31'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '但仍依赖长期的输入', 'origin_text': '出Oi,jOi,jO_{i,j}就能计算一个能捕捉到大多局部信息  !!!并且依赖于长期输入的表示!!!  。相比卷积网络，应用于图像的RNN通常更昂贵，但允许同一特征图', 'time': '2017-02-24T13:35'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '代价更大', 'origin_text': '且依赖于长期输入的表示。相比卷积网络，应用于图像的RNN通常更  !!!昂贵!!!  ，但允许同一特征图的特征之间存在长期横向的相互作用{cite?}', 'time': '2017-02-24T13:37'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '不足', 'origin_text': '制要求编码器与解码器的隐藏层具有相同的大小。此架构的一个明显  !!!限制!!!  是，编码器RNN输出的上下文CCC的维度太小而难以适当地概括一个', 'time': '2017-02-24T14:22'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '换行', 'origin_text': '，以及  从隐藏状态到输出。\\end{enumerate}  !!!根据\\fig?中的RNN架构!!!  ，这三个块都与单个权重矩阵相关联。换句话说，当网络被展开时，每', 'time': '2017-02-24T14:24'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': 'RNNs\n', 'origin_text': '”混淆。}代表循环网络的另一个扩展，它被构造为深的树状结构而不是  !!!RNN!!!  的链状结构，因此是不同类型的计算图。递归网络的典型计算图如\\f', 'time': '2017-02-26T13:16'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '情况', 'origin_text': '中引入。根本问题是，经过许多阶段传播后的梯度倾向于消失（大部分  !!!时间!!!  ）或爆炸（很少，但对优化过程影响很大）。即使我们假设循环网络是', 'time': '2017-02-26T15:22'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '乘积$w^t$的消失还算激增是由$w$的幅值决定的', 'origin_text': '题是针对循环网络的。在标量情况下，想象多次乘一个权重www。  !!!根据w!!!  ww的幅值，该乘积wtwtw^t要么消失要么激增。然而，如果每', 'time': '2017-02-26T15:48'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '$v^*$', 'origin_text': '(vn)O(vn)\\CalO(v^n)。为了获得某些期望的方差  !!!$v^!!!  ，我们可以选择单个方差为，我们可以选择单个方差为，我们可以选择单', 'time': '2017-02-26T15:51'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '具有鲁棒性', 'origin_text': '爆炸的参数空间来避免这个问题。不幸的是，为了储存记忆并对小扰动  !!!的鲁棒!!!  ，RNN必须进入参数空间中的梯度消失区域{cite?}。具体来', 'time': '2017-02-26T15:54'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '通过SGD', 'origin_text': '们增加了需要捕获的依赖关系的跨度，基于梯度的优化变得越来越困难，  !!!SGD!!!  在长度仅为10或20的序列上成功训练传统RNN的概率迅速变为0。', 'time': '2017-02-26T15:59'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '在{Pascanu-et-al-ICML2013}中对{Doya93,Bengio1994ITNN,Siegelmann+Sontag-1995}的回顾', 'origin_text': 'N的概率迅速变为0。将循环网络作为动力系统更深入探讨的资料见  !!!{Doya93,Bengio1994ITNN,Siegelmann+Sontag-1995}及{Pascanu-et-al-ICML2013}的回顾!!!  。本章的其余部分将讨论目前已经提出的降低学习长期依赖（在某些情', 'time': '2017-02-26T16:02'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '这种想法可以分别称为回声状态网络或ESN{cite?}，以及流体状态机{cite?}。', 'origin_text': '其能很好地捕捉过去输入历史，并且\\emph{只学习输出权重}。  !!!回声状态网络或ESN{cite?}，以及流体状态机{cite?}分别独立地提出了这种想法!!!  。后者是类似的，只不过它使用脉冲神经元（二值输出）而不是ESN', 'time': '2017-02-26T23:53'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '所有矢量需要加粗\n', 'origin_text': 't改变的简单情况。例如当网络是纯线性时，会发生这种情况。假设  !!!J!!!  J\\MJ特征值λλ\\lambda对应的特征向量为vv\\Vv。考', 'time': '2017-02-27T06:25'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '向后一步传播', 'origin_text': '或等价的，h(t+1)h(t+1)\\Vh^{(t+1)}的梯度如  !!!何向后传播!!!  。需要注意的是，WW\\MW和JJ\\MJ都不需要是对称的（尽管它', 'time': '2017-02-27T06:42'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '隐层到隐层', 'origin_text': 'ph{初始化}完全可训练的循环网络的权重（通过时间反向传播来训练  !!!隐藏到隐藏!!!  的循环权重），帮助学习长期依赖{cite?}。在这种设定下，结', 'time': '2017-02-27T07:40'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '消失或爆炸\\emph{与时间步数有关}', 'origin_text': '迟循环网络是可能的{cite?}。正如我们在\\sec?看到，  !!!梯度可能\\emph{关于时间步数数消失或成倍爆炸}!!!  。{cite?}引入了ddd延时的循环连接以减轻这个问题。现', 'time': '2017-02-27T07:54'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '因为', 'origin_text': '与τdτd\\frac{\\tau}{d}相关而不是ττ\\tau。  !!!既然!!!  同时存在延迟和单步连接，梯度仍可能成ttt指数爆炸。这允许学习', 'time': '2017-02-27T07:55'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '长短期记忆模型', 'origin_text': 'M引入自循环的巧妙构思，以产生梯度长时间持续流动的路径是初始  !!!长短期记忆!!!  的核心贡献{cite?}。其中一个关键扩展是使自循环的权重视上', 'time': '2017-03-01T02:56'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '在生成门控自循（由另一个隐藏单元控制）的权重时', 'origin_text': '扩展是使自循环的权重视上下文而定，而不是固定的{cite?}。  !!!门控此自循环（由另一个隐藏单元控制）的权重!!!  ，累积的时间尺度可以动态地改变。在这种情况下，即使是具有固定参', 'time': '2017-03-01T02:59'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '谨慎地', 'origin_text': 'mportance}发现使用较简单的方法可以达到类似的结果，例如  !!!细心!!!  初始化的Nesterov动量法。更详细的内容参考{Sutske', 'time': '2017-03-01T03:53'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '公布', 'origin_text': '学者提出{cite?}（相对于隐藏单元）截断反向传播梯度，但没有  !!!发布!!!  与这些变种之间的比较; 我们推测，所有这些方法表现类似。', 'time': '2017-03-01T05:34'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '尾部', 'origin_text': '正则化或约束参数，以引导”信息流”。特别是即使损失函数只对序列  !!!未部!!!  的输出作惩罚，我们也希望梯度向量∇h(t)L∇h(t)L\\nab', 'time': '2017-03-01T05:38'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '删除多余的逗号', 'origin_text': '\\nabla_{\\Vh^{(t)}} L在反向传播时能维持其幅度  !!!，!!!  。形式的，我们要使(∇h(t)L)∂h(t)∂h(t−1)(', 'time': '2017-03-01T05:38'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '形式上', 'origin_text': 'bla_{\\Vh^{(t)}} L在反向传播时能维持其幅度，。  !!!形式的!!!  ，我们要使(∇h(t)L)∂h(t)∂h(t−1)(∇h(t)', 'time': '2017-03-01T05:39'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '近似常数', 'origin_text': 't)L∇h(t)L\\nabla_{\\Vh^{(t)}} L考虑为  !!!近乎恒定的近似!!!  （为了计算正则化的目的，没有必要通过它们向后传播）。使用该正则', 'time': '2017-03-01T05:42'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '学习的成功性', 'origin_text': '持了爆炸梯度边缘的RNN动态。如果没有梯度截断，梯度爆炸将阻碍  !!!成功学习!!!  。这种方法的一个主要弱点是，在处理数据冗余的任务时如语言模型', 'time': '2017-03-01T05:45'}
+{'user': 'acct:zhaoyu611@hypothes.is', 'text': '存在着', 'origin_text': '识并且可以通过学习获取知识，这已促使大型深度架构的发展。然而，  !!!存在!!!  不同种类的知识。有些知识是隐含的、潜意识的并且难以用语言表达—', 'time': '2017-03-01T05:47'}
+
+=============================   Replies   =============================
+
+{'user': 'acct:swordyork@hypothes.is', 'text': '网页没有显示加粗，PDF有。', 'time': '2017-03-04T03:19'}
+{'user': 'acct:swordyork@hypothes.is', 'text': 'pdf中都有加粗。多谢！', 'time': '2017-03-04T03:15'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '这个我就先按照书中hidden-hidden来，因为这里不是层的概念，更应该指隐藏单元。所以直接译成隐藏。', 'time': '2017-03-04T03:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '先保持minibatch，之后再作考虑', 'time': '2017-03-04T03:12'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '先保持minibatch，之后再作考虑', 'time': '2017-03-04T03:12'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '中文中没有加s的习惯，所以我们这里不加s了。', 'time': '2017-03-04T02:41'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '这里很关键，我看错了！', 'time': '2017-03-04T02:37'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '我们拿到最新版没有这句话。我记得以前有，我把它删了。', 'time': '2017-03-04T02:35'}
+{'user': 'acct:swordyork@hypothes.is', 'text': 'time step我们统一翻译成时间步。', 'time': '2017-03-04T02:30'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '摘要是可以的，跟文本摘要类似。非常感谢你的校对！', 'time': '2017-03-04T02:30'}
