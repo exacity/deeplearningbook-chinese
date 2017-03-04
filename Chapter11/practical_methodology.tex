@@ -112,7 +112,7 @@
 在一些应用中，\gls{ML}系统可能会拒绝做出判断。
 \gls{ML}算法能够估计对判断的置信度，会是非常有用的，特别是在错误判断会有严重危害，而人工操作员能够偶尔接管的情况下。
 街景\gls{transcription_system}可以作为这种情况的一个示例。
-该任务是转录照片上的地址号码，以关联到地图上拍摄照片的位置。%??  翻译的很有问题
+这个任务是识别照片上的地址号码，将照片拍摄地点对应到地图上的地址。%??  翻译的很有问题
 因为如果地图是不精确的，那么地图的价值会严重下降。
 因此只在转录正确的情况下添加地址十分重要。
 如果\gls{ML}系统认为它不太能像人一样正确地转录，那么最好办法当然是让人来转录照片。
@@ -169,7 +169,7 @@
 除非\gls{training_set}包含数千万以及更多的样本，否则项目应该在一开始就包含一些温和的\gls{regularization}。 
 \gls{early_stopping}也被普遍采用。
 \gls{dropout}也是一个很容易实现，且兼容很多模型和训练算法的良好\gls{regularizer}。
-\gls{batch_normalization}有时也能降低\gls{generalization_error}，并且因为归一化每个变量统计量的估计而带来的\gls{noise}，可以省略\gls{dropout}。%?? 还是有问题
+\gls{batch_normalization}有时也能降低\gls{generalization_error}，允许省略\gls{dropout}步骤，这是因为用于归一化变量的统计量估计存在\gls{noise}，有助于泛化。 %?? 还是有问题
 % -- 413 --  end
 
 
@@ -216,7 +216,9 @@
 在拥有百万甚至上亿用户的大型网络公司，收集大型数据集是可行的，并且这样做的成本可能比其他方法要少很多，所以答案几乎总是收集更多的训练数据。
 例如，收集大型\gls{labeled}数据集是解决\gls{object_recognition}问题的主要因素之一。
 在其他情况下，如医疗应用，收集更多的数据可能代价很高或者不可行。
-一个替代收集更多数据的简单方法是降低模型规模或是改进\gls{regularization}，如调整\gls{hyperparameter}，如\gls{weight_decay}系数，或是加入\gls{regularization}策略，如\gls{dropout}。%?? 这句结构太乱
+一个可以替代收集更多数据的简单方法是降低模型大小或是改进\gls{regularization}（调整\gls{hyperparameter}，如\gls{weight_decay}系数，或是加入\gls{regularization}策略，如\gls{dropout}）。%?? 这句结构太乱
+
+
 如果调整\gls{regularization}\gls{hyperparameter}后，\gls{training_set}性能和\gls{test_set}性能之间的差距还是不可接受，那么收集更多的数据是可取的。
 % 415 mid
 
@@ -260,7 +262,8 @@
 手动搜索\gls{hyperparameter}的主要目标是调整模型的有效\gls{capacity}以匹配任务的复杂性。
 有效\gls{capacity}受限于三个因素：模型的表示\gls{capacity}，学习算法成功最小化训练模型\gls{cost_function}的能力，以及\gls{cost_function}和训练过程\gls{regularize}模型的程度。
 具有更多网络层，每层有更多\gls{hidden_unit}的模型具有较高的表达能力——能够表示更复杂的函数。
-然而，如果训练算法不能找到合适的函数来最小化训练\gls{cost}，或是如果\gls{regularization}项，如\gls{weight_decay}，排除了这些函数，那么模型就不能学习到所有这些函数。%??  还是太乱
+然而，如果训练算法不能找到某个合适的函数来最小化训练\gls{cost}，或是如果\gls{regularization}项（如\gls{weight_decay}）排除了这些合适的函数，那么即使模型的表达能力较高，也不能学习出合适的函数。%??  还是太乱
+
 % 416 mid
 
 
@@ -273,11 +276,10 @@
 
 
 
-\gls{hyperparameter}数值太大时，会发生\gls{overfitting}。
-例如，中间层\gls{hidden_unit}太大时，会发生\gls{overfitting}。%??  原文不符
-因为\gls{hidden_unit}数量增多提高了模型\gls{capacity}。
-有些\gls{hyperparameter}数值太小时，也会发生\gls{overfitting}。
-例如，\gls{weight_decay}系数为零时，学习算法具有最大的有效\gls{capacity}，容易\gls{overfitting}。%??  原文不符   这一段好像偏差较大
+对于某些\gls{hyperparameter}，当\gls{hyperparameter}数值太大时，会发生\gls{overfitting}。
+例如中间层\gls{hidden_unit}的数量，增加数量能提高模型的\gls{capacity}，容易发生\gls{overfitting}。%??  原文不符 
+对于某些\gls{hyperparameter}，当\gls{hyperparameter}数值太小时，也会发生\gls{overfitting}。
+例如，最小的\gls{weight_decay}系数允许为零，此时学习算法具有最大的有效\gls{capacity}，反而容易\gls{overfitting}。%??  原文不符   这一段好像偏差较大 
 % 417 head
 
 
@@ -286,7 +288,7 @@
 有些\gls{hyperparameter}是二值的。
 通常这些\gls{hyperparameter}用来指定是否使用学习算法中的一些可选部分，如预处理步骤减去均值，除以标准差，归一化输入特征。
 这些\gls{hyperparameter}只能探索曲线上的两点。
-其他一些\gls{hyperparameter}可能会限制其探索曲线某部分的最大值或最小值。%??    
+其他一些\gls{hyperparameter}可能会有最小值或最大值，限制其探索曲线的某些部分。%??    
 例如，\gls{weight_decay}系数最小是零。
 这意味着，如果\gls{weight_decay}系数为零时模型\gls{underfitting}，那么我们将无法通过修改\gls{weight_decay}系数探索\gls{overfitting}区域。
 换言之，有些\gls{hyperparameter}只能减少模型\gls{capacity}。
@@ -392,15 +394,15 @@
 理想的学习算法应该是只需要输入一个数据集，就可以输出学习的函数，而不需要手动调整\gls{hyperparameter}。
 一些流行的学习算法，如\gls{logistic_regression}和\gls{SVM}，流行的部分原因是这类算法只有一到两个\gls{hyperparameter}需要调整，它们也能表现出不错的性能。
 有些情况下，所需调整的\gls{hyperparameter}数量较少时，神经网络可以表现出不错的性能；但\gls{hyperparameter}数量有几十甚至更多时，效果会提升得更加明显。
-当用户有一个很好的初始值，例如由在相同类型的应用和架构上具有经验的人确定初始值，或者用户在相似问题上具有几个月甚至几年的神经网络\gls{hyperparameter}调整经验，那么手动调整\gls{hyperparameter}能有很好的效果。%??  由在相同类型的应用和架构上具有经验的人确定初始  这句话好像不对吧？
+当使用者有一个很好的初始值，例如由在相同类型的应用和架构上具有经验的人确定初始值，或者使用者在相似问题上具有几个月甚至几年的神经网络\gls{hyperparameter}调整经验，那么手动调整\gls{hyperparameter}能有很好的效果。%??  由在相同类型的应用和架构上具有经验的人确定初始  这句话好像不对吧？ --没觉得有问题，你觉得是什么了
 然而，对于很多应用而言，这些起点都不可用。
 在这些情况下，自动算法可以找到合适的\gls{hyperparameter}。
 % 420 head
 
 
-如果我们思考用户搜索学习算法合适\gls{hyperparameter}的方式，我们会意识到这其实是一种优化：
+如果我们思考使用者搜索学习算法合适\gls{hyperparameter}的方式，我们会意识到这其实是一种优化：
 我们在试图寻找\gls{hyperparameter}来优化\gls{objective_function}，例如验证误差，有时还会有一些约束（如训练时间，内存或识别时间的预算）。
-因此，原则上有可能开发出封装学习算法的\firstgls{hyperparameter_optimization}算法，并选择其\gls{hyperparameter}，从而用户不需要指定学习算法的\gls{hyperparameter}。
+因此，原则上有可能开发出封装学习算法的\firstgls{hyperparameter_optimization}算法，并选择其\gls{hyperparameter}，从而使用者不需要指定学习算法的\gls{hyperparameter}。
 令人遗憾的是，\gls{hyperparameter}优化算法往往有自己的\gls{hyperparameter}，如学习算法的每个\gls{hyperparameter}的值应该被探索的范围。
 然而，这些次级\gls{hyperparameter}通常很容易选择，这是说，相同的次级\gls{hyperparameter}能够很多不同的问题上具有良好的性能。
 % 420 mid
@@ -409,7 +411,7 @@
 \subsection{\glsentrytext{grid_search}}
 \label{sec:grid_search}
 当有三个或更少的\gls{hyperparameter}时，常见的\gls{hyperparameter}搜索方法是\firstgls{grid_search}。
-对于每个\gls{hyperparameter}，用户选择一个较小的有限值集去探索。
+对于每个\gls{hyperparameter}，使用者选择一个较小的有限值集去探索。
 然后，这些\gls{hyperparameter}笛卡尔乘积得到一组组\gls{hyperparameter}，\gls{grid_search}使用每组\gls{hyperparameter}训练模型。
 挑选\gls{validation_set}误差最小的\gls{hyperparameter}作为最好的\gls{hyperparameter}。
 如\figref{fig:chap11_grid_vs_random}所示\gls{hyperparameter}值的网络。
@@ -479,7 +481,7 @@
 % 422 mid
 
 
-和\gls{grid_search}不同，我们\emph{不需要离散化}\gls{hyperparameter}的值，我们可以在一个更大的集合上进行搜索，而不产生额外的计算代价。%?? bin
+和\gls{grid_search}不同，我们\emph{不需要离散化}\gls{hyperparameter}的值。这允许我们在一个更大的集合上进行搜索，而不产生额外的计算代价。%?? bin 不知道如何翻译bin，你有什么好的翻译没 
 实际上，如\figref{fig:chap11_grid_vs_random}所示，当有几个\gls{hyperparameter}对\gls{performance_metrics}没有显著影响时，\gls{random_search}相比于\gls{grid_search}指数级地高效。
 \cite{Bergstra+Bengio-2012-small}进行了详细的研究并发现相比于\gls{grid_search}， \gls{random_search}能够更快地减小\gls{validation_set}误差（就每个模型运行的试验数而言）。
 % 422 end
@@ -507,7 +509,7 @@
 
 为了弥补梯度的缺失，我们可以对\gls{validation_set}误差建模，然后通过优化该模型来提出新的\gls{hyperparameter}猜想。
 大部分基于模型的\gls{hyperparameter}搜索算法，都是使用贝叶斯回归模型来估计每个\gls{hyperparameter}的\gls{validation_set}误差期望和该期望的不确定性。
-因此，优化涉及到探索（探索高度不确定的\gls{hyperparameter}，可能带来显著的效果提升，也可能效果很差）和使用（使用已经确信效果不错的\gls{hyperparameter}——通常是先前非常熟悉的\gls{hyperparameter}）之间的权衡。%??  略乱。
+因此，优化涉及到探索（探索高度不确定的\gls{hyperparameter}，可能带来显著的效果提升，也可能效果很差）和使用（使用已经确信效果不错的\gls{hyperparameter}——通常是先前见过的非常熟悉的\gls{hyperparameter}）之间的权衡。%??  略乱。    额，不知道如何改进。。。
 关于\gls{hyperparameter}优化的最前沿方法还有Spearmint\citep{Snoek+al-NIPS2012-small}，TPE\citep{Bergstra+al-NIPS2011}和SMAC\citep{hutter+hoos+leyton+brown:2011}。
 
 
@@ -555,12 +557,12 @@
 
 
 大部分神经网络的调试策略都是解决这两个难题的一个或两个。
-我们可以设计一种足够简单的情况，能够预见正确结果，判断和模型输出是否相符；我们也可以设计一个测试，可以独立检查神经网络实现的一部分。%??  判断和模型输出是否相符 这多了一句
+我们可以设计一种足够简单的情况，能够提前得到正确结果，判断模型预测是否与之相符；我们也可以设计一个测试，独立检查神经网络实现的一部分。%??  判断和模型输出是否相符 这多了一句     改成上述，帮助理解
 
 
 一些重要的调试检测如下所列。
 
-\emph{可视化模型的行为}：%??  in action 
+\emph{可视化计算中模型的行为}：%??  in action 
 当训练模型检测图像中的对象时，查看一些模型检测到部分重叠的图像。
 在训练语音生成模型时，试听一些生成的语音样本。
 这似乎是显而易见的，但在实际中很容易只注意量化\gls{performance_metrics}，如\gls{accuracy}或对数似然。
@@ -590,8 +592,8 @@
 另一种可能是，\gls{test_error}没有被正确地度量，可能是由于训练后保存模型再重载去度量\gls{test_set}时出现问题，或者是因为测试数据和训练数据预处理的方式不同。
 如果训练和\gls{test_error}都很高，那么很难确定是软件错误，还是由于算法原因模型\gls{underfitting}。
 这种情况需要进一步的测试，如下面所述。
-% -- 426 head
 
+% -- 426 head
 
 \emph{拟合极小的数据集}：
 当\gls{training_set}上有很大的误差时，我们需要确定问题是\gls{underfitting}，还是软件错误。
@@ -599,8 +601,8 @@
 例如，只有一个样本的分类数据可以通过正确设置输出层的偏置来拟合。
 通常，如果不能训练一个分类器来正确标注一个单独的样本，或不能训练一个\gls{AE}来成功地精准再现一个单独的样本，或不能训练一个生成模型来一致地生成一个单独的样本，那么很有可能是由于软件错误阻止\gls{training_set}上的成功优化。
 此测试可以扩展到只有少量样本的小数据集上。
-% 426 mid
 
+% 426 mid
 
 \emph{比较反向传播导数和数值导数}：
 如果正在使用一个需要实现梯度计算的软件框架，或者在添加一个新操作到求导库中，必须定义它的\texttt{bprop}方法，那么常见的错误原因是没能正确实现梯度表达。
@@ -618,17 +620,17 @@
 	f'(x) \approx \frac{ f(x+\frac{1}{2}\epsilon) - f(x-\frac{1}{2}\epsilon) }{\epsilon}.
 \end{equation}
 扰动大小$\epsilon$必须足够大，以确保该扰动不会由于数值计算的有限\gls{precision}问题产生舍入误差。
-% 426 end
 
+% 426 end
 
 通常，我们会测试向量值函数$g:\SetR^m \to \SetR^n$的梯度或\gls{jacobian}矩阵。
 令人遗憾的是，\gls{finite_difference}只允许我们每次计算一个导数。
-我们既可以运行\gls{finite_difference} $mn$次评估$g$的所有偏导数，又可以将该测试应用于一个输入输出都是$g$的随机投影的新函数。%??  后面这句好像不对？  g的输入输出都使用随机投影的
-例如，我们可以用导数实现去测试函数$f(x) = \Vu^T g(\Vv x)$，其中$\Vu$和$\Vv$是随机向量。%??  这句也不对
+我们可以使用\gls{finite_difference} $mn$次评估$g$的所有偏导数，也可以将该测试应用于一个新函数（在函数$g$的输入输出都加上随机投影）。%??  后面这句好像不对？  g的输入输出都使用随机投影的
+例如，我们可以将导数实现的测试用于函数$f(x) = \Vu^T g(\Vv x)$，其中$\Vu$和$\Vv$是随机向量。%??  这句也不对
 正确计算$f'(x)$要求能够正确地通过$g$反向传播，但是使用\gls{finite_difference}能够高效地计算，因为$f$只有一个输入和一个输出。
-在多个$\Vu$值和$\Vv$值上重复这个测试通常是个好主意，可以减少测试忽略了垂直于随机投影误差的几率。%??  很难
-% 427 head
+通常，一个好的方法是在多个$\Vu$值和$\Vv$值上重复这个测试，可以减少测试忽略了垂直于随机投影的错误的几率。%??  很难
 
+% 427 head
 
 如果可以在复数上进行数值计算，那么使用复数作为函数的输入能有非常高效的数值方法估算梯度\citep{Squire+Trapp-1998}。
 该方法基于如下观察
@@ -639,8 +641,8 @@
 其中$i=\sqrt{-1}$。
 和上面的实值情况不同，这里不存在消除影响因为我们对$f$在不同点上计算差分。
 因此我们可以使用很小的$\epsilon$，比如$\epsilon = 10^{-150}$，其中误差$O(\epsilon^2)$对所有实用目标都是微不足道的。
-% 427 mid
 
+% 427 mid
 
 \emph{监控激励函数值和梯度的直方图}：
 可视化神经网络在大量训练迭代后（也许是每个迭代）收集到的激励函数值和梯度的统计量往往是有用的。
@@ -652,8 +654,8 @@
 正如\citep{Bottou-DLSS2015}的建议，我们希望参数在一个\gls{minibatch}更新中变化的幅度是参数量值$1\%$这样的级别，而不是$50\%$或者$0.001\%$（这会导致参数移动得太慢）。
 也有可能是某些参数以良好的步长移动，而另一些停滞。
 如果数据是稀疏的（比如自然语言），有些参数可能很少更新，检测它们变化时应该记住这一点。
-% 428 head
 
+% 428 head
 
 最后，许多\gls{DL}算法为每一步产生的结果提供了某种保证。
 例如，在第三部分，我们将看到一些使用代数解决优化问题的近似推断算法。
@@ -661,20 +663,20 @@
 某些优化算法提供的保证包括，\gls{objective_function}值在算法的迭代步中不会增加，某些变量的导数在算法的每一步中都是零，所有变量的梯度都会收敛到零。
 通常，由于舍入误差，这些条件不会在数字计算机上完全成立，因此调试测试应该包含一些允差参数。
 
-
 % 428 mid
+
 \section{示例：多位数字识别}
 \label{sec:example_multi_digit_number_recognition}
 为了\gls{end_to_end}说明如何在实践中应用我们的设计方法，我们从设计\gls{DL}成分出发，简单地介绍下街景\gls{transcription_system}。
 显然，整个系统的许多其他组件，如街景车、数据库设施，等等，也是极其重要的。
-% 428 mid
 
+% 428 mid
 
 从\gls{ML}任务的视角出发，首先这个过程要采集数据。
 街景车收集原始数据，然后操作员手动提供标签。
 转录任务开始前有大量的数据处理工作，包括在转录前使用其他\gls{ML}技术\emph{探测}房屋号码。
-% 428 mid
 
+% 428 mid
 
 转录项目开始于\gls{performance_metrics}的选择，和对这些度量的期望值。
 一个重要的总原则是度量的选择要符合项目的业务目标。
@@ -684,8 +686,8 @@
 为了达到这个级别的\gls{accuracy}，街景\gls{transcription_system}牺牲了\gls{coverage}。
 因此在保持\gls{accuracy} $98\%$的情况下，\gls{coverage}成了这个项目优化的主要\gls{performance_metrics}。
 随着\gls{convolutional_network}的改进，能够降低网络拒绝转录输入的置信度阈值，最终超出了\gls{coverage} $95\%$的目标。
-% -- 428 end
 
+% -- 428 end
 
 在选择量化目标后，我们推荐方法的下一步是要快速建立一个合理的\gls{baseline}系统。
 对于视觉任务而言，\gls{baseline}系统是带有\gls{ReLU}的\gls{convolutional_network}。
@@ -693,14 +695,14 @@
 当时，使用\gls{convolutional_network}输出预测序列并不常见。
 开始时，我们使用一个尽可能简单的\gls{baseline}模型，该模型输出层的第一个实现包含$n$个不同的\gls{softmax_unit}来预测$n$个字符的序列。
 我们使用和训练分类任务相同的方式来训练这些\gls{softmax_unit}，独立地训练每个\gls{softmax_unit}。
-% 429 head
 
+% 429 head
 
 我们建议反复细化这些\gls{baseline}，并测试每个变化是否都有改进。
 街景\gls{transcription_system}的第一个变化受激励于\gls{coverage}指标的理论理解和数据结构。
 具体地，当输出序列的概率低于某个值$t$即$p(\Vy\mid\Vx) < t$时，网络拒绝为输入$\Vx$分类。
 最初，$p(\Vy\mid\Vx)$的定义是临时的，简单地将所有\gls{softmax}输出乘在一起。
-这促使我们后来发展能够真正计算出合理对数似然的特定输出层和\gls{cost_function}。%??  后来是否该去掉？
+这促使我们发展能够真正计算出合理对数似然的特定输出层和\gls{cost_function}。%??  后来是否该去掉？
 这种方法使得样本拒绝机制更有效。
 
 
@@ -713,11 +715,11 @@
 在这种情况下，这意味着可视化 不正确而模型给了最高置信度的\gls{training_set}转录结果。
 结果显示，主要是输入图像裁剪得太紧，有些和地址相关的数字被裁剪操作除去了。
 例如，地址``1849''的图片可能裁切得太紧，只剩下``849''是可见的。
-花费几周改进负责确定裁剪区域的地址号码检测系统的\gls{accuracy}，或许可以解决这个问题。%??  
-与之不同，该项目团队采取了更实际的办法，简单地系统性扩大裁剪区域的宽度大于地址号码检测系统预测的区域。%??    ’大于‘ 不对吧， 加个 使其
+如果我们花费几周时间改进确定裁剪区域的地址号码检测系统的\gls{accuracy}，或许也可以解决这个问题。%??  
+与之不同，项目团队采取了更实际的办法，简单地系统性扩大裁剪区域的宽度，使其大于地址号码检测系统预测的区域宽度。%??    ’大于‘ 不对吧， 加个 使其
 这种单一改变给\gls{transcription_system}的\gls{coverage}增加了$10$个百分点。
-% -- 429 end
 
+% -- 429 end
 
 最后，性能提升的最后几个百分点来自调整\gls{hyperparameter}。
 这主要包括在保持一些计算代价限制的同时加大模型的规模。
