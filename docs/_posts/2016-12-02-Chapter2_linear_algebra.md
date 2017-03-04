@@ -92,15 +92,6 @@ share: false
 (\MA^\top)_{i,j}= \SA_{j,i}.
 \end{equation}
 
-\begin{figure}[!bht]
-\ifOpenSource
-\centerline{\includegraphics{figure.pdf}}
-\else
-\centerline{\includegraphics{Chapter2/figures/transpose}}
-\fi
-\caption{矩阵的转置可以看成是以主对角线为轴的一个镜像。}
-\end{figure}
-
 向量可以看作是只有一列的矩阵。
 对应地，向量的转置可以看作是只有一行的矩阵。
 有时，我们通过将向量元素作为行矩阵写在文本行中，然后使用转置操作将其变为标准的列向量，来定义一个向量，比如$\Vx=[\Sx_1, \Sx_2, \Sx_3]^\top$.
@@ -108,6 +99,15 @@ share: false
 
 标量可以看作是只有一个元素的矩阵。
 因此，标量的转置等于它本身，$\Sa=\Sa^\top$。
+
+\begin{figure}[!hbt]
+\ifOpenSource
+\centerline{\includegraphics{figure.pdf}}
+\else
+\centerline{\includegraphics{Chapter2/figures/transpose}}
+\fi
+\caption{矩阵的转置可以看成是以主对角线为轴的一个镜像。}
+\end{figure}
 
 <!-- % -- 31 -- -->
 
@@ -567,8 +567,8 @@ $L^1$范数可以简化如下：
 <!-- % -- 40 -- -->
 
 虽然任意一个实对称矩阵$\MA$都有特征分解，但是特征分解可能并不唯一。
-如果两个或多个特征向量拥有相同的特征值，那么在这些特征向量的生成子空间中，任意一组正交向量都是该特征值对应的特征向量。
-因此，我们可以等价地使用这些特征向量构成$\MQ$作为替代。
+如果两个或多个特征向量拥有相同的特征值，那么在由这些特征向量产生的生成子空间中，任意一组正交向量都是该特征值对应的特征向量。
+因此，我们可以等价地从这些特征向量中构成$\MQ$作为替代。
 按照惯例，我们通常按降序排列$\VLambda$的元素。
 在该约定下，特征分解唯一当且仅当所有的特征值都是唯一的。
 
