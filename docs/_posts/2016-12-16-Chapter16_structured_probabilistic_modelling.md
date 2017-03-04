@@ -448,7 +448,7 @@ Z = \int \tilde{p}(\RVx)d\RVx.
 <!-- % 559  -->
 
 
-
+<!-- % 559 end -->
 <!-- %在设计无向模型时我们必须牢记在心的一个要点是设置一些因子使得$Z$不存在这样的方法也是有可能的。 -->
 在设计无向模型时我们必须牢记在心的一个要点是设定一些使得$Z$不存在的因子也是有可能的。
 当模型中的一些变量是连续的，且在$\tilde{p}$在其定义域上的积分发散的时候这种情况就会发生。
@@ -457,7 +457,6 @@ Z = \int \tilde{p}(\RVx)d\RVx.
 \begin{align}
 Z = \int x^2 dx.
 \end{align}
-
 由于这个积分是发散的，所以不存在一个对应着这个势能函数$\phi(x)$的概率分布。
 有时候$\phi$函数某些参数的选择可以决定相应的概率分布是否能够被定义。
 比如说，对$\phi$函数$\phi(x;\beta) = \text{exp}(-\beta x^2)$来说，参数$\beta$决定了归一化常数$Z$是否存在。
@@ -491,7 +490,7 @@ Z = \int x^2 dx.
 无向模型中许多有趣的理论结果都依赖于$\forall \Vx,\ \tilde{p}(\Vx)>0$这个假设。
 使这个条件满足的一种简单方式是使用基于能量的模型，其中
 \begin{align}
-\tilde{p}(\RVx) = \exp(-E(\RVx)).
+\tilde{p}(\RVx) = \exp(-E(\RVx)),
 \end{align}
 $E(\RVx)$被称作是能量函数。
 对所有的$\RSz$ $\exp(\RSz)$都是正的，这保证了没有一个能量函数会使得某一个状态$\RVx$的概率为$0$。
@@ -1045,7 +1044,7 @@ $E(\RVx)$被称作是能量函数。
 我们经常使用最大似然的准则来训练我们的模型。
 由于
 \begin{align}
-\log p(\Vv) = \SetE_{\RVh \sim p(\RVh\mid \Vv)} [\log p(\Vh,\Vv) -  \log p(\Vh\mid\Vv)]
+\log p(\Vv) = \SetE_{\RVh \sim p(\RVh\mid \Vv)} [\log p(\Vh,\Vv) -  \log p(\Vh\mid\Vv)],
 \end{align}
 学习过程中，%为了执行学习规则，
 我们经常需要计算$p(\RVh\mid\Vv)$。
@@ -1164,7 +1163,7 @@ RBM本身不是一个深层模型。
 
 规范的RBM是具有二进制的可见和隐藏单元的基于能量的模型。 其能量函数为
 \begin{align}
-E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh
+E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh,
 \end{align}
 其中$\Vb,\Vc$和$\MW$都是无约束、实值的可学习参数。
 我们可以看到，模型被分成两组单元：$\Vv$和$\Vh$，
@@ -1195,8 +1194,6 @@ p(\RVh\mid\RVv) = \prod_i p(\RSh_i\mid \RVv)
 p(\RVv\mid\RVh) = \prod_i p(\RSv_i\mid \RVh).
 \end{align}
 <!-- % 578 head -->
-
-
 独立的条件分布很容易计算。
 对于二元的受限玻尔兹曼机，我们可以得到：
 \begin{align}
@@ -1234,6 +1231,9 @@ RBM模型通过Gibbs采样产生的样本在\fig?中。
 \begin{align}
 \frac{\partial}{\partial W_{i,j}} E(\RVv,\RVh) = - \RSv_i \RSh_j.
 \end{align}
+
+
+<!-- % 579 head -->
 这两个属性，高效的Gibbs采样和导数计算，使训练过程非常方便。
 在\chap?中，我们将看到，可以通过计算应用于这种来自模型样本的导数来训练无向模型。
 <!-- % 579 -->

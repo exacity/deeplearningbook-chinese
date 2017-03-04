@@ -953,7 +953,7 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 \gls{partition_function}随着输入大小的改变而改变。
 此外，许多卷积网络按与输入大小成比例地缩放池化区域来实现尺寸不变性，但缩放\gls{BM}池化区域是不优雅的。
 传统的卷积神经网络可以使用固定数量的池化单元并且动态地增加它们池化区域的大小，以此获得可变大小输入的固定尺寸的表示。
-对于\gls{BM}，大型池化区域对于朴素的方法变得很昂贵。
+对于\gls{BM}，大型池化区域的计算成本比朴素方法高很多。
  \citet{HonglakL2009} 的方法使得每个检测器单元在相同的池化区域中互斥，解决了计算问题，但仍然不允许大小可变的池化区域。
 例如，假设我们在学习边缘检测器时，检测器单元上具有$2 \times 2$的概率最大池化。
 这强制约束在每个$2 \times 2$的区域中只能出现这些边中的一条。
@@ -1220,7 +1220,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 
 在\gls{sigmoid_bn}中执行\gls{inference}的一种方法是构造专用于\gls{sigmoid_bn}的不同下界 \citep{Saul+96}。
 这种方法只适用于非常小的网络。
-另一种方法是使用的学习好的\gls{inference}机制，如\secref{sec:learned_approximate_inference}中描述的。
+另一种方法是使用学成的\gls{inference}机制，如\secref{sec:learned_approximate_inference}中描述的。
 \gls{helmholtz_machine} \citep{Dayan-et-al-1995,dayan1996varieties} 结合了一个\gls{sigmoid_bn}与一个预测\gls{hidden_unit}上\gls{meanfield}分布参数的\gls{inference}网络。
 \gls{sigmoid_bn}的现代方法\citep{Gregor-et-al-ICML2014,Mnih+Gregor-ICML2014} 仍然使用这种\gls{inference}网络的方法。
 因为\gls{latent_variable}的离散本质，这些技术仍然是困难的。
@@ -1729,7 +1729,7 @@ $\vcenter{\hbox{
 
 % -- 700 --
 
-在同一篇文章中，作者提出了深度版本的架构，但不幸的是，这立即使计算像原始\gls{neural_auto_regressive_network}一样昂贵\citep{Bengio+Bengio-NIPS2000}。
+在同一篇文章中，作者提出了深度版本的架构，但不幸的是，这立即使计算成本像原始\gls{neural_auto_regressive_network}一样高\citep{Bengio+Bengio-NIPS2000}。
 第一层和输出层仍然可以在$\CalO(nh)$的乘法-加法操作中计算，如在常规\glssymbol{NADE}中，其中$h$是\gls{hidden_unit}的数量（\figref{fig:chap20_NADE}和\figref{fig:chap20_neural_autoregressive}中的组$h_i$的大小），而它在\citet{Bengio+Bengio-NIPS2000}中是$\CalO(n^2h)$。
 然而，对于其他\gls{hidden_layer}的计算量是$\CalO(n^2 h^2)$（假设在每个层存在$n$组$h$个\gls{hidden_unit}， 且在$l$层的每个``先前''组参与预测$l+1$层处的``下一个''组）。
 如在\citet{Uria+al-ICML2014}中， 使$l+1$层上的第$i$个组仅取决于第$i$个组，$l$层处的计算量将减少到$\CalO(nh^2)$，但仍然比常规\glssymbol{NADE}差$h$倍。

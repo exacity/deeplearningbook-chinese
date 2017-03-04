@@ -1387,7 +1387,7 @@ $\ +\ .007\ \times$ &%
 
 \gls{tangent_prop}也涉及到\gls{double_backprop}\citep{DruckerLeCun92}和\gls{adversarial_training}\citep{Szegedy-et-al-arxiv2014,Goodfellow-2015-adversarial}。
 \gls{double_backprop}\gls{regularization}\gls{jacobian}要小，而\gls{adversarial_training}找到原输入附近的点，训练模型以在这些点产生与原来输入相同的输出。
-\gls{tangent_prop}和手工指定转换的数据集增强都要求模型对输入变化的某些特定的方向是不变的。
+\gls{tangent_prop}和手动指定转换的数据集增强都要求模型对输入变化的某些特定的方向是不变的。
 \gls{double_backprop}和\gls{adversarial_training}都要求模型对输入所有方向中的变化（只要该变化较小）都应当是不变的。
 正如数据集增强是\gls{tangent_prop}非无限小的版本，\gls{adversarial_training}是\gls{double_backprop}非无限小的版本。
 

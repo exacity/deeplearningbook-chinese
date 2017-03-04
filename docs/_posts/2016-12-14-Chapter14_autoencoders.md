@@ -362,7 +362,7 @@ DAE的训练准则（条件高斯$p(\Vx \mid \Vh)$）能让自编码器学到能
 当训练去噪自编码器最小化平方误差$\| g(f(\tilde \Vx)) - \Vx \|^2$的平均值时，重构 $g(f(\tilde \Vx))$估计$\SetE_{\RVx, \tilde{\RVx} \sim p_{\text{data}}(\RVx) C(\tilde{\RVx} \mid \RVx)}[\RVx \mid \tilde{\Vx}]$。
 $g(f(\tilde \Vx))$对可能产生$\tilde \Vx$的原始点$\Vx$的质心进行估计，所以向量$ g(f(\tilde \Vx)) - \tilde \Vx $近似指向流形上最近的点。
 因此自编码器可以学习由绿色箭头表示的向量场$ g(f( \Vx)) -  \Vx $。
-该向量场估计得分$\nabla_{\Vx} \log p_{\text{data}}(\Vx)$为乘法因子，即平均均方根重构误差。
+该向量场将得分$\nabla_{\Vx} \log p_{\text{data}}(\Vx)$估计为一个乘性因子，即重构误差均方根的平均。
 }
 \end{figure}
 
