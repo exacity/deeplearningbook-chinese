@@ -332,18 +332,26 @@
 寻找最佳的\gls{test_error}需要权衡这些数值。
 当\gls{training_error}较小（因此\gls{capacity}较大），\gls{test_error}主要取决于\gls{training_error}和\gls{test_error}之间的差距时，通常神经网络效果最好。
 此时目标是缩小这一差距，使\gls{training_error}的增长速率不快于差距减小的速率。
-要减少差距，我们可以改变\gls{regularization}\gls{hyperparameter}，以减少有效的模型\gls{capacity}，如添加\gls{dropout}或\gls{weight_decay}。
+要减少这个差距，我们可以改变\gls{regularization}\gls{hyperparameter}，以减少有效的模型\gls{capacity}，如添加\gls{dropout}或\gls{weight_decay}策略。
 通常，最佳性能来自\gls{regularization}得很好的大规模模型，比如使用\gls{dropout}的神经网络。
+% 418 mid
 
-大部分\gls{hyperparameter}可以通过推理其是否增加或减少模型\gls{capacity}来设置。如表\ref{tab:hyperparameter_effect}所示部分示例。
 
+大部分\gls{hyperparameter}可以通过推理其是否增加或减少模型\gls{capacity}来设置。
+部分示例如表\ref{tab:hyperparameter_effect}所示。
+
+
+% 418 end
 手动调整\gls{hyperparameter}时，不要忘记最终目标：提升\gls{test_set}性能。
 加入\gls{regularization}只是实现这个目标的一种方法。
 只要\gls{training_error}低，随时都可以通过收集更多的训练数据来减少\gls{generalization_error}。
 实践中能够确保学习有效的的暴力方法就是不断提高模型\gls{capacity}和\gls{training_set}的大小，直到解决问题。
 这种做法增加了训练和推断的计算代价，所以只有在拥有足够资源时才是可行的。
 原则上，这种做法可能会因为优化难度提高而失败，但对于许多问题而言，优化似乎并没有成为一个显著的障碍，当然，前提是选择了合适的模型。
+% 419 end
 
+
+% -- 419
 \begin{table}
 \centering
 \small
@@ -374,34 +382,39 @@
 \index{Dropout}
 \index{Weight decay}
 \end{table}
+% -- 419
 
 
-% -- 418 --
+
 
 \subsection{自动\glsentrytext{hyperparameter}优化算法}
 \label{sec:automatic_hyperparameter_optimization_algorithms}
 理想的学习算法应该是只需要输入一个数据集，就可以输出学习的函数，而不需要手动调整\gls{hyperparameter}。
 一些流行的学习算法，如\gls{logistic_regression}和\gls{SVM}，流行的部分原因是这类算法只有一到两个\gls{hyperparameter}需要调整，它们也能表现出不错的性能。
 有些情况下，所需调整的\gls{hyperparameter}数量较少时，神经网络可以表现出不错的性能；但\gls{hyperparameter}数量有几十甚至更多时，效果会提升得更加明显。
-当用户有一个很好的初始值，例如由在相同类型的应用和架构上具有经验的人确定初始值，或者用户在相似问题上，具有几个月甚至几年的神经网络\gls{hyperparameter}调整经验，那么手动调整\gls{hyperparameter}能有很好的效果。
+当用户有一个很好的初始值，例如由在相同类型的应用和架构上具有经验的人确定初始值，或者用户在相似问题上具有几个月甚至几年的神经网络\gls{hyperparameter}调整经验，那么手动调整\gls{hyperparameter}能有很好的效果。%??  由在相同类型的应用和架构上具有经验的人确定初始  这句话好像不对吧？
 然而，对于很多应用而言，这些起点都不可用。
 在这些情况下，自动算法可以找到合适的\gls{hyperparameter}。
+% 420 head
+
 
 如果我们思考用户搜索学习算法合适\gls{hyperparameter}的方式，我们会意识到这其实是一种优化：
-我们在试图寻找\gls{hyperparameter}来优化目标函数，例如验证误差，有时还会有一些约束（如训练时间，内存或识别时间的预算）。
+我们在试图寻找\gls{hyperparameter}来优化\gls{objective_function}，例如验证误差，有时还会有一些约束（如训练时间，内存或识别时间的预算）。
 因此，原则上有可能开发出封装学习算法的\firstgls{hyperparameter_optimization}算法，并选择其\gls{hyperparameter}，从而用户不需要指定学习算法的\gls{hyperparameter}。
-令人遗憾的是，\gls{hyperparameter}优化算法往往有自己的（次级）\gls{hyperparameter}，如学习算法的每个\gls{hyperparameter}的值应该被探索的范围。
+令人遗憾的是，\gls{hyperparameter}优化算法往往有自己的\gls{hyperparameter}，如学习算法的每个\gls{hyperparameter}的值应该被探索的范围。
 然而，这些次级\gls{hyperparameter}通常很容易选择，这是说，相同的次级\gls{hyperparameter}能够很多不同的问题上具有良好的性能。
+% 420 mid
+
 
 \subsection{\glsentrytext{grid_search}}
 \label{sec:grid_search}
 当有三个或更少的\gls{hyperparameter}时，常见的\gls{hyperparameter}搜索方法是\firstgls{grid_search}。
 对于每个\gls{hyperparameter}，用户选择一个较小的有限值集去探索。
-然后，这些\gls{hyperparameter}笛卡尔乘积为一组组\gls{hyperparameter}，\gls{grid_search}使用每组\gls{hyperparameter}训练模型。
-挑选\gls{validation_set}误差最小的\gls{hyperparameter}。
+然后，这些\gls{hyperparameter}笛卡尔乘积得到一组组\gls{hyperparameter}，\gls{grid_search}使用每组\gls{hyperparameter}训练模型。
+挑选\gls{validation_set}误差最小的\gls{hyperparameter}作为最好的\gls{hyperparameter}。
 如\figref{fig:chap11_grid_vs_random}所示\gls{hyperparameter}值的网络。
+% -- 420 end
 
-% -- 420 --
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -428,19 +441,22 @@
 \label{fig:chap11_grid_vs_random}
 \end{figure}
 
+
 应该如何选择搜索集合的范围呢？
 在\gls{hyperparameter}是数值（有序）的情况下，每个列表的最小和最大的元素可以基于先前相似实验的经验保守地挑选出来，以确保最优解非常可能在所选范围内。
 通常，\gls{grid_search}大约会在\firstgls{logarithmic_scale}下挑选合适的值，例如，一个\gls{learning_rate}的取值集合是$\{0.1,0.01,10^{-3},10^{-4},10^{-5}\}$，或者\gls{hidden_unit}数目的取值集合$\{50,100,200,500,1000,2000\}$。
+% 421 head
+
 
 通常重复进行\gls{grid_search}时，效果会最好。
 例如，假设我们在集合$\{-1,0,1\}$上\gls{grid_search}\gls{hyperparameter} $\alpha$。
-如果找到的最佳值是$1$，那么说明我们低估了最优值$\alpha$所在的范围，应该扩大搜索范围，例如在集合$\{1,2,3\}$中搜索。
+如果找到的最佳值是$1$，那么说明我们低估了最优值$\alpha$所在的范围，应该改变搜索格点，例如在集合$\{1,2,3\}$中搜索。
 如果最佳值是$0$，那么我们不妨通过细化搜索范围以改进估计，在集合$\{-0.1,0,0.1\}$上进行\gls{grid_search}。
+% -- 422 head
 
-% -- 421 --
 
 \gls{grid_search}带来的一个明显问题是，计算代价会随着\gls{hyperparameter}数量呈指数级增长。
-如果有$m$个\gls{hyperparameter}，每个至少取$n$个值，那么训练和估计所需的试验数将是$O(n^m)$。
+如果有$m$个\gls{hyperparameter}，每个最多取$n$个值，那么训练和估计所需的试验数将是$O(n^m)$。
 可以并行地进行实验，并且并行要求十分宽松（不同搜索的机器之间几乎没有必要进行通信）。
 令人遗憾的是，由于\gls{grid_search}指数级增长计算代价，即使是并行，我们也无法提供令人满意的计算能力。
 
@@ -448,6 +464,8 @@
 \subsection{\glsentrytext{random_search}}
 \label{sec:random_search}
 幸运的是，有一个替代\gls{grid_search}的方法，并且编程简单，使用更方便，能更快地收敛到\gls{hyperparameter}的良好取值：\gls{random_search}\citep{Bergstra+Bengio-2012-small}。
+% 422
+
 
 \gls{random_search}过程如下。
 首先，我们为每个\gls{hyperparameter}定义一个边缘分布，例如，\gls{bernoulli_distribution}或\gls{categorical_distribution}（对应着二元\gls{hyperparameter}或离散\gls{hyperparameter}），或者\gls{logarithmic_scale}上的均匀分布（对应着正实值\gls{hyperparameter}）。
@@ -458,72 +476,87 @@
 \end{align}
 其中，$u(a,b)$表示区间$(a,b)$上均匀采样的样本。
 类似地，$\texttt{log\_number\_of\_hidden\_units}$可能表示在$u(\log(50), \log(2000))$上采样。
+% 422 mid
 
-和\gls{grid_search}不同，我们\emph{不需要离散化}\gls{hyperparameter}的值，我们可以在一个更大的集合上进行搜索，而不产生额外的计算代价。
-实际上，如\figref{fig:chap11_grid_vs_random}所示，当有几个\gls{hyperparameter}对\gls{performance_metrics}没有很强的影响时，\gls{random_search}指数级高效于\gls{grid_search}。
-\cite{Bergstra+Bengio-2012-small}进行了详细的研究，发现\gls{random_search}比\gls{grid_search}要快得多地减小\gls{validation_set}误差（就每个模型运行的试验数而言）。
 
-与\gls{grid_search}一样，可以经常重复运行不同版本的\gls{random_search}，以基于前一次运行的结果改进下一次搜索。
+和\gls{grid_search}不同，我们\emph{不需要离散化}\gls{hyperparameter}的值，我们可以在一个更大的集合上进行搜索，而不产生额外的计算代价。%?? bin
+实际上，如\figref{fig:chap11_grid_vs_random}所示，当有几个\gls{hyperparameter}对\gls{performance_metrics}没有显著影响时，\gls{random_search}相比于\gls{grid_search}指数级地高效。
+\cite{Bergstra+Bengio-2012-small}进行了详细的研究并发现相比于\gls{grid_search}， \gls{random_search}能够更快地减小\gls{validation_set}误差（就每个模型运行的试验数而言）。
+% 422 end
+
+与\gls{grid_search}一样，我们可以经常重复运行不同版本的\gls{random_search}，以基于前一次运行的结果改进下一次搜索。
+% 422 end
+
 
 \gls{random_search}能比\gls{grid_search}更快地找到良好\gls{hyperparameter}的原因是，没有浪费的实验，不像\gls{grid_search}有时会对一个\gls{hyperparameter}的两个不同值（给定其他\gls{hyperparameter}值不变）给出相同结果。
 在\gls{grid_search}中，其他\gls{hyperparameter}将在这两次实验中拥有相同的值，而在\gls{random_search}中，它们通常会具有不同的值。
-因此，如果这两个值的变化不能勉强使\gls{validation_set}误差有明显区别的话，\gls{grid_search}没有必要重复两个等价的实验，而\gls{random_search}仍然会对其他\gls{hyperparameter}进行两次独立地探索。
+因此，如果这两个值的变化所对应的\gls{validation_set}误差没有明显区别的话，\gls{grid_search}没有必要重复两个等价的实验，而\gls{random_search}仍然会对其他\gls{hyperparameter}进行两次独立地探索。
 
-% -- 422 --
+% 423 head
 
 \subsection{基于模型的\glsentrytext{hyperparameter}优化}
 \label{sec:model_based_hyperparameter_optimization}
 \gls{hyperparameter}搜索问题可以转化为一个优化问题。
 决策变量是\gls{hyperparameter}。
-优化的目标是最小化\gls{hyperparameter}训练出来的模型在\gls{validation_set}上的误差。
-在简化的设定下，可以计算\gls{validation_set}上可导误差函数关于\gls{hyperparameter}的导数，然后我们遵循这个导数更新\citep{bengio:1999:snowbird,bengio-hyper-NC00,maclaurin2015gradient}。
+优化的\gls{cost}是\gls{hyperparameter}训练出来的模型在\gls{validation_set}上的误差。
+在简化的设定下，可以计算\gls{validation_set}上可导误差函数关于\gls{hyperparameter}的梯度，然后我们遵循这个梯度更新\citep{bengio:1999:snowbird,bengio-hyper-NC00,maclaurin2015gradient}。
 令人遗憾的是，在大多数实际设定中，这个梯度是不可用的。
-这可能是因为其高额的计算代价和存储成本，也可能是因为\gls{validation_set}误差在\gls{hyperparameter}上本质不可导，例如\gls{hyperparameter}是离散值的情况。
+这可能是因为其高额的计算代价和存储成本，也可能是因为\gls{validation_set}误差在\gls{hyperparameter}上在本质上不可导，例如\gls{hyperparameter}是离散值的情况。
+% 423 mid
 
-为了弥补导数这一不足，我们可以对\gls{validation_set}误差建模，然后通过优化该模型来提出新的\gls{hyperparameter}猜想。
-大部分基于模型的\gls{hyperparameter}搜索算法，都是使用贝叶斯回归模型来估计每个\gls{hyperparameter}的\gls{validation_set}误差期望，和该期望的不确定性。
-因此，优化涉及到探索（探索高度不确定的\gls{hyperparameter}，可能有重大效果提升，也可能效果很差）和使用（使用已经确信效果不错的\gls{hyperparameter}——通常是先前非常熟悉的\gls{hyperparameter}）之间的权衡。
-关于\gls{hyperparameter}优化，现在的方法还有Spearmint\citep{Snoek+al-NIPS2012-small}，TPE\citep{Bergstra+al-NIPS2011}和SMAC\citep{hutter+hoos+leyton+brown:2011}。
 
-目前，我们无法明确确定，贝叶斯\gls{hyperparameter}优化是否是一个能够实现更好\gls{DL}结果或是能够事半功倍的工具。
+为了弥补梯度的缺失，我们可以对\gls{validation_set}误差建模，然后通过优化该模型来提出新的\gls{hyperparameter}猜想。
+大部分基于模型的\gls{hyperparameter}搜索算法，都是使用贝叶斯回归模型来估计每个\gls{hyperparameter}的\gls{validation_set}误差期望和该期望的不确定性。
+因此，优化涉及到探索（探索高度不确定的\gls{hyperparameter}，可能带来显著的效果提升，也可能效果很差）和使用（使用已经确信效果不错的\gls{hyperparameter}——通常是先前非常熟悉的\gls{hyperparameter}）之间的权衡。%??  略乱。
+关于\gls{hyperparameter}优化的最前沿方法还有Spearmint\citep{Snoek+al-NIPS2012-small}，TPE\citep{Bergstra+al-NIPS2011}和SMAC\citep{hutter+hoos+leyton+brown:2011}。
+
+
+% 423 end
+目前，我们无法明确确定，贝叶斯\gls{hyperparameter}优化是否是一个能够实现更好\gls{DL}结果或是能够事半功倍的成熟工具。
 贝叶斯\gls{hyperparameter}优化有时表现得像人类专家，能够在有些问题上取得很好的效果，但有时又会在某些问题上发生灾难性的失误。
 看看它是否适用于一个特定的问题是值得尝试的，但目前该方法还不够成熟或可靠。
 就像所说的那样，\gls{hyperparameter}优化是一个重要的研究领域，通常主要受\gls{DL}所需驱动，但是它不仅能贡献于整个\gls{ML}领域，还能贡献于一般的工程学。
+% 424 head
 
-% -- 423 --
 
 大部分\gls{hyperparameter}优化算法比\gls{random_search}更复杂，并且具有一个共同的缺点，在它们能够从实验中提取任何信息之前，它们需要运行完整的训练实验。
 相比于人类实践者手动搜索，考虑实验早期可以收集的信息量，这种方法是相当低效的，因为手动搜索通常可以很早判断出某组\gls{hyperparameter}是否是完全病态的。
 \cite{swersky2014freeze}提出了一个可以维护多个实验的早期版本算法。
 在不同的时间点，\gls{hyperparameter}优化算法可以选择开启一个新实验，``冻结''正在运行但希望不大的实验，或是``解冻''并恢复早期被冻结的，但现在根据更多信息后又有希望的实验。
 
+
+% 424
 \section{调试策略}
 \label{sec:debugging_strategies}
 当一个\gls{ML}系统效果不好时，通常很难判断效果不好的原因是算法本身，还是算法实现错误。
 由于各种原因，\gls{ML}系统很难调试。
 
-在大多数情况下，我们不能提前知道算法的预期行为。
+
+% 424
+在大多数情况下，我们不能提前知道算法的行为。
 事实上，使用\gls{ML}的整个出发点是，它会发现一些我们自己无法发现的有用行为。
 如果我们在一个\emph{新}的分类任务上训练一个神经网络，它达到$5\%$的\gls{test_error}，我们没法直接知道这是期望的结果，还是次优的结果。
+
 
 另一个难点是，大部分\gls{ML}模型有多个自适应的部分。
 如果一个部分失效了，其他部分仍然可以自适应，并获得大致可接受的性能。
 例如，假设我们正在训练多层神经网络，其中参数为权重$\MW$和\gls{bias_aff} $\Vb$。
-进一步假设，我们单独手动实现了每个参数的梯度下降规则。
+进一步假设，我们单独手动实现了每个参数的\gls{GD}规则。
 而我们在偏置更新时犯了一个错误：
 \begin{equation}
 	\Vb \leftarrow \Vb - \alpha,
 \end{equation}
 其中$\alpha$是\gls{learning_rate}。
 这个错误更新没有使用梯度。
-它会导致偏置在整个学习中不断变为负值，而这显然是错误的。 
+它会导致偏置在整个学习中不断变为负值，对于一个学习算法来说这显然是错误的。 
 然而只是检查模型的输出，该错误可能并不是显而易见的。
 根据输入的分布，权重可能可以自适应地补偿负的偏置。
+% -- 425 head
 
-% -- 424 --
 
 大部分神经网络的调试策略都是解决这两个难题的一个或两个。
-我们可以设计一种简单的情况，能够预见正确结果，判断和模型输出是否相符；我们也可以设计一个测试，检查神经网络实现的一部分。
+我们可以设计一种足够简单的情况，能够预见正确结果，判断和模型输出是否相符；我们也可以设计一个测试，可以独立检查神经网络实现的一部分。%??  判断和模型输出是否相符 这多了一句
+
 
 一些重要的调试检测如下所列。
 
