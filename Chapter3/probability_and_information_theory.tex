@@ -30,7 +30,7 @@
 硬件错误确实会发生，但它们罕见到大部分软件应用在设计时并不需要考虑这些因素的影响。
 鉴于许多计算机科学家和软件工程师在一个相对干净和确定的环境中工作，机器学习对于概率论的大量使用是很令人吃惊的。
 
-这是因为机器学习必须始终处理不确定量，有时也可能需要处理随机(非确定性)量。
+这是因为机器学习必须始终处理不确定量，有时也可能需要处理随机(不明确的)量。
 %(这里uncertain和stochastic有什么区别？)
 不确定性和随机性可能来自多个方面。
 研究人员至少从20世纪80年代开始就对使用概率论来量化不确定性提出了令人信服的论据。
@@ -828,7 +828,7 @@ p(\RSa, \RSb, \RSc) = p(\RSa)p(\RSb\mid \RSa)p(\RSc\mid\RSb).
 两种图模型使用图$\CalG$，其中图的每个节点对应着一个\gls{RV}，连接两个\gls{RV}的边意味着\gls{PD}可以表示成这两个\gls{RV}之间的直接作用。
 
 \firstgls{directed}模型使用带有有向边的图，它们用\gls{conditional_probability}分布来表示\gls{factorization}，就像上面的例子。
-特别地，有向模型对于分布中的每一个\gls{RV} $\RSx_i$都包含着一个影响因子，这个组成$\RSx_i$\gls{conditional_probability}的影响因子被称为$\RSx_i$的双亲，记为$Pa_\CalG(\RSx_i)$：
+特别地，有向模型对于分布中的每一个\gls{RV} $\RSx_i$都包含着一个影响因子，这个组成$\RSx_i$\gls{conditional_probability}的影响因子被称为$\RSx_i$的父节点，记为$Pa_\CalG(\RSx_i)$：
 \begin{equation}
 p(\RVx) = \prod_i p(\RSx_i \mid Pa_\CalG(\RSx_i)).
 \end{equation}
