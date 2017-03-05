@@ -5,19 +5,18 @@
 % 549
 
 
-\gls{DL}为研究者们提供了许多指导性的建模和设计算法的思路。
-其中一种形式是\firstgls{structured_probabilistic_models}。
+\gls{DL}为研究者们提供了许多指导性的建模和设计算法的思路。%??
+其中一种形式是\firstgls{structured_probabilistic_models}的思想。
 我们曾经在\secref{sec:structured_probabilistic_models_chap3}中简要讨论过\gls{structured_probabilistic_models}。
-那个简单的介绍已经足够使我们充分了解如何使用\gls{structured_probabilistic_models}来描述第二部分中的某些算法。
-现在在第三部分，\gls{structured_probabilistic_models}是许多\gls{DL}重要研究方向的关键组成部分。
-作为讨论这些研究方向的预备知识，本章更加详细地描述了\gls{structured_probabilistic_models}。
-本章中我们努力做到内容的自洽性。
-在阅读本章之前读者不需要回顾之前的介绍。
+此前简要的介绍已经足够使我们充分了解如何使用\gls{structured_probabilistic_models}作为描述第二部分中某些算法的语言。
+现在在第三部分，我们可以看到\gls{structured_probabilistic_models}是许多\gls{DL}重要研究方向的关键组成部分。
+作为讨论这些研究方向的预备知识，本章将更加详细地描述\gls{structured_probabilistic_models}。
+本章内容是自洽的，所以在阅读本章之前读者不需要回顾之前的介绍。
 % 549
 
 
 \gls{structured_probabilistic_models}使用图来描述概率分布中随机变量之间的直接相互作用，从而描述一个概率分布。
-在这里我们使用了图论（一系列结点通过一系列边来连接）中图的概念，由于模型的结构是由图来定义的，所以这些模型也通常被叫做\firstgls{graphical_models}。
+在这里我们使用了图论（一系列结点通过一系列边来连接）中``图''的概念，由于模型结构是由图定义的，所以这些模型也通常被称为\firstgls{graphical_models}。
 % 549
 
 
@@ -204,7 +203,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554
 
 
-\firstgls{directed_graphical_model}是一种\gls{structured_probabilistic_models}，也被叫做\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望强调从网络中计算出的值的推断本质，尤其是强调这些值代表的是置信程度大小而不是事件的频率时，Judea Pearl建议使用``\gls{bayesian_network}''这个术语。} \citep{pearl85bayesian}。
+\firstgls{directed_graphical_model}是一种\gls{structured_probabilistic_models}，也被称为\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望强调从网络中计算出的值的推断本质，尤其是强调这些值代表的是置信程度大小而不是事件的频率时，Judea Pearl建议使用``\gls{bayesian_network}''这个术语。} \citep{pearl85bayesian}。
 % 554
 
 
@@ -308,7 +307,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 
 
 \gls{directed_graphical_model}为我们提供了一种描述\gls{structured_probabilistic_models}的语言。
-而另一种常见的语言则是\firstgls{undirected_model}，也叫做\firstall{MRF}或者是\firstgls{markov_network} \citep{kindermann-book-1980}。
+而另一种常见的语言则是\firstgls{undirected_model}，也称为\firstall{MRF}或者是\firstgls{markov_network} \citep{kindermann-book-1980}。
 就像它们的名字所说的那样，\gls{undirected_model}中所有的边都是没有方向的。
 % 556 end
 
@@ -360,7 +359,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 
 正式的说，一个\gls{undirected_model}是一个定义在\gls{undirected_model} $\CalG$上的\gls{structured_probabilistic_models}。
 对图中的每一个\gls{clique}\footnote{图的一个\gls{clique}是图中结点的一个子集，并且其中的点是全连接的}$\CalC$，
-一个\firstgls{factor} $\phi(\CalC)$(也叫做\firstgls{clique_potential})，衡量了\gls{clique}中变量每一种可能的联合状态所对应的密切程度。
+一个\firstgls{factor} $\phi(\CalC)$(也称为\firstgls{clique_potential})，衡量了\gls{clique}中变量每一种可能的联合状态所对应的密切程度。
 这些\gls{factor}都被限制为是非负的。
 合在一起他们定义了\firstgls{unnormalized_probability_function}：
 \begin{align}
@@ -503,7 +502,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 
 服从\eqnref{eqn:167}形式的任意分布都是\firstgls{boltzmann_distribution}的一个实例。
-正是基于这个原因，我们把许多\gls{energy_based_model}叫做\firstgls{BM}~\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
+正是基于这个原因，我们把许多\gls{energy_based_model}称为\firstgls{BM}~\citep{Fahlman83,Ackley85,Hinton84,Hinton86a}。
 关于什么时候叫\gls{energy_based_model}，什么时候叫\gls{BM}不存在一个公认的判别标准。
 一开始\gls{BM}这个术语是用来描述一个只有二进制变量的模型，但是如今许多模型，比如\gls{mcrbm2}，也涉及到了实值变量。
 虽然\gls{BM}最初的定义既可以包含\gls{latent_variable}也可以不包含\gls{latent_variable}，但是时至今日\gls{BM}这个术语通常用于指拥有\gls{latent_variable}的模型，而没有\gls{latent_variable}的\gls{BM}则经常被称为\gls{MRF}或\gls{log_linear_model}。
@@ -690,7 +689,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 在$\RSa$处观察到一个低于预期的风速（对飓风而言）并不会改变我们对$\RSb$处风速的期望（已知有飓风的情况下）。
 然而，如果$\RSs$不被观测到，那么$\RSa$和$\RSb$是依赖的，即路径是活跃的。
 （c）变量$\RSa$和$\RSb$都是$\RSs$的父节点。
-这叫做\firstgls{vstructure}或者\firstgls{collider}。
+这称为\firstgls{vstructure}或者\firstgls{collider}。
 根据\firstgls{explaining_away_effect}，\gls{vstructure}导致$\RSa$和$\RSb$是相关的。
 在这种情况下，当$\RSs$被观测到时路径是活跃的。
 举个例子，假设$\RSs$是一个表示你的同事不在工作的变量。

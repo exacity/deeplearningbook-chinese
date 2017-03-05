@@ -65,7 +65,7 @@
 我们希望计算观察数据的概率对数$\log p(\Vv;\Vtheta)$。
 有时候如果边缘化消去$\Vh$的操作很费时的话，我们通常很难计算$\log p(\Vv;\Vtheta)$。
 作为替代，我们可以计算一个$\log p(\Vv;\Vtheta)$的下界$\CalL(\Vv,{\Vtheta},q)$。
-这个下界叫做\firstall{ELBO}。
+这个下界称为\firstall{ELBO}。
 这个下界的另一个常用名字是负\firstgls{variational_free_energy}。
 具体地，这个\gls{ELBO}是这样定义的：
 % 625 head 
@@ -307,16 +307,16 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 \begin{align}
 	q(\Vh\mid\Vv) = \prod_{i}^{}q(h_i \mid \Vv).
 \end{align}
-这被叫做是\firstgls{mean_field}方法。
+这被称为是\firstgls{mean_field}方法。
 更一般地说，我们可以通过选择$q$分布的形式来选择任何\gls{graphical_models}的结构，通过选择变量之间的相互作用来灵活地决定近似程度的大小。
-这种完全通用的\gls{graphical_models}方法叫做\firstgls{structured_variational_inference} \citep{Saul96}。
+这种完全通用的\gls{graphical_models}方法称为\firstgls{structured_variational_inference} \citep{Saul96}。
 % 630 
 
 
 变分方法的优点是我们不需要为分布$q$设定一个特定的参数化形式。
 我们设定它如何分解，之后通过解决优化问题来找出在这些分解限制下最优的概率分布。
 对离散型\gls{latent_variable}来说，这意味着我们使用了传统的优化技巧来优化描述$q$分布的有限个数变量。
-对连续型\gls{latent_variable}来说，这意味着我们使用了一个叫做\gls{calculus_of_variations}的数学分支来解决对一个函数空间的优化问题。
+对连续型\gls{latent_variable}来说，这意味着我们使用了一个称为\gls{calculus_of_variations}的数学分支来解决对一个函数空间的优化问题。
 然后决定哪一个函数来表示$q$分布。
 \gls{calculus_of_variations}是``变分学习''或者``变分推断''这些名字的来历，尽管当\gls{latent_variable}是离散时\gls{calculus_of_variations}并没有用武之地。
 当遇到连续型\gls{latent_variable}时，\gls{calculus_of_variations}不需要过多地人工选择模型，是一种很有用的工具。
