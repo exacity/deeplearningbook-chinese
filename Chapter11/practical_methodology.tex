@@ -429,9 +429,9 @@
 \fi
 \caption{\gls{grid_search}和\gls{random_search}的比较。
 为了方便地说明，我们只展示两个\gls{hyperparameter}的例子，但是通常我们关注的问题中\gls{hyperparameter}个数会更多。
-（左）为了实现\gls{grid_search}，我们为每个\gls{hyperparameter}提供了一个值的集合。
+\emph{(左)}为了实现\gls{grid_search}，我们为每个\gls{hyperparameter}提供了一个值的集合。
 搜索算法对每一种在这些集合的交叉积中的\gls{hyperparameter}组合进行训练。
-（右）为了实现\gls{random_search}，我们给联合\gls{hyperparameter}赋予了一个概率分布。
+\emph{(右)}为了实现\gls{random_search}，我们给联合\gls{hyperparameter}赋予了一个概率分布。
 通常\gls{hyperparameter}之间是相互独立的。
 常见的这种分布的选择是均匀分布或者是对数均匀（从对数均匀分布中抽样，就是对从均匀分布中抽取的样本进行指数运算）的。
 然后这些搜索算法联合的\gls{hyperparameter}空间中采样，然后运行每一个样本。

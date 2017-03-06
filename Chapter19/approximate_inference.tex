@@ -39,10 +39,10 @@
 \fi
 \caption{\gls{DL}中难以处理的推断问题通常是由于结构化图模型中\gls{latent_variable}的相互作用。
 这些相互作用产生于一个\gls{latent_variable}与另一个\gls{latent_variable}或者当\gls{vstructure}的子节点可观察时与更长的激活路径相连。
-（左）一个\gls{hidden_unit}存在连接的\firstgls{srbm}~\citep{Osindero+Hinton-2008}。
+\emph{(左)}一个\gls{hidden_unit}存在连接的\firstgls{srbm}~\citep{Osindero+Hinton-2008}。
 由于存在大量\gls{latent_variable}的\gls{clique}，\gls{latent_variable}的直接连接使得后验分布难以处理。
-（中）一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。
-（右）当可见变量可观察时这个有向模型的\gls{latent_variable}之间存在相互作用，因为每两个\gls{latent_variable}都是\gls{coparent}。
+\emph{(中)}一个\gls{DBM}，被分层从而使得不存在层内连接，由于层之间的连接其后验分布仍然难以处理。
+\emph{(右)}当可见变量可观察时这个有向模型的\gls{latent_variable}之间存在相互作用，因为每两个\gls{latent_variable}都是\gls{coparent}。
 即使拥有上图中的某一种结构，一些概率模型依然能够获得易于处理的关于\gls{latent_variable}的后验分布。
 如果我们选择条件概率分布来引入相对于图结构描述的额外的独立性这种情况也是可能出现的。
 举个例子，\gls{PPCA}的图结构如右图所示，然而由于其条件分布的特殊性质（带有相互正交基向量的线性高斯条件分布）依然能够进行简单的推断。}
@@ -417,9 +417,9 @@ $p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构见\figref{fig:bsc}。
 	\centerline{\includegraphics{Chapter19/figures/bsc}}
 \fi
 \caption{包含四个\gls{hidden_unit}的\gls{binary_sparse_coding}的图结构。
-（左）$p(\Vh,\Vv)$的图结构。
+\emph{(左)}$p(\Vh,\Vv)$的图结构。
 要注意边是有向的，每两个\gls{hidden_unit}都是每个可见单元的\gls{coparent}。
-（右）$p(\Vh,\Vv)$的图结构。
+\emph{(右)}$p(\Vh,\Vv)$的图结构。
 为了解释\gls{coparent}之间的活跃路径，后验分布所有\gls{hidden_unit}之间都有边。}
 	\label{fig:bsc}
 \end{figure}

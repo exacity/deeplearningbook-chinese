@@ -415,11 +415,11 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 	\centerline{\includegraphics{Chapter12/figures/gcn_sphere_color}}
 \fi
 	\caption{\glssymbol{GCN}将样本投影到一个球上。
-（左）原始的输入数据可能拥有任意的范数。
-（中）$\lambda=0$时候的\glssymbol{GCN}可以完美地将所有的非零样本投影到球上。
+\emph{(左)}原始的输入数据可能拥有任意的范数。
+\emph{(中)}$\lambda=0$时候的\glssymbol{GCN}可以完美地将所有的非零样本投影到球上。
 这里我们令$s=1$，$\epsilon = 10^{-8}$。
 由于我们使用的\glssymbol{GCN}是基于归一化\gls{standard_deviation}而不是$L^2$范数，所得到的球并不是单位球。
-（右）$\lambda>0$的\gls{regularization}\glssymbol{GCN}将样本投影到球上，但是并没有完全地丢弃其范数中变化。
+\emph{(右)}$\lambda>0$的\gls{regularization}\glssymbol{GCN}将样本投影到球上，但是并没有完全地丢弃其范数中变化。
 $s$和$\epsilon$的取值与之前一样。}
 \label{fig:gcn_sphere_color}
 \end{figure}

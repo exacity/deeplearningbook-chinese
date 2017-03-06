@@ -5,7 +5,7 @@
 
 本章我们讨论概率论和信息论。
 
-概率论是用于表示不确定性\gls{statement}(statement)的数学框架。
+概率论是用于表示不确定性\firstgls{statement}的数学框架。
 %(statement要不要换一下说法)
 它不仅提供了量化不确定性的方法，也提供了用于导出新的不确定性\gls{statement}的公理。
 在\gls{AI}领域，概率论主要有两种用途。
@@ -17,23 +17,24 @@
 
 概率论使我们能够作出不确定的\gls{statement}以及在不确定性存在的情况下进行推理，而信息论使我们能够量化\gls{PD}中的不确定性总量。
 
-如果你已经对概率论和信息论很熟悉了，那么你可能会希望跳过除了\ref{sec:structured_probabilistic_models_chap3}节以外的整章内容，而在这一节中我们会介绍用来描述机器学习中\gls{structured_probabilistic_models}的图。
-如果你对这些主题完全没有任何的先验知识，本章对于完成深度学习的研究项目来说已经足够，但我们还是建议你能够参考一些额外的资料，例如\cite{Jaynes03}。
+如果你已经对概率论和信息论很熟悉了，那么除了\secref{sec:structured_probabilistic_models_chap3}以外的整章内容，你都可以跳过。
+而在\secref{sec:structured_probabilistic_models_chap3}中，我们会介绍用来描述机器学习中\gls{structured_probabilistic_models}的图。
+即使你对这些主题完全没有任何的先验知识，本章对于完成深度学习的研究项目来说已经足够，但我们还是建议你能够参考一些额外的资料，例如\cite{Jaynes03}。
 
 % -- 51 --
 
-\section{为什么要用概率？}
+\section{为什么要使用概率？}
 \label{sec:why_probability}
 
-计算机科学的许多分支处理的大部分都是完全确定的实体。
+计算机科学的许多分支处理的实体大部分都是完全确定且必然的。
 程序员通常可以安全地假定CPU将完美地执行每条机器指令。
-硬件错误确实会发生，但它们罕见到大部分软件应用在设计时并不需要考虑这些因素的影响。
+硬件错误确实会发生，但它们足够罕见，以致于大部分软件应用在设计时并不需要考虑这些因素的影响。
 鉴于许多计算机科学家和软件工程师在一个相对干净和确定的环境中工作，机器学习对于概率论的大量使用是很令人吃惊的。
 
-这是因为机器学习必须始终处理不确定量，有时也可能需要处理随机(不明确的)量。
+这是因为机器学习通常必须处理不确定量，有时也可能需要处理随机(非确定性的)量。
 %(这里uncertain和stochastic有什么区别？)
 不确定性和随机性可能来自多个方面。
-研究人员至少从20世纪80年代开始就对使用概率论来量化不确定性提出了令人信服的论据。
+至少从20世纪80年代开始，研究人员就对使用概率论来量化不确定性提出了令人信服的论据。
 这里提出的许多论点都是根据\cite{Pearl88}总结或启发得到的。
 
 几乎所有的活动都需要能够在不确定性存在时进行推理。
@@ -43,59 +44,59 @@
 
 \begin{enumerate}
 \item 被建模系统内在的随机性。
-例如，大多数\gls{quantum_mechanics}的解释，都将\gls{subatomic}(subatomic)粒子的动力学描述为概率性的。
-我们还可以创建一些我们假设具有随机动力学的理论情境，例如一个假想的纸牌游戏，在这个游戏中我们假设纸牌真正混洗成了随机顺序。
+例如，大多数\gls{quantum_mechanics}的解释，都将\gls{subatomic}粒子的动力学描述为概率的。
+我们还可以创建一些我们假设具有随机动态的理论情境，例如一个假想的纸牌游戏，在这个游戏中我们假设纸牌真正混洗成了随机顺序。
 
 \item 不完全观测。
 即使是确定的系统，当我们不能观测到所有驱动系统行为的变量时，该系统也会呈现随机性。
-例如，在Monty Hall提出的问题中，一个游戏节目的参赛者被要求在三个门之间选择并且赢得放置在选中门后的奖金。
+例如，在Monty Hall问题中，一个游戏节目的参赛者被要求在三个门之间选择并且赢得放置在选中门后的奖金。
 两扇门通向山羊，第三扇门通向一辆汽车。
 选手选择所导致的结果是确定的，但是站在选手的角度，结果是不确定的。
 
 \item 不完全建模。
 当我们使用一些必须舍弃某些观测信息的模型时，舍弃的信息会导致模型的预测出现不确定性。
-例如，假设我们建立了一个机器人，它可以准确地观察周围每一个对象的位置。
-如果预测这些对象将来的位置时机器人采用的是离散化的空间，那么离散化使得机器人立即变得不确定对象的精确位置：每个对象都可能处于它被观察到占据的离散单元的任何位置。
+例如，假设我们制作了一个机器人，它可以准确地观察周围每一个对象的位置。
+如果预测这些对象将来的位置时机器人采用的是离散化的空间，那么离散化使得机器人立即变得不能确定对象的精确位置：每个对象都可能处于它被观察到占据的离散单元的任何位置。
 \end{enumerate}
 
 % -- 52 --  
 
-在很多情况下，使用一些简单而不确定的规则要比复杂而确定的规则更为实用，即使真正的规则是确定的并且我们建模的系统可以足够逼真地容纳复杂的规则。
-例如，简单的原则``多数鸟儿都会飞''可以很容易描述并且使用广泛，而正式的规则，``除了那些非常小的还没学会飞翔的幼鸟，生病或是受伤失去了飞翔能力的鸟，不会飞的鸟类包括食火鸟(cassowary)、鸵鸟(ostrich)、几维(kiwi，一种新西兰产的无翼鸟)……等等，鸟儿会飞''，很难应用、维持和沟通，毕竟这方面的努力还是很脆弱，容易失败。
+在很多情况下，使用一些简单而不确定的规则要比复杂而确定的规则更为实用，即使真正的规则是确定的并且我们建模的系统可以足够精确地容纳复杂的规则。
+例如，简单的原则``多数鸟儿都会飞''的描述很简单很并且使用广泛，而正式的规则——``除了那些非常小的还没学会飞翔的幼鸟，因为生病或是受伤而失去了飞翔能力的鸟，不会飞的鸟类包括食火鸟(cassowary)、鸵鸟(ostrich)、几维(kiwi，一种新西兰产的无翼鸟)……等等，鸟会飞''，很难应用、维护和沟通，即使经过所有这些的努力，这些规则还是很脆弱的，并且容易失效。
 
 尽管我们的确需要一种用以对不确定性进行表示和推理的方法，但是概率论并不能明显地提供我们在\gls{AI}领域需要的所有工具。
 概率论最初的发展是为了分析事件发生的频率。
-可以很容易地看出概率论，对于像在扑克牌游戏中抽出一手特定的牌这种事件的研究中，是如何使用的。
-这类事件往往是重复的。
-当我们说一个结果发生的概率为$p$，这意味着如果我们反复实验(例如，抽取一手牌)无限次，有$p$的比例会导致这样的结果。
-这种推理似乎并不立即适用于那些不重复的命题。
-如果一个医生诊断了病人，并说该病人患流感的几率为40\%，这意味着非常不同的事情——我们既不能让病人有无穷多的副本，也没有任何理由去相信病人的不同副本在具有不同的潜在情况下表现出相同的症状。
-在医生诊断病人的情况下，我们用概率来表示一种\firstgls{degree_of_belief}，其中1表示非常肯定病人患有流感而0表示非常肯定病人没有流感。
+我们可以很容易地看出概率论，对于像在扑克牌游戏中抽出一手特定的牌这种事件的研究中，是如何使用的。
+这类事件往往是可以重复的。
+当我们说一个结果发生的概率为$p$，就意味着如果我们反复实验(例如，抽取一手牌)无限次，有$p$的比例会导致这样的结果。
+这种推理似乎并不立即适用于那些不可重复的命题。
+如果一个医生诊断了病人，并说该病人患流感的几率为40\%，这意味着非常不同的事情——我们既不能让病人有无穷多的副本，也没有任何理由去相信病人的不同副本在具有不同的潜在条件下表现出相同的症状。
+在医生诊断病人的情况下，我们用概率来表示一种\firstgls{degree_of_belief}，其中1表示非常肯定病人患有流感，而0表示非常肯定病人没有流感。
 前面一种概率，直接与事件发生的频率相联系，被称为\firstgls{frequentist_probability}；而后者，涉及到确定性水平，被称为\firstgls{bayesian_probability}。
 
 如果要列出一些关于不确定性的常识推理中我们希望其具有的性质，那么满足这些性质的唯一一点就是将\gls{bayesian_probability}和\gls{frequentist_probability}视为等同的。
 例如，如果我们要在扑克牌游戏中根据玩家手上的牌计算她能够获胜的概率，我们和医生情境使用完全相同的公式，就是我们依据病人的某些症状计算她是否患病的概率。
-有关为什么一些小的常识假设能够导出相同公理的细节必须深入了解这两种概率，参见\cite{Ramsey1926}。
+有关一个小集合的常识假设为什么能够导出相同公理的细节必须深入了解这两种概率，参见\cite{Ramsey1926}。
 
 % -- 53 --
 
 概率可以被看作是用于处理不确定性的逻辑扩展。
 逻辑提供了一套形式化的规则，可以在给定某些命题是真或假的假设下，判断另外一些命题是真的还是假的。
-概率论提供了一套形式化的规则，可以在给定一些命题的\gls{likelihood}(likelihood)后，计算其他命题为真的\gls{likelihood}。
+概率论提供了一套形式化的规则，可以在给定一些命题的\gls{likelihood}后，计算其他命题为真的\gls{likelihood}。
 
 \section{\glsentrytext{RV}}
 \label{sec:random_variables}
 
 \firstgls{RV}是可以随机地取不同值的变量。
 我们通常用无格式字体(plain typeface)中的小写字母来表示\gls{RV}本身，而用手写体中的小写字母来表示\gls{RV}能够取到的值。
-例如，$x_1$和$x_2$都是\gls{RV}$\mathrm{x}$可能的取值。
-对于向量值变量，我们会将\gls{RV}写成$\mathbf{x}$，它的一个值为$\bm{x}$。
+例如，$x_1$和$x_2$都是\gls{RV}~$\RSx$可能的取值。
+对于向量值变量，我们会将\gls{RV}写成$\RVx$，它的一个可能取值为$\Vx$。
 就其本身而言，一个\gls{RV}只是对可能的状态的描述；它必须伴随着一个\gls{PD}来指定每个状态的可能性。
 
 \gls{RV}可以是离散的或者连续的。
-离散型\gls{RV}拥有有限或者可数无限多的状态。
-注意这些状态不一定非要是整数；它们也可能只是一些被命名的状态并且没有数值。
-连续型\gls{RV}伴随着实数值。
+离散\gls{RV}拥有有限或者可数无限多的状态。
+注意这些状态不一定非要是整数；它们也可能只是一些被命名的状态而没有数值。
+连续\gls{RV}伴随着实数值。
 
 \section{\glsentrytext{PD}}
 \label{sec:probability_distributions}
@@ -108,13 +109,13 @@
 
 离散型变量的\gls{PD}可以用\firstall{PMF}\footnote{译者注：国内有些教材也将它翻译成概率分布律。}来描述。
 我们通常用大写字母$P$来表示\gls{PMF}。
-通常每一个\gls{RV}都会有一个不同的\gls{PMF}，并且读者必须根据\gls{RV}来推断所使用的\glssymbol{PMF}，而不是根据函数的名称来推断；例如，$P(\mathrm{x})$ 通常和$P(\mathrm{y})$不一样。
+通常每一个\gls{RV}都会有一个不同的\gls{PMF}，并且读者必须根据\gls{RV}来推断所使用的\glssymbol{PMF}，而不是根据函数的名称来推断；例如，$P(\RSx)$ 通常和$P(\RSy)$不一样。
 
 % -- 54 --
 
 \gls{PMF}将\gls{RV}能够取得的每个状态映射到\gls{RV}取得该状态的概率。
-$\mathrm{x} = x$的概率用$P(x)$来表示，概率为1表示$\mathrm{x} = x$是确定的，概率为0表示$\mathrm{x}=x$是不可能发生的。
-有时为了使得\glssymbol{PMF}的使用不相互混淆，我们会明确写出\gls{RV}的名称：$P(\mathrm{x} = x)$。
+$\RSx = x$的概率用$P(x)$来表示，概率为1表示$\RSx = x$是确定的，概率为0表示$\RSx=x$是不可能发生的。
+有时为了使得\glssymbol{PMF}的使用不相互混淆，我们会明确写出\gls{RV}的名称：$P(\RSx = x)$。
 有时我们会先定义一个\gls{RV}，然后用$\sim$符号来说明它遵循的分布：$\RSx\sim P(\RSx)$。
 
 \gls{PMF}可以同时作用于多个\gls{RV}。
@@ -163,7 +164,7 @@ $\frac{1}{k}$是正的，因为$k$是一个正整数。我们也可以看出
 \gls{PDF} $p(x)$并没有直接对特定的状态给出概率，相对的，它给出了落在面积为$\delta x$ 的无限小的区域内的概率为$p(x)\delta x$。
 
 我们可以对\gls{PDF}求积分来获得点集的真实概率质量。
-特别地，$x$落在集合$\mathbb{S}$中的概率可以通过$p(x)$对这个集合求积分来得到。
+特别地，$x$落在集合$\SetS$中的概率可以通过$p(x)$对这个集合求积分来得到。
 在单变量的例子中，$x$落在区间$[a, b]$的概率是$\int_{[a,b]} p(x)dx$。
 
 为了给出一个连续型\gls{RV}的\glssymbol{PDF}的例子，考虑实数区间上的\gls{uniform_distribution}。
@@ -204,7 +205,7 @@ p(x) = \int p(x, y)dy.
 我们将给定$\RSx = x$时$\RSy = y$发生的\gls{conditional_probability}记为$P(\RSy = y\mid \RSx =x)$。
 这个\gls{conditional_probability}可以通过下面的公式计算：
 \begin{equation}
-P(\RSy = y\mid \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)}
+P(\RSy = y\mid \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)} .
 \label{eq:3.5}
 \end{equation}
 \gls{conditional_probability}只在$P(\RSx = x)>0$时有定义。
@@ -220,7 +221,7 @@ P(\RSy = y\mid \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)}
 
 任何多维\gls{RV}的\gls{joint_probability_distribution}，都可以分解成只有一个变量的\gls{conditional_probability}相乘的形式：
 \begin{equation}
-P(\RSx^{(1)}, \ldots, \RSx^{(n)}) = P(\RSx^{(1)}) \Pi_{i=2}^n P(\RSx^{(i)} \mid \RSx^{(1)}, \ldots, \RSx^{(i-1)})
+P(\RSx^{(1)}, \ldots, \RSx^{(n)}) = P(\RSx^{(1)}) \Pi_{i=2}^n P(\RSx^{(i)} \mid \RSx^{(1)}, \ldots, \RSx^{(i-1)}) .
 \label{eq:chap3_chain_rule}
 \end{equation}
 
@@ -306,7 +307,7 @@ $s$以$\frac{1}{2}$的概率值为1，否则为-1。
 
 % -- 59 --
 
-随机向量$\bm{x}\in \SetR^n$的\firstgls{covariance_matrix}是一个$n\times n$的矩阵，并且满足
+随机向量$\Vx \in \SetR^n$的\firstgls{covariance_matrix}是一个$n\times n$的矩阵，并且满足
 \begin{equation}
 \Cov(\RVx)_{i,j} = \Cov(\RSx_i, \RSx_j).
 \end{equation}
@@ -342,9 +343,9 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 \gls{multinoulli_distribution}是\firstgls{multinomial_distribution}的一个特例。
 \gls{multinomial_distribution}是$\{0,\ldots, n\}^k$中的向量的分布，用于表示当对\gls{multinoulli_distribution}采样$n$次时$k$个类中的每一个被访问的次数。
 很多文章使用``\gls{multinomial_distribution}''而实际上说的是\gls{multinoulli_distribution}，但是他们并没有说是对$n=1$的情况，这点需要注意。}
-\gls{multinoulli_distribution}的参数是向量$\bm{p} \in [0, 1]^{k-1}$，每一个分量$p_i$表示第$i$个状态的概率。
-最后的第$k$个状态的概率通过$1-\bm{1}^\top \bm{p}$给出。
-注意到我们必须限制$\bm{1}^\top\bm{p}\le 1$。
+\gls{multinoulli_distribution}的参数是向量$\Vp \in [0, 1]^{k-1}$，每一个分量$p_i$表示第$i$个状态的概率。
+最后的第$k$个状态的概率通过$1-\bm{1}^\top \Vp$给出。
+注意到我们必须限制$\bm{1}^\top\Vp\le 1$。
 \gls{multinoulli_distribution}经常用来表示对象分类的分布，所以我们很少假设状态1具有数值1之类的。
 因此，我们通常不需要去计算\gls{multinoulli_distribution}的\gls{RV}的\gls{expectation}和\gls{variance}。
 
@@ -404,19 +405,19 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 充分利用和证明这个想法需要更多的数学工具，我们推迟到\ref{sec:calculus_of_variations}节进行讲解。
 
 \gls{normal_distribution}可以推广到$\SetR^n$空间，这种情况下被称为\firstgls{multivariate_normal_distribution}。
-它的参数是一个正定对称矩阵$\bm{\Sigma}$：
+它的参数是一个正定对称矩阵$\VSigma$：
 \begin{equation}
 \label{eq:3.23}
-\CalN(\bm{x}; \bm{\mu}, \bm{\Sigma}) = \sqrt{ \frac{1}{ (2\pi)^n \det(\bm{\Sigma})}}  \exp \left ( -\frac{1}{2} (\bm{x}-\bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}- \bm{\mu}) \right).
+\CalN(\Vx; \Vmu, \VSigma) = \sqrt{ \frac{1}{ (2\pi)^n \det(\VSigma)}}  \exp \left ( -\frac{1}{2} (\Vx-\Vmu)^\top \VSigma^{-1} (\Vx- \Vmu) \right).
 \end{equation}
 
-参数$\bm{\mu}$仍然表示分布的均值，只不过现在是向量值的。
-参数$\bm{\Sigma}$给出了分布的\gls{covariance_matrix}。
-和单变量的情况类似，当我们希望对很多不同参数下的\gls{PDF}多次求值时，\gls{covariance_matrix}并不是一个很高效的用参数描述分布的方法，因为对\gls{PDF}求值时需要对$\bm{\Sigma}$求逆。
+参数$\Vmu$仍然表示分布的均值，只不过现在是向量值的。
+参数$\VSigma$给出了分布的\gls{covariance_matrix}。
+和单变量的情况类似，当我们希望对很多不同参数下的\gls{PDF}多次求值时，\gls{covariance_matrix}并不是一个很高效的用参数描述分布的方法，因为对\gls{PDF}求值时需要对$\VSigma$求逆。
 我们可以用一个\firstgls{precision_matrix}
-$\bm{\beta}$ 进行替代：
+$\Vbeta$ 进行替代：
 \begin{equation}
-\CalN(\bm{x}; \bm{\mu}, \bm{\beta}^{-1}) = \sqrt{ \frac{\det(\bm{\beta})}{ (2\pi)^n}}  \exp \left ( -\frac{1}{2} (\bm{x}-\bm{\mu})^\top \bm{\beta} (\bm{x}- \bm{\mu}) \right).
+\CalN(\Vx; \Vmu, \Vbeta^{-1}) = \sqrt{ \frac{\det(\Vbeta)}{ (2\pi)^n}}  \exp \left ( -\frac{1}{2} (\Vx-\Vmu)^\top \Vbeta (\Vx- \Vmu) \right).
 \end{equation}
 
 % -- 62 --
@@ -458,9 +459,9 @@ p(x) = \delta(x-\mu).
 
 \gls{dirac_distribution}经常作为\firstgls{empirical_distribution}的一个组成部分出现：
 \begin{equation}
-\hat{p}(\bm{x}) = \frac{1}{m} \sum_{i=1}^m \delta(\bm{x} - \bm{x}^{(i)})
+\hat{p}(\Vx) = \frac{1}{m} \sum_{i=1}^m \delta(\Vx - \Vx^{(i)})
 \end{equation}
-\gls{empirical_distribution}将概率密度$\frac{1}{m}$赋给$m$个点$\bm{x}^{(1)}, \ldots, \bm{x}^{(m)}$中的每一个，这些点是给定的数据集或者采样的集合。
+\gls{empirical_distribution}将概率密度$\frac{1}{m}$赋给$m$个点$\Vx^{(1)}, \ldots, \Vx^{(m)}$中的每一个，这些点是给定的数据集或者采样的集合。
 只在定义连续型\gls{RV}的经验分布时，\gls{dirac_delta_function}才是必要的。
 对于离散型\gls{RV}，情况更加简单：\gls{empirical_distribution}可以被定义成一个\gls{multinoulli_distribution}，对于每一个可能的输入，其概率可以简单地设为在训练集上那个输入值的\firstgls{empirical_frequency}。
 
@@ -484,7 +485,7 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 % -- 64 --
 
 混合模型是组合简单\gls{PD}来生成更丰富的分布的一种简单策略。
-在第\ref{chap:structured_probabilistic_models_for_deep_learning}章中，我们探讨从简单\gls{PD}构建复杂模型的更详细的技术。
+在\chapref{chap:structured_probabilistic_models_for_deep_learning}中，我们探讨从简单\gls{PD}构建复杂模型的更详细的技术。
 
 混合模型使我们能够一瞥以后会用到的一个非常重要的概念——\firstgls{latent_variable}。
 \gls{latent_variable}是我们不能直接观测到的\gls{RV}。
@@ -493,15 +494,15 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 \gls{latent_variable}的分布$P(\RSc)$以及关联\gls{latent_variable}和观测变量的条件分布$P(\RSx \mid\RSc)$，共同决定了分布$P(\RSx)$的形状，尽管描述$P(\RSx)$时可能并不需要\gls{latent_variable}。
 \gls{latent_variable}会在\ref{sec:learning_about_dependencies}一节中深入讨论。
 
-一个非常强大且常见的混合模型是\firstgls{GMM}，它的组件$p(\RSx \mid \RSc= i)$是\gls{gaussian_distribution}。
-每个组件都有各自的参数，均值$\bm{\mu}^{(i)}$和\gls{covariance_matrix} $\bm{\Sigma}^{(i)}$。
+一个非常强大且常见的混合模型是\firstgls{GMM}，它的组件$p(\RVx \mid \RSc= i)$是\gls{gaussian_distribution}。
+每个组件都有各自的参数，均值$\Vmu^{(i)}$和\gls{covariance_matrix} $\VSigma^{(i)}$。
 有一些混合可以有更多的限制。
-例如，\gls{covariance_matrix}可以通过$\bm{\Sigma}^{(i)} = \bm{\Sigma}, \forall i$的形式在组件之间共享参数。
+例如，\gls{covariance_matrix}可以通过$\VSigma^{(i)} = \VSigma, \forall i$的形式在组件之间共享参数。
 和单个\gls{gaussian_distribution}一样，\gls{GMM}有时会限制每个组件的\gls{covariance_matrix}是对角的或者各向同性的(标量乘以单位矩阵）。
 
 除了均值和\gls{covariance}以外，\gls{GMM}的参数指明了给每个组件$i$的\firstgls{prior_probability} $\alpha_i = P(\RSc = i)$。
-``先验''一词表明了在观测到$\RSx$\emph{之前}传递给模型关于$\RSc$的信念。
-作为对比，$P(\RSc \mid \bm{x})$是\firstgls{posterior_probability}，因为它是在观测到$\RSx$\emph{之后}进行计算的。
+``先验''一词表明了在观测到$\RVx$~\emph{之前}传递给模型关于$\RSc$的信念。
+作为对比，$P(\RSc \mid \Vx)$是\firstgls{posterior_probability}，因为它是在观测到$\RSx$\emph{之后}进行计算的。
 \gls{GMM}是概率密度的\firstgls{universal_approximator}，在这种意义上，任何平滑的概率密度都可以用具有足够多组件的\gls{GMM}以任意精度来逼近。
 
 图\ref{fig:chap3_mog_color}演示了某个\gls{GMM}生成的样例。
@@ -613,9 +614,9 @@ P(\RSx \mid \RSy) = \frac{P(\RSx) P(\RSy \mid \RSx)}{P(\RSy)}.
 连续型\gls{RV}和\gls{PDF}的深入理解需要用到数学分支\firstgls{measure_theory}的相关内容来扩展概率论。
 \gls{measure_theory}超出了本书的范畴，但我们可以简要勾勒一些\gls{measure_theory}用来解决的问题。
 
-在\ref{sec:continuous_variables_and_probability_density_functions}节中，我们已经看到连续型向量值\gls{RV} $\RVx$落在某个集合$\SetS$ 中的概率是通过$p(\bm{x})$对集合$\SetS$积分得到的。
+在\ref{sec:continuous_variables_and_probability_density_functions}节中，我们已经看到连续型向量值\gls{RV} $\RVx$落在某个集合$\SetS$ 中的概率是通过$p(\Vx)$对集合$\SetS$积分得到的。
 对于集合$\SetS$的一些选择可能会引起悖论。
-例如，构造两个集合$\SetS_1$和$\SetS_2$使得$p(\bm{x}\in \SetS_1) + p(\bm{x}\in \SetS_2)>1$并且$\SetS_1 \cap \SetS_2 = \emptyset$是可能的。
+例如，构造两个集合$\SetS_1$和$\SetS_2$使得$p(\Vx\in \SetS_1) + p(\Vx\in \SetS_2)>1$并且$\SetS_1 \cap \SetS_2 = \emptyset$是可能的。
 这些集合通常是大量使用了实数的无限精度来构造的，例如通过构造分形形状(fractal-shaped)的集合或者是通过有理数相关集合的变换定义的集合。
 \footnote{Banach-Tarski定理给出了这类集合的一个有趣的例子。
 译者注：我们这里把``the set of rational numbers''翻译成``有理数相关集合''，理解为``一些有理数组成的集合''，如果直接用后面的翻译读起来会比较拗口。}
@@ -639,8 +640,8 @@ P(\RSx \mid \RSy) = \frac{P(\RSx) P(\RSy \mid \RSx)}{P(\RSy)}.
 概率论中的一些重要结果对于离散值成立但对于连续值只能是``几乎处处''成立。
 
 连续型\gls{RV}的另一技术细节，涉及到处理那种相互之间有确定性函数关系的连续型变量。
-假设我们有两个\gls{RV} $\RVx$和$\RVy$满足$\bm{y} = g(\bm{x})$，其中$g$是可逆的、连续可微的函数。
-可能有人会想$p_y(\bm{y}) = p_x(g^{-1}(\bm{y}))$。
+假设我们有两个\gls{RV} $\RVx$和$\RVy$满足$\Vy = g(\Vx)$，其中$g$是可逆的、连续可微的函数。
+可能有人会想$p_y(\Vy) = p_x(g^{-1}(\Vy))$。
 但实际上这并不对。
 
 举一个简单的例子，假设我们有两个标量值\gls{RV} $\RSx$和$\RSy$，并且满足$\RSy= \frac{\RSx}{2}$以及$\RSx \sim U(0, 1)$。
@@ -652,8 +653,8 @@ P(\RSx \mid \RSy) = \frac{P(\RSx) P(\RSy \mid \RSx)}{P(\RSy)}.
 而这违背了概率密度的定义(积分为1)。
 
 这个常见错误之所以错是因为它没有考虑到引入函数$g$后造成的空间变形。
-回忆一下，$\bm{x}$落在无穷小的体积为$\delta \bm{x}$的区域内的概率为$p(\bm{x})\delta\bm{x}$。
-因为$g$可能会扩展或者压缩空间，在$\bm{x}$空间内的包围着$\bm{x}$ 的无穷小体积在$\bm{y}$空间中可能有不同的体积。
+回忆一下，$\Vx$落在无穷小的体积为$\delta \Vx$的区域内的概率为$p(\Vx)\delta\Vx$。
+因为$g$可能会扩展或者压缩空间，在$\Vx$空间内的包围着$\Vx$ 的无穷小体积在$\Vy$空间中可能有不同的体积。
 
 % -- 69 --
 
@@ -672,10 +673,10 @@ p_x(x) = p_y(g(x)) \left | \frac{\partial g(x)}{\partial x} \right |.
 \end{equation}
 
 在高维空间中，微分运算扩展为\firstgls{jacobian_matrix}的行列式——矩阵的每个元素为$J_{i, j} = \frac{\partial x_i}{\partial y_j}$。
-因此，对于实数值的向量$\bm{x}$和$\bm{y}$，
+因此，对于实数值的向量$\Vx$和$\Vy$，
 \begin{equation}
 \label{eqn:3.47}
-p_x(\bm{x}) = p_y(g(\bm{x})) \left | \det \left ( \frac{\partial g(\bm{x})}{\partial \bm{x}} \right) \right |.
+p_x(\Vx) = p_y(g(\Vx)) \left | \det \left ( \frac{\partial g(\Vx)}{\partial \Vx} \right) \right |.
 \end{equation}
 
 \section{信息论}
