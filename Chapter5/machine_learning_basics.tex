@@ -353,7 +353,7 @@ Iris（鸢尾花卉）\gls{dataset}\citep{Fisher-1936}是统计学家和\gls{ML}
 \else
 \centerline{\includegraphics{Chapter5/figures/linreg_color}}
 \fi
-\caption{一个\gls{linear_regression}问题，训练集包括了十个数据点，每个数据点包含了一个特征。因为只有一个特征，权重向量$\Vw$也只有一个要学习的参数$w_1$。（左）我们可以观察到\gls{linear_regression}学习$w_1$，从而使得直线$y=w_1x$能够尽量接近穿过所有的训练点。（右）标注的点表示由\gls{normal_equations}学习到的$w_1$的值，我们发现它可以最小化训练集上的\gls{mean_squared_error}。}
+\caption{一个\gls{linear_regression}问题，训练集包括了十个数据点，每个数据点包含了一个特征。因为只有一个特征，权重向量$\Vw$也只有一个要学习的参数$w_1$。\emph{(左)}我们可以观察到\gls{linear_regression}学习$w_1$，从而使得直线$y=w_1x$能够尽量接近穿过所有的训练点。\emph{(右)}标注的点表示由\gls{normal_equations}学习到的$w_1$的值，我们发现它可以最小化训练集上的\gls{mean_squared_error}。}
 \label{fig:chap5_linreg}
 \end{figure}
 
@@ -473,7 +473,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/underfit_just_right_overfit_color}}
 \fi
-\caption{我们用三个模型拟合了这个训练集的样本。训练数据是通过随机抽取$x$然后用二次函数确定性地生成$y$来合成的。（左）用一个线性函数拟合数据会导致\gls{underfitting}－－－它无法捕捉数据中的\gls{curvature}信息。（中）用二次函数拟合数据在未观察到的点上\gls{generalization}得很好。这并不会导致明显的\gls{underfitting}或者\gls{overfitting}。（右）一个$9$阶的多项式拟合数据会导致\gls{overfitting}。在这里我们使用\gls{Moore}来解这个欠定的\gls{normal_equations}。得出的解能够精确的穿过所有的训练点，但不幸的是我们无法提取有效的结构信息。在两个数据点之间它有一个真实的函数所不包含的深谷。在数据的左侧，它也会急剧增长，在这一区域真实的函数却是下降的。}
+\caption{我们用三个模型拟合了这个训练集的样本。训练数据是通过随机抽取$x$然后用二次函数确定性地生成$y$来合成的。\emph{(左)}用一个线性函数拟合数据会导致\gls{underfitting}－－－它无法捕捉数据中的\gls{curvature}信息。\emph{(中)}用二次函数拟合数据在未观察到的点上\gls{generalization}得很好。这并不会导致明显的\gls{underfitting}或者\gls{overfitting}。\emph{(右)}一个$9$阶的多项式拟合数据会导致\gls{overfitting}。在这里我们使用\gls{Moore}来解这个欠定的\gls{normal_equations}。得出的解能够精确的穿过所有的训练点，但可惜我们无法提取有效的结构信息。在两个数据点之间它有一个真实的函数所不包含的深谷。在数据的左侧，它也会急剧增长，在这一区域真实的函数却是下降的。}
 \label{fig:chap5_underfit_just_right_overfit}
 \end{figure}
 
@@ -577,7 +577,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 在一定程度上，\gls{ML}仅通过概率法则就可以避免这个问题，而无需使用纯逻辑推理整个确定性法则。
 \gls{ML}保证找到一个关注的\emph{大多数}\gls{example:chap5}\emph{可能}正确的规则。
 
-不幸的是，即使这样也不能解决整个问题。
+可惜，即使这样也不能解决整个问题。
 \gls{ML}的\firstgls{no_free_lunch_theorem}表明，在所有可能的数据生成分布上平均，每一个分类算法在未事先观测的点上都有相同的错误率。
 换言之，在某种意义上，没有一个\gls{ML}算法总是比其他的要好。
 我们能够设想的最先进的算法和简单地将每一个点归为同一类的简单算法有着相同的平均性能（在所有可能的任务上）。
@@ -633,7 +633,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/underfit_just_right_overfit_wd_color}}
 \fi
-\caption{我们使用高阶多项式回归模型来拟合图\ref{fig:chap5_underfit_just_right_overfit}中训练样本。真实函数是二次的，但是在这里我们只使用$9$阶多项式。我们通过改变\gls{weight_decay}的量来避免高阶模型的过拟合问题。（左）当$\lambda$非常大时，我们可以强迫模型学习到了一个没有斜率的函数。由于它只能表示一个常数函数，所以会导致\gls{underfitting}。（中）取一个适当的$\lambda$时，学习算法能够用一个正常的形状来恢复曲率。即使模型能够用更复杂的形状来来表示函数，\gls{weight_decay}鼓励用一个带有更小参数的更简单的模型来描述它。（右）当\gls{weight_decay}趋近于$0$（即，使用\gls{Moore}来解这个带有最小\gls{regularization}的欠定问题）时，这个$9$阶多项式会导致严重的\gls{overfitting}，这和我们在图\ref{fig:chap5_underfit_just_right_overfit}中看到的一样。}
+\caption{我们使用高阶多项式回归模型来拟合图\ref{fig:chap5_underfit_just_right_overfit}中训练样本。真实函数是二次的，但是在这里我们只使用$9$阶多项式。我们通过改变\gls{weight_decay}的量来避免高阶模型的过拟合问题。\emph{(左)}当$\lambda$非常大时，我们可以强迫模型学习到了一个没有斜率的函数。由于它只能表示一个常数函数，所以会导致\gls{underfitting}。\emph{(中)}取一个适当的$\lambda$时，学习算法能够用一个正常的形状来恢复曲率。即使模型能够用更复杂的形状来来表示函数，\gls{weight_decay}鼓励用一个带有更小参数的更简单的模型来描述它。\emph{(右)}当\gls{weight_decay}趋近于$0$（即，使用\gls{Moore}来解这个带有最小\gls{regularization}的欠定问题）时，这个$9$阶多项式会导致严重的\gls{overfitting}，这和我们在图\ref{fig:chap5_underfit_just_right_overfit}中看到的一样。}
 \label{fig:chap5_underfit_just_right_overfit_wd_color}
 \end{figure}
 
@@ -898,7 +898,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \end{equation}
 其中$\sigma^2$是\gls{example:chap5} $x^{(i)}$的真实方差。
 \gls{standard_error}通常被记作$\sigma$。
-不幸的是，样本方差的平方根和方差无偏估计的平方根都不是\gls{standard_deviation}的无偏估计。
+可惜，样本方差的平方根和方差无偏估计的平方根都不是\gls{standard_deviation}的无偏估计。
 这两种计算方法都倾向于低估真实的\gls{standard_deviation}，但仍用于实际中。
 相较而言，方差无偏估计的平方根较少被低估。
 对于较大的$m$，这种近似非常合理。
@@ -1098,7 +1098,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \label{sec:properties_of_maximum_likelihood}
 \gls{maximum_likelihood_estimation}最吸引人的地方在于，它被证明是当\gls{example:chap5}数目$m\to\infty$时，就收敛率而言最好的渐近估计。
 
-在合适的条件下，\gls{maximum_likelihood_estimation}具有一致性（参考\secref{sec:consistency}），意味着训练\gls{example:chap5}数目趋向于无限大时，参数的\gls{maximum_likelihood_estimation}收敛到参数的真实值。
+在合适的条件下，\gls{maximum_likelihood_estimation}具有一致性（参考\secref{sec:consistency}），意味着训练\gls{example:chap5}数目趋向于无穷大时，参数的\gls{maximum_likelihood_estimation}收敛到参数的真实值。
 这些条件是：
 \begin{itemize}
     \item 真实分布$p_{\text{data}}$必须在模型族$p_{\text{model}}(\cdot; \Vtheta)$ 中。
@@ -1154,7 +1154,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \begin{equation}
     p(x^{(m+1)} \mid x^{(1)},\dots,x^{(m)}) = 
     \int p(x^{(m+1)} \mid \Vtheta) p(\Vtheta \mid x^{(1)},\dots,x^{(m)}) 
-        \mathrm{d}\Vtheta .
+        d \Vtheta .
 \end{equation}
 这里，每个具有正概率密度的$\Vtheta$的值有助于下一个\gls{example:chap5}的预测，其中贡献由后验密度本身加权。
 在观测到\gls{dataset} $\{ x^{(1)},\dots,x^{(m)}\}$之后，如果我们仍然非常不确定$\Vtheta$的值，那么这个不确定性会直接包含在我们所做的任何预测中。
@@ -1414,7 +1414,7 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 然后，我们可以解释这些\gls{one_hot}编码的均值为类别的概率分布。
 作为一个非参数学习算法，$k$-近邻能达到非常高的容量。
 例如，假设我们有一个用$0$-$1$误差度量性能的多分类任务。
-在此设定中，当训练\gls{example:chap5}数目趋向于无限大时，$1$-最近邻收敛到两倍贝叶斯误差。
+在此设定中，当训练\gls{example:chap5}数目趋向于无穷大时，$1$-最近邻收敛到两倍贝叶斯误差。
 超出贝叶斯误差的原因是它会随机从等距离的临近点中随机挑一个。
 当有无限的训练数据时，所有测试点$\Vx$周围距离为零的邻近点有无限多个。
 如果我们使用所有这些临近点投票的决策方式，而不是随机挑选一个，那么该过程将会收敛到贝叶斯错误率。
@@ -1509,7 +1509,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 \else
 \centerline{\includegraphics{Chapter5/figures/pca_color}}
 \fi
-\caption{\glssymbol{PCA}学习了一种线性投影，<bad>投影的方向对齐了新的空间最大方差的轴。（左）原始数据包含了$\Vx$的样本。在这个空间中，方差的方向与轴的方向并不是对齐的。（右）变换过的数据$\Vz = \Vx^{\top}\MW$在轴$z_1$的方向上有最大的变化。第二大变化方差的方向沿着轴$z_2$。}
+\caption{\glssymbol{PCA}学习一种线性投影，使最大方差的方向和新空间的轴对齐。\emph{(左)}原始数据包含了$\Vx$的样本。在这个空间中，方差的方向与轴的方向并不是对齐的。\emph{(右)}变换过的数据$\Vz = \Vx^{\top}\MW$在轴$z_1$的方向上有最大的变化。第二大变化方差的方向沿着轴$z_2$。}
 \label{fig:chap5_pca}
 \end{figure}
 
@@ -1667,7 +1667,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 对于固定大小的模型，每一步\gls{SGD}更新的计算量不取决于训练集的大小$m$。
 在实践中，当训练集大小增长时，我们通常会使用一个更大的模型，但这并非强制的。
 达到收敛所需的更新次数通常会随训练集规模增大而增加。
-然而，当$m$趋向于无限大时，该模型最终会在\gls{SGD}抽样训练集上的所有\gls{example:chap5}之前收敛到可能的最优测试误差。
+然而，当$m$趋向于无穷大时，该模型最终会在\gls{SGD}抽样训练集上的所有\gls{example:chap5}之前收敛到可能的最优测试误差。
 继续增加$m$不会延长达到模型可能的最优测试误差的时间。
 从这点来看，我们可以认为用\glssymbol{SGD}训练模型的渐近代价是关于$m$的函数的$O(1)$级别。
 
@@ -1772,7 +1772,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
     \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_1d_color} & \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_2d_color} & \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_3d_color}
 \end{tabular}
 \fi
-\caption{当数据的相关维度增大时（从左向右），我们感兴趣的configuration的数目会随之指数性地增长。（左）在这个一维的例子中，我们用一个变量来区分所感兴趣的仅仅$10$个区域。当每个区域都有足够的样本数时（图中每个样本对应了一个细胞），学习算法能够轻易地\gls{generalization}得很好。\gls{generalization}的一个直接方法是估计目标函数在每个区域的值（<bad>可能是相邻区域的插值）。（中）在二维情况下，对每个变量区分$10$个不同的值更加困难。我们需要追踪$10\times10=100$个区域，至少需要很多样本来覆盖所有的区域。（右）三维情况下，区域数量增加到了$10^3=1000$，至少需要更多的样本。对于需要区分的$d$维以及$v$个值来说，我们需要$O(v^d)$个区域和样本。这就是\gls{curse_of_dimensionality}的一个实例。感谢由Nicolas Chapados提供的图片。}
+\caption{当数据的相关维度增大时（从左向右），我们感兴趣的configuration的数目会随之指数性地增长。\emph{(左)}在这个一维的例子中，我们用一个变量来区分所感兴趣的仅仅$10$个区域。当每个区域都有足够的样本数时（图中每个样本对应了一个细胞），学习算法能够轻易地\gls{generalization}得很好。\gls{generalization}的一个直接方法是估计目标函数在每个区域的值（可能是在相邻区域之间插值）。\emph{(中)}在二维情况下，对每个变量区分$10$个不同的值更加困难。我们需要追踪$10\times10=100$个区域，至少需要很多样本来覆盖所有的区域。\emph{(右)}三维情况下，区域数量增加到了$10^3=1000$，至少需要更多的样本。对于需要区分的$d$维以及$v$个值来说，我们需要$O(v^d)$个区域和样本。这就是\gls{curse_of_dimensionality}的一个实例。感谢由Nicolas Chapados提供的图片。}
 \label{fig:chap5_curse}
 \end{figure}
 
