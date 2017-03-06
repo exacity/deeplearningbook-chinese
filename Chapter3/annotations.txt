@@ -1,0 +1,67 @@
+{'user': 'acct:kkpoker@hypothes.is', 'text': '据此', 'origin_text': '方式来使用概率论。首先，概率法则告诉我们AI系统应该如何推理，  !!!所以!!!  我们设计一些算法来计算或者近似由概率论导出的表达式。其次，我们', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '逼近？拟合？\n看了一下似乎应该是估算', 'origin_text': '法则告诉我们AI系统应该如何推理，所以我们设计一些算法来计算或者  !!!近似!!!  由概率论导出的表达式。其次，我们可以用概率和统计从理论上分析我', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '进行推理', 'origin_text': '。概率论使我们能够作出不确定的陈述以及在不确定性存在的情况下  !!!推理!!!  ，而信息论使我们能够量化概率分布中的不确定性总量。如果你已经', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '在设计时并不需要', 'origin_text': '指令。硬件错误确实会发生，但它们足够罕见，以至于大部分软件应用  !!!并不需要被设计为!!!  考虑这些因素的影响。鉴于很多计算机科学家和软件工程师在一个相对', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '是很令人吃惊的', 'origin_text': '师在一个相对干净和确定的环境中工作，机器学习对于概率论的大量使用  !!!不得不令人吃惊!!!  。这是因为机器学习必须始终处理不确定量，有时也可能需要处理随', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '可以用于表示和推理', 'origin_text': '，毕竟这方面的努力还是很脆弱，容易失败。尽管我们明确需要一种  !!!表示和推理!!!  不确定性的方法，但是概率论能够提供所有我们想要的人工智能领域的工', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '我们可以', 'origin_text': '具并不是那么显然。概率论最初的发展是为了分析事件发生的频率。  !!!可以!!!  很容易地看出概率论，对于像在扑克牌游戏中抽出一手特定的牌这种事件', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '尽管我们的确需要一种用以对不确定性进行表示和推理的方法，但是概率论并不能明显地提供我们在人工智能领域需要的工具。', 'origin_text': '很难应用、维持和沟通，毕竟这方面的努力还是很脆弱，容易失败。  !!!尽管我们明确需要一种表示和推理不确定性的方法，但是概率论能够提供所有我们想要的人工智能领域的工具并不是那么显然!!!  。概率论最初的发展是为了分析事件发生的频率。可以很容易地看出', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '概率论主要有两种用途', 'origin_text': '方法，也提供了用于导出新的不确定性陈述的公理。在人工智能领域，  !!!我们主要以两种方式来使用概率论!!!  。首先，概率法则告诉我们AI系统应该如何推理，所以我们设计一些', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '条', 'origin_text': '是完全确定的实体。程序员通常可以安全地假定CPU将完美地执行每  !!!个!!!  机器指令。硬件错误确实会发生，但它们足够罕见，以至于大部分软件', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '但它们罕见到', 'origin_text': '安全地假定CPU将完美地执行每个机器指令。硬件错误确实会发生，  !!!但它们足够罕见，以至于!!!  大部分软件应用并不需要被设计为考虑这些因素的影响。鉴于很多计算', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '“We can also create theoretical scenarios that we postulate to have random dynamics, such as…”\ndynamics 应该是指动态而不再是上文中的动力学', 'origin_text': '，都将亚原子(subatomic)粒子的动力学描述为概率性的。  !!!我们还可以假定有随机动力学，并为此建立理论方案!!!  ，例如一个假想的纸牌游戏，我们假设纸牌真正混洗成随机顺序。', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '在一个假想的纸牌游戏中', 'origin_text': '概率性的。我们还可以假定有随机动力学，并为此建立理论方案，例如  !!!一个假想的纸牌游戏!!!  ，我们假设纸牌真正混洗成随机顺序。      不完全观测', 'time': '2017-02-18T12:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '意译成 可以足够逼真地容纳复杂的规则 ？', 'origin_text': '杂而确定的原则更为实用，即使真实的规则是确定的并且我们的模型系统  !!!对适应复杂规则具有很好的逼真度(fidelity)!!!  。例如，简单的原则”多数鸟儿都会飞”可以很容易应用并且使用广泛', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': 'develope 这里可译成描述？', 'origin_text': 'idelity)。例如，简单的原则”多数鸟儿都会飞”可以很容易  !!!应用!!!  并且使用广泛，而正式的规则，”除了那些非常小的还没学会飞翔的幼鸟', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '如果要列出一些关于不确定性的常识推理中我们希望其具有的性质', 'origin_text': '被称为频率概率；而后者，涉及到确定性水平，被称为贝叶斯概率。  !!!如果我们要列出一些，我们期望关于不确定性的常识推理具有的性质!!!  ，那么满足这些属性的唯一一点就是将贝叶斯概率和频率概率视为等同的', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '去掉', 'origin_text': '状计算她是否患病的概率。有关为什么一些小的常识假设能够导出相同  !!!的!!!  公理的细节必须深入了解这两种概率，参见{Ramsey1926}。', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '，可以在给定某些命题是真或假的假设下', 'origin_text': '被看作是用于处理不确定性的逻辑扩展。逻辑提供了一套形式化的规则  !!!在给定某些命题是真或假的假设下!!!  ，判断另外一些命题是真的还是假的。概率论提供了一套形式化的规则', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '用于在', 'origin_text': '，判断另外一些命题是真的还是假的。概率论提供了一套形式化的规则  !!!在!!!  给定一些命题的似然(likelihood)后，计算其他命题为真的', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '印刷体？', 'origin_text': '随机变量随机变量是可以随机地取不同值的变量。我们通常用  !!!打印机体!!!  的小写字母来表示随机变量本身，而用脚本字体中的小写字母来表示随机', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': 'script letter 手写体', 'origin_text': '值的变量。我们通常用打印机体的小写字母来表示随机变量本身，而用  !!!脚本字体!!!  中的小写字母来表示随机变量能够取到的值。例如，x1x1x_1和', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '是', 'origin_text': '计算当采用某个动作后会发生什么相混淆。假定某个人说德语，那么他  !!!可能是!!!  德国人的条件概率是非常高的，但是如果是随机选择的一个人会说德语，', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '不会因此而改变', 'origin_text': '条件概率是非常高的，但是如果是随机选择的一个人会说德语，他的国籍  !!!是不变的!!!  。计算一个行动的后果被称为干预查询。干预查询属于因果模型的范', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '变量大小的影响', 'origin_text': '如相关系数将每个变量的贡献归一化，为了只衡量变量的相关性，而不受  !!!变量大小的分别影响!!!  。协方差和相关性是有联系的，但实际上不同的概念。它们是有联', 'time': '2017-02-18T12:59'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '其中k是一个有限值', 'origin_text': '分类分布是指在具有kkk个不同状态的单个离散型随机变量上的分布，  !!!kkk是有限的!!!  。\\footnote{“multinoulli”这个术语是最近', 'time': '2017-02-18T13:00'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '任意', 'origin_text': 'oulli分布足够用来描述在它们领域内的任意分布。它们能够描述  !!!这些!!!  分布，不是因为它们特别强大，而是因为它们的领域很简单；它们可以', 'time': '2017-02-18T13:22'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': 'enumerate 枚举？', 'origin_text': '而是因为它们的领域很简单；它们可以对那些，能够将所有的状态进行  !!!标号!!!  的离散型随机变量，进行建模。当处理的是连续型随机变量时，会有不', 'time': '2017-02-18T13:24'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '有严格的限制', 'origin_text': '数无限多的状态，所以任何通过少量参数描述的概率分布都必须在分布上  !!!采用严格的极限!!!  。高斯分布对于实数上的分布最常用的就是正态分布，也称为高', 'time': '2017-02-18T13:28'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': 'uncountably many states 留下无限多就可以了？', 'origin_text': '号的离散型随机变量，进行建模。当处理的是连续型随机变量时，会有  !!!不可数无限多!!!  的状态，所以任何通过少量参数描述的概率分布都必须在分布上采用严格', 'time': '2017-02-18T13:29'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': 'to control the precision or inverse variance\n原文的precision是斜体，所以这里or可以理解为后者是前者的解释？\n分布的精确度(用方差的倒数来表示)', 'origin_text': 'β∈(0,∞)\\beta \\in (0, \\infty)，来控制  !!!分布的精度或者方差的倒数!!!  ：N(x;μ,β−1)=β2π−−−√exp(−12β(x−μ', 'time': '2017-02-18T13:49'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '含噪声的正态分布', 'origin_text': '服从正态分布。这意味着在实际中，很多复杂系统都可以被成功建模成  !!!正态分布的噪声!!!  ，即使系统可以被分解成具有更多结构化行为的各个部分。第二，在', 'time': '2017-02-18T14:00'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '一些更结构化的部分', 'origin_text': '多复杂系统都可以被成功建模成正态分布的噪声，即使系统可以被分解成  !!!具有更多结构化行为的各个部分!!!  。第二，在具有相同方差的所有可能的概率分布中，正态分布在实数', 'time': '2017-02-18T14:01'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': ' We can think of the Dirac delta function as being the limit point of a series of functions that put less and less mass on all points other than zero.', 'origin_text': '学对象，被称为广义函数，广义函数是依据积分性质定义的数学对象。  !!!我们可以把Dirac delta函数想成一系列函数的极限点，这一系列函数把除μμ\\mu以外的所有点的概率密度越变越小。!!!  通过把p(x)p(x)p(x)定义成δδ\\delta函数', 'time': '2017-02-19T02:51'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': 'Dirac delta函数只在定义连续型随机变量的经验分布时是必要的/只在定义连续型随机变量的经验分布时，Dirac delta函数才是必要的', 'origin_text': '}^{(m)}中的每一个，这些点是给定的数据集或者采样的集合。  !!!Dirac delta函数只对定义连续型随机变量的经验分布是必要的!!!  。对于离散型随机变量，情况更加简单：经验分布可以被定义成一个M', 'time': '2017-02-19T02:58'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '观测', 'origin_text': 'lpha_i = P(\\RSc = i)。“先验”一词表明了在  !!!观测到!!!  xx\\RSx\\emph{之前}传递给模型关于cc\\RSc的信念。', 'time': '2017-02-20T00:30'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': "express the model's beliefs about c\n\n我也没想到翻译成什么…不过总感觉信念有点奇怪", 'origin_text': '。“先验”一词表明了在观测到xx\\RSx\\emph{之前}传递  !!!给模型关于cc\\RSc的信念!!!  。作为对比，P(c∣\\bmx)P(c∣\\bmx)P(\\RSc ', 'time': '2017-02-20T02:50'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '贝叶斯公式', 'origin_text': ')ζ(−x)\\zeta(-x)进行操作，就像公式\\?中那样。  !!!贝叶斯规则!!!  我们经常会需要在已知P(y∣x)P(y∣x)P(\\RSy \\', 'time': '2017-02-20T01:00'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '变换\n\n\ntransform包含平移和旋转，如脚注的Banach-Tarski定理', 'origin_text': '(fractal-shaped)的集合或者是通过有理数相关集合的  !!!平移!!!  来定义的集合。\\footnote{Banach-Tarski定', 'time': '2017-02-20T02:49'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '测度论更多的是用来描述那些适用于RnRn上的大多数点，却不适用于一些边界情况的定理', 'origin_text': '以测度论的这个方面不会成为一个相关考虑。对于我们的目的，  !!!测度论更多的是用来描述那些适用于RnRn\\SetR^n上的大多数点的定理的，而不是只适用于一些小的情况!!!  。测度论提供了一种严格的方式来描述那些非常微小的点集。这种集', 'time': '2017-02-20T02:49'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '除了一个测度为零的集合', 'origin_text': '几乎处处”。某个性质如果是几乎处处都成立的，那么它在整个空间中  !!!除了测度为零的集合!!!  以外都是成立的。因为这些例外只在空间中占有极其微小的量，它们在', 'time': '2017-02-20T02:57'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '相互之间有确定性函数关系', 'origin_text': '几乎处处”成立。连续型随机变量的另一技术细节，涉及到处理那种  !!!相互之间是彼此的确定性函数!!!  的连续型变量。假设我们有两个随机变量 xx\\RVx和yy\\RV', 'time': '2017-02-20T03:38'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '它给出了对依据概率分布 PP生成的符号进行编码所需的比特数的平均意义上的下界(当对数底数不是2时，单位将有所不同)。', 'origin_text': '，一个分布的香农熵是指遵循这个分布的事件所产生的期望信息总量。  !!!它给出了对，依据概率分布 PPP生成的符号，进行编码所需的比特数的平均意义上的下界(如果对数的底是2的话，否则单位有所不同)。!!!  那些接近确定性的分布(输出几乎可以确定)具有较低的熵；那些接近', 'time': '2017-02-20T07:55'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '去', 'origin_text': '一种被设计成能够使得概率分布 QQQ 产生的消息的长度最小的编码  !!!时，!!!  发送包含由概率分布 PPP产生的符号的消息时，所需要的额外信息量', 'time': '2017-02-20T08:02'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '交叉熵', 'origin_text': 'og Q(x).\\end{equation}针对QQQ最小化  !!!互信息!!!  等价于最小化KL散度，因为QQQ并不参与被省略的那一项。当计', 'time': '2017-02-20T08:14'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '因式分解更常见？', 'origin_text': 'RSc\\mid\\RSb).\\end{equation}这种  !!!因子分解!!!  可以极大地减少用来描述一个分布的参数的数量。每个因子使用的参数', 'time': '2017-02-20T08:24'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '由两两相连的点构成的集合', 'origin_text': '模型那样，这些函数通常不是任何类型的概率分布。GG\\CalG中  !!!任何全部相连的节点构成的集合!!!  被称为团。无向模型中的每个团C(i)C(i)\\CalC^{(i', 'time': '2017-02-20T08:28'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '我们仅仅将结构化概率模型视作一门语言', 'origin_text': '都可以用两种方式进行描述。在本书第\\?部分和第\\?部分中，   !!!我们使用结构化概率模型仅仅是作为一门语言!!!  ，来描述不同的机器学习算法选择表示的直接的概率关系。一直到研究', 'time': '2017-02-20T08:35'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '直到研究课题的讨论之前，不会需要对结构化概率模型的深入理解', 'origin_text': '为一门语言，来描述不同的机器学习算法选择表示的直接的概率关系。  !!!一直到研究课题的讨论之前，不会需要用到结构化概率模型的深入理解!!!  。在第\\?部分的研究课题中，我们会更为详尽地探讨结构化概率模型', 'time': '2017-02-20T08:41'}
+{'user': 'acct:knightwupz@hypothes.is', 'text': '翻译成父节点，和图论用语一致？', 'origin_text': 'ixi\\RSx_i条件概率的影响因子被称为xixi\\RSx_i的  !!!双亲!!!  ，记为PaG(xi)PaG(xi)Pa_\\CalG(\\RSx_i', 'time': '2017-02-28T15:11'}
+
+=============================   Replies   =============================
+
+{'user': 'acct:swordyork@hypothes.is', 'text': '为了跟20章还有前面哪一章统一，我改成动态了。', 'time': '2017-03-06T05:23'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '嗯嗯，有道理。这样更符合数据结构的习惯。', 'time': '2017-03-04T02:54'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '感觉因式分解特指多项式的分解。。。[wiki](https://zh.wikipedia.org/wiki/%E5%9B%A0%E5%BC%8F%E5%88%86%E8%A7%A3)\n原文是\n> factorization\n\n英文的话没有那么特指，[wiki](https://en.wikipedia.org/wiki/Factorization)，还可以只矩阵的分解之类的，但是中文感觉找不到太好的对应词，我改成分解好了。', 'time': '2017-02-21T08:01'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '这里还是听你的翻译成变换吧，但事实上构造不可测集确实只用到了平移操作...对集合没有旋转一说...', 'time': '2017-02-21T06:17'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '确实中文的很多教材都直接称为贝叶斯公式，但原文是\n> Bayes’ Rule\n\n我还是保留贝叶斯规则吧...', 'time': '2017-02-21T06:13'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '原文是\n> before it has observed x\n\n所以我翻译成”观测到“', 'time': '2017-02-21T06:09'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '感觉这种翻法很普遍啊。。。像belief network翻译成信念网络；belief propagation翻译成信念传播', 'time': '2017-02-21T06:08'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '这里是0，当时下意识写了`$\\mu$`', 'time': '2017-02-21T05:57'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '原文是这样的\n> many complicated systems can be modeled successfully as normally distributed noise\n', 'time': '2017-02-21T05:43'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '这里不能只说”无限多“，因为在实分析里可数无限多和不可数无限多区别很大。像数列那种，就是可以把所有的状态枚举出来，属于可数无限多；但是像[0,1]内实数的个数这种，不能枚举，属于不可数无限多，一般称为连续统。', 'time': '2017-02-21T05:09'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '这里并不是任意分布，而是\n> any distribution over their domain\n\n如果还是说”它们领域内的任意分布“和前面有点重复，所以我选择用”这些“来代替。', 'time': '2017-02-21T05:03'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '打印机体确实不对，原文是\n> plain typeface\n\n直译为"无格式字体"，参考[wiki](https://zh.wikipedia.org/wiki/%E5%8D%B0%E5%88%B7%E4%BD%93)可以看到翻译成印刷体不是很合适...我也找不到一个恰当的翻译，实在不知道怎么描述这种字体...在LaTeX中，我是用`\\mathrm{x}`打出的这种字体，可以理解成罗马体。\n\n暂时先翻译成“无格式字体“吧', 'time': '2017-02-20T15:37'}
+{'user': 'acct:kkpoker@hypothes.is', 'text': '其实是感觉中文需要个主语，仅此而已(', 'time': '2017-02-20T15:12'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '原文是\n> It is easy to see how probability theory can be used to study events like drawing a certain hand of cards in a poker game.\n\n所以我还是没加“我们”', 'time': '2017-02-20T15:10'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '这里我重新翻了一下，改成"我们还可以创建一些我们假设具有随机动力学的理论情境，例如一个假想的纸牌游戏，在这个游戏中我们假设纸牌真正混洗成了随机顺序。"感觉动态一词很少见，还是保留动力学怎么样？', 'time': '2017-02-20T15:04'}
