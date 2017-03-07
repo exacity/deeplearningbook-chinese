@@ -5,7 +5,8 @@
 % 549
 
 
-\gls{DL}为研究者们提供了许多指导性的建模和设计算法的思路。%??
+%\gls{DL}为研究者们提供了许多指导性的建模和设计算法的思路。%??
+\gls{DL}为研究者们提供了许多建模方式，用以设计以及描述算法。
 其中一种形式是\firstgls{structured_probabilistic_models}的思想。
 我们曾经在\secref{sec:structured_probabilistic_models_chap3}中简要讨论过\gls{structured_probabilistic_models}。
 此前简要的介绍已经足够使我们充分了解如何使用\gls{structured_probabilistic_models}作为描述第二部分中某些算法的语言。
@@ -46,7 +47,7 @@
 
 
 \gls{DL}的目标是使得\gls{ML}能够解决许多\gls{AI}中亟需解决的挑战。
-这也意味着能够理解具有丰富结构的高维数据。%??
+这也意味着能够理解具有丰富结构的高维数据。%??  我觉得还是应该这样翻译
 举个例子，我们希望\glssymbol{AI}的算法能够理解自然图片\footnote{自然图片指的是能够在正常的环境下被照相机拍摄的图片，不同于合成的图片，或者一个网页的截图等等。}，表示语音的声音信号和包含许多词和标点的文档。
 % 550  ok
 
@@ -207,7 +208,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 
 
 \firstgls{directed_graphical_model}是一种\gls{structured_probabilistic_models}，也被称为\firstgls{BN}或者\firstgls{bayesian_network}
-\footnote{当我们希望强调从网络中计算出的值的推断本质，尤其是强调这些值代表的是置信程度大小而不是事件的频率时，Judea Pearl建议使用``\gls{bayesian_network}''这个术语。}%??
+\footnote{当我们希望``强调''从网络中计算出的值的``推断''本质，即强调这些值代表的是置信程度大小而不是事件的频率时，Judea Pearl建议使用``\gls{bayesian_network}''这个术语。}%??
  \citep{pearl85bayesian}。
 % 554
 
@@ -1016,8 +1017,9 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 良好的生成模型需要准确地捕获所观察到的或``可见''变量$\RVv$上的分布。
 通常$\RVv$的不同元素彼此高度依赖。
 在\gls{DL}中，最常用于建模这些\gls{dependency}关系的方法是引入几个\gls{latent}或``隐藏''变量$\RVh$。
-然后，该模型可以捕获任何对之间的\gls{dependency}关系（变量$\RSv_i$和$\RSv_j$间接依赖，$\RSv_i$和$\RVh$之间直接依赖，$\RVv$和$\RSh_j$直接依赖)。%??
+然后，该模型可以捕获任何对（变量$\RSv_i$和$\RSv_j$间接\gls{dependency}，$\RSv_i$和$\RVh$之间直接\gls{dependency}，$\RVv$和$\RSh_j$直接\gls{dependency})之间的\gls{dependency}关系。%??
 % 572  end 
+
 
 一个好的不包含任何\gls{latent_variable}的 关于$\RVv$的模型需要在\gls{bayesian_network}中的每个节点具有大量父节点或在\gls{markov_network}中具有非常大的\gls{clique}。
 仅仅表示这些高阶相互作用的成本是很高的，首先从计算角度上考虑，存储在存储器中的参数数量是\gls{clique}中成员数量的指数级别，接着在统计学意义上，因为这些指数数量的参数需要大量的数据来准确估计。
@@ -1031,7 +1033,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 它们提出了一种结构，对具有该结构的模型进行训练，然后给出分数。 
 该分数奖励训练集上的高精度并对模型的复杂度进行惩罚。
 然后提出添加或移除少量边的候选结构作为搜索的下一步。
-搜索向一个预计会增加分数的方向发展。 %??
+搜索向一个预计会增加分数的新结构发展。 %??
 % 573
 
 
@@ -1042,7 +1044,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 % 573 
 
 
-\gls{latent_variable}还有一个额外的优势，即能够高效地描述$p(\RVv)$。%??
+\gls{latent_variable}除了发挥本来的作用，即能够高效地描述$p(\RVv)$以外，还有一些优势。%??
 新变量$\RVh$还提供了$\RVv$的替代表示。
 例如，如\secref{sec:mixtures_of_distributions}所示，\gls{GMM}学习了一个\gls{latent_variable}，这个\gls{latent_variable}对应于输入样本是从哪一个混合体中抽出。
 这意味着\glssymbol{GMM}中的\gls{latent_variable}可以用于做分类。
