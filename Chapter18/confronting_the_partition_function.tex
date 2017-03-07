@@ -517,7 +517,7 @@
 	p_{\text{smoothed}}(\Vx) = \int p_{\text{data}} (\Vy) q( \Vx \mid \Vy) d \Vy
 \end{equation}
 而不是拟合真实分布$p_{\text{data}}$。
-分布$q(\Vx \mid \Vy)$是一个噪扰过程，通常在形成$\Vx$的过程中会向$\Vy$中添加少量\gls{noise}。
+分布$q(\Vx \mid \Vy)$是一个损坏过程，通常在形成$\Vx$的过程中会向$\Vy$中添加少量\gls{noise}。
 
 
 \gls{denoising_score_matching}非常有用，因为在实践中，通常我们不能获取真实的$p_{data}$，而只能得到其样本确定的\gls{empirical_distribution}。

@@ -13,7 +13,7 @@
 
 % 267 mid
 如果你不熟悉基于梯度的优化的基础，我们建议您查看\chapref{chap:numerical_computation}。
-该章简要概述了一般的\gls{nume_optimization}。
+该章简要概述了一般的\gls{nume_optimization}项。
 
 
 本章主要关注这一类特定的优化问题：寻找\gls{NN}上的一组参数$\Vtheta$，它能显著地降低\gls{cost_function} $J(\Vtheta)$，该\gls{cost_function}通常包括整个\gls{training_set}上的性能评估和额外的\gls{regularization}。
@@ -113,7 +113,7 @@
 
 在某些情况下，\gls{surrogate_loss_function}能比原函数学习到更多。
 例如，使用对数似然替代函数时，在\gls{training_set}上的$0-1$损失达到$0$之后，\gls{test_set}上的$0-1$损失还能持续下降很长一段时间。
-这是因为即使$0-1$损失期望是零时，我们还能拉开不同类别的距离以改进分类器的鲁棒性，获得一个更强壮的、值得信赖的分类器，从而，相较于简单地最小化\gls{training_set}上的平均$0-1$损失，它能够从训练数据中抽取了更多信息。
+这是因为即使$0-1$损失期望是零时，我们还能拉开不同类别的距离以改进分类器的鲁棒性，获得一个更强壮的、值得信赖的分类器，从而，相对于简单地最小化\gls{training_set}上的平均$0-1$损失，它能够从训练数据中抽取了更多信息。
 % 270 head
 
 
@@ -475,7 +475,7 @@
 
 % -- 279 mid
 
-\gls{saddle_points}对于训练算法来说有哪些影响呢？
+\gls{saddle_points}扩散对于训练算法来说有哪些影响呢？
 对于只使用梯度信息的一阶优化算法而言，目前情况还不清楚。
 \gls{saddle_points}附近的梯度通常会非常小。
 另一方面，实验中\gls{GD}似乎可以在许多情况下逃离\gls{saddle_points}。
@@ -560,7 +560,7 @@
 不管我们是从上还是从下接近悬崖，情况都很糟糕，但幸运的是可以用使用\secref{sec:clipping_gradients}介绍的启发式\firstgls{gradient_clipping}来避免其主要缺点。
 其基本想法源自考虑到梯度并没有指明最佳步长，只是说明在无限小区域内的最佳方向。
 当传统的\gls{GD}算法提议更新很大一步时，启发式\gls{gradient_clipping}会干涉去减小步长，从而使其不太可能走出梯度近似为\gls{steepest}方向的悬崖区域。
-悬崖结构在\gls{RNN}的\gls{cost_function}中很常见，因为这类模型会涉及到多个因素的相乘，每个因素对应了一个 \gls{time_step}。
+悬崖结构在\gls{RNN}的\gls{cost_function}中很常见，因为这类模型会涉及到多个因子的相乘，每个因子对应了一个 \gls{time_step}。
 因此，长期时间序列会产生大量相乘。
 % 281 mid
 
@@ -569,7 +569,7 @@
 \subsection{\glsentrytext{long_term_dependency}}
 \label{sec:long_term_dependencies}
 当\gls{computational_graph}变得极深时，\gls{NN}优化算法会面临的另外一个难题就是\gls{long_term_dependency}问题——由于变深的结构使模型丧失了学习到先前信息的能力，让优化变得极其困难。 
-深层的\gls{computational_graph}不仅\gls{feedforward_network}中存在，在会介绍的\gls{recurrent_network}（在\chapref{chap:sequence_modeling_recurrent_and_recursive_nets}中描述）结构中也是一样的，因为要在很长时间序列的各时刻重复操作相同的网络模块，并且模型参数共享，这使问题更加凸显。
+深层的\gls{computational_graph}不仅\gls{feedforward_network}中存在，在会介绍的\gls{recurrent_network}（在\chapref{chap:sequence_modeling_recurrent_and_recursive_nets}中描述）结构中也是一样的，因为要在很长时间序列的各个时刻重复操作相同的网络模块，并且模型参数共享，这使问题更加凸显。
 
 % 282 head
 
@@ -642,7 +642,7 @@
 甚至，这些\gls{critical_points}不一定存在。
 例如，\gls{loss_function} $-\log p(y\mid\Vx;\Vtheta)$ 可以没有\gls{global_minimum}，而是当随着训练模型逐渐稳定后，收敛于某个值。    
 对于具有离散的$y$和\ENNAME{softmax}分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类\gls{training_set}上的每个样本，则负对数似然可以无限趋近但不会等于零。
-同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无穷——如果$f(\Vtheta)$能够正确预测所有\gls{training_set}中的目标$y$，学习算法会无边界地增加$\beta$。
+同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无穷——如果$f(\Vtheta)$能够正确预测所有\gls{training_set}中的目标$y$，学习算法会无限制地增加$\beta$。
 \figref{fig:chap8_bad_global}给出了一个失败的例子，即使没有\gls{local_minima}和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的\gls{cost_function}值。
 
 % 283 end
@@ -677,7 +677,7 @@
 \gls{GD}和基本上所有有效训练\gls{NN}的学习算法，都是基于局部较小更新。
 先前的小节主要集中于为何这些局部范围更新的正确方向难以计算。
 我们也许能计算\gls{objective_function}的一些性质，如近似的有偏梯度或正确方向估计的方差。
-在这些情况下，局部下降不确定能不能找到有效解的短路径，我们并不能真的遵循局部下降的路径。
+在这些情况下，难以确定局部下降能否定义通向有效解的足够短的路径，但我们并不能真的遵循局部下降的路径。
 \gls{objective_function}可能有诸如\gls{poor_conditioning}或不连续梯度的问题，使得梯度为\gls{objective_function}提供较好近似的区间非常小。
 在这些情况下，步长为$\epsilon$的局部下降可能定义了一个寻求解法的合理的短路经，但是我们只能计算步长为$\delta \ll \epsilon$的局部下降方向。
 在这些情况下，局部下降或许能定义一个寻求解法的路径，但是该路径包含很多次更新，因此遵循该路径会带来很高的计算代价。
@@ -689,7 +689,7 @@
 % 285 head
 
 不管哪个问题最重要，如果存在一个区域，我们遵循\gls{local_descent}便能合理地直接到达解决方案，并且我们能够在该良好区域上初始化学习，那么这些问题都可以避免。
-最终的观点还是建议在传统优化算法上研究怎样选择更佳的初始化点，来实现目标更切实可行。
+最终的观点还是建议在传统优化算法上研究怎样选择更佳的初始化点，以此来实现目标更切实可行。
 
 % 285 mid
 
@@ -706,8 +706,8 @@
 其他结果表明，寻求给定规模的网络的一个解决方案是不可解的，
 但是，在实际情况中，我们通过设置更多参数，很容易发现针对大型\gls{NN}来说还不错的解决方案。
 此外，在\gls{NN}训练中，我们通常不关注某个函数的精确\gls{minimum}，而只关注将其值下降到足够小以获得一个很好的\gls{generalization_error}。
-想要对优化算法是否能完成此目标进行理论分析是非常困难的。
-因此，在现实中研究优化算法的性能上界仍然是学术界的一个重要目标。
+对优化算法是否能完成此目标进行理论分析是非常困难的。
+因此，研究优化算法更现实的性能上界仍然是学术界的一个重要目标。
 
 % 285 end
 
@@ -784,16 +784,16 @@
 % 287 mid
 
 \gls{learning_rate}可通过试验和误差来选取，通常最好的选择方法是画出\gls{objective_function}值随时间变化的学习曲线。
-与其说是科学，这更像是一门艺术，应该谨慎地参考这个问题的大部分指导。
+与其说是科学，这更像是一门艺术，我们应该谨慎地参考关于这个问题的大部分指导。
 使用线性策略时，需要选择的参数为$\epsilon_0$，$\epsilon_\tau$，$\tau$。  
 通常$\tau$被设为需要反复遍历\gls{training_set}几百次的迭代次数。
 通常$\epsilon_\tau$应设为大约$\epsilon_0$的$1\%$。
 主要问题是如何设置$\epsilon_0$。
 若$\epsilon_0$太大，学习曲线将会剧烈振荡，\gls{cost_function}值通常会明显增加。
 温和的振荡是良好的，容易在训练随机\gls{cost_function}（例如由信号丢失引起的\gls{cost_function}）时出现。
-如果\gls{learning_rate}太小，那么学习进程会很缓慢。
+如果\gls{learning_rate}太小，那么学习过程会很缓慢。
 如果初始\gls{learning_rate}太低，那么学习可能会卡在一个相当高的\gls{cost}值。
-通常，就总训练时间和最终\gls{cost}值而言，最优初始\gls{learning_rate}的效果会好于大约迭代$100$次左右后最佳的\gls{learning_rate}。
+通常，就总训练时间和最终\gls{cost}值而言，最优初始\gls{learning_rate}的效果会好于大约迭代$100$次左右后最佳的效果。
 因此，通常最好是检测最早的几轮迭代，选择一个比在效果上表现最佳的\gls{learning_rate}更大的\gls{learning_rate}，但又不能太大导致严重的震荡。  
 
 % 287 mid
@@ -1191,7 +1191,7 @@
 
 
 除了这些初始化模型参数的简单固定或随机方法，还有可能使用\gls{ML}初始化模型参数。
-本书第III部分讨论的常用策略是初始化监督模型的参数为无监督模型训练于相同的输入上学习出的参数。
+在本书第三部分讨论的一个常用策略是使用相同的输入数据集，用无监督模型训练出来的参数来初始化监督模型。
 我们也可以在相关问题上使用监督训练。
 即使是运行监督训练在一个不相关的任务上，有时也能得到一个比随机初始化具有更快收敛率的初始值。
 这些初始化策略有些能够得到更快的收敛率和更好的\gls{generalization_error}，因为它们编码了模型初始参数分布的信息。
@@ -1199,7 +1199,7 @@
 % 298 mid
 
 
-\section{具有自适应\glsentrytext{learning_rate}的算法}
+\section{自适应\glsentrytext{learning_rate}算法}
 \label{sec:algorithms_with_adaptive_learning_rates}
 \gls{NN}研究员早就意识到\gls{learning_rate}肯定是难以设置的\gls{hyperparameter}之一，因为它对模型的性能有显著的影响。
 正如我们在\secref{sec:gradient_based_optimization}和\secref{sec:challenges_in_neural_network_optimization}中探讨的，损失通常高度敏感于参数空间中的某些方向，而不敏感于其他。
@@ -1366,9 +1366,9 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 
 遗憾的是，目前在这一点上没有达成共识。
 \cite{Schaul2014_unittests}展示了许多优化算法在大量学习任务上的价值比较。
-虽然结果表明，具有自适应\gls{learning_rate}（由RMSProp和AdaDelta代表）的算法族表现得相当鲁棒，但没有单一的算法表现为最好的。
+虽然结果表明，具有自适应\gls{learning_rate}（由RMSProp和AdaDelta代表）的算法族表现得相当鲁棒，不分伯仲，但没有哪个算法能脱颖而出。
 
-目前，最流行的活跃使用的优化算法包括SGD，具\gls{momentum}的SGD，RMSProp，具\gls{momentum}的RMSProp，AdaDelta和Adam。
+目前，最流行并且使用很高的优化算法包括SGD、具\gls{momentum}的SGD、RMSProp、具\gls{momentum}的RMSProp、AdaDelta和Adam。
 此时，选择哪一个算法似乎主要取决于使用者对算法的熟悉程度（以便调节\gls{hyperparameter}）。
 
 \section{二阶近似方法}
