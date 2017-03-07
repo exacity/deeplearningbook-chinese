@@ -4,16 +4,16 @@
 \label{chap:representation_learning}
 % 517 head
 在本章中，首先我们会讨论学习表示是什么意思，以及表示的概念如何有助于深度框架的设计。
-我们探讨学习算法如何在不同任务中共享统计信息，包括使用\gls{unsupervised}任务中的信息完成\gls{supervised}任务。
+我们探讨学习算法如何在不同任务中共享统计信息，包括使用\gls{unsupervised}任务中的信息来完成\gls{supervised}任务。
 共享表示有助于处理多模式或多领域，或是将已学到的知识转移到样本很少或没有、但任务表示依然存在的任务上。
 最后，我们回溯去探讨\gls{representation_learning}成功的原因，从\gls{distributed_representation}~\citep{Hinton-et-al-PDP1986}和深度表示的理论优势，最后会讲到\gls{DGP}潜在假设的更一般概念，特别是观测数据的基本成因。
 
 
 很多信息处理任务，非常容易或者非常困难，这取决于信息是如何表示的。
-这是一个普适于日常生活，普适于计算机科学的基本原则，也普适于\gls{ML}。
+这是一个普适于日常生活，普适于一般计算机科学的基本原则，也普适于\gls{ML}。
 例如，对于人而言，可以直接使用长除法计算$210$除以$6$。
 但如果使用罗马数字表示，这个问题就没那么直接了。
-大部分现代人在计算\ENNAME{CCX}除以\ENNAME{VI}时，都会将其转化成阿拉伯数字，从而使用位值系统的长除法。
+大部分现代人在计算\ENNAME{CCX}除以\ENNAME{VI}时，都会首先将其转化成阿拉伯数字，从而使用位值系统的长除法。
 更具体地，我们可以使用合适或不合适的表示来量化不同操作的渐近运行时间。
 例如，插入一个数字到有序表中的正确位置，如果该数列表示为链表，那么所需时间是$O(n)$；如果该列表表示为红黑树，那么只需要$O(\log n)$的时间。
 
@@ -24,55 +24,63 @@
 选择什么表示通常取决于随后的学习任务。
 % 518 head 
 
+
 我们可以将\gls{supervised_learning}训练的\gls{feedforward_network}视为\gls{representation_learning}的一种形式。
 具体地，网络的最后一层通常是\gls{linear_classifier}，如\gls{softmax_chap15}回归分类器。
 网络的其余部分学习出该分类器的表示。
-\gls{supervised}准则下的训练自然会使得每个\gls{hidden_layer}（比较接近顶层的\gls{hidden_layer}）的表示趋向于具有使训练任务更容易的性质。
+\gls{supervised}准则下的训练自然会使得每个\gls{hidden_layer}（但接近顶层的\gls{hidden_layer}更强一些）的表示趋向于拥有使训练任务更容易的性质。
 例如，输入特征线性不可分的类别可能在最后一个\gls{hidden_layer}变成线性\gls{separable}。
 原则上，最后一层可以是另一种模型，如\gls{nearest_neighbor}分类器~\citep{SalakhutdinovR2007-small}。
 倒数第二层的特征应该根据最后一层的类型学习不同的性质。
+% 518 mid
 
 
 \gls{feedforward_network}的\gls{supervised}训练并没有给学习到的中间特征明确强加任何条件。
-其他的\gls{representation_learning}算法往往会以某种特定的方式明确设计的表示。
+其他的\gls{representation_learning}算法往往会以某种特定的方式明确设计表示。
 例如，我们想要学习一种使得密度估计更容易的表示。
 具有更多独立性的分布会更容易建模，因此，我们可以设计鼓励表示向量$\Vh$中元素之间相互独立的\gls{objective_function}。
 就像\gls{supervised}网络，\gls{unsupervised}深度学习算法有一个主要的训练目标，但也额外地学习出了表示。
 不论该表示是如何得到的，它都可以用于其他任务。
 另外，很多任务（有些是\gls{supervised}的，有些是\gls{unsupervised}的）可以通过共享的内部表示一起学习。
 
+
 % 518 mid 
 大多数\gls{representation_learning}算法都会在保留尽可能多和输入相关的信息和追求良好的性质（如独立性）之间做出权衡。
 
 
+% 518 mid 
 \gls{representation_learning}特别有趣，因为它提供了进行\gls{unsupervised_learning}和\gls{semi_supervised_learning}的一种方法。
 我们通常会有非常大量的\gls{unlabeled}训练数据和相对较少的\gls{labeled}训练数据。
 在非常有限的\gls{labeled}数据集上\gls{supervised_learning}通常会导致严重的\gls{overfitting}。
-\gls{semi_supervised_learning}通过进一步学习\gls{unlabeled}数据，来解决\gls{overfitting}的问题。
-具体地，我们可以从\gls{unlabeled}数据上学习出很好的表示，然后用这些表示来解决\gls{supervised_learning}问题。
+\gls{semi_supervised_learning}通过从\gls{unlabeled}数据中学习，来解决\gls{overfitting}的问题。
+具体地，我们可以从\gls{unlabeled}数据上学习出很好的表示，然后用这些表示来解决\gls{supervised_learning}任务。
 % 518 end
+
 
 人类和动物能够从非常少的\gls{labeled}样本中学习。
 我们至今仍不知道这是如何做到的。
 有许多假说解释人类的卓越学习能力——例如，大脑可能使用了大量的分类器或者\gls{bayesian_inference}技术的\gls{ensemble}。
 一种流行的假说是，大脑能够利用\gls{unsupervised_learning}和\gls{semi_supervised_learning}。
 利用\gls{unlabeled}数据有多种方式。
-在本章中，我们主要探讨\gls{unlabeled}数据可以学习出更好的表示。
-
+在本章中，我们主要探讨\gls{unlabeled}数据可以学习出更好的表示这个假设。
 % -- 519 head
+
 
 \section{\glsentrytext{greedy_layer_wise_unsupervised_pretraining}}
 \label{sec:greedy_layer_wise_unsupervised_pretraining}
 \gls{unsupervised_learning}在\gls{DNN}的复兴上起到了关键的、历史性的作用，它使研究者首次可以训练不含诸如\gls{convolution}或者\gls{recurrence}这类特殊结构的深度\gls{supervised}网络。
 我们将这一过程称为\firstgls{unsupervised_pretraining}，或者更精确地，\firstgls{greedy_layer_wise_unsupervised_pretraining}。
 此过程是一个任务（\gls{unsupervised_learning}，尝试获取输入分布的形状）的表示如何有助于另一个任务（具有相同输入域的\gls{supervised_learning}）的典型示例。
+% 519 mid
 
 
 \gls{greedy_layer_wise_unsupervised_pretraining}依赖于单层\gls{representation_learning}算法，例如\glssymbol{RBM}、单层\gls{AE}、\gls{sparse_coding}模型或其他学习\gls{latent}表示的模型。
-每一层使用\gls{unsupervised_learning}\gls{pretraining}，输入前一层的输出，输出数据的新的表示。
+每一层使用\gls{unsupervised_learning}\gls{pretraining}，将前一层的输出作为输入，输出数据的新的表示。
 这个新的表示的分布（或者是和其他变量比如要预测类别的关系）有可能是更简单的。
 如\algref{alg:pretraining}所示正式地表述。
 
+
+% 521 head
 \begin{algorithm}
 \caption{ {\em \gls{greedy_layer_wise_unsupervised_pretraining}的协定}\\
 给定如下：无监督特征学习算法$\CalL$，$\CalL$使用训练集样本并返回\gls{encoder}或特征函数$f$。
@@ -94,23 +102,24 @@
 \STATE {\bf Return} $f$
 \end{algorithmic}
 \end{algorithm}
+% 521 head
 
 
 基于\gls{unsupervised}标准的贪心逐层训练过程，早已被用来规避\gls{supervised}问题中\gls{DNN}难以联合训练多层的问题。
 这种方法至少可以追溯神经认知机~\citep{Fukushima75}。
 深度学习的复兴始于2006年，源于发现这种贪心学习的过程能够为多层联合训练过程找到一个好的初始值，甚至可以成功训练全连接的结构~\citep{Hinton06-small,Hinton-Science2006,HintonG2006,Bengio-nips-2006,ranzato-07-small}。
-在此发现之前，只有深度卷积网络或深度循环网络这类特殊结构的深度网络被认为是有可能训练的。
-现在我们知道训练全连接的深度结构，\gls{greedy_layer_wise_unsupervised_pretraining}不是唯一的方法，但\gls{unsupervised}\gls{pretraining}是第一个成功的方法。
+在此发现之前，只有卷积深度网络或循环深度网络这类特殊结构的深度网络被认为是有可能训练的。%??
+现在我们知道训练全连接的深度结构，\gls{greedy_layer_wise_unsupervised_pretraining}不是必要的，但\gls{unsupervised}\gls{pretraining}是第一个成功的方法。
 % 519 end
 
 
 \gls{greedy_layer_wise_unsupervised_pretraining}被称为\firstgls{greedy}的，是因为它是一个\firstgls{greedy_algorithm}，
-这意味着它独立地优化解决方案的一个部分，每一步解决一个部分，而不是联合优化所有部分。
+这意味着它独立地优化解决方案的每一个部分，每一步解决一个部分，而不是联合优化所有部分。
 它被称为\firstgls{layer_wise}，是因为这些独立的解决方案是网络层。
 具体地，\gls{greedy_layer_wise_unsupervised_pretraining}每次处理一层网络，训练第$k$层时保持前面的网络层不变。
 特别地，低层网络（最先训练的）不会在引入高层网络后进行调整。
 它被称为\firstgls{unsupervised}的，是因为每一层用\gls{unsupervised}\gls{representation_learning}算法训练。
-然而，它也被称为\firstgls{pretraining}，是因为它只是在联合训练算法\textbf{\gls{fine_tune}}所有层之前的第一步。
+然而，它也被称为\firstgls{pretraining}，是因为它只是在联合训练算法\firstgls{fine_tune}所有层之前的第一步。
 在\gls{supervised_learning}任务中，它可以被看作是\gls{regularizer}（在一些实验中，\gls{pretraining}不能降低训练误差，但能降低测试误差）和参数初始化的一种形式。
 % 520 head
 
@@ -119,11 +128,13 @@
 \gls{supervised_learning}阶段可能会使用\gls{pretraining}阶段得到的顶层特征训练一个简单分类器，或者可能会对\gls{pretraining}阶段得到的整个网络进行\gls{supervised}\gls{fine_tune}。
 不管采用什么类型的\gls{supervised_learning}算法和模型，在大多数情况下，整个训练过程几乎是相同的。
 虽然\gls{unsupervised_learning}算法的选择将明显影响到细节，但是大多数\gls{unsupervised_pretraining}应用都遵循这一基本方法。
+% 520 mid
 
 
 \gls{greedy_layer_wise_unsupervised_pretraining}也能用作其他\gls{unsupervised_learning}算法的初始化，比如深度\gls{AE}~\citep{Hinton-Science2006}和具有很多\gls{latent_variable}层的概率模型。
 这些\gls{model}包括\gls{DBN}~\citep{Hinton06-small}和\gls{DBM}~\citep{Salakhutdinov+Hinton-2009-small}。
 这些\gls{DGM}会在\chapref{chap:deep_generative_models}中讨论。
+% 520 mid
 
 
 正如\secref{sec:supervised_pretraining}所探讨的，也可以进行\gls{greedy}逐层\emph{\gls{supervised}}\gls{pretraining}。
@@ -142,6 +153,7 @@
 由于\gls{unsupervised_pretraining}有时有效，但经常也会带来负面效果，因此很有必要了解它何时有效以及有效的原因，以确定它是否适合用于特定的任务。
 % 521 mid
 
+
 首先，要注意的是这个讨论大部分都是针对\gls{greedy_unsupervised_pretraining}而言。
 还有很多其他完全不同的方法使用\gls{semi_supervised_learning}来训练\gls{NN}，比如\secref{sec:adversarial_training}介绍的\gls{virtual_adversarial_training}。
 我们还可以在训练\gls{supervised_model}的同时训练\gls{AE}或\gls{generative_model}。
@@ -157,15 +169,15 @@
 
 这两个想法都涉及到\gls{ML}算法中多个未能完全理解的部分之间复杂的相互作用。
 
-
-第一个想法，\gls{DNN}初始参数的选择对其性能具有很强的\gls{regularization}效果，是最不容易理解的。
-在\gls{pretraining}变得流行时，在一个位置初始化模型被认为会使其接近某一个\gls{local_minimum}，而不是另一个\gls{local_minimum}。
+% 522 mid
+第一个想法，即\gls{DNN}初始参数的选择对其性能具有很强的\gls{regularization}效果，是最不容易理解的。
+在\gls{pretraining}变得流行时，在一个位置初始化模型被认为会使其接近某一个\gls{local_minimum}，而不是另一个\gls{local_minimum}。%?? 难以理解
 如今，\gls{local_minima}不再被认为是\gls{NN}优化中的严重问题。
 现在我们知道标准的\gls{NN}训练过程通常不会到达任何形式的\gls{critical_points}。
 仍然可能的是，\gls{pretraining}会初始化模型到一个可能不会到达的位置——例如，某种区域，其中\gls{cost_function}从一个样本点到另一个样本点变化很大，\gls{minibatch}只能提供\gls{noise}严重的梯度估计，或是某种区域中的\gls{hessian}矩阵条件数是病态的，\gls{GD}必须使用非常小的步长。
 然而，我们很难准确判断\gls{supervised_learning}期间\gls{pretraining}参数的哪些部分应该保留。
 这是现代方法通常同时使用\gls{unsupervised_learning}和\gls{supervised_learning}，而不是依序使用两个学习阶段的原因之一。
-<bad> 除去让\gls{supervised_learning}阶段保持\gls{unsupervised_learning}阶段所提取信息的复杂方法，我们还可以简单地固定\gls{feature_extractor}的参数，仅仅将\gls{supervised_learning}作为顶层特征的分类器。
+<bad> 除去让\gls{supervised_learning}阶段保持\gls{unsupervised_learning}阶段所提取信息的复杂方法，我们还可以简单地固定\gls{feature_extractor}的参数，仅仅将\gls{supervised_learning}作为\gls{learned}特征的顶层的分类器。%??
 % 522 mid
 
 
