@@ -332,12 +332,12 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \section{\glsentrytext{gibbs_sampling}}
 \label{sec:gibbs_sampling}
 
-截至目前我们已经了解了如何通过反复地更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。
-然而我们还没有提到过如何确定一个有效的$q(\Vx)$分布。
-本书中描述了两种基本的方法。
+截至目前我们已经了解了如何通过反复更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。 %?? 截至目前 换成 目前为止
+然而我们还没有提到过如何确定一个有效的$q(\Vx)$分布。%?? 然而我们还没有介绍如何确定分布$q(\Vx)$是否是一个有用的分布。
+本书中描述了两种基本的方法。  %?? 本书会描述／介绍两种基本的方法。
 第一种方法是从已经学习到的分布$p_{\text{model}}$中推导出$T$，下文描述了如何从\gls{energy_based_model}中采样。
 第二种方法是直接用参数描述$T$，然后学习这些参数，其\gls{stationary_distribution}隐式地定义了我们所感兴趣的模型$p_{\text{model}}$。
-我们将在\secref{sec:generative_stochastic_networks}和\secref{sec:other_generation_schemes}中讨论第二种方法的例子。
+我们将在\secref{sec:generative_stochastic_networks}和\secref{sec:other_generation_schemes}中讨论第二种方法的例子。  
 % 590
 
 
@@ -349,15 +349,15 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 
 \firstgls{gibbs_sampling}是一种概念简单而又有效的方法。
 它构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$，然后从$p_{\text{model}}$中该点关于在无向图$\CalG$（定义了\gls{energy_based_model}结构）中邻接点的条件分布中抽样。
-给定他们所有的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。
-正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\glssymbol{RBM}的例子一样，\glssymbol{RBM}所有的\gls{hidden_unit}可以被同时采样，因为在给定可见单元的条件下他们相互条件独立。
-同样的，所有的可见单元也可以被同时采样因为在给定\gls{hidden_unit}的情况下他们相互条件独立。
-像这样的同时更新许多变量的\gls{gibbs_sampling}通常被称为\firstgls{block_gibbs_sampling}。
+给定他们所有的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。  %?? 如果一些变量在给定相邻变量时是条件独立的，那么这些变量就可以被同时采样。
+正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\glssymbol{RBM}示例一样，\glssymbol{RBM}中所有的\gls{hidden_unit}可以被同时采样，因为在给定可见单元的条件下他们相互条件独立。
+同样地，所有的可见单元也可以被同时采样因为在给定\gls{hidden_unit}的情况下它们相互条件独立。 
+以这种方式同时更新许多变量的\gls{gibbs_sampling}通常被称为\firstgls{block_gibbs_sampling}。   
 % 590
 
-设计从$p_{\text{model}}$中采样的\gls{markov_chain}还存在另外的备选方法。
+设计从$p_{\text{model}}$中采样的\gls{markov_chain}还存在其他备选方法。  
 比如说，Metropolis-Hastings算法在其他情景下被广泛使用。
-在\gls{DL}的\gls{undirected_model}中，除了\gls{gibbs_sampling}很少使用其他的方法。
+不过在\gls{DL}的\gls{undirected_model}中，我们主要使用\gls{gibbs_sampling}，很少使用其他方法。 
 改进采样技巧也是一个潜在的研究热点。
 % 590
 
@@ -367,24 +367,24 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 % 591  head 
 
 使用\glssymbol{mcmc}方法的主要难点在于他们经常\gls{mixing}得很糟糕。
-理想情况下，从设计好的\gls{markov_chain}中采出的连续样本之间是完全独立的，而且在$\Vx$空间中，\gls{markov_chain}以正比于不同区域对应概率的概率访问这些区域。
+在理想情况下，从设计好的\gls{markov_chain}中采出的连续样本之间是完全独立的，而且在$\Vx$空间中，\gls{markov_chain}以正比于不同区域对应概率的概率访问这些区域。
 然而，\glssymbol{mcmc}方法采出的样本可能会具有很强的相关性，尤其是在高维的情况下。
 我们把这种现象称为慢\gls{mixing}甚至\gls{mixing}失败。
 具有缓慢\gls{mixing}的\glssymbol{mcmc}方法可以被视为对\gls{energy_function}无意地执行类似于带噪声的\gls{GD}的操作，或者说等价于相对于链的状态（随机变量被采样）依据概率进行等效的噪声爬坡。
 （在\gls{markov_chain}的状态空间中）从$\Vx^{(t-1)}$到$\Vx^{(t)}$该链倾向于选取很小的步长，其中能量$E(\Vx^{(t)})$通常低于或者近似等于能量$E(\Vx^{(t-1)})$，
 倾向于向较低能量的区域移动。
-当从可能性较小的状态（比来自$p(\Vx)$的典型样本拥有更高的能量）开始时，链趋向于逐渐减少状态的能量，并且仅仅偶尔移动到另一个\gls{mode}。
-一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，则低能量的区域可以是同一对象所对应图像的一个相连的\gls{manifold}），我们称之为\gls{mode}，链将倾向于围绕着这个\gls{mode}游走（以某一种形式的随机游走）。
+当从可能性较小的状态（比来自$p(\Vx)$的典型样本拥有更高的能量）开始时，链趋向于逐渐减少状态的能量，并且仅仅偶尔移动到另一个\gls{mode}。 %??  链 换成  马尔可夫链， 你斟酌下
+一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，则低能量的区域可以是同一对象所对应图像的一个相连的\gls{manifold}），我们称之为\gls{mode}，链将倾向于围绕着这个\gls{mode}游走（以某一种形式的随机游走）。 %??  链 换成  马尔可夫链， 你斟酌下
 它时不时会走出该\gls{mode}，但是结果通常会返回该\gls{mode}或者（如果找到一条离开的路线）移向另一个\gls{mode}。
 问题是对于很多有趣的分布来说成功的离开路线很少，所以\gls{markov_chain}将在一个\gls{mode}附近抽取远超过需求的样本。
 % 591 
 
 
-当考虑到\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。
+当考虑到\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。 %??  当我们考虑\gls{gibbs_sampling} 。。。。
 在这种情况下，我们考虑在一定步数内从一个\gls{mode}移动到一个临近\gls{mode}的概率。
 决定这个概率的是两个\gls{mode}之间的``能量障碍''的形状。
 隔着一个巨大``能量障碍'' （低概率的区域）的两个\gls{mode}之间的转移概率是（随着能量障碍的高度）指数下降的，如在\figref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
-当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分变量又严重依赖其他的变量时，这会导致严重的问题。
+当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分变量又严重依赖其他的变量时，这会导致严重的问题。   %?? 最后一句建议换为  这种问题尤为严重。
 % 591
 
 
@@ -408,18 +408,18 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 
 
 %  592
-举一个简单的例子，考虑两个变量$\RSa$， $\RSb$的\gls{energy_based_model}，这两个变量都是二元的，取值$+1$或者$-1$。
-如果对某个较大的正数$w$， $E(\RSa,\RSb) = - w \RSa \RSb$，那么这个模型传达了一个强烈的信息，$\RSa$和$\RSb$有相同的符号。
+举一个简单的例子，考虑两个变量$\RSa$，$\RSb$的\gls{energy_based_model}，这两个变量都是二元的，取值$+1$或者$-1$。   %??  
+如果对某个较大的正数$w$，$E(\RSa,\RSb) = - w \RSa \RSb$，那么这个模型传达了一个强烈的信息，$\RSa$和$\RSb$有相同的符号。
 当$\RSa=1$时用\gls{gibbs_sampling}更新$\RSb$。
 给定$\RSb$时的条件分布满足$p(\RSb=1\mid \RSa=1) = \sigma(w)$。
 如果$w$的值很大，\gls{sigmoid}函数趋近于饱和，那么$b$取到$1$的概率趋近于$1$。
-相同的道理，如果$\RSa=-1$，那么$\RSb$取到$-1$的概率也趋于$1$。
+相同的道理，如果$\RSa=-1$，那么$\RSb$取到$-1$的概率也趋于$1$。  %??  相同的道理 换成  同理
 根据模型$p_{\text{model}}(\RSa,\RSb)$，两个变量取一样的符号的概率几乎相等。
 根据$p_{\text{model}}(\RSa\mid \RSb)$，两个变量应该有相同的符号。
 这也意味着\gls{gibbs_sampling}很难会改变这些变量的符号。
 % 592
 
-在实际问题中，这种挑战更加地艰巨因为在实际问题中我们不能仅仅关注在两个\gls{mode}之间的转移而是需要关注在多个\gls{mode}之间地转移。
+在实际问题中，这种挑战更加艰巨因为在实际问题中我们不能仅仅关注在两个\gls{mode}之间的转移而是需要关注在多个\gls{mode}之间的转移。 
 如果由于\gls{mode}之间\gls{mixing}困难导致几个这样的转移是很艰难的，那么得到一些可靠的覆盖大部分\gls{mode}的样本集合的代价是很高的，同时\gls{markov_chain}收敛到它的\gls{stationary_distribution}的过程也会非常缓慢。
 % 592
 
@@ -428,7 +428,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 归根结底，\gls{markov_chain}最初就是被提出来解决这个问题，即从大量变量中采样的问题。
 % 592
 
-含有\gls{latent_variable}的模型中定义了一个联合分布$p_{\text{model}}(\Vx,\Vh)$，我们经常通过交替地从$p_{\text{model}}(\Vx\mid \Vh)$和$p_{\text{model}}(\Vh\mid \Vx)$中采样来达到抽$\Vx$的目的。
+含有\gls{latent_variable}的模型中定义了一个联合分布$p_{\text{model}}(\Vx,\Vh)$，我们经常通过交替地从$p_{\text{model}}(\Vx\mid \Vh)$和$p_{\text{model}}(\Vh\mid \Vx)$中采样来达到抽$\Vx$的目的。  %?? 在定以了一个联合分布$p_{\text{model}}(\Vx,\Vh)$的\gls{latent_variable}模型中，
 从快速\gls{mixing}的角度上说，我们更希望$p_{\text{model}}(\Vh\mid \Vx)$有很大的熵。
 然而，从学习一个$\Vh$的有用表示的角度上考虑，我们还是希望$\Vh$能够包含$\Vx$的足够信息从而能够较完整地重构它，这意味$\Vh$和$\Vx$有着非常高的互信息。
 这两个目标是相互矛盾的。
@@ -474,10 +474,10 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \label{sec:tempering_to_mix_between_modes}
 % 594
 
-当一个分布有一些陡峭的峰并且被低概率区域包围时，很难在分布的不同\gls{mode}之间\gls{mixing}。
+当一个分布有一些陡峭的峰并且被低概率区域包围时，很难在分布的不同\gls{mode}之间\gls{mixing}。   %?? 峰值
 一些加速\gls{mixing}的方法是基于构造一个不同的概率分布，这个概率分布的\gls{mode}没有那么高，\gls{mode}周围的低谷也没有那么低。
 \gls{energy_based_model}为这个想法提供一种简单的做法。
-截止目前，我们已经描述了一个\gls{energy_based_model}的概率分布的定义：
+目前为止，我们已经描述了一个\gls{energy_based_model}的概率分布的定义：   
 \begin{align}
 \label{eqn:1725}
 p(\Vx) \propto \exp(-E(\Vx)).
@@ -505,7 +505,7 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 转移算子包括了两个\gls{temperature}之间的随机跳转，所以一个高\gls{temperature}状态分布槽中的样本有足够大的概率跳转到低\gls{temperature}分布的槽中。
 这个方法也被应用到了\glssymbol{RBM}中~\citep{Desjardins+al-2010-small,Cho10IJCNN}。
 尽管\gls{tempering}这种方法前景可期，现今它仍然无法让我们在采样复杂的\gls{energy_based_model}中更进一步。
-一个可能的原因是在\firstgls{critical_temperatures}时\gls{temperature}转移算子必须设置的非常慢（因为\gls{temperature}需要逐渐下降）来确保\gls{tempering}的有效性。
+一个可能的原因是在\firstgls{critical_temperatures}时\gls{temperature}转移算子必须设置得非常慢（因为\gls{temperature}需要逐渐下降）来确保\gls{tempering}的有效性。
 % 594
 
 
@@ -514,15 +514,15 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 \label{sec:depth_may_help_mixing}
 
 当我们从\gls{latent_variable}模型$p(\Vh,\Vx)$中采样时，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码得非常好，那么从$p(\Vx \mid \Vh)$中采样时，并不会太大地改变$\Vx$，那么\gls{mixing}结果会很糟糕。
-解决这个问题的一种方法是使得$\Vh$成为一种将$\Vx$编码为$\Vh$的深度表达，从而使得\gls{markov_chain}在$\Vh$空间中更容易\gls{mixing}。
+解决这个问题的一种方法是使得$\Vh$成为一种将$\Vx$编码为$\Vh$的深度表示，从而使得\gls{markov_chain}在$\Vh$空间中更容易\gls{mixing}。
 <bad> 在许多\gls{representation_learning}算法诸如\gls{AE}和\glssymbol{RBM}中，$\Vh$的边缘分布相比于关于$\Vx$的原始数据分布，通常表现为更加均匀、更趋近于\gls{unimodal}。
 值得指出的是，这些方法往往利用所有可用的表达空间并尽量减小\gls{reconstruction_error}。
 因为当训练集上的不同样本之间在$\Vh$空间能够被非常容易地区分时，我们也会很容易地最小化\gls{reconstruction_error}。
 \citet{Bengio-et-al-ICML2013-small}观察到这样的现象，堆叠越深的\gls{regularize}\gls{AE}或者\glssymbol{RBM}，顶端$\Vh$空间的边缘分布越趋向于均匀和发散，而且不同\gls{mode}（比如说实验中的类别）所对应区域之间的间距也会越模糊。
-在高层次的空间训练\glssymbol{RBM}使得\gls{gibbs_sampling}\gls{mixing}得更快。
+在高层空间中训练\glssymbol{RBM}会使得\gls{gibbs_sampling}\gls{mixing}得更快。
 然而，如何利用这种观察到的现象来辅助训练深度\gls{generative_model}或者从中采样仍然有待探索。
 % 595
 
-尽管存在\gls{mixing}的难点，\gls{monte_carlo}技巧仍然是一个有用的也是最好的可用工具。
-事实上，在遇到难以处理的\gls{undirected_model}中的\gls{partition_function}时，\gls{monte_carlo}方法仍然是最基础的工具，这将在下一章详细阐述。
+尽管存在\gls{mixing}的难点，\gls{monte_carlo}技巧仍然是一个有用的也是最好的可用工具。  %?? 有用的工具，通常也是最好的工具。
+事实上，在遇到难以处理的\gls{undirected_model}中的\gls{partition_function}时，\gls{monte_carlo}方法仍然是最主要的工具，这将在下一章详细阐述。
 % 595
