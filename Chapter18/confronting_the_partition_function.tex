@@ -10,7 +10,7 @@
 \end{equation}
 \gls{partition_function}是未归一化概率所有状态的积分（对于连续变量）或求和（对于离散变量）：
 \begin{equation}
-	\int \tilde{p}(\Vx) \mathrm{d} \Vx
+	\int \tilde{p}(\Vx) d \Vx
 \end{equation}
 或者
 \begin{equation}
@@ -83,8 +83,8 @@
 上述推导对离散的$\Vx$进行求和，对连续的$\Vx$进行积分也可以得到类似结果。
 在连续版本的推导中，使用在积分符号內取微分的\gls{leibniz_rule}可以得到等式
 \begin{equation}
-	\nabla_{\Vtheta} \int \tilde{p} (\RVx) \mathrm{d} \Vx  = \int \nabla_{\Vtheta} 
-\tilde{p} (\RVx) \mathrm{d} \Vx.
+	\nabla_{\Vtheta} \int \tilde{p} (\RVx) d \Vx  = \int \nabla_{\Vtheta} 
+\tilde{p} (\RVx) d \Vx.
 \end{equation}
 该等式只适用于$\tilde{p}$和$\nabla_{\Vtheta} \tilde{p} (\RVx)$上的一些特定正则条件。
 在测度论术语中，这些条件是：
@@ -514,7 +514,7 @@
 \label{sec:denoising_score_matching}
 某些情况下，我们希望拟合以下分布来正则化\gls{score_matching}
 \begin{equation}
-	p_{\text{smoothed}}(\Vx) = \int p_{\text{data}} (\Vy) q( \Vx \mid \Vy) \mathrm{d} \Vy
+	p_{\text{smoothed}}(\Vx) = \int p_{\text{data}} (\Vy) q( \Vx \mid \Vy) d \Vy
 \end{equation}
 而不是拟合真实分布$p_{\text{data}}$。
 分布$q(\Vx \mid \Vy)$是一个噪扰过程，通常在形成$\Vx$的过程中会向$\Vy$中添加少量\gls{noise}。
@@ -688,13 +688,13 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 % -- 615 --
 
 \begin{equation}
-	Z_1 = \int \tilde{p}_1 (\RVx) \mathrm{d} \RVx 
+	Z_1 = \int \tilde{p}_1 (\RVx) d \RVx 
 \end{equation}
 \begin{equation}
-	= \int  \frac{ p_0(\RVx) }{ p_0(\RVx) }   \tilde{p}_1 (\RVx) \mathrm{d} \RVx 
+	= \int  \frac{ p_0(\RVx) }{ p_0(\RVx) }   \tilde{p}_1 (\RVx) d \RVx 
 \end{equation}
 \begin{equation}
-	= Z_0 \int  p_0(\RVx)   \frac{ \tilde{p}_1 (\RVx) }{ \tilde{p}_0 (\RVx) } \mathrm{d} \RVx 
+	= Z_0 \int  p_0(\RVx)   \frac{ \tilde{p}_1 (\RVx) }{ \tilde{p}_0 (\RVx) } d \RVx 
 \end{equation}
 \begin{equation}
 \label{eq:18.44}
@@ -767,7 +767,7 @@ $p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限�
 为了从这些中间分布中采样，我们定义了一组\gls{markov_chain}转移函数$T_{\eta_j}(\Vx' \mid \Vx)$，定义了给定$\Vx$转移到$\Vx'$的\gls{conditional_probability_distribution}。
 转移算子$T_{\eta_j}(\Vx' \mid \Vx)$定义如下，保持$p_{\eta_j}(\Vx)$不变：
 \begin{equation}
-	p_{\eta_j}(\Vx) = \int p_{\eta_j} (\Vx') T_{\eta_j} (\Vx \mid \Vx') \mathrm{d}\Vx'.
+	p_{\eta_j}(\Vx) = \int p_{\eta_j} (\Vx') T_{\eta_j} (\Vx \mid \Vx') d\Vx'.
 \end{equation}
 这些转移可以被构造为任何\gls{mcmc}方法（例如，Metropolis-Hastings，Gibbs），包括涉及多次遍历所有\gls{RV}或其他迭代的方法。
 

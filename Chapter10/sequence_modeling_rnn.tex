@@ -115,8 +115,8 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 \fi
 \caption{没有输出的\gls{recurrent_network}。
 此\gls{recurrent_network}只处理来自输入$\Vx$的信息，将其合并到经过时间向前传播的状态$\Vh$。
-(左)回路原理图。 黑色方块表示单个\gls{time_step}的延迟。
-(右)同一网络被视为展开的计算图，其中每个节点现在与一个特定的时间实例相关联。
+\emph{(左)}回路原理图。 黑色方块表示单个\gls{time_step}的延迟。
+\emph{(右)}同一网络被视为展开的计算图，其中每个节点现在与一个特定的时间实例相关联。
 }
 \label{fig:chap10_rnn_circuit_unfolded}
 \end{figure}
@@ -175,8 +175,8 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 损失$L$内部计算$\hat{\Vy} = \text{softmax}(\Vo)$，并将其与目标$\Vy$比较。
 \glssymbol{RNN}输入到隐藏的连接由权重矩阵$\MU$参数化，隐藏到隐藏的循环连接由权重矩阵$\MW$参数化以及隐藏到输出的连接由权重矩阵$\MV$参数化。
 \eqnref{eq:108a}定义了该模型中的前向传播。
-(左)使用循环连接绘制的\glssymbol{RNN}和它的损失。
-(右)同一网络被视为展开的计算图，其中每个节点现在与一个特定的时间实例相关联。
+\emph{(左)}使用循环连接绘制的\glssymbol{RNN}和它的损失。
+\emph{(右)}同一网络被视为展开的计算图，其中每个节点现在与一个特定的时间实例相关联。
 }
 \label{fig:chap10_hidden_recurrence_rnn}
 \end{figure}
@@ -197,8 +197,8 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此式\
 \fi
 \caption{此类\glssymbol{RNN}的唯一循环是从输出到隐藏层的反馈连接。
 在每个\gls{time_step}~$t$，输入为$\Vx_t$，\gls{hidden_layer}激活为$\Vh^{(t)}$，输出为$\Vo^{(t)}$，目标为$\Vy^{(t)}$，损失为$L^{(t)}$。
-(左)回路原理图。
-(右)展开的计算图。
+\emph{(左)}回路原理图。
+\emph{(右)}展开的计算图。
 这样的\glssymbol{RNN}没有\figref{fig:chap10_hidden_recurrence_rnn}表示的RNN那样强大（只能表示更小的函数集合）。
 \figref{fig:chap10_hidden_recurrence_rnn}中的\glssymbol{RNN}可以选择将其想要的关于过去的任何信息放入隐藏表示$\Vh$中并且将$\Vh$传播到未来。
 该图中的\glssymbol{RNN}被训练为将特定输出值放入$\Vo$中，并且$\Vo$是允许传播到未来的唯一信息。
@@ -301,8 +301,8 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 \fi
 \caption{\gls{teacher_forcing}的示意图。
 \gls{teacher_forcing}是一种训练技术，适用于输出与下一\gls{time_step}的隐藏状态存在连接的\glssymbol{RNN}。
-(左)训练时，我们将训练集中\emph{正确}的输出$\Vy^{(t)}$反馈到$\Vh^{(t+1)}$。
-(右)当模型部署后，真正的输出通常是未知的。
+\emph{(左)}训练时，我们将训练集中\emph{正确}的输出$\Vy^{(t)}$反馈到$\Vh^{(t+1)}$。
+\emph{(右)}当模型部署后，真正的输出通常是未知的。
 在这种情况下，我们用模型的输出$\Vo^{(t)}$近似正确的输出$\Vy^{(t)}$，并反馈回模型。
 }
 \label{fig:chap10_teacher_forcing}
@@ -696,7 +696,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 实验证据与我们需要足够的深度以执行所需映射的想法一致。
 读者可以参考\cite{Schmidhuber96,ElHihi+Bengio-nips8}或\cite{Jaeger2007}了解更早的关于深度\glssymbol{RNN}的研究。
 
-\cite{Graves-arxiv2013}第一个展示了将\glssymbol{RNN}的状态分为多层的显著好处，如\figref{fig:chap10_deep}（左）。
+\cite{Graves-arxiv2013}第一个展示了将\glssymbol{RNN}的状态分为多层的显著好处，如\figref{fig:chap10_deep}~\emph{(左)}。
 我们可以认为，在\figref{fig:chap10_deep}(a)所示层次结构中较低的层起到了将原始输入转化为对更高层的隐藏状态更合适表示的作用。
 \cite{Pascanu-et-al-ICLR2014}更进一步提出在上述三个块中各使用一个单独的\glssymbol{MLP}（可能是深度的），如\figref{fig:chap10_deep}(b)所示。
 考虑表示容量，我们建议在这三个步中都分配足够的容量，但增加深度可能会因为优化困难而损害学习效果。
@@ -1113,9 +1113,9 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 \gls{gradient_clipping}可以使\gls{GD}在极陡峭的悬崖附近更合理地执行。
 这些陡峭的悬崖通常发生在\gls{recurrent_network}中，位于\gls{recurrent_network}近似线性的附近。
 悬崖在\gls{time_step}的数量上呈指数地陡峭，因为对于每个\gls{time_step}，权重矩阵都自乘一次。
-(左)没有\gls{gradient_clipping}的\gls{GD}越过这个小峡谷的底部，然后从悬崖面接收非常大的梯度。
+\emph{(左)}没有\gls{gradient_clipping}的\gls{GD}越过这个小峡谷的底部，然后从悬崖面接收非常大的梯度。
 大梯度灾难性地将参数推到图的轴外。
-(右)使用\gls{gradient_clipping}的\gls{GD}对悬崖的反应更温和。
+\emph{(右)}使用\gls{gradient_clipping}的\gls{GD}对悬崖的反应更温和。
 当它上升到悬崖面时，步长受到限制，使得它不会被推出靠近解的陡峭区域。
 经\citet{Pascanu+al-ICML2013-small}许可改编此图。
 }

@@ -102,8 +102,8 @@
      \centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/fig-ssrbm_samples}}
 \fi
 	\caption{自然图片的概率建模。
-（上）CIFAR-10数据集\citep{KrizhevskyHinton2009}中的$32\times 32$像素的样例图片。
-（下）从这个数据集上训练的\gls{structured_probabilistic_models}中抽出的样本。
+\emph{(上)}CIFAR-10数据集\citep{KrizhevskyHinton2009}中的$32\times 32$像素的样例图片。
+\emph{(下)}从这个数据集上训练的\gls{structured_probabilistic_models}中抽出的样本。
 每一个样本都出现在与其欧式距离最近的训练样本的格点中。
 这种比较使得我们发现这个模型确实能够生成新的图片，而不是记住训练样本。
 为了方便展示，两个集合的图片都经过了微调。
@@ -777,9 +777,9 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \fi
 \caption{\gls{complete_graph}的例子，\gls{complete_graph}能够描述任何的概率分布。
 这里我们展示了一个带有四个随机变量的例子。
-（左）完全无向图。
+\emph{(左)}完全无向图。
 在无向图中，\gls{complete_graph}是唯一的。
-（右）一个完全有向图。
+\emph{(右)}一个完全有向图。
 在有向图中，并不存在唯一的\gls{complete_graph}。
 我们选择一种变量的排序，然后对每一个变量，从它本身开始，向每一个指向顺序在其后面的变量画一条弧。
 因此存在着关于变量数阶乘数量级的不同种\gls{complete_graph}。
@@ -821,16 +821,16 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 	\centerline{\includegraphics{Chapter16/figures/dm_to_um}}	
 \fi
 \caption{通过构造\gls{moralized_graph}将有向模型（上一行）转化为无向模型（下一行）的例子。
-（左）只需要把有向边替换成无向边就可以把这个简单的链转化为一个\gls{moralized_graph}。
+\emph{(左)}只需要把有向边替换成无向边就可以把这个简单的链转化为一个\gls{moralized_graph}。
 得到的无向模型包含了完全相同的独立关系和\gls{conditional_independent}关系。
-（中）这个图是在不丢失独立性的情况下是无法
+\emph{(中)}这个图是在不丢失独立性的情况下是无法
 %不丢失独立性的情况下无法
 转化为无向模型的最简单的有向模型。
 这个图包含了单个完整的\gls{immorality}结构。
 因为$\RSa$和$\RSb$都是$\RSc$的父节点，当$\RSc$被观察到时，它们之间通过活跃路径相连。
 为了捕捉这个\gls{dependency}，无向模型必须包含一个含有所有三个变量的\gls{clique}。
 这个\gls{clique}无法编码$\RSa \perp \RSb$这个信息。
-（右）一般来说，\gls{moralization}的过程会给图添加许多边，因此丢失了一些隐含的独立性。
+\emph{(右)}一般来说，\gls{moralization}的过程会给图添加许多边，因此丢失了一些隐含的独立性。
 举个例子，这个\gls{sparse_coding}图需要在每一对\gls{hidden_unit}之间添加\gls{moralization}的边，因此也引入了二次数量级的新的直接\gls{dependency}。}
 	\label{fig:dm_to_um}
 \end{figure}
@@ -862,12 +862,12 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 	\centerline{\includegraphics{Chapter16/figures/um_to_dm}}	
 \fi
 \caption{将一个无向模型转化为一个有向模型。
-（左）这个无向模型无法转化为有向模型，因为它有一个长度为$4$且不带有\gls{chord}的\gls{loop}。
+\emph{(左)}这个无向模型无法转化为有向模型，因为它有一个长度为$4$且不带有\gls{chord}的\gls{loop}。
 具体说来，这个无向模型包含了两种不同的独立性，并且不存在一个有向模型可以同时描述这两种性质：$\RSa\perp \RSc \mid \{\RSb,\RSd\}$和$\RSb \perp \RSd \mid \{\RSa,\RSc\}$。
-（中）为了将无向图转化为有向图，我们必须通过保证所有长度大于$3$的\gls{loop}都有\gls{chord}来\gls{triangulate}图。
+\emph{(中)}为了将无向图转化为有向图，我们必须通过保证所有长度大于$3$的\gls{loop}都有\gls{chord}来\gls{triangulate}图。
 为了实现这个目标，我们可以加一条连接$\RSa$和$\RSc$或者连接$\RSb$和$\RSd$的边。
 在这个例子中，我们选择添加一条连接$\RSa$和$\RSc$的边。
-（右）为了完成转化的过程，我们必须给每条边分配一个方向。
+\emph{(右)}为了完成转化的过程，我们必须给每条边分配一个方向。
 执行这个任务时，我们必须保证不产生任何有向环。
 避免出现有向环的一种方法是赋予节点一定的顺序，然后将每个边从排序较早的节点指向排序稍后的节点。
 在这个例子中，我们根据变量名的字母进行排序。}
@@ -909,10 +909,10 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 	\centerline{\includegraphics{Chapter16/figures/factor_graph}}	
 \fi
 \caption{\gls{factor_graph}如何解决无向网络中的模糊性的一个例子。
-（左）一个包含三个变量（$\RSa$、$\RSb$和$\RSc$）的\gls{clique}组成的无向网络。
-（中）对应这个无向模型的\gls{factor_graph}。
+\emph{(左)}一个包含三个变量（$\RSa$、$\RSb$和$\RSc$）的\gls{clique}组成的无向网络。
+\emph{(中)}对应这个无向模型的\gls{factor_graph}。
 这个\gls{factor_graph}有一个包含三个变量的因子。
-（右）对应这个无向模型的另一种有效的\gls{factor_graph}。
+\emph{(右)}对应这个无向模型的另一种有效的\gls{factor_graph}。
 这个\gls{factor_graph}包含了三个因子，每个因子只对应两个变量。
 这个\gls{factor_graph}上进行的表示、推断和学习相比于中图描述的\gls{factor_graph}都要渐进性地廉价，即使它们表示的是同一个无向模型。}
 	\label{fig:factor_graph}
@@ -1242,11 +1242,11 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 	\centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/rbm_samples}}	
 \fi
 \caption{训练好的\glssymbol{RBM}的样本及其权重。
-（左）用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。
+\emph{(左)}用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。
 每一列是一个单独的\gls{gibbs_sampling}过程。
 每一行表示另一个$1000$步后\gls{gibbs_sampling}的输出。
 连续的样本之间彼此高度相关。
-（右）对应的权重向量。
+\emph{(右)}对应的权重向量。
 将本图结果与图\ref{fig:s3c_samples}中描述的\gls{linear_factor}的样本和权重相比。
 由于\glssymbol{RBM}的先验$p(\Vh)$没有限制为\gls{factorial}，这里的样本表现得好很多。
 采样时\glssymbol{RBM}能够学习到哪些特征需要一起出现。

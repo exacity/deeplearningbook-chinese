@@ -1,33 +1,35 @@
 % !Mode:: "TeX:UTF-8"
 % Translator: Kai Li
-\chapter{\glsentrytext{CNN}}
+\chapter{\glsentrytext{convolutional_network}}
 \label{chap:convolutional_networks}
 
 \firstgls{convolutional_network}\citep{LeCun89a}，也叫做\firstall{CNN}，是一种专门用来处理具有类似网格结构的数据的神经网络。
 例如时间序列数据（可以认为是在时间轴上有规律地采样形成的一维网格）和图像数据（可以看作是二维的像素网格）。
 \gls{convolutional_network}在诸多应用领域都表现优异。
-``\gls{convolutional_network}''一词表明该网络使用了\firstgls{convolution}这种数学运算。
+``\gls{CNN}''一词表明该网络使用了\firstgls{convolution}这种数学运算。
 卷积是一种特殊的线性运算。
 \emph{\gls{convolutional_network}是指那些至少在网络的一层中使用卷积运算来替代一般的矩阵乘法运算的神经网络。}
 
 本章，我们首先说明什么是卷积运算。
 接着，我们会解释在神经网络中使用卷积运算的动机。
-然后我们会介绍一种几乎所有的\gls{CNN}都会用到的操作\firstgls{pooling}。
+然后我们会介绍\firstgls{pooling}，这是一种几乎所有的\gls{convolutional_network}都会用到的操作。
 通常来说，\gls{CNN}中用到的卷积运算和其他领域（例如工程领域以及纯数学领域）中的定义并不完全一致。
-我们会对神经网络实践中用得比较多的几种卷积函数的变体进行说明。
+我们会对神经网络实践中广泛应用的几种卷积函数的变体进行说明。
 我们也会说明如何在多种不同维数的数据上使用卷积运算。
 之后我们讨论使得卷积运算更加高效的一些方法。
-\gls{CNN}是神经科学的原理影响深度学习的典型代表，我们之后也会讨论这些神经科学的原理，并对卷积神经网络在深度学习发展史中的作用作出评价。
-本章没有涉及如何为你的卷积神经网络选择合适的结构，因为本章的目标是说明\gls{CNN}提供的强大工具，第\ref{chap:practical_methodology}章会对在具体环境中使用相应的工具给出一些指导。
-对于\gls{convolutional_network}结构的研究进展得如此迅速，以至于针对特定问题，数月甚至几周就会产生一个新的最优的网络结构，甚至在写这本书时也不好描述究竟哪种结构是最好的。
-然而，最好的结构也是由本章所描述的基本部件一点一点搭建起来的。
+\gls{convolutional_network}是神经科学原理影响深度学习的典型代表。
+我们之后也会讨论这些神经科学的原理，并对\gls{convolutional_network}在深度学习发展史中的作用作出评价。
+本章没有涉及如何为你的\gls{convolutional_network}选择合适的结构，因为本章的目标是说明\gls{convolutional_network}提供的各种工具。
+第\ref{chap:practical_methodology}将会对如何在具体环境中选择使用相应的工具给出通用的准则。
+对于\gls{convolutional_network}结构的研究进展得如此迅速，以至于针对特定基准(benchmark)，数月甚至几周就会公开一个新的最优的网络结构，甚至在写这本书时也不好描述究竟哪种结构是最好的。
+然而，最好的结构也是由本章所描述的基本部件逐步搭建起来的。
 
 % -- 321 --
  
 \section{卷积运算}
 \label{sec:the_convolution_operation}
 
-在通常形式中，卷积是对两个实值函数的一种数学运算。
+在通常形式中，卷积是对两个实变函数的一种数学运算\footnote{译者注：本书中operation视语境有时翻译成``运算''，有时翻译成``操作''。}。
 为了给出卷积的定义，我们从两个可能会用到的函数的例子出发。
 
 假设我们正在用激光传感器追踪一艘宇宙飞船的位置。
@@ -155,6 +157,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \label{fig:chap9_area_of_effect}
 \end{figure}
  \footnotetext{译者注：译者认为此处应当是$x_3$。}
+
 % fig 9.3
 \begin{figure}[!htb]
 \ifOpenSource
@@ -163,9 +166,11 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 \centerline{\includegraphics{Chapter9/figures/receptive_field}}
 \fi
 \captionsetup{singlelinecheck=off}
-\caption[.]{\gls{sparse_connectivity}，对每幅图从上往下看。我们强调了一个输出单元$s_3$以及$\bm{x}$中影响该单元的输入单元。这些单元被称为$s_3$的\gls{receptive_field}。\emph{(上)}当$\bm{s}$是由核宽度为3的卷积产生时，只有三个输入影响$s_3$。\emph{(下)}当$\bm{s}$是由矩阵乘法产生时，连接不再是稀疏的，所以所有的输入都会影响$s_3$。}
+\caption[Caption for LOF]{\gls{sparse_connectivity}，对每幅图从上往下看。我们强调了一个输出单元$s_3$以及$\bm{x}$中影响该单元的输入单元。这些单元被称为$s_3$的\firstgls{receptive_field}\protect\footnotemark。\emph{(上)}当$\bm{s}$是由核宽度为3的卷积产生时，只有三个输入影响$s_3$。\emph{(下)}当$\bm{s}$是由矩阵乘法产生时，连接不再是稀疏的，所以所有的输入都会影响$s_3$。}
 \label{fig:chap9_receptive_field}
 \end{figure}
+\footnotetext{译者注：在生物中称之为``感受野''。}
+
 % fig 9.4
 \begin{figure}[!htb]
 \ifOpenSource
@@ -364,7 +369,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 
 我们可以把\gls{CNN}想成和全连接网络类似，但对于这个全连接网络的权值有一个无限强的先验。
 这个无限强的先验是说一个\gls{hidden_unit}的权值必须和它邻居的权值相等，但在空间中改变。
-这个先验也要求除了那些处在\gls{hidden_unit}空间连续的小的接收域以内的权值外，其余的权值都为零。%这样翻译对吗？其实这里加个图更好
+这个先验也要求除了那些处在\gls{hidden_unit}空间连续的小的接受域以内的权值外，其余的权值都为零。%这样翻译对吗？其实这里加个图更好
 总之，我们可以把卷积的使用当作是对网络中一层的参数引入了一个无限强的\gls{prior_probability_distribution}。
 这个先验是说该层应该学得的函数只包含局部连接关系并且对平移具有等变性。
 类似的，使用\gls{pooling}也是一个无限强的先验：每一个单元都具有对少量平移的不变性。
@@ -376,7 +381,7 @@ S(i, j) = (I*K)(i, j) = \sum_m \sum_n I(i+m, j+n) K(m, n).
 与任何其他先验类似，卷积和\gls{pooling}只有当先验的假设合理且正确时才有用。
 如果一项任务依赖于保存精确的空间信息，那么在所有的特征上使用\gls{pooling}将会增大训练误差。
 一些\gls{CNN}\citep{Szegedy-et-al-arxiv2014}为了既获得具有较高不变性的特征又获得当平移不变性不合理时不会导致欠拟合的特征，被设计成在一些通道上使用\gls{pooling}而在另一些通道上不使用。
-当一项任务涉及到要对输入中相隔较远的信息进行合并时，那么卷积所需要的先验可能就不正确了。
+当一项任务涉及到要对输入中相隔较远的信息进行合并时，那么卷积所利用的先验可能就不正确了。
 
 另一个关键洞察是当我们比较卷积模型的统计学习表现时，只能以基准中的其他卷积模型作为比较的对象。
 其他不使用卷积的模型即使我们把图像中的所有像素点都置换后依然有可能进行学习。
@@ -501,7 +506,7 @@ $\TSW$的索引分别是：输出的通道$i$，输出的行$j$和列$k$，输�
  
 % -- 340 --
  
-当我们知道每一个特征都是一小部分空间的函数而不是整个空间的特征时，局部连接层是很有用的。
+当我们知道每一个特征都是一小块空间的函数并且在全空间上不存在相同的特征时，局部连接层是很有用的。
 例如，如果我们想要辨别一张图片是否是人脸图像时，我们只需要去寻找嘴是否在图像的下部中央部分即可。
 
 使用那些连接被更进一步限制的卷积或者局部连接层也是有用的，例如，限制每一个输出的通道$i$仅仅是输入通道$l$的一部分的函数时。
@@ -617,7 +622,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 为了训练\gls{AE}，我们会收到关于$\TSR$的梯度，表示为一个张量$\TSE$。
 为了训练解码器，我们需要获得对于$\TSK$的梯度，通过$g(\TSH, \TSE, s)$来得到。
 为了训练编码器，我们需要获得对于$\TSH$的梯度，通过$c(\TSK, \TSE, s)$来得到。
-也可能通过用$c$和$h$对$g$求微分得到，但这些运算对于任何标准神经网络上的反向传播算法来说都是不需要的。
+通过用$c$和$h$对$g$求微分也是可行的，但这些运算对于任何标准神经网络上的反向传播算法来说都是不需要的。
  
 % -- 346 --
  
@@ -710,8 +715,8 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 在这种情况下，我们必须进行一些额外的设计步骤，例如插入一个\gls{pooling}层，\gls{pooling}区域的大小要与输入的大小成比例，以便保持固定数量的\gls{pooling}输出。
 这种策略的一些例子可以参见图\ref{fig:chap9_cnn_classifier}。
 
-注意，使用卷积处理可变尺寸的输入仅对具有尺寸可变的输入才有意义，因为它们包含对相同种类的事物的不同量的观察——时间上不同长度的记录，空间上不同宽度的观察等。
-如果输入具有可变尺寸，卷积是没有意义的，因为它可以选择性地包括不同种类的观察。
+注意，使用卷积处理可变尺寸的输入，仅对输入是因为包含对同种事物的不同量的观察(时间上不同长度的记录，空间上不同宽度的观察等)而导致的尺寸变化这种情况才有意义。
+如果输入是因为它可以选择性地包括不同种类的观察而具有可变尺寸，使用卷积是不合理的。
 例如，如果我们正在处理大学申请，并且我们的特征包括成绩和标准化测试分数，但不是每个申请人都进行了标准化测试，则使用相同的权重来对成绩特征和测试分数特征进行卷积是没有意义的。
 
 \section{高效的卷积算法}
@@ -778,7 +783,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 与其他无监督预训练的方法一样，使用这种方法的一些好处仍然难以说清。
 无监督预训练可以提供一些相对于有监督训练的正则化，或者它可以简单地允许我们训练更大的结构，因为它的学习规则减少了计算成本。
 
-\section{\glsentrytext{CNN}的神经科学基础}
+\section{\glsentrytext{convolutional_network}的神经科学基础}
 \label{sec:the_neuroscientific_basis_for_convolutional_networks}
 
 \gls{convolutional_network}也许是生物学启发人工智能的最为成功的故事。
@@ -830,15 +835,15 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
 研究人员测试了单个神经元是否会响应名人的照片。
 他们发现了后来被称为``Halle Berry神经元''的神经元：由Halle Berry的概念激活的单个神经元。
 当一个人看到Halle Berry的照片，Halle Berry的图画，甚至包含单词``Halle Berry''的文本时，这个神经元会触发。
-当然，这与Halle Berry自己无关；其他神经元响应Bill Clinton，Jennifer Aniston等的出现。
+当然，这与Halle Berry本人无关；其他神经元响应Bill Clinton，Jennifer Aniston等的出现。
  
 % -- 354 --
  
-这些内侧颞叶神经元比现代\gls{convolutional_network}更通用，它们在读取名称时不会自动推广到识别人或对象。
-与\gls{convolutional_network}的最后一层特征上最接近的类比是称为颞下皮质（IT）的脑区。
-当查看一个对象时，信息从视网膜经LGN流到V1，然后到V2，V4，然后是IT。
+这些内侧颞叶神经元比现代\gls{convolutional_network}更通用一些，这些网络在读取名称时不会自动推广到识别人或对象。
+与\gls{convolutional_network}的最后一层在特征上最接近的类比是称为颞下皮质（IT）的脑区。
+当查看一个对象时，信息从视网膜经LGN流到V1，然后到V2，V4，之后是IT。
 这发生在瞥见对象的前100ms内。
-如果允许一个人继续观察对象更多的时间，那么信息将开始向后流动，因为大脑使用自上而下的反馈来更新较低级脑区中的激活。
+如果允许一个人继续观察对象更多的时间，那么信息将开始回流，因为大脑使用自上而下的反馈来更新较低级脑区中的激活。
 然而，如果我们打断人的注视，并且只观察前100ms内的大多数前向激活导致的放电率，那么IT被证明与\gls{convolutional_network}非常相似。
 \gls{convolutional_network}可以预测IT放电率，并且在执行对象识别任务时与人类（时间有限的情况）非常类似\citep{dicarlo-tutorial-2013}。
 
@@ -965,7 +970,7 @@ Gaussian因子$ \alpha \exp(-\beta_x x'^2 - \beta_y y'^2)$可以被视为阈值�
 换句话说，复杂细胞对于图像在方向$\tau$上的微小变换或者翻转图像（用白色代替黑色，反之亦然）具有不变性。
 
 神经科学和机器学习之间最显著的对应关系，是从视觉上比较机器学习模型学得的特征与使用V1得到的特征。
-\cite{Olshausen+Field-1996}说明，一个简单的无监督学习算法，稀疏编码，学习的特征具有与简单细胞类似的接收域。
+\cite{Olshausen+Field-1996}说明，一个简单的无监督学习算法，稀疏编码，学习的特征具有与简单细胞类似的接受域\footnote{译者注：这里原文是``receptive field''，生物中称之为``感受野''}。
 从那时起，我们发现，当应用于自然图像时，极其多样的统计学习算法学习类Gabor函数的特征。这包括大多数深度学习算法，它们在其第一层中学习这些特征。
 图\ref{fig:chap9_feature_detectors}给出了一些例子。
 因为如此众多不同的学习算法学习边缘检测器，所以很难仅基于学习算法学得的特征，来断定哪一个特定的学习算法是``正确''的大脑模型（虽然，当应用于自然图像时，如果一个算法\emph{不能}学得某种检测器时，它能够作为一种否定标志）。
@@ -989,7 +994,7 @@ Gaussian因子$ \alpha \exp(-\beta_x x'^2 - \beta_y y'^2)$可以被视为阈值�
 \label{fig:chap9_feature_detectors}     
 \end{figure}
 
-\section{卷积神经网络与深度学习的历史}
+\section{卷积网络与深度学习的历史}
 \label{sec:convolutional_networks_and_the_history_of_deep_learning}
  
 % -- 359 --

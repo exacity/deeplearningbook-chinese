@@ -41,15 +41,15 @@
 | ------------ | ------------ | ------------ | ------------ | ------------ |
 | [第一章 前言](https://exacity.github.io/deeplearningbook-chinese/Chapter1_introduction/) | @swordyork | lc, @SiriusXDJ, @corenel, @NeutronT | @linzhp | 完成合并 |
 | [第二章 线性代数](https://exacity.github.io/deeplearningbook-chinese/Chapter2_linear_algebra/) | @liber145 | @SiriusXDJ, @angrymidiao | @badpoem | 完成合并 |
-| [第三章 概率与信息论](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/) | @KevinLee1110 | @SiriusXDJ | @kkpoker |  等待合并 |
+| [第三章 概率与信息论](https://exacity.github.io/deeplearningbook-chinese/Chapter3_probability_and_information_theory/) | @KevinLee1110 | @SiriusXDJ | @kkpoker | 完成合并 |
 | [第四章 数值计算](https://exacity.github.io/deeplearningbook-chinese/Chapter4_numerical_computation/) | @swordyork | @zhangyafeikimi | @hengqujushi | 完成合并 |
 | [第五章 机器学习基础](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter5_machine_learning_basics/) | @liber145 | @wheaio, @ZhiweiYang | @fairmiracle, @linzhp | 等待合并 |
 | [第六章 深度前馈网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter6_deep_feedforward_networks/) | @KevinLee1110 | @angrymidiao | @minoriwww，@linzhp | 需要校对 |
 | [第七章 深度学习的正则化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter7_regularization/) | @swordyork | @TonyHan0915 | @dfcv24 | 需要校对 |
 | [第八章 深度模型中的优化](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter8_optimization_for_training_deep_models/) | @liber145 | @zhangyafeikimi | @codeVerySlow, @huangpingchun | 需要校对 |
 | [第九章 卷积神经网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter9_convolutional_networks/) | @KevinLee1110 | @TonyHan0915, @zhaoyu611, @corenel | @zhiding | 等待合并 |
-| [第十章 序列建模：循环和递归网络](https://exacity.github.io/deeplearningbook-chinese/Chapter10_sequence_modeling_rnn/) | @swordyork | lc | @zhaoyu611, @yinruiqing | 合并完成 |
-| [第十一章 实用方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter11_practical_methodology/) | @liber145 | @wheaio, @angrymidiao |  | 需要校对 |
+| [第十章 序列建模：循环和递归网络](https://exacity.github.io/deeplearningbook-chinese/Chapter10_sequence_modeling_rnn/) | @swordyork | lc | @zhaoyu611, @yinruiqing | 完成合并 |
+| [第十一章 实践方法论](https://exacity.github.io/deeplearningbook-chinese/Chapter11_practical_methodology/) | @liber145 |  |  |  完成合并 |
 | [第十二章 应用](https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork, @futianfan |  | @corenel | 完成合并 |
 | [第十三章 线性因子模型](https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | @cloudygoose | @ZhiweiYang | 完成合并 |
 | [第十四章 自编码器](https://exacity.github.io/deeplearningbook-chinese/Chapter14_autoencoders/) | @swordyork |  | @Seaball, @huangpingchun | 完成合并 |
@@ -79,7 +79,7 @@ TODO
 @tttwwy @tankeco @fairmiracle @GageGao @huangpingchun @MaHongP @acgtyrant @yanhuibin315 @Buttonwood @titicacafz 
 @weijy026a @RuiZhang1993 @zymiboxpay @xingkongliang @oisc @tielei @yuduowu @Qingmu @HC-2016 @xiaomingabc 
 @bengordai @Bojian @JoyFYan @minoriwww @khty2000 @gump88 @zdx3578 @PassStory @imwebson @wlbksy @roachsinai @Elvinczp 
-@endymecy name:YUE-DaJiong @9578577 @linzhp @cnscottzheng @germany-zhu  @zhangyafeikimi @showgood163
+@endymecy name:YUE-DaJiong @9578577 @linzhp @cnscottzheng @germany-zhu  @zhangyafeikimi @showgood163 @gump88
 @kangqf @NeutronT @badpoem @kkpoker @Seaball @wheaio @angrymidiao @ZhiweiYang @corenel @zhaoyu611 @SiriusXDJ @dfcv24 EmisXXY
 
 注意
