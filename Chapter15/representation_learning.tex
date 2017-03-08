@@ -236,20 +236,22 @@
 换言之，\gls{unsupervised_pretraining}将\gls{NN}参数初始化到它们不易逃逸的区域，并且遵循这种初始化的结果更加一致，和没有这种初始化相比，结果很差的可能性更低。
 % 524 mid
 
-\cite{Erhan+al-2010-small}也回答了\emph{何时}\gls{pretraining}效果最好——预训练的网络越深，\gls{test_error}的均值和方差下降得越多。
-值得注意的是，这些实验是在训练非常深层网络的现代方法发明和流行（\gls{ReLU}，\gls{dropout}和\gls{batch_normalization}）之前进行的，因此对于\gls{unsupervised_pretraining}与当前方法的结合，我们所知甚少。
+\cite{Erhan+al-2010-small}也回答了\emph{何时}\gls{pretraining}效果最好——\gls{pretraining}的网络越深，\gls{test_error}的均值和方差下降得越多。
+值得注意的是，这些实验是在训练非常深层网络的现代方法（\gls{ReLU}，\gls{dropout}和\gls{batch_normalization}）发明和流行之前进行的，因此对于\gls{unsupervised_pretraining}与当前方法结合的效果，我们所知甚少。
 % 524 mid
 
+
 一个重要的问题是\gls{unsupervised_pretraining}是如何起到\gls{regularizer}作用的。
-一个假设是，\gls{pretraining}鼓励学习算法发现那些与生成观察数据的潜在原因相关的特征。
-这也是除\gls{unsupervised_pretraining}之外许多其他算法的重要思想的启发，将会在\secref{sec:semi_supervised_disentangling_of_causal_factors}中进一步讨论。
+一个假设是，\gls{pretraining}鼓励学习算法发现那些与生成观察数据的\gls{underlying_cause}相关的特征。
+这也是除\gls{unsupervised_pretraining}之外许多其他算法的重要思想的启发，将会在\secref{sec:semi_supervised_disentangling_of_causal_factors}中进一步讨论。%?? 前半句逻辑有点乱，我也不知道如何改     
 % 524 mid  
+
 
 与\gls{unsupervised_learning}的其他形式相比，\gls{unsupervised_pretraining}的缺点是其使用了两个单独的训练阶段。
 很多\gls{regularization}技术都具有一个优点，允许用户通过调整单一\gls{hyperparameter}的值来控制\gls{regularization}的强度。
-\gls{unsupervised_pretraining}没有一种明确的方法，调整\gls{unsupervised}阶段\gls{regularization}的强度。
+\gls{unsupervised_pretraining}没有一种明确的方法来调整\gls{unsupervised}阶段\gls{regularization}的强度。
 相反，\gls{unsupervised_pretraining}有许多\gls{hyperparameter}，但其效果只能之后度量，通常难以提前预测。
-当我们同时执行\gls{unsupervised}和\gls{supervised_learning}而不使用\gls{pretraining}策略时，会有单个\gls{hyperparameter}（通常是附加到\gls{unsupervised}\gls{cost_function}的系数）控制\gls{unsupervised}目标\gls{regularize}\gls{supervised}模型的强度。
+当我们同时执行\gls{unsupervised}和\gls{supervised_learning}而不使用\gls{pretraining}策略时，会有单个\gls{hyperparameter}（通常是附加到\gls{unsupervised}\gls{cost}的系数）控制\gls{unsupervised}\gls{objective}\gls{regularize}\gls{supervised}模型的强度。
 减少该系数，总是能够可预测地获得较少\gls{regularization}强度。
 在\gls{unsupervised_pretraining}的情况下，没有一种灵活调整\gls{regularization}强度的方式——要么\gls{supervised}模型初始化为\gls{pretraining}的参数，要么不是。
 % 525 end
@@ -286,7 +288,7 @@
 第二阶段的性能通常不能在第一阶段期间预测，因此在第一阶段提出\gls{hyperparameter}和第二阶段根据反馈来更新之间存在较长的延迟。
 最通用的方法是在\gls{supervised}阶段使用\gls{validation_set}上的误差来挑选\gls{pretraining}阶段的\gls{hyperparameter}，如\cite{Larochelle-jmlr-2009}中讨论的。
 在实际中，有些\gls{hyperparameter}，如\gls{pretraining}迭代的次数，很方便在\gls{pretraining}阶段设定，通过\gls{unsupervised}目标上使用\gls{early_stopping}策略完成。
-这个策略并不理想，但是在计算上比使用\gls{supervised}目标代价小得多。
+这个策略并不理想，但是在计算上比使用\gls{supervised}\gls{objective}代价小得多。
 % 526 head
 
 
@@ -295,14 +297,15 @@
 这种方法由\cite{CollobertR2008-small}、\cite{Turian+Ratinov+Bengio-2010-small}和\cite{collobert2011natural}开创，至今仍在使用。
 % 526 mid
 
-基于\gls{supervised_learning}的\gls{DL}技术，通过\gls{dropout}或\gls{batch_normalization}来\gls{regularize}，能够在很多任务上达到人类级别的性能，但必须使用极大的\gls{labeled}数据集。
+
+基于\gls{supervised_learning}的\gls{DL}技术，通过\gls{dropout}或\gls{batch_normalization}来\gls{regularize}，能够在很多任务上达到人类级别的性能，但仅仅是在极大的\gls{labeled}数据集上。
 在中等大小的数据集（例如\ENNAME{CIFAR}-10和\ENNAME{MNIST}，每个类大约有5,000个\gls{labeled}样本）上，这些技术的效果比\gls{unsupervised_pretraining}更好。
 在极小的数据集，例如\gls{alternative_splicing_dataset}，贝叶斯方法要优于基于\gls{unsupervised_pretraining}的方法~\citep{Srivastava-master-small}。
 由于这些原因，\gls{unsupervised_pretraining}已经不如以前流行。
 然而，\gls{unsupervised_pretraining}仍然是\gls{DL}研究历史上的一个重要里程碑，并将继续影响当代方法。
 \gls{pretraining}的想法已经推广到\firstgls{supervised_pretraining}，这将在\secref{sec:supervised_pretraining}中讨论，在\gls{transfer_learning}中这是非常常用的方法。
 \gls{transfer_learning}中的\gls{supervised_pretraining}流行~\citep{Oquab-et-al-CVPR2014,yosinski-nips2014}于在\ENNAME{ImageNet}数据集上使用\gls{convolutional_network}\gls{pretraining}。
-由于这个原因，实践者们公布了这些网络训练出的参数，就像自然语言任务公布\gls{pretraining}的单词向量一样~\citep{collobert2011natural,Mikolov-et-al-ICLR2013}。
+实践者们公布了这些网络训练出的参数，出于和自然语言任务公布\gls{pretraining}的单词向量一样的目的~\citep{collobert2011natural,Mikolov-et-al-ICLR2013}。
 % 526 end
 
 
@@ -316,7 +319,7 @@
 在\firstgls{transfer_learning}中，\gls{learner}必须执行两个或更多个不同的任务，但是我们假设能够解释$P_1$变化的许多因素和学习$P_2$需要抓住的变化相关。
 这通常能够在\gls{supervised_learning}中解释，输入是相同的，但是输出不同的性质。
 例如，我们可能在第一种设定中学习了一组视觉类别，比如猫和狗，然后在第二种设定中学习一组不同的视觉类别，比如蚂蚁和黄蜂。
-如果第一种设定（从$P_1$采样）中具有非常多的数据，那么这有助于在$P_2$抽取到的非常少的样本中快速\gls{generalize}。
+如果第一种设定（从$P_1$采样）中具有非常多的数据，那么这有助于学习到能够使得从$P_2$抽取的非常少样本中快速\gls{generalize}的表示。%??
 许多视觉类别\emph{共享}一些低级概念，比如边缘、视觉形状、几何变化、光照变化的影响等。
 一般而言，当存在对不同设定或任务有用，且对应多个设定的潜在因素的特征时，\gls{transfer_learning}、\gls{multitask_learning}（\secref{sec:multitask_learning}）和\gls{domain_adaption}可以使用\gls{representation_learning}来实现。
 如\figref{fig:chap7_multi_factor_output}所示，具有共享底层和任务相关上层的学习框架。
@@ -348,9 +351,9 @@
 在\firstgls{domain_adaption}的相关情况下，在每个设定之间任务（和最优的输入到输出的映射）都是相同的，但是\gls{input_distribution}稍有不同。 
 例如，考虑情感分析的任务，包括判断一条评论是表达积极的还是消极的情绪。 
 网上的评论有许多类别。
-在书、视频和音乐等媒体内容上训练的顾客评论情感预测器，被用于分析诸如电视机或智能电话的消费电子产品的评论时，\gls{domain_adaption}情景可能会出现。
+在书、视频和音乐等媒体内容上训练的顾客评论情感预测器，被用于分析诸如电视机或智能电话的消费电子产品的评论时，\gls{domain_adaption}情景可能会出现。%?? 
 可以想象，存在一个潜在的函数可以判断任何语句是正面的、中性的还是负面的，但是词汇和风格可能会因领域而有差异，使得跨域的\gls{generalize}训练变得更加困难。
-简单的\gls{unsupervised_pretraining}（\gls{DAE}）已经能够非常成功地用于\gls{domain_adaption}的情感分析\citep{Glorot+al-ICML-2011}。
+简单的\gls{unsupervised_pretraining}（带有\gls{DAE}）已经能够非常成功地用于\gls{domain_adaption}的情感分析\citep{Glorot+al-ICML-2011}。
 % 527 end 
 
 % 528 head
@@ -368,7 +371,7 @@
 如前所述，\gls{transfer_learning}中\gls{unsupervised}\gls{DL}已经在一些\gls{ML}比赛中取得了成功~\citep{UTLC+LISA-2011-small,goodfellow+all-NIPS2011}。
 这些比赛中的某一个实验配置如下。
 首先每个参与者获得一个第一种\gls{setting}（来自分布$P_1$）的数据集，其中含有一些类别的样本。
-参与者必须用这个来学习一个良好的特征空间（将原始输入映射到某种表示），使得当我们将这个学习到的变换用于来自迁移\gls{setting}（分布$P_2$）的输入时，\gls{linear_classifier}可以在很少\gls{labeled}样本上训练、\gls{generalize}得很好。
+参与者必须用这个来学习一个良好的特征空间（将原始输入映射到某种表示），使得当我们将这个\gls{learned}变换用于来自迁移\gls{setting}（分布$P_2$）的输入时，\gls{linear_classifier}可以在很少\gls{labeled}样本上训练、\gls{generalize}得很好。
 这个比赛中最引人注目的结果之一是，学习表示的网络架构越深（在第一个\gls{setting}$P_1$中的数据使用纯\gls{unsupervised}方式学习），在第二个\gls{setting}（迁移）$P_2$的新类别上学习到的曲线就越好。
 对于深度表示而言，迁移任务只需要较少的\gls{labeled}样本就能获得明显地渐近\gls{generalization}性能。
 % 529 head
@@ -380,7 +383,7 @@
 
 因为第一阶段学习出的表示就可以清楚地分离出潜在的类别，所以\gls{one_shot_learning}~\citep{Fei-Fei+al-2006}是可能的。
 在\gls{transfer_learning}阶段，仅需要一个\gls{labeled}样本来推断表示空间中聚集在相同点周围许多可能测试样本的\gls{label}。
-这使得在学习到的表示空间中，对应于不变性的变化因子已经与其他因子完全分离，在区分某些类别的对象时，我们可以学习到哪些因素能够起作用而哪些不会。
+这使得在\gls{learned}表示空间中，对应于不变性的变化因子已经与其他因子完全分离，在区分某些类别的对象时，我们可以学习到哪些因素能够起作用而哪些不会。
 %我们以哪种方式学习到哪些因素具有决定意义。
 % 529 mid
 
@@ -389,6 +392,7 @@
 如果文本足够好地描述了对象，那么即使没有看到某对象的图像，也能识别出该对象的类别。
 例如，已知猫有四条腿和尖尖的耳朵，那么\gls{learner}可以在没有见过猫的情况下猜测该图像中是猫。
 % 529 end
+
 
 只有在训练时使用了额外信息，\gls{zero_data_learning}~\citep{Larochelle2008}和\gls{zero_shot_learning}~\citep{Palatucci2009,Socher-2013}才是有可能的。
 我们可以认为\gls{zero_data_learning}场景包含三个随机变量：传统输入$\Vx$，传统输出或目标$\Vy$，以及描述任务的附加随机变量，$T$。
