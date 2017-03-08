@@ -404,9 +404,9 @@
 % 530  head
 
 
-\gls{zero_shot_learning}要求$T$被表示为某种\gls{generalization}的形式。
+\gls{zero_shot_learning}要求$T$被表示为某种形式的\gls{generalization}。
 例如，$T$不能仅是指示对象类别的\gls{one_hot}编码。
-通过使用每个类别词的\gls{word_embeddings}表示，\cite{Socher-2013}提出了对象类别的\gls{distributed_representation}。
+通过使用每个类别关联的词的\gls{learned}\gls{word_embeddings}表示，\cite{Socher-2013}提出了对象类别的\gls{distributed_representation}。
 % 530 mid
 
 
@@ -417,7 +417,7 @@
 
 \gls{zero_shot_learning}是\gls{transfer_learning}的一种特殊形式。
 同样的原理可以解释如何能执行\firstgls{multimodal_learning}，学习两种\gls{modality}的表示，和一种\gls{modality}中的观察结果$\Vx$与另一种\gls{modality}中的观察结果$\Vy$组成的对$(\Vx, \Vy)$之间的关系（通常是一个联合分布）\citep{Srivastava+Salakhutdinov-NIPS2012-small}。
-通过学习所有的三组参数（从$\Vx$到它的表示、从$\Vy$到它的表示，以及两个表示之间的关系），一个表示中的概念被锚定在另一个表示中，反之亦然，从而可以有效地推广到新的对组。
+通过学习所有的三组参数（从$\Vx$到它的表示、从$\Vy$到它的表示，以及两个表示之间的关系），一个表示中的概念被锚定在另一个表示中，反之亦然，从而可以有效地推广到新的对组。 %?? allowing one 
 这个过程如\figref{fig:chap15_maps_between_representations}所示。
 % 530 end
 
@@ -452,17 +452,17 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 % 532 head
 
 \gls{representation_learning}的一个重要问题是``什么原因能够使一个表示比另一个表示更好？''
-一种假设是，理想表示中的特征对应到观测数据的潜在成因，特征空间中不同的特征或方向对应着不同的原因，从而表示能够区分这些原因。
+一种假设是，理想表示中的特征对应到观测数据的\gls{underlying_cause}，特征空间中不同的特征或方向对应着不同的原因，从而表示能够区分这些原因。
 这个假设激励我们去寻找表示$p(\Vx)$的更好方法。
 如果$\Vy$是$\Vx$的重要成因之一，那么这种表示也可能是计算$p(\Vy \mid \Vx)$的一种良好表示。
-从至少20世纪90年代以来，这个想法已经指导了大量的\gls{DL}研究工作~\citep{Becker92,hinton1999unsupervised}。
+从至少20世纪90年代以来，这个想法已经指导了大量的\gls{DL}研究工作~\citep{Becker92,hinton1999unsupervised}。%?? in more detail
 关于\gls{semi_supervised_learning}可以超过纯\gls{supervised_learning}的其他论点，请读者参考\cite{Chapelle-2006}的第1.2节。
 % 532 head
 
-在\gls{representation_learning}的其他方法中，我们大多关注易于建模的表示——例如，数据稀疏或是各项之间相互独立的情况。
-能够清楚地分离出潜在因素的表示可能并不一定易于建模。
-<bad>然而，该假设的激励\gls{semi_supervised_learning}使用\gls{unsupervised}\gls{representation_learning}的一个更深层原因是，对于很多\gls{AI}任务而言，有两个相随的特点：一旦我们能够获得观察结果基本成因的解释，那么将会很容易分离出个体属性。
-具体来说，如果表示向量$\Vh$表示观察值$\Vx$的很多潜在因素，并且输出向量$\Vy$是最为重要的原因之一，那么从$\Vh$预测$\Vy$会很容易。
+在\gls{representation_learning}的其他方法中，我们大多关注易于建模的表示——例如，数据元素稀疏或是各项之间相互独立的情况。
+能够清楚地分离出\gls{underlying_cause}的表示可能并不一定易于建模。% factor与causal重合， 没法翻了
+<bad>然而，该假设的激励\gls{semi_supervised_learning}使用\gls{unsupervised}\gls{representation_learning}的一个更深层原因是，对于很多\gls{AI}任务而言，有两个相随的特点：一旦我们能够获得观察结果的潜在解释，那么一般来说将会很容易分离出个体属性。
+具体来说，如果表示向量$\Vh$表示观察值$\Vx$的很多\gls{underlying_cause}，并且输出向量$\Vy$是最为重要的原因之一，那么通过$\Vh$预测$\Vy$会很容易。
 % 532 mid 
 
 首先，让我们看看$p(\RVx)$的\gls{unsupervised_learning}无助于学习$p(\RVy\mid\RVx)$时，\gls{semi_supervised_learning}为何失败。
@@ -473,7 +473,7 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 接下来，让我们看看\gls{semi_supervised_learning}成功的一个简单例子。
 考虑这样的情况，$\RVx$来自一个混合分布，每个$\RVy$值具有一个混合分量，如\figref{fig:chap15_mixture_model}所示。
 如果混合分量很好地分出来了，那么建模$p(\RVx)$可以精确地指出每个分量的位置，每个类一个\gls{labeled}样本的\gls{training_set}足以精确学习$p(\RVy \mid \RVx)$。
-但是更一般地，什么能将$p(\RVy \mid \RVx)$和$p(\RVx)$关联在一起呢？
+但是更一般地，究竟是什么能将$p(\RVy \mid \RVx)$和$p(\RVx)$关联在一起呢？
 % 532 mid-end
 
 
@@ -493,11 +493,11 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 % 533 head
 
 
-如果$\RVy$与$\RVx$的成因之一非常相关，那么$p(\RVx)$和$p(\RVy \mid \RVx)$也会紧密关联，试图找到变化\gls{underlying}因素的\gls{unsupervised}\gls{representation_learning}可能会有助于\gls{semi_supervised_learning}。
+如果$\RVy$与$\RVx$的\gls{causal_factor}之一非常相关，那么$p(\RVx)$和$p(\RVy \mid \RVx)$也会紧密关联，试图找到变化\gls{underlying}因素的\gls{unsupervised}\gls{representation_learning}很可能会有助于\gls{semi_supervised_learning}。
 % -- 532 end
 
 % 533 mid
-假设$\RVy$是$\RVx$的成因之一，让$\RVh$代表所有这些成因。
+假设$\RVy$是$\RVx$的\gls{causal_factor}之一，让$\RVh$代表所有这些成因。
 真实的生成过程可以被认为是根据这个\gls{directed_graphical_model}结构化出来的，其中$\RVh$是$\RVx$的父节点：
 \begin{equation}
 	p(\RVh, \RVx) = p(\RVx \mid \RVh) p(\RVh).
@@ -518,7 +518,7 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 因此，在这些假设情况下，\gls{semi_supervised_learning}应该能提高性能。
 % 533 end
 
-关于这个事实的一个重要的研究问题是，大多数观察是由极其大量的\gls{underlying}成因形成的。
+关于这个事实的一个重要的研究问题是，大多数观察是由极其大量的\gls{underlying_cause}形成的。
 假设$\RVy = \RSh_i$，但是\gls{unsupervised}\gls{learner}并不知道是哪一个$\RSh_i$。
 对于一个\gls{unsupervised}\gls{learner}暴力求解就是学习一种表示，这种表示能够捕获\emph{所有}合理的重要生成因子$\RSh_j$，并将它们彼此区分开来，因此不管$\RSh_i$是否关联于$\RVy$，从$\RVh$预测$\RVy$都是容易的。
 % -- 534 head
@@ -527,17 +527,17 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 在实践中，暴力求解是不可行的，因为不可能捕获影响观察的所有或大多数变化。
 例如，在视觉场景中，表示是否应该对背景中的所有最小对象进行编码？
 根据一个有据可查的心理学现象，人们不会察觉到环境中和他们所在进行的任务并不立刻相关的变化——具体例子可参考\cite{simons1998failure}。
-\gls{semi_supervised_learning}的一个重要研究前沿是确定每种情况下要编码的对象。
-目前，处理大量\gls{underlying}原因的两个主要策略是，同时使用\gls{unsupervised_learning}和\gls{supervised_learning}信号，从而使得模型捕获最相关的变动因素，或是使用纯\gls{unsupervised_learning}学习更大规模的表示。
+\gls{semi_supervised_learning}的一个重要研究前沿是确定每种情况下要编码的\emph{对象}。
+目前，处理大量\gls{underlying_cause}的两个主要策略是，同时使用\gls{unsupervised_learning}和\gls{supervised_learning}信号，从而使得模型捕获最相关的变动因素，或是使用纯\gls{unsupervised_learning}来使用更大规模的表示。
 % 534 mid
 
-<bad>\gls{unsupervised_learning}的一个新兴策略是修改确定哪些\gls{underlying}因素最为关键的定义。
+<bad>\gls{unsupervised_learning}的一个新兴策略是修改确定哪些\gls{underlying_cause}最为关键的定义。%??     有``确定''的意思吗
 之前，\gls{AE}和\gls{generative_model}被训练来优化一个类似于\gls{mean_squared_error}的固定标准。
-这些固定标准确定了哪些因素是突出的。
+这些固定标准确定了哪些因素是重要的。
 例如，图像像素的\gls{mean_squared_error}隐式地指定，一个\gls{underlying}因素只有在其显著地改变大量像素的亮度时，才是重要影响因素。
-如果我们希望解决的问题涉及到小对象的交互，那么这将有可能遇到问题。
+如果我们希望解决的问题涉及到小对象之间的相互作用，那么这将有可能遇到问题。
 如\figref{fig:chap15_pingpong}所示，在机器人任务中，\gls{AE}未能学习到编码小乒乓球。
-同样是这个机器人，它可以成功地与更大的对象进行交互（例如棒球，\gls{mean_squared_error}在这种情况下很突出）。
+同样是这个机器人，它可以成功地与更大的对象进行交互（例如棒球，在\gls{mean_squared_error}下很突出）。
 % 534 mid
 
 
@@ -562,9 +562,9 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 % 535 head
 
 % 534 end
-还有一些其他的突出性的定义。
+还有一些其他的突出性的定义。%??  salient   翻译成 突出  重要？  
 例如，如果一组像素具有高度可识别的模式，那么即使该模式不涉及到极端的亮度或暗度，该模式还是会被认为非常突出。
-实现这样一种定义``突出''的方法是使用最近提出的\firstgls{generative_adversarial_networks}~\citep{Goodfellow-et-al-NIPS2014-small}。
+实现这样一种定义突出的方法是使用最近提出的\firstgls{generative_adversarial_networks}~\citep{Goodfellow-et-al-NIPS2014-small}。
 在这种方法中，\gls{generative_model}被训练来愚弄\gls{feedforward_classifier}。
 \gls{feedforward_classifier}尝试将来自\gls{generative_model}的所有样本识别为假的，并将来自\gls{training_set}的所有样本识别为真的。
 在这个框架中，\gls{feedforward_network}能够识别出的任何结构化模式都是非常突出的。
@@ -605,10 +605,10 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 \end{figure}
 
 % 535 head
-正如\cite{Janzing-et-al-ICML2012}指出，学习\gls{underlying}因素的好处是，如果真实的生成过程中$\RVx$是结果，$\RVy$是原因，那么建模$p(\RVx \mid \RVy)$对于$p(\RVy)$的变化是鲁棒的。
+正如\cite{Janzing-et-al-ICML2012}指出，学习\gls{underlying}\gls{causal_factor}的好处是，如果真实的生成过程中$\RVx$是结果，$\RVy$是原因，那么建模$p(\RVx \mid \RVy)$对于$p(\RVy)$的变化是鲁棒的。
 如果因果关系被逆转，这是不对的，因为根据\gls{bayes_rule}，$p(\RVx \mid \RVy)$将会对$p(\RVy)$的变化十分敏感。
-很多时候，我们考虑分布的变化（由于不同领域、时间不稳定性或任务性质的变化）时，\emph{因果机制是保持不变的}（``宇宙定律不变''），而\gls{underlying}因素的边缘分布是会变化的。
-因此，通过学习试图恢复成因向量$\RVh$和$p(\RVx \mid \RVh)$的\gls{generative_model}，我们可以期望最后的模型对所有种类的变化有更好的\gls{generalization}和鲁棒性。
+很多时候，我们考虑分布中的变化（由于不同领域、时间不稳定性或任务性质的变化）时，\emph{因果机制是保持不变的}（``宇宙定律不变''），而\gls{underlying_cause}的边缘分布是会变化的。
+因此，通过学习试图恢复\gls{causal_factor}$\RVh$和$p(\RVx \mid \RVh)$的\gls{generative_model}，我们可以期望最后的模型对所有种类的变化有更好的\gls{generalization}和鲁棒性。
 % 536 mid
 
 
