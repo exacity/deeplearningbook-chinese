@@ -629,7 +629,7 @@ $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$�
 这可以与\emph{\gls{symbolic_representation}}相比较，其中输入关联到单一符号或类别。
 如果字典中有$n$个符号，那么可以想象有$n$个特征监测器，每个特征探测器监测相关类别的存在。
 在这种情况下，只有表示空间中$n$个不同配置才有可能在输入空间中刻画$n$个不同的区域，如\figref{fig:chap15_nondistributed}所示。
-这样的\gls{symbolic_representation}也被称为\gls{one_hot}表示，因为它可以表示成各位排斥的$n$维二元向量（其中只有一位是激活的）。
+这样的\gls{symbolic_representation}也被称为\gls{one_hot}表示，因为它可以表示成相互排斥的$n$维二元向量（其中只有一位是激活的）。
 \gls{symbolic_representation}是更广泛的\gls{nondistributed_representation}类中的一个具体示例，可以包含很多条目，但是每个条目没有显著意义的单独控制作用。
 % 537 mid
 
@@ -685,7 +685,7 @@ $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$�
 % 537 mid
 以下是基于\gls{nondistributed_representation}的学习算法的示例：
 \begin{itemize}
-	\item 聚类算法，包含$k$-均值算法：每个输入点恰好分配到一个类别。
+	\item 聚类算法，包含$k$-means算法：每个输入点恰好分配到一个类别。
 
 	\item $k$-\gls{nearest_neighbor}算法：给定一个输入，一个或几个模板或原型样本与之关联。
 	在$k >  1$ 的情况下，每个输入都使用多个值来描述，但是它们不能彼此分开控制，因此这不能算真正的\gls{distributed_representation}。
@@ -705,8 +705,8 @@ $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$�
 % -- 539 mid  
 
 
-对于这些\gls{nondistributed}算法中的部分而言，有些输出并非是恒定的，而是在相邻区域之间内插。
-参数（或样本）的数量和它们能够定义区域的数量之间保持线性关系。
+对于部分\gls{nondistributed}算法而言，有些输出并非是恒定的，而是在相邻区域之间内插。
+参数（或样本）的数量和它们能够定义区域的数量之间仍保持线性关系。
 % -- 539 mid  
 
 将\gls{distributed_representation}和\gls{symbolic_representation}区分开来的一个重要概念是，由不同概念之间的\emph{共享属性而产生的\gls{generalization}}。
@@ -724,7 +724,7 @@ $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$�
 有许多方法来形式化这样一个假设，但其结果是如果我们有一个样本$(x,y)$，并且我们知道$f(x) \approx y$，那么我们可以选取一个\gls{estimator}$\hat{f}$近似地满足这些限制，并且当我们移动到附近的输入$x + \epsilon$时，$\hat{f}$尽可能少地发生改变。
 显然这个假设是非常有用的，但是它会遭受\gls{curse_of_dimensionality}：
 学习出一个能够在很多不同区域上增加或减少很多次的目标函数
-\footnote{一般来说，我们可能会想要学习一个函数，这个函数在指数级数量区域的值都是不同的：在$d$-维空间中，为了区分每一维，至少有两个不同的值。
+\footnote{一般来说，我们可能会想要学习一个函数，这个函数在指数级数量区域的表现都是不同的：在$d$-维空间中，为了区分每一维，至少有两个不同的值。
 我们想要函数$f$区分这$2^d$个不同的区域，需要$O(2^d)$量级的训练样本}，
 我们可能需要至少和可区分区域数量一样多的样本。
 可以将每一个区域视为一个类别或符号：通过让每个符号（或区域）具有单独的自由度，我们可以学习出从符号映射到值的任意\gls{decoder}。
