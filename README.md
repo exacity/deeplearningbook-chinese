@@ -54,7 +54,7 @@
 | [第十三章 线性因子模型](https://exacity.github.io/deeplearningbook-chinese/Chapter13_linear_factor_models/) | @futianfan | @cloudygoose | @ZhiweiYang | 完成合并 |
 | [第十四章 自编码器](https://exacity.github.io/deeplearningbook-chinese/Chapter14_autoencoders/) | @swordyork |  | @Seaball, @huangpingchun | 完成合并 |
 | [第十五章 表示学习](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter15_representation_learning/) | @liber145 | @cnscottzheng | | 需要校对 |
-| [第十六章 深度学习中的结构化概率模型](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter16_structured_probabilistic_modelling/) | @futianfan | @cnscottzheng |  | 需要校对 |
+| [第十六章 深度学习中的结构化概率模型](https://exacity.github.io/deeplearningbook-chinese/Chapter16_structured_probabilistic_modelling/) | @futianfan | |  | 完成合并 |
 | [第十七章 蒙特卡罗方法](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter17_monte_carlo_methods/) | @futianfan | @zhangyafeikimi |  | 需要校对 |
 | [第十八章 面对配分函数](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter18_confronting_the_partition_function/) | @liber145 | | @tankeco | 需要校对 |
 | [第十九章 近似推断](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter19_approximate_inference/) | @futianfan | |  | 需要校对 |

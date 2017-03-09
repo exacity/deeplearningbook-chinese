@@ -226,7 +226,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 任何图灵可计算的函数都可以通过这样一个有限维的\gls{recurrent_network}计算，在这个意义上\figref{fig:chap10_hidden_recurrence_rnn}和式\eqref{eq:108a}的\gls{RNN}是万能的。
 \glssymbol{RNN}经过若干\gls{time_step}后读取输出，这与由图灵机所用的\gls{time_step}是渐近线性的，与输入长度也是渐近线性的\citep{Siegelmann+Sontag-1991,Siegelmann-1995,Siegelmann+Sontag-1995,Hyotyniemi-1996}。
 由图灵机计算的函数是离散的，所以这些结果都是函数的具体实现，而不是近似。
-\glssymbol{RNN}作为图灵机使用时，需要一个二进制序列作为输入，其输出必须离散化后提供二进制输出。
+\glssymbol{RNN}作为图灵机使用时，需要一个二进制序列作为输入，其输出必须离散化以提供二进制输出。
 利用单个有限大小的特定\glssymbol{RNN}计算在此设置下的所有函数是可能的（\cite{Siegelmann+Sontag-1995}用了886个单元）。
 图灵机的``输入''是要计算函数的详细说明(specification)，所以模拟此图灵机的相同网络足以应付所有问题。
 用于证明的理论\glssymbol{RNN}可以通过激活和权重（由无限精度的有理数表示）来模拟无限堆栈。
