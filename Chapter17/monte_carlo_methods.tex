@@ -6,13 +6,13 @@
 
 随机算法可以粗略的分为两类：\ENNAME{Las Vegas}\,算法和\gls{monte_carlo}算法。
 \ENNAME{Las Vegas}\,算法通常精确地返回一个正确答案 （或者返回算法失败了）。   
-这类方法通常需要占用随机量的计算资源（通常指的是内存和运行时间）。    %?? “和” 换成 “或” ， “通常“是修饰 内存 和 运行 时间的。
+这类方法通常需要占用随机量的计算资源（一般指内存和运行时间）。    %?? “和” 换成 “或” ， “通常“是修饰 内存 和 运行 时间的。
 与此相对的，\gls{monte_carlo}方法返回的答案具有随机大小的错误。 
 花费更多的计算资源（通常包括内存和运行时间）可以减少这种随机量的错误。 %?? 加个主语吧， 我们可以话费。。。。
 在任意固定的计算资源下， \gls{monte_carlo}算法可以得到一个近似解。
 
 对于\gls{ML}中的许多问题来说，我们很难得到精确的答案。
-这类问题很难用精确的确定性的算法如\,\ENNAME{Las Vegas}\,算法解决。% 和 -> 如
+这类问题很难用精确的确定性的算法如\,\ENNAME{Las Vegas}\,算法解决。
 取而代之的是确定性的近似算法或\gls{monte_carlo}近似方法。
 这两种方法在\gls{ML}中都非常普遍。
 本章主要关注\gls{monte_carlo}方法。
@@ -28,7 +28,7 @@
 
 有许多原因使我们希望从某个分布中采样。  
 当我们需要以较小的代价近似许多项的和或某个积分时，采样是一种很灵活的选择。  
-有时候，我们使用它加速一些很费时却易于处理的求和估计，就像我们使用\gls{minibatch}对整个训练代价进行\gls{subsample}一样。  %?? 和的估计  换成  求和估计
+有时候，我们使用它加速一些很费时却易于处理的求和估计，就像我们使用\gls{minibatch}对整个训练代价进行\gls{subsample}一样。 
 在其他情况下，我们需要近似求一个难以处理的和或积分，例如估计一个\gls{undirected_model}中\gls{partition_function}对数的梯度时。   %?? 去掉 时，sum 翻译成 求和，可以和 积分 成对，后面也有类似情况，你斟酌下
 在许多其他情况下，抽样实际上是我们的目标，例如我们想训练一个可以从训练分布采样的模型。  
 % 582 
@@ -55,7 +55,7 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \hat{s}_n = \frac{1}{n}\sum_{i=1}^{n}f(\Vx^{(i)}).
 \end{align}
 这种近似可以被证明拥有如下几个性质。
-首先很容易观察到$\hat{s}$这个估计是无偏的，由于
+首先很容易观察到$\hat{s}$这个估计是\gls{unbiased}的，由于
 \begin{align}
 \SetE[\hat{s}_n] = \frac{1}{n}\sum_{i=1}^{n}\SetE[f(\Vx^{(i)})] = \frac{1}{n}\sum_{i=1}^{n}s = s.
 \end{align}
@@ -80,25 +80,25 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 
 
 以上的所有结论都依赖于我们可以从基准分布$p(\RVx)$中轻易地采样，但是这个假设并不是一直成立的。
-当我们无法从$p$中采样时，一个备选方案是用\gls{importance_sampling}，在\secref{sec:importance_sampling_chap17}会讲到。 %?? 一个备选方案是17.2节会讲到的\gls{importance_sampling}。
-一种更加通用的方式是构建一个收敛到目标分布估计的序列。 %?? 一种更加通用的方法是构建一个收敛于目标分布的估计序列。
+当我们无法从$p$中采样时，一个备选方案是用\secref{sec:importance_sampling_chap17}讲到的\gls{importance_sampling}。 
+一种更加通用的方式是构建一个收敛到目标分布的估计序列。 
 这就是\gls{mcmc}方法（见\secref{sec:markov_chain_monte_carlo_methods}）。
 % 583
 
 \section{\glsentrytext{importance_sampling}}
 \label{sec:importance_sampling_chap17}
 
-如方程~\eqref{eqn:integra}所示，在\gls{monte_carlo}方法中，对积分（或者和）分解，即确定积分中哪一部分作为概率分布$p(\Vx)$以及哪一部分作为被积的函数$f(\Vx)$（我们感兴趣的是估计$f(\Vx)$在概率分布$p(\Vx)$下的期望）是很关键的一步。   %?? 去掉  即    %?? eqref 要不要换成 eqnref, 后面还有一些
-$p(\Vx)f(\Vx)$存在不唯一的分解因为它总是可以被写成    %?? 通常  换成  总是
+如方程~\eqref{eqn:integra}所示，在\gls{monte_carlo}方法中，对积分（或者和）分解，即确定积分中哪一部分作为概率分布$p(\Vx)$以及哪一部分作为被积的函数$f(\Vx)$（我们感兴趣的是估计$f(\Vx)$在概率分布$p(\Vx)$下的期望）是很关键的一步。   %?? 去掉  即    
+$p(\Vx)f(\Vx)$存在不唯一的分解因为它总是可以被写成   
 \begin{align}
 \label{eqn:decomposition}
 p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 \end{align}
 在这里，我们从$q$分布中采样，然后估计$\frac{pf}{q}$在此分布下的均值。
 许多情况中，给定$p$和$f$的情况下我们希望计算某个期望，这个问题既然是求期望，那么很自然地$p$和$f$是一种分解选择。  %?? 在许多情况下，我们希望给定$p$和$f$计算期望。既然这个问题是计算期望，那么概率函数$p$和数值函数$f$是一种很自然的分解选择。   拆成了两句，你斟酌下。
-然而，从衡量一定采样数所达到精度的角度说，原始定义的问题通常不是最优的选择。   %?? 考虑达到指定精度所需的采样数量，这个问题最初的分解选择不是最优的。
-幸运的是，最优的选择$q^*$通常可以简单推出。    %?? 最优选择$q^*$通常可以被简单推导出来。
-这种最优的采样函数$q^*$对应的是所谓的最优\gls{importance_sampling}。 %?? 这种最优选择$q^*$被称为最优\gls{importance_sampling}。
+然而，用达到指定级别精度所需的采样数量衡量，这个问题最初的分解选择不是最优的选择。
+幸运的是，最优的选择$q^*$通常可以被简单推导出来。   
+这种最优的采样函数$q^*$对应所谓的最优\gls{importance_sampling}。 
 % 584
 
 
@@ -114,7 +114,7 @@ p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 \begin{align}
 \SetE_q [\hat{s}_q] = \SetE_p [\hat{s}_p] = s.      
 \end{align}
-然而，\gls{importance_sampling}的方差却对$q$的选择非常敏感。  %?? 去掉 不同，  选取 换成 选择
+然而，\gls{importance_sampling}的方差却对$q$的选择非常敏感。 
 这个方差可以表示为
 \begin{align}
 \label{eqn:variance_of_is}
@@ -126,10 +126,10 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z},
 \end{align}
 % 584
 在这里$Z$表示归一化常数，选择适当的$Z$使得$q^*(\Vx)$之和或者积分为$1$。
-一个更好的\gls{importance_sampling}分布会把更多的权重放在被积函数较大的地方。   %?? 好 换成  更好
-事实上，当$f(\Vx)$的正负符号不变时，$\Var[\hat{s}_{q^*}]=0$， 这意味着当使用最优的$q$分布时，\emph{只需要一个样本就足够了}。 %?? 去掉 采
+一个更好的\gls{importance_sampling}分布会把更多的权重放在被积函数较大的地方。 
+事实上，当$f(\Vx)$的正负符号不变时，$\Var[\hat{s}_{q^*}]=0$， 这意味着当使用最优的$q$分布时，\emph{只需要一个样本就足够了}。
 当然，这仅仅是因为计算$q^*$时已经解决了所有的问题。   
-所以在实践中这种只需要采样一个样本的方法往往是无法实现的。 %?? 需要采 换成 需要 或是 采样， 另外可以考虑换个语序， 所以在实践中，这种。。。。
+所以在实践中这种只需要采样一个样本的方法往往是无法实现的。 
 % 584
 
 
@@ -147,13 +147,13 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z},
 & = \frac{\sum_{i=1}^{n} \frac{\tilde{p}(\Vx^{(i)})}{\tilde{q}(\Vx^{(i)})} f(\Vx^{(i)})}{\sum_{i=1}^{n}\frac{\tilde{p}(\Vx^{(i)})}{\tilde{q}(\Vx^{(i)})}},
 \end{align}
 其中$\tilde{p}$和$\tilde{q}$分别是分布${p}$和${q}$的未经归一化的形式，$\Vx^{(i)}$是从分布${q}$中抽取的样本。
-这种估计是有偏的因为$\SetE[\hat{s}_{\text{BIS}}]\neq s$，除非当$n$渐进性地趋近于$\infty$时，方程~\eqref{eqn:bis}的分母会收敛到$1$。
-所以这种估计也被称为渐进性\gls{unbiased}的。   %?? 可以考虑加个 gls 渐进无偏
+这种估计是有偏的因为$\SetE[\hat{s}_{\text{BIS}}]\neq s$，除非当$n$渐进性地趋近于$\infty$时，方程~\eqnref{eqn:bis}的分母会收敛到$1$。
+所以这种估计也被称为渐进性\gls{unbiased}的。   
 % 585
 
 
 尽管一个好的$q$分布的选择可以显著地提高\gls{monte_carlo}估计的效率，反之一个糟糕的$q$分布选择则会使效率更糟糕。
-我们回过头来看看方程~\eqref{eqn:variance_of_is}会发现，如果存在一个$q$使得$\frac{p(\Vx)f(\Vx)}{q(\Vx)}$很大，那么这个估计的方差也会很大。
+我们回过头来看看方程~\eqnref{eqn:variance_of_is}会发现，如果存在一个$q$使得$\frac{p(\Vx)f(\Vx)}{q(\Vx)}$很大，那么这个估计的方差也会很大。
 当$q(\Vx)$很小，而$f(\Vx)$和$p(\Vx)$都较大并且无法抵消$q$时，这种情况会非常明显。
 $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布中容易地采样。
 当$\Vx$是高维数据时，$q$分布的简单性使得它很难与$p$或者$p\vert f\vert$相匹配。   
@@ -181,20 +181,19 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 在深度学习中，分布$p_{\text{model}}(\RVx)$往往表达成一个无向模型。 %?? 在深度学习中，当分布$p_{\text{model}}(\RVx)$表示无向模型时，这种情况往往会发生。
 在这种情况下，为了从分布$p_{\text{model}}(\RVx)$中近似采样，我们引入了一种称为\firstgls{markov_chain}的数学工具。
 利用\gls{markov_chain}来进行\gls{monte_carlo}估计的这一类算法被称为\firstall{mcmc}算法。
-\gls{mcmc}算法在\gls{ML}中的应用在~\citet{koller-book2009}中花了大量篇幅描述。
-%?? \citet{koller-book2009}花了大量篇幅来描述\gls{mcmc}算法在\gls{ML}中的应用。
+~\citet{koller-book2009}中花了大量篇幅来描述\gls{mcmc}算法在\gls{ML}中的应用。
 \glssymbol{mcmc}算法最标准，最一般的要求是只适用模型分布处处不为$0$的情况。
 因此，最方便的目标分布的表达是从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
 %?? 因此，这些技术最方便的使用方法是用于从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
 在\glssymbol{energy_based_model}中每一个状态所对应的概率都不为零。
-事实上\glssymbol{mcmc}方法可以被广泛地应用在了许多包含概率为$0$的状态的概率分布中。%?? 去掉 了
+事实上\glssymbol{mcmc}方法可以被广泛地应用在许多包含概率为$0$的状态的概率分布中。
 然而，在这种情况下，关于\glssymbol{mcmc}方法性能的理论保证只能依据具体不同类型的分布具体分析证明。
 在\gls{DL}中，应用于所有\gls{energy_based_model}的通用理论保证是很常见的。
 % 586 end
 
 
-为了解释从\gls{energy_based_model}中采样的困难性，我们考虑一个包含两个变量的\glssymbol{energy_based_model}的例子，记作$p(\RSa,\RSb)$。  %?? 采样困难的原因 或者 难以采样的原因
-为了采$\RSa$，我们必须先从$p(\RSa\mid \RSb)$中采样，为了采$\RSb$，我们又必须从$p(\RSb\mid \RSa)$中采样。   %??  建议第二个逗号 换成 分号
+为了解释从\gls{energy_based_model}中采样困难的原因，我们考虑一个包含两个变量的\glssymbol{energy_based_model}的例子，记作$p(\RSa,\RSb)$。  
+为了采$\RSa$，我们必须先从$p(\RSa\mid \RSb)$中采样；为了采$\RSb$，我们又必须从$p(\RSb\mid \RSa)$中采样。   
 这似乎成了难以解释的先有鸡还是先有蛋的问题。
 \gls{directed_model}避免了这一问题因为它的图是有向无环的。
 为了完成\firstgls{ancestral_sampling}，我们根据拓扑顺序采样每一个变量，给定每个变量的所有父结点的条件下，这个变量是确定能够被采样的（详见\secref{sec:sampling_from_graphical_models}）。   
@@ -253,24 +252,24 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 \Vv^{(t)} = \MA \Vv^{(t-1)}.
 \end{align}
 % 588   head
-重复地使用\gls{markov_chain}来更新就相当于重复地乘上矩阵$\MA$。  %?? 去掉 来， 去掉 就， 建议后半段换成 重复地与矩阵$\MA$相乘。
-换一句话说，我们可以认为这一过程就是关于$\MA$的指数变化：   %??  换言之，。。。就是矩阵$\MA$的幂乘。
+重复地使用\gls{markov_chain}更新相当于重复地与矩阵$\MA$相乘。  
+换言之，我们可以认为这一过程就是关于$\MA$的幂乘：  
 \begin{align}
 \Vv^{(t)} = \MA^{t} \Vv^{(0)}.
 \end{align}
 % 588
 
 
-矩阵$\MA$有一种特殊的结构，因为它的每一列都代表了一个概率分布。 %?? 去掉 了
-这样的矩阵被称作是\firstgls{stochastic_matrix}。 %??  去掉 是， 或者 被称为
+矩阵$\MA$有一种特殊的结构，因为它的每一列都代表一个概率分布。
+这样的矩阵被称为\firstgls{stochastic_matrix}。
 对于任意状态$x$到任意其他状态$x'$存在一个$t$使得转移概率不为$0$，那么Perron-Frobenius定理~\citep{perron1907theorie,frobenius1908matrizen}可以保证这个矩阵的最大特征值是实数且大小为$1$。
 我们可以看到所有的特征值随着时间呈现指数变化： 
 \begin{align}
 \Vv^{(t)} = (\MV \text{diag}(\Vlambda)\MV^{-1})^{t} \Vv^{(0)} = \MV \text{diag}(\Vlambda)^t \MV^{-1} \Vv^{(0)}.
 \end{align}
 这个过程导致了所有的不等于$1$的特征值都衰减到$0$。  
-在一些额外的较为宽松的假设下，我们可以保证矩阵$\MA$只有一个特征值为$1$。   %?? 只有一个特征值为$1$的特征向量。
-所以这个过程收敛到\firstgls{stationary_distribution}，有时也称为\firstgls{equilibrium_distribution}。  %?? 被称为
+在一些额外的较为宽松的假设下，我们可以保证矩阵$\MA$只有一个对应特征值为$1$的特征向量。  
+所以这个过程收敛到\firstgls{stationary_distribution}，有时也被称为\firstgls{equilibrium_distribution}。 
 收敛时，我们得到 
 \begin{align}
 \label{eqn:1723}
@@ -279,7 +278,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 这个条件也适用于收敛之后的每一步。
 这就是特征向量方程。
 作为收敛的静止点，$\Vv$一定是特征值为$1$所对应的特征向量。   %?? 如果$\Vv$是收敛的稳定点／静止点，那么。。。。  你斟酌下
-这个条件保证收敛到了\gls{stationary_distribution}以后，之后的采样过程不会改变不同\gls{markov_chain}   的状态分布（尽管转移算子自然而然地会改变每个单独的状态）。   %??  重复的转移采样过程不会改变所有\gls{markov_chain}上状态的\emph{分布}（当然转移算子会改变每个单独的状态）。 
+这个条件保证收敛到了\gls{stationary_distribution}以后，重复的转移采样过程将不会改变所有不同\gls{markov_chain}   上状态的\emph{分布}（尽管转移算子自然而然地会改变每个单独的状态）。  
 % 588
 
 
@@ -289,17 +288,17 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 
 
 可数状态\gls{markov_chain}的大多数性质可以被推广到连续状态的\gls{markov_chain}中。 
-在这种情况下，一些研究者把这种\gls{markov_chain}称为\firstgls{harris_chain}，但是这两种情况我们都用\gls{markov_chain}来表示。 %?? 我们将这两种情况都称为\gls{markov_chain}。
-通常情况下，在一些宽松的条件下，一个带有转移算子$T$的\gls{markov_chain}都会收敛到一个固定点，这个固定点可以写成如下形式：  %?? 通常在一些。。。
+在这种情况下，一些研究者把这种\gls{markov_chain}称为\firstgls{harris_chain}，但是我们将这两种情况都称为\gls{markov_chain}。
+通常在一些宽松的条件下，一个带有转移算子$T$的\gls{markov_chain}都会收敛到一个固定点，这个固定点可以写成如下形式：
 \begin{align}
 q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \end{align}
-这个方程的离散版本就是方程~\eqref{eqn:1723}。	%?? 重新改写 式17.23
-当$\RVx$离散时，这个期望对应着求和，而当$\RVx$连续时，这个期望对应的是积分。   %?? 建议  当$\RVx$是离散数值时，。。。。 当。。是连续数值时，。。。
+这个方程的离散版本就是方程~\eqnref{eqn:1723}。	%?? 重新改写 式17.23
+当$\RVx$是离散值时，这个期望对应着求和，而当$\RVx$是连续值时，这个期望对应的是积分。 
 % 589 head
 
 
-无论状态是连续的还是离散的，所有的\gls{markov_chain}方法都包括了重复，随机地更新直到最终所有的状态开始从\gls{equilibrium_distribution}中采样。 %?? 包括重复地随机更新，直到最后状态开始从\gls{equilibrium_distribution}中采样。
+无论状态是连续的还是离散的，所有的\gls{markov_chain}方法都包括了重复、随机地更新直到最后状态开始从\gls{equilibrium_distribution}中采样。 
 运行\gls{markov_chain}直到它达到\gls{equilibrium_distribution}的过程通常被称为\gls{markov_chain}的\firstgls{burn_in}过程。
 在\gls{markov_chain}达到\gls{equilibrium_distribution}之后，我们可以从\gls{equilibrium_distribution}中抽取一个无限多数量的样本序列。 
 这些样本服从同一分布，但是两个连续的样本之间存在强烈的相关性。 
@@ -332,7 +331,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \section{\glsentrytext{gibbs_sampling}}
 \label{sec:gibbs_sampling}
 
-目前为止我们已经了解了如何通过反复更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。 %?? 截至目前 换成 目前为止
+目前为止我们已经了解了如何通过反复更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。 
 然而我们还没有提到过如何确定一个有效的$q(\Vx)$分布。%?? 然而我们还没有介绍如何确定分布$q(\Vx)$是否是一个有用的分布。
 本书中将会描述两种基本的方法。  
 第一种方法是从已经学习到的分布$p_{\text{model}}$中推导出$T$，下文描述了如何从\gls{energy_based_model}中采样。
@@ -380,7 +379,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 % 591 
 
 
-当我们考虑\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。 %??  当我们考虑\gls{gibbs_sampling} 。。。。
+当我们考虑\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。
 在这种情况下，我们考虑在一定步数内从一个\gls{mode}移动到一个临近\gls{mode}的概率。
 决定这个概率的是两个\gls{mode}之间的``能量障碍''的形状。
 隔着一个巨大``能量障碍'' （低概率的区域）的两个\gls{mode}之间的转移概率是（随着能量障碍的高度）指数下降的，如在\figref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
