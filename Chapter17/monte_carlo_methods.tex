@@ -4,15 +4,15 @@
 \label{chap:monte_carlo_methods}
 % 581
 
-随机算法可以粗略的分为两类：\ENNAME{Las Vegas}算法和\gls{monte_carlo}算法。
-\ENNAME{Las Vegas}算法通常精确地返回一个正确答案 （或者发布一个失败报告）。   %?? “发布一个失败报告”   不太好，“返回算法失败了”，你再斟酌下
+随机算法可以粗略的分为两类：\ENNAME{Las Vegas}\,算法和\gls{monte_carlo}算法。
+\ENNAME{Las Vegas}\,算法通常精确地返回一个正确答案 （或者发布一个失败报告）。   %?? “发布一个失败报告”   不太好，“返回算法失败了”，你再斟酌下
 这类方法通常需要占用随机量的计算资源（通常指的是内存和运行时间）。    %?? “和” 换成 “或” ， “通常“是修饰 内存 和 运行 时间的。
 与此相对的，\gls{monte_carlo}方法返回一个伴随着随机量错误的答案。 	 %?? 返回的答案具有随机大小的错误。   随机量 有点别扭，要不直接说随机的错误，你再斟酌下
 花费更多的计算资源（通常包括内存和运行时间）可以减少这种随机量的错误。 %?? 加个主语吧， 我们可以话费。。。。
 在任意固定的计算资源下， \gls{monte_carlo}算法可以得到一个近似解。
 
 对于\gls{ML}中的许多问题来说，我们很难得到精确的答案。
-这类问题很难用精确的确定性的算法如\ENNAME{Las Vegas}算法解决。% 和 -> 如
+这类问题很难用精确的确定性的算法如\,\ENNAME{Las Vegas}\,算法解决。% 和 -> 如
 取而代之的是确定性的近似算法或\gls{monte_carlo}近似方法。
 这两种方法在\gls{ML}中都非常普遍。
 本章主要关注\gls{monte_carlo}方法。
@@ -304,12 +304,12 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 在\gls{markov_chain}达到\gls{equilibrium_distribution}之后，我们可以从\gls{equilibrium_distribution}中采集一个无限多数量的样本序列。 
 这些样本服从同一分布，但是两个连续的样本之间存在强烈的相关性。 
 所以一个有限的序列无法完全表达\gls{equilibrium_distribution}。
-一种解决这个问题的方法是每隔$n$个样本返回一个样本，从而使得我们对于\gls{equilibrium_distribution}的统计量的估计不会被\glssymbol{mcmc}方法的样本之间的相关性所干扰。
+一种解决这个问题的方法是每隔$n$个样本返回一个样本，从而使得我们对于\gls{equilibrium_distribution}的统计量的估计不会被\,\glssymbol{mcmc}\,方法的样本之间的相关性所干扰。
 所以\gls{markov_chain}在计算上是代价很高的，主要源于达到\gls{equilibrium_distribution}前需要\gls{burn_in}的时间以及在达到\gls{equilibrium_distribution}之后从一个样本转移到另一个完全无关的样本所需要的时间。
 如果我们想要得到完全独立的样本，那么我们可以同时并行地运行多个\gls{markov_chain}。  
 这种方法使用了额外的并行计算来消除潜在因素的干扰。 
 使用一条\gls{markov_chain}来生成所有样本的策略和（使用多条\gls{markov_chain}）每条\gls{markov_chain}只产生一个样本的策略是两种极端。
-深度学习的研究者们通常选取的\gls{markov_chain}的数目和\ENNAME{minibatch}中的样本数相近，然后从这些固定的\gls{markov_chain}集合中采集所需要的样本。 
+深度学习的研究者们通常选取的\gls{markov_chain}的数目和\gls{minibatch}中的样本数相近，然后从这些固定的\gls{markov_chain}集合中采集所需要的样本。 
 \gls{markov_chain}的数目通常选为$100$。
 % 589
 
@@ -321,7 +321,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 如果我们从矩阵$\MA$作用在概率向量$\Vv$上的角度来分析\gls{markov_chain}，那么我们可以发现当$\MA^t$除了单个$1$以外的特征值都趋于$0$时，\gls{markov_chain}混合成功（收敛到了\gls{equilibrium_distribution}）。
 这也意味着矩阵$\MA$的第二大特征值决定了\gls{markov_chain}的\gls{mixing_time}。
 然而，在实践中，我们通常不能将\gls{markov_chain}表示成矩阵的形式。 
-我们的概率模型所能够达到的状态是变量数的指数级别，所以表达$\Vv$、$\MA$或者$\MA$的特征值是不现实的。 
+我们的概率模型所能够达到的状态是变量数的指数级别，所以表达$\Vv$，$\MA$或者$\MA$的特征值是不现实的。 
 由于这些阻碍，我们通常无法知道\gls{markov_chain}是否已经混合成功。
 作为替代，我们只能运行一定量时间\gls{markov_chain}直到我们粗略估计这段时间是足够的，然后使用启发式的方法来决定\gls{markov_chain}是否混合成功。
 这些启发性的算法包括了手动检查样本或者衡量连续样本之间的相关性。 %?? 连续 换成  前后， 初看误解成了 连续值的样本
@@ -352,12 +352,12 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 给定他们所有的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。  %?? 如果一些变量在给定相邻变量时是条件独立的，那么这些变量就可以被同时采样。
 正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\glssymbol{RBM}示例一样，\glssymbol{RBM}中所有的\gls{hidden_unit}可以被同时采样，因为在给定可见单元的条件下他们相互条件独立。
 同样地，所有的可见单元也可以被同时采样因为在给定\gls{hidden_unit}的情况下它们相互条件独立。 
-以这种方式同时更新许多变量的\gls{gibbs_sampling}通常被称为\firstgls{block_gibbs_sampling}。   
+以这种方式同时更新许多变量的\,\gls{gibbs_sampling}通常被称为\firstgls{block_gibbs_sampling}。   
 % 590
 
 设计从$p_{\text{model}}$中采样的\gls{markov_chain}还存在其他备选方法。  
 比如说，Metropolis-Hastings算法在其他情景下被广泛使用。
-不过在\gls{DL}的\gls{undirected_model}中，我们主要使用\gls{gibbs_sampling}，很少使用其他方法。 
+不过在\gls{DL}的\gls{undirected_model}中，我们主要使用\,\gls{gibbs_sampling}，很少使用其他方法。 
 改进采样技巧也是一个潜在的研究热点。
 % 590
 
@@ -366,11 +366,11 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \label{sec:the_challenge_of_mixing_between_separated_modes}
 % 591  head 
 
-使用\glssymbol{mcmc}方法的主要难点在于他们经常\gls{mixing}得很糟糕。
+使用\,\glssymbol{mcmc}\,方法的主要难点在于他们经常\gls{mixing}得很糟糕。
 在理想情况下，从设计好的\gls{markov_chain}中采出的连续样本之间是完全独立的，而且在$\Vx$空间中，\gls{markov_chain}以正比于不同区域对应概率的概率访问这些区域。
-然而，\glssymbol{mcmc}方法采出的样本可能会具有很强的相关性，尤其是在高维的情况下。
+然而，\,\glssymbol{mcmc}\,方法采出的样本可能会具有很强的相关性，尤其是在高维的情况下。
 我们把这种现象称为慢\gls{mixing}甚至\gls{mixing}失败。
-具有缓慢\gls{mixing}的\glssymbol{mcmc}方法可以被视为对\gls{energy_function}无意地执行类似于带噪声的\gls{GD}的操作，或者说等价于相对于链的状态（随机变量被采样）依据概率进行等效的噪声爬坡。
+具有缓慢\gls{mixing}的\,\glssymbol{mcmc}\,方法可以被视为对\gls{energy_function}无意地执行类似于带噪声的\gls{GD}的操作，或者说等价于相对于链的状态（随机变量被采样）依据概率进行等效的噪声爬坡。
 （在\gls{markov_chain}的状态空间中）从$\Vx^{(t-1)}$到$\Vx^{(t)}$该链倾向于选取很小的步长，其中能量$E(\Vx^{(t)})$通常低于或者近似等于能量$E(\Vx^{(t-1)})$，
 倾向于向较低能量的区域移动。
 当从可能性较小的状态（比来自$p(\Vx)$的典型样本拥有更高的能量）开始时，链趋向于逐渐减少状态的能量，并且仅仅偶尔移动到另一个\gls{mode}。 %??  链 换成  马尔可夫链， 你斟酌下
@@ -380,11 +380,11 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 % 591 
 
 
-当考虑到\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。 %??  当我们考虑\gls{gibbs_sampling} 。。。。
+当考虑到\,\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。 %??  当我们考虑\gls{gibbs_sampling} 。。。。
 在这种情况下，我们考虑在一定步数内从一个\gls{mode}移动到一个临近\gls{mode}的概率。
 决定这个概率的是两个\gls{mode}之间的``能量障碍''的形状。
 隔着一个巨大``能量障碍'' （低概率的区域）的两个\gls{mode}之间的转移概率是（随着能量障碍的高度）指数下降的，如在\figref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
-当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分变量又严重依赖其他的变量时，这会导致严重的问题。   %?? 最后一句建议换为  这种问题尤为严重。
+当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\,\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分变量又严重依赖其他的变量时，这会导致严重的问题。   %?? 最后一句建议换为  这种问题尤为严重。
 % 591
 
 
@@ -395,13 +395,13 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \else
 	\centerline{\includegraphics{Chapter17/figures/good_bad_really_bad_mixing_color}}
 \fi
-\caption{对于三种分布使用\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为\gls{mode}。
+\caption{对于三种分布使用\,\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为\gls{mode}。
 \emph{(左)}一个带有两个独立变量的\gls{multivariate_normal_distribution}。
 由于变量之间是相互独立的，\gls{gibbs_sampling}\gls{mixing}得很好。
 \emph{(中)}变量之间存在高度相关性的一个\gls{multivariate_normal_distribution}。
 变量之间的相关性使得\gls{markov_chain}很难\gls{mixing}。
 因为每一个变量的更新需要相对其他变量求条件分布，相关性减慢了\gls{markov_chain}远离初始点的速度。
-\emph{(右)}\gls{mode}之间间距很大且不在轴上对齐的混合高斯分布。
+\emph{(右)}\,\gls{mode}之间间距很大且不在轴上对齐的混合高斯分布。
 \gls{gibbs_sampling}\gls{mixing}得很慢，因为每次更新仅仅一个变量很难跨越不同的\gls{mode}。}
 \label{fig:chap17_good_bad_really_bad_mixing_color}
 \end{figure}
@@ -410,13 +410,13 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 %  592
 举一个简单的例子，考虑两个变量$\RSa$，$\RSb$的\gls{energy_based_model}，这两个变量都是二元的，取值$+1$或者$-1$。   %??  
 如果对某个较大的正数$w$，$E(\RSa,\RSb) = - w \RSa \RSb$，那么这个模型传达了一个强烈的信息，$\RSa$和$\RSb$有相同的符号。
-当$\RSa=1$时用\gls{gibbs_sampling}更新$\RSb$。
+当$\RSa=1$时用\,\gls{gibbs_sampling}更新$\RSb$。
 给定$\RSb$时的条件分布满足$p(\RSb=1\mid \RSa=1) = \sigma(w)$。
 如果$w$的值很大，\gls{sigmoid}函数趋近于饱和，那么$b$取到$1$的概率趋近于$1$。
 相同的道理，如果$\RSa=-1$，那么$\RSb$取到$-1$的概率也趋于$1$。  %??  相同的道理 换成  同理
 根据模型$p_{\text{model}}(\RSa,\RSb)$，两个变量取一样的符号的概率几乎相等。
 根据$p_{\text{model}}(\RSa\mid \RSb)$，两个变量应该有相同的符号。
-这也意味着\gls{gibbs_sampling}很难会改变这些变量的符号。
+这也意味着\,\gls{gibbs_sampling}很难会改变这些变量的符号。
 % 592
 
 在实际问题中，这种挑战更加艰巨因为在实际问题中我们不能仅仅关注在两个\gls{mode}之间的转移而是需要关注在多个\gls{mode}之间的转移。 
@@ -451,9 +451,9 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \fi
 \caption{深度概率模型中一个\gls{mixing}缓慢问题的例证。
 每张图都是按照从左到右从上到下的顺序的。
-\emph{(左)}\gls{gibbs_sampling}从MNIST数据集训练成的\gls{DBM}中采出的连续样本。
+\emph{(左)}\,\gls{gibbs_sampling}从MNIST数据集训练成的\gls{DBM}中采出的连续样本。
 这些连续的样本之间非常相似。
-由于\gls{gibbs_sampling}作用于一个深度图模型，相似度更多地是基于语义而非原始视觉特征。
+由于\,\gls{gibbs_sampling}作用于一个深度图模型，相似度更多地是基于语义而非原始视觉特征。
 但是对于吉布斯链来说从分布的一个\gls{mode}转移到另一个仍然是很困难的，比如说改变数字。
 \emph{(右)}从\gls{generative_adversarial_networks}中抽出的连续原始样本。
 因为\gls{ancestral_sampling}生成的样本之间互相独立，所以不存在\gls{mixing}问题。
@@ -464,7 +464,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 
 
 % 593 mid
-当感兴趣的分布对于每个类具有单独的\gls{manifold}结构时，所有这些问题可以使\glssymbol{mcmc}方法不那么有用：分布集中在许多\gls{mode}周围，并且这些模式由大量高能量区域分割。
+当感兴趣的分布对于每个类具有单独的\gls{manifold}结构时，所有这些问题可以使\,\glssymbol{mcmc}\,方法不那么有用：分布集中在许多\gls{mode}周围，并且这些模式由大量高能量区域分割。
 我们在许多分类问题中遇到的是这种类型的分布，由于\gls{mode}之间\gls{mixing}缓慢，它将使得\glssymbol{mcmc}方法非常缓慢地收敛。
 % 593
 
@@ -498,12 +498,12 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 % 594
 
 基于\firstgls{tempering_transition}~\citep{Neal94b}的\gls{markov_chain}初始从高\gls{temperature}的分布中采样使其在不同\gls{mode}之间\gls{mixing}，然后从单位\gls{temperature}的分布中重新开始。
-这些技巧被应用在一些模型比如\glssymbol{RBM}中~\citep{Salakhutdinov-2010}。
+这些技巧被应用在一些模型比如\,\glssymbol{RBM}中~\citep{Salakhutdinov-2010}。
 另一种方法是利用\firstgls{parallel_tempering}~\citep{Iba-2001}。
 其中\gls{markov_chain}并行地模拟许多不同\gls{temperature}的不同状态。
 最高\gls{temperature}的状态\gls{mixing}较慢，相比之下最低\gls{temperature}的状态，即\gls{temperature}为$1$时，采出了精确的样本。
 转移算子包括了两个\gls{temperature}之间的随机跳转，所以一个高\gls{temperature}状态分布槽中的样本有足够大的概率跳转到低\gls{temperature}分布的槽中。
-这个方法也被应用到了\glssymbol{RBM}中~\citep{Desjardins+al-2010-small,Cho10IJCNN}。
+这个方法也被应用到了\,\glssymbol{RBM}中~\citep{Desjardins+al-2010-small,Cho10IJCNN}。
 尽管\gls{tempering}这种方法前景可期，现今它仍然无法让我们在采样复杂的\gls{energy_based_model}中更进一步。
 一个可能的原因是在\firstgls{critical_temperatures}时\gls{temperature}转移算子必须设置得非常慢（因为\gls{temperature}需要逐渐下降）来确保\gls{tempering}的有效性。
 % 594
@@ -515,11 +515,11 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 
 当我们从\gls{latent_variable}模型$p(\Vh,\Vx)$中采样时，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码得非常好，那么从$p(\Vx \mid \Vh)$中采样时，并不会太大地改变$\Vx$，那么\gls{mixing}结果会很糟糕。
 解决这个问题的一种方法是使得$\Vh$成为一种将$\Vx$编码为$\Vh$的深度表示，从而使得\gls{markov_chain}在$\Vh$空间中更容易\gls{mixing}。
-<bad> 在许多\gls{representation_learning}算法诸如\gls{AE}和\glssymbol{RBM}中，$\Vh$的边缘分布相比于关于$\Vx$的原始数据分布，通常表现为更加均匀、更趋近于\gls{unimodal}。
+<bad> 在许多\gls{representation_learning}算法诸如\gls{AE}和\,\glssymbol{RBM}中，$\Vh$的边缘分布相比于关于$\Vx$的原始数据分布，通常表现为更加均匀、更趋近于\gls{unimodal}。
 值得指出的是，这些方法往往利用所有可用的表达空间并尽量减小\gls{reconstruction_error}。
 因为当训练集上的不同样本之间在$\Vh$空间能够被非常容易地区分时，我们也会很容易地最小化\gls{reconstruction_error}。
-\citet{Bengio-et-al-ICML2013-small}观察到这样的现象，堆叠越深的\gls{regularize}\gls{AE}或者\glssymbol{RBM}，顶端$\Vh$空间的边缘分布越趋向于均匀和发散，而且不同\gls{mode}（比如说实验中的类别）所对应区域之间的间距也会越模糊。
-在高层空间中训练\glssymbol{RBM}会使得\gls{gibbs_sampling}\gls{mixing}得更快。
+\citet{Bengio-et-al-ICML2013-small}观察到这样的现象，堆叠越深的\gls{regularize}\gls{AE}或者\,\glssymbol{RBM}，顶端$\Vh$空间的边缘分布越趋向于均匀和发散，而且不同\gls{mode}（比如说实验中的类别）所对应区域之间的间距也会越模糊。
+在高层空间中训练\,\glssymbol{RBM}会使得\,\gls{gibbs_sampling}\gls{mixing}得更快。
 然而，如何利用这种观察到的现象来辅助训练深度\gls{generative_model}或者从中采样仍然有待探索。
 % 595
 
