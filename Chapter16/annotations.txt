@@ -1,0 +1,203 @@
+{'user': 'acct:swordyork@hypothes.is', 'text': '与原文意思不同', 'origin_text': '                            !!!深度学习为研究者们提供了许多指导性的建模和设计算法的思路。!!!  其中一种形式是结构化概率模型。我们曾经在\\sec?中简要讨论', 'time': '2017-03-04T07:32'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '模型的思想', 'origin_text': '供了许多指导性的建模和设计算法的思路。其中一种形式是结构化概率  !!!模型!!!  。我们曾经在\\sec?中简要讨论过结构化概率模型。那个简单的', 'time': '2017-03-04T07:33'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '使用结构化概率模型作为语言', 'origin_text': '讨论过结构化概率模型。那个简单的介绍已经足够使我们充分了解如何  !!!使用结构化概率模型!!!  来描述第二部分中的某些算法。现在在第三部分，结构化概率模型是许', 'time': '2017-03-04T07:36'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '现在在第三部分，我们可以看到', 'origin_text': '使我们充分了解如何使用结构化概率模型来描述第二部分中的某些算法。  !!!现在在第三部分!!!  ，结构化概率模型是许多深度学习重要研究方向的关键组成部分。作为', 'time': '2017-03-04T07:38'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '将更详细的描述结构化概率模型', 'origin_text': '要研究方向的关键组成部分。作为讨论这些研究方向的预备知识，本章  !!!更加详细地描述了结构化概率模型!!!  。本章中我们努力做到内容的自洽性。在阅读本章之前读者不需要回', 'time': '2017-03-04T07:39'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '本章内容是自洽的，所以', 'origin_text': '论这些研究方向的预备知识，本章更加详细地描述了结构化概率模型。  !!!本章中我们努力做到内容的自洽性。!!!  在阅读本章之前读者不需要回顾之前的介绍。结构化概率模型使', 'time': '2017-03-04T07:41'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '此前简要', 'origin_text': '化概率模型。我们曾经在\\sec?中简要讨论过结构化概率模型。  !!!那个简单!!!  的介绍已经足够使我们充分了解如何使用结构化概率模型来描述第二部分', 'time': '2017-03-04T07:41'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '“图”', 'origin_text': '率分布。在这里我们使用了图论（一系列结点通过一系列边来连接）中  !!!图!!!  的概念，由于模型的结构是由图来定义的，所以这些模型也通常被叫做图', 'time': '2017-03-04T07:42'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '由于模型结构是由图定义的        \n', 'origin_text': '在这里我们使用了图论（一系列结点通过一系列边来连接）中图的概念，  !!!由于模型的结构是由图来定义的!!!  ，所以这些模型也通常被叫做图模型。图模型的研究领域是巨大的', 'time': '2017-03-04T07:43'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '称为', 'origin_text': '）中图的概念，由于模型的结构是由图来定义的，所以这些模型也通常被  !!!叫做!!!  图模型。图模型的研究领域是巨大的，曾提出过大量的模型，训练', 'time': '2017-03-04T07:44'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '群体', 'origin_text': '由图来定义的，所以这些模型也通常被叫做图模型。图模型的研究  !!!领域!!!  是巨大的，曾提出过大量的模型，训练算法和推断算法。在本章中，我', 'time': '2017-03-04T07:44'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '、', 'origin_text': '被叫做图模型。图模型的研究领域是巨大的，曾提出过大量的模型  !!!，!!!  训练算法和推断算法。在本章中，我们介绍了图模型中几个核心方法的', 'time': '2017-03-04T07:45'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '并', 'origin_text': '所以这些模型也通常被叫做图模型。图模型的研究领域是巨大的，  !!!曾!!!  提出过大量的模型，训练算法和推断算法。在本章中，我们介绍了图模', 'time': '2017-03-04T07:45'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '将介绍', 'origin_text': '巨大的，曾提出过大量的模型，训练算法和推断算法。在本章中，我们  !!!介绍了!!!  图模型中几个核心方法的基本背景，并且强调了在深度学习领域中图模型', 'time': '2017-03-04T07:45'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '重点描述已被证明对深度学习社群最有用的观点。', 'origin_text': '算法。在本章中，我们介绍了图模型中几个核心方法的基本背景，并且  !!!强调了在深度学习领域中图模型已经被公认为是有效的!!!  。如果你已经对图模型已经了解很多，那么你可以跳过本章的绝大部分', 'time': '2017-03-04T07:49'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '如果你已经熟知图模型', 'origin_text': '本背景，并且强调了在深度学习领域中图模型已经被公认为是有效的。  !!!如果你已经对图模型已经了解很多!!!  ，那么你可以跳过本章的绝大部分。然而，我们相信即使是资深的图模', 'time': '2017-03-04T07:50'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '使用图模型的独特方式。', 'origin_text': '后一节中获益匪浅，详见\\sec?，其中我们强调了在深度学习算法中  !!!一些图模型特有的算法!!!  。相比于其他图模型研究领域的是，深度学习的研究者们通常会使用完', 'time': '2017-03-04T07:52'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '、', 'origin_text': '模型研究领域的是，深度学习的研究者们通常会使用完全不同的模型结构  !!!，!!!  学习算法和推断过程。在本章中，我们指明了这种区别并且解释了其中', 'time': '2017-03-04T07:53'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '将指明', 'origin_text': '常会使用完全不同的模型结构，学习算法和推断过程。在本章中，我们  !!!指明了!!!  这种区别并且解释了其中的原因。在本章中，我们首先介绍了建立', 'time': '2017-03-04T07:53'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 了', 'origin_text': '结构，学习算法和推断过程。在本章中，我们指明了这种区别并且解释  !!!了!!!  其中的原因。在本章中，我们首先介绍了建立大尺度概率模型中面', 'time': '2017-03-04T07:53'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 且', 'origin_text': '的模型结构，学习算法和推断过程。在本章中，我们指明了这种区别并  !!!且!!!  解释了其中的原因。在本章中，我们首先介绍了建立大尺度概率模', 'time': '2017-03-04T07:54'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': '过程。在本章中，我们指明了这种区别并且解释了其中的原因。  !!!在本章中，!!!  我们首先介绍了建立大尺度概率模型中面临的挑战。之后，我们介绍了', 'time': '2017-03-04T07:54'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 了', 'origin_text': '指明了这种区别并且解释了其中的原因。在本章中，我们首先介绍  !!!了!!!  建立大尺度概率模型中面临的挑战。之后，我们介绍了如何使用一个图', 'time': '2017-03-04T07:54'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '构建大规模', 'origin_text': '明了这种区别并且解释了其中的原因。在本章中，我们首先介绍了  !!!建立大尺度!!!  概率模型中面临的挑战。之后，我们介绍了如何使用一个图来描述概率', 'time': '2017-03-04T07:55'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '时', 'origin_text': '释了其中的原因。在本章中，我们首先介绍了建立大尺度概率模型  !!!中!!!  面临的挑战。之后，我们介绍了如何使用一个图来描述概率分布的结构', 'time': '2017-03-04T07:55'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 了', 'origin_text': '，我们首先介绍了建立大尺度概率模型中面临的挑战。之后，我们介绍  !!!了!!!  如何使用一个图来描述概率分布的结构。尽管这个方法能够帮助我们解', 'time': '2017-03-04T07:55'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '仍', 'origin_text': '分布的结构。尽管这个方法能够帮助我们解决许多挑战和问题，它本身  !!!也!!!  有很多缺陷。图模型中的一个主要难点就是判断哪些变量之间存在直接', 'time': '2017-03-04T07:56'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '我们通过学习依赖性，', 'origin_text': '，也就是对于给定的问题哪一种图结构是最适合的。在\\sec?中，  !!!通过了解依赖性，我们!!!  简要概括了解决这个难点的两种基本方法。最后，在\\sec?中，我', 'time': '2017-03-04T07:57'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 基本', 'origin_text': '在\\sec?中，通过了解依赖性，我们简要概括了解决这个难点的两种  !!!基本!!!  方法。最后，在\\sec?中，我们讨论并强调了图模型在深度学习中', 'time': '2017-03-04T07:58'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '最后，作为本章的收尾，我们在\\sec?中讨论深度学习研究者使用图模型特定方式的独特之处。', 'origin_text': '?中，通过了解依赖性，我们简要概括了解决这个难点的两种基本方法。  !!!最后，在\\sec?中，我们讨论并强调了图模型在深度学习中的一些独特之处和一些特有的方法，作为本章的收尾。!!!  非结构化建模的挑战深度学习的目标是使得机器学习能够解决许', 'time': '2017-03-04T08:01'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '亟需', 'origin_text': '的挑战深度学习的目标是使得机器学习能够解决许多人工智能中  !!!需要!!!  解决的挑战。这也意味着能够理解具有丰富结构的高维数据。举个例', 'time': '2017-03-04T08:02'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '有点不对', 'origin_text': '学习的目标是使得机器学习能够解决许多人工智能中需要解决的挑战。  !!!这也意味着能够理解具有丰富结构的高维数据。!!!  举个例子，我们希望AI的算法能够理解自然图片\\footnote', 'time': '2017-03-04T08:04'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '不同于合成的图片，或者一个网页的截图等等。\n', 'origin_text': 'tnote{自然图片指的是能够在正常的环境下被照相机拍摄的图片，  !!!以区别于合成的图片，或者一个网页的截图。!!!  }，包含语音的声音信号和拥有许多词和标点的文档。分类问题可', 'time': '2017-03-04T08:05'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '表示', 'origin_text': '被照相机拍摄的图片，以区别于合成的图片，或者一个网页的截图。}，  !!!包含!!!  语音的声音信号和拥有许多词和标点的文档。分类问题可以把这样', 'time': '2017-03-04T08:05'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '包含', 'origin_text': '以区别于合成的图片，或者一个网页的截图。}，包含语音的声音信号和  !!!拥有!!!  许多词和标点的文档。分类问题可以把这样一个来自高维分布的数', 'time': '2017-03-04T08:06'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '使用', 'origin_text': '档。分类问题可以把这样一个来自高维分布的数据作为输入，然后  !!!用!!!  一个类别的标签来概括它——这个标签可以是照片中是什么物品，一段语', 'time': '2017-03-04T08:06'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '这个分类过程', 'origin_text': '，一段语音中说的是哪个单词，也可以是一段文档描述的是哪个话题。  !!!分类的这个过程!!!  丢弃了输入数据中的大部分信息，然后给出了一个单个值的输出（或者是', 'time': '2017-03-04T08:08'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '关于单个', 'origin_text': '丢弃了输入数据中的大部分信息，然后给出了一个单个值的输出（或者是  !!!一个!!!  输出值的概率分布）。这个分类器通常可以忽略输入数据的很多部分。', 'time': '2017-03-04T08:08'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '产生', 'origin_text': '的是哪个话题。分类的这个过程丢弃了输入数据中的大部分信息，然后  !!!给出了一个!!!  单个值的输出（或者是一个输出值的概率分布）。这个分类器通常可以', 'time': '2017-03-04T08:09'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '例如', 'origin_text': '出值的概率分布）。这个分类器通常可以忽略输入数据的很多部分。  !!!举个例子!!!  ，当我们识别一个照片中是哪一个物品的时候，我们通常可以忽略图片的', 'time': '2017-03-04T08:10'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '张', 'origin_text': '个分类器通常可以忽略输入数据的很多部分。举个例子，当我们识别一  !!!个!!!  照片中是哪一个物品的时候，我们通常可以忽略图片的背景。我们', 'time': '2017-03-04T08:10'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '的一个物体时', 'origin_text': '器通常可以忽略输入数据的很多部分。举个例子，当我们识别一个照片  !!!中是哪一个物品的时候!!!  ，我们通常可以忽略图片的背景。我们也可以使用概率模型来完成', 'time': '2017-03-04T08:10'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '好像可以去掉 来', 'origin_text': '的时候，我们通常可以忽略图片的背景。我们也可以使用概率模型  !!!来!!!  完成许多其他的任务。这些任务通常比分类更加昂贵。其中的一些任', 'time': '2017-03-04T08:12'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '换掉', 'origin_text': '也可以使用概率模型来完成许多其他的任务。这些任务通常比分类更加  !!!昂贵!!!  。其中的一些任务需要产生多个输出。大部分任务需要对输入数据整', 'time': '2017-03-04T08:12'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '输出值', 'origin_text': '任务。这些任务通常比分类更加昂贵。其中的一些任务需要产生多个  !!!输出!!!  。大部分任务需要对输入数据整个结构的完整理解，所以并不能舍弃数', 'time': '2017-03-04T08:12'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉了', 'origin_text': '据整个结构的完整理解，所以并不能舍弃数据的一部分。这些任务包括  !!!了!!!  以下几个：  \\textbf{估计密度函数}：给定一个输入', 'time': '2017-03-04T08:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 了', 'origin_text': 'tbf{估计密度函数}：给定一个输入xx\\Vx，机器学习系统返回  !!!了!!!  一个对数据生成分布的真实密度函数p(x)p(x)p(\\Vx)的估', 'time': '2017-03-04T08:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 了', 'origin_text': '察有误的输入数据x~x~\\tilde{\\Vx}，机器学习系统返回  !!!了!!!  一个对原始的真实xx\\Vx的估计。举个例子，有时候机器学习系统', 'time': '2017-03-04T08:14'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '灰尘', 'origin_text': 'Vx的估计。举个例子，有时候机器学习系统需要从一张老相片中去除  !!!污渍!!!  或者抓痕。这个系统会产生多个输出（对应着估计的干净样本xx\\V', 'time': '2017-03-04T08:15'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '一个受损区域也会显示最终估计也是受损的。 \n与原文意思有区别，我也不清楚。', 'origin_text': 'Vx的每一个元素），并且需要我们有一个对输入的整体理解（因为即使  !!!一个严重损害的区域也需要在最后的输出中恢复!!!  ）。\t% 551 ok+\\textbf{缺失值的填补}：', 'time': '2017-03-04T08:18'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '其应用包括', 'origin_text': '样}： 模型从分布p(x)p(x)p(\\Vx)中抽取新的样本。  !!!应用包含了!!!  语音合成，即产生一个听起来很像人说话的声音。这个模型也需要多个', 'time': '2017-03-04T08:19'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '从这', 'origin_text': 'cite?}中的$32\\times\xa032$像素的样例图片。（下）  !!!这!!!  个数据集上训练的结构化概率模型中抽出的样本。每一个样本都出现在与', 'time': '2017-03-04T08:21'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '极具', 'origin_text': '百万随机变量的分布建模，无论从计算上还是从统计意义上说，都是一个  !!!具有!!!  挑战性的任务。假设我们只想对二值的随机变量建模。这是一个最简', 'time': '2017-03-04T08:23'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '我们仍然', 'origin_text': '假设我们只想对二值的随机变量建模。这是一个最简单的例子，但是  !!!仍然!!!  无能为力。对一个小的32×3232×3232\\times 32', 'time': '2017-03-04T08:23'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '只有', 'origin_text': '随机变量建模。这是一个最简单的例子，但是仍然无能为力。对一个  !!!小的!!!  32×3232×3232\\times 32像素的彩色（RGB）图', 'time': '2017-03-04T08:24'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '每一个可能值', 'origin_text': ')P(\\Vx)的方法需要存储一个可以查询的表格。这个表格记录了  !!!每一种可能的值!!!  的概率，需要记录knknk^n个参数。基于下述几个原因，这', 'time': '2017-03-04T08:25'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '则需要', 'origin_text': '要存储一个可以查询的表格。这个表格记录了每一种可能的值的概率，  !!!需要记录!!!  knknk^n个参数。基于下述几个原因，这种方式是不可行的', 'time': '2017-03-04T08:26'}
+{'user': 'acct:swordyork@hypothes.is', 'text': 'emph不对', 'origin_text': '基于下述几个原因，这种方式是不可行的：        !!!\\emph{内存}： 存储参数的开销!!!  。除了极小的nnn和kkk的值，用表格的形式来表示这样一个分布', 'time': '2017-03-04T08:26'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '平滑', 'origin_text': '额外的假设来联系表格中的不同元素（正如\\sec?中所举的回退或者  !!!平滑过的!!!  nnn-gram模型）。        \\emph{运行', 'time': '2017-03-04T08:28'}
+{'user': 'acct:swordyork@hypothes.is', 'text': 'emph不对', 'origin_text': 'n-gram模型）。        \\emph{运行时间  !!!}：推断的开销。!!!  假设我们需要完成一个推断的任务，其中我们需要使用联合分布P(x', 'time': '2017-03-04T08:28'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '这样一个', 'origin_text': '    \\emph{运行时间}：推断的开销。假设我们需要完成  !!!一个!!!  推断的任务，其中我们需要使用联合分布P(x)P(x)P(\\RVx', 'time': '2017-03-04T08:29'}
+{'user': 'acct:swordyork@hypothes.is', 'text': 'emph 不对', 'origin_text': '销是一个级别的。        \\emph{运行时间}：  !!! 采样的开销!!!  。类似的，假设我们想要从这样的模型中采样。最简单的方法就是从', 'time': '2017-03-04T08:29'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '它也', 'origin_text': '素。最差情况下，这个操作需要读取整个表格，所以和其他操作一样，  !!!它!!!  需要指数级别的时间。  基于表格操作的方法的主要问题', 'time': '2017-03-04T08:30'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '地', 'origin_text': '际问题中我们遇到的概率分布远比这个简单。通常，许多变量只是间接  !!!的!!!  相互作用。例如，我们想要对接力跑步比赛中一个队伍完成比赛的', 'time': '2017-03-04T08:31'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 的', 'origin_text': '始跑。如果Alice跑得更快，那么Bob也会完成得更快。所有  !!!的!!!  其他关系都可以被类似地推出。最后，Carol的完成时间依赖于她', 'time': '2017-03-04T08:33'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '下，', 'origin_text': '此她的完成时间也更有可能要晚。然而，在给定Bob完成时间的情况  !!!下!!!  Carol的完成时间只是间接地依赖于Alice的完成时间。如果', 'time': '2017-03-04T08:34'}
+{'user': 'acct:swordyork@hypothes.is', 'text': 'emph', 'origin_text': '晚。然而，在给定Bob完成时间的情况下Carol的完成时间只是  !!!间接!!!  地依赖于Alice的完成时间。如果我们已经知道了Bob的完成时', 'time': '2017-03-04T08:35'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '我们可以', 'origin_text': 'ce的完成时间对估计Carol的完成时间并无任何帮助。这意味着  !!!可以!!!  通过仅仅两个相互作用来建模这个接力赛。这两个相互作用分别是Al', 'time': '2017-03-04T08:35'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '仅仅通过', 'origin_text': '的完成时间对估计Carol的完成时间并无任何帮助。这意味着可以  !!!通过仅仅!!!  两个相互作用来建模这个接力赛。这两个相互作用分别是Alice的', 'time': '2017-03-04T08:36'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '这些更小的模型大大减小了在模型存储、模型推断以及从模型中采样时的计算开销。\n', 'origin_text': '少了模型的参数个数以致于模型只需要更少的数据来进行有效的估计。  !!!这些更轻便的模型在模型存储，模型推断以及从模型中采样的时候有着更小的计算开销。!!!  使用图来描述模型结构结构化概率模型使用图（在图论中', 'time': '2017-03-04T08:38'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 来', 'origin_text': '，模型推断以及从模型中采样的时候有着更小的计算开销。使用图  !!!来!!!  描述模型结构结构化概率模型使用图（在图论中”结点”是通过', 'time': '2017-03-04T08:43'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '会', 'origin_text': '这些直接相互作用隐含着其他的间接相互作用，但是只有直接的相互作用  !!!是!!!  被显式地建模的。使用图来描述概率分布中相互作用的方法不止一', 'time': '2017-03-04T08:44'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 的', 'origin_text': '用隐含着其他的间接相互作用，但是只有直接的相互作用是被显式地建模  !!!的!!!  。使用图来描述概率分布中相互作用的方法不止一种。在下文中', 'time': '2017-03-04T08:44'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 ，', 'origin_text': '行和有用的方法。图模型可以被大致分为两类：基于有向无环图的模型  !!!，!!!  和基于无向模型的模型。有向模型有向图模型是一种结构', 'time': '2017-03-04T08:45'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '图', 'origin_text': '法。图模型可以被大致分为两类：基于有向无环图的模型，和基于无向  !!!模型!!!  的模型。有向模型有向图模型是一种结构化概率模型，也', 'time': '2017-03-04T08:45'}
+{'user': 'acct:swordyork@hypothes.is', 'text': 'judgmental没有翻', 'origin_text': '构化概率模型，也被叫做信念网络或者贝叶斯网络\\footnote{  !!!当我们希望强调从网络中计算出的值的推断本质!!!  ，尤其是强调这些值代表的是置信程度大小而不是事件的频率时，Jud', 'time': '2017-03-04T08:47'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '如图？所示', 'origin_text': '赖于t0t0\\RSt_0。我们用一个有向图模型来建模这种关系，  !!!就如在\\fig?中看到的一样!!!  。\\begin{figure}[!htb]\\ifOpenS', 'time': '2017-03-04T08:50'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉一个', 'origin_text': '/relay_race_graph}}\t\\fi\\caption{  !!!一个!!!  描述接力赛例子的有向图模型。Alice的完成时间$\\RSt_0$', 'time': '2017-03-04T08:50'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '只能', 'origin_text': '\\RSt_0$影响了Bob的完成时间$\\RSt_1$，因为Bob  !!!会!!!  在Alice完成比赛后才开始。类似的，Carol也只会在Bob完', 'time': '2017-03-04T08:50'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '公式符号可能不对', 'origin_text': 'x_i\\mid P_{a\\CalG}(\\RSx_i))来定义的，  !!!其中!!!  PaG(xi)PaG(xi)P_{a\\CalG}(\\RSx_i)', 'time': '2017-03-04T08:51'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '100个t0的可能取值', 'origin_text': '么我们需要存储999,999999,999999,999个值（  !!!t0t0\\RSt_0的取值100!!!   ××\\times t1t1\\RSt_1的取值100 ××\\ti', 'time': '2017-03-04T08:53'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '略微', 'origin_text': 't1\\RSt_1的表格，而是一个包含了k−1k−1k-1个参数的  !!!略!!!  复杂的公式。有向图模型并不能对我们如何定义条件分布做出任何限制', 'time': '2017-03-04T09:01'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '作', 'origin_text': '1个参数的略复杂的公式。有向图模型并不能对我们如何定义条件分布  !!!做!!!  出任何限制。它只能定义哪些变量之间存在着依赖性关系。无向', 'time': '2017-03-04T09:02'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '少了syntax\n', 'origin_text': '的表格，而是一个包含了k−1k−1k-1个参数的略复杂的公式。  !!!有向图模型!!!  并不能对我们如何定义条件分布做出任何限制。它只能定义哪些变量之', 'time': '2017-03-04T09:02'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 性， 或者按照原文。', 'origin_text': '如何定义条件分布做出任何限制。它只能定义哪些变量之间存在着依赖  !!!性!!!  关系。无向模型有向图模型为我们提供了一种描述结构化', 'time': '2017-03-04T09:03'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '被称为', 'origin_text': '种描述结构化概率模型的语言。而另一种常见的语言则是无向模型，也  !!!叫做!!!  马尔可夫随机场或者是马尔可夫网络 {cite?}。就像它们的名', 'time': '2017-03-04T09:04'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '当存在很明显的理由画出每一个指向特定方向的箭头时，有向模型显然最适用。', 'origin_text': '像它们的名字所说的那样，无向模型中所有的边都是没有方向的。  !!!有向模型显然适用于当存在一个很明显的理由来描述每一个箭头的时候!!!  。有向模型中，经常存在我们理解的具有因果关系以及因果关系有明确', 'time': '2017-03-04T09:06'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 下', 'origin_text': '型中，经常存在我们理解的具有因果关系以及因果关系有明确方向的情况  !!!下!!!  。接力赛的例子就是一个这样的情况。之前运动员的表现影响了后面', 'time': '2017-03-04T09:08'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '会影响', 'origin_text': '情况下。接力赛的例子就是一个这样的情况。之前运动员的表现影响  !!!了!!!  后面运动员的完成时间，而后面运动员却不会影响前面运动员的完成时间', 'time': '2017-03-04T09:08'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '时', 'origin_text': '关系。当相互的作用并没有本质性的指向，或者是明确的双向相互作用  !!!的时候!!!  ，使用无向模型更加合适。作为一个这种情况的例子，假设我们希', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '时', 'origin_text': '关系。当相互的作用并没有本质性的指向，或者是明确的双向相互作用  !!!的时候!!!  ，使用无向模型更加合适。作为一个这种情况的例子，假设我们希', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉是', 'origin_text': '室友和同事并不认识，所以他们不太可能直接相互传染一些疾病，比如说  !!!是!!!  感冒。这个事件太过稀有，所以我们不对此事件建模。然而，很有可', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '罕见', 'origin_text': '以他们不太可能直接相互传染一些疾病，比如说是感冒。这个事件太过  !!!稀有!!!  ，所以我们不对此事件建模。然而，很有可能他们之一将感冒传染给你', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉是', 'origin_text': '室友和同事并不认识，所以他们不太可能直接相互传染一些疾病，比如说  !!!是!!!  感冒。这个事件太过稀有，所以我们不对此事件建模。然而，很有可', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '其中', 'origin_text': '冒。这个事件太过稀有，所以我们不对此事件建模。然而，很有可能  !!!他们!!!  之一将感冒传染给你，然后通过你来传染给了另一个人。我们通过对你', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '时', 'origin_text': '关系。当相互的作用并没有本质性的指向，或者是明确的双向相互作用  !!!的时候!!!  ，使用无向模型更加合适。作为一个这种情况的例子，假设我们希', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '时', 'origin_text': '关系。当相互的作用并没有本质性的指向，或者是明确的双向相互作用  !!!的时候!!!  ，使用无向模型更加合适。作为一个这种情况的例子，假设我们希', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉是', 'origin_text': '室友和同事并不认识，所以他们不太可能直接相互传染一些疾病，比如说  !!!是!!!  感冒。这个事件太过稀有，所以我们不对此事件建模。然而，很有可', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '罕见', 'origin_text': '以他们不太可能直接相互传染一些疾病，比如说是感冒。这个事件太过  !!!稀有!!!  ，所以我们不对此事件建模。然而，很有可能他们之一将感冒传染给你', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '再', 'origin_text': '对此事件建模。然而，很有可能他们之一将感冒传染给你，然后通过你  !!!来!!!  传染给了另一个人。我们通过对你的同事传染给你以及你传染给你的室', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '健康状况', 'origin_text': '中的边是没有方向的，并不与一个条件分布相关联。我们把对应你  !!!的健康!!!  的随机变量记作hyhy\\RSh_y，对应你的室友健康状况的随机变', 'time': '2017-03-04T11:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '表示', 'origin_text': 'h_r，你的同事健康的变量记作hchc\\RSh_c。\\fig?  !!!表示来!!!  这种关系。\\begin{figure}[!htb]\\ifO', 'time': '2017-03-04T11:14'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉的？还有逗号问题。', 'origin_text': '}\t\\fi\\caption{表示你室友健康的$\\RSh_r$，你  !!!的!!!  健康的$\\RSh_y$，你同事健康的$\\RSh_c$之间如何相互', 'time': '2017-03-04T11:15'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '对于', 'origin_text': '向模型是一个定义在无向模型 GG\\CalG上的结构化概率模型。  !!!对!!!  图中的每一个团\\footnote{图的一个团是图中结点的一个子集', 'time': '2017-03-04T11:15'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '它们一起', 'origin_text': '可能的联合状态所对应的密切程度。这些因子都被限制为是非负的。  !!!合在一起他们!!!  定义了未归一化概率函数：p~(x)=∏C∈Gϕ(C).p~(x', 'time': '2017-03-04T11:16'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '的', 'origin_text': '程度。这些因子都被限制为是非负的。合在一起他们定义了未归一化  !!!概!!!  率函数：p~(x)=∏C∈Gϕ(C).p~(x)=∏C∈Gϕ(', 'time': '2017-03-04T11:17'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉 的', 'origin_text': ' \\phi(\\CalC).\\end{align}只要所有  !!!的!!!  团中的结点数都不大，那么我们就能够高效地处理这些未归一化概率函数', 'time': '2017-03-04T11:17'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '密切度越高的状态', 'origin_text': '我们就能够高效地处理这些未归一化概率函数。它包含了这样的思想，  !!!越高密切度的状态!!!  有越大的概率。然而，不像贝叶斯网络，几乎不存在团定义的结构，所', 'time': '2017-03-04T11:18'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '，函数', 'origin_text': '}\\fi\t\\caption{这个图说明通过选择适当的$\\phi$  !!!函数!!!  \t\t$p(\\RSa,\\RSb,\\RSc,\\RSd,\\RSe,\\R', 'time': '2017-03-04T11:19'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '、', 'origin_text': '}(\\RSe,\\RSf)$。}\\end{figure}在你  !!!，!!!  你的室友和同事之间感冒传染的例子中包含了两个团。一个团包含了h', 'time': '2017-03-04T11:19'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '罕见', 'origin_text': '度。两个人中只有一个人是生病的密切程度是最低的，因为这是一个很  !!!少见!!!  的状态。两个人都生病的状态（通过一个人来传染给了另一个人）有一', 'time': '2017-03-04T11:20'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '这是', 'origin_text': '接写ZZZ是一个常用的方式。归一化常数ZZZ被称作是配分函数，  !!!一个!!!  从统计物理学中借鉴的术语。由于ZZZ通常是由对所有可能的x', 'time': '2017-03-04T11:22'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '，我们', 'origin_text': '样的近似方法是\\chap?的主要内容。在设计无向模型时  !!!我们!!!  必须牢记在心的一个要点是设定一些使得ZZZ不存在的因子也是有可能', 'time': '2017-03-04T11:23'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': 'ZZZ不存在的因子也是有可能的。当模型中的一些变量是连续的，且  !!!在!!!  p~p~\\tilde{p}在其定义域上的积分发散的时候这种情况就', 'time': '2017-03-04T11:24'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '时，', 'origin_text': '量是连续的，且在p~p~\\tilde{p}在其定义域上的积分发散  !!!的时候!!!  这种情况就会发生。例如， 当我们需要对一个单独的标量变量x∈R', 'time': '2017-03-04T11:25'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '单个', 'origin_text': '一个单独的标量变量x∈Rx∈R\\RSx\\in\\SetR建模，并且  !!!这个包含一个点的!!!  团势能定义为ϕ(x)=x2ϕ(x)=x2\\phi(x) = x^', 'time': '2017-03-04T11:25'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '例如，或比如', 'origin_text': 'phi函数某些参数的选择可以决定相应的概率分布是否能够被定义。  !!!比如说!!!  ，对ϕϕ\\phi函数ϕ(x;β)=exp(−βx2)ϕ(x;β)', 'time': '2017-03-04T11:26'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': '^2)来说，参数ββ\\beta决定了归一化常数ZZZ是否存在。  !!!一个!!!  正的ββ\\beta使得ϕϕ\\phi函数是一个关于xx\\RSx的高', 'time': '2017-03-04T11:27'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': 'eta使得ϕϕ\\phi函数是一个关于xx\\RSx的高斯分布，但是  !!!一个!!!  非正的参数ββ\\beta则使得ϕϕ\\phi不可能被归一化。', 'time': '2017-03-04T11:27'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': ' = \\exp(b_i\\RSx_i)。在这种情况下概率分布是怎  !!!么!!!  样的呢？答案是我们无法确定，因为我们并没有指定xx\\RVx的定', 'time': '2017-03-04T11:29'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '基？', 'origin_text': 'ext{sigmoid}(b_i)。如果xx\\RVx的定义域是  !!!基本单位!!!  向量 ([1,0,…,0],[0,1,…,0],…,[0,0,…', 'time': '2017-03-04T11:30'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '，一个较大的', 'origin_text': '{softmax}(\\Vb)，因此对于j≠ij≠ij\\neq i  !!!一个较大的!!!  bibib_i的值会降低所有的p(xj=1)p(xj=1)p(\\', 'time': '2017-03-04T11:31'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': 'j≠ij≠ij\\neq i一个较大的bibib_i的值会降低所有  !!!的!!!  p(xj=1)p(xj=1)p(\\RSx_j = 1)的概率。', 'time': '2017-03-04T11:31'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '集合', 'origin_text': '。通常情况下，通过仔细选择变量的定义域，能够使得一个相对简单的  !!!ϕϕ\\phi函数!!!  可以获得一个相对复杂的表达。我们会在\\sec?中讨论这个想法的', 'time': '2017-03-04T11:32'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '从', 'origin_text': 'j = 1)的概率。通常情况下，通过仔细选择变量的定义域，能够  !!!使得!!!  一个相对简单的ϕϕ\\phi函数可以获得一个相对复杂的表达。我们', 'time': '2017-03-04T11:32'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '，', 'origin_text': 'gn}E(x)E(x)E(\\RVx)被称作是能量函数。对所有  !!!的zz\\RSz exp!!!  (z)exp\u2061(z)\\exp(\\RSz)都是正的，这保证了没有一', 'time': '2017-03-04T11:33'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '完全', 'origin_text': '个能量函数会使得某一个状态xx\\RVx的概率为000。我们可以  !!!很!!!  自由地选择那些能够简化学习过程的能量函数。如果我们直接学习各个', 'time': '2017-03-04T11:34'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '称为', 'origin_text': '兹曼分布的一个实例。正是基于这个原因，我们把许多基于能量的模型  !!!叫做!!!  玻尔兹曼机~{cite?}。关于什么时候叫基于能量的模型，什么', 'time': '2017-03-04T11:37'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '称之为', 'origin_text': '许多基于能量的模型叫做玻尔兹曼机~{cite?}。关于什么时候  !!!叫!!!  基于能量的模型，什么时候叫玻尔兹曼机不存在一个公认的判别标准。', 'time': '2017-03-04T11:37'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '称之为', 'origin_text': '兹曼机~{cite?}。关于什么时候叫基于能量的模型，什么时候  !!!叫!!!  玻尔兹曼机不存在一个公认的判别标准。一开始玻尔兹曼机这个术语是', 'time': '2017-03-04T11:37'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '可以参考', 'origin_text': '同团的一个因子。关于如何从无向模型结构中获得能量函数形式的示例  !!!参见!!!  \\fig?。人们可以将能量函数中带有多个项的基于能量的模型视作', 'time': '2017-03-04T11:39'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '我们令$\\phi$等于对应负能量的指数，可以', 'origin_text': '_{\\RSe,\\RSf}(\\RSe,\\RSf)$。值得注意的是，  !!!我们可以通过令$\\phi$等于对应负能量的指数来!!!  获得图\\?中的$\\phi$函数，比如，$\\phi_{\\RSa,\\', 'time': '2017-03-04T11:41'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '任何？', 'origin_text': '由统计物理学家做出的，其中EEE是指实际的、物理概念的能量，没有  !!!任意!!!  的符号。诸如”能量”和”配分函数”这类术语仍然与这些技术相关联', 'time': '2017-03-04T11:43'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '原文有出入', 'origin_text': '类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽，  !!!尽管最早是从物理学中发现的!!!  。一些机器学习研究者（例如，{Smolensky86}将负能量', 'time': '2017-03-04T11:44'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '对于基于能量，且具有潜变量的模型？', 'origin_text': ')。对于具有潜变量。对于具有潜变量。对于具有潜变量 \\Vh$的  !!!基于能量的模型!!!  ， 这些算法有时会将该量的负数称为自由能：\\begin{ali', 'time': '2017-03-04T11:45'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': '者所有路径都包含可观测的变量，那么它们是分离的。我们认为仅涉及  !!!到!!!  未观察到的变量的路径是”活跃”的，将包括可观察变量的路径称为”非', 'time': '2017-03-04T11:48'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '而', 'origin_text': '们是分离的。我们认为仅涉及到未观察到的变量的路径是”活跃”的，  !!!将!!!  包括可观察变量的路径称为”非活跃”的。当我们画图时，我们可', 'time': '2017-03-04T11:49'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': '图时无向模型中的活跃和非活跃路径的样子。\\fig?描述了一个从  !!!一个!!!  无向模型中读取分离信息的例子。\\begin{figure}', 'time': '2017-03-04T11:49'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': 'RSb$之间不是分离的。\xa0(b)图中$\\RSs$用阴影填充，表示  !!!了!!!  它是可观察的。因为$\\RSa$和$\\RSb$之间的唯一路径通过$', 'time': '2017-03-04T11:50'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '如果图结构显示给定变量集SS时 ，变量集AA与变量集BB无关， 那么我们说给定变量集SS时，变量集AAd-分离于变量集BB。', 'origin_text': '性”的意思。有向图中d-分离的定义与无向模型中分离的定义相同：  !!!我们认为如果图结构显示给定另外的变量集SS\\SetS时 AA\\SetA与变量集BB\\SetB无关，那么给定变量集SS\\SetS时，变量集AA\\SetAd-分离于变量集BB\\SetB。!!!  与无向模型一样，我们可以通过查看图中存在的活跃路径来检查图中隐含', 'time': '2017-03-04T11:53'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '查看，参考', 'origin_text': '定路径是否活跃有点复杂。关于在有向模型中识别活跃路径的方法可以  !!!参见!!!  \\fig?。 \\fig?是从一个图中读取一些属性的例子。', 'time': '2017-03-04T11:54'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '尤其重要', 'origin_text': '\\fig?。 \\fig?是从一个图中读取一些属性的例子。  !!!重要!!!  的是要记住分离和d-分离只能告诉我们\\emph{图中隐含}的条件', 'time': '2017-03-04T11:54'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': '定环境下的独立指的是取决于网络中一些变量值的独立性。例如，考虑  !!!一个!!!  三个二进制变量的模型：aa\\RSa，bb\\RSb 和cc\\RSc', 'time': '2017-03-04T11:55'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '时', 'origin_text': '\\RSb和cc\\RSc不是独立的。一般来说，当独立性不存在  !!!的时候!!!  ，图不会显示独立性。 然而，图可能无法显示存在的独立性。', 'time': '2017-03-04T11:57'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '编码', 'origin_text': '说，当独立性不存在的时候，图不会显示独立性。 然而，图可能无法  !!!显示存在的!!!  独立性。\\begin{figure}[!htb]\t\\if', 'time': '2017-03-04T11:58'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '存在的长度为$2$的所有种类的活跃路径。\n', 'origin_text': 'fi\\caption{两个随机变量$\\RSa$，$\\RSb$之间  !!!存在的所有种类的长度为$2$的活跃路径。!!!  （a）箭头方向从$\\RSa$指向$\\RSb$的任何路径，反过来也', 'time': '2017-03-04T12:01'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '\\emph', 'origin_text': '经看到过这种类型的路径。（b）变量$\\RSa$和$\\RSb$通过  !!!共用原因\xa0!!!  $\\RSs$相连。举个例子，假设$\\RSs$是一个表示是否存在飓', 'time': '2017-03-04T12:02'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '在$\\RSa$处观察到很高\n', 'origin_text': '\\RSa$和$\\RSb$表示两个相邻气象监控区域的风速。如果我们  !!!观察到在$\\RSa$处有很高!!!  的风速，我们可以期望在$b$处也观察到高速的风。如果观察到$\\R', 'time': '2017-03-04T12:02'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '，', 'origin_text': '，我们可以期望在$b$处也观察到高速的风。如果观察到$\\RSs$  !!!那么!!!  这条路径就被阻塞了。如果我们已经知道存在飓风，那么无论$\\RSa', 'time': '2017-03-04T12:03'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '最好前面的都加，', 'origin_text': 'aa\\RSa和bb\\RSb不是d-分离的。  给定dd\\RSd  !!!的情况下!!!  aa\\RSa和bb\\RSb不是d-分离的。}\\end{f', 'time': '2017-03-04T12:07'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '合', 'origin_text': '是，一些模型很适合使用有向图\\emph{描述}，而另一些模型很适  !!!用于!!!  使用无向模型描述。有向模型和无向模型都有其优点和缺点。这', 'time': '2017-03-04T12:08'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '有时也可以', 'origin_text': '影响我们决定使用哪种建模方式。 即使在使用单个概率分布时，我们  !!!有时可以!!!  在不同的建模方式之间切换。有时，如果我们观察到变量的某个子集，', 'time': '2017-03-04T12:10'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '公式化，形式？', 'origin_text': '地从模型中抽取样本（在\\sec?中描述）的直接方法。而无向模型  !!!公式!!!  通常对于推导近似推断过程（我们将在\\chap?中看到，\\eqn?', 'time': '2017-03-04T12:11'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '其中', 'origin_text': '向模型公式通常对于推导近似推断过程（我们将在\\chap?中看到，  !!!\\e!!!  qn?强调了无向模型的作用）是很有用的。每个概率分布可以由', 'time': '2017-03-04T12:12'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '我们可以', 'origin_text': '每个概率分布可以由有向模型或由无向模型表示。在最坏的情况下，  !!!可以!!!  使用”完全图”来表示任何分布。在有向模型的情况下，完全图是任何', 'time': '2017-03-04T12:12'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '任意', 'origin_text': '可以使用”完全图”来表示任何分布。在有向模型的情况下，完全图是  !!!任何!!!  有向无环图，其中我们对随机变量排序，并且每个变量在排序中位于其之', 'time': '2017-03-04T12:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '隐含', 'origin_text': '一些变量不直接相互作用的信息。 完全图并不是很有用，因为它并不  !!!包含!!!  任何独立性。当我们用图表示概率分布时，我们想要选择一个包含', 'time': '2017-03-04T12:15'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '参考，查看？', 'origin_text': '道德图。关于一个通过道德化将有向图模型转化为无向模型的例子可以  !!!参见!!!  \\fig?。\\begin{figure}[!htb]\\i', 'time': '2017-03-04T12:18'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '在不丢失独立性的情况下是无法', 'origin_text': '到的无向模型包含了完全相同的独立关系和条件独立关系。（中）这个图  !!!是不丢失独立性的情况下无法!!!  转化为无向模型的最简单的有向模型。这个图包含了单个完整的不道德结', 'time': '2017-03-04T12:20'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '，', 'origin_text': '和$\\RSb$都是$\\RSc$的父节点，当$\\RSc$被观察到时  !!!它们!!!  之间通过活跃路径相连。为了捕捉这个依赖性，无向模型必须包含一个含', 'time': '2017-03-04T12:21'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '一般来说', 'origin_text': '这个团无法编码$\\RSa\xa0\\perp\xa0\\RSb$这个信息。（右）  !!!通常讲!!!  ，道德化的过程会给图添加许多边，因此丢失了一些隐含的独立性。举个', 'time': '2017-03-04T12:22'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': '弦，我们必须在将它们转换为有向模型之前添加弦。添加这些弦会丢弃  !!!了!!!  在UU\\CalU中编码的一些独立信息。通过将弦添加到UU\\Ca', 'time': '2017-03-04T12:24'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '因为现在我们', 'origin_text': '通过将弦添加到UU\\CalU形成的图被称为弦图或者三角形化图，  !!!现在!!!  可以用更小的、三角的环来描述所有的环。要从弦图构建有向图DD\\', 'time': '2017-03-04T12:26'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '中的边', 'origin_text': '建有向循环，否则将无法定义有效的有向概率模型。为DD\\CalD  !!!中边!!!  分配方向的一种方法是对随机变量排序，然后将每个边从排序较早的节点', 'time': '2017-03-04T12:27'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '排序稍后', 'origin_text': '方向的一种方法是对随机变量排序，然后将每个边从排序较早的节点指向  !!!稍后排序!!!  的节点。一个简单的实例参见\\fig?。\\begin{f', 'time': '2017-03-04T12:27'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '见', 'origin_text': '然后将每个边从排序较早的节点指向稍后排序的节点。一个简单的实例  !!!参见!!!  \\fig?。\\begin{figure}[!htb]\\i', 'time': '2017-03-04T12:27'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '排序稍后', 'origin_text': '的一种方法是赋予节点一定的顺序，然后将每个边从排序较早的节点指向  !!!稍后排序!!!  的节点。在这个例子中，我们根据变量名的字母进行排序。}\\end{', 'time': '2017-03-04T12:29'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '语法', 'origin_text': '因子图是从无向模型中抽样的另一种方法，它可以解决标准无向模型  !!!句法!!!  中图表达的模糊性。在无向模型中，每个ϕϕ\\phi函数的范围必须', 'time': '2017-03-04T12:29'}
+{'user': 'acct:swordyork@hypothes.is', 'text': 'emph', 'origin_text': '性。在无向模型中，每个ϕϕ\\phi函数的范围必须是图中某个团的  !!!子集!!!  。我们无法确定每一个团是否含有一个作用域包含整个团的因子——比', 'time': '2017-03-04T12:30'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '图形化？', 'origin_text': '种模糊性。具体来说，因子图是一个包含无向二分图的无向模型的  !!!图形!!!  表示。一些节点被绘制为圆形。 这些节点对应于随机变量，就像在', 'time': '2017-03-04T12:34'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '交换语序', 'origin_text': '包含无向二分图的无向模型的图形表示。一些节点被绘制为圆形。   !!!这些节点对应于随机变量，就像在标准无向模型中一样!!!  。其余节点绘制为方块。这些节点对应于未归一化概率函数的因子 ', 'time': '2017-03-04T12:34'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '存在连接', 'origin_text': '当且仅当变量包含在未归一化概率函数的因子中时，变量和因子在图中  !!!连接!!!  。没有因子可以连接到图中的另一个因子，也不能将变量连接到变量。', 'time': '2017-03-04T12:35'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '可以通过一个简单高效的过程从模型所表示的联合分布中产生样本，这个过程被称为原始采样。', 'origin_text': '图模型同样简化了从模型中采样的过程。有向图模型的一个优点是，  !!!可以通过一个简单高效的被称作是原始采样的过程从由模型表示的联合分布中抽取样本!!!  。其基本思想是将图中的变量xixi\\RSx_i使用拓扑排序', 'time': '2017-03-05T02:09'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '原始采样', 'origin_text': '的被称作是原始采样的过程从由模型表示的联合分布中抽取样本。  !!!其!!!  基本思想是将图中的变量xixi\\RSx_i使用拓扑排序，使得对于', 'time': '2017-03-05T02:09'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '只要不难从每个条件分布xi∼P(xi∣PaG(xi))xi∼P(xi∣PaG(xi))\\RSx_i\\sim P(\\RSx_i\\mid Pa_{\\CalG}(\\RSx_i))中采样，那么从整个模型中采样也是容易的。\n', 'origin_text': 'Sx_n\\mid Pa_{\\CalG}(\\RSx_n))中采样。  !!!只要从每个条件分布xi∼P(xi∣PaG(xi))xi∼P(xi∣PaG(xi))\\RSx_i\\sim P(\\RSx_i\\mid Pa_{\\CalG}(\\RSx_i))中采样都是很容易的，那么很容易从整个模型中抽样。!!!  拓扑排序操作保证我们可以按照\\eqn?中条件分布的顺序依次采样', 'time': '2017-03-05T02:11'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '我们可能会在变量父节点可用之前尝试对其采样。\n', 'origin_text': '可以按照\\eqn?中条件分布的顺序依次采样。如果没有拓扑排序，  !!!我们可能会尝试在其父节点可用之前对该变量进行抽样。!!!  对于一些图，可能有多个拓扑排序。 原始采样可以使用这些拓', 'time': '2017-03-05T02:13'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '非常简便', 'origin_text': '原始采样通常非常快（假设从每个条件分布中采样都是很容易的）并且  !!!方便!!!  。原始采样的一个缺点是其仅适用于有向图模型。 另一个缺点', 'time': '2017-03-05T02:15'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '有些图可能存在', 'origin_text': '扑排序，我们可能会尝试在其父节点可用之前对该变量进行抽样。  !!!对于一些图，可能有!!!  多个拓扑排序。 原始采样可以使用这些拓扑排序中的任何一个。', 'time': '2017-03-05T02:15'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '原文出入', 'origin_text': '）并且方便。原始采样的一个缺点是其仅适用于有向图模型。   !!!另一个缺点是它并不是每次采样都是条件采样操作!!!  。当我们希望从有向图模型中变量的子集中抽样时，给定一些其他变量', 'time': '2017-03-05T02:15'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '采', 'origin_text': '每次采样都是条件采样操作。当我们希望从有向图模型中变量的子集中  !!!抽!!!  样时，给定一些其他变量，我们经常要求所有给定的条件变量在图中比要', 'time': '2017-03-05T02:16'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '顺序图', 'origin_text': '子集中抽样时，给定一些其他变量，我们经常要求所有给定的条件变量在  !!!图!!!  中比要抽样的变量的顺序要早。在这种情况下，我们可以从模型分布指', 'time': '2017-03-05T02:18'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '采', 'origin_text': '样时，给定一些其他变量，我们经常要求所有给定的条件变量在图中比要  !!!抽!!!  样的变量的顺序要早。在这种情况下，我们可以从模型分布指定的局部', 'time': '2017-03-05T02:18'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '分布中', 'origin_text': '的顺序要早。在这种情况下，我们可以从模型分布指定的局部条件概率  !!!分布!!!  进行抽样。 否则，我们需要采样的条件分布是给定观测变量的后验分', 'time': '2017-03-05T02:19'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '采', 'origin_text': '早。在这种情况下，我们可以从模型分布指定的局部条件概率分布进行  !!!抽!!!  样。 否则，我们需要采样的条件分布是给定观测变量的后验分布。', 'time': '2017-03-05T02:19'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '很高', 'origin_text': '在模型中通常没有明确指定和参数化。 推断这些后验分布的代价可能  !!!是昂贵的!!!  。 在这种情况下的模型中，原始采样不再有效。不幸的是，原', 'time': '2017-03-05T02:19'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '要', 'origin_text': '向模型来实现从无向模型中抽样，但是这通常需要解决棘手的推断问题（  !!!以!!!  确定新有向图的根节点上的边缘分布），或者需要引入许多边从而会使得', 'time': '2017-03-05T02:20'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '采', 'origin_text': '者需要引入许多边从而会使得到的有向模型变得难以处理。从无向模型  !!!抽!!!  样，而不首先将其转换为有向模型的做法似乎需要解决循环依赖的问题。', 'time': '2017-03-05T02:21'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '采样', 'origin_text': '需要解决循环依赖的问题。 每个变量与每个其他变量相互作用，因此  !!!对于抽样!!!  过程没有明确的起点。不幸的是，从无向模型中抽取样本是一个昂贵的', 'time': '2017-03-05T02:22'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '这个没问题', 'origin_text': '互作用，因此对于抽样过程没有明确的起点。不幸的是，从无向模型中  !!!抽取!!!  样本是一个昂贵的多次迭代的过程。理论上最简单的方法是Gibbs', 'time': '2017-03-05T02:23'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '我们很难', 'origin_text': '重新取样。在多次重复之后，该过程渐近地收敛到正确的目标分布。  !!!很难!!!  确定样本何时达到所期望分布的足够精确的近似。无向模型的抽样技术', 'time': '2017-03-05T02:25'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '采', 'origin_text': '。很难确定样本何时达到所期望分布的足够精确的近似。无向模型的  !!!抽!!!  样技术是一个高级的研究方向，\\chap?将对此进行更详细的讨论。', 'time': '2017-03-05T02:26'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '选择不对某些变量的相互作用进行建模是允许所有这些操作使用较少的运行时间和内存的主要机制。\n', 'origin_text': '有向模型中采样还可以被加速，但是对于无向模型情况则较为复杂。  !!!允许所有这些操作使用较少的运行时间和内存的主要机制是选择不对某些变量的相互作用进行建模。!!!  图模型通过省略某些边来传达信息。在没有边的情况下，模型假设不', 'time': '2017-03-05T02:27'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '太长', 'origin_text': '在没有边的情况下，模型假设不对变量间直接的相互作用建模。  !!!使用结构化概率模型的一个更加不容易量化的益处是它们允许我们明确地将给定的现有的知识与知识的学习或者推断分开!!!  。这使我们的模型更容易开发和调试。 我们可以设计、分析和评估', 'time': '2017-03-05T02:28'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '认为数据中存在的重要关系的', 'origin_text': '范围的图的学习算法和推断算法。同时，我们可以设计能够捕捉到我们  !!!认为重要的关系的!!!  模型。然后，我们可以组合这些不同的算法和结构，并获得不同可能性', 'time': '2017-03-05T02:30'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '然而，为', 'origin_text': '们可以组合这些不同的算法和结构，并获得不同可能性的笛卡尔乘积。  !!!为!!!  每种可能的情况设计端到端的算法是困难的。学习依赖性关系', 'time': '2017-03-05T02:30'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '会更加困难', 'origin_text': '并获得不同可能性的笛卡尔乘积。为每种可能的情况设计端到端的算法  !!!是困难的!!!  。学习依赖性关系良好的生成模型需要准确地捕获所观察', 'time': '2017-03-05T02:31'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '去掉', 'origin_text': '。在深度学习中，最常用于建模这些依赖性关系的方法是引入几个潜在  !!!的!!!  或”隐藏”变量hh\\RVh。然后，该模型可以捕获任何对之间的依', 'time': '2017-03-05T02:32'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '原文出入', 'origin_text': '这些依赖性关系的方法是引入几个潜在的或”隐藏”变量hh\\RVh。  !!!然后，该模型可以捕获任何对之间的依赖性关系（变量vivi\\RSv_i和vjvj\\RSv_j间接依赖，vivi\\RSv_i和hh\\RVh之间直接依赖，vv\\RVv和hjhj\\RSh_j直接依赖)。!!!  一个好的不包含任何潜变量的 关于vv\\RVv的模型需要在贝', 'time': '2017-03-05T02:33'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '如果一个良好的关于v的模型不包含任何潜变量，那么它在贝叶斯网络中的每个节点需要具有大量父节点或在马尔可夫网络中具有非常大的团。', 'origin_text': '间直接依赖，vv\\RVv和hjhj\\RSh_j直接依赖)。  !!!一个好的不包含任何潜变量的 关于vv\\RVv的模型需要在贝叶斯网络中的每个节点具有大量父节点或在马尔可夫网络中具有非常大的团。!!!  仅仅表示这些高阶的相互作用是昂贵的，首先从计算角度上，存储在存', 'time': '2017-03-05T02:36'}
+{'user': 'acct:swordyork@hypothes.is', 'text': '仅仅是表示这些高阶相互作用的代价就很高，', 'origin_text': '络中的每个节点具有大量父节点或在马尔可夫网络中具有非常大的团。  !!!仅仅表示这些高阶的相互作用是昂贵的!!!  ，首先从计算角度上，存储在存储器中的参数数量是团中成员数量的指数', 'time': '2017-03-05T02:38'}
+
+=============================   Replies   =============================
+
