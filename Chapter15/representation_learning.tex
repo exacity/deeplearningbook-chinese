@@ -780,7 +780,7 @@ $n$维二元向量是一个\gls{distributed_representation}的示例，有$2^n$�
 
 如果我们幸运的话，除了平滑之外，目标函数可能还有一些其他规律。
 例如，具有\gls{max_pooling}的\gls{convolutional_network}
-可以不考虑对象在图像中的位置（即使对象的空间变换不对应输入空间的平滑变换），而识别出对象。
+可以在不考虑对象在图像中位置（即使对象的空间变换不对应输入空间的平滑变换）的情况下识别出对象。
 
 % -- 540 mid
 
@@ -799,7 +799,7 @@ $n$个相应半空间的指数级数量的交集确定了该\gls{distributed_rep
 这提供了\gls{distributed_representation}\gls{generalization}能力的一种几何解释：$O(nd)$个参数（空间$\SetR^d$中的$n$个线性阀值特征）能够明确表示输入空间中$O(n^d)$个不同区域。
 如果我们没有对数据做任何假设，并且每个区域使用唯一的符号来表示，每个符号使用单独的参数去识别$\SetR^d$中的对应区域，那么指定$O(n^d)$个区域需要$O(n^d)$个样本。
 更一般地，\gls{distributed_representation}的优势还可以体现在我们对\gls{distributed_representation}中的每个特征使用非线性的、可能连续的\gls{feature_extractor}，而不是\gls{linear_threshold_units}的情况。
-在这种情况下，如果具有$k$个参数的参数变换可以学习输入空间中的$r$个区域（$k\ll r$），并且如果学习这样的表示有助于关注的任务，那么这种方式会比\gls{nondistributed}\gls{setting}（我们需要$O(r)$个样本来获得相同的特征，将输入空间相关联地划分成$r$个区域。）泛化得更好。
+在这种情况下，如果具有$k$个参数的参数变换可以学习输入空间中的$r$个区域（$k\ll r$），并且如果学习这样的表示有助于关注的任务，那么这种方式会比\gls{nondistributed}\gls{setting}（我们需要$O(r)$个样本来获得相同的特征，将输入空间相关联地划分成$r$个区域。）\gls{generalize}得更好。
 使用较少的参数来表示模型意味着我们只需拟合较少的参数，因此只需要更少的训练样本去获得良好的\gls{generalization}。
 
 % -- 541 mid
@@ -815,14 +815,14 @@ $n$个相应半空间的指数级数量的交集确定了该\gls{distributed_rep
 
 到目前为止讨论的想法都是抽象的，但是它们可以通过实验验证。
 \cite{Zhou-et-al-ICLR2015}发现，在\ENNAME{ImageNet}和\ENNAME{Places}基准数据集上训练的深度\gls{convolutional_network}中的\gls{hidden_unit}学习到的特征通常是可以解释的，对应人类自然分配的\gls{label}。
-在实践中，\gls{hidden_unit}并不能总是学习出具有简单语言学名称的事物，但有趣的是，这些会在\gls{CV}深度网络的顶层附近出现。
-这些特征的共同之处在于，我们可以想象\emph{学习其中的每个特征不需要知道所有其他特征的所有配置}。
+在实践中，\gls{hidden_unit}并不能总是学习出具有简单语言学名称的事物，但有趣的是，这些事物会在那些最好的\gls{CV}深度网络的顶层附近出现。
+这些特征的共同之处在于，我们可以设想\emph{学习其中的每个特征不需要知道所有其他特征的所有配置}。
 \cite{radford2015unsupervised}发现\gls{generative_model}可以学习人脸图像的表示，在表示空间中的不同方向捕获不同的\gls{underlying}变化因素。
 \figref{fig:chap15_generative_glasses}展示表示空间中的一个方向对应着该人是男性还是女性，而另一个方向对应着该人是否戴着眼镜。
 这些特征都是自动发现的，而非先验固定的。
 没有必要为\gls{hidden_unit}分类器提供\gls{label}：只要该任务需要这样的特征，\gls{GD}就能在感兴趣的\gls{objective_function}上自然地学习出语义上有趣的特征。
 我们可以学习出男性和女性之间的区别，或者是眼镜的存在与否，而不必通过涵盖所有这些值组合的样本来表征其他$n-1$个特征的所有配置。
-这种形式的统计可分离性质能够\gls{generalize}到训练期间从未见过的新人的特征。
+这种形式的统计可分离性质能够\gls{generalize}到训练期间从未见过的新特征上。
 
 % 543 head
 
@@ -854,7 +854,7 @@ $n$个相应半空间的指数级数量的交集确定了该\gls{distributed_rep
 
 \section{得益于深度的指数增益}
 \label{sec:exponential_gains_from_depth}
-我们已经在\secref{sec:universal_approximation_properties_and_depth}中看到，\gls{MLP}是通用的近似器，一些函数能够用指数级小的\gls{deep_network}（相比于浅层网络）表示。
+我们已经在\secref{sec:universal_approximation_properties_and_depth}中看到，\gls{MLP}是\gls{universal_approximator}，相比于浅层网络，一些函数能够用指数级小的\gls{deep_network}表示。
 缩小模型规模能够提高统计效率。
 在本节中，我们描述如何将类似结果更一般地应用于其他具有分布式隐藏表示的模型。
 
