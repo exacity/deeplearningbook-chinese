@@ -663,24 +663,24 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 \section{超参数和验证集}
 \label{sec:hyperparameters_and_validation_sets}
-大多数\gls{ML}算法都有设置超参数，可以用来控制算法行为。
+大多数\gls{ML}算法都有超参数，可以设置来控制算法行为。
 超参数的值不是通过学习算法本身学习出来的（尽管我们可以设计一个嵌套的学习过程，一个学习算法为另一个学习算法学出最优超参数）。
 
 在\figref{fig:chap5_underfit_just_right_overfit}所示的多项式回归示例中，有一个超参数：多项式的次数，作为\textbf{\gls{capacity}}超参数。
 控制\gls{weight_decay}程度的$\lambda$是另一个超参数。
 
-有时一个\gls{setting}被设为学习算法不用学习的超参数，是因为它太难优化了。
-更多的情况是，该设定必须是超参数，因为它不适合在训练集上学习。
+有时一个选项被设为学习算法不用学习的超参数，是因为它太难优化了。
+更多的情况是，该选项必须是超参数，因为它不适合在训练集上学习。
 这适用于控制模型\gls{capacity}的所有超参数。
 如果在训练集上学习超参数，这些超参数总是趋向于最大可能的模型容量，导致过拟合（参考\figref{fig:chap5_generalization_vs_capacity}）。
-例如，相较低次多项式和正的权重衰减设定，更高次的多项式和权重衰减参数设定$\lambda=0$总能在训练集上更好地拟合。
+例如，相比低次多项式和正的权重衰减设定，更高次的多项式和权重衰减参数设定$\lambda=0$总能在训练集上更好地拟合。
 
 % -- 117 --
 
-为了解决这个问题，我们需要训练算法观测不到的\firstgls{validation_set}\gls{example:chap5}。
+为了解决这个问题，我们需要一个训练算法观测不到的\firstgls{validation_set}\gls{example:chap5}。
 
-早先我们讨论过和训练数据相同分布的\gls{example:chap5}组成的\gls{test_set}可以用来估计学习过程完成之后的\gls{learner}的泛化误差。
-其重点在于测试\gls{example:chap5}不能以任何形式参与到模型的选择，包括设定超参数。
+早先我们讨论过和训练数据相同分布的\gls{example:chap5}组成的\gls{test_set}，它可以用来估计学习过程完成之后的\gls{learner}的泛化误差。
+其重点在于测试\gls{example:chap5}不能以任何形式参与到模型的选择中，包括设定超参数。
 基于这个原因，\gls{test_set}中的\gls{example:chap5}不能用于验证集。
 因此，我们总是从\emph{训练}数据中构建验证集。
 特别地，我们将训练数据分成两个不相交的子集。
@@ -694,7 +694,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 在实际中，当相同的\gls{test_set}已在很多年中重复地用于评估不同算法的性能，并且考虑学术界在该\gls{test_set}上的各种尝试，我们最后可能也会对\gls{test_set}有着乐观的估计。
 \gls{benchmarks}会因之变得陈旧，而不能反映系统的真实性能。
-值得庆幸的是，学术界往往会移到新的（通常会更具大更具挑战性的）基准\gls{dataset}上。
+值得庆幸的是，学术界往往会移到新的（通常会更巨大、更具挑战性）基准\gls{dataset}上。
 
 \subsection{交叉验证}
 \label{sec:cross_validation}
@@ -710,29 +710,6 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 测试误差可以估计为$k$次计算后的平均测试误差。
 在第$i$次测试时，数据的第$i$个子集用于\gls{test_set}，其他的数据用于训练集。
 带来的一个问题是不存在平均误差方差的无偏估计\citep{Bengio-Grandvalet-JMLR-04}，但是我们通常会使用近似来解决。
-
-\section{估计、偏差和方差}
-\label{sec:estimators_bias_and_variance}
-统计领域为我们提供了很多工具达到\gls{ML}目标，不仅可以解决训练集上的任务，还可以泛化。
-基本的概念，例如参数估计，偏差和方差，对于形式化刻画泛化，欠拟合和过拟合都非常有帮助。
-
-\subsection{点估计}
-\label{sec:point_estimation}
-点估计试图为一些感兴趣的量提供单个``最优''预测。
-一般地，感兴趣的量可以是单个参数，或是某些参数模型中的一个向量参数，例如\secref{sec:example_linear_regression}\gls{linear_regression}中的权重，但是也有可能是整个函数。
-
-为了区分参数估计和真实值，我们习惯将参数$\Vtheta$的点估计表示为$\hat{\Vtheta}$。
-
-令$\{\Vx^{(1)},\dots,\Vx^{(m)}\}$是$m$个独立同分布（i.i.d.）的数据点。
-\firstgls{point_estimator}或\firstgls{statistics}是这些数据的任意函数：
-\begin{equation}
-    \hat{\Vtheta}_m = g(\Vx^{(1)}, \dots, \Vx^{(m)}) .
-\end{equation}
-这个定义不要求$g$返回一个接近真实值$\Vtheta$的值，或者$g$的值域恰好是$\Vtheta$的允许取值范围。
-点估计的定义非常宽泛，给了\gls{estimator:chap5}的设计者极大的灵活性。
-虽然几乎所有的函数都可以称为\gls{estimator:chap5}，但是一个好的\gls{estimator:chap5}的输出会接近生成训练数据的真实参数$\Vtheta$。
-
-% -- 119 --
 
 \begin{algorithm}
   \caption{$k$-折交叉验证算法。
@@ -759,6 +736,28 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \end{algorithmic}
 \end{algorithm}
 
+\section{估计、偏差和方差}
+\label{sec:estimators_bias_and_variance}
+统计领域为我们提供了很多工具来实现\gls{ML}目标，不仅可以解决训练集上的任务，还可以泛化。
+基本的概念，例如参数估计、偏差和方差，对于正式地刻画泛化、欠拟合和过拟合都非常有帮助。
+
+\subsection{点估计}
+\label{sec:point_estimation}
+点估计试图为一些感兴趣的量提供单个``最优''预测。
+一般地，感兴趣的量可以是单个参数，或是某些参数模型中的一个向量参数，例如\secref{sec:example_linear_regression}\gls{linear_regression}中的权重，但是也有可能是整个函数。
+
+为了区分参数估计和真实值，我们习惯将参数$\Vtheta$的点估计表示为$\hat{\Vtheta}$。
+
+令$\{\Vx^{(1)},\dots,\Vx^{(m)}\}$是$m$个独立同分布（i.i.d.）的数据点。
+\firstgls{point_estimator}或\firstgls{statistics}是这些数据的任意函数：
+\begin{equation}
+    \hat{\Vtheta}_m = g(\Vx^{(1)}, \dots, \Vx^{(m)}) .
+\end{equation}
+这个定义不要求$g$返回一个接近真实$\Vtheta$的值，或者$g$的值域恰好是$\Vtheta$的允许取值范围。
+点估计的定义非常宽泛，给了\gls{estimator:chap5}的设计者极大的灵活性。
+虽然几乎所有的函数都可以称为\gls{estimator:chap5}，但是一个良好的\gls{estimator:chap5}的输出会接近生成训练数据的真实参数$\Vtheta$。
+
+% -- 119 --
 
 现在，我们采取频率派在统计上的观点。
 换言之，我们假设真实参数$\Vtheta$是固定但未知的，而点估计$\hat{\Vtheta}$是数据的函数。
@@ -768,9 +767,9 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 % -- 120 --
 
 点估计也可以指输入和\gls{target}变量之间关系的估计。
-我们将这类点估计称为函数估计。
+我们将这种类型的点估计称为函数估计。
 
-\textbf{函数估计}\quad 有时我们会关注函数估计（或函数近似）。
+\paragraph{函数估计} 有时我们会关注函数估计（或函数近似）。
 这时我们试图从输入向量$\Vx$预测变量$\Vy$。
 我们假设有一个函数$f(\Vx)$表示$\Vy$和$\Vx$之间的近似关系。
 例如，我们可能假设$\Vy = f(\Vx) + \Vepsilon$，其中$\Vepsilon$是$\Vy$中未能从$\Vx$预测的一部分。
@@ -793,8 +792,8 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 % -- 121 --
 
-\textbf{示例：伯努利分布}\quad 
-考虑一组服从均值为$\theta$的伯努利分布的独立同分布采样$\{x^{(1)}, \dots , x^{(m)}\}$：
+\paragraph{示例：伯努利分布}
+考虑一组服从均值为$\theta$的伯努利分布的独立同分布的样本$\{x^{(1)}, \dots , x^{(m)}\}$：
 \begin{equation}
     P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{(1 - x^{(i)})}.
 \end{equation}
@@ -815,7 +814,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 因为$\text{bias}(\hat{\theta})=0$，我们称估计$\hat{\theta}$是无偏的。
 
-\textbf{示例：均值的高斯分布估计}\quad 
+\paragraph{示例：均值的高斯分布估计}
 现在，考虑一组独立同分布的\gls{example:chap5} $\{x^{(1)}, \dots , x^{(m)}\}$服从高斯分布$p(x^{(i)}) = \mathcal{N}(x^{(i)}; \mu, \sigma^2)$，其中$i\in\{1, \dots, m\}$。
 回顾高斯概率密度函数如下：
 \begin{equation}
@@ -838,7 +837,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 % -- 122 --
 
-\textbf{示例：高斯分布方差估计}\quad 
+\paragraph{示例：高斯分布方差估计}
 本例中，我们比较高斯分布方差参数$\sigma^2$的两个不同估计。
 我们探讨是否有一个是有偏的。
 
@@ -847,7 +846,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     \hat{\sigma}_m^2 = \frac{1}{m} \sum_{i=1}^m \left( x^{(i)} - \hat{\mu}_m \right)^2,
 \end{equation}
 其中$\hat{\mu}_m$是\gls{sample_mean}。
-更形式地，我们感兴趣计算
+更形式地，我们对计算感兴趣
 \begin{equation}
 \label{eq:5.37}
     \text{bias} (\hat{\sigma}_m^2) = \SetE [ \hat{\sigma}_m^2 ]  - \sigma^2.
@@ -877,12 +876,12 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 % -- 123 --
 
 我们有两个\gls{estimator:chap5}：一个是有偏的，另一个是无偏的。
-尽管无偏估计显然是可取的，但它并不总是``最好''的估计。
+尽管无偏估计显然是令人满意的，但它并不总是``最好''的估计。
 我们将看到，经常会使用其他具有重要性质的有偏估计。
 
 \subsection{方差和\glsentrytext{standard_error}}
 \label{sec:variance_and_standard_error}
-我们有时会考虑\gls{estimator:chap5}的另一个性质，数据样本函数的变化程度。
+我们有时会考虑\gls{estimator:chap5}的另一个性质是它作为数据样本的函数，期望的变化程度是多少。
 正如我们可以计算\gls{estimator:chap5}的期望来决定它的偏差，我们也可以计算它的方差。
 \gls{estimator:chap5}的\firstgls{variance}就是一个\gls{variance}
 \begin{equation}
@@ -894,7 +893,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \gls{estimator:chap5}的方差或\gls{standard_error}告诉我们，当独立地从潜在的数据生成过程中重采样数据集时，如何期望估计的变化。
 正如我们希望估计的偏差较小，我们也希望其方差较小。
 
-当我们使用有限的样本计算任何统计量时，真实参数的估计都是不确定的，在这个意义下，从相同的分布得到其他样本时，它们的统计量会不一样。
+当我们使用有限的样本计算任何统计量时，真实参数的估计都是不确定的，在这个意义下，从相同的分布得到其他样本时，它们的统计量也会不一样。
 任何方差估计量的期望程度是我们想量化的误差的来源。
 
 均值的\gls{standard_error}被记作
@@ -923,7 +922,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 以上区间是基于均值$\hat{\mu}_m$和方差$\text{SE}(\hat{\mu}_m)^2$的高斯分布。
 在\gls{ML}实验中，我们通常说算法$A$比算法$B$好，是指算法$A$的误差的$95\%$置信区间的上界小于算法$B$的误差的$95\%$置信区间的下界。
 
-\textbf{示例：伯努利分布} \quad 我们再次考虑从伯努利分布（回顾$P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{1 - x^{(i)}}$）中独立同分布采样出来的一组\gls{example:chap5} $\{ x^{(1)}, \dots, x^{(m)} \}$。
+\paragraph{示例：伯努利分布} 我们再次考虑从伯努利分布（回顾$P(x^{(i)}; \theta) = \theta^{x^{(i)}} (1-\theta)^{1 - x^{(i)}}$）中独立同分布采样出来的一组\gls{example:chap5} $\{ x^{(1)}, \dots, x^{(m)} \}$。
 这次我们关注估计$\hat{\theta}_m = \frac{1}{m} \sum_{i=1}^m x^{(i)}$的方差：
 \begin{align}
     \text{Var}\left( \hat{\theta}_m \right) &= \text{Var}\left( \frac{1}{m} \sum_{i=1}^m x^{(i)} \right) \\
@@ -937,13 +936,13 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 % -- 125 --
 
-\subsection{权衡偏值和方差以最小化均方误差}
+\subsection{权衡偏差和方差以最小化均方误差}
 \label{sec:trading_off_bias_and_variance_to_minimize_mean_squared_error}
 偏差和方差度量着估计量的两个不同误差来源。
 偏差度量着偏离真实函数或参数的误差期望。
 而方差度量着数据上任意特定采样可能导致的估计期望的偏差。
 
-当可以在一个偏差更大的估计和一个方差更大的估计中进行选择时，会发生什么呢？我们该如何选择？
+当我们可以在一个偏差更大的估计和一个方差更大的估计中进行选择时，会发生什么呢？我们该如何选择？
 例如，想象我们希望近似\figref{fig:chap5_underfit_just_right_overfit}中的函数，我们只可以选择一个偏差较大的估计或一个方差较大的估计，我们该如何选择呢？
 
 判断这种权衡最常用的方法是交叉验证。
@@ -957,7 +956,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 如\eqnref{eq:5.54}所示，\glssymbol{mean_squared_error}\,估计包含了偏差和方差。
 理想的估计具有较小的\,\glssymbol{mean_squared_error}\,或是在检查中会稍微约束它们的偏差和方差。
 
-偏差和方差的关系和\gls{ML}容量，欠拟合和过拟合的概念紧密相联。
+偏差和方差的关系和\gls{ML}容量、欠拟合和过拟合的概念紧密相联。
 用\,\glssymbol{mean_squared_error}\,度量泛化误差（偏差和方差对于泛化误差都是有意义的）时，增加容量会增加方差，降低偏差。
 如\figref{fig:chap5_bias_variance_tradeoff}所示，我们再次在关于容量的函数中，看到泛化误差的U形曲线。
 
@@ -967,7 +966,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/bias_variance_tradeoff}}
 \fi
-\caption{当\gls{capacity}增大（$x$轴）时，\gls{BIAS}（用点表示）随之减小，而方差（虚线）随之增大，使得\gls{generalization_error}（加粗曲线）产生了另一种U形。如果我们沿着轴改变\gls{capacity}，会发现\gls{optimal_capacity}，当\gls{capacity}小于\gls{optimal_capacity}会呈现\gls{underfitting}，大于时导致\gls{overfitting}。这种关系与\secref{sec:capacity_overfitting_and_underfitting}以及图\ref{fig:chap5_generalization_vs_capacity}中讨论的\gls{capacity}，\gls{underfitting}和\gls{overfitting}之间的关系类似。}
+\caption{当\gls{capacity}增大（$x$轴）时，\gls{BIAS}（用点表示）随之减小，而方差（虚线）随之增大，使得\gls{generalization_error}（加粗曲线）产生了另一种U形。如果我们沿着轴改变\gls{capacity}，会发现\gls{optimal_capacity}，当\gls{capacity}小于\gls{optimal_capacity}会呈现\gls{underfitting}，大于时导致\gls{overfitting}。这种关系与\secref{sec:capacity_overfitting_and_underfitting}以及图\ref{fig:chap5_generalization_vs_capacity}中讨论的\gls{capacity}、\gls{underfitting}和\gls{overfitting}之间的关系类似。}
 \label{fig:chap5_bias_variance_tradeoff}
 \end{figure}
 
@@ -975,7 +974,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 \subsection{一致性}
 \label{sec:consistency}
-目前我们已经探讨了，固定大小训练集下不同\gls{estimator:chap5}的性质。
+目前我们已经探讨了固定大小训练集下不同\gls{estimator:chap5}的性质。
 通常，我们也会关注训练数据增多后\gls{estimator:chap5}的效果。
 特别地，我们希望当\gls{dataset}中数据点的数量$m$增加时，点估计会收敛到对应参数的真实值。
 更形式地，我们想要
@@ -1001,14 +1000,14 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \label{sec:maximum_likelihood_estimation}
 之前，我们已经看过常用估计的定义，并分析了它们的性质。
 但是这些估计是从哪里来的呢？
-并非猜测某些函数可能是好的估计，然后分析其偏差和方差，我们希望有些准则可以让我们从不同模型中得到特定函数作为好的估计。
+我们希望有些准则可以让我们从不同模型中得到特定函数作为好的估计，而不是猜测某些函数可能是好的估计，然后分析其偏差和方差。
 
 最常用的准则是\gls{maximum_likelihood_estimation}。
 
 考虑一组含有$m$个\gls{example:chap5}的\gls{dataset} $\SetX=\{ \Vx^{(1)},\dots, \Vx^{(m)} \}$，独立地由未知的真实数据生成分布$p_{\text{data}}(\RVx)$生成。
 
 令$p_{\text{model}}( \RVx; \Vtheta )$是一族由$\Vtheta$确定在相同空间上的概率分布。
-换言之，$p_{\text{model}}(\Vx;\Vtheta)$将任意输入$\Vx$映射到实数去估计真实概率$p_{\text{data}}(\Vx)$。
+换言之，$p_{\text{model}}(\Vx;\Vtheta)$将任意输入$\Vx$映射到实数来估计真实概率$p_{\text{data}}(\Vx)$。
 
 对$\Vtheta$的最大似然估计被定义为：
 \begin{align}
@@ -1047,10 +1046,10 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 任何一个由负对数似然组成的\gls{loss}都是定义在训练集上的经验分布和定义在模型上的概率分布之间的\gls{cross_entropy}。
 例如，\gls{mean_squared_error}是经验分布和高斯模型之间的\gls{cross_entropy}。
 
-我们可以将最大似然看作是使模型分布尽可能和经验分布$\hat{p}_{\text{data}}$相匹配的尝试。
+我们可以将最大似然看作是使模型分布尽可能地和经验分布$\hat{p}_{\text{data}}$相匹配的尝试。
 理想情况下，我们希望匹配真实的数据生成分布$p_{\text{data}}$，但我们没法直接知道这个分布。
 
-虽然最优$\Vtheta$在最大化似然或是最小化~\gls{KL}时是相同的，但是目标函数值是不一样的。
+虽然最优$\Vtheta$在最大化似然或是最小化~\gls{KL}时是相同的，但目标函数值是不一样的。
 在软件中，我们通常将两者都称为最小化\gls{cost_function}。
 因此最大化似然变成了最小化负对数似然（NLL)，或者等价的是最小化交叉熵。
 将最大化似然看作最小化~\gls{KL}的视角在这个情况下是有帮助的，因为已知~\gls{KL}最小值是零。
@@ -1058,7 +1057,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 \subsection{条件对数似然和\glsentrytext{mean_squared_error}}
 \label{sec:conditional_log_likelihood_and_mean_squared_error}
-\gls{maximum_likelihood_estimation}很容易扩展到估计条件概率$P(\RVy \mid \RVx;\Vtheta)$，从而给定$\RVx$预测$\RVy$的情况。
+\gls{maximum_likelihood_estimation}很容易扩展到估计条件概率$P(\RVy \mid \RVx;\Vtheta)$，从而给定$\RVx$预测$\RVy$。
 实际上这是最常见的情况，因为这构成了大多数\gls{supervised_learning}的基础。
 如果$\MX$表示所有的输入，$\MY$表示我们观测到的\gls{target}，那么条件\gls{maximum_likelihood_estimation}是
 \begin{equation}
@@ -1072,11 +1071,11 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 % -- 129 --
 
-\textbf{示例：\gls{linear_regression}作为最大似然}\quad \secref{sec:example_linear_regression}介绍的\gls{linear_regression}，可以被看作是最大似然过程。
+\paragraph{示例：\gls{linear_regression}作为最大似然} \secref{sec:example_linear_regression}介绍的\gls{linear_regression}，可以被看作是最大似然过程。
 之前，我们将\gls{linear_regression}作为学习从输入$\Vx$映射到输出$\hat{y}$的算法。
 从$\Vx$到$\hat{y}$的映射选自最小化\gls{mean_squared_error}（我们或多或少介绍的一个标准）。
 现在，我们以\gls{maximum_likelihood_estimation}的角度重新审视\gls{linear_regression}。
-不只是得到一个单独的预测$\hat{y}$，我们现在希望模型能够得到条件概率$p(y \mid \Vx)$。
+我们现在希望模型能够得到条件概率$p(y \mid \Vx)$，而不只是得到一个单独的预测$\hat{y}$。
 想象有一个无限大的训练集，我们可能会观测到几个训练\gls{example:chap5}有相同的输入$\Vx$但是不同的$y$。
 现在学习算法的目标是拟合分布$p(y \mid \Vx)$到和$\Vx$相匹配的不同的$y$。
 为了得到我们之前推导出的相同的\gls{linear_regression}算法，我们定义$p(y \mid \Vx) = \mathcal{N}(y; \hat{y}(\Vx; \Vw), \sigma^2)$。
@@ -1102,7 +1101,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 \subsection{最大似然的性质}
 \label{sec:properties_of_maximum_likelihood}
-\gls{maximum_likelihood_estimation}最吸引人的地方在于，它被证明是当\gls{example:chap5}数目$m\to\infty$时，就收敛率而言最好的渐近估计。
+\gls{maximum_likelihood_estimation}最吸引人的地方在于，它被证明当\gls{example:chap5}数目$m\to\infty$时，就收敛率而言是最好的渐近估计。
 
 在合适的条件下，\gls{maximum_likelihood_estimation}具有一致性（参考\secref{sec:consistency}），意味着训练\gls{example:chap5}数目趋向于无穷大时，参数的\gls{maximum_likelihood_estimation}会收敛到参数的真实值。
 这些条件是：
@@ -1119,11 +1118,11 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 某些一致估计可能会在固定数目的样本上获得一个较低的泛化误差，或者等价地，可能只需要较少的\gls{example:chap5}就能达到一个固定程度的泛化误差。
 
 统计效率通常用于\firstgls{parametric_case}的研究中（例如\gls{linear_regression}）。有参情况中我们的目标是估计参数值（假设有可能确定真实参数），而不是函数值。
-一种度量我们和真实参数相差多少的方法是计算\gls{mean_squared_error}期望，即计算$m$个从数据生成分布中出来的训练\gls{example:chap5}上的估计参数和真实参数之间差值的平方。
+一种度量我们和真实参数相差多少的方法是计算\gls{mean_squared_error}的期望，即计算$m$个从数据生成分布中出来的训练\gls{example:chap5}上的估计参数和真实参数之间差值的平方。
 有参\gls{mean_squared_error}估计随着$m$的增加而减少，当$m$较大时，Cram\'er-Rao下界\citep{Rao-1945,Cramer-1946}表明不存在\gls{mean_squared_error}低于\gls{MLE}的一致估计。
 
 因为这些原因（一致性和统计效率），最大似然通常是\gls{ML}中的首选估计。
-当\gls{example:chap5}数目小到会过拟合时，\gls{regularization}策略如权重衰减可用于获得训练数据有限时方差较小的最大似然有偏版本。
+当\gls{example:chap5}数目小到会发生过拟合时，\gls{regularization}策略如权重衰减可用于获得训练数据有限时方差较小的最大似然有偏版本。
 
 % -- 131 --
 
