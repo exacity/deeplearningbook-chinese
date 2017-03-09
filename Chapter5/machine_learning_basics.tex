@@ -5,7 +5,7 @@
 \gls{DL}是\gls{ML}的一个特定分支。
 我们要想充分理解\gls{DL}，必须对\gls{ML}的基本原理有着深刻的理解。
 本章将探讨贯穿本书其余部分的一些\gls{ML}重要原理。
-我们建议新手读者或是希望更全面了解的读者参考一些更全面覆盖基础知识的\gls{ML}参考书，例如\cite{MurphyBook2012}或者\cite{bishop-book2006}。
+我们建议新手读者或是希望更全面了解的读者参考一些更全面覆盖基础知识的\gls{ML}参考书，例如~\cite{MurphyBook2012}或者~\cite{bishop-book2006}。
 如果你已经熟知\gls{ML}，可以跳过前面的部分，前往\secref{sec:challenges_motivating_deep_learning}。
 \secref{sec:challenges_motivating_deep_learning}涵盖了一些传统\gls{ML}技术观点，这些技术对\gls{DL}的发展有着深远影响。
 
@@ -232,7 +232,7 @@ Iris（鸢尾花卉）\gls{dataset}~\citep{Fisher-1936}是统计学家和\gls{ML
 有些\gls{ML}算法并不是训练于一个固定的\gls{dataset}上。
 例如，\firstgls{reinforcement_learning}算法会和环境进行交互，所以学习系统和它的训练过程会有反馈回路。
 这类算法超出了本书的范畴。
-请参考\cite{Sutton+Barto-98}或\cite{Bertsekas+Tsitsiklis-book1996}了解强化学习相关知识，\cite{Mnih2013}介绍了强化学习方向的\gls{DL}方法。
+请参考~\cite{Sutton+Barto-98}或~\cite{Bertsekas+Tsitsiklis-book1996}了解强化学习相关知识，\cite{Mnih2013}介绍了强化学习方向的\gls{DL}方法。
 
 大部分\gls{ML}算法简单地训练于一个\gls{dataset}上。
 \gls{dataset}可以用很多不同方式来表示。
@@ -478,7 +478,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/underfit_just_right_overfit_color}}
 \fi
-\caption{我们用三个模型拟合了这个训练集的样本。训练数据是通过随机抽取$x$然后用二次函数确定性地生成$y$来合成的。\emph{(左)}用一个线性函数拟合数据会导致\gls{underfitting}——它无法捕捉数据中的\gls{curvature}信息。\emph{(中)}用二次函数拟合数据在未观察到的点上\gls{generalization}得很好。这并不会导致明显的\gls{underfitting}或者\gls{overfitting}。\emph{(右)}一个$9$阶的多项式拟合数据会导致\gls{overfitting}。在这里我们使用\gls{Moore}来解这个欠定的\gls{normal_equations}。得出的解能够精确的穿过所有的训练点，但可惜我们无法提取有效的结构信息。在两个数据点之间它有一个真实的函数所不包含的深谷。在数据的左侧，它也会急剧增长，在这一区域真实的函数却是下降的。}
+\caption{我们用三个模型拟合了这个训练集的样本。训练数据是通过随机抽取$x$然后用二次函数确定性地生成$y$来合成的。\emph{(左)}用一个线性函数拟合数据会导致\gls{underfitting}——它无法捕捉数据中的\gls{curvature}信息。\emph{(中)}用二次函数拟合数据在未观察到的点上\gls{generalization}得很好。这并不会导致明显的\gls{underfitting}或者\gls{overfitting}。\emph{(右)}一个$9$阶的多项式拟合数据会导致\gls{overfitting}。在这里我们使用\,\gls{Moore}来解这个欠定的\gls{normal_equations}。得出的解能够精确的穿过所有的训练点，但可惜我们无法提取有效的结构信息。在两个数据点之间它有一个真实的函数所不包含的深谷。在数据的左侧，它也会急剧增长，在这一区域真实的函数却是下降的。}
 \label{fig:chap5_underfit_just_right_overfit}
 \end{figure}
 
@@ -502,9 +502,9 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 统计学习理论提供了量化模型容量的不同方法。
 在这些中，最有名的是\firstall{VC}。
-\glssymbol{VC}维度量二元分类器的容量。
-\glssymbol{VC}维定义为该分类器能够分类的训练\gls{example:chap5}的最大数目。
-假设存在$m$个不同$\Vx$点的训练集，分类器可以任意地标记该$m$个不同的$\Vx$点，\glssymbol{VC}维被定义为$m$的最大可能值。
+\glssymbol{VC}\,维度量二元分类器的容量。
+\glssymbol{VC}\,维定义为该分类器能够分类的训练\gls{example:chap5}的最大数目。
+假设存在$m$个不同$\Vx$点的训练集，分类器可以任意地标记该$m$个不同的$\Vx$点，\glssymbol{VC}\,维被定义为$m$的最大可能值。
 
 量化模型的容量使得统计学习理论可以进行量化预测。
 统计学习理论中最重要的结论阐述了训练误差和泛化误差之间差异的上界随着模型容量增长而增长，但随着训练\gls{example:chap5}增多而下降\citep{Vapnik71,Vapnik82,Blumer-et-al-1989,Vapnik95}。
@@ -568,7 +568,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/training_size_grows}}
 \fi
-\caption{训练集大小对\gls{training_error}，\gls{test_error}以及\gls{optimal_capacity}的影响。通过给一个$5$阶多项式添加适当大小的噪声，我们构造了一个合成的\gls{regression}问题，生成单个测试集，然后生成一些不同尺寸的训练集。为了描述\%95置信区间的\gls{error_bar}，对于每一个尺寸，我们生成了$40$个不同的训练集。（上）两个不同的模型上训练集和测试集的\glssymbol{mean_squared_error}，一个二次模型，另一个模型的阶数通过最小化\gls{test_error}来选择。两个模型都是用闭式解来拟合。对于二次模型来说，当训练集增加时\gls{training_error}也随之增大。这是由于越大的数据集越难以拟合。同时，\gls{test_error}随之减小，因为关于训练数据的不正确的假设越来越少。二次模型的容量并不足以解决这个问题，所以它的\gls{test_error}趋近于一个较高的值。\gls{optimal_capacity}点处的\gls{test_error}趋近于\gls{bayes_error}。\gls{training_error}可以低于\gls{bayes_error}，因为训练算法有能力记住训练集中特定的样本。当训练集趋向于无穷大时，任何固定容量的模型（在这里指的是二次模型）的\gls{training_error}都至少增至\gls{bayes_error}。（下）当训练集大小增大时，\gls{optimal_capacity}（在这里是用最优多项式回归器的阶数衡量的）也会随之增大。\gls{optimal_capacity}在达到足够捕捉模型复杂度之后就不再增长了。}
+\caption{训练集大小对\gls{training_error}，\gls{test_error}以及\gls{optimal_capacity}的影响。通过给一个$5$阶多项式添加适当大小的噪声，我们构造了一个合成的\gls{regression}问题，生成单个测试集，然后生成一些不同尺寸的训练集。为了描述$95\%$置信区间的\gls{error_bar}，对于每一个尺寸，我们生成了$40$个不同的训练集。（上）两个不同的模型上训练集和测试集的\,\glssymbol{mean_squared_error}，一个二次模型，另一个模型的阶数通过最小化\gls{test_error}来选择。两个模型都是用闭式解来拟合。对于二次模型来说，当训练集增加时\gls{training_error}也随之增大。这是由于越大的数据集越难以拟合。同时，\gls{test_error}随之减小，因为关于训练数据的不正确的假设越来越少。二次模型的容量并不足以解决这个问题，所以它的\gls{test_error}趋近于一个较高的值。\gls{optimal_capacity}点处的\gls{test_error}趋近于\gls{bayes_error}。\gls{training_error}可以低于\gls{bayes_error}，因为训练算法有能力记住训练集中特定的样本。当训练集趋向于无穷大时，任何固定容量的模型（在这里指的是二次模型）的\gls{training_error}都至少增至\gls{bayes_error}。（下）当训练集大小增大时，\gls{optimal_capacity}（在这里是用最优多项式回归器的阶数衡量的）也会随之增大。\gls{optimal_capacity}在达到足够捕捉模型复杂度之后就不再增长了。}
 \label{fig:chap5_training_size_grows}
 \end{figure}
 
@@ -638,7 +638,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/underfit_just_right_overfit_wd_color}}
 \fi
-\caption{我们使用高阶多项式回归模型来拟合图\ref{fig:chap5_underfit_just_right_overfit}中训练样本。真实函数是二次的，但是在这里我们只使用$9$阶多项式。我们通过改变\gls{weight_decay}的量来避免高阶模型的过拟合问题。\emph{(左)}当$\lambda$非常大时，我们可以强迫模型学习到了一个没有斜率的函数。由于它只能表示一个常数函数，所以会导致\gls{underfitting}。\emph{(中)}取一个适当的$\lambda$时，学习算法能够用一个正常的形状来恢复曲率。即使模型能够用更复杂的形状来来表示函数，\gls{weight_decay}鼓励用一个带有更小参数的更简单的模型来描述它。\emph{(右)}当\gls{weight_decay}趋近于$0$（即，使用\gls{Moore}来解这个带有最小\gls{regularization}的欠定问题）时，这个$9$阶多项式会导致严重的\gls{overfitting}，这和我们在图\ref{fig:chap5_underfit_just_right_overfit}中看到的一样。}
+\caption{我们使用高阶多项式回归模型来拟合图\ref{fig:chap5_underfit_just_right_overfit}中训练样本。真实函数是二次的，但是在这里我们只使用$9$阶多项式。我们通过改变\gls{weight_decay}的量来避免高阶模型的过拟合问题。\emph{(左)}当$\lambda$非常大时，我们可以强迫模型学习到了一个没有斜率的函数。由于它只能表示一个常数函数，所以会导致\gls{underfitting}。\emph{(中)}取一个适当的$\lambda$时，学习算法能够用一个正常的形状来恢复曲率。即使模型能够用更复杂的形状来来表示函数，\gls{weight_decay}鼓励用一个带有更小参数的更简单的模型来描述它。\emph{(右)}当\gls{weight_decay}趋近于$0$（即，使用\,\gls{Moore}来解这个带有最小\gls{regularization}的欠定问题）时，这个$9$阶多项式会导致严重的\gls{overfitting}，这和我们在图\ref{fig:chap5_underfit_just_right_overfit}中看到的一样。}
 \label{fig:chap5_underfit_just_right_overfit_wd_color}
 \end{figure}
 
@@ -953,12 +953,12 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     \text{MSE} &= \SetE[ ( \hat{\theta}_m - \theta  )^2 ] \\
         &= \text{Bias}( \hat{\theta}_m )^2 + \text{Var}( \hat{\theta}_m ) \label{eq:5.54}
 \end{align}
-\glssymbol{mean_squared_error}~度量着估计和真实参数$\theta$之间平方误差的总体期望偏差。
-如\eqnref{eq:5.54}所示，\glssymbol{mean_squared_error}~估计包含了偏差和方差。
-理想的估计具有较小的~\glssymbol{mean_squared_error}~或是在检查中会稍微约束它们的偏差和方差。
+\glssymbol{mean_squared_error}\,度量着估计和真实参数$\theta$之间平方误差的总体期望偏差。
+如\eqnref{eq:5.54}所示，\glssymbol{mean_squared_error}\,估计包含了偏差和方差。
+理想的估计具有较小的\,\glssymbol{mean_squared_error}\,或是在检查中会稍微约束它们的偏差和方差。
 
 偏差和方差的关系和\gls{ML}容量，欠拟合和过拟合的概念紧密相联。
-用~\glssymbol{mean_squared_error}~度量泛化误差（偏差和方差对于泛化误差都是有意义的）时，增加容量会增加方差，降低偏差。
+用\,\glssymbol{mean_squared_error}\,度量泛化误差（偏差和方差对于泛化误差都是有意义的）时，增加容量会增加方差，降低偏差。
 如\figref{fig:chap5_bias_variance_tradeoff}所示，我们再次在关于容量的函数中，看到泛化误差的U形曲线。
 
 \begin{figure}[!htb]
@@ -1095,7 +1095,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \end{equation}
 我们立刻可以看出最大化关于$\Vw$的对数似然和最小化\gls{mean_squared_error}会得到相同的参数估计$\Vw$。
 但是对于相同的最优$\Vw$，这两个准则有着不同的值。
-这验证了~\glssymbol{mean_squared_error}~可以用于\gls{maximum_likelihood_estimation}。
+这验证了\,\glssymbol{mean_squared_error}\,可以用于\gls{maximum_likelihood_estimation}。
 正如我们将看到的，\gls{maximum_likelihood_estimation}有几个理想的性质。
 
 % -- 130 --
@@ -1198,7 +1198,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
         ( \Vy^{(\text{train})} - \MX^{(\text{train})}\Vw )
     \right),
 \end{align}
-其中，我们根据标准的~\glssymbol{mean_squared_error}~公式假设$y$上的高斯方差为$1$。
+其中，我们根据标准的\,\glssymbol{mean_squared_error}\,公式假设$y$上的高斯方差为$1$。
 在下文中，为减少符号负担，我们将$(\MX^{(\text{train})}, \Vy^{(\text{train})})$简单表示为$(\MX, \Vy)$。
 
 % -- 133 --
@@ -1453,7 +1453,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 \else
 \centerline{\includegraphics{Chapter5/figures/decision_tree}}
 \fi
-\caption{描述一个\gls{decision_tree}如何工作的图。（上）树中每个节点都选择将输入样本送到左子节点（$0$）或者右子节点（$1$）。内部的节点用圆圈表示，叶节点用方块表示。每一个节点可以用一个二值的字符串识别并对应树中的位置，这个字符串是通过给起父亲节点的字符串添加一个bit位来实现的（$0$表示选择左或者上，$1$表示选择右或者下）。（下）这个树将空间分为区域。这个二维平面说明\gls{decision_tree}可以分割$SetR^2$。平面中画了树的节点，每个内部点穿过分割线并用来给样本分类，叶节点画在样本所属区域的中心。结果是一个分块常数函数，每一个叶节点一个区域。每个叶需要至少一个训练样本来定义，所以\gls{decision_tree}不可能用来学习一个拥有比训练样本数量还多的\gls{local_maxima}的函数。}
+\caption{描述一个\gls{decision_tree}如何工作的图。（上）树中每个节点都选择将输入样本送到左子节点（$0$）或者右子节点（$1$）。内部的节点用圆圈表示，叶节点用方块表示。每一个节点可以用一个二值的字符串识别并对应树中的位置，这个字符串是通过给起父亲节点的字符串添加一个位元来实现的（$0$表示选择左或者上，$1$表示选择右或者下）。（下）这个树将空间分为区域。这个二维平面说明\gls{decision_tree}可以分割$\SetR^2$。平面中画了树的节点，每个内部点穿过分割线并用来给样本分类，叶节点画在样本所属区域的中心。结果是一个分块常数函数，每一个叶节点一个区域。每个叶需要至少一个训练样本来定义，所以\gls{decision_tree}不可能用来学习一个拥有比训练样本数量还多的\gls{local_maxima}的函数。}
 \label{fig:chap5_decision_tree}
 \end{figure}
 
@@ -1494,10 +1494,10 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 
 \subsection{\gls{PCA}}
 \label{sec:principal_components_analysis_chap5}
-在\secref{sec:example_principal_components_analysis_chap2}中，我们看到\glssymbol{PCA}算法提供了一种压缩数据的方式。
-我们也可以将\glssymbol{PCA}视为学习数据表示的\gls{unsupervised_learning}算法。
+在\secref{sec:example_principal_components_analysis_chap2}中，我们看到\,\glssymbol{PCA}\,算法提供了一种压缩数据的方式。
+我们也可以将\,\glssymbol{PCA}\,视为学习数据表示的\gls{unsupervised_learning}算法。
 这种表示基于上述简单表示的两个标准。
-\glssymbol{PCA}学习一种比原始输入低维的表示。
+\,\glssymbol{PCA}\,学习一种比原始输入低维的表示。
 它也学习了一种元素之间彼此没有线性相关的表示。
 这是学习表示中元素统计独立标准的第一步。
 要实现完全独立性，表示学习算法必须也去掉变量间的非线性关系。
@@ -1515,7 +1515,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 \else
 \centerline{\includegraphics{Chapter5/figures/pca_color}}
 \fi
-\caption{\glssymbol{PCA}学习一种线性投影，使最大方差的方向和新空间的轴对齐。\emph{(左)}原始数据包含了$\Vx$的样本。在这个空间中，方差的方向与轴的方向并不是对齐的。\emph{(右)}变换过的数据$\Vz = \Vx^{\top}\MW$在轴$z_1$的方向上有最大的变化。第二大变化方差的方向沿着轴$z_2$。}
+\caption{\glssymbol{PCA}\,学习一种线性投影，使最大方差的方向和新空间的轴对齐。\emph{(左)}原始数据包含了$\Vx$的样本。在这个空间中，方差的方向与轴的方向并不是对齐的。\emph{(右)}变换过的数据$\Vz = \Vx^{\top}\MW$在轴$z_1$的方向上有最大的变化。第二大变化方差的方向沿着轴$z_2$。}
 \label{fig:chap5_pca}
 \end{figure}
 
