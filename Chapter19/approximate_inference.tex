@@ -72,13 +72,13 @@
 \begin{align}
 \CalL(\Vv,{\Vtheta},q) = \log p(\Vv;{\Vtheta}) - D_{\text{KL}}(q(\Vh\mid\Vv) \Vert p(\Vh\mid\Vv;{\Vtheta})),
 \end{align}
-在这里 $q$是关于$\Vh$的一个任意概率分布。
+其中$q$是关于$\Vh$的一个任意概率分布。
 % 625
 
 
 因为$\log p(\Vv)$和$\CalL(\Vv,{\Vtheta},q)$之间的距离是由\gls{KL}来衡量的。
 因为\gls{KL}总是非负的，我们可以发现$\CalL$小于等于所求的概率对数。
-当且仅当$q$完全相等于$p(\Vh\mid\Vv)$时取到等号。
+当且仅当分布$q$完全相等于$p(\Vh\mid\Vv)$时取到等号。
 % 625
 
 
@@ -99,9 +99,9 @@
 \end{align}
 
 
-对于一个较好的选择$q$来说，$\CalL$是容易计算的。
-对任意选择$q$来说，$\CalL$提供了似然函数的一个下界。
-越好的近似$p(\Vh\mid\Vv)$的分布$q(\Vh\mid\Vv)$得到的下界就越紧，换句话说，就是与$\log p(\Vv)$更加接近。
+对于一个较好的分布$q$的选择来说，$\CalL$是容易计算的。
+对任意分布$q$的选择来说，$\CalL$提供了似然函数的一个下界。
+越好的近似$p(\Vh\mid\Vv)$的分布$q(\Vh\mid\Vv)$得到的下界就越紧，换言之，就是与$\log p(\Vv)$更加接近。
 当$q(\Vh\mid\Vv) = p(\Vh\mid\Vv)$时，这个近似是完美的，也意味着$\CalL(\Vv,{\Vtheta},q) = \log {p(\Vv;{\Vtheta})} $。
 % 625
 
@@ -113,9 +113,9 @@
 % 625  end
 
 
-无论我们选择什么样的$q$，$\CalL$始终是一个下界。
+无论我们选择什么样的分布$q$，$\CalL$始终是一个下界。
 我们可以通过选择一个更简单抑或更复杂的计算过程来得到对应的更松或者更紧的下界。
-通过一个不彻底的优化过程或者将$q$分布做很强的限定（并且使用一个彻底的优化过程）我们可以获得一个很差的$q$，尽管计算开销是极小的。
+通过一个不彻底的优化过程或者将分布$q$做很强的限定（并且使用一个彻底的优化过程）我们可以获得一个很差的$q$，尽管计算开销是极小的。
 % 626 head
 
 
@@ -125,7 +125,7 @@
 
 我们介绍的第一个最大化下界$\CalL$的算法是\firstall{EM}算法。
 在\gls{latent_variable}模型中，这是一个非常热门的训练算法。
-在这里我们描述\citet{emview}所提出的\glssymbol{EM}算法。
+在这里我们描述 \citet{emview} 所提出的\glssymbol{EM}算法。
 与大多数我们在本章中介绍的其他算法不同的是，\glssymbol{EM}并不是一个\gls{approximate_inference}算法，但是是一种能够学到近似后验的算法。
 % 626
 
@@ -145,7 +145,7 @@
 
 
 这可以被看做通过\gls{coordinate_ascent}算法来最大化$\CalL$。
-在第一步中，我们更新$q$来最大化$\CalL$，而另一步中，我们更新$\Vtheta$来最大化$\CalL$。
+在第一步中，我们更新分布$q$来最大化$\CalL$，而另一步中，我们更新$\Vtheta$来最大化$\CalL$。
 % 626
 
 
@@ -156,7 +156,7 @@
 
 
 即使\gls{e_step}采用的是精确推断，我们仍然可以将\glssymbol{EM}算法视作是某种程度上的\gls{approximate_inference}。
-具体地说，\gls{m_step}假设一个$q$分布可以被所有的$\Vtheta$值分享。
+具体地说，\gls{m_step}假设一个分布$q$可以被所有的$\Vtheta$值分享。
 当\gls{m_step}越来越远离\gls{e_step}中的$\Vtheta^{(0)}$时，这将会导致$\CalL$和真实的$\log p(\Vv)$的差距。
 幸运的事，当下一个循环时，\gls{e_step}把这种差距又降到了$0$。
 % 627 head
@@ -168,7 +168,7 @@
 这种特定的性质并不仅仅适用于\glssymbol{EM}算法。
 例如，使用\gls{GD}来最大化似然函数的对数这种方法也利用了相同的性质。
 计算对数似然函数的梯度需要对\gls{hidden_unit}的后验分布来求期望。 
-\glssymbol{EM}算法另一个关键的性质是当我们移动到另一个$\Vtheta$时候，我们仍然可以使用旧的$q$。
+\glssymbol{EM}算法另一个关键的性质是当我们移动到另一个$\Vtheta$时候，我们仍然可以使用旧的分布$q$。
 在传统\gls{ML}中，这种特有的性质在推导大\gls{m_step}更新时候得到了广泛的应用。
 在\gls{DL}中，大多数模型太过于复杂以致于在最优大\gls{m_step}更新中很难得到一个简单的解。
 所以\glssymbol{EM}算法的第二个特质，更多为其所独有，较少被使用。
@@ -199,13 +199,13 @@
 
 
 
-我们回过头来看看\secref{sec:inference_as_optimization}中所描述的精确推断，它指的是关于一个在无限制的概率分布族中的$q$分布使用精确的优化算法来最大化
+我们回过头来看看\secref{sec:inference_as_optimization}中所描述的精确推断，它指的是关于一个在无限制的概率分布族中的分布$q$使用精确的优化算法来最大化
 \begin{align}
 \CalL(\Vv,{\Vtheta},q)
  = \SetE_{\RVh\sim q}[\log p(\Vh , \Vv)] + H(q).
 \end{align}
-我们通过限定$q$分布属于某个分布族，能够使得\glssymbol{MAP}推断成为一种形式的\gls{approximate_inference}。
-具体地说，我们令$q$分布满足一个\gls{dirac_distribution}：
+我们通过限定分布$q$属于某个分布族，能够使得\glssymbol{MAP}推断成为一种形式的\gls{approximate_inference}。
+具体地说，我们令分布$q$满足一个\gls{dirac_distribution}：
 \begin{align}
 q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 \end{align}
@@ -291,15 +291,15 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 % 629
 
 
-我们已经说明过了为什么\gls{ELBO} $\CalL(\Vv,\Vtheta,q)$是$\log  p(\Vv;\Vtheta)$的一个下界、如何将推断看做是 关于$q$分布最大化$\CalL$ 的过程以及如何将学习看做是关于参数$\Vtheta$最大化$\CalL$的过程。
-我们也讲到了\glssymbol{EM}算法在给定了$q$分布的条件下能够进行\gls{large_learning_step}，而基于\glssymbol{MAP}推断的学习算法则是学习一个$p(\Vh \mid \Vv)$的点估计而非推断整个完整的分布。
+我们已经说明过了为什么\gls{ELBO} $\CalL(\Vv,\Vtheta,q)$是$\log  p(\Vv;\Vtheta)$的一个下界、如何将推断看做是 关于分布$q$最大化$\CalL$ 的过程以及如何将学习看做是关于参数$\Vtheta$最大化$\CalL$的过程。
+我们也讲到了\glssymbol{EM}算法在给定了分布$q$的条件下能够进行\gls{large_learning_step}，而基于\glssymbol{MAP}推断的学习算法则是学习一个$p(\Vh \mid \Vv)$的点估计而非推断整个完整的分布。
 在这里我们介绍一些变分学习中更加通用的算法。
 % 629
 
 
-变分学习的核心思想就是我们通过选择给定有约束的分布族中一个$q$分布来最大化$\CalL$。
+变分学习的核心思想就是我们通过选择给定有约束的分布族中一个分布$q$来最大化$\CalL$。
 选择这个分布族时应该考虑到计算$\SetE_q \log p(\Vh,\Vv)$的简单性。
-一个典型的方法就是添加一些$q$分布如何分解的假设。
+一个典型的方法就是添加一些分布$q$如何分解的假设。
 % 630 head
 
 
@@ -308,19 +308,19 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 	q(\Vh\mid\Vv) = \prod_{i}^{}q(h_i \mid \Vv).
 \end{align}
 这被称为是\firstgls{mean_field}方法。
-更一般地说，我们可以通过选择$q$分布的形式来选择任何\gls{graphical_models}的结构，通过选择变量之间的相互作用来灵活地决定近似程度的大小。
+更一般地说，我们可以通过选择分布$q$的形式来选择任何\gls{graphical_models}的结构，通过选择变量之间的相互作用来灵活地决定近似程度的大小。
 这种完全通用的\gls{graphical_models}方法称为\firstgls{structured_variational_inference} \citep{Saul96}。
 % 630 
 
 
 变分方法的优点是我们不需要为分布$q$设定一个特定的参数化形式。
 我们设定它如何分解，之后通过解决优化问题来找出在这些分解限制下最优的概率分布。
-对离散型\gls{latent_variable}来说，这意味着我们使用了传统的优化技巧来优化描述$q$分布的有限个数变量。
+对离散型\gls{latent_variable}来说，这意味着我们使用了传统的优化技巧来优化描述分布$q$的有限个数变量。
 对连续型\gls{latent_variable}来说，这意味着我们使用了一个称为\gls{calculus_of_variations}的数学分支来解决对一个函数空间的优化问题。
-然后决定哪一个函数来表示$q$分布。
+然后决定哪一个函数来表示分布$q$。
 \gls{calculus_of_variations}是``变分学习''或者``变分推断''这些名字的来历，尽管当\gls{latent_variable}是离散时\gls{calculus_of_variations}并没有用武之地。
 当遇到连续型\gls{latent_variable}时，\gls{calculus_of_variations}不需要过多地人工选择模型，是一种很有用的工具。
-我们只需要设定分布$q$如何分解，而不需要去猜测一个特定的能够精确近似原后验分布的$q$分布。
+我们只需要设定分布$q$如何分解，而不需要去猜测一个特定的能够精确近似原后验分布的分布$q$。
 % 630 
 
 
@@ -332,7 +332,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 这两种基于\gls{KL}的方法都有各自的优点与缺点。
 选择哪一种方法取决于在具体每一个应用中哪一种性质更受偏好。
 在基于优化的推断问题中，从计算角度考虑，我们选择使用$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
-具体地说，计算$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$涉及到了计算$q$分布下的期望。
+具体地说，计算$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$涉及到了计算分布$q$下的期望。
 所以通过将分布$q$设计得较为简单，我们可以简化求所需要的期望的计算过程。
 另一个方向的\gls{KL}需要计算真实后验分布下的期望。
 因为真实后验分布的形式是由模型的选择决定的，我们不能设计出一种能够精确计算$D_{\text{KL}}(p(\Vh\mid\Vv) \Vert q(\Vh\mid\Vv))$的开销较小的方法。
@@ -347,8 +347,8 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 关于离散型\gls{latent_variable}的变分推断相对来说比较直接。
 我们定义一个分布$q$，通常$q$的每个因子都由一些离散状态的可查询表格定义。
-在最简单的情况中，$\Vh$是二元的并且我们做了\gls{mean_field}假定，$q$可以根据每一个$h_i$分解。
-在这种情况下，我们可以用一个向量$\hat{\Vh}$来参数化$q$分布，$\hat{\Vh}$的每一个元素都代表一个概率，即$q(h_i = 1\mid \Vv) = \hat{h}_i$。
+在最简单的情况中，$\Vh$是二值的并且我们做了\gls{mean_field}假定，$q$可以根据每一个$h_i$分解。
+在这种情况下，我们可以用一个向量$\hat{\Vh}$来参数化分布$q$，$\hat{\Vh}$的每一个元素都代表一个概率，即$q(h_i = 1\mid \Vv) = \hat{h}_i$。
 % 631
 
 
@@ -358,7 +358,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 % 631
 
 
-这个优化问题是很高效的因为它在许多学习算法的内循环中出现。
+这个优化问题可以很快求解，因为它在许多学习算法的内循环中出现。
 为了追求速度，我们通常使用特殊设计的优化算法。
 这些算法通常能够在极少的循环内解决一些小而简单的问题。
 一个常见的选择是使用\gls{fixed_point_equation}，换句话说，就是解关于$\hat{h}_i$的方程
@@ -369,7 +369,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 % 631
 
 
-为了具体化这些描述，我们接下来会讲如何将变分推断应用到\firstgls{binary_sparse_coding}模型（这里我们所描述的模型是\citet{henniges2010binary}提出的，但是我们采用了传统、通用的\gls{mean_field}方法，而原文作者采用了一种特殊设计的算法）中。
+为了具体化这些描述，我们接下来会讲如何将变分推断应用到\firstgls{binary_sparse_coding}模型（这里我们所描述的模型是 \citet{henniges2010binary} 提出的，但是我们采用了传统、通用的\gls{mean_field}方法，而原文作者采用了一种特殊设计的算法）中。
 推导过程在数学上非常详细，为希望完全了解我们描述过的变分推断和学习高级概念描述的读者所准备。
 而对于并不计划推导或者实现变分学习算法的读者来说，可以放心跳过，直接阅读下一节，这并不会导致新的高级概念的遗漏。
 建议那些从事\gls{binary_sparse_coding}研究的读者可以重新看一下\secref{sec:useful_properties_of_common_functions}中描述的一些经常在概率模型中出现的有用的函数性质。
@@ -545,7 +545,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 这也是一种形式的竞争——两个共同解释输入的\gls{hidden_unit}之间，只有一个解释得更好的才被允许继续保持活跃。
 在\gls{binary_sparse_coding}的后验分布中，\gls{mean_field}近似为了捕获到更多的\gls{explaining_away}作用，产生了这种竞争。
 事实上，\gls{explaining_away}效应会导致一个\gls{multimodal}的后验分布，以致于我们如果从后验分布中采样，一些样本只有一个结点是活跃的，其他的样本在另一个结点活跃，只有很少的样本能够两者都处于活跃状态。
-不幸的是，\gls{explaining_away}作用无法通过\gls{mean_field}中\gls{factorial}$q$分布来建模，因此建模时\gls{mean_field}近似只能选择一个\gls{mode}。
+不幸的是，\gls{explaining_away}作用无法通过\gls{mean_field}中\gls{factorial}分布$q$来建模，因此建模时\gls{mean_field}近似只能选择一个\gls{mode}。
 这个现象的一个例子可以参考\figref{fig:chap3_kl_direction_color}。
 % 636
 
@@ -569,7 +569,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 取而代之的是，我们使用一种称为是\firstgls{damping}的启发式技巧来实现块更新。
 在\gls{damping}方法中，对$\hat{\Vh}$中的每一个元素我们都可以解出最优值，然后对于所有的值都在这个方向上移动一小步。
 这个方法不能保证每一步都能增加$\CalL$，但是对于许多模型都很有效。
-关于在\gls{message_passing}算法中如何选择同步程度以及使用\gls{damping}策略可以参考\citet{koller-book2009} 。
+关于在\gls{message_passing}算法中如何选择同步程度以及使用\gls{damping}策略可以参考 \citet{koller-book2009} 。
  % 637 head 
 
 
@@ -785,7 +785,7 @@ $\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_
 从这里，我们可以发现$\tilde{q}$\gls{functional}形式满足\gls{gaussian_distribution}。
 因此，我们可以得到$q(\Vh\mid\Vv) = \CalN(\Vh;\Vmu,\Vbeta^{-1})$，其中$\Vmu$和对角的$\Vbeta$是变分参数，我们可以使用任何方法来优化它。
 有必要再强调一下，我们并没有假设$q$是一个\gls{gaussian_distribution}，这个高斯的形式是使用\gls{calculus_of_variations}来最大化$q$关于$\CalL$\footnote{此处似乎有笔误。}推导出的。
-在不同的模型上应用相同的方法可能会得到不同\gls{functional}形式的$q$分布。
+在不同的模型上应用相同的方法可能会得到不同\gls{functional}形式的分布$q$。
 % 641
 
 当然，上述模型只是为了说明情况的一个简单例子。
@@ -894,7 +894,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 % 644
 
 
-近来\gls{learned}\gls{approximate_inference}已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一\citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
+近来\gls{learned}\gls{approximate_inference}已经成为了\gls{VAE}形式的\gls{generative_model}中的主要方法之一 \citep{Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014}。
 在这种优美的方法中，不需要为推断网络构造显式的目标。
 反之，推断网络仅仅被用来定义$\CalL$，然后调整推断网络的参数来增大$\CalL$。
 这种模型在\secref{sec:variational_autoencoders}中详细描述。
