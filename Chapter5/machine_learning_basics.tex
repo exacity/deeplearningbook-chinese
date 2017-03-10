@@ -652,7 +652,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 我们可以将去掉假设空间中的某个函数看作是对不赞成这个函数的无限偏好。
 
 在我们权重衰减的示例中，通过在最小化的\gls{target}中额外增加一项，我们明确地表示了偏好权重较小的线性函数。
-有很多其他方法隐式地或显式地表示对不同解的偏好。
+有很多其他方法隐式或显式地表示对不同解的偏好。
 总而言之，这些不同的方法都被称为\firstgls{regularization}。
 \emph{\gls{regularization}是指我们修改学习算法，使其降低泛化误差而非训练误差}。
 \gls{regularization}是\gls{ML}领域的中心问题之一，只有优化能够与其重要性相媲。
@@ -1142,24 +1142,23 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 在观察到数据前，我们将$\Vtheta$的已知知识表示成\firstgls{prior_probability_distribution}，$p(\Vtheta)$（有时简单地称为``先验''）。
 一般而言，\gls{ML}实践者会选择一个相当宽泛的（即，高熵的）先验分布，反映在观测到任何数据前参数$\Vtheta$的高度不确定性。
 例如，我们可能会假设先验$\Vtheta$在有限区间中均匀分布。
-许多先验偏好于``更简单''的解决方法（如小幅度的系数，或是接近常数的函数）。
+许多先验偏好于``更简单''的解（如小幅度的系数，或是接近常数的函数）。
 
-现在假设有一组数据样本$\{x^{(1)},\dots,x^{(m)}\}$。
-通过贝叶斯法则结合数据似然$p(x^{(1)},\dots,x^{(m)} \mid \Vtheta)$和先验，我们可以恢复数据对我们关于$\Vtheta$信念的影响：
+现在假设我们有一组数据样本$\{x^{(1)},\dots,x^{(m)}\}$。
+通过\gls{bayes_rule}结合数据似然$p(x^{(1)},\dots,x^{(m)} \mid \Vtheta)$和先验，我们可以恢复数据对我们关于$\Vtheta$信念的影响：
 \begin{equation}
         p(\Vtheta \mid x^{(1)},\dots,x^{(m)}) = 
         \frac{p(x^{(1)},\dots,x^{(m)} \mid \Vtheta) p(\Vtheta)}
             {p(x^{(1)},\dots,x^{(m)})}
 \end{equation}
-在贝叶斯估计通常使用的情况下，先验开始是相对均匀的分布或高熵的高斯分布，观测数据通常会使后验的熵下降，并集中在参数的几个可能性很高的值。
+在贝叶斯估计常用的情景下，先验开始是相对均匀的分布或高熵的高斯分布，观测数据通常会使后验的熵下降，并集中在参数的几个可能性很高的值。
 
 相对于\gls{maximum_likelihood_estimation}，贝叶斯估计有两个重要区别。
 第一，不像最大似然方法预测时使用$\Vtheta$的点估计，贝叶斯方法使用$\Vtheta$的全分布。
-例如，在观测到$m$个\gls{example:chap5}后，下一个数据\gls{example:chap5}，$x^{(m+1)}$，的预测分布如下：
+例如，在观测到$m$个\gls{example:chap5}后，下一个数据\gls{example:chap5}~$x^{(m+1)}$的预测分布如下：
 \begin{equation}
     p(x^{(m+1)} \mid x^{(1)},\dots,x^{(m)}) = 
-    \int p(x^{(m+1)} \mid \Vtheta) p(\Vtheta \mid x^{(1)},\dots,x^{(m)}) 
-        d \Vtheta .
+    \int p(x^{(m+1)} \mid \Vtheta) p(\Vtheta \mid x^{(1)},\dots,x^{(m)})~d\Vtheta .
 \end{equation}
 这里，每个具有正概率密度的$\Vtheta$的值有助于下一个\gls{example:chap5}的预测，其中贡献由后验密度本身加权。
 在观测到\gls{dataset} $\{ x^{(1)},\dots,x^{(m)}\}$之后，如果我们仍然非常不确定$\Vtheta$的值，那么这个不确定性会直接包含在我们所做的任何预测中。
@@ -1168,7 +1167,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 在\secref{sec:estimators_bias_and_variance}中，我们已经探讨频率派方法解决给定点估计$\Vtheta$的不确定性的方法是评估方差，估计的方差评估了观测数据重新从观测数据中采样后，估计可能如何变化。
 对于如何处理估计不确定性的这个问题，贝叶斯派的答案是积分，这往往会防止过拟合。
-积分当然是概率法则的应用，使贝叶斯方法容易验证，而频率派\gls{ML}基于相当特别的决定构建了一个估计，将\gls{dataset}里的所有信息归纳到一个单独的点估计。
+当然，积分仅仅是概率法则的应用，使贝叶斯方法容易验证，而频率派\gls{ML}基于相当特别的决定构建了一个估计，将\gls{dataset}里的所有信息归纳到一个单独的点估计。
 
 贝叶斯方法和最大似然方法的第二个最大区别是由贝叶斯先验分布造成的。
 先验能够影响概率质量密度朝参数空间中偏好先验的区域偏移。
@@ -1177,9 +1176,10 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 当训练数据很有限时，贝叶斯方法通常泛化得更好，但是当训练\gls{example:chap5}数目很大时，通常会有很大的计算\gls{cost}。
 
-\textbf{示例：贝叶斯\gls{linear_regression}} \quad 我们使用贝叶斯估计方法学习\gls{linear_regression}参数。
+
+\paragraph{示例：贝叶斯\gls{linear_regression}}  我们使用贝叶斯估计方法学习\gls{linear_regression}的参数。
 在\gls{linear_regression}中，我们学习从输入向量$\Vx\in\SetR^n$预测标量$y\in\SetR$的线性映射。
-该预测的参数为向量$\Vw \in \SetR^n$：
+该预测由向量$\Vw \in \SetR^n$参数化：
 \begin{equation}
     \hat{y} = \Vw^\Tsp \Vx .
 \end{equation}
@@ -1204,7 +1204,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 为确定模型参数向量$\Vw$的后验分布，我们首先需要指定一个先验分布。
 先验应该反映我们对这些参数取值的信念。
-虽然有时很难或很不自然将我们的先验信念表示为模型的参数，在实践中我们通常假设一个相当广泛的分布来表示$\Vtheta$的高度不确定性。
+虽然有时将我们的先验信念表示为模型的参数很难或很不自然，但在实践中我们通常假设一个相当广泛的分布来表示$\Vtheta$的高度不确定性。
 实数值参数通常使用高斯作为先验分布：
 \begin{equation}
     p(\Vw) = \mathcal{N}( \Vw; \Vmu_0, \VLambda_0 ) 
@@ -1254,14 +1254,14 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 检查此后验分布可以让我们获得\gls{bayesian_inference}效果的一些直觉。
 大多数情况下，我们设置$\Vmu_0 = 0$。
 如果我们设置$\VLambda_0 = \frac{1}{\alpha}\MI$，那么$\mu_m$对$\Vw$的估计就和频率派带权重衰减惩罚$\alpha\Vw^\Tsp\Vw$的\gls{linear_regression}的估计是一样的。
-一个区别是若$\alpha$设为$0$则贝叶斯估计是未定义的——不能初始化贝叶斯学习过程为一个无限宽的$\Vw$先验。
+一个区别是若$\alpha$设为$0$则贝叶斯估计是未定义的——我们不能将贝叶斯学习过程初始化为一个无限宽的$\Vw$先验。
 更重要的区别是贝叶斯估计会给出一个协方差矩阵，表示$\Vw$所有不同值的可能范围，而不仅是估计$\mu_m$。
 
 \subsection{\glsentrytext{MAP}(\glssymbol{MAP})估计}
 \label{sec:maximum_a_posteriori_map_estimation}
 原则上，我们应该使用参数$\Vtheta$的完整贝叶斯后验分布进行预测，但单点估计常常也是需要的。
 希望使用点估计的一个常见原因是，对于大多数有意义的模型而言，大多数涉及到贝叶斯后验的计算是非常棘手的，点估计提供了一个可行的近似解。
-我们仍然可以让先验影响点估计的选择而利用贝叶斯方法的优点，而不是简单地回归到\gls{MLE}。
+我们仍然可以让先验影响点估计的选择来利用贝叶斯方法的优点，而不是简单地回到\gls{MLE}。
 一种能够做到这一点的合理方式是选择\firstall{MAP}点估计。
 \glssymbol{MAP}\,估计选择后验概率最大的点（或在$\Vtheta$是连续值的更常见情况下，概率密度最大的点）：
 \begin{equation}
@@ -1275,24 +1275,24 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 例如，考虑具有高斯先验权重$\Vw$的\gls{linear_regression}模型。
 如果先验是$\mathcal{N}(\Vw;\mathbf{0},\frac{1}{\lambda}I^2)$，那么\eqnref{eq:5.79}的对数先验项正比于熟悉的权重衰减惩罚$\lambda \Vw^\Tsp\Vw$，加上一个不依赖于$\Vw$也不会影响学习过程的项。
-因此，具有高斯先验权重的\gls{MAP}\gls{bayesian_inference}对应着权重衰减。
+因此，具有高斯先验权重的\glssymbol{MAP}~\gls{bayesian_inference}对应着权重衰减。
 
-正如全\gls{bayesian_inference}，\glssymbol{MAP}\,\gls{bayesian_inference}的优势是能够利用来自先验而非训练数据的信息。
+正如全\gls{bayesian_inference}，\glssymbol{MAP}\,\gls{bayesian_inference}的优势是能够利用来自先验的信息，这些信息无法从训练数据中获得。
 该附加信息有助于减少\gls{MAP}点估计的方差（相比于ML估计）。
 然而，这个优点的代价是增加了偏差。
 
 许多正规化估计方法，例如权重衰减\gls{regularization}的最大似然学习，可以被解释为\gls{bayesian_inference}的\,\glssymbol{MAP}\,近似。
-这个解释产生于\gls{regularization}时加到\gls{target}函数的附加项对应着$\log p(\Vtheta)$。
-并非所有的正规化惩罚都对应着\gls{bayesian_inference}。
+这个适应于\gls{regularization}时加到\gls{target}函数的附加项对应着$\log p(\Vtheta)$。
+并非所有的正则化惩罚都对应着\glssymbol{MAP}~\gls{bayesian_inference}。
 例如，有些\gls{regularizer}可能不是一个概率分布的对数。
 还有些\gls{regularizer}依赖于数据，当然也不会是一个先验概率分布。
 
-\glssymbol{MAP}\,\gls{bayesian_inference}提供了一个直观的方法去设计复杂但可解释的\gls{regularizer}。
+\glssymbol{MAP}\,\gls{bayesian_inference}提供了一个直观的方法来设计复杂但可解释的\gls{regularizer}。
 例如，更复杂的惩罚项可以通过混合高斯分布作为先验得到，而不是一个单独的高斯分布\citep{Nowlan-nips92}。
 
 \section{\glsentrytext{supervised_learning}算法}
 \label{sec:supervised_learning_algorithms}
-回顾\secref{sec:the_experience_e}，\gls{supervised_learning}算法，粗略地说，是给定一组输入$\Vx$和输出$\Vy$的训练集，学习如何关联输入和输出。
+回顾\secref{sec:the_experience_e}，粗略地说，\gls{supervised_learning}算法是给定一组输入$\Vx$和输出$\Vy$的训练集，学习如何关联输入和输出。
 在许多情况下，输出$\Vy$很难自动收集，必须由人来提供``监督''，不过该术语仍然适用于训练集目标可以被自动收集的情况。
 
 % -- 136 --
@@ -1318,13 +1318,13 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 \begin{equation}
     p(y = 1 \mid \Vx; \Vtheta) = \sigma(\Vtheta^\Tsp \Vx).
 \end{equation}
-这个方法被称为\firstgls{logistic_regression}，名字有点奇怪，因为该模型用于分类，而非回归。
+这个方法被称为\firstgls{logistic_regression}，这个名字有点奇怪，因为该模型用于分类而非回归。
 
 \gls{linear_regression}中，我们能够通过求解正规方程以找到最佳权重。
 相比而言，逻辑回归会更困难些。
 其最佳权重没有闭解。
 反之，我们必须最大化对数似然来搜索最优解。
-我们可以通过\gls{GD}算法最小化负对数似然达到这一点。
+我们可以通过\gls{GD}算法最小化负对数似然来搜索。
 
 通过确定正确的输入和输出变量上的有参条件概率分布族，相同的策略基本上可以用于任何\gls{supervised_learning}问题。
 
@@ -1346,12 +1346,12 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 \end{equation}
 其中，$\Vx^{(i)}$是训练\gls{example:chap5}，$\Valpha$是系数向量。
 学习算法重写为这种形式允许我们将$\Vx$替换为\gls{feature}函数$\phi(\Vx)$的输出，\gls{dot_product}替换为被称为\firstgls{kernel}的函数$k(\Vx, \Vx^{(i)}) = \phi(\Vx)\cdot \phi(\Vx^{(i)})$。
-运算$\cdot$表示类似于$\phi(\Vx)^\Tsp \phi(\Vx^{(i)})$的\gls{dot_product}。
+运算符$\cdot$表示类似于$\phi(\Vx)^\Tsp \phi(\Vx^{(i)})$的\gls{dot_product}。
 对于某些\gls{feature}空间，我们可能不会书面地使用向量\gls{inner_product}。
-在某些无限维空间中，我们需要使用其他类型的\gls{inner_product}，如基于积分而非总和的\gls{inner_product}。
+在某些无限维空间中，我们需要使用其他类型的\gls{inner_product}，如基于积分而非加和的\gls{inner_product}。
 这种类型\gls{inner_product}的完整介绍超出了本书的范围。
 
-核估计替换\gls{dot_product}之后，我们可以使用如下函数进行预测
+使用核估计替换\gls{dot_product}之后，我们可以使用如下函数进行预测
 \begin{equation}
     f(\Vx) = b + \sum_i \alpha_i k(\Vx, \Vx^{(i)}) .
 \end{equation}
@@ -1360,14 +1360,14 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 核函数完全等价于用$\phi(\Vx)$预处理所有的输入，然后在新的转换空间学习线性模型。
 
 \gls{kernel_trick}十分强大有两个原因。
-首先，它使我们能够使用保证有效收敛的凸优化技术来学习作为$\Vx$的函数的非线性模型。
+首先，它使我们能够使用保证有效收敛的凸优化技术来学习非线性模型（关于$\Vx$的函数）。
 这是可能的，因为我们可以认为$\phi$是固定的，仅优化$\alpha$，即优化算法可以将决策函数视为不同空间中的线性函数。
 其二，核函数$k$的实现方法通常有比直接构建$\phi(\Vx)$再算\gls{dot_product}高效很多。
 
 在某些情况下，$\phi(\Vx)$甚至可以是无限维的，对于普通的显式方法而言，这将是无限的计算代价。
-在很多情况下，即使$\phi(\Vx)$是难算的，$k(\Vx,\Vx')$却会是一个关于$\Vx$非线性的，易算的函数。
+在很多情况下，即使$\phi(\Vx)$是难算的，$k(\Vx,\Vx')$却会是一个关于$\Vx$非线性的、易算的函数。
 举个无限维空间易算的核的例子，我们构建一个作用于非负整数$x$上的\gls{feature}映射$\phi(x)$。
-假设这个映射返回一个由开头$x$个$1$，随后时无限个$0$的向量。
+假设这个映射返回一个由开头$x$个$1$，随后是无限个$0$的向量。
 我们可以写一个核函数$k(x,x^{(i)}) = \min(x, x^{(i)})$，完全等价于对应的无限维\gls{dot_product}。
 
 % -- 138 --
@@ -1378,16 +1378,16 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 \end{equation}
 其中$\mathcal{N}(x; \Vmu, \VSigma)$是标准正态密度。
 这个核也被称为\firstall{RBF}核，因为其值沿$\Vv$中从$\Vu$向外辐射的方向减小。
-高斯核对应于无限维空间中的\gls{dot_product}，但是该空间的推导没有整数上最小核的示例直观。
+高斯核对应于无限维空间中的\gls{dot_product}，但是该空间的推导没有整数上最小核的示例那么直观。
 
-我们可以认为高斯核在执行一种\textbf{模板匹配}。
+我们可以认为高斯核在执行一种\textbf{模板匹配}(template matching)。
 训练\gls{label} $y$相关的训练\gls{example:chap5} $\Vx$变成了类别$y$的模版。
-当测试点$\Vx'$到$\Vx$的欧几里得距离很小时，对应的高斯核很大，表明$\Vx'$和模版$\Vx$非常相似。
+当测试点$\Vx'$到$\Vx$的欧几里得距离很小，对应的高斯核响应很大时，表明$\Vx'$和模版$\Vx$非常相似。
 该模型进而会赋予相对应的训练\gls{label} $y$较大的权重。
 总的来说，预测将会组合很多这种通过训练样本相似度加权的训练标签。
 
 \gls{SVM}不是唯一可以使用\gls{kernel_trick}来增强的算法。
-许多其他的线性模型可以通过这种方式来增强。
+许多其他的线性模型也可以通过这种方式来增强。
 使用\gls{kernel_trick}的算法类别被称为\firstgls{kernel_machines}或\firstgls{kernel_methods}\citep{Williams+Rasmussen-nips8,Scholkopf99}。    
 
 核机器的一个主要缺点是计算决策函数的成本关于训练\gls{example:chap5}的数目是线性的。
@@ -1407,7 +1407,7 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 
 \subsection{其他简单的\glsentrytext{supervised_learning}算法}
 \label{sec:other_simple_supervised_learning_algorithms}
-我们已经简要介绍过另一个非概率\gls{supervised_learning}算法，近邻回归。
+我们已经简要介绍过另一个非概率\gls{supervised_learning}算法，最近邻回归。
 更一般地，k-最近邻是一类可用于分类或回归的技术。
 作为一个非参数学习算法，$k$-最近邻并不局限于固定数目的参数。
 我们通常认为$k$-最近邻算法没有任何参数，而是使用训练数据的简单函数。
@@ -1421,12 +1421,12 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 例如，假设我们有一个用$0$-$1$误差度量性能的多分类任务。
 在此设定中，当训练\gls{example:chap5}数目趋向于无穷大时，$1$-最近邻收敛到两倍贝叶斯误差。
 超出贝叶斯误差的原因是它会随机从等距离的临近点中随机挑一个。
-当有无限的训练数据时，所有测试点$\Vx$周围距离为零的邻近点有无限多个。
+而存在无限的训练数据时，所有测试点$\Vx$周围距离为零的邻近点有无限多个。
 如果我们使用所有这些临近点投票的决策方式，而不是随机挑选一个，那么该过程将会收敛到贝叶斯错误率。
 $k$-最近邻的高容量使其在训练\gls{example:chap5}数目大时能够获取较高的精度。
 然而，它的计算成本很高，另外在训练集较小时泛化能力很差。
 $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他更具识别力。
-例如，假设我们在做从各向同性的高斯分布中抽取$\Vx\in\SetR^{100}$的回归任务，但是只有一个变量$x_1$和结果相关。
+例如，假设我们要处理一个的回归任务，其中$\Vx\in\SetR^{100}$是从各向同性的高斯分布中抽取的，但是只有一个变量$x_1$和结果相关。
 进一步假设该\gls{feature}直接决定了输出，即在所有情况中$y=x_1$。
 \gls{nearest_neighbor_regression}不能检测到这个简单模式。
 大多数点$\Vx$的最近邻将取决于$x_2$到$x_{100}$的大多数\gls{feature}，
@@ -1435,16 +1435,16 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 
 % -- 140 --
 
-\firstgls{decision_tree}及其变种是另一类将输入空间分成不同的区域，每个区域有独立的参数的算法\citep{Breiman84}。
+\firstgls{decision_tree}及其变种是另一类将输入空间分成不同的区域，每个区域有独立参数的算法\citep{Breiman84}。
 如\figref{fig:chap5_decision_tree}所示，决策树的每个节点都与输入空间的一个区域相关联，并且内部节点继续将区域分成子节点下的子区域（通常使用坐标轴拆分区域）。
 空间由此细分成不重叠的区域，叶节点和输入区域之间形成一一对应的关系。
 每个叶结点将其输入区域的每个点映射到相同的输出。
 决策树通常有特定的训练算法，超出了本书的范围。
-如果允许学习任意大小的决策树，那么可以被视作非参数算法。
-然而实践中通常有大小限制作为\gls{regularizer}将其转变成有参模型。
+如果允许学习任意大小的决策树，那么它可以被视作非参数算法。
+然而实践中通常有大小限制，作为\gls{regularizer}将其转变成有参模型。
 由于决策树通常使用坐标轴相关的拆分，并且每个子节点关联到常数输出，因此有时解决一些对于逻辑回归很简单的问题很费力。
 例如，假设有一个二分类问题，当$x_2>x_1$时分为正类，则决策树的分界不是坐标轴对齐的。
-决策树将需要许多节点近似决策边界，坐标轴对齐使其算法步骤将不断来回穿梭于真正的决策函数。
+因此，决策树将需要许多节点近似决策边界，坐标轴对齐使其算法步骤不断地来回穿梭于真正的决策函数。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -1452,7 +1452,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 \else
 \centerline{\includegraphics{Chapter5/figures/decision_tree}}
 \fi
-\caption{描述一个\gls{decision_tree}如何工作的图。\emph{(上)}树中每个节点都选择将输入样本送到左子节点（$0$）或者右子节点（$1$）。内部的节点用圆圈表示，叶节点用方块表示。每一个节点可以用一个二值的字符串识别并对应树中的位置，这个字符串是通过给起父亲节点的字符串添加一个位元来实现的（$0$表示选择左或者上，$1$表示选择右或者下）。\emph{(下)}这个树将空间分为区域。这个二维平面说明\gls{decision_tree}可以分割$\SetR^2$。平面中画了树的节点，每个内部点穿过分割线并用来给样本分类，叶节点画在样本所属区域的中心。结果是一个分块常数函数，每一个叶节点一个区域。每个叶需要至少一个训练样本来定义，所以\gls{decision_tree}不可能用来学习一个拥有比训练样本数量还多的\gls{local_maxima}的函数。}
+\caption{描述一个\gls{decision_tree}如何工作的示意图。\emph{(上)}树中每个节点都选择将输入样本送到左子节点($0$)或者右子节点($1$)。内部的节点用圆圈表示，叶节点用方块表示。每一个节点可以用一个二值的字符串识别并对应树中的位置，这个字符串是通过给起父亲节点的字符串添加一个位元来实现的（$0$表示选择左或者上，$1$表示选择右或者下）。\emph{(下)}这个树将空间分为区域。这个二维平面说明\gls{decision_tree}可以分割$\SetR^2$。这个平面中画出了树的节点，每个内部点穿过分割线并用来给样本分类，叶节点画在样本所属区域的中心。结果是一个分块常数函数，每一个叶节点一个区域。每个叶需要至少一个训练样本来定义，所以\gls{decision_tree}不可能用来学习一个\gls{local_maxima}比训练样本数量还多的函数。}
 \label{fig:chap5_decision_tree}
 \end{figure}
 
@@ -1460,26 +1460,26 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 尽管如此，在计算资源受限制时，它们都是很有用的学习算法。
 通过思考复杂算法和$k$-最近邻或决策树之间的相似性和差异，我们可以建立对更复杂学习算法的直觉。
 
-参考~\cite{MurphyBook2012,bishop-book2006,Hastie2001}或其他\gls{ML}教科书了解更多的传统\gls{supervised_learning}算法。
+读者可以参考~\cite{MurphyBook2012,bishop-book2006,Hastie2001}或其他\gls{ML}教科书了解更多的传统\gls{supervised_learning}算法。
 
 \section{\glsentrytext{unsupervised_learning}算法}
 \label{sec:unsupervised_learning_algorithms}
 回顾\secref{sec:the_experience_e}，无监督算法只处理``\gls{feature}''，不操作监督信号。
-监督和无监督算法之间的区别没有规范，严格的定义，因为没有客观的判断来区分监督者提供的值是\gls{feature}还是\gls{target}。
-通俗地说，\gls{unsupervised_learning}是指从不需要人为注释\gls{example:chap5}的分布中抽取信息的大多数尝试。
-该术语通常与密度估计相关，学习从分布中采样，学习从分布中\gls{denoise}，需要数据分布的流形，或是将数据中相关的\gls{example:chap5}聚类。
+监督和无监督算法之间的区别没有规范严格的定义，因为没有客观的判断来区分监督者提供的值是\gls{feature}还是\gls{target}。
+通俗地说，\gls{unsupervised_learning}的大多数尝试是指从不需要人为注释的\gls{example:chap5}的分布中抽取信息。
+该术语通常与密度估计相关，学习从分布中采样、学习从分布中\gls{denoise}、寻找数据分布的流形或是将数据中相关的\gls{example:chap5}聚类。
 
 一个经典的\gls{unsupervised_learning}任务是找到数据的``最佳''表示。
-``最佳''可以是不同的表示，但是一般来说，是指该表示在比本身表示的信息更简单或更易访问而受到一些惩罚或限制的情况下，尽可能保存关于$\Vx$更多的信息。 
+``最佳''可以是不同的表示，但是一般来说，是指该表示在比本身表示的信息\emph{更简单}或更易访问而受到一些惩罚或限制的情况下，尽可能地保存关于$\Vx$更多的信息。 
 
 % -- 142 --
 
-有很多方式定义较简单的表示。最常见的三种包括低维表示，稀疏表示，独立表示。
+有很多方式定义较简单的表示。最常见的三种包括低维表示、稀疏表示和独立表示。
 低维表示尝试将$\Vx$中的信息尽可能压缩在一个较小的表示中。
 稀疏表示将\gls{dataset}嵌入到输入项大多数为零的表示中\citep{Barlow89,Olshausen+Field-1996,Hinton+Ghahramani-97}。
 稀疏表示通常用于需要增加表示维数的情况，使得大部分为零的表示不会丢失很多信息。
 这会使得表示的整体结构倾向于将数据分布在表示空间的坐标轴上。
-独立表示试图解开数据分布中变动的来源，使得表示的维度是统计独立的。
+独立表示试图\emph{分开}数据分布中变化的来源，使得表示的维度是统计独立的。
 
 当然这三个标准并非相互排斥的。
 低维表示通常会产生比原始的高维数据具有较少或较弱依赖关系的元素。
@@ -1489,23 +1489,23 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 表示的概念是\gls{DL}核心主题之一，因此也是本书的核心主题之一。
 本节会介绍表示学习算法中的一些简单示例。
 总的来说，这些示例算法会说明如何实施上面的三个标准。
-剩余的大部分章节会介绍其他表示学习算法以不同方式处理这三个标准或是介绍其他标准。
+剩余的大部分章节会介绍额外的表示学习算法，它们以不同方式处理这三个标准或是引入其他标准。
 
-\subsection{\gls{PCA}}
+\subsection{\glsentrytext{PCA}}
 \label{sec:principal_components_analysis_chap5}
 在\secref{sec:example_principal_components_analysis_chap2}中，我们看到\,\glssymbol{PCA}\,算法提供了一种压缩数据的方式。
 我们也可以将\,\glssymbol{PCA}\,视为学习数据表示的\gls{unsupervised_learning}算法。
 这种表示基于上述简单表示的两个标准。
-\,\glssymbol{PCA}\,学习一种比原始输入低维的表示。
+\,\glssymbol{PCA}\,学习一种比原始输入维数更低的表示。
 它也学习了一种元素之间彼此没有线性相关的表示。
 这是学习表示中元素统计独立标准的第一步。
-要实现完全独立性，表示学习算法必须也去掉变量间的非线性关系。
+要实现完全独立性，表示学习算法也必须去掉变量间的非线性关系。
 
 % -- 143 --
 
-如\figref{fig:chap5_pca}所示，\glssymbol{PCA}\,将输入$\Vx$投影表示成$\Vz$，学习数据的正交，线性变换。
+如\figref{fig:chap5_pca}所示，\glssymbol{PCA}\,将输入$\Vx$投影表示成$\Vz$，学习数据的正交线性变换。
 在\secref{sec:example_principal_components_analysis_chap2}中，我们看到了如何学习重建原始数据的最佳一维表示（就\gls{mean_squared_error}而言），这种表示其实对应着数据的第一个主要成分。
-因此，我们可以用\,\glssymbol{PCA}\,作为保留数据尽可能多信息的降维方法（再次是就最小重构误差平方而言）。
+因此，我们可以用\,\glssymbol{PCA}\,作为保留数据尽可能多信息的降维方法（再次就最小重构误差平方而言）。
 在下文中，我们将研究\,\glssymbol{PCA}\,表示如何使原始数据表示$\MX$去相关的.
 
 \begin{figure}[!htb]
@@ -1519,7 +1519,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 \end{figure}
 
 假设有一个$m\times n$的\gls{design_matrix} $\MX$，数据的均值为零，$\SetE[\Vx\,] = 0$。
-若非如此，通过预处理步骤所有\gls{example:chap5}减去均值，数据可以很容易地中心化。
+若非如此，通过预处理步骤使所有\gls{example:chap5}减去均值，数据可以很容易地中心化。
 
 $\MX$对应的无偏样本协方差矩阵给定如下
 \begin{equation}
@@ -1533,8 +1533,8 @@ $\MX$对应的无偏样本协方差矩阵给定如下
     \MX^\Tsp\MX = \MW \VLambda \MW^\Tsp .
 \end{equation}
 本节中，我们会探索主成分的另一种推导。
-主成分也可以通过奇异值分解得到。
-具体地，它们是$\MX$的右奇异向量。
+主成分也可以通过奇异值分解(SVD)得到。
+具体来说，它们是$\MX$的右奇异向量。
 为了说明这点，假设$\MW$是奇异值分解$\MX = \MU\VSigma\MW^\Tsp$的右奇异向量。
 以$\MW$作为特征向量基，我们可以得到原来的特征向量方程：
 \begin{equation}
@@ -1562,10 +1562,10 @@ $\MX$对应的无偏样本协方差矩阵给定如下
 \end{align}
 其中，再次使用\,\glssymbol{SVD}\,的定义有$\MW^\Tsp\MW = \MI$。
 
-以上分析指明当我们通过线性变换$\MW$将数据$\Vx$投影到$\Vz$时，得到的数据表示的协方差矩阵是对角的（$\VSigma^2$），即说明$\Vz$中的元素是彼此无关的。
+以上分析指明当我们通过线性变换$\MW$将数据$\Vx$投影到$\Vz$时，得到的数据表示的协方差矩阵是对角的（即$\VSigma^2$），立刻可得$\Vz$中的元素是彼此无关的。
 
 \glssymbol{PCA}\,这种将数据变换为元素之间彼此不相关表示的能力是\,\glssymbol{PCA}\,的一个重要性质。
-它是\emph{消除数据中未知变动因素}的简单表示示例。
+它是\emph{消除数据中未知变化因素}的简单表示示例。
 在\,\glssymbol{PCA}\,中，这个消除是通过寻找输入空间的一个旋转（由$\MW$确定），
 使得方差的主坐标和$\Vz$相关的新表示空间的基对齐。
 
@@ -1598,10 +1598,10 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 然而我们不知道聚类的性质是否很好地对应到真实世界的性质。
 此外，可能有许多不同的聚类都能很好地对应到现实世界的某些属性。
 我们可能希望找到和一个\gls{feature}相关的聚类，但是得到了一个和任务无关的，同样是合理的不同聚类。
-例如，假设我们在包含红色卡车图片，红色汽车图片，灰色卡车图片和灰色汽车图片的\gls{dataset}上运行两个聚类算法。
+例如，假设我们在包含红色卡车图片、红色汽车图片、灰色卡车图片和灰色汽车图片的\gls{dataset}上运行两个聚类算法。
 如果每个聚类算法聚两类，那么可能一个算法将汽车和卡车各聚一类，另一个根据红色和灰色各聚一类。
 假设我们还运行了第三个聚类算法，用来决定类别的数目。
-这有可能聚成了四类，红色卡车，红色汽车，灰色卡车和灰色汽车。
+这有可能聚成了四类，红色卡车、红色汽车、灰色卡车和灰色汽车。
 现在这个新的聚类至少抓住了属性的信息，但是丢失了相似性信息。
 红色汽车和灰色汽车在不同的类中，正如红色汽车和灰色卡车也在不同的类中。
 该聚类算法没有告诉我们灰色汽车和红色汽车的相似度比灰色卡车和红色汽车的相似度更高。
@@ -1658,12 +1658,12 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \begin{equation}
     \Vtheta \leftarrow \Vtheta - \epsilon \Vg,
 \end{equation}
-其中，$\epsilon$是学习速率。
+其中，$\epsilon$是\gls{learning_rate}。
 
 \gls{GD}往往被认为很慢或不可靠。
 以前，将\gls{GD}应用到非凸优化问题被认为很鲁莽或没有原则。
 现在，我们知道\gls{GD}用于本书第二部分中的训练时效果不错。
-优化算法不一定能保证在合理的时间内达到一个局部最小值，但它通常能及时地找到\gls{cost_function}一个很小的值。
+优化算法不一定能保证在合理的时间内达到一个局部最小值，但它通常能及时地找到\gls{cost_function}一个很小的值，并且是有用的。
 
 % -- 148 --
 
@@ -1672,7 +1672,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 对于固定大小的模型，每一步\gls{SGD}更新的计算量不取决于训练集的大小$m$。
 在实践中，当训练集大小增长时，我们通常会使用一个更大的模型，但这并非是必须的。
 达到收敛所需的更新次数通常会随训练集规模增大而增加。
-然而，当$m$趋向于无穷大时，该模型最终会在\gls{SGD}抽样使用训练集上的所有\gls{example:chap5}之前收敛到可能的最优测试误差。
+然而，当$m$趋向于无穷大时，该模型最终会在\gls{SGD}抽样完训练集上的所有\gls{example:chap5}之前收敛到可能的最优测试误差。
 继续增加$m$不会延长达到模型可能的最优测试误差的时间。
 从这点来看，我们可以认为用\,\glssymbol{SGD}\,训练模型的渐近代价是关于$m$的函数的$O(1)$级别。
 
@@ -1687,9 +1687,9 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 \section{构建\glsentrytext{ML}算法}
 \label{sec:building_a_machine_learning_algorithm}
-几乎所有的深学习算法可以被描述为一个相当简单的配方：特定的\gls{dataset}，\gls{cost_function}，优化过程和模型。
+几乎所有的深度学习算法都可以被描述为一个相当简单的配方：特定的\gls{dataset}、\gls{cost_function}、优化过程和模型。
 
-例如，\gls{linear_regression}算法的组成成分有$\MX$和$\Vy$构成的\gls{dataset}，\gls{cost_function}
+例如，\gls{linear_regression}算法由以下部分组成：$\MX$和$\Vy$构成的\gls{dataset}，\gls{cost_function}
 \begin{equation}
     J(\Vw, b) = -\SetE_{\RVx,\RSy\sim\hat{p}_{\text{data}}}
     \log p_{\text{model}} (y \mid \Vx) ,
@@ -1697,7 +1697,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 模型是$p_{\text{model}} (y \mid \Vx) = \mathcal{N}(y; \Vx^\Tsp \Vw + b, 1)$，
 在大多数情况下，优化算法可以定义为求解\gls{cost_function}梯度为零的\gls{normal_equations}。
 
-意识到我们可以替换独立于其他成分的大多数成分，因此我们能得到很多不同的算法。
+意识到我们可以替换独立于其他组件的大多数组件，因此我们能得到很多不同的算法。
 
 % -- 149 --
 
@@ -1712,39 +1712,39 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \end{equation}
 该优化仍然有闭解。
 
-如果我们将该模型变成非线性的，那么大多数\gls{cost_function}不再有优化闭解。
+如果我们将该模型变成非线性的，那么大多数\gls{cost_function}不再能通过闭解优化。
 这就要求我们选择一个迭代数值优化过程，如\gls{GD}等。
 
-组合模型，\gls{cost}和优化算法来构建学习算法的配方同时适用于\gls{supervised_learning}和\gls{unsupervised_learning}。
+组合模型、\gls{cost}和优化算法来构建学习算法的配方同时适用于\gls{supervised_learning}和\gls{unsupervised_learning}。
 \gls{linear_regression}示例说明了如何适用于\gls{supervised_learning}的。
-\gls{unsupervised_learning}时，我们需要定义一个只包含$\MX$的\gls{dataset}，一个合适的无监督\gls{cost}和一个模型。
+\gls{unsupervised_learning}时，我们需要定义一个只包含$\MX$的\gls{dataset}、一个合适的无监督\gls{cost}和一个模型。
 例如，通过指定如下\gls{loss_function}可以得到\,\glssymbol{PCA}\,的第一个主向量
 \begin{equation}
     J(\Vw) = \SetE_{\RVx \sim \hat{p}_{\text{data}}} \norm{\Vx - r(\Vx; \Vw)}_2^2
 \end{equation}
-模型定义为重建函数$r(\Vx) = \Vw^\Tsp\Vx \,\Vw$，并且$\Vw$有范数为$1$的限制。
+模型定义为重构函数$r(\Vx) = \Vw^\Tsp\Vx \,\Vw$，并且$\Vw$有范数为$1$的限制。
 
 在某些情况下，由于计算原因，我们不能实际计算\gls{cost_function}。
 在这种情况下，只要我们有近似其梯度的方法，那么我们仍然可以使用迭代数值优化近似最小化\gls{target}。
 
-大多数学习算法都用到了上述配方，尽管有时候不显然。
-如果一个\gls{ML}算法看上去特别独特或是手动设计的，那么通常使用特殊的优化方法进行求解。
+尽管有时候不显然，但大多数学习算法都用到了上述配方。
+如果一个\gls{ML}算法看上去特别独特或是手动设计的，那么通常需要使用特殊的优化方法进行求解。
 有些模型，如决策树或$k$-均值，需要特殊的优化，因为它们的\gls{cost_function}有平坦的区域，
 使其不适合通过基于梯度的优化去最小化。
-在我们认识到大部分\gls{ML}算法可以使用上述配方描述之后，可以将不同算法视为出于相同原因解决相关问题的一类方法，而不是一长串各个不同的算法。
+在我们认识到大部分\gls{ML}算法可以使用上述配方描述之后，我们可以将不同算法视为出于相同原因解决相关问题的一类方法，而不是一长串各个不同的算法。
 
 % -- 150 --
 
 \section{促使\glsentrytext{DL}发展的挑战}
 \label{sec:challenges_motivating_deep_learning}
-本章描述的简单\gls{ML}算法在很多不同的重要问题上都效果良好。
+本章描述的简单\gls{ML}算法在很多不同的重要问题上效果都良好。
 但是它们不能成功解决人工智能中的核心问题，如语音识别或者对象识别。
 
 \gls{DL}发展动机的一部分原因是传统学习算法在这类人工智能问题上泛化能力不足。
 
-本节介绍为何处理高维数据时在新\gls{example:chap5}上泛化特别困难，以及为何传统\gls{ML}中实现泛化的机制不适合学习高维空间中复杂的函数。
+本节介绍为何处理高维数据时在新\gls{example:chap5}上泛化特别困难，以及为何在传统\gls{ML}中实现泛化的机制不适合学习高维空间中复杂的函数。
 这些空间经常涉及巨大的计算代价。
-\gls{DL}旨在克服这些，以及一些其他难题。
+\gls{DL}旨在克服这些以及其他一些难题。
 
 \subsection{\glsentrytext{curse_of_dimensionality}}
 \label{sec:the_curse_of_dimensionality}
@@ -1766,7 +1766,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 因为在高维空间中参数配置数目远大于\gls{example:chap5}数目，大部分配置没有相关的\gls{example:chap5}。 %?? 配置
 我们如何能在这些新配置中找到一些有意义的东西呢？
 许多传统\gls{ML}算法只是简单地假设在一个新点的输出应大致和最接近的训练点的输出相同。
-然而在高维空间中，这个假设是不够的。
+
 
 
 \begin{figure}[!htb]
@@ -1777,7 +1777,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
     \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_1d_color} & \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_2d_color} & \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_3d_color}
 \end{tabular}
 \fi
-\caption{当数据的相关维度增大时（从左向右），我们感兴趣的配置数目会随之指数级增长。\emph{(左)}在这个一维的例子中，我们用一个变量来区分所感兴趣的仅仅$10$个区域。当每个区域都有足够的样本数时（图中每个样本对应了一个细胞），学习算法能够轻易地\gls{generalization}得很好。\gls{generalization}的一个直接方法是估计目标函数在每个区域的值（可能是在相邻区域之间插值）。\emph{(中)}在二维情况下，对每个变量区分$10$个不同的值更加困难。我们需要追踪$10\times10=100$个区域，至少需要很多样本来覆盖所有的区域。\emph{(右)}三维情况下，区域数量增加到了$10^3=1000$，至少需要更多的样本。对于需要区分的$d$维以及$v$个值来说，我们需要$O(v^d)$个区域和样本。这就是\gls{curse_of_dimensionality}的一个示例。感谢由Nicolas Chapados提供的图片。}
+\caption{当数据的相关维度增大时（从左向右），我们感兴趣的配置数目会随之指数级增长。\emph{(左)}在这个一维的例子中，我们用一个变量来区分所感兴趣的仅仅$10$个区域。当每个区域都有足够的样本数时（图中每个样本对应了一个细胞），学习算法能够轻易地\gls{generalization}得很好。\gls{generalization}的一个直接方法是估计目标函数在每个区域的值（可能是在相邻区域之间插值）。\emph{(中)}在二维情况下，对每个变量区分$10$个不同的值更加困难。我们需要追踪$10\times10=100$个区域，至少需要很多样本来覆盖所有的区域。\emph{(右)}三维情况下，区域数量增加到了$10^3=1000$，至少需要那么多的样本。对于需要区分的$d$维以及$v$个值来说，我们需要$O(v^d)$个区域和样本。这就是\gls{curse_of_dimensionality}的一个示例。感谢由Nicolas Chapados提供的图片。}
 \label{fig:chap5_curse}
 \end{figure}
 
@@ -1796,10 +1796,10 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 这个先验表明我们学习的函数不应在小区域内发生很大的变化。
 
 许多简单算法完全依赖于此先验达到良好的泛化，其结果是不能推广去解决\gls{AI}级别任务中的统计挑战。
-本书中，我们将介绍\gls{DL}如何引入额外的（或显或隐的）先验去降低复杂任务中的泛化误差。
+本书中，我们将介绍\gls{DL}如何引入额外的（显式或隐式的）先验去降低复杂任务中的泛化误差。
 这里，我们解释为什么仅依靠平滑先验不足以应对这类任务。
 
-有许多不同的方法来或显或隐地表示学习函数应该具有光滑或局部不变的先验。
+有许多不同的方法来显式或隐式地表示学习函数应该具有光滑或局部不变的先验。
 所有这些不同的方法都旨在鼓励学习过程能够学习出函数$f^*$对于大多数设置$\Vx$和小变动$\epsilon$，都满足条件
 \begin{equation}
     f^*(\Vx) \approx f^*(\Vx + \epsilon).
@@ -1852,26 +1852,26 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 % -- 154 --
 
 只要在要学习的真实函数的峰值和谷值处有足够多的\gls{example:chap5}，那么平滑性假设和相关的无参数学习算法的效果都非常好。
-当要学习的函数足够平滑，并且只在少数几维变动，这样做一般没问题。
-在高维空间中，即使是非常平滑的函数，也会在不同维度上有不同的平滑变动程度。
+当要学习的函数足够平滑，并且只在少数几维变化，这样做一般没问题。
+在高维空间中，即使是非常平滑的函数，也会在不同维度上有不同的变化方式。
 如果函数在不同的区间中表现不一样，那么就非常难用一组训练\gls{example:chap5}去刻画函数。
 如果函数是复杂的（我们想区分多于训练\gls{example:chap5}数目的大量区间），有希望很好地泛化么？
 
-回答这些问题——是否可以有效地表示复杂的函数，以及所估计的函数是否可以很好地泛化到新的输入——答案是有。
+这些问题，即是否可以有效地表示复杂的函数以及所估计的函数是否可以很好地泛化到新的输入，答案是有。
 关键观点是，只要我们通过额外假设生成数据的分布来建立区域间的依赖关系，那么$O(k)$个\gls{example:chap5}足以描述多如$O(2^k)$的大量区间。
 通过这种方式，我们确实能做到非局部的泛化\citep{Bengio+Monperrus-2005,NIPS2005_539}。
-为了利用这些优势，许多不同的\gls{DL}算法都提出了一些适用于多种\,\glssymbol{AI}\,任务的或隐或显的假设。
+为了利用这些优势，许多不同的\gls{DL}算法都提出了一些适用于多种\,\glssymbol{AI}\,任务的隐式或显式的假设。
 
 
 一些其他的\gls{ML}方法往往会提出更强的，针对特定问题的假设。
 例如，假设\gls{target}函数是周期性的，我们很容易解决棋盘问题。
 通常，神经网络不会包含这些很强的（针对特定任务的）假设，因此神经网络可以泛化到更广泛的各种结构中。
-人工智能任务的结构非常复杂，很难限制到简单的，人工手动指定的性质，如周期性，因此我们希望学习算法具有更通用的假设。
+人工智能任务的结构非常复杂，很难限制到简单的、人工手动指定的性质，如周期性，因此我们希望学习算法具有更通用的假设。
 \gls{DL}的核心思想是假设数据由\emph{因素或特征组合}产生，这些因素或特征可能来自一个层次结构的多个层级。
 许多其他类似的通用假设进一步提高了\gls{DL}算法。
 这些很温和的假设允许了\gls{example:chap5}数目和可区分区间数目之间的指数增益。
-这类指数增益将在\secref{sec:universal_approximation_properties_and_depth}，\secref{sec:distributed_representation}和\secref{sec:exponential_gains_from_depth}中被更详尽地介绍。
-深度的\gls{distributed_representation}带来的指数增益有效解决了\gls{curse_of_dimensionality}带来的挑战。
+这类指数增益将在\secref{sec:universal_approximation_properties_and_depth}、\secref{sec:distributed_representation}和\secref{sec:exponential_gains_from_depth}中更详尽地介绍。
+深度的\gls{distributed_representation}带来的指数增益有效地解决了\gls{curse_of_dimensionality}带来的挑战。
 
 % -- 155 --
 
@@ -1888,7 +1888,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 例如在地球表面这个流形中，我们可以朝东南西北走。
 
 尽管术语``\gls{manifold}''有正式的数学定义，但是\gls{ML}倾向于更松散地定义一组点，只需要考虑少数嵌入在高维空间中的自由度或维数就能很好地近似。
-每一维都对应着局部的变动方向。
+每一维都对应着局部的变化方向。
 如\figref{fig:chap5_one_dim_manifold_and_data}所示，训练数据位于二维空间中的一维流形中。
 在\gls{ML}中，我们允许流形的维数从一个点到另一个点有所变化。
 这经常发生于流形和自身相交的情况中。
@@ -1904,9 +1904,8 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \label{fig:chap5_one_dim_manifold_and_data}
 \end{figure}
 
-如果我们希望\gls{ML}算法学习$\SetR^n$上的所有感兴趣的函数，那么很多\gls{ML}问题
-看上去都是不可解的。
-\firstgls{manifold_learning}算法通过一个假设来克服这个障碍，该假设认为$\SetR^n$中大部分区域都是无效的输入，有意义的输入只分布在包含少量数据点的子集构成的一组流形中，而学习函数的输出中，有意义的变动都沿着流形的方向或仅发生在我们切换到另一流形时。
+如果我们希望\gls{ML}算法学习整个$\SetR^n$上有趣变化的函数，那么很多\gls{ML}问题看上去都是无望的。
+\firstgls{manifold_learning}算法通过一个假设来克服这个障碍，该假设认为$\SetR^n$中大部分区域都是无效的输入，有意义的输入只分布在包含少量数据点的子集构成的一组流形中，而学习函数的输出中，有意义的变化都沿着流形的方向或仅发生在我们切换到另一流形时。
 流形学习最初用于连续数值和无监督学习的环境，尽管这个概率集中的想法也能够泛化到离散数据和\gls{supervised_learning}的设定下：关键假设仍然是概率质量高度集中。
 
 
@@ -1926,12 +1925,11 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 
 数据位于低维流形的假设并不总是对的或者有用的。
-我们认为在人工智能的一些场景中，如涉及到处理图像，声音或者文本，流形假设至少是近似对的。
+我们认为在人工智能的一些场景中，如涉及到处理图像、声音或者文本时，流形假设至少是近似对的。
 这个假设的支持证据包含两类观察结果。
 
-第一个支持\firstgls{manifold_hypothesis}的观察是现实生活中的图像，文本，声音的
-概率分布都是高度集中的。
-均匀的\gls{noise}从来没有和这类领域的结构化输入相似过。
+第一个支持\firstgls{manifold_hypothesis}的观察是现实生活中的图像、文本、声音的概率分布都是高度集中的。
+均匀的\gls{noise}从来不会与这类领域的结构化输入类似。
 \figref{fig:chap5_noise}显示均匀采样的点看上去像是没有信号时模拟电视上的静态模式。
 同样，如果我们均匀地随机抽取字母来生成文件，能有多大的概率得到一个有意义的英语文档？
 几乎是零。
@@ -1943,21 +1941,21 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 我们还必须确保，我们遇到的\gls{example:chap5}和其他\gls{example:chap5}相互连接，每个\gls{example:chap5}被其他高度相似的\gls{example:chap5}包围，而这些高度相似的样本可以通过变换来遍历该流形得到。
 支持流形假设的第二个论点是，我们至少能够非正式地想象这些邻域和变换。
 在图像中，我们当然会认为有很多可能的变换仍然允许我们描绘出图片空间的流形：
-我们可以逐渐变暗或变亮光泽，逐步移动或旋转图中对象，逐渐改变对象表面的颜色，等等。
+我们可以逐渐变暗或变亮光泽、逐步移动或旋转图中对象、逐渐改变对象表面的颜色等等。
 在大多数应用中很有可能会涉及到多个流形。
 例如，人脸图像的\gls{manifold}不太可能连接到猫脸图像的\gls{manifold}。
 
 % -- 157 --
 
 这些支持流形假设的思维实验传递了一些支持它的直观理由。
-更严格的实验\citep{Cayton-2005,Narayanan+Mitter-NIPS2010,Scholkopf98-book,Roweis2000-lle-small,Tenenbaum2000-isomap,Brand2003,Belkin+Niyogi-nips2003,Donoho+Carrie-03,Weinberger04a}在\gls{AI}中受关注的一大类\gls{dataset}上支持了这个假设。
+更严格的实验\citep{Cayton-2005,Narayanan+Mitter-NIPS2010,Scholkopf98-book,Roweis2000-lle-small,Tenenbaum2000-isomap,Brand2003,Belkin+Niyogi-nips2003,Donoho+Carrie-03,Weinberger04a}在\gls{AI}中备受关注的一大类\gls{dataset}上支持了这个假设。
 
-当数据位于低维流形中时，使用流形中的坐标，而非$\SetR^n$中的坐标表示\gls{ML}数据更为自然。
+当数据位于低维流形中时，使用流形中的坐标而非$\SetR^n$中的坐标表示\gls{ML}数据更为自然。
 日常生活中，我们可以认为道路是嵌入在三维空间的一维流形。
 我们用一维道路中的地址号码确定地址，而非三维空间中的坐标。
 提取这些流形中的坐标是非常具有挑战性的，但是很有希望改进许多\gls{ML}算法。
 这个一般性原则能够用在很多情况中。
-\figref{fig:chap5_QMUL-facedataset}展示了包含脸的\gls{dataset}的流形结构。
+\figref{fig:chap5_QMUL-facedataset}展示了包含人脸的\gls{dataset}的流形结构。
 在本书的最后，我们会介绍一些学习这样的流形结构的必备方法。
 在\figref{fig:chap20_kingma-vae-2d-faces-manifold}中，我们将看到\gls{ML}算法如何成功完成这个\gls{target}。
 
@@ -1974,9 +1972,8 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 \end{figure}
 
 第一部分介绍了数学和\gls{ML}中的基本概念，这将用于本书其他章节中。
-至此，我们已经完成了开始学习\gls{DL}的准备。
+至此，我们已经做好了研究\gls{DL}的准备。
 
 % -- 159 --
-
 
 

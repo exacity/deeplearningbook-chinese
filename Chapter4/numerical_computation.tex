@@ -215,7 +215,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 有时，我们也对\gls{derivative}的\gls{derivative}感兴趣，即\firstgls{second_derivative}。
 例如，有一个函数$f: \SetR^m \rightarrow \SetR$，$f$的一阶\gls{derivative}(关于$\Sx_j$)关于$x_i$的\gls{derivative}记为$\frac{\partial^2}{\partial \Sx_i \partial \Sx_j} f$。
 在一维情况下，我们可以将$\frac{\partial^2}{\partial \Sx^2} f$为$f''(\Sx)$。
-\gls{second_derivative}告诉我们的一阶\gls{derivative}将如何随着输入的变化而改变。
+\gls{second_derivative}告诉我们，一阶\gls{derivative}将如何随着输入的变化而改变。
 它表示只基于\gls{gradient}信息的\gls{GD}步骤是否会产生如我们预期的那样大的改善，因此它是重要的。
 我们可以认为，\gls{second_derivative}是对\gls{curvature}的衡量。
 假设我们有一个二次函数（虽然很多实践中的函数都不是二次，但至少在局部可以很好地用二次近似）。
@@ -243,7 +243,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \end{figure}
 
 当我们的函数具有多维输入时，\gls{second_derivative}也有很多。
-可以这些导数合并成一个矩阵，称为\firstgls{hessian}矩阵。
+我们可以这些导数合并成一个矩阵，称为\firstgls{hessian}矩阵。
 \gls{hessian}矩阵$\MH(f)(\Vx)$定义为
 \begin{align}
  \MH(f)(\Vx)_{i,j} = \frac{\partial^2}{\partial \Sx_i \partial  \Sx_j} f(\Vx).
@@ -307,7 +307,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 当\gls{hessian}是正定的（所有特征值都是正的），则该\gls{critical_points}是\gls{local_minimum}。
 因为方向\gls{second_derivative}在任意方向都是正的，参考单变量的\gls{second_derivative_test}就能得出此结论。
 同样的，当\gls{hessian}是负定的（所有特征值都是负的），这个点就是\gls{local_maximum}。
-在多维情况下，实际上可以找到确定该点是否为\gls{saddle_points}的积极迹象（某些情况下）。
+在多维情况下，实际上我们可以找到确定该点是否为\gls{saddle_points}的积极迹象（某些情况下）。
 如果\gls{hessian}的特征值中至少一个是正的且至少一个是负的，那么$\Vx$是$f$某个横截面的\gls{local_maximum}，却是另一个横截面的\gls{local_minimum}。
 见\figref{fig:chap4_saddle_3d_color}中的例子。
 最后，多维\gls{second_derivative_test}可能像单变量版本那样是不确定的。
@@ -402,8 +402,8 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
 \gls{convex_optimization}算法只对凸函数适用，即\gls{hessian}处处半正定的函数。
 因为这些函数没有\gls{saddle_points}而且其所有\gls{local_minimum}必然是\gls{global_minimum}，所以表现很好。
 然而，\gls{DL}中的大多数问题都难以表示成\gls{convex_optimization}的形式。
-\gls{convex_optimization}仅用作的一些\gls{DL}算法的子程序。
-\gls{convex_optimization}中的分析思路对证明\gls{DL}算法的收敛性非常有用，然而一般来说，\gls{DL}背景下的\gls{convex_optimization}的重要性大大减少。 
+\gls{convex_optimization}仅用作一些\gls{DL}算法的子程序。
+\gls{convex_optimization}中的分析思路对证明\gls{DL}算法的收敛性非常有用，然而一般来说，\gls{DL}背景下\gls{convex_optimization}的重要性大大减少。 
 有关\gls{convex_optimization}的详细信息，详见\cite{Boyd04}或\cite{rockafellar1997convex}。
 
 
@@ -471,7 +471,7 @@ $x_1$轴是\gls{hessian}的一个特征向量，并且具有正特征值。
  \underset{\Valpha, \Valpha \geq 0}{\max} 
   -f(\Vx) + \sum_i \lambda_i g^{(i)}(\Vx)  + \sum_j \alpha_j h^{(j)}(\Vx).
 \end{align}
-我们也可将其转换为在外层最大化的一个问题：
+我们也可将其转换为在外层最大化的问题：
 \begin{align}
  \underset{\Vx}{\max}~ \underset{\Vlambda}{\min}~
  \underset{\Valpha, \Valpha \geq 0}{\min} 
@@ -512,14 +512,14 @@ $中的$\alpha_i = 0$。
 \begin{align}
  f(\Vx) = \frac{1}{2}\| \MA \Vx - \Vb \|_2^2 .
 \end{align}
-专门线性代数算法能够高效地解决这个问题；但是，我们也可以探索如何使用基于\gls{gradient}的优化来解决这个问题，这可以作为这些技术是如何工作的一个简单例子。
+有专门的线性代数算法能够高效地解决这个问题；但是，我们也可以探索如何使用基于\gls{gradient}的优化来解决这个问题，这可以作为这些技术是如何工作的一个简单例子。
 
 首先，我们计算\gls{gradient}：
 \begin{align}
  \nabla_{\Vx} f(\Vx) = \MA^\Tsp (\MA \Vx - \Vb) = \MA^\Tsp \MA \Vx - \MA^\Tsp \Vb .
 \end{align}
 
-然后，我们可以采用小的步长，按照这个\gls{gradient}下降。见\algref{alg:gdlsq}中的详细信息。
+然后，我们可以采用小的步长，并按照这个\gls{gradient}下降。见\algref{alg:gdlsq}中的详细信息。
 
 \begin{algorithm}[ht]
 \caption{从任意点$\Vx$开始，使用\gls{GD}关于$\Vx$最小化
@@ -536,7 +536,7 @@ $ f(\Vx) = \frac{1}{2} || \MA \Vx - \Vb ||_2^2$的算法。
 
 
 我们也可以使用\gls{newton_method}解决这个问题。
-因为在这个情况下真正的函数是二次的，\gls{newton_method}所用的二次近似是精确的，该算法会在一步后收敛到\gls{global_minimum}。
+因为在这个情况下真实的函数是二次的，\gls{newton_method}所用的二次近似是精确的，该算法会在一步后收敛到\gls{global_minimum}。
 
 现在假设我们希望最小化同样的函数，但受 $\Vx^\Tsp \Vx \leq 1$ 的约束。 
 要做到这一点，我们引入\ENNAME{Lagrangian}
@@ -551,7 +551,7 @@ $ f(\Vx) = \frac{1}{2} || \MA \Vx - \Vb ||_2^2$的算法。
 
 % -- 92 --
 
-可以用\ENNAME{Moore-Penrose}伪逆：$\Vx = \MA^+ \Vb$找到无约束最小二乘问题的最小范数解。
+我们可以用\ENNAME{Moore-Penrose}伪逆：$\Vx = \MA^+ \Vb$找到无约束最小二乘问题的最小范数解。
 如果这一点是\gls{feasible}，那么这也是约束问题的解。
 否则，我们必须找到约束是活跃的解。
 关于$\Vx$对\ENNAME{Lagrangian}微分，我们得到方程
@@ -570,7 +570,7 @@ $\lambda$的选择必须使结果服从约束。
 \end{align}
 当$\Vx$的范数超过1时，该导数是正的，所以为了跟随\gls{derivative}上坡并相对$\lambda$增加\ENNAME{Lagrangian}，我们需要增加$\lambda$。
 因为$\Vx^\Tsp \Vx$的惩罚系数增加了，求解关于$\Vx$的线性方程现在将得到具有较小范数的解。
-求解线性方程和调整$\lambda$的过程一直持续到$\Vx$具有正确的范数并且关于$\lambda$的\gls{derivative}是$0$。
+求解线性方程和调整$\lambda$的过程将一直持续到$\Vx$具有正确的范数并且关于$\lambda$的\gls{derivative}是$0$。
 
 本章总结了开发\gls{ML}算法所需的数学基础。
 现在，我们已经准备好建立和分析一些成熟的学习系统。
