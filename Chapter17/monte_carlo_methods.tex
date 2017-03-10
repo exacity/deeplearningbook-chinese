@@ -29,7 +29,7 @@
 有许多原因使我们希望从某个分布中采样。  
 当我们需要以较小的代价近似许多项的和或某个积分时，采样是一种很灵活的选择。  
 有时候，我们使用它加速一些很费时却易于处理的求和估计，就像我们使用\gls{minibatch}对整个训练代价进行\gls{subsample}一样。 
-在其他情况下，我们需要近似求一个难以处理的和或积分，例如估计一个\gls{undirected_model}中\gls{partition_function}对数的梯度时。   %?? 去掉 时，sum 翻译成 求和，可以和 积分 成对，后面也有类似情况，你斟酌下
+在其他情况下，我们需要近似一个难以处理的求和或积分，例如估计一个\gls{undirected_model}中\gls{partition_function}对数的梯度时。   %?? 去掉 时，sum 翻译成 求和，可以和 积分 成对，后面也有类似情况，你斟酌下
 在许多其他情况下，抽样实际上是我们的目标，例如我们想训练一个可以从训练分布采样的模型。  
 % 582 
 
@@ -88,14 +88,14 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 \section{\glsentrytext{importance_sampling}}
 \label{sec:importance_sampling_chap17}
 
-如方程~\eqref{eqn:integra}所示，在\gls{monte_carlo}方法中，对积分（或者和）分解，即确定积分中哪一部分作为概率分布$p(\Vx)$以及哪一部分作为被积的函数$f(\Vx)$（我们感兴趣的是估计$f(\Vx)$在概率分布$p(\Vx)$下的期望）是很关键的一步。   %?? 去掉  即    
+如方程~\eqref{eqn:integra}所示，在\gls{monte_carlo}方法中，对积分（或者和）分解，确定积分中哪一部分作为概率分布$p(\Vx)$以及哪一部分作为被积的函数$f(\Vx)$（我们感兴趣的是估计$f(\Vx)$在概率分布$p(\Vx)$下的期望）是很关键的一步。  
 $p(\Vx)f(\Vx)$存在不唯一的分解因为它总是可以被写成   
 \begin{align}
 \label{eqn:decomposition}
 p(\Vx)f(\Vx) = q(\Vx) \frac{p(\Vx)f(\Vx)}{q(\Vx)},
 \end{align}
 在这里，我们从$q$分布中采样，然后估计$\frac{pf}{q}$在此分布下的均值。
-许多情况中，给定$p$和$f$的情况下我们希望计算某个期望，这个问题既然是求期望，那么很自然地$p$和$f$是一种分解选择。  %?? 在许多情况下，我们希望给定$p$和$f$计算期望。既然这个问题是计算期望，那么概率函数$p$和数值函数$f$是一种很自然的分解选择。   拆成了两句，你斟酌下。
+许多情况中，我们希望在给定$p$和$f$的情况下计算某个期望，这个问题既然是求期望，那么很自然地$p$和$f$是一种分解选择。 
 然而，用达到指定级别精度所需的采样数量衡量，这个问题最初的分解选择不是最优的选择。
 幸运的是，最优的选择$q^*$通常可以被简单推导出来。   
 这种最优的采样函数$q^*$对应所谓的最优\gls{importance_sampling}。 
@@ -167,24 +167,22 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 585 end
 尽管存在上述的风险，但是\gls{importance_sampling}及其变种在\gls{ML}的应用中仍然扮演着重要的角色，包括\gls{DL}算法。
 例如，\gls{importance_sampling}被应用于加速训练具有大规模词汇的神经网络\gls{language_model}的过程中（见\secref{sec:importance_sampling_chap12}）或者其他有着大量输出结点的\gls{NN}中。   
-此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数）的过程中（详见\secref{sec:estimating_the_partition_function}）以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见\secref{sec:variational_autoencoders}）。
-%??  去掉 的过程中，可以考虑在 以及 前面加上 逗号
-采用\gls{SGD}训练模型参数时\gls{importance_sampling}可以用来改进对\gls{cost_function}梯度的估计，尤其是针对于分类器模型的训练中一小部分错误分类样本产生的\gls{cost_function}。    %?? 尤其是针对诸如分类器的模型，\gls{cost_function}中的大部分\gls{cost}来自于少量错误分类的样本。
-在这种情况下更加频繁地抽取这些困难的样本可以降低梯度估计的方差~\citep{Hinton06}。 %??  在这种情况下，更多地采样难以分类的样本有利于降低梯度方差~\citep{Hinton06}。
+此外，还可以看到\gls{importance_sampling}应用于估计\gls{partition_function}（一个概率分布的归一化常数），详见\secref{sec:estimating_the_partition_function}，以及在深度有向图模型比如\gls{VAE}中估计似然函数的对数（详见\secref{sec:variational_autoencoders}）。
+采用\gls{SGD}训练模型参数时\gls{importance_sampling}可以用来改进对\gls{cost_function}梯度的估计，尤其是针对于诸如分类器这样的模型，\gls{cost_function}中的大部分\gls{cost}来自于少量错误分类的样本。    
+在这种情况下，更加频繁地抽取这些困难的样本可以降低梯度估计的方差~\citep{Hinton06}。 
 % 586 
 
 
 \section{\glsentrytext{mcmc}方法}
 \label{sec:markov_chain_monte_carlo_methods}
 
-在许多实例中，我们希望采用\gls{monte_carlo}方法，然而往往又不存在一种直接从目标分布$p_{\text{model}}(\RVx)$中精确采样或者一个好的（方差较小的）\gls{importance_sampling}分布$q(\Vx)$。   %?? 又不存在一种简单的方法从目标分布$p_{\text{model}}(\RVx)$中或者一个良好的（方差较小的）\gls{importance_sampling}分布$q(\Vx)$中精确采样。
-在深度学习中，分布$p_{\text{model}}(\RVx)$往往表达成一个无向模型。 %?? 在深度学习中，当分布$p_{\text{model}}(\RVx)$表示无向模型时，这种情况往往会发生。
+在许多实例中，我们希望采用\gls{monte_carlo}方法，然而往往又不存在一种简单的方法可以直接从目标分布$p_{\text{model}}(\RVx)$中精确采样或者一个好的（方差较小的）\gls{importance_sampling}分布$q(\Vx)$。 
+在深度学习中，当分布$p_{\text{model}}(\RVx)$表示成无向模型时，这种情况往往会发生。
 在这种情况下，为了从分布$p_{\text{model}}(\RVx)$中近似采样，我们引入了一种称为\firstgls{markov_chain}的数学工具。
 利用\gls{markov_chain}来进行\gls{monte_carlo}估计的这一类算法被称为\firstall{mcmc}算法。
 ~\citet{koller-book2009}中花了大量篇幅来描述\gls{mcmc}算法在\gls{ML}中的应用。
 \glssymbol{mcmc}算法最标准，最一般的要求是只适用模型分布处处不为$0$的情况。
-因此，最方便的目标分布的表达是从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
-%?? 因此，这些技术最方便的使用方法是用于从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
+因此，这些技术最方便的使用方法是用于从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
 在\glssymbol{energy_based_model}中每一个状态所对应的概率都不为零。
 事实上\glssymbol{mcmc}方法可以被广泛地应用在许多包含概率为$0$的状态的概率分布中。
 然而，在这种情况下，关于\glssymbol{mcmc}方法性能的理论保证只能依据具体不同类型的分布具体分析证明。
@@ -201,31 +199,31 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 587 begin
 
 
-在一个\glssymbol{energy_based_model}中，我们通过使用\gls{markov_chain}来采样，从而避免了先有鸡还是先有蛋的问题。  %?? 去掉 一个
+在\glssymbol{energy_based_model}中，我们通过使用\gls{markov_chain}来采样，从而避免了先有鸡还是先有蛋的问题。  
 \gls{markov_chain}的核心思想是以一个任意状态的点$\Vx$作为起始点。
 随着时间的推移，我们随机地反复更新状态$\Vx$。  
 最终$\Vx$成为了一个从$p(\Vx)$中抽出的（非常接近）比较公正的样本。  %?? 建议 比较公正 换成 标准
 在正式的定义中，\gls{markov_chain}由一个随机状态$x$和一个转移分布$T(\Vx'\mid \Vx)$定义而成，$T(\Vx'\mid \Vx)$是一个概率分布，说明了给定状态$\Vx$的情况下随机地转移到$\Vx'$的概率。
 运行一个\gls{markov_chain}意味着根据转移分布$T(\Vx'\mid \Vx)$反复地用状态$\Vx'$来更新状态$\Vx$。  
-% 587
+% 587  mid
 
 
-为了给出\glssymbol{mcmc}方法为何有效的一些理论解释，重定义这个问题是很有用的。  %??  reparameterize 翻译为 重定义 感觉不妥，因为问题没变，对参数加了一些限制。。。   重新参数化 你再斟酌下
+为了给出\glssymbol{mcmc}方法为何有效的一些理论解释，重新参数化这个问题是很有用的。 
 首先我们关注一些简单的情况，其中随机变量$\RVx$有可数个状态。
 我们将这种状态记作正整数$x$。
 不同的整数$x$的大小对应着原始问题中$\Vx$的不同状态。
-% 587  
+% 587   mid
 
 
-接下来我们考虑如果并行地运行无穷多个\gls{markov_chain}会发生什么。   %??  建议 接下来我们考虑并行地运行无穷多个\gls{markov_chain}的情况。
-不同\gls{markov_chain}的所有状态都会被某一个分布$q^{(t)}(x)$采到，在这里$t$表示消耗的时间数。  %?? 。。。所有状态都采样自某一个分布。。。
+接下来我们考虑如果并行地运行无穷多个\gls{markov_chain}的情况。  
+不同\gls{markov_chain}的所有状态都采样自某一个分布$q^{(t)}(x)$，在这里$t$表示消耗的时间数。
 开始时，对每个\gls{markov_chain}，我们采用一个分布$q^{{0}}$来任意地初始化$x$。  
-之后，$q^{(t)}$与所有之前跑过的\gls{markov_chain}有关。 %??  跑过的 换成 运行的
-我们的目标就是$q^{(t)}(x)$收敛到$p(x)$。  %?? 去掉 就
-% 587 
+之后，$q^{(t)}$与所有之前运行的\gls{markov_chain}有关。
+我们的目标是$q^{(t)}(x)$收敛到$p(x)$。 
+% 587 mid 
 
 
-因为我们已经用正整数$x$重定义了这个问题，我们可以用一个向量$\Vv$来描述这个概率分布$q$，并且满足   %?? reparametrized,  去掉 并且满足
+因为我们已经用正整数$x$重新参数化了这个问题，我们可以用一个向量$\Vv$来描述这个概率分布$q$，  
 \begin{align}
 q(\RSx = i) = v_i.
 \end{align}
@@ -241,13 +239,13 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 % 587 end
 
 
-根据状态为整数的设定，我们可以将转移算子$T$表示成一个矩阵$\MA$。
+根据状态为整数的参数化设定，我们可以将转移算子$T$表示成一个矩阵$\MA$。
 矩阵$\MA$的定义如下：
 \begin{align}
 \MA_{i,j} = T(\RVx' = i\mid \RVx = j).
 \end{align}
-使用这一定义，我们可以重新写成\eqnref{eqn:transition1}。  %??  我们可以重新改写
-与之前使用$q$和$T$来理解单个状态的更新相对的是，我们现在可以使用$\Vv$和$\MA$来描述当我们更新时（并行运行的）不同个\gls{markov_chain}上整个分布是如何变化的：   %?? 不同于之前使用$q$和$T$来理解单个状态的更新，     不同个 换成  不同
+使用这一定义，我们可以重新改写\eqnref{eqn:transition1}。
+不同于之前使用$q$和$T$来理解单个状态的更新，我们现在可以使用$\Vv$和$\MA$来描述当我们更新时（并行运行的）不同\gls{markov_chain}上整个分布是如何变化的： 
 \begin{align}
 \Vv^{(t)} = \MA \Vv^{(t-1)}.
 \end{align}
@@ -293,7 +291,7 @@ q^{(t+1)}(x') = \sum_{x} q^{(t)}(x) T(x'\mid x).
 \begin{align}
 q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \end{align}
-这个方程的离散版本就是方程~\eqnref{eqn:1723}。	%?? 重新改写 式17.23
+这个方程的离散版本就相当于重新改写方程~\eqnref{eqn:1723}。
 当$\RVx$是离散值时，这个期望对应着求和，而当$\RVx$是连续值时，这个期望对应的是积分。 
 % 589 head
 
@@ -332,12 +330,12 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \label{sec:gibbs_sampling}
 
 目前为止我们已经了解了如何通过反复更新$\Vx \xleftarrow{} \Vx'\sim T(\Vx'\mid\Vx)$从一个分布$q(\Vx)$中采样。 
-然而我们还没有提到过如何确定一个有效的$q(\Vx)$分布。%?? 然而我们还没有介绍如何确定分布$q(\Vx)$是否是一个有用的分布。
+然而我们还没有介绍过如何确定$q(\Vx)$是否是一个有效的分布。
 本书中将会描述两种基本的方法。  
 第一种方法是从已经学习到的分布$p_{\text{model}}$中推导出$T$，下文描述了如何从\gls{energy_based_model}中采样。
 第二种方法是直接用参数描述$T$，然后学习这些参数，其\gls{stationary_distribution}隐式地定义了我们所感兴趣的模型$p_{\text{model}}$。
 我们将在\secref{sec:generative_stochastic_networks}和\secref{sec:other_generation_schemes}中讨论第二种方法的例子。  
-% 590
+% 590  mid
 
 
 在\gls{DL}中，我们通常使用\gls{markov_chain}从定义为\gls{energy_based_model}的分布$p_{\text{model}}(\Vx)$中采样。
@@ -348,17 +346,17 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 
 \firstgls{gibbs_sampling}是一种概念简单而又有效的方法。
 它构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$，然后从$p_{\text{model}}$中该点关于在无向图$\CalG$（定义了\gls{energy_based_model}结构）中邻接点的条件分布中抽样。
-给定他们所有的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样。  %?? 如果一些变量在给定相邻变量时是条件独立的，那么这些变量就可以被同时采样。
+只要一些变量在给定相邻变量时是条件独立的，那么这些变量就可以被同时采样。
 正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\glssymbol{RBM}示例一样，\glssymbol{RBM}中所有的\gls{hidden_unit}可以被同时采样，因为在给定可见单元的条件下他们相互条件独立。
 同样地，所有的可见单元也可以被同时采样因为在给定\gls{hidden_unit}的情况下它们相互条件独立。 
 以这种方式同时更新许多变量的\,\gls{gibbs_sampling}通常被称为\firstgls{block_gibbs_sampling}。   
-% 590
+% 590 mid
 
 设计从$p_{\text{model}}$中采样的\gls{markov_chain}还存在其他备选方法。  
 比如说，Metropolis-Hastings算法在其他情景下被广泛使用。
 不过在\gls{DL}的\gls{undirected_model}中，我们主要使用\,\gls{gibbs_sampling}，很少使用其他方法。 
 改进采样技巧也是一个潜在的研究热点。
-% 590
+% 590 end
 
 
 \section{不同的\glsentrytext{mode}之间的\glsentrytext{mixing}挑战}
@@ -383,7 +381,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 在这种情况下，我们考虑在一定步数内从一个\gls{mode}移动到一个临近\gls{mode}的概率。
 决定这个概率的是两个\gls{mode}之间的``能量障碍''的形状。
 隔着一个巨大``能量障碍'' （低概率的区域）的两个\gls{mode}之间的转移概率是（随着能量障碍的高度）指数下降的，如在\figref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
-当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\,\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分变量又严重依赖其他的变量时，这会导致严重的问题。   %?? 最后一句建议换为  这种问题尤为严重。
+当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\,\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分变量又严重依赖其他的变量时，这会导致严重的问题。 
 % 591
 
 
@@ -522,6 +520,6 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，在统计物理
 然而，如何利用这种观察到的现象来辅助训练深度\gls{generative_model}或者从中采样仍然有待探索。
 % 595
 
-尽管存在\gls{mixing}的难点，\gls{monte_carlo}技巧仍然是一个有用的也是最好的可用工具。  %?? 有用的工具，通常也是最好的工具。
+尽管存在\gls{mixing}的难点，\gls{monte_carlo}技巧仍然是一个有用的工具，通常也是最好的可用工具。  
 事实上，在遇到难以处理的\gls{undirected_model}中的\gls{partition_function}时，\gls{monte_carlo}方法仍然是最主要的工具，这将在下一章详细阐述。
 % 595
