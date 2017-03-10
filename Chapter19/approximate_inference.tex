@@ -12,19 +12,19 @@
 % 623
 
 许多诸如\gls{RBM}和\gls{PPCA}这样的仅仅含有一层\gls{hidden_layer}的简单\gls{graphical_models}的定义，往往使得推断操作如计算$p(\Vh\mid\Vv)$或者计算分布$p(\Vh\mid\Vv)$下的期望是非常容易的。
-不幸的是，大多数的具有多层\gls{latent_variable}的\gls{graphical_models}的后验分布都很难处理。
-对于这些模型精确的推断算法需要指数量级的运行时间。
+不幸的是，大多数具有多层\gls{latent_variable}的\gls{graphical_models}的后验分布都很难处理。
+对于这些模型而言，精确推断算法需要指数量级的运行时间。
 即使一些只有单层的模型，如\gls{sparse_coding}，也存在着这样的问题。
 % 623
 
 
-在本章中，我们介绍了几个基本的技巧，用来解决难以处理的推断问题。
-稍后，在\chapref{chap:deep_generative_models}中，我们还将描述如何将这些技巧应用到训练其他方法难以奏效的概率模型中，如\gls{DBN}，\gls{DBM}。
+在本章中，我们将会介绍几个基本的技巧，用来解决难以处理的推断问题。
+稍后，在\chapref{chap:deep_generative_models}中，我们还将描述如何将这些技巧应用到训练其他方法难以奏效的概率模型中，如\gls{DBN}、\gls{DBM}。
 % 623
 
 
 在\gls{DL}中难以处理的推断问题通常源于结构化图模型中\gls{latent_variable}之间的相互作用。
-详见\figref{fig:intractable_graphs}的几个例子。
+可以参考\figref{fig:intractable_graphs}的几个例子。
 这些相互作用可能是\gls{undirected_model}的直接作用，也可能是\gls{directed_model}中同一个可见变量的共同祖先之间的``\gls{explaining_away}''作用。
 % 623 end
 
@@ -100,14 +100,14 @@
 
 
 对于一个较好的选择$q$来说，$\CalL$是容易计算的。
-对任意选择$q$来说，$\CalL$提供了一个似然函数的下界。
-越好的近似$q$的分布$q(\Vh\mid\Vv)$得到的下界就越紧，换句话说，就是与$\log p(\Vv)$更加接近。
+对任意选择$q$来说，$\CalL$提供了似然函数的一个下界。
+越好的近似$p(\Vh\mid\Vv)$的分布$q(\Vh\mid\Vv)$得到的下界就越紧，换句话说，就是与$\log p(\Vv)$更加接近。
 当$q(\Vh\mid\Vv) = p(\Vh\mid\Vv)$时，这个近似是完美的，也意味着$\CalL(\Vv,{\Vtheta},q) = \log {p(\Vv;{\Vtheta})} $。
 % 625
 
 
 因此我们可以将推断问题看做是找一个分布$q$使得$\CalL$最大的过程。
-精确的推断能够在包含分布$p(\Vh\mid\Vv)$的函数族中搜索一个函数，完美地最大化$\CalL$。
+精确推断能够在包含分布$p(\Vh\mid\Vv)$的函数族中搜索一个函数，完美地最大化$\CalL$。
 在本章中，我们将会讲到如何通过近似优化寻找分布$q$的方法来推导出不同形式的\gls{approximate_inference}。
 我们可以通过限定分布$q$的形式或者使用并不彻底的优化方法来使得优化的过程更加高效（却更粗略），但是优化的结果是不完美的，因为只能显著地提升$\CalL$而无法彻底地最大化$\CalL$。
 % 625  end
@@ -156,7 +156,7 @@
 
 
 即使\gls{e_step}采用的是精确推断，我们仍然可以将\glssymbol{EM}算法视作是某种程度上的\gls{approximate_inference}。
-具体地说，\gls{m_step}假设了一个$q$分布可以被所有的$\Vtheta$值分享。
+具体地说，\gls{m_step}假设一个$q$分布可以被所有的$\Vtheta$值分享。
 当\gls{m_step}越来越远离\gls{e_step}中的$\Vtheta^{(0)}$时，这将会导致$\CalL$和真实的$\log p(\Vv)$的差距。
 幸运的事，当下一个循环时，\gls{e_step}把这种差距又降到了$0$。
 % 627 head
@@ -232,7 +232,7 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 
 
 
-\glssymbol{MAP}推断作为特征提取器以及一种学习机制被广泛的应用在了\gls{DL}中。
+\glssymbol{MAP}推断作为\gls{feature_extractor}以及一种学习机制被广泛地应用在了\gls{DL}中。
 在\gls{sparse_coding}模型中，它起到了关键作用。
 % 628
 
@@ -328,7 +328,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 在这种情况下，我们要用$q$来拟合$p$。
 然而，我们并不是直接拟合一个近似，而是处理一个\gls{KL}的问题。
 当我们使用\gls{MLE}来用模型拟合数据时，我们最小化$D_{\text{KL}}(p_{\text{data}} \Vert p_{\text{model}})$。
-如同\figref{fig:chap3_kl_direction_color}中所示，这意味着\gls{maximum_likelihood}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
+如\figref{fig:chap3_kl_direction_color}所示，这意味着\gls{maximum_likelihood}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
 这两种基于\gls{KL}的方法都有各自的优点与缺点。
 选择哪一种方法取决于在具体每一个应用中哪一种性质更受偏好。
 在基于优化的推断问题中，从计算角度考虑，我们选择使用$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
@@ -405,7 +405,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 这需要计算$p(\Vh\mid\Vv)$下的期望。
 不幸的是，$p(\Vh\mid\Vv)$是一个很复杂的分布。
-$p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构见\figref{fig:bsc}。
+关于$p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构可以参考\figref{fig:bsc}。
 \gls{hidden_unit}的后验分布对应的是关于\gls{hidden_unit}的完全图，所以相对于暴力算法，消元算法并不能有助于提高计算所需要的期望的效率。
 % 633 head
 
@@ -584,7 +584,7 @@ $p(\Vh,\Vv)$和$p(\Vh\mid\Vv)$的图结构见\figref{fig:bsc}。
 
 
 许多\gls{ML}的技巧是基于寻找一个输入向量$\Vtheta\in\SetR^n$来最小化函数$J(\Vtheta)$，使得它取到最小值。
-这个步骤可以利用多元微积分以及线性代数的知识找到满足$\nabla_{\Vtheta} J(\Vtheta) = 0$的临界点来完成。
+这个步骤可以利用多元微积分以及线性代数的知识找到满足$\nabla_{\Vtheta} J(\Vtheta) = 0$的\gls{critical_points}来完成。
 在某些情况下，我们希望能够解一个函数$f(\Vx)$，比如当我们希望找到一些随机变量的\gls{PDF}时。
 正是\gls{calculus_of_variations}能够让我们完成这个目标。
 % p 637

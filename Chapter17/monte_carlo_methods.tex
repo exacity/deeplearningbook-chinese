@@ -4,7 +4,7 @@
 \label{chap:monte_carlo_methods}
 % 581
 
-随机算法可以粗略的分为两类：\ENNAME{Las Vegas}\,算法和\gls{monte_carlo}算法。
+随机算法可以粗略地分为两类：\ENNAME{Las Vegas}\,算法和\gls{monte_carlo}算法。
 \ENNAME{Las Vegas}\,算法通常精确地返回一个正确答案 （或者返回算法失败了）。   
 这类方法通常需要占用随机量的计算资源（一般指内存和运行时间）。    %?? “和” 换成 “或” ， “通常“是修饰 内存 和 运行 时间的。
 与此相对的，\gls{monte_carlo}方法返回的答案具有随机大小的错误。 
@@ -380,7 +380,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 当我们考虑\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。
 在这种情况下，我们考虑在一定步数内从一个\gls{mode}移动到一个临近\gls{mode}的概率。
 决定这个概率的是两个\gls{mode}之间的``能量障碍''的形状。
-隔着一个巨大``能量障碍'' （低概率的区域）的两个\gls{mode}之间的转移概率是（随着能量障碍的高度）指数下降的，如在\figref{fig:chap17_good_bad_really_bad_mixing_color}中展示的一样。
+隔着一个巨大``能量障碍'' （低概率的区域）的两个\gls{mode}之间的转移概率是（随着能量障碍的高度）指数下降的，如\figref{fig:chap17_good_bad_really_bad_mixing_color}所示。
 当目标分布有很多\gls{mode}并且以很高的概率被低概率区域所分割，尤其当\,\gls{gibbs_sampling}的每一步都只是更新变量的一小部分而这一小部分变量又严重依赖其他的变量时，这会导致严重的问题。 
 % 591
 
@@ -425,7 +425,9 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 归根结底，\gls{markov_chain}最初就是被提出来解决这个问题，即从大量变量中采样的问题。
 % 592
 
-含有\gls{latent_variable}的模型中定义了一个联合分布$p_{\text{model}}(\Vx,\Vh)$，我们经常通过交替地从$p_{\text{model}}(\Vx\mid \Vh)$和$p_{\text{model}}(\Vh\mid \Vx)$中采样来达到抽$\Vx$的目的。  %?? 在定以了一个联合分布$p_{\text{model}}(\Vx,\Vh)$的\gls{latent_variable}模型中，
+
+% 593 head
+在定义了一个联合分布$p_{\text{model}}(\Vx,\Vh)$的\gls{latent_variable}模型中，我们经常通过交替地从$p_{\text{model}}(\Vx\mid \Vh)$和$p_{\text{model}}(\Vh\mid \Vx)$中采样来达到抽$\Vx$的目的。  
 从快速\gls{mixing}的角度上说，我们更希望$p_{\text{model}}(\Vh\mid \Vx)$有很大的熵。
 然而，从学习一个$\Vh$的有用表示的角度上考虑，我们还是希望$\Vh$能够包含$\Vx$的足够信息从而能够较完整地重构它，这意味$\Vh$和$\Vx$有着非常高的互信息。
 这两个目标是相互矛盾的。
@@ -454,7 +456,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 但是对于吉布斯链来说从分布的一个\gls{mode}转移到另一个仍然是很困难的，比如说改变数字。
 \emph{(右)}从\gls{generative_adversarial_networks}中抽出的连续原始样本。
 因为\gls{ancestral_sampling}生成的样本之间互相独立，所以不存在\gls{mixing}问题。
-{译者注：原书此处左右搞反了。}} %??
+{译者注：原书此处左右搞反了。}} 
 \label{fig:chap17_fig-dbm-bad-mixing}
 \end{figure}
 % 593 end
