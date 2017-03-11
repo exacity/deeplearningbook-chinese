@@ -238,7 +238,7 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 
 
 我们回过头来看\secref{sec:sparse_coding}中的\gls{sparse_coding}，\gls{sparse_coding}是一种在\gls{hidden_unit}上加上了鼓励稀疏的先验知识的\gls{linear_factor}。
-一个常用的选择是可分解的拉普拉斯先验，表示为
+一个常用的选择是可分解的Laplace先验，表示为
 \begin{align}
 	p(h_i) = \frac{\lambda}{2}  \exp(-\lambda \vert h_i \vert).
 \end{align}
@@ -323,7 +323,7 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 
 因为$\CalL(\Vv,\Vtheta,q)$被定义成$\log p(\Vv;\Vtheta) - D_{\text{KL}} (q(\Vh\mid\Vv) \Vert  p(\Vh\mid\Vv;\Vtheta) )$，我们可以认为关于$q$最大化$\CalL$的问题等价于（关于$q$）最小化$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
 在这种情况下，我们要用$q$来拟合$p$。
-然而，我们并不是直接拟合一个近似，而是处理一个\gls{KL}的问题。 %?? 然而，与以前方法不同，我们使用\gls{KL}的相反方向来拟合一个近似。  你斟酌下
+然而，与以前方法不同，我们使用\gls{KL}的相反方向来拟合一个近似。
 当我们使用\gls{MLE}来用模型拟合数据时，我们最小化$D_{\text{KL}}(p_{\text{data}} \Vert p_{\text{model}})$。
 如\figref{fig:chap3_kl_direction_color}所示，这意味着\gls{maximum_likelihood}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
 这两种基于\gls{KL}的方法都有各自的优点与缺点。
@@ -382,12 +382,12 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 \begin{align}
 	p(\Vv\mid\Vh) = \CalN(\Vv;\MW \Vh,{\Vbeta}^{-1}),
 \end{align}
-其中$\Vb$是一个可以学习的偏置集合，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角精度矩阵。
+其中$\Vb$是一个可以学习的\gls{BIAS}集合，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角精度矩阵。
 % 632
 
 
 使用\gls{maximum_likelihood}来训练这样一个模型需要对参数进行求导。
-我们考虑对其中一个偏置进行求导的过程：
+我们考虑对其中一个\gls{BIAS}进行求导的过程：
 \begin{align}
 		& \frac{\partial}{\partial b_i} \log p(\Vv) \\
 		= &  \frac{\frac{\partial}{\partial b_i} p(\Vv)}{p(\Vv)}\\
@@ -535,12 +535,12 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 % 636  head 
 
 
-在\gls{binary_sparse_coding}模型中，我们可以发现\eqnref{eqn:1944}中描述的\gls{recurrent_network}连接包含了根据相邻\gls{hidden_unit}变化值来反复更新当前\gls{hidden_unit}的操作。   %?? 连接  换成 （和图模型推断的相关联系）     你斟酌下
+在\gls{binary_sparse_coding}模型中，我们可以发现\eqnref{eqn:1944}中描述的\gls{recurrent_network}连接包含了根据相邻\gls{hidden_unit}变化值来反复更新当前\gls{hidden_unit}的操作。   %?? 连接  换成 （和图模型推断的相关联系）     
 输入层通常给\gls{hidden_unit}发送一个固定的信息$\Vv^{\top}\beta\MW$，然而\gls{hidden_unit}不断地更新互相传送的信息。
 具体地说，当$\hat{h}_i$和$\hat{h}_j$两个单元的权重向量平行时，它们会互相抑制。
 这也是一种形式的竞争——两个解释输入的\gls{hidden_unit}之间，只有一个解释得更好的才被允许继续保持活跃。
-在\gls{binary_sparse_coding}的后验分布中，\gls{mean_field}近似为了捕获到更多的\gls{explaining_away}相互作用，产生了这种竞争。   %?? 捕获  换成  反应，  你斟酌下
-事实上，\gls{explaining_away}效应会产生一个\gls{multimodal}的后验分布，以致于如果我们从后验分布中采样，一些样本在一个结点是活跃的，其他的样本在另一个结点活跃，只有很少的样本能够两者都处于活跃状态。  %?? unit 翻译成 结点 好么。。
+在\gls{binary_sparse_coding}的后验分布中，\gls{mean_field}近似试图捕获到更多的\gls{explaining_away}相互作用，从而产生了这种竞争。   %?? 捕获  换成  反应，
+事实上，\gls{explaining_away}效应会产生一个\gls{multimodal}的后验分布，以致于如果我们从后验分布中采样，一些样本在一个单元是活跃的，其他的样本在另一个单元活跃，只有很少的样本能够两者都处于活跃状态。
 不幸的是，\gls{explaining_away}作用无法通过\gls{mean_field}中\gls{factorial}分布$q$来建模，因此建模时\gls{mean_field}近似只能选择一个\gls{mode}。
 这个现象的一个例子可以参考\figref{fig:chap3_kl_direction_color}。
 % 636
@@ -766,7 +766,6 @@ $p(\Vx\mid\Vh)$的复杂性导致了似然函数的对数及其梯度也很难�
 & -2vh_1w_1 - 2vh_2w_2 + 2h_1w_1h_2w_2]\Big).
 \end{align}
 % 641 
-% 641 
 从这里，我们可以发现其中我们只需要从$q(h_2\mid \Vv)$中获得两个有效值：
 $\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2^2]$。
 把这两项记作$\langle h_2 \rangle$和$\langle h_2^2 \rangle$，我们可以得到：
@@ -851,13 +850,13 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 %<bad>这种方法的主要缺点是我们将只能够训练推断网络在模型下具有高概率的$\Vv$值。
 这种方法的主要缺点是我们将只能在那些在当前模型上有较高概率的$\Vv$值上训练推断网络。
 在学习早期，模型分布与数据分布偏差较大，因此推断网络将不具有在类似数据的样本上学习的机会。
-% 643
+% 643 mid
 
 
-在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中，我们看到睡眠做梦在人类和动物中作用的一个可能解释是，做梦可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}中对数\gls{partition_function}负梯度的负相位样本。
+在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中，我们看到睡眠做梦在人类和动物中作用的一个可能解释是，做梦可以提供\gls{monte_carlo}训练算法用于近似\gls{undirected_model}中对数\gls{partition_function}负梯度的\gls{negative_phase}样本。
 生物做梦的另一个可能解释是它提供来自$p(\Vh,\Vv)$的样本，这可以用于训练推断网络在给定$\Vv$的情况下预测$\Vh$。
 在某些意义上，这种解释比\gls{partition_function}的解释更令人满意。
-如果\gls{monte_carlo}算法仅使用梯度的正相位运行几个步骤，然后仅对梯度的负相位运行几个步骤，那么结果通常不会很好。
+如果\gls{monte_carlo}算法仅使用梯度的\gls{positive_phase}运行几个步骤，然后仅对梯度的\gls{negative_phase}运行几个步骤，那么结果通常不会很好。
 人类和动物通常连续清醒几个小时，然后连续睡着几个小时。
 这个时间表如何支持\gls{undirected_model}的\gls{monte_carlo}训练尚不清楚。
 然而，基于最大化$\CalL$的学习算法可以通过长时间调整改进$q$和长期调整${\Vtheta}$来实现。
