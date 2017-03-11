@@ -15,7 +15,7 @@
 在本节中，我们简要介绍二值\gls{BM}并讨论训练模型和执行\gls{inference}时出现的问题。
 
 我们在$d$维二值随机向量$\Vx \in \{0, 1\}^d$上定义\gls{BM}。
-\gls{BM}是一种基于能量的模型（\secref{sec:energy_based_models}），意味着我们可以使用\gls{energy_function}定义\gls{joint_probability_distribution}：
+\gls{BM}是一种\gls{energy_based_model}（\secref{sec:energy_based_models}），意味着我们可以使用\gls{energy_function}定义\gls{joint_probability_distribution}：
 \begin{align}\label{eq:201px}
  P(\Vx) = \frac{\exp(-E(\Vx))}{Z},
 \end{align}
@@ -40,7 +40,7 @@
 相反，\gls{BM}变成了离散变量上\gls{PMF}的\gls{universal_approximator} \citep{LeRoux-Bengio-2008}。
 
 
-形式地，我们将单元$\Vx$分解为两个子集：可见单元$\Vv$和\gls{latent}（或隐藏）单元$\Vh$。
+正式地，我们将单元$\Vx$分解为两个子集：可见单元$\Vv$和\gls{latent}（或隐藏）单元$\Vh$。
 \gls{energy_function}变为
 \begin{align}
  E(\Vv, \Vh) = -\Vv^\top \MR \Vv - \Vv^\top \MW \Vh - \Vh^\top \MS \Vh - \Vb^\top \Vv - \Vc^\top \Vh.
@@ -118,7 +118,7 @@
 更正式地说，令观察层由一组$n_v$个二值随机变量组成，我们统称为向量$\RVv$。
 我们将$n_h$个二值随机变量的\gls{latent}或\gls{hidden_layer}记为$\Vh$。
 
-就像普通的\gls{BM}，\gls{RBM}也是基于能量的模型，其\gls{joint_probability_distribution}由\gls{energy_function}指定：
+就像普通的\gls{BM}，\gls{RBM}也是\gls{energy_based_model}，其\gls{joint_probability_distribution}由\gls{energy_function}指定：
 \begin{align}
  P(\RVv = \Vv, \RVh = \Vh) = \frac{1}{Z} \exp(-E(\Vv, \Vh)).
 \end{align}
@@ -175,7 +175,7 @@ RBM的\gls{energy_function}由下给出
 <BAD>因为\glssymbol{RBM}允许以高效\glssymbol{mcmc}采样（\gls{block_gibbs_sampling}的形式）对$\tilde{P}(\Vv)$进行高效评估和求导，所以可以简单地使用\chapref{chap:confronting_the_partition_function}中描述的任意训练具有难解\gls{partition_function}模型的技术。
 这包括\glssymbol{contrastive_divergence}、\glssymbol{SML}（\glssymbol{persistent_contrastive_divergence}）、\gls{ratio_matching}等。
 与深度学习中使用的其他\gls{undirected_model}相比，\glssymbol{RBM}可以相对直接地训练，因为我们可以以闭解形式计算$P(\RVh  \mid  \Vv)$。
-其他一些深度模型，如\gls{DBM}，同时具备难处理的\gls{partition_function}和难以推论的难题。
+其他一些深度模型，如\gls{DBM}，同时具备难处理的\gls{partition_function}和难以推断的难题。
 
 % -- 650 --
 
@@ -304,7 +304,7 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 
 与\glssymbol{RBM}和\glssymbol{DBN}一样，\glssymbol{DBM}通常仅包含二值单元 （正如我们为简化模型的演示而假设的），但很容易就能扩展到实值可见单元。
 
-\glssymbol{DBM}是基于能量的模型，意味着模型变量的\gls{joint_probability_distribution}由\gls{energy_function} $E$参数化。
+\glssymbol{DBM}是\gls{energy_based_model}，意味着模型变量的\gls{joint_probability_distribution}由\gls{energy_function} $E$参数化。
 \gls{DBM}包含一个可见层$\Vv$和三个\gls{hidden_layer} $\Vh^{(1)},\Vh^{(2)}$和$\Vh^{(3)}$的情况下，联合概率由下式给出：
 \begin{align}
  P(\Vv, \Vh^{(1)},  \Vh^{(2)},  \Vh^{(3)}) = \frac{1}{Z(\Vtheta)} 
@@ -925,7 +925,7 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 
 深度卷积网络通常需要池化操作，使得每个连续层的空间大小减小。
 前馈卷积网络通常使用池化函数，例如池化元素的最大值。
-目前尚不清楚如何将其推广到基于能量设定的模型。
+目前尚不清楚如何将其推广到\gls{energy_based_model}的设定中。
 我们可以在$n$个二值检测器单元$\RVd$上引入二值池化单元$\RSp$，强制$p = \max_i d_i$，并且当违反约束时将\gls{energy_function}设置为$\infty$。
 因为它需要评估$2^n$个不同的能量设置来计算归一化常数，这种方式不能很好地扩展。
 对于小的$3\times3$池化区域，每个池化单元需要评估$2^9 = 512$个\gls{energy_function}！

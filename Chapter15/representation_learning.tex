@@ -11,19 +11,19 @@
 最后，我们回过头探讨\gls{representation_learning}成功的原因，从\gls{distributed_representation}~\citep{Hinton-et-al-PDP1986}和深度表示的理论优势，最后会讲到\gls{DGP}潜在假设的更一般概念，特别是观测数据的基本成因。
 
 
-很多信息处理任务，非常容易或者非常困难，这取决于信息是如何表示的。
-这是一个广泛适用于日常生活，计算机科学及\gls{ML}的基本原则。
+很多信息处理任务可能非常容易，也可能非常困难，这取决于信息是如何表示的。
+这是一个广泛适用于日常生活、计算机科学及\gls{ML}的基本原则。
 例如，对于人而言，可以直接使用长除法计算$210$除以$6$。
 但如果使用罗马数字表示，这个问题就没那么直接了。
-大部分现代人在进行罗马数字计算\ENNAME{CCX}除以\ENNAME{VI}时，都会将其转化成阿拉伯数字，从而使用位值系统的长除法。
+大部分现代人在使用罗马数字计算\ENNAME{CCX}除以\ENNAME{VI}时，都会将其转化成阿拉伯数字，从而使用位值系统的长除法。
 更具体地，我们可以使用合适或不合适的表示来量化不同操作的渐近运行时间。
 例如，插入一个数字到有序表中的正确位置，如果该数列表示为链表，那么所需时间是$O(n)$；如果该列表表示为红黑树，那么只需要$O(\log n)$的时间。
 
 % -- 517 --
 
 在\gls{ML}中，到底是什么因素决定了一种表示比另一种表示更好呢？
-一般而言，一个好的表示可以使随后的学习任务更容易。
-选择什么表示通常取决于随后的学习任务。
+一般而言，一个好的表示可以使后续的学习任务更容易。
+选择什么表示通常取决于后续的学习任务。
 
 % 518 head 
 
@@ -44,17 +44,17 @@
 具有更多独立性的分布会更容易建模，因此，我们可以设计鼓励表示向量$\Vh$中元素之间相互独立的\gls{objective_function}。
 就像\gls{supervised}网络，\gls{unsupervised}深度学习算法有一个主要的训练目标，但也额外地学习出了表示。
 不论该表示是如何得到的，它都可以用于其他任务。
-另外，很多任务（有些是\gls{supervised}的，有些是\gls{unsupervised}的）可以通过共享的内部表示一起学习。
+或者，多个任务（有些是\gls{supervised}的，有些是\gls{unsupervised}的）可以通过共享的内部表示一起学习。
 
 
 % 518 mid 
 
-大多数\gls{representation_learning}算法都会在保留尽可能多和输入相关的信息和追求良好的性质（如独立性）之间做出权衡。
+大多数\gls{representation_learning}算法都会在尽可能多地保留与输入相关的信息和追求良好的性质（如独立性）之间作出权衡。
 
 
 % 518 mid 
 \gls{representation_learning}特别有趣，因为它提供了进行\gls{unsupervised_learning}和\gls{semi_supervised_learning}的一种方法。
-我们通常会有非常大量的\gls{unlabeled}训练数据和相对较少的\gls{labeled}训练数据。
+我们通常会有巨量的\gls{unlabeled}训练数据和相对较少的\gls{labeled}训练数据。
 在非常有限的\gls{labeled}数据集上\gls{supervised_learning}通常会导致严重的\gls{overfitting}。
 \gls{semi_supervised_learning}通过进一步学习\gls{unlabeled}数据，来解决\gls{overfitting}的问题。
 具体地，我们可以从\gls{unlabeled}数据上学习出很好的表示，然后用这些表示来解决\gls{supervised_learning}问题。
@@ -66,7 +66,7 @@
 有许多假说解释人类的卓越学习能力——例如，大脑可能使用了大量的分类器或者\gls{bayesian_inference}技术的\gls{ensemble}。
 一种流行的假说是，大脑能够利用\gls{unsupervised_learning}和\gls{semi_supervised_learning}。
 利用\gls{unlabeled}数据有多种方式。
-在本章中，我们主要使用的假说是\gls{unlabeled}数据可以学习出更好的表示。
+在本章中，我们主要使用的假说是\gls{unlabeled}数据可以学习出良好的表示。
 
 % -- 519 head
 
@@ -82,7 +82,7 @@
 \gls{greedy_layer_wise_unsupervised_pretraining}依赖于单层\gls{representation_learning}算法，例如\glssymbol{RBM}、单层\gls{AE}、\gls{sparse_coding}模型或其他学习\gls{latent}表示的模型。
 每一层使用\gls{unsupervised_learning}\gls{pretraining}，将前一层的输出作为输入，输出数据的新的表示。
 这个新的表示的分布（或者是和其他变量比如要预测类别的关系）有可能是更简单的。
-如\algref{alg:pretraining}所示正式地表述。
+如\algref{alg:pretraining}所示的正式表述。
 
 \begin{algorithm}
 \caption{ {\em \gls{greedy_layer_wise_unsupervised_pretraining}的协定}\\
@@ -112,7 +112,7 @@
 这种方法至少可以追溯神经认知机~\citep{Fukushima75}。
 深度学习的复兴始于2006年，源于发现这种贪心学习过程能够为多层联合训练过程找到一个好的初始值，甚至可以成功训练全连接的结构~\citep{Hinton06-small,Hinton-Science2006,HintonG2006,Bengio-nips-2006,ranzato-07-small}。
 在此发现之前，只有深度卷积网络或深度循环网络这类特殊结构的深度网络被认为是有可能训练的。
-现在我们知道训练全连接的深度结构，\gls{greedy_layer_wise_unsupervised_pretraining}不是唯一的方法，但\gls{unsupervised}\gls{pretraining}是第一个成功的方法。
+现在我们知道训练具有全连接的深度结构时，不再需要使用\gls{greedy_layer_wise_unsupervised_pretraining}，但\gls{unsupervised}\gls{pretraining}是第一个成功的方法。
 
 % 519 end
 
@@ -140,7 +140,7 @@
 % 520 mid
 
 
-正如\secref{sec:supervised_pretraining}所探讨的，也可以进行\gls{greedy}逐层\emph{\gls{supervised}}\gls{pretraining}。
+正如\secref{sec:supervised_pretraining}所探讨的，我们也可以进行\gls{greedy}逐层\emph{\gls{supervised}}\gls{pretraining}。
 这是建立在训练浅层模型比\gls{deep_model}更容易的前提下，而该前提似乎在一些情况下已被证实~\citep{Erhan+al-2010-small}。
 
 % 520 end
@@ -169,31 +169,31 @@
 
 \gls{unsupervised_pretraining}结合了两种不同的想法。
 第一，它利用了\gls{DNN}对初始参数的选择，可以对模型有着显著的\gls{regularization}效果（在较小程度上，可以改进优化）的想法。
-第二，它利用了更一般的想法，学习\gls{input_distribution}有助于学习从\gls{input}到\gls{output}的映射。
+第二，它利用了更一般的想法——学习\gls{input_distribution}有助于学习从\gls{input}到\gls{output}的映射。
 
 % 522 head
 
 这两个想法都涉及到\gls{ML}算法中多个未能完全理解的部分之间复杂的相互作用。
 
 % 522 mid
-第一个想法，即\gls{DNN}初始参数的选择对其性能具有很强的\gls{regularization}效果，是最不容易理解的。
+第一个想法，即\gls{DNN}初始参数的选择对其性能具有很强的\gls{regularization}效果，很少有关于这个想法的理解。
 在\gls{pretraining}变得流行时，在一个位置初始化模型被认为会使其接近某一个\gls{local_minimum}，而不是另一个\gls{local_minimum}。%?? 难以理解
 如今，\gls{local_minima}不再被认为是\gls{NN}优化中的严重问题。
 现在我们知道标准的\gls{NN}训练过程通常不会到达任何形式的\gls{critical_points}。
-仍然可能的是，\gls{pretraining}会初始化模型到一个可能不会到达的位置——例如，某种区域，其中\gls{cost_function}从一个样本点到另一个样本点变化很大，\gls{minibatch}只能提供\gls{noise}严重的梯度估计，或是某种区域中的\gls{hessian}矩阵条件数是病态的，\gls{GD}必须使用非常小的步长。
+仍然可能的是，\gls{pretraining}会初始化模型到一个可能不会到达的位置——例如，某种区域，其中\gls{cost_function}从一个样本点到另一个样本点变化很大，而\gls{minibatch}只能提供\gls{noise}严重的梯度估计，或是某种区域中的\gls{hessian}矩阵条件数是病态的，\gls{GD}必须使用非常小的步长。
 然而，我们很难准确判断\gls{supervised_learning}期间\gls{pretraining}参数的哪些部分应该保留。
 这是现代方法通常同时使用\gls{unsupervised_learning}和\gls{supervised_learning}，而不是依序使用两个学习阶段的原因之一。
-除了这些复杂的方法可以让\gls{supervised_learning}阶段保持\gls{unsupervised_learning}阶段提取的信息之外，还有一种简单的方法，固定\gls{feature_extractor}的参数，仅仅将\gls{supervised_learning}作为顶层特征的分类器。
+除了这些复杂的方法可以让\gls{supervised_learning}阶段保持\gls{unsupervised_learning}阶段提取的信息之外，还有一种简单的方法，固定\gls{feature_extractor}的参数，仅仅将\gls{supervised_learning}作为顶层学成特征的分类器。
 
 % 522 mid
 
-另一个想法，学习算法可以使用\gls{unsupervised}阶段学习的信息，更好地执行\gls{supervised_learning}阶段，已经被更加深刻地理解了。
+另一个想法有更好的理解，即学习算法可以使用\gls{unsupervised}阶段学习的信息，在\gls{supervised_learning}的阶段表现得更好。
 其基本想法是对于\gls{unsupervised}任务有用的一些特征对于\gls{supervised_learning}任务也可能是有用的。
 例如，如果我们训练汽车和摩托车图像的\gls{generative_model}，它需要知道轮子的概念，以及一张图中应该有多少个轮子。
-如果我们幸运的话，\gls{unsupervised}阶段学习的轮子表示会很合适地用于\gls{supervised_learning}。
-然而还未能从数学、理论层面上证明，因此并不总是能够预测哪种任务能以这种形式从\gls{unsupervised_learning}中受益。
+如果我们幸运的话，\gls{unsupervised}阶段学习的轮子表示会适合于\gls{supervised_learning}。
+然而我们还未能从数学、理论层面上证明，因此并不总是能够预测哪种任务能以这种形式从\gls{unsupervised_learning}中受益。
 这种方法的许多方面高度依赖于具体使用的模型。
-例如，如果我们希望为\gls{pretraining}的特征添加\gls{linear_classifier}，那么（学习到的）特征必须使潜在的类别是线性\gls{separable}。%??    学习到的， 译者加， 便于理解
+例如，如果我们希望在\gls{pretraining}特征的顶层添加\gls{linear_classifier}，那么（学习到的）特征必须使潜在的类别是线性\gls{separable}。%??    学习到的， 译者加， 便于理解
 这些性质通常会在\gls{unsupervised_learning}阶段自然发生，但也并非总是如此。
 这是另一个\gls{supervised}和\gls{unsupervised_learning}同时训练更可取的原因——输出层施加的约束很自然地从一开始就包括在内。
 
@@ -218,7 +218,7 @@
 % 523 mid
 
 还可能涉及到一些其他的因素。
-例如，当要学习的函数非常复杂时，\gls{unsupervised_pretraining}可能会非常有用。
+例如，当我们要学习的函数非常复杂时，\gls{unsupervised_pretraining}可能会非常有用。
 \gls{unsupervised_learning}不同于\gls{weight_decay}这样的\gls{regularizer}，它不偏向于学习一个简单的函数，而是学习对\gls{unsupervised_learning}任务有用的特征函数。
 如果真实的潜在函数是复杂的，并且由\gls{input_distribution}的规律塑造，那么\gls{unsupervised_learning}更适合作为\gls{regularizer}。
 
@@ -232,7 +232,7 @@
 % 524 head
 
 \cite{Erhan+al-2010-small}进行了许多实验来解释\gls{unsupervised_pretraining}的几个成功原因。
-对\gls{training_error}和\gls{test_error}的改进都可以解释为，\gls{unsupervised_pretraining}将参数引入到了其它方法可能探索不到的区域。
+对\gls{training_error}和\gls{test_error}的改进都可以解释为，\gls{unsupervised_pretraining}将参数引入到了其他方法可能探索不到的区域。
 \gls{NN}训练是非确定性的，并且每次运行都会收敛到不同的函数。
 训练可以停止在梯度很小的点；也可以\gls{early_stopping}结束训练，以防\gls{overfitting}；
 还可以停止在梯度很大，但由于诸如随机性或\gls{hessian}矩阵\gls{poor_conditioning}等问题难以找到合适下降方向的点。
@@ -251,7 +251,7 @@
 
 一个重要的问题是\gls{unsupervised_pretraining}是如何起到\gls{regularizer}作用的。
 一个假设是，\gls{pretraining}鼓励学习算法发现那些与生成观察数据的潜在原因相关的特征。
-这也是除\gls{unsupervised_pretraining}之外许多其他算法的重要思想的启发，将会在\secref{sec:semi_supervised_disentangling_of_causal_factors}中进一步讨论。
+这也是启发除\gls{unsupervised_pretraining}之外许多其他算法的重要思想，将会在\secref{sec:semi_supervised_disentangling_of_causal_factors}中进一步讨论。
 
 % 524 mid  
 
@@ -277,15 +277,15 @@
 \caption{在\emph{函数空间}（并非参数空间，避免从参数向量到函数的多对一映射）不同神经网络的学习轨迹的非线性映射的可视化。
 不同网络采用不同的随机初始化，并且有的使用了\gls{unsupervised_pretraining}，有的没有。
 每个点对应着训练过程中一个特定时间的神经网络。
-经\citet{Erhan+al-2010-small}许可转载此图。
+经\citet{Erhan+al-2010-small}许可改编此图。
 函数空间中的坐标是关于每组输入$\Vx$和它的一个输出$\Vy$的\gls{infinite}维向量。
 \cite{Erhan+al-2010-small}将很多特定$\Vx$的$\Vy$连接起来，线性投影到高维空间中。
 然后他们使用\gls{isomap}~\citep{Tenenbaum2000-isomap}进行进一步的非线性投影并投到二维空间。
 颜色表示时间。
-所有的网络初始化在上图的中心点附近（对应的函数区域在不多数输入上具有近似\gls{uniform_distribution}的类别$\Vy$）。
-随着时间迁移，学习向外移动函数到预测得更好的点。
+所有的网络初始化在上图的中心点附近（对应的函数区域在不多数输入上具有近似\gls{uniform_distribution}的类别$y$）。
+随着时间推移，学习将函数向外移动到预测得更好的点。
 当使用\gls{pretraining}时，训练会一致地收敛到同一个区域；
-而不使用\gls{pretraining}时，训练会收敛到其他不重叠的区域。
+而不使用\gls{pretraining}时，训练会收敛到另一个不重叠的区域。
 \gls{isomap}试图维持全局相对距离（体积因此也保持不变），因此使用\gls{pretraining}的模型对应的较小区域意味着，基于\gls{pretraining}的\gls{estimator}具有较小的方差。
 }
 \label{fig:chap15_isomap}
@@ -295,7 +295,7 @@
 
 % 525 end 
 
-具有两个单独的训练阶段的另一个缺点是每个阶段都具有自己的\gls{hyperparameter}。
+具有两个单独的训练阶段的另一个缺点是每个阶段都具有各自的\gls{hyperparameter}。
 第二阶段的性能通常不能在第一阶段期间预测，因此在第一阶段提出\gls{hyperparameter}和第二阶段根据反馈来更新之间存在较长的延迟。
 最通用的方法是在\gls{supervised}阶段使用\gls{validation_set}上的误差来挑选\gls{pretraining}阶段的\gls{hyperparameter}，如\cite{Larochelle-jmlr-2009}中讨论的。
 在实际中，有些\gls{hyperparameter}，如\gls{pretraining}迭代的次数，很方便在\gls{pretraining}阶段设定，通过\gls{unsupervised}目标上使用\gls{early_stopping}策略完成。
@@ -304,7 +304,7 @@
 % 526 head
 
 如今，大部分算法已经不使用\gls{unsupervised_pretraining}了，除了在\gls{NLP}领域中单词作为\gls{one_hot}向量的自然表示不能传达相似性信息，并且有非常多的\gls{unlabeled}数据集可用。
-在这种情况下，\gls{pretraining}的优点是可以对一个巨大的\gls{unlabeled}集合（例如用包含数十亿单词的语料库）进行\gls{pretraining}，学习良好的表示（通常是单词，但也可以是句子），然后使用该表示或\gls{fine_tune}它，这种方法适用于训练集样本很少的\gls{supervised}任务。
+在这种情况下，\gls{pretraining}的优点是可以对一个巨大的\gls{unlabeled}集合（例如用包含数十亿单词的语料库）进行\gls{pretraining}，学习良好的表示（通常是单词，但也可以是句子），然后使用该表示或\gls{fine_tune}它，使其适合于训练集样本大幅减少的\gls{supervised}任务。
 这种方法由\cite{CollobertR2008-small}、\cite{Turian+Ratinov+Bengio-2010-small}和\cite{collobert2011natural}开创，至今仍在使用。
 
 % 526 mid
