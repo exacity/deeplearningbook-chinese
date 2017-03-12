@@ -11,7 +11,7 @@
 
 如果你已经很熟悉线性代数，那么你可以轻松地跳过本章。
 如果你已经了解这些概念，但是需要一份索引表来回顾一些重要公式，那么我们推荐\emph{The Matrix Cookbook} \citep{matrix-cookbook}。
-如果你没有接触过线性代数，那么本章将告诉你本书所需的线性代数知识，不过我们仍然非常建议你参考其他专注于讲解线性代数的文献，例如\cite{shilov1977linear}。
+如果你没有接触过线性代数，那么本章将告诉你本书所需的线性代数知识，不过我们仍然非常建议你参考其他专注于讲解线性代数的文献，例如~\cite{shilov1977linear}。
 最后，本章跳过了很多重要但是对于理解深度学习非必需的线性代数知识。
 
 
@@ -416,7 +416,7 @@ $L^1$范数可以简化如下：
 % -- 37 --
 
 
-另外一个经常在机器学习中出现的范数是$L^\infty$范数，也被称为~\firstgls{max_norm}。
+另外一个经常在机器学习中出现的范数是$L^\infty$范数，也被称为\,\firstgls{max_norm}。
 这个范数表示向量中具有最大幅值的元素的绝对值：
 \begin{equation}
     \norm{\Vx}_\infty = \max_i |x_i|.
@@ -645,7 +645,7 @@ $\MA$的\firstgls{right_Svector}是$\MA^\top\MA$的特征向量。
 $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\MA^\top$特征值的平方根。
 
 
-\glssymbol{SVD}最有用的一个性质可能是拓展矩阵求逆到非方矩阵上。我们将在下一节中探讨。
+\glssymbol{SVD}\,最有用的一个性质可能是拓展矩阵求逆到非方矩阵上。我们将在下一节中探讨。
 
 
 
@@ -783,13 +783,13 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 
 
 计算这个解码器的最优编码可能是一个困难的问题。
-为了使编码问题简单一些，\glssymbol{PCA}限制$\MD$的列向量彼此正交（注意，除非$l=n$，否则严格意义上$\MD$不是一个正交矩阵）。
+为了使编码问题简单一些，\glssymbol{PCA}\,限制$\MD$的列向量彼此正交（注意，除非$l=n$，否则严格意义上$\MD$不是一个正交矩阵）。
 
 
 为了将这个基本想法变为我们能够实现的算法，首先我们需要明确如何根据每一个输入$\Vx$得到一个最优编码$\Vc^*$。
 一种方法是最小化原始输入向量$\Vx$和重构向量$g(\Vc^*)$之间的距离。
 我们使用范数来衡量它们之间的距离。
-在\glssymbol{PCA}算法中，我们使用$L^2$范数：
+在\,\glssymbol{PCA}\,算法中，我们使用$L^2$范数：
 \begin{equation}
  \Vc^* = \underset{\Vc}{\arg\min} \norm{\Vx-g(\Vc)}_2.
 \end{equation}
@@ -848,7 +848,7 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 \begin{equation}
     f(\Vx)=\MD^\top\Vx.
 \end{equation}
-进一步使用矩阵乘法，我们也可以定义\glssymbol{PCA}重构操作：
+进一步使用矩阵乘法，我们也可以定义\,\glssymbol{PCA}\,重构操作：
 \begin{equation}
 \label{eq:2.67}
     r(\Vx)=g(f(\Vx)) = \MD\MD^\top \Vx.
@@ -858,7 +858,7 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 接下来，我们需要挑选编码矩阵$\MD$。
 要做到这一点，我们回顾最小化输入和重构之间$L^2$距离的这个想法。
 因为我们用相同的矩阵$\MD$对所有点进行解码，我们不能再孤立地看待每个点。
-反之，我们必须最小化所有维数和所有点上的误差矩阵的\gls{frobenius_norm}：
+反之，我们必须最小化所有维数和所有点上的误差矩阵的\,\gls{frobenius_norm}：
 \begin{equation}
 \label{eq:2.68}
     \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{ subject to } \MD^\top\MD = \MI_l.
@@ -898,7 +898,7 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
     \Vd^* = \underset{\Vd}{\arg\min} \norm{\MX - \MX\Vd\Vd^\top}_F^2
         \text{ subject to } \Vd^\top \Vd = 1.
 \end{equation}
-暂时不考虑约束，我们可以将\gls{frobenius_norm}简化成下面的形式：
+暂时不考虑约束，我们可以将\,\gls{frobenius_norm}简化成下面的形式：
 \begin{equation}
      \underset{\Vd}{\arg\min} \norm{\MX - \MX \Vd\Vd^\top}_F^2
 \end{equation}
