@@ -187,7 +187,7 @@
 \label{alg:cd}
 \begin{algorithmic}
 \STATE 设步长 $\epsilon$ 为一个小正数。
-\STATE 设\gls{gibbs_steps} $k$ 大到足以让从 $p_\text{data}$初始化并从 $p(\RVx; \Vtheta)$采样的\gls{markov_chain}混合 。在小图像集上训练一个\glssymbol{RBM}大致设为1-20。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以让从 $p_\text{data}$初始化并从 $p(\RVx; \Vtheta)$采样的\gls{markov_chain}\gls{mixing} 。在小图像集上训练一个\glssymbol{RBM}大致设为1-20。
 \WHILE{不收敛}
 \STATE 从训练集中采包含 $m$ 个样本 $\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$ 的\gls{minibatch}。
 \STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta).$
@@ -308,11 +308,12 @@
 
 % 605 mid
 在$k$太小或$\epsilon$太大时，随机梯度算法移动模型的速率比\gls{markov_chain}在迭代步中\gls{mixing}更快，此时\,\glssymbol{SML}\,容易变得不准确。
-不幸的是，这些值的容许范围与问题有很大关联。
-现在还没有方法能够正式地测试\gls{markov_chain}是否能够在迭代步骤之间成功混合。
-主观地，如果学习速率对于Gibbs步骤数目而言太大的话，那么
+不幸的是，这些值的容许范围高度依赖于具体问题。
+现在还没有方法能够正式地测试\gls{markov_chain}是否能够在迭代步骤之间成功\gls{mixing}。
+主观地，如果对于Gibbs步骤数目而言\gls{learning_rate}太大的话，那么
 梯度步骤中\gls{negative_phase}采样的方差会比不同\gls{markov_chain}中\gls{negative_phase}采样的方差更大。
-例如，一个MNIST模型在一个步骤中只采样得到了$7$，然后学习过程将会极大降低$7$出现的概率，在下一个步骤中，模型可能会只采样得到$9$。
+例如，一个MNIST模型在一个步骤中只采样得到了$7$。
+然后学习过程将会极大降低$7$对应的\gls{mode}，在下一个步骤中，模型可能会只采样得到$9$。
 
 % 605 end
 从使用\,\glssymbol{SML}\,训练的模型中评估采样必须非常小心。
@@ -330,27 +331,27 @@
 
 
 所有基于\,\glssymbol{mcmc}\,从模型中抽取样本的方法在原则上几乎可以与\,\glssymbol{mcmc}\,的任何变体一起使用。
-这意味着诸如\,\glssymbol{SML}\,这样的技术可以使用\chapref{chap:monte_carlo_methods}中描述的任何增强\,\glssymbol{mcmc}\,的技术（例如并行回火）来加以改进~\citep{desjardins2010tempered,Cho10IJCNN-small}。
+这意味着诸如\,\glssymbol{SML}\,这样的技术可以使用\chapref{chap:monte_carlo_methods}中描述的任何增强\,\glssymbol{mcmc}\,的技术（例如\gls{parallel_tempering}）来加以改进~\citep{desjardins2010tempered,Cho10IJCNN-small}。
+% 606 mid
 
-
-一种在学习期间加速混合的方法是，不改变\gls{monte_carlo}采样技术，而是改变模型的参数化和\gls{cost_function}。
+一种在学习期间加速\gls{mixing}的方法是，不改变\gls{monte_carlo}采样技术，而是改变模型的参数化和\gls{cost_function}。
 \firstgls{FPCD}，或者\,\glssymbol{FPCD}~\citep{TielemanT2009-small}使用如下表达式去替换传统模型的参数$\Vtheta$
 
 \begin{equation}
 	\Vtheta = \Vtheta^{\text{(slow)}} + \Vtheta^{\text{(fast)}}.
 \end{equation}
 现在的参数是以前的两倍多，逐位相加定义原始模型的参数。
-快速参数用更大的学习速率来训练，从而使其快速响应学习的\gls{negative_phase}，并使\gls{markov_chain}探索新的区域。
-这能够使\gls{markov_chain}快速混合，尽管这种效应只会发生在学习期间快速权重可以自由改变的时候。
-通常，在短时间地将快速权重设为大值并保持足够长时间，使\gls{markov_chain}改变模式之后，我们会对快速权重使用显著的权重衰减，促使它们收敛到小值。
+快速参数用更大的\gls{learning_rate}来训练，从而使其快速响应学习的\gls{negative_phase}，并促使\gls{markov_chain}探索新的区域。
+这能够使\gls{markov_chain}快速\gls{mixing}，尽管这种效应只会发生在学习期间快速权重可以自由改变的时候。
+通常，在短时间地将快速权重设为大值并保持足够长时间，使\gls{markov_chain}改变\gls{mode}之后，我们会对快速权重使用显著的\gls{weight_decay}，促使它们收敛到较小的值。
 
 
 本节介绍的基于\,\glssymbol{mcmc}\,的方法的一个关键优点是它们提供了$\log Z$梯度的估计，因此我们可以从本质上将问题分解为$\log \tilde{p}$和$\log Z$两块。
 然后我们可以使用任何其他的方法来处理$\log \tilde{p}(\RVx)$，只需将我们的\gls{negative_phase}梯度加到其他方法的梯度中。
-特别地，这意味着\gls{positive_phase}可以使用在$\tilde{p}$上仅有下限的方法。
+特别地，这意味着\gls{positive_phase}可以使用那些仅提供$\tilde{p}$下限的方法。
 然而，本章介绍处理$\log Z$的大多数其他方法都和基于边界的\gls{positive_phase}方法是不兼容的。
 
-% -- 606 --
+% -- 606 end
 
 \section{\glsentrytext{pseudolikelihood}}
 \label{sec:pseudolikelihood}
@@ -375,13 +376,13 @@
 
 不幸的是，为了计算对数似然，我们需要边缘化很多变量。
 如果总共有$n$个变量，那么我们必须边缘化$n-1$个变量。
-根据概率的\gls{chain_rule}，
+根据概率的\gls{chain_rule}，我们有
 \begin{equation}
 	\log p(\RVx) = \log p(x_1) + \log p(x_2 \mid x_1) + \dots + \log p(x_n \mid \RVx_{1:n−1}).
 \end{equation}
 在这种情况下，我们已经使$\RVa$尽可能小，但是$\RVc$可以大到$\RVx_{2:n}$。
 如果我们简单地将$\RVc$移到$\RVb$中以减少计算代价，那么会发生什么呢？
-这便产生了\firstgls{pseudolikelihood}~\citep{Besag75pseudolikelihood}目标函数，给定所有其他特征$\Vx_{-i}$，预测特征$x_i$的值：
+这便产生了\firstgls{pseudolikelihood}~\citep{Besag75pseudolikelihood}\gls{objective_function}，给定所有其他特征$\Vx_{-i}$，预测特征$x_i$的值：
 \begin{equation}
 	\sum_{i=1}^n \log p(x_i \mid \Vx_{-i}).
 \end{equation}
@@ -391,8 +392,8 @@
 
 % -- 607 --
 
-这看起来似乎是一个没有道理的策略，但可以证明最大化伪似然的估计是渐近一致的~\citep{Mase1995}。
-当然，在数据集不接近大采样极限的情况下，伪似然可能表现出与最大似然估计不同的结果。
+这看起来似乎是一个没有道理的策略，但可以证明最大化\gls{pseudolikelihood}的估计是渐近一致的~\citep{Mase1995}。
+当然，在数据集不接近大采样极限的情况下，\gls{pseudolikelihood}可能表现出与最大似然估计不同的结果。
 
 
 可以用\firstgls{generalized_pseudolikelihood_estimator}以计算复杂度的增加换取最大似然偏离的下降~\citep{Huang02}。
@@ -412,12 +413,12 @@
 例如，在自然图像中，空间中相隔很远的像素也具有弱相关性，因此广义伪似然可以应用于每个$\SetS$集是小的局部空间窗口的情况。
 
 
-伪似然估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中介绍的\gls{variational_inference}。这是因为$\tilde{p}$出现在了分母中。
+\gls{pseudolikelihood}估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中介绍的\gls{variational_inference}。这是因为$\tilde{p}$出现在了分母中。
 分母的下界仅提供了整个表达式的上界，然而我们并不关心最大化上界。
 这使得难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的\gls{deep_model}，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
 尽管如此，\gls{pseudolikelihood}仍然可以用在\gls{DL}中，它可以用于单层模型，或使用不基于下限的近似推断方法的\gls{deep_model}。
 
-% -- 608 --
+% -- 608 end
 
 \gls{pseudolikelihood}比\,\glssymbol{SML}\,在每个梯度步骤中的计算代价要大得多，这是由于其对所有条件进行显式计算。
 但是，如果每个样本只计算一个随机选择的条件，那么广义伪似然和类似标准仍然可以很好地运行，从而使计算代价降低到和\,\glssymbol{SML}\,差不多的程度~\citep{Goodfellow-et-al-NIPS2013}。
@@ -427,7 +428,7 @@
 每个条件分布的分母会使得学习算法降低所有仅具有一个变量不同于训练样本的状态的概率。
 
 
-了解\gls{pseudolikelihood}的渐近效率理论分析，请参看~\cite{Marlin11-small}。
+了解\gls{pseudolikelihood}的渐近效率理论分析，可以参考~\cite{Marlin11-small}。
 
 
 \section{\glsentrytext{score_matching}和\glsentrytext{ratio_matching}}
@@ -435,20 +436,20 @@
 \gls{score_matching}~\citep{Hyvarinen-2005-small}提供了另一种训练模型而不需要估计$Z$或其导数的一致性方法。
 对数密度关于参数的导数$\nabla_{\Vx} \log p(\Vx)$，被称为其\firstgls{score}，\emph{\gls{score_matching}}这个名称正是来自这样的术语。
 \gls{score_matching}采用的策略是，最小化模型对数密度和数据对数密度关于输入的导数之间的平方差期望：
-\begin{equation}
-	L(\Vx, \Vtheta) = \frac{1}{2} \norm{  \nabla_{\Vx} \log p_{\text{model}}(\Vx; \Vtheta) - \nabla_{\Vx} \log p_{\text{data}} (\Vx)  }_2^2,
-\end{equation}
-\begin{equation}
-	J(\Vtheta) = \frac{1}{2} \SetE_{p_{\text{data}}(\Vx)}  L(\Vx, \Vtheta),
-\end{equation}
-\begin{equation}
-	\Vtheta^* = \min_{\Vtheta} J(\Vtheta) .
-\end{equation}
+\begin{align}
+	L(\Vx, \Vtheta) & = \frac{1}{2} \norm{  \nabla_{\Vx} \log p_{\text{model}}(\Vx; \Vtheta) - \nabla_{\Vx} \log p_{\text{data}} (\Vx)  }_2^2, \\
+%\end{equation}
+%\begin{equation}
+	J(\Vtheta) & = \frac{1}{2} \SetE_{p_{\text{data}}(\Vx)}  L(\Vx, \Vtheta), \\
+%\end{equation}
+%\begin{equation}
+	\Vtheta^* & = \min_{\Vtheta} J(\Vtheta) . \\
+\end{align}
+%??   等号未对齐
 
-
-该目标函数避免了微分\gls{partition_function} $Z$带来的难题，因为$Z$不是$x$的函数，所以$\nabla_{\RVx} Z = 0$。
+该\gls{objective_function}避免了微分\gls{partition_function} $Z$带来的难题，因为$Z$不是$x$的函数，所以$\nabla_{\RVx} Z = 0$。
 最初，\gls{score_matching}似乎有一个新的困难：计算数据分布的\gls{score}需要知道生成训练数据的真实分布$p_{\text{data}}$。
-幸运的是，最小化$L(\Vx, \Vtheta)$的期望等效于最小化下式的期望
+幸运的是，最小化$L(\Vx, \Vtheta)$的期望等价于最小化下式的期望
 \begin{equation}
 	\tilde{L} (\Vx, \Vtheta) = \sum_{j=1}^n \left( \frac{\partial^2}{ \partial x_j^2 } 
 	\log p_{\text{model}} (\Vx; \Vtheta) + \frac{1}{2} \left( \frac{\partial}{ \partial x_j }
@@ -480,8 +481,8 @@
 
 
 一种更成功地将\gls{score_matching}的基本想法扩展到离散数据的方法是\firstgls{ratio_matching}~\citep{Hyvarinen-2007}。
-\gls{ratio_matching}特别适用于二元数据。
-\gls{ratio_matching}最小化以下目标函数在样本上的均值：
+\gls{ratio_matching}特别适用于二值数据。
+\gls{ratio_matching}最小化以下\gls{objective_function}在样本上的均值：
 \begin{equation}
 	L^{(\text{RM})} (\Vx, \Vtheta) = \sum_{j=1}^n \left( 
 	\frac{1}{ 1 + \frac{ p_{\text{model}}(\Vx; \Vtheta) }{ p_{\text{model}}(f(\Vx), j; \Vtheta) } } 
@@ -490,7 +491,7 @@
 其中$f(\Vx, j)$返回$j$处位值取反的$\RVx$。
 \gls{ratio_matching}使用了与\gls{pseudolikelihood}估计相同的策略来绕开\gls{partition_function}：\gls{partition_function}会在两个概率的比率中抵消掉。
 \cite{Marlin10Inductive-small}发现，
-训练模型给测试集图像\gls{denoising}时，\gls{ratio_matching}的效果要优于\,\glssymbol{SML}，\gls{pseudolikelihood}和\,\glssymbol{GSM}。
+训练模型给测试集图像\gls{denoising}时，\gls{ratio_matching}的效果要优于\,\glssymbol{SML}、\gls{pseudolikelihood}和\,\glssymbol{GSM}。
 
 
 % -- 610 --
