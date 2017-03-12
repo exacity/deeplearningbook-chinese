@@ -393,14 +393,14 @@
 % -- 607 --
 
 这看起来似乎是一个没有道理的策略，但可以证明最大化\gls{pseudolikelihood}的估计是渐近一致的~\citep{Mase1995}。
-当然，在数据集不接近大采样极限的情况下，\gls{pseudolikelihood}可能表现出与最大似然估计不同的结果。
+当然，在数据集不趋近于大采样极限的情况下，\gls{pseudolikelihood}可能表现出与\gls{MLE}不同的结果。
+% 608 head
 
-
-可以用\firstgls{generalized_pseudolikelihood_estimator}以计算复杂度的增加换取最大似然偏离的下降~\citep{Huang02}。
+可以用\firstgls{generalized_pseudolikelihood_estimator}以计算复杂度的增加换取其相对于最大似然表现的偏离的下降~\citep{Huang02}。
 \gls{generalized_pseudolikelihood_estimator}使用$m$个不同的集合$\SetS^{(i)}$，$i=1, \dots, m$作为变量的指标出现在条件棒的左侧。
 在$m = 1$和$\SetS^{(1)}= 1, \dots, n$的极端情况下\gls{generalized_pseudolikelihood_estimator}会变为对数似然。
-在$m = n$和$\SetS^{(i)} = \{i\}$的极端情况下，广义伪似然会变为伪随机。
-\gls{generalized_pseudolikelihood_estimator}目标函数如下所示
+在$m = n$和$\SetS^{(i)} = \{i\}$的极端情况下，\gls{generalized_pseudolikelihood}会恢复为\gls{pseudolikelihood}。%??   recover the pseudolikeli
+\gls{generalized_pseudolikelihood_estimator}\gls{objective_function}如下所示
 \begin{equation}
 	\sum_{i=1}^m \log p(\RVx_{\SetS^{(i)}} \mid \RVx_{- \SetS^{(i)} }).
 \end{equation}
@@ -409,28 +409,28 @@
 基于\gls{pseudolikelihood}的方法的性能在很大程度上取决于模型是如何使用的。
 对于完全联合分布$p(\RVx)$模型的任务（例如密度估计和采样），\gls{pseudolikelihood}通常效果不好。
 对于在训练期间只需要使用条件分布的任务而言，它的效果比最大似然更好，例如填充少量的缺失值。
-如果数据具有规则结构，使得$\SetS$索引集可以被设计为表现最重要的相关性质，同时略去相关性可忽略的变量，那么广义伪似然策略将会非常有效。
-例如，在自然图像中，空间中相隔很远的像素也具有弱相关性，因此广义伪似然可以应用于每个$\SetS$集是小的局部空间窗口的情况。
-
+如果数据具有规则结构，使得$\SetS$索引集可以被设计为表现最重要的相关性质，同时略去相关性可忽略的变量，那么\gls{generalized_pseudolikelihood}策略将会非常有效。
+例如，在自然图像中，空间中相隔很远的像素也具有弱相关性，因此\gls{generalized_pseudolikelihood}可以应用于每个$\SetS$集是小的局部空间窗口的情况。
+% 608 mid
 
 \gls{pseudolikelihood}估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中介绍的\gls{variational_inference}。这是因为$\tilde{p}$出现在了分母中。
-分母的下界仅提供了整个表达式的上界，然而我们并不关心最大化上界。
-这使得难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的\gls{deep_model}，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
-尽管如此，\gls{pseudolikelihood}仍然可以用在\gls{DL}中，它可以用于单层模型，或使用不基于下限的近似推断方法的\gls{deep_model}。
+分母的下界仅提供了整个表达式的上界，然而我们并不关心最大化上界。%?? 最大化这个上届没有什么意义？
+这使得我们难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的\gls{deep_model}，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
+尽管如此，\gls{pseudolikelihood}仍然可以用在\gls{DL}中，它可以用于单层模型，或使用不基于下限的近似推断方法的\gls{deep_model}中。
 
 % -- 608 end
 
 \gls{pseudolikelihood}比\,\glssymbol{SML}\,在每个梯度步骤中的计算代价要大得多，这是由于其对所有条件进行显式计算。
-但是，如果每个样本只计算一个随机选择的条件，那么广义伪似然和类似标准仍然可以很好地运行，从而使计算代价降低到和\,\glssymbol{SML}\,差不多的程度~\citep{Goodfellow-et-al-NIPS2013}。
+但是，如果每个样本只计算一个随机选择的条件，那么\gls{generalized_pseudolikelihood}和类似标准仍然可以很好地运行，从而使计算代价降低到和\,\glssymbol{SML}\,差不多的程度~\citep{Goodfellow-et-al-NIPS2013}。
 
 
 虽然\gls{pseudolikelihood}估计没有显式地最小化$\log Z$，但是我们仍然认为它具有类似\gls{negative_phase}的效果。
 每个条件分布的分母会使得学习算法降低所有仅具有一个变量不同于训练样本的状态的概率。
 
 
-了解\gls{pseudolikelihood}的渐近效率理论分析，可以参考~\cite{Marlin11-small}。
+了解\gls{pseudolikelihood}渐近效率的理论分析，可以参考~\cite{Marlin11-small}。
 
-
+% 609 mid
 \section{\glsentrytext{score_matching}和\glsentrytext{ratio_matching}}
 \label{sec:score_matching_and_ratio_matching}
 \gls{score_matching}~\citep{Hyvarinen-2005-small}提供了另一种训练模型而不需要估计$Z$或其导数的一致性方法。
@@ -445,7 +445,7 @@
 %\begin{equation}
 	\Vtheta^* & = \min_{\Vtheta} J(\Vtheta) . \\
 \end{align}
-%??   等号未对齐
+
 
 该\gls{objective_function}避免了微分\gls{partition_function} $Z$带来的难题，因为$Z$不是$x$的函数，所以$\nabla_{\RVx} Z = 0$。
 最初，\gls{score_matching}似乎有一个新的困难：计算数据分布的\gls{score}需要知道生成训练数据的真实分布$p_{\text{data}}$。
@@ -459,22 +459,22 @@
 \end{equation}
 其中$n$是$\Vx$的维度。
 
-% -- 609 --
+% -- 609 end
 
 因为\gls{score_matching}需要关于$\RVx$的导数，所以它不适用于具有离散数据的模型，但是模型中的\gls{latent_variable}可以是离散的。
 
 
 类似于\gls{pseudolikelihood}，\gls{score_matching}只有在我们能够直接估计$\log \tilde{p}(\RVx)$及其导数的时候才有效。
-它不兼容与对$\log \tilde{p}(\RVx)$仅提供下界的方法，因为\gls{score_matching}需要$\log \tilde{p}(\RVx)$的导数和二阶导数，而下限不能传达关于导数的任何信息。
+它与对$\log \tilde{p}(\RVx)$仅提供下界的方法不兼容，因为\gls{score_matching}需要$\log \tilde{p}(\RVx)$的导数和二阶导数，而下限不能传达关于导数的任何信息。
 这意味着\gls{score_matching}不能应用于\gls{hidden_unit}之间具有复杂相互作用的模型估计，例如\gls{sparse_coding}模型或\gls{DBM}。
 虽然\gls{score_matching}可以用于\gls{pretraining}较大模型的第一个\gls{hidden_layer}，但是它没有被用于预训练较大模型的较深层网络。
 这可能是因为这些模型的\gls{hidden_layer}通常包含一些离散变量。
 
 
 虽然\gls{score_matching}没有明确显示具有\gls{negative_phase}信息，但是它可以被视为使用特定类型\gls{markov_chain}的\gls{contrastive_divergence}的变种~\citep{Hyvarinen-2007b}。
-在这种情况下，\gls{markov_chain}并没有采用\,\gls{gibbs_sampling}，而是采用一种由梯度引导的局部更新的不同方法。
+在这种情况下，\gls{markov_chain}并没有采用\,\gls{gibbs_sampling}，而是采用一种由梯度引导局部更新的不同方法。
 当局部更新的大小接近于零时，\gls{score_matching}等价于具有这种\gls{markov_chain}的\gls{contrastive_divergence}。
-
+% 610 mid
 
 \cite{Lyu09}将\gls{score_matching}推广到离散的情况（但是推导有误，后由~\cite{Marlin10Inductive-small}修正）。
 \cite{Marlin10Inductive-small}发现，\textbf{\gls{GSM}}（\textbf{generalized score matching}， GSM）在许多样本观测概率为$0$的高维离散空间中不起作用。
@@ -494,27 +494,27 @@
 训练模型给测试集图像\gls{denoising}时，\gls{ratio_matching}的效果要优于\,\glssymbol{SML}、\gls{pseudolikelihood}和\,\glssymbol{GSM}。
 
 
-% -- 610 --
+% -- 610 end
 
-类似于\gls{pseudolikelihood}估计，\gls{ratio_matching}对每个数据点需要$n$个$\tilde{p}$的估计，因此每次更新的计算代价大约比\,\glssymbol{SML}的计算代价高出$n$倍。
-
-
-与\gls{pseudolikelihood}估计一样，我们可以认为\gls{ratio_matching}减小了，所有只有一个变量不同于训练样本的状态的概率。
-由于\gls{ratio_matching}特别适用于二元数据，这意味着在与数据的\gls{hamming_distance}为$1$内的所有状态上，\gls{ratio_matching}都是有效的。
+类似于\gls{pseudolikelihood}估计，\gls{ratio_matching}对每个数据点都需要$n$个$\tilde{p}$的估计，因此每次更新的计算代价大约比\,\glssymbol{SML}的计算代价高出$n$倍。
 
 
-\gls{ratio_matching}还可以作为处理高维稀疏数据（例如单词计数向量）的基础。
-这类稀疏数据对基于\,\glssymbol{mcmc}\,的方法提出了挑战，因为数据以密集格式表示是非常消耗计算资源的，而只有在模型学会表示数据分布的稀疏性之后，\glssymbol{mcmc}\,采样才会产生稀疏值。
-\cite{Dauphin+Bengio-NIPS2013}设计了\gls{ratio_matching}的无偏随机近似来解决这个问题。
+与\gls{pseudolikelihood}估计一样，我们可以认为\gls{ratio_matching}减小了所有只有一个变量不同于训练样本的状态的概率。
+由于\gls{ratio_matching}特别适用于二值数据，这意味着在与数据的\gls{hamming_distance}为$1$内的所有状态上，\gls{ratio_matching}都是有效的。
+
+
+\gls{ratio_matching}还可以作为处理高维稀疏数据（例如词计数向量）的基础。
+这类稀疏数据对基于\,\glssymbol{mcmc}\,的方法提出了挑战，因为以密集格式表示数据是非常消耗计算资源的，而只有在模型学会表示数据分布的稀疏性之后，\glssymbol{mcmc}\,采样才会产生稀疏值。
+\cite{Dauphin+Bengio-NIPS2013}设计了\gls{ratio_matching}的\gls{unbiased}随机近似来解决这个问题。
 该近似只估计随机选择的目标子集，不需要模型生成完整的样本。
 
 
-了解\gls{ratio_matching}的渐近效率理论分析，请参看~\cite{Marlin11-small}。
-
+了解\gls{ratio_matching}渐近效率的理论分析，可以参考~\cite{Marlin11-small}。
+% 611 mid
 
 \section{\glsentrytext{denoising_score_matching}}
 \label{sec:denoising_score_matching}
-某些情况下，我们希望拟合以下分布来正则化\gls{score_matching}
+某些情况下，我们希望拟合以下分布来\gls{regularize}\gls{score_matching}
 \begin{equation}
 	p_{\text{smoothed}}(\Vx) = \int p_{\text{data}} (\Vy) q( \Vx \mid \Vy) d \Vy
 \end{equation}
@@ -523,9 +523,9 @@
 
 
 \gls{denoising_score_matching}非常有用，因为在实践中，通常我们不能获取真实的$p_{data}$，而只能得到其样本确定的\gls{empirical_distribution}。
-给定足够容量，任何一致估计都会使$p_{model}$成为一组以训练点为中心的\,\gls{dirac_distribution}。
-考虑在\secref{sec:consistency}介绍的渐近一致性上的损失，通过$q$来平滑有助于缓解这个问题。
-\cite{Kingma+LeCun-2010}介绍了平滑分布$q$为正态分布\gls{noise}的正则化\gls{score_matching}。
+给定足够\gls{capacity}，任何一致估计都会使$p_{model}$成为一组以训练点为中心的\,\gls{dirac_distribution}。
+考虑在\secref{sec:consistency}介绍的渐近一致性上的\gls{loss}，通过$q$来平滑有助于缓解这个问题。
+\cite{Kingma+LeCun-2010}介绍了平滑分布$q$为正态分布\gls{noise}的\gls{regularize}\gls{score_matching}。
 
 
 回顾\secref{sec:estimating_the_score}，有一些\gls{AE}训练算法等价于\gls{score_matching}或\gls{denoising_score_matching}。
@@ -547,7 +547,7 @@
 \end{equation}
 其中$c$是$-\log Z(\Vtheta)$的近似。
 不仅仅估计$\Vtheta$，\gls{NCE}过程将$c$视为另一参数，使用相同的算法同时估计$\Vtheta$和$c$。
-因此，所得到的$\log p_{\text{model}}(\RVx)$可能不完全对应有效的\gls{PD}，但随着$c$估计的改进，它将变得越来越接近有效值\footnote{\glssymbol{NCE}也适用于具有易于处理的，不需要引入额外参数$c$的\gls{partition_function}的问题。它已经是最令人感兴趣的，估计具有复杂\gls{partition_function}模型的方法}。
+因此，所得到的$\log p_{\text{model}}(\RVx)$可能并不完全对应有效的\gls{PD}，但随着$c$估计的改进，它将变得越来越接近有效值\footnote{\glssymbol{NCE}也适用于具有易于处理的，不需要引入额外参数$c$的\gls{partition_function}的问题。它已经是最令人感兴趣的，估计具有复杂\gls{partition_function}模型的方法}。
 
 
 这种方法不可能使用最大似然作为估计的标准。
@@ -558,9 +558,9 @@
 该\gls{supervised_learning}问题中的\gls{MLE}定义了原始问题的渐近一致估计。
 
 
-具体来说，我们引入第二个分布，\firstgls{noise_distribution} $p_{\text{noise}}(\RVx)$。
-\gls{noise_distribution}应该易于估计和从中取样。
-我们现在可以构造一个联合$\RVx$和新二元变量$y$的模型。
+具体地说，我们引入第二个分布，\firstgls{noise_distribution} $p_{\text{noise}}(\RVx)$。
+\gls{noise_distribution}应该易于估计和从中采样。
+我们现在可以构造一个联合$\RVx$和新二值变量$y$的模型。
 在新的联合模型中，我们指定
 \begin{equation}
 	p_{\text{joint}} (y = 1) = \frac{1}{2},
@@ -578,7 +578,7 @@
 
 我们可以在训练数据上构造一个类似的联合模型。
 在这种情况下，开关变量决定是从\textbf{数据}还是从\gls{noise}分布中抽取$\RVx$。
-形式地，$p_{\text{train}}(y = 1) = \frac{1}{2}$，$p_{\text{train}}( \RVx \mid y = 1) = p_{\text{data}}( \RVx)$，和
+正式地，$p_{\text{train}}(y = 1) = \frac{1}{2}$，$p_{\text{train}}( \RVx \mid y = 1) = p_{\text{data}}( \RVx)$，和
 $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 
@@ -608,7 +608,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 
 因此，只要$\log \tilde{p}_{\text{model}}$易于\gls{back_propagation}，
-并且如上所述，$p_{\text{noise}}$应易于估计（以便评估$p_{\text{joint}}$）和抽样（以生成训练数据），那么\,\glssymbol{NCE}\,就易于使用。
+并且如上所述，$p_{\text{noise}}$应易于估计（以便评估$p_{\text{joint}}$）和采样（以生成训练数据），那么\,\glssymbol{NCE}\,就易于使用。
 
 
 \glssymbol{NCE}\,能够非常成功地应用于\gls{RV}较少的问题，但即使\gls{RV}很多时，它也很有效。
