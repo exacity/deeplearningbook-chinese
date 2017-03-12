@@ -23,7 +23,7 @@
 
 正如我们将在\chapref{chap:deep_generative_models}看到的，有些\gls{DL}模型被设计成具有一个易于处理的归一化常数，或被设计成能够在不涉及计算$p(\RVx)$的情况下使用。
 然而，其他一些模型会直接面对难以计算的\gls{partition_function}的挑战。
-在本章中，我们会介绍用于训练和评估具有难以计算\gls{partition_function}的模型的技术。
+在本章中，我们会介绍用于训练和评估那些具有难以处理的\gls{partition_function}的模型的技术。
 % -- 597 end
 
 
@@ -81,12 +81,12 @@
 
 
 上述推导对离散的$\Vx$进行求和，对连续的$\Vx$进行积分也可以得到类似结果。
-在连续版本的推导中，使用在积分符号內取微分的\gls{leibniz_rule}可以得到等式
+在连续版本的推导中，使用在积分符号内取微分的\gls{leibniz_rule}可以得到等式
 \begin{equation}
 	\nabla_{\Vtheta} \int \tilde{p} (\RVx) d \Vx  = \int \nabla_{\Vtheta} 
 \tilde{p} (\RVx) d \Vx.
 \end{equation}
-该等式只适用于$\tilde{p}$和$\nabla_{\Vtheta} \tilde{p} (\RVx)$上的一些特定正则条件。
+该等式只适用于$\tilde{p}$和$\nabla_{\Vtheta} \tilde{p} (\RVx)$上的一些特定规范条件。
 在测度论术语中，这些条件是：
 （1）对每一个$\Vtheta$而言，未归一化分布$\tilde{p}$必须是$\Vx$的\gls{lebesgue_integrable}函数。
 （2）对于所有的$\Vtheta$和几乎所有$\Vx$，梯度$\nabla_{\Vtheta} \tilde{p}(\RVx)$必须存在。
@@ -94,7 +94,7 @@
 幸运的是，大多数感兴趣的\gls{ML}模型都具有这些性质。
 % 599 mid
 
-这个等式
+等式
 \begin{equation}
 \label{eq:18.15}
 	\nabla_{\Vtheta} \log Z = \SetE_{\RVx \sim p(\RVx)} \nabla_{\Vtheta} \log \tilde{p}(\RVx)
@@ -118,7 +118,8 @@
 当使用\gls{SGD}进行学习时，这意味着\gls{markov_chain}必须在每次梯度步骤中\gls{burn_in}。
 这种方法引导下的训练过程如\algref{alg:naive_cd}所示。
 内循环中\gls{burn_in}\gls{markov_chain}的计算代价过高，导致这个过程在实际中是不可行的，
-不过该过程启发了其他计算代价较低的近似算法。
+但是这个过程是其他更加实际的近似算法的基础。
+%不过该过程启发了其他计算代价较低的近似算法。
 
 % -- 599 --
 \begin{algorithm}[ht]
@@ -143,11 +144,11 @@
 \end{algorithm}
 
 
-我们可以将\,\glssymbol{mcmc}\,方法视为在两种力之间平衡最大似然，一种力拉高数据出现时的模型分布，一种拉低模型采样出现时的模型分布。
+我们可以将\,\glssymbol{mcmc}\,方法视为在两种力之间平衡最大似然，一种力拉高数据出现时的模型分布，一种拉低模型采样出现时的模型分布。%??   从而最大化似然     还是  将最大似然提前？
 \figref{fig:chap18_pos_and_neg_phase}展示了这个过程。
 这两种力分别对应最大化$\log \tilde{p}$和最小化$\log Z$。
-对于\gls{negative_phase}会有一些近似。
-这些近似都可以理解为使\gls{negative_phase}更容易计算，但是也可能将其推向错误的位置。
+对于\gls{negative_phase}会有一些近似方法。
+这些近似都可以理解为使\gls{negative_phase}更容易计算，但是也可能将其推向错误的位置。%??  push down  翻成 拉低/压低  ？推向 不对吧？
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -164,17 +165,17 @@
 \label{fig:chap18_pos_and_neg_phase}
 \end{figure}
 
-% -- 600 --
 
-因为\gls{negative_phase}涉及到从模型分布中采样，所以我们可以认为它在找模型信任度很高的点。
+% -- 600 end
+因为\gls{negative_phase}涉及到从模型分布中抽样，所以我们可以认为它在找模型信任度很高的点。
 因为\gls{negative_phase}减少了这些点的概率，它们一般被认为代表了模型不正确的信念。
 在文献中，它们经常被称为``幻觉''或``幻想粒子''。
-事实上，\gls{negative_phase}已经被作为人类和其他动物做梦的一种可能解释\citep{CrickMitchison83}。
+事实上，\gls{negative_phase}已经被作为人类和其他动物做梦的一种可能解释~\citep{CrickMitchison83}。
 这个想法是说，大脑维持着世界的概率模型，并且在醒着经历真实事件时会遵循$\log \tilde{p}$的梯度，在睡觉时会遵循$\log \tilde{p}$的负梯度最小化$\log Z$，其经历的样本采样自当前的模型。
 这个视角解释了具有\gls{positive_phase}和\gls{negative_phase}的大多数算法，但是它还没有被神经科学实验证明是正确的。
 在\gls{ML}模型中，通常有必要同时使用\gls{positive_phase}和\gls{negative_phase}，而不是按不同时间阶段分为清醒和REM睡眠时期。
 正如我们将在\secref{sec:learned_approximate_inference}中看到的，一些其他\gls{ML}算法出于其他原因从模型分布中采样，这些算法也能提供睡觉做梦的解释。
-
+% 601 mid
 
 这样理解学习\gls{positive_phase}和\gls{negative_phase}的作用之后，我们设计了一个比\algref{alg:naive_cd}计算代价更低的替代算法。
 简单的\,\glssymbol{mcmc}\,算法的计算成本主要来自每一步的随机初始化\gls{burn_in}\gls{markov_chain}。
@@ -204,22 +205,22 @@
 \end{algorithmic}
 \end{algorithm}
 
-
-\textbf{\gls{contrastive_divergence}}（\glssymbol{contrastive_divergence}，或者是具有$k$个Gibbs步骤的\glssymbol{contrastive_divergence}-$k$）算法在每个步骤中初始化\gls{markov_chain}为采样自数据分布中的样本\citep{Hinton-PoE-2000,Hinton-RBMguide-small}，如\algref{alg:cd}所示。
+% 601 end
+\textbf{\gls{contrastive_divergence}}（\glssymbol{contrastive_divergence}，或者是具有$k$个Gibbs步骤的\glssymbol{contrastive_divergence}-$k$）算法在每个步骤中初始化\gls{markov_chain}为采样自数据分布中的样本~\citep{Hinton-PoE-2000,Hinton-RBMguide-small}，如\algref{alg:cd}所示。
 从数据分布中获取样本是计算代价最小的，因为它们已经在数据集中了。
 初始时，数据分布并不接近模型分布，因此\gls{negative_phase}不是非常准确。
 幸运的是，\gls{positive_phase}仍然可以准确地增加数据的模型概率。
 进行\gls{positive_phase}阶段一段时间之后，模型分布会更接近于数据分布，并且\gls{negative_phase}开始变得准确。
-
+% 602 mid
 
 当然，\glssymbol{contrastive_divergence}\,仍然是\gls{negative_phase}的一个近似。
 \glssymbol{contrastive_divergence}\,未能定性地实现真实\gls{negative_phase}的主要原因是，它不能抑制远离真实训练样本的高概率区域。
 这些区域在模型上具有高概率，但是在数据生成区域上具有低概率，被称为\firstgls{spurious_modes}。
 \figref{fig:chap18_spurious_mode}解释了这种现象发生的原因。
 基本上，除非$k$非常大，否则远离数据分布的模型分布中的模态不会被在训练数据中初始化的\gls{markov_chain}访问到。
+% -- 602 end
 
 
-% -- 602 --
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -241,8 +242,8 @@
 \label{fig:chap18_spurious_mode}
 \end{figure}
 
-
-\cite{Perpinan+Hinton-2005-small}实验上证明\,\glssymbol{contrastive_divergence}\,\gls{estimator}偏向于\glssymbol{RBM}和完全可见的\gls{BM}，因为它会收敛到与\gls{MLE}不同的点。
+% -- 602 end
+\cite{Perpinan+Hinton-2005-small}从实验上证明\,\glssymbol{contrastive_divergence}\,\gls{estimator}偏向于\glssymbol{RBM}和完全可见的\gls{BM}，因为它会收敛到与\gls{MLE}不同的点。
 他们认为，由于偏差较小，\glssymbol{contrastive_divergence}\,可以作为一种计算代价低的方式来初始化模型，之后可以通过计算代价高的\,\glssymbol{mcmc}\,方法进行\gls{fine_tune}。
 \cite{Bengio+Delalleau-2009}表明，\glssymbol{contrastive_divergence}\,可以被理解为去掉了正确\,\glssymbol{mcmc}\,梯度更新中的最小项，这解释了偏差的由来。
 
@@ -254,9 +255,9 @@
 由于\gls{hidden_unit}不包括在数据中，所以使用训练点初始化无法解决这个问题。
 即使我们使用数据初始化可见单元，我们仍然需要\gls{burn_in}在给定这些可见单元的\gls{hidden_unit}条件分布上采样的\gls{markov_chain}。
 
-% -- 603 --
+% -- 603 end
 
-\glssymbol{contrastive_divergence}\,算法可以被理解为惩罚具有快速改变来自数据的输入的\gls{markov_chain}的模型。
+\glssymbol{contrastive_divergence}\,算法可以被理解为惩罚具有快速改变来自数据的输入的\gls{markov_chain}的模型。%??   
 这意味着使用\,\glssymbol{contrastive_divergence}\,训练有点类似于训练\gls{AE}。
 即使\,\glssymbol{contrastive_divergence}\,估计比一些其他训练方法具有更大偏差，但是它有助于\gls{pretraining}之后会堆叠起来的浅层模型。
 这是因为堆栈中最早的模型会受激励复制更多的信息到其\gls{latent_variable}，使其可用于随后的模型。
@@ -268,7 +269,7 @@
 
 
 另一个解决\,\glssymbol{contrastive_divergence}\,中许多问题的不同策略是，在每个梯度步骤中初始化\gls{markov_chain}为先前梯度步骤的状态值。
-这个方法首先被应用数学和统计学社群发现，命名为\textbf{\gls{SML}}（\glssymbol{SML}）\citep{Younes98onthe}，后来又在\gls{DL}社区中以名称\textbf{\gls{persistent_contrastive_divergence}}（\glssymbol{persistent_contrastive_divergence}，或者每个更新中具有$k$个Gibbs步骤的\,\glssymbol{persistent_contrastive_divergence}-k）独立地被重新发现\citep{Tieleman08-small}。
+这个方法首先被应用数学和统计学社群发现，命名为\textbf{\gls{SML}}（\glssymbol{SML}）\citep{Younes98onthe}，后来又在\gls{DL}社群中以名称\textbf{\gls{persistent_contrastive_divergence}}（\glssymbol{persistent_contrastive_divergence}，或者每个更新中具有$k$个Gibbs步骤的\,\glssymbol{persistent_contrastive_divergence}-k）独立地被重新发现~\citep{Tieleman08-small}。
 具体请看\algref{alg:sml}。
 这种方法的基本思想是，只要随机梯度算法得到的步长很小，那么前一步骤的模型将类似于当前步骤的模型。
 因此，来自先前模型分布的样本将非常接近于来自当前模型分布的样本，因此用这些样本初始化的\gls{markov_chain}将不需要花费很多时间来完成混合。
@@ -329,7 +330,7 @@
 
 
 所有基于\,\glssymbol{mcmc}\,从模型中抽取样本的方法在原则上几乎可以与\,\glssymbol{mcmc}\,的任何变体一起使用。
-这意味着诸如\,\glssymbol{SML}\,这样的技术可以使用\chapref{chap:monte_carlo_methods}中描述的任何增强\,\glssymbol{mcmc}\,的技术（例如并行回火）来加以改进\citep{desjardins2010tempered,Cho10IJCNN-small}。
+这意味着诸如\,\glssymbol{SML}\,这样的技术可以使用\chapref{chap:monte_carlo_methods}中描述的任何增强\,\glssymbol{mcmc}\,的技术（例如并行回火）来加以改进~\citep{desjardins2010tempered,Cho10IJCNN-small}。
 
 
 一种在学习期间加速混合的方法是，不改变\gls{monte_carlo}采样技术，而是改变模型的参数化和\gls{cost_function}。
@@ -380,7 +381,7 @@
 \end{equation}
 在这种情况下，我们已经使$\RVa$尽可能小，但是$\RVc$可以大到$\RVx_{2:n}$。
 如果我们简单地将$\RVc$移到$\RVb$中以减少计算代价，那么会发生什么呢？
-这便产生了\firstgls{pseudolikelihood}\citep{Besag75pseudolikelihood}目标函数，给定所有其他特征$\Vx_{-i}$，预测特征$x_i$的值：
+这便产生了\firstgls{pseudolikelihood}~\citep{Besag75pseudolikelihood}目标函数，给定所有其他特征$\Vx_{-i}$，预测特征$x_i$的值：
 \begin{equation}
 	\sum_{i=1}^n \log p(x_i \mid \Vx_{-i}).
 \end{equation}
@@ -390,11 +391,11 @@
 
 % -- 607 --
 
-这看起来似乎是一个没有道理的策略，但可以证明最大化伪似然的估计是渐近一致的\citep{Mase1995}。
+这看起来似乎是一个没有道理的策略，但可以证明最大化伪似然的估计是渐近一致的~\citep{Mase1995}。
 当然，在数据集不接近大采样极限的情况下，伪似然可能表现出与最大似然估计不同的结果。
 
 
-可以用\firstgls{generalized_pseudolikelihood_estimator}以计算复杂度的增加换取最大似然偏离的下降\citep{Huang02}。
+可以用\firstgls{generalized_pseudolikelihood_estimator}以计算复杂度的增加换取最大似然偏离的下降~\citep{Huang02}。
 \gls{generalized_pseudolikelihood_estimator}使用$m$个不同的集合$\SetS^{(i)}$，$i=1, \dots, m$作为变量的指标出现在条件棒的左侧。
 在$m = 1$和$\SetS^{(1)}= 1, \dots, n$的极端情况下\gls{generalized_pseudolikelihood_estimator}会变为对数似然。
 在$m = n$和$\SetS^{(i)} = \{i\}$的极端情况下，广义伪似然会变为伪随机。
@@ -419,7 +420,7 @@
 % -- 608 --
 
 \gls{pseudolikelihood}比\,\glssymbol{SML}\,在每个梯度步骤中的计算代价要大得多，这是由于其对所有条件进行显式计算。
-但是，如果每个样本只计算一个随机选择的条件，那么广义伪似然和类似标准仍然可以很好地运行，从而使计算代价降低到和\,\glssymbol{SML}\,差不多的程度\citep{Goodfellow-et-al-NIPS2013}。
+但是，如果每个样本只计算一个随机选择的条件，那么广义伪似然和类似标准仍然可以很好地运行，从而使计算代价降低到和\,\glssymbol{SML}\,差不多的程度~\citep{Goodfellow-et-al-NIPS2013}。
 
 
 虽然\gls{pseudolikelihood}估计没有显式地最小化$\log Z$，但是我们仍然认为它具有类似\gls{negative_phase}的效果。
@@ -469,7 +470,7 @@
 这可能是因为这些模型的\gls{hidden_layer}通常包含一些离散变量。
 
 
-虽然\gls{score_matching}没有明确显示具有\gls{negative_phase}信息，但是它可以被视为使用特定类型\gls{markov_chain}的\gls{contrastive_divergence}的变种\citep{Hyvarinen-2007b}。
+虽然\gls{score_matching}没有明确显示具有\gls{negative_phase}信息，但是它可以被视为使用特定类型\gls{markov_chain}的\gls{contrastive_divergence}的变种~\citep{Hyvarinen-2007b}。
 在这种情况下，\gls{markov_chain}并没有采用\,\gls{gibbs_sampling}，而是采用一种由梯度引导的局部更新的不同方法。
 当局部更新的大小接近于零时，\gls{score_matching}等价于具有这种\gls{markov_chain}的\gls{contrastive_divergence}。
 
@@ -478,7 +479,7 @@
 \cite{Marlin10Inductive-small}发现，\textbf{\gls{GSM}}（\textbf{generalized score matching}， GSM）在许多样本观测概率为$0$的高维离散空间中不起作用。
 
 
-一种更成功地将\gls{score_matching}的基本想法扩展到离散数据的方法是\firstgls{ratio_matching}\citep{Hyvarinen-2007}。
+一种更成功地将\gls{score_matching}的基本想法扩展到离散数据的方法是\firstgls{ratio_matching}~\citep{Hyvarinen-2007}。
 \gls{ratio_matching}特别适用于二元数据。
 \gls{ratio_matching}最小化以下目标函数在样本上的均值：
 \begin{equation}
@@ -610,7 +611,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 
 \glssymbol{NCE}\,能够非常成功地应用于\gls{RV}较少的问题，但即使\gls{RV}很多时，它也很有效。
-例如，它已经成功地应用于给定单词上下文建模单词的条件分布\citep{Mnih2013}。
+例如，它已经成功地应用于给定单词上下文建模单词的条件分布~\citep{Mnih2013}。
 虽然单词可以采样自一个很大的词汇表，但是只能采样一个单词。
 
 % -- 613 --
@@ -631,11 +632,11 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 同样地，$p_{\text{noise}}$的下界也没有用，因为它只提供了$p_{\text{joint}}( y = 1 \mid \RVx)$的上界。
 
 
-当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}\,定义了一个被称为\gls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望\citep{Goodfellow-ICLR2015}。
+当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}\,定义了一个被称为\gls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望~\citep{Goodfellow-ICLR2015}。
 特殊情况的\,\glssymbol{NCE}（\gls{noise}采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分的过程，而\gls{NCE}通过让模型区分现实和固定的基准（\gls{noise}模型），降低了计算成本。
 
 
-在训练样本和生成样本（使用模型能量函数定义分类器）之间进行分类以得到模型的梯度的方法，已经在更早的时候以各种形式提出来\citep{Welling2003b,Bengio-2009-book}。
+在训练样本和生成样本（使用模型能量函数定义分类器）之间进行分类以得到模型的梯度的方法，已经在更早的时候以各种形式提出来~\citep{Welling2003b,Bengio-2009-book}。
 
 
 \gls{NCE}是基于良好\gls{generative_model}应该能够区分数据和\gls{noise}的想法。
@@ -730,7 +731,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 \subsection{\glsentrytext{AIS}}
 \label{sec:annealed_importance_sampling}
-在$D_{KL}(p_0 \| p_1)$很大的情况下（即，$p_0$和$p_1$之间几乎没有重叠），一种称为\textbf{\gls{AIS}}（\textbf{annealed importance sampling}，AIS）的方法试图通过引入中间分布来桥接差距\citep{Jarzynski1997,Neal-2001}。
+在$D_{KL}(p_0 \| p_1)$很大的情况下（即$p_0$和$p_1$之间几乎没有重叠），一种称为\textbf{\gls{AIS}}（\textbf{annealed importance sampling}，AIS）的方法试图通过引入中间分布来缩小这种差距~\citep{Jarzynski1997,Neal-2001}。
 考虑分布序列$p_{\eta_0},\dots,p_{\eta_n}$，其中$0=\eta_0 < \eta_1 < \dots < \eta_{n-1} < \eta_n = 1$，分布序列中的第一个和最后一个分别是$p_0$和$p_1$。
 
 
@@ -841,7 +842,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 \gls{AIS}首先由~\cite{Jarzynski1997}发现，然后由~\cite{Neal-2001}再次独立发现。
 目前它是估计无向概率模型的\gls{partition_function}的最常用方法。
-其原因可能与一篇有影响力的论文\citep{Salakhutdinov+Murray-2008}有关，该论文并没有讨论该方法相对于其他方法的优点，而是介绍了将其应用于估计\gls{RBM}和\gls{DBN}的\gls{partition_function}。
+其原因可能与一篇有影响力的论文~\citep{Salakhutdinov+Murray-2008}有关，该论文并没有讨论该方法相对于其他方法的优点，而是介绍了将其应用于估计\gls{RBM}和\gls{DBN}的\gls{partition_function}。
 
 
 关于\,\glssymbol{AIS}\,估计性质（例如，方差和效率）的讨论，请参看~\cite{Neal-2001}。
@@ -863,7 +864,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 可以表明，最优的\gls{bridge_sampling}是$p_*^{(opt)} (\RVx) \propto \frac{ \tilde{p}_0(\Vx) \tilde{p}_1(\Vx) }{ r\tilde{p}_0(\Vx) + \tilde{p}_1(\Vx) }$，其中$r = Z_1 / Z_0$。
 这似乎是一个不可行的解决方案，因为它似乎需要我们估计数值$Z_1 / Z_0$。
-然而，可以从粗糙的$r$开始估计，然后使用得到的\gls{bridge_sampling}逐步迭代以改进估计\citep{Neal05estimatingratios}。
+然而，可以从粗糙的$r$开始估计，然后使用得到的\gls{bridge_sampling}逐步迭代以改进估计~\citep{Neal05estimatingratios}。
 也就是说，我们会迭代地重新估计比率，并使用每次迭代更新$r$的值。
 
 

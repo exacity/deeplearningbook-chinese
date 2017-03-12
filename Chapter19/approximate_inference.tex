@@ -26,7 +26,7 @@
 
 在\gls{DL}中难以处理的推断问题通常源于结构化图模型中\gls{latent_variable}之间的相互作用。
 可以参考\figref{fig:intractable_graphs}的几个例子。
-这些相互作用可能是\gls{undirected_model}的直接相互作用，也可能是\gls{directed_model}中同一个可见变量的共同祖先之间的``\gls{explaining_away}''作用。 %?? explaining away 翻译成 相消解释    你斟酌下
+这些相互作用可能是\gls{undirected_model}的直接相互作用，也可能是\gls{directed_model}中同一个可见变量的共同祖先之间的``\gls{explaining_away}''作用。
 % 623 end
 
 
@@ -779,7 +779,7 @@ $\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_
 
 从这里，我们可以发现$\tilde{q}$的\gls{functional}形式满足\gls{gaussian_distribution}。
 因此，我们可以得到$q(\Vh\mid\Vv) = \CalN(\Vh;\Vmu,\Vbeta^{-1})$，其中$\Vmu$和对角的$\Vbeta$是变分参数，我们可以使用任何方法来优化它。
-有必要再强调一下，我们并没有假设$q$是一个\gls{gaussian_distribution}，这个高斯的形式是使用\gls{calculus_of_variations}来最大化关于$\CalL$的分布$q$\footnote{此处似乎有笔误。}推导出的。    %?? 什么笔误啊。。。
+有必要再强调一下，我们并没有假设$q$是一个\gls{gaussian_distribution}，这个高斯的形式是使用\gls{calculus_of_variations}来最大化关于$\CalL$的分布$q$\footnote{此处似乎有笔误。}推导出的。    %?? 什么笔误啊。。。  最大化L关于q 还是 最大化q关于L
 在不同的模型上应用相同的方法可能会得到不同\gls{functional}形式的分布$q$。
 % 641
 
