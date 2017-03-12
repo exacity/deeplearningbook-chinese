@@ -1,0 +1,135 @@
+{'user': 'acct:caszhang@hypothes.is', 'text': '总是', 'origin_text': '：Las Vegas算法和蒙特卡罗算法。Las Vegas算法  !!!通常!!!  精确地返回一个正确答案 （或者发布一个失败报告）。这类方法通常', 'time': '2017-03-11T07:47'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '报告求解失败', 'origin_text': '算法。Las Vegas算法通常精确地返回一个正确答案 （或者  !!!发布一个失败报告!!!  ）。这类方法通常需要占用随机量的计算资源（通常指的是内存和运行', 'time': '2017-03-11T07:48'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '或', 'origin_text': '来说，我们很难得到精确的答案。这类问题很难用精确的确定性的算法  !!!如!!!  Las Vegas算法解决。% 和 -> 如取而代之的是确定性', 'time': '2017-03-11T07:52'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '还有些时候', 'origin_text': '，就像我们使用minibatch对整个训练代价进行子采样一样。  !!!在其他情况下!!!  ，我们需要近似一个难以处理的和或积分，例如估计一个无向模型中配分', 'time': '2017-03-11T07:54'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '下面几个性质表明了这种近似的合理性', 'origin_text': '=1}^{n}f(\\Vx^{(i)}).\\end{align}  !!!这种近似可以被证明拥有如下几个性质!!!  。首先很容易观察到s^s^\\hat{s}这个估计是无偏的，由于', 'time': '2017-03-11T07:56'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '我们更倾向于用方差的无偏估计，它由偏差的平方和除以$n-1$而非$n$得到', 'origin_text': '))f(\\Vx^{(i)})的经验均值和方差\\footnote{  !!!计算无偏估计的方差时，更倾向于用计算偏差平方和除以n−1n−1n-1而非nnn。!!!  }，然后将估计的方差除以样本数nnn来得到Var[s^n]Va', 'time': '2017-03-11T08:01'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '估计量', 'origin_text': 'n]Var[s^n]\\text{Var}[\\hat{s}_n]的  !!!估计!!!  。中心极限定理告诉我们s^ns^n\\hat{s}_n的分布收敛', 'time': '2017-03-11T08:02'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '累积分布函数', 'origin_text': 'Vx)]}{n}为方差的正态分布。这使得我们可以利用正态分布的  !!!累积密度函数!!!  来估计s^ns^n\\hat{s}_n的置信区间。以上的所有', 'time': '2017-03-11T08:04'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '找出一列收敛于目标分布的估计量', 'origin_text': '备选方案是用重要采样，在\\sec?会讲到。一种更加通用的方式是  !!!使用一个趋近于目标分布估计的序列!!!  。这就是马尔可夫链蒙特卡罗方法（见\\sec?）。重要采样', 'time': '2017-03-11T08:11'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '不存在唯一', 'origin_text': '一步。p(x)f(x)p(x)f(x)p(\\Vx)f(\\Vx)  !!!存在不唯一!!!  的分解因为它通常可以被写成p(x)f(x)=q(x)p(x)f', 'time': '2017-03-11T08:14'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '总（可以不译出）', 'origin_text': ')p(x)f(x)p(\\Vx)f(\\Vx)存在不唯一的分解因为它  !!!通常!!!  可以被写成p(x)f(x)=q(x)p(x)f(x)q(x),', 'time': '2017-03-11T08:15'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '如果考虑达到某给定精度所需要的样本数', 'origin_text': '既然是求期望，那么很自然地ppp和fff是一种分解选择。然而，  !!!从衡量一定采样数所达到精度的角度说!!!  ，原始定义的问题通常不是最优的选择。幸运的是，最优的选择$q^', 'time': '2017-03-11T08:17'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '删去', 'origin_text': '，原始定义的问题通常不是最优的选择。幸运的是，最优的选择$q^  !!!通常!!!  可以简单推出。这种最优的采样函数通常可以简单推出。这种最优的采样', 'time': '2017-03-11T08:19'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '由等式\\eqref{}可得', 'origin_text': '出。这种最优的采样函数q^$对应的是所谓的最优重要采样。  !!!从\\eqn?所示的关系中可以发现!!!  ，任意蒙特卡罗估计\\begin{align}\\hat{s}p', 'time': '2017-03-11T08:20'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '估计量\n\n（本章许多estimator都被翻译成了估计，这是不准确的）', 'origin_text': '优重要采样。从\\eqn?所示的关系中可以发现，任意蒙特卡罗  !!!估计!!!  \\begin{align}\\hat{s}p = \\frac{', 'time': '2017-03-11T08:23'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '估计量', 'origin_text': '{(i)})\\end{align}可以被转化为一个重要采样的  !!!估计!!!  \\begin{align}\\hat{s}q = \\frac{1', 'time': '2017-03-11T08:23'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '估计量', 'origin_text': 'x^{(i)})}.\\end{align}我们可以容易地发现  !!!估计值!!!  的期望与qqq分布无关：\\begin{align}\\SetE', 'time': '2017-03-11T08:24'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '可能对(can be)', 'origin_text': '_p] = s.\\end{align}然而，重要采样的方差却  !!!对!!!  不同qqq的选取非常敏感。这个方差可以表示为Var[s^q]', 'time': '2017-03-11T08:24'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '原问题', 'origin_text': '个样本就足够了}。当然，这仅仅是因为计算q^$的时候已经解决了  !!!所有的问题!!!  。所以这种只需要采一个样本的方法往往是实践中无法实现的。', 'time': '2017-03-11T08:26'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '能得到正确期望的', 'origin_text': '中无法实现的。对于重要采样来说任意qqq分布都是可行的（从  !!!得到一个期望上正确的值的!!!  角度来说），$q^指的是最优的指的是最优的指的是最优的q分布（从', 'time': '2017-03-11T08:27'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '减小', 'origin_text': '方差的角度上考虑）。从q^中采样往往是不可行的，但是其他仍然能  !!!降低!!!  方差的中采样往往是不可行的，但是其他仍然能降低方差的中采样往往是', 'time': '2017-03-11T08:28'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '这一估计量', 'origin_text': 'i)x(i)\\Vx^{(i)}是从分布qq{q}中采集的样本。  !!!这种估计!!!  是有偏的因为E[s^BIS]≠sE[s^BIS]≠s\\SetE[', 'time': '2017-03-11T08:32'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '只有$n\\to\\infty$，17.14式的分母趋于$1$时才渐近成立等号\n\n（注意渐近的近是远近的近）', 'origin_text': 'etE[\\hat{s}_{\\text{BIS}}]\\neq s，  !!!除非当nnn渐进性地趋近于∞∞\\infty时，方程~\\eq?的分母会收敛到1!!!  11。所以这种估计也被叫做渐进性无偏的。尽管一个好的qq', 'time': '2017-03-11T14:13'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '渐近无偏', 'origin_text': 'y时，方程~\\eq?的分母会收敛到111。所以这种估计也被叫做  !!!渐进性无偏!!!  的。尽管一个好的qqq分布的选择可以显著地提高蒙特卡罗估计', 'time': '2017-03-11T08:40'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '这一估计量', 'origin_text': '于∞∞\\infty时，方程~\\eq?的分母会收敛到111。所以  !!!这种估计!!!  也被叫做渐进性无偏的。尽管一个好的qqq分布的选择可以显著', 'time': '2017-03-11T08:40'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '一个好的$q$分布的选择可以显著地提高蒙特卡罗估计的效率，而一个糟糕的$q$分布选择却会使效率大幅下降\n（语句不通）', 'origin_text': '的分母会收敛到111。所以这种估计也被叫做渐进性无偏的。  !!!尽管一个好的qqq分布的选择可以显著地提高蒙特卡罗估计的效率，反之一个糟糕的qqq分布选择则会使效率更糟糕!!!  。我们回过头来看看方程~\\eq?会发现，如果存在一个qqq使得', 'time': '2017-03-11T08:45'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '估计量', 'origin_text': 'rac{p(\\Vx)f(\\Vx)}{q(\\Vx)}很大，那么这个  !!!估计!!!  的方差也会很大。当q(x)q(x)q(\\Vx)很小，而f(x)', 'time': '2017-03-11T08:45'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '而不足以', 'origin_text': 'f(x)f(x)f(\\Vx)和p(x)p(x)p(\\Vx)都较大  !!!并且无法!!!  抵消qqq时，这种情况会非常明显。qqq分布经常会取一些简单常', 'time': '2017-03-11T08:46'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '与？', 'origin_text': '样。当xx\\Vx是高维数据的时候，qqq分布的简单性使得它很难  !!!于!!!  ppp或者p|f|p|f|p\\vert f\\vert相匹配。当', 'time': '2017-03-11T08:47'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '加数很小或者为零', 'origin_text': '^{(i)})\\vert 的时候，重要采样采到了很多无用的样本（  !!!权值之和很小或趋于零!!!  ）。另一方面，当q(x(i))≪p(x(i))|f(x(i))', 'time': '2017-03-11T08:50'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '这种', 'origin_text': '被采到，其对应的权值却会非常大。正因为后一个事件是很少发生的，  !!!这些!!!  样本很难被采到，通常使得对sss的估计出现了典型的估计不足，很难', 'time': '2017-03-11T08:54'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '这样一来，我们会常常欠估计$s$，而能将之抵消的严重过估计却很少发生【注：这两个分句分别对应着前面两种情况，gross应作“严重的”解】', 'origin_text': '却会非常大。正因为后一个事件是很少发生的，这些样本很难被采到，  !!!通常使得对sss的估计出现了典型的估计不足，很难被整体的估计过量抵消!!!  。这样的不均匀情况在高维数据屡见不鲜，因为在高维度分布中联合分', 'time': '2017-03-12T00:46'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '有可能', 'origin_text': '不均匀情况在高维数据屡见不鲜，因为在高维度分布中联合分布的动态域  !!!通常!!!  非常大。尽管存在上述的风险，但是重要采样及其变种在机器学', 'time': '2017-03-11T08:59'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '包含大量', 'origin_text': '重要的角色，包括深度学习算法。比方说，重要采样被应用于加速训练  !!!具有大规模!!!  词汇的神经网络语言模型的过程中（见\\sec?）或者其他有着大量输', 'time': '2017-03-11T09:00'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '对数似然', 'origin_text': '程中（详见\\sec?）以及在深度有向图模型比如变分自编码器中估计  !!!似然函数的对数!!!  （详见\\sec?）。采用随机梯度下降训练模型参数的时候重要采样', 'time': '2017-03-11T09:10'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '尤其是分类器这样的模型，其中代价函数主要由少量错误分类的样本产生', 'origin_text': '下降训练模型参数的时候重要采样可以用来改进对代价函数梯度的估计，  !!!尤其是针对于分类器模型的训练中一小部分错误分类样本产生的代价函数!!!  。在这种情况下更加频繁地采集这些困难的样本可以降低梯度估计的方', 'time': '2017-03-11T09:21'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '“一种”后加上“易处理的方法来”【漏译tractable method】', 'origin_text': '尔可夫链蒙特卡罗方法在许多实例中，我们希望采用蒙特卡罗方法，  !!!然而往往又不存在一种!!!  直接从目标分布pmodel(x)pmodel(x)p_{\\tex', 'time': '2017-03-11T10:59'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '这种情况通常发生在$p_{\\text{model}}(\\RV x)$表示为无向图模型时', 'origin_text': '小的）重要采样分布q(x)q(x)q(\\Vx)。在深度学习中，  !!!分布pmodel(x)pmodel(x)p_{\\text{model}}(\\RVx)往往表达成一个无向模型!!!  。在这种情况下，为了从分布pmodel(x)pmodel(x)', 'time': '2017-03-11T09:24'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '方法（前后统一）', 'origin_text': '马尔可夫链来进行蒙特卡罗估计的这一类算法被称为马尔可夫链蒙特卡罗  !!!算法!!!  。马尔可夫链蒙特卡罗算法在机器学习中的应用在{koller-b', 'time': '2017-03-11T09:27'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '方法', 'origin_text': '计的这一类算法被称为马尔可夫链蒙特卡罗算法。马尔可夫链蒙特卡罗  !!!算法!!!  在机器学习中的应用在{koller-book2009}中花了大量', 'time': '2017-03-11T09:27'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '方法', 'origin_text': '{koller-book2009}中花了大量篇幅描述。MCMC  !!!算法!!!  最标准，最一般的要求是只适用模型分布处处不为000的情况。因此', 'time': '2017-03-11T09:27'}
+{'user': 'acct:caszhang@hypothes.is', 'text': 'EBM表述', 'origin_text': 'ropto \\exp(-E(\\Vx))中采样，见\\sec?。在  !!!EBM!!!  中每一个状态所对应的概率都不为零。事实上MCMC方法可以被广泛', 'time': '2017-03-11T09:29'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '事实上，MCMC方法的适用范围比这要广，许多包含零概率状态的分布也可以用', 'origin_text': '样，见\\sec?。在EBM中每一个状态所对应的概率都不为零。  !!!事实上MCMC方法可以被广泛地应用在了许多包含概率为000的状态的概率分布中!!!  。然而，在这种情况下，关于MCMC方法性能的理论保证只能依据具', 'time': '2017-03-11T09:51'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '最标准、最一般的理论保证只适用于那些各状态概率均不为零的模型【注：theoretical guarantee的意思类似于correctness proof】', 'origin_text': 'oller-book2009}中花了大量篇幅描述。MCMC算法  !!!最标准，最一般的要求是只适用模型分布处处不为000的情况!!!  。因此，最方便的目标分布的表达是从基于能量的模型即p(x)∝e', 'time': '2017-03-11T09:53'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '逐一加以证明', 'origin_text': '情况下，关于MCMC方法性能的理论保证只能依据具体不同类型的分布  !!!具体分析证明!!!  。在深度学习中，应用于所有基于能量的模型的通用理论保证是很常见', 'time': '2017-03-11T09:54'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '我们通常依赖于那些对所有基于能量的模型都能自然成立的、最一般的理论保证', 'origin_text': '理论保证只能依据具体不同类型的分布具体分析证明。在深度学习中，  !!!应用于所有基于能量的模型的通用理论保证是很常见的!!!  。为了解释从基于能量的模型中采样的困难性，我们考虑一个包含', 'time': '2017-03-11T09:55'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '记其给出的分布为$p(a,b)$', 'origin_text': '量的模型中采样的困难性，我们考虑一个包含两个变量的EBM的例子，  !!!记作p(a,b)!!!  p(a,b)p(\\RSa,\\RSb)。为了采aa\\RSa，我们', 'time': '2017-03-11T10:31'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '难处理的(intractable)', 'origin_text': 'p(b∣a)p(\\RSb\\mid \\RSa)中采样。这似乎成了  !!!难以解释的!!!  先有鸡还是先有蛋的问题。有向模型避免了这一问题因为它的图是有向', 'time': '2017-03-11T10:32'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '建议：“原始采样”似乎没有体现出ancestral一词的含义，建议译为祖先采样', 'origin_text': '问题。有向模型避免了这一问题因为它的图是有向无环的。为了完成  !!!原始采样!!!  ，我们根据拓扑顺序采样每一个变量，给定每个变量的所有父结点的条件', 'time': '2017-03-11T10:37'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '我们按拓扑序，在父结点给定的条件下依次采样各个变量（可以保证，这时父结点已经被采样过了）。', 'origin_text': '向模型避免了这一问题因为它的图是有向无环的。为了完成原始采样，  !!!我们根据拓扑顺序采样每一个变量，给定每个变量的所有父结点的条件下，这个变量是确定能够被采样的!!!  （详见\\sec?）。原始采样定义了一种高效的，单路径的方法来采', 'time': '2017-03-11T12:20'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '单遍(single-pass)', 'origin_text': '确定能够被采样的（详见\\sec?）。原始采样定义了一种高效的，  !!!单路径!!!  的方法来采集一个样本。在一个EBM中，我们通过使用马尔可夫', 'time': '2017-03-11T10:47'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '可以', 'origin_text': '种高效的，单路径的方法来采集一个样本。在一个EBM中，我们  !!!通过!!!  使用马尔可夫链来采样，从而避免了先有鸡还是先有蛋的问题。马尔可', 'time': '2017-03-11T10:47'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '介绍这些方法最方便的表述是从基于能量的模型即p(x)∝exp(−E(x))中采样', 'origin_text': '标准，最一般的要求是只适用模型分布处处不为000的情况。因此，  !!!最方便的目标分布的表达是从基于能量的模型即p(x)∝exp(−E(x))p(x)∝exp\u2061(−E(x))p(\\Vx)\\propto \\exp(-E(\\Vx))中采样!!!  ，见\\sec?。在EBM中每一个状态所对应的概率都不为零。事', 'time': '2017-03-11T10:55'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '从某个可取任意值的状态$\\Vx$出发', 'origin_text': '采样，从而避免了先有鸡还是先有蛋的问题。马尔可夫链的核心思想是  !!!以一个任意状态的点xx\\Vx作为起始点!!!  。随着时间的推移，我们随机地反复地更新状态xx\\Vx。最终x', 'time': '2017-03-11T12:18'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '值', 'origin_text': '(x′∣x)T(x′∣x)T(\\Vx’\\mid \\Vx)反复地用  !!!状态!!!  x′x′\\Vx’来更新状态xx\\Vx。为了给出MCMC方法', 'time': '2017-03-11T12:20'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '改换参数表示这一问题', 'origin_text': '态xx\\Vx。为了给出MCMC方法为何有效的一些理论解释，  !!!重定义这个问题!!!  是很有用的。首先我们关注一些简单的情况，其中随机变量xx\\RV', 'time': '2017-03-11T12:22'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '此时我们可以把状态简单', 'origin_text': '先我们关注一些简单的情况，其中随机变量xx\\RVx有可数个状态。  !!!我们将这种状态!!!  记作正整数xxx。不同的整数xxx的大小对应着原始问题中xx\\', 'time': '2017-03-11T12:23'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '各条马尔可夫链的状态都是从某个分布q(t)(x)中采到的', 'origin_text': '接下来我们考虑如果并行地运行无穷多个马尔可夫链会发生什么。  !!!不同马尔可夫链的所有状态都会被某一个分布q(t)(x)q(t)(x)q^{(t)}(x)采到!!!  ，在这里ttt表示消耗的时间数。开始时，对每个马尔可夫链，我们', 'time': '2017-03-11T12:26'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '利用我们的整数值参数', 'origin_text': '}(x) T(x’\\mid x).\\end{align}  !!!根据状态为整数的设定!!!  ，我们可以将转移算子TTT表示成一个矩阵AA\\MA。矩阵AA\\', 'time': '2017-03-11T12:29'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '改写', 'origin_text': 'Vx = j).\\end{align}使用这一定义，我们可以  !!!重新写成!!!  \\eqn?。与之前使用qqq和TTT来理解单个状态的更新相对的', 'time': '2017-03-11T12:30'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '不同的？', 'origin_text': '在可以使用vv\\Vv和AA\\MA来描述当我们更新时（并行运行的）  !!!不同个!!!  马尔可夫链上整个分布是如何变化的：v(t)=Av(t−1).v', 'time': '2017-03-11T12:31'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '求$\\MA$的幂', 'origin_text': '重复地乘上矩阵AA\\MA。换一句话说，我们可以认为这一过程就是  !!!关于AA\\MA的指数变化!!!  ：v(t)=Atv(0).v(t)=Atv(0).\\begin', 'time': '2017-03-11T12:31'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '如果对于', 'origin_text': '它的每一列都代表了一个概率分布。这样的矩阵被称作是随机矩阵。  !!!对于!!!  任意状态xxx到任意其他状态x′x′x’存在一个ttt使得转移概', 'time': '2017-03-11T12:32'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '是实数$1$', 'origin_text': 'robenius定理~{cite?}可以保证这个矩阵的最大特征值  !!!是实数且大小为1!!!  11。我们可以看到所有的特征值随着时间呈现指数变化：v(t)', 'time': '2017-03-11T12:32'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '稳定点', 'origin_text': '条件也适用于收敛之后的每一步。这就是特征向量方程。作为收敛的  !!!静止点!!!  ，vv\\Vv一定是特征值为111所对应的特征向量。这个条件保证', 'time': '2017-03-11T12:34'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '再重复转移采样过程', 'origin_text': '值为111所对应的特征向量。这个条件保证收敛到了平稳分布以后，  !!!之后的采样过程!!!  不会改变不同马尔可夫链的状态分布（尽管转移算子自然而然地会改变每', 'time': '2017-03-11T12:35'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '很快会(shortly)', 'origin_text': '最终的平稳分布 qqq将会等于我们所希望采样的分布ppp。我们  !!!会简要地!!!  介绍如何选择TTT，详见\\sec?。可数状态马尔可夫链的大', 'time': '2017-03-11T12:36'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '不动点', 'origin_text': '些宽松的条件下，一个带有转移算子TTT的马尔可夫链都会收敛到一个  !!!固定点!!!  ，这个固定点可以写成如下形式：q′(x′)=Ex∼qT(x′∣', 'time': '2017-03-11T12:37'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '不动点', 'origin_text': '下，一个带有转移算子TTT的马尔可夫链都会收敛到一个固定点，这个  !!!固定点!!!  可以写成如下形式：q′(x′)=Ex∼qT(x′∣x),q′(', 'time': '2017-03-11T12:37'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '包括了XXX的操作/需要XXX', 'origin_text': '应的是积分。无论状态是连续还是离散，所有的马尔可夫链方法都  !!!包括了!!!  重复，随机地更新直到最终所有的状态开始从平衡分布中采样。运行马', 'time': '2017-03-11T12:38'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '高度相关', 'origin_text': '多数量的样本序列。这些样本服从同一分布，但是两个连续的样本之间  !!!存在强烈的相关性!!!  。所以一个有限的序列无法完全表达平衡分布。一种解决这个问题的', 'time': '2017-03-11T12:40'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '马尔可夫链的计算开销很大', 'origin_text': '的统计量的估计不会被MCMC方法的样本之间的相关性所干扰。所以  !!!马尔可夫链在计算上是非常昂贵的!!!  ，主要源于达到平衡分布前需要预烧的时间以及在达到平衡分布之后从一', 'time': '2017-03-11T12:41'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '足够无关', 'origin_text': '分布前需要预烧的时间以及在达到平衡分布之后从一个样本转移到另一个  !!!完全无关!!!  的样本所需要的时间。如果我们想要得到完全独立的样本，那么我们需', 'time': '2017-03-11T12:42'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '减少时延(latency)', 'origin_text': '要同时并行的运行多个马尔可夫链。这种方法使用了额外的并行计算来  !!!消除潜在因素的干扰!!!  。使用一条马尔可夫链来生成所有样本的策略和（使用多条马尔可夫链', 'time': '2017-03-11T12:43'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '不能真的', 'origin_text': '的第二大特征值决定了马尔可夫链的混合时间。然而，在实践中，我们  !!!通常不能!!!  将马尔可夫链表示成为矩阵的形式。我们的概率模型所能够达到的状态', 'time': '2017-03-11T12:45'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '包括以上在内的诸多', 'origin_text': '达vv\\Vv、AA\\MA或者AA\\MA的特征值是不现实的。由于  !!!这些!!!  阻碍，我们通常无法知道马尔可夫链是否已经混合成功。作为替代，我', 'time': '2017-03-11T12:46'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '判断', 'origin_text': '尔可夫链直到我们粗略估计这段时间是足够的，然后使用启发式的方法来  !!!决定!!!  马尔可夫链是否混合成功。这些启发性的算法包括了手动检查样本或者', 'time': '2017-03-11T12:46'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '如何确定分布$q(\\Vx)$是有效的', 'origin_text': '个分布q(x)q(x)q(\\Vx)中采样。然而我们还没有提到过  !!!如何确定一个有效的q(x)q(x)q(\\Vx)分布!!!  。本书中描述了两种基本的方法。第一种方法是从已经学习到的分布', 'time': '2017-03-11T12:47'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '记模型结构的无向图表示为G，然后从p_model中该点关于G中其邻接点的条件分布中抽样', 'origin_text': '\\mid \\RVx)采样是通过选择一个变量xixi\\RSx_i，  !!!然后从pmodelpmodelp_{\\text{model}}中该点关于在无向图GG\\CalG（定义了基于能量的模型结构）中邻接点的条件分布中抽样!!!  。给定他们所有的邻居结点只要一些变量是条件独立的，那么这些变量', 'time': '2017-03-11T12:53'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '如果某些变量在给定相邻变量时是条件独立的，那么它们可以被同时采样', 'origin_text': '\\CalG（定义了基于能量的模型结构）中邻接点的条件分布中抽样。  !!!给定他们所有的邻居结点只要一些变量是条件独立的，那么这些变量可以被同时采样!!!  。正如在\\sec?中看到的RBM的例子一样，RBM所有的隐藏单', 'time': '2017-03-11T15:00'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '给定全部可见单元', 'origin_text': '到的RBM的例子一样，RBM所有的隐藏单元可以被同时采样，因为在  !!!给定可见单元!!!  的条件下他们相互条件独立。同样的，所有的可见单元也可以被同时采', 'time': '2017-03-11T12:55'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '它们', 'origin_text': '，RBM所有的隐藏单元可以被同时采样，因为在给定可见单元的条件下  !!!他们!!!  相互条件独立。同样的，所有的可见单元也可以被同时采样因为在给定', 'time': '2017-03-11T12:56'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '领域中', 'origin_text': '方法。比如说，Metropolis-Hastings算法在其他  !!!情景下!!!  被广泛使用。在深度学习的无向模型中，除了Gibbs采样很少使用', 'time': '2017-03-11T12:57'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '在于马尔可夫链的混合通常不理想\n【句子有歧义，不是混合MCMC methods】', 'origin_text': '不同的峰值之间的混合挑战使用MCMC方法的主要难点  !!!在于他们经常混合得很糟糕!!!  。理想情况下，从设计好的马尔可夫链中采出的连续样本之间是完全独', 'time': '2017-03-11T16:43'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '马尔可夫链会按概率大小访问许多不同区域', 'origin_text': '可夫链中采出的连续样本之间是完全独立的，而且在xx\\Vx空间中，  !!!马尔可夫链以正比于不同区域对应概率的概率访问这些区域!!!  。然而，MCMC方法采出的样本可能会具有很强的相关性，尤其是在', 'time': '2017-03-11T13:01'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '可删去，前面已经翻译出“等价于”了', 'origin_text': '的操作，或者说等价于相对于链的状态（随机变量被采样）依据概率进行  !!!等效的!!!  噪声爬坡。（在马尔可夫链的状态空间中）从x(t−1)x(t−1', 'time': '2017-03-11T13:04'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '被采样的随机变量', 'origin_text': '地执行类似于带噪声的梯度下降的操作，或者说等价于相对于链的状态（  !!!随机变量被采样!!!  ）依据概率进行等效的噪声爬坡。（在马尔可夫链的状态空间中）从x', 'time': '2017-03-11T13:04'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '构型\n【注：作者在涉及energy的地方回归物理学用了configuration一词，可译为“能量构型”；其实和state指的是一回事】', 'origin_text': 'x(t−1))E(\\Vx^{(t-1)})，倾向于向较低能量的  !!!区域!!!  移动。当从可能性较小的状态（比来自p(x)p(x)p(\\Vx)', 'time': '2017-03-11T13:59'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '连通的', 'origin_text': '变量是图像中的像素，则低能量的区域可以是同一对象所对应图像的一个  !!!相连的!!!  流形），我们称之为峰值，链将倾向于围绕着这个峰值游走（以某一种形', 'time': '2017-03-11T13:11'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '模(最频值，mode)，见《模式分类》P78/472', 'origin_text': '量）开始时，链趋向于逐渐减少状态的能量，并且仅仅偶尔移动到另一个  !!!峰值!!!  。一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，', 'time': '2017-03-11T13:17'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '模，下同', 'origin_text': '能量的区域可以是同一对象所对应图像的一个相连的流形），我们称之为  !!!峰值!!!  ，链将倾向于围绕着这个峰值游走（以某一种形式的随机游走）。它时', 'time': '2017-03-11T13:18'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '当目标分布包含很多被低概率区域分割的高概率模', 'origin_text': '（随着能量障碍的高度）指数下降的，如在\\fig?中展示的一样。  !!!当目标分布有很多峰值并且以很高的概率被低概率区域所分割!!!  ，尤其当Gibbs采样的每一步都只是更新变量的一小部分而这一小部', 'time': '2017-03-11T13:20'}
+{'user': 'acct:caszhang@hypothes.is', 'text': 'the problem arises，没有“严重的”', 'origin_text': '新变量的一小部分而这一小部分变量又严重依赖其他的变量时，这会导致  !!!严重的问题!!!  。\\begin{figure}[!htb]\\ifOpen', 'time': '2017-03-11T13:21'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '运行的马尔可夫链', 'origin_text': 'i\\caption{对于三种分布使用Gibbs采样所产生的路径，  !!!所有的分布马尔可夫链!!!  初始值都设为峰值。（左）一个带有两个独立变量的多维正态分布。由于', 'time': '2017-03-11T13:21'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '进入', 'origin_text': '高斯分布。Gibbs采样混合得很慢，因为每次更新仅仅一个变量很难  !!!跨越!!!  不同的峰值。}\\end{figure}\\begin{figure', 'time': '2017-03-11T13:22'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '二值', 'origin_text': '变量aa\\RSa， bb\\RSb的基于能量的模型，这两个变量都是  !!!二元!!!  的，取值+1+1+1或者−1−1-1。如果对某个较大的正数ww', 'time': '2017-03-11T13:23'}
+{'user': 'acct:caszhang@hypothes.is', 'text': 'b的条件分布', 'origin_text': '当a=1a=1\\RSa=1时用Gibbs采样更新bb\\RSb。  !!!给定bb\\RSb时的条件分布!!!  满足p(b=1∣a=1)=σ(w)p(b=1∣a=1)=σ(w)', 'time': '2017-03-11T13:26'}
+{'user': 'acct:caszhang@hypothes.is', 'text': 'b也取到1', 'origin_text': '(w)。如果www的值很大，sigmoid函数趋近于饱和，那么  !!!bbb取到1!!!  11的概率趋近于111。相同的道理，如果a=−1a=−1\\RS', 'time': '2017-03-11T13:27'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '两个变量取这两种符号的可能性相等', 'origin_text': 'a,b)p_{\\text{model}}(\\RSa,\\RSb)，  !!!两个变量取一样的符号的概率几乎相等!!!  。根据pmodel(a∣b)pmodel(a∣b)p_{\\te', 'time': '2017-03-11T13:28'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '不仅', 'origin_text': '符号。在实际问题中，这种挑战更加地艰巨因为在实际问题中我们  !!!不能仅仅!!!  关注在两个峰值之间的转移而是需要关注在多个峰值之间地转移。如果', 'time': '2017-03-11T13:31'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '更', 'origin_text': '战更加地艰巨因为在实际问题中我们不能仅仅关注在两个峰值之间的转移  !!!而是需要!!!  关注在多个峰值之间地转移。如果由于峰值之间混合困难导致几个这样', 'time': '2017-03-11T13:31'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '的', 'origin_text': '中我们不能仅仅关注在两个峰值之间的转移而是需要关注在多个峰值之间  !!!地!!!  转移。如果由于峰值之间混合困难导致几个这样的转移是很艰难的，那', 'time': '2017-03-11T13:31'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '的', 'origin_text': 's采样很难会改变这些变量的符号。在实际问题中，这种挑战更加  !!!地!!!  艰巨因为在实际问题中我们不能仅仅关注在两个峰值之间的转移而是需要', 'time': '2017-03-11T13:31'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '开销很高【注：指的是计算开销】', 'origin_text': '样的转移是很艰难的，那么得到一些可靠的覆盖大部分峰值的样本集合的  !!!代价是很昂贵的!!!  ，同时马尔可夫链收敛到它的平稳分布的过程也会非常缓慢。通过', 'time': '2017-03-11T13:32'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '某几个这样的转移难以完成', 'origin_text': '而是需要关注在多个峰值之间地转移。如果由于峰值之间混合困难导致  !!!几个这样的转移是很艰难的!!!  ，那么得到一些可靠的覆盖大部分峰值的样本集合的代价是很昂贵的，同', 'time': '2017-03-11T13:33'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '【是】可以', 'origin_text': '高度依赖变量的组以及分块同时更新块（组）中的变量，这个问题有时候  !!!可以!!!  被解决的。然而不幸的是，当依赖关系很复杂的时候，从这些组中采样', 'time': '2017-03-11T13:41'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '要有', 'origin_text': 'x的足够信息从而能够较完整地重构它，这意味hh\\Vh和xx\\Vx  !!!有着!!!  非常高的互信息。这两个目标是相互矛盾的。我们经常学习到能够将', 'time': '2017-03-11T13:42'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '但是想让吉布斯链从分布的一个模转移到另一个（比如通过改变数字）仍然是很困难的', 'origin_text': '样作用于一个深度图模型，相似度更多地是基于语义而非原始视觉特征。  !!!但是对于吉布斯链来说从分布的一个峰值转移到另一个仍然是很困难的，比如说改变数字!!!  。（右）从生成式对抗网络中抽出的连续原始样本。因为原始采样生成的', 'time': '2017-03-11T13:46'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '这些问题就使MCMC方法变得不那么有用了', 'origin_text': 'gure}当感兴趣的分布对于每个类具有单独的流形结构时，  !!!所有这些问题可以使MCMC方法不那么有用!!!  ：分布集中在许多峰值周围，并且这些模式由大量高能量区域分割。我', 'time': '2017-03-11T13:48'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '构造一个概率分布替代目标分布', 'origin_text': '区域包围时，很难在分布的不同峰值之间混合。一些加速混合的方法是  !!!基于构造一个不同的概率分布!!!  ，这个概率分布的峰值没有那么高，峰值周围的低谷也没有那么低。基', 'time': '2017-03-11T13:50'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '此前，我们一直以概率分布定义基于能量的模型', 'origin_text': '谷也没有那么低。基于能量的模型为这个想法提供一种简单的做法。  !!!截止目前，我们已经描述了一个基于能量的模型的概率分布的定义!!!  ：p(x)∝exp(−E(x)).p(x)∝exp\u2061(−E(x', 'time': '2017-03-11T13:51'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '反映出基于能量的模型的统计物理学起源', 'origin_text': 'end{align}ββ\\beta参数可以被理解为温度的倒数，  !!!在统计物理中反映了基于能量的模型的本质!!!  。当温度趋近于0时，ββ\\beta趋近于无穷大，此时的基于能量', 'time': '2017-03-11T13:53'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '但我们也可以利用其他的温度', 'origin_text': '通常情况下，在β=1β=1\\beta = 1时训练一个模型。  !!!然而，我们利用了其他温度!!!  ，尤其是β<1β<1\\beta < 1的情况。回火作为一种通用', 'time': '2017-03-11T13:54'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '构型', 'origin_text': ')p(\\Vx)的典型样本拥有更高的能量）开始时，链趋向于逐渐减少  !!!状态!!!  的能量，并且仅仅偶尔移动到另一个峰值。一旦该链已经找到低能量的', 'time': '2017-03-11T13:58'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '会暂时', 'origin_text': '峰值之间快速混合。基于回火转移~{cite?}的马尔可夫链  !!!初始!!!  从高温度的分布中采样使其在不同峰值之间混合，然后从单位温度的分布', 'time': '2017-03-11T13:59'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '继续在单位温度的分布中采样', 'origin_text': '的马尔可夫链初始从高温度的分布中采样使其在不同峰值之间混合，然后  !!!从单位温度的分布中重新开始!!!  。这些技巧被应用在一些模型比如RBM中~{cite?}。另一', 'time': '2017-03-11T14:00'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '或许可以说(It can be argued that...)，这是因为利用了', 'origin_text': 'xx\\Vx的原始数据分布，通常表现为更加均匀、更趋近于单峰值。  !!!值得指出的是，这些方法往往利用!!!  所有可用的表达空间并尽量减小重构误差。因为当训练集上的不同样本', 'time': '2017-03-11T14:07'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '实验中是不同的类别', 'origin_text': '，顶端hh\\Vh空间的边缘分布越趋向于均匀和发散，而且不同峰值（  !!!比如说实验中的类别!!!  ）所对应区域之间的间距也会越模糊。在高层次的空间训练RBM使得', 'time': '2017-03-11T14:08'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '小', 'origin_text': '散，而且不同峰值（比如说实验中的类别）所对应区域之间的间距也会越  !!!模糊!!!  。在高层次的空间训练RBM使得Gibbs采样混合得更快。然而', 'time': '2017-03-11T14:08'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '在模间混合得更快（漏译between modes）', 'origin_text': '间的间距也会越模糊。在高层次的空间训练RBM使得Gibbs采样  !!!混合得更快!!!  。然而，如何利用这种观察到的现象来辅助训练深度生成模型或者从中', 'time': '2017-03-11T14:08'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '方法', 'origin_text': '模型或者从中采样仍然有待探索。尽管存在混合的难点，蒙特卡罗  !!!技巧!!!  仍然是一个有用的也是最好的可用工具。事实上，在遇到难以处理的无', 'time': '2017-03-11T14:09'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '也常常是最好的', 'origin_text': '有待探索。尽管存在混合的难点，蒙特卡罗技巧仍然是一个有用的  !!!也是最好的!!!  可用工具。事实上，在遇到难以处理的无向模型中的配分函数时，蒙特', 'time': '2017-03-11T14:09'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '最重要的', 'origin_text': '实上，在遇到难以处理的无向模型中的配分函数时，蒙特卡罗方法仍然是  !!!最基础的!!!  工具，这将在下一章详细阐述。             ', 'time': '2017-03-11T14:10'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '地', 'origin_text': '                   随机算法可以粗略  !!!的!!!  分为两类：Las Vegas算法和蒙特卡罗算法。Las Veg', 'time': '2017-03-11T14:13'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '或', 'origin_text': '败报告）。这类方法通常需要占用随机量的计算资源（通常指的是内存  !!!和!!!  运行时间）。与此相对的，蒙特卡罗方法返回一个伴随着随机量错误的', 'time': '2017-03-11T15:02'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '或', 'origin_text': '回一个伴随着随机量错误的答案。花费更多的计算资源（通常包括内存  !!!和!!!  运行时间）可以减少这种随机量的错误。在任意固定的计算资源下， ', 'time': '2017-03-11T15:02'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '不定大小误差', 'origin_text': '指的是内存和运行时间）。与此相对的，蒙特卡罗方法返回一个伴随着  !!!随机量错误!!!  的答案。花费更多的计算资源（通常包括内存和运行时间）可以减少这', 'time': '2017-03-11T15:04'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '大小不定的误差', 'origin_text': '答案。花费更多的计算资源（通常包括内存和运行时间）可以减少这种  !!!随机量的错误!!!  。在任意固定的计算资源下， 蒙特卡罗算法可以得到一个近似解。', 'time': '2017-03-11T15:04'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '另一种相对少见的情况是[EQUATION]', 'origin_text': ' 的时候，重要采样采到了很多无用的样本（权值之和很小或趋于零）。  !!!另一方面，当q(x(i))≪p(x(i))|f(x(i))|q(x(i))≪p(x(i))|f(x(i))|q(\\Vx^{(i)})\\ll p(\\Vx^{(i)}) \\vert f(\\Vx^{(i)})\\vert 的时候， 样本会很少被采到!!!  ，其对应的权值却会非常大。正因为后一个事件是很少发生的，这些样', 'time': '2017-03-11T16:33'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '相应的比值会非常大 【注：指p(x)f(x)/q(x)】', 'origin_text': 'f(\\Vx^{(i)})\\vert 的时候， 样本会很少被采到，  !!!其对应的权值却会非常大!!!  。正因为后一个事件是很少发生的，这些样本很难被采到，通常使得对', 'time': '2017-03-11T16:33'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '减小', 'origin_text': '本产生的代价函数。在这种情况下更加频繁地采集这些困难的样本可以  !!!降低!!!  梯度估计的方差{cite?}。马尔可夫链蒙特卡罗方法在', 'time': '2017-03-12T00:47'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '从业者', 'origin_text': '夫链）每条马尔可夫链只产生一个样本的策略是两种极端。深度学习的  !!!研究者!!!  们通常选取的马尔可夫链的数目和minibatch中的样本数相近，', 'time': '2017-03-12T00:48'}
+
+=============================   Replies   =============================
+
