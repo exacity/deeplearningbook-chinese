@@ -72,7 +72,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此\eqn
 \end{align}
 
 以这种方式重复应用定义，\gls{unfolding}等式，就能得到不涉及循环的表达。
-现在可以使用传统的有向无环\gls{computational_graph}呈现这样的表达。
+现在我们可以使用传统的有向无环\gls{computational_graph}呈现这样的表达。
 
 \eqnref{eq:101s}和\eqnref{eq:103s}的\gls{unfolding}\gls{computational_graph}如\figref{fig:chap10_unfolded_dynsys}所示。
 \begin{figure}[!htb]
@@ -133,7 +133,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此\eqn
 一种方法是为可能在模型的物理实现中存在的部分赋予一个节点，如生物神经网络。
 在这个观点下，网络定义了实时操作的回路，如\figref{fig:chap10_rnn_circuit_unfolded}的左侧，其当前状态可以影响其未来的状态。
 在本章中，我们使用回路图的黑色方块表明在时刻$t$的状态到时刻$t+1$的状态单个时刻延迟中的相互作用。
-另一个绘制~\glssymbol{RNN}~的方法是展开的\gls{computational_graph}，其中每一个组件是由许多不同的变量表示，每个\gls{time_step}一个变量，表示在该时间点组件的状态。
+另一个绘制~\glssymbol{RNN}~的方法是展开的\gls{computational_graph}，其中每一个组件由许多不同的变量表示，每个\gls{time_step}一个变量，表示在该时间点组件的状态。
 每个\gls{time_step}的每个变量绘制为\gls{computational_graph}的一个独立节点，如\figref{fig:chap10_rnn_circuit_unfolded}的右侧。
 我们所说的\gls{unfolding}是将左图中的回路映射为右图中包含重复组件的\gls{computational_graph}的操作。
 目前，\gls{unfolded_graph}的大小取决于序列长度。
@@ -150,7 +150,7 @@ $\Vs$在时刻$t$的定义需要参考时刻$t-1$时同样的定义，因此\eqn
  \item 无论序列的长度，学成的模型始终具有相同的输入大小，因为它指定的是从一种状态到另一种状态的\gls{transition}， 而不是在可变长度的历史状态上操作。
  \item 我们可以在每个\gls{time_step}使用相同参数的\emph{相同}\gls{transition}函数$f$。
 \end{enumerate}
-这两个因素使得学习在所有\gls{time_step}和所有序列长度上操作的单一模型$f$是可能的，而不需要在所有可能\gls{time_step}学习独立的模型$g^{(t)}$。
+这两个因素使得学习在所有\gls{time_step}和所有序列长度上操作单一的模型$f$是可能的，而不需要在所有可能\gls{time_step}学习独立的模型$g^{(t)}$。
 学习单一的共享模型允许泛化到没有见过的序列长度（没有出现在训练集中），并且估计模型所需的训练样本远远少于不带\gls{parameter_sharing}的模型。
 
 % -- 367 --
@@ -362,7 +362,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 % -- 374 --
 
 一旦获得了\gls{computational_graph}内部节点的\gls{gradient}，我们就可以得到关于参数节点的\gls{gradient}。
-因为参数在许多\gls{time_step}共享，必须在表示这些变量的微积分操作时谨慎对待。
+因为参数在许多\gls{time_step}共享，我们必须在表示这些变量的微积分操作时谨慎对待。
 我们希望实现的等式使用\secref{sec:general_back_propagation}中的{\tt bprop}方法计算\gls{computational_graph}中单一边对\gls{gradient}的贡献。
 然而微积分中的$\nabla_{\MW} f$算子，计算$\MW$对于$f$的贡献时将\gls{computational_graph}中的\emph{所有}边都考虑进去了。
 为了消除这种歧义，我们定义只在$t$时刻使用的虚拟变量$\MW^{(t)}$作为$\MW$的副本。
@@ -1085,7 +1085,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 不幸的是，二阶方法有许多缺点，包括高的计算成本、需要一个大的\gls{minibatch}、并且倾向于被吸引到鞍点。
 \cite{Martens+Sutskever-ICML2011}发现采用二阶方法的不错结果。
 之后，\cite{sutskeverimportance}发现使用较简单的方法可以达到类似的结果，例如经过谨慎初始化的~\ENNAME{Nesterov}~动量法。
-更详细的内容参考\~cite{Sutskever-thesis2012}。
+更详细的内容参考~\cite{Sutskever-thesis2012}。
 应用于~\glssymbol{LSTM}~时，这两种方法在很大程度上会被单纯的~\glssymbol{SGD}（甚至没有动量）取代。
 这是\gls{ML}中一个延续的主题，设计一个易于优化模型通常比设计出更加强大的优化算法更容易。
 
@@ -1194,9 +1194,9 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 \gls{NN}处理序列信息的需要，改变了每个步骤向网络注入输入的方式，长期以来推理能力被认为是重要的，而不是对输入做出自动的、直观的反应\citep{hinton1990mapping} 。
 
 
-为了解决这一难题，\citep{Weston2014}引入了\firstgls{memory_network}，其中包括一组可以通过寻址机制来访问的记忆单元。
+为了解决这一难题，\citet{Weston2014}引入了\firstgls{memory_network}，其中包括一组可以通过寻址机制来访问的记忆单元。
 \gls{memory_network}原本需要监督信号指示他们如何使用自己的记忆单元。
-\citep{Graves-et-al-arxiv2014}引入的\firstgls{NTM}，不需要明确的监督指示采取哪些行动而能学习从记忆单元读写任意内容，并通过使用基于内容的软注意机制（见\citep{Bahdanau-et-al-ICLR2015-small}和\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}），允许端到端的训练。
+\citet{Graves-et-al-arxiv2014}引入的\firstgls{NTM}，不需要明确的监督指示采取哪些行动而能学习从记忆单元读写任意内容，并通过使用基于内容的软注意机制（见\citet{Bahdanau-et-al-ICLR2015-small}和\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}），允许端到端的训练。
 这种软寻址机制已成为其他允许基于\gls{gradient}优化的模拟算法机制的相关架构的标准\citep{Sukhbaatar2015,Joulin+Mikolov-2015,Kumar-et-al-2015,Vinyals2015,Grefenstette-et-al-NIPS2015}。
 
 每个记忆单元可以被认为是~\glssymbol{LSTM}~和GRU中记忆单元的扩展。
