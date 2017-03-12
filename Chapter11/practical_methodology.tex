@@ -12,7 +12,7 @@
 这可能给人一种印象——成为\gls{ML}专家的最重要因素是了解各种各样的\gls{ML}技术，并熟悉各种不同的数学。
 在实践中，正确使用一个普通算法通常比草率地使用一个不清楚的算法效果更好。
 正确应用一个算法需要掌握一些相当简单的方法论。
-本章的许多建议都来自\cite{ng-lecture-advice}。
+本章的许多建议都来自~\cite{ng-lecture-advice}。
 
 
 我们建议参考以下几个实践设计流程：
@@ -32,7 +32,7 @@
 \end{itemize}
 
 
-我们将使用街景地址号码\gls{transcription_system}\citep{Goodfellow+et+al-ICLR2014a}作为一个运行示例。
+我们将使用街景地址号码\gls{transcription_system}~\citep{Goodfellow+et+al-ICLR2014a}作为一个运行示例。
 该应用的目标是将建筑物添加到谷歌地图。
 街景车拍摄建筑物，并记录与每张建筑照片相关的GPS坐标。
 \gls{convolutional_network}识别每张照片上的地址号码，由谷歌地图数据库在正确的位置添加该地址。
@@ -105,7 +105,7 @@
 \begin{equation}
 	F = \frac{2pr}{p+r}.
 \end{equation}
-另一种方法是报告\gls{prcurve}下方的总面积。
+另一种方法是报告\,\gls{prcurve}下方的总面积。
 % -- 412 head
 
 
@@ -154,11 +154,11 @@
 首先，根据数据的结构选择一类合适的模型。
 如果项目是以固定大小的向量作为输入的\gls{supervised_learning}，那么可以使用全连接的\gls{feedforward_network}。
 如果输入有已知的拓扑结构（例如，输入是图像），那么可以使用\gls{convolutional_network}。
-在这些情况下，刚开始可以使用某些\gls{piecewise}线性单元（\glssymbol{ReLU}或者其扩展，如\glssymbol{leaky_ReLU}、\glssymbol{PReLU}和\glssymbol{maxout}）。
-如果输入或输出是一个序列，可以使用\gls{gated_recurrent_net}（\glssymbol{LSTM}或\glssymbol{gated_recurrent_unit}）。
+在这些情况下，刚开始可以使用某些\gls{piecewise}线性单元（\glssymbol{ReLU}\,或者其扩展，如\,\glssymbol{leaky_ReLU}、\glssymbol{PReLU}\,和\,\glssymbol{maxout}）。
+如果输入或输出是一个序列，可以使用\gls{gated_recurrent_net}（\glssymbol{LSTM}\,或\,\glssymbol{gated_recurrent_unit}）。
 % 413 mid 
 
-具有衰减\gls{learning_rate}以及\gls{momentum}的\glssymbol{SGD}是优化算法一个合理的选择
+具有衰减\gls{learning_rate}以及\gls{momentum}的\,\glssymbol{SGD}\,是优化算法一个合理的选择
 （流行的衰减方法有，衰减到固定最低\gls{learning_rate}的线性衰减、指数衰减，或每次发生验证错误停滞时将\gls{learning_rate}降低$2-10$倍，这些衰减方法在不同问题上好坏不一）。
 另一个非常合理的选择是Adam算法。
 \gls{batch_normalization}对优化性能有着显著的影响，特别是对\gls{convolutional_network}和具有\gls{sigmoid}非线性函数的网络而言。
@@ -168,8 +168,8 @@
 
 除非\gls{training_set}包含数千万以及更多的样本，否则项目应该在一开始就包含一些温和的\gls{regularization}。 
 \gls{early_stopping}也被普遍采用。
-\gls{dropout}也是一个很容易实现，且兼容很多模型和训练算法的出色\gls{regularizer}。
-\gls{batch_normalization}有时也能降低\gls{generalization_error}，此时可以省略\gls{dropout}步骤，因为用于标准化变量的统计量估计本身就存在\gls{noise}。 %?? 还是有问题
+\gls{dropout}\,也是一个很容易实现，且兼容很多模型和训练算法的出色\gls{regularizer}。
+\gls{batch_normalization}有时也能降低\gls{generalization_error}，此时可以省略\,\gls{dropout}\,步骤，因为用于标准化变量的统计量估计本身就存在\gls{noise}。 %?? 还是有问题
 % -- 413 --  end
 
 
@@ -216,7 +216,7 @@
 在拥有百万甚至上亿用户的大型网络公司，收集大型数据集是可行的，并且这样做的成本可能比其他方法要少很多，所以答案几乎总是收集更多的训练数据。
 例如，收集大型\gls{labeled}数据集是解决\gls{object_recognition}问题的主要因素之一。
 在其他情况下，如医疗应用，收集更多的数据可能代价很高或者不可行。
-一个可以替代的简单方法是降低模型大小或是改进\gls{regularization}（调整\gls{hyperparameter}，如\gls{weight_decay}系数，或是加入\gls{regularization}策略，如\gls{dropout}）。
+一个可以替代的简单方法是降低模型大小或是改进\gls{regularization}（调整\gls{hyperparameter}，如\gls{weight_decay}系数，或是加入\gls{regularization}策略，如\,\gls{dropout}）。
 如果调整\gls{regularization}\gls{hyperparameter}后，\gls{training_set}性能和\gls{test_set}性能之间的差距还是不可接受，那么收集更多的数据是可取的。
 % 415 mid
 
@@ -282,7 +282,7 @@
 
 
 并非每个\gls{hyperparameter}都能对应着完整的U形曲线。
-很多\gls{hyperparameter}是离散的，如中间层单元数目或是\gls{maxout_unit}中线性元件的数目，这种情况只能沿曲线探索一些点。
+很多\gls{hyperparameter}是离散的，如中间层单元数目或是\,\gls{maxout_unit}中线性元件的数目，这种情况只能沿曲线探索一些点。
 有些\gls{hyperparameter}是二值的。
 通常这些\gls{hyperparameter}用来指定是否使用学习算法中的一些可选部分，如预处理步骤减去均值并除以标准差来标准化输入特征。
 这些\gls{hyperparameter}只能探索曲线上的两点。
@@ -332,8 +332,8 @@
 寻找最佳的\gls{test_error}需要权衡这些数值。
 当\gls{training_error}较小（因此\gls{capacity}较大），\gls{test_error}主要取决于\gls{training_error}和\gls{test_error}之间的差距时，通常神经网络效果最好。
 此时目标是缩小这一差距，使\gls{training_error}的增长速率不快于差距减小的速率。
-要减少这个差距，我们可以改变\gls{regularization}\gls{hyperparameter}，以减少有效的模型\gls{capacity}，如添加\gls{dropout}或\gls{weight_decay}策略。
-通常，最佳性能来自\gls{regularization}得很好的大规模模型，比如使用\gls{dropout}的神经网络。
+要减少这个差距，我们可以改变\gls{regularization}\gls{hyperparameter}，以减少有效的模型\gls{capacity}，如添加\,\gls{dropout}\,或\gls{weight_decay}策略。
+通常，最佳性能来自\gls{regularization}得很好的大规模模型，比如使用\,\gls{dropout}\,的神经网络。
 % 418 mid
 
 
@@ -374,7 +374,7 @@
 \gls{weight_decay}系数 & 降低 & 降低\gls{weight_decay}系数使得模型参数可以自由地变大。
  & \\
 \hline
-\gls{dropout}比率 & 降低 & 较少地丢弃单元可以更多地让单元彼此``协力''来适应\gls{training_set}。
+\gls{dropout}\,比率 & 降低 & 较少地丢弃单元可以更多地让单元彼此``协力''来适应\gls{training_set}。
  & \\
 \end{tabular}
 \caption{各种\gls{hyperparameter}对模型\gls{capacity}的影响。}
@@ -463,7 +463,7 @@
 
 \subsection{\glsentrytext{random_search}}
 \label{sec:random_search}
-幸运的是，有一个替代\gls{grid_search}的方法，并且编程简单，使用更方便，能更快地收敛到\gls{hyperparameter}的良好取值：\gls{random_search}\citep{Bergstra+Bengio-2012-small}。
+幸运的是，有一个替代\gls{grid_search}的方法，并且编程简单，使用更方便，能更快地收敛到\gls{hyperparameter}的良好取值：\gls{random_search}~\citep{Bergstra+Bengio-2012-small}。
 % 422
 
 
@@ -508,7 +508,7 @@
 为了弥补梯度的缺失，我们可以对\gls{validation_set}误差建模，然后通过优化该模型来提出新的\gls{hyperparameter}猜想。
 大部分基于模型的\gls{hyperparameter}搜索算法，都是使用贝叶斯回归模型来估计每个\gls{hyperparameter}的\gls{validation_set}误差期望和该期望的不确定性。
 因此，优化涉及到探索（探索高度不确定的\gls{hyperparameter}，可能带来显著的效果提升，也可能效果很差）和使用（使用已经确信效果不错的\gls{hyperparameter}——通常是先前见过的非常熟悉的\gls{hyperparameter}）之间的权衡。
-关于\gls{hyperparameter}优化的最前沿方法还包括Spearmint\citep{Snoek+al-NIPS2012-small}，TPE\citep{Bergstra+al-NIPS2011}和SMAC\citep{hutter+hoos+leyton+brown:2011}。
+关于\gls{hyperparameter}优化的最前沿方法还包括Spearmint~\citep{Snoek+al-NIPS2012-small}，TPE~\citep{Bergstra+al-NIPS2011}和SMAC~\citep{hutter+hoos+leyton+brown:2011}。
 
 
 % 423 end
@@ -571,7 +571,7 @@
 
 \emph{可视化最严重的错误}：
 大多数模型能够输出运行任务时的某种置信度量。
-例如，基于\gls{softmax}输出层的分类器给每个类分配一个概率。
+例如，基于\,\gls{softmax}\,输出层的分类器给每个类分配一个概率。
 因此，分配给最有可能的类的概率给出了模型在其分类决定上的置信估计值。
 通常，相比于正确预测的概率最大似然训练会略有高估。
 但是由于实际上模型的较小概率不太可能对应着正确的标签，因此它们在一定意义上还是有些用的。
@@ -621,7 +621,7 @@
 
 % 426 end
 
-通常，我们会测试向量值函数$g:\SetR^m \to \SetR^n$的梯度或\gls{jacobian}矩阵。
+通常，我们会测试向量值函数$g:\SetR^m \to \SetR^n$的梯度或\,\gls{jacobian}\,矩阵。
 令人遗憾的是，\gls{finite_difference}只允许我们每次计算一个导数。
 我们可以使用\gls{finite_difference} $mn$次评估$g$的所有偏导数，也可以将该测试应用于一个新函数（在函数$g$的输入输出都加上随机投影）。%??  后面这句好像不对？  g的输入输出都使用随机投影的
 例如，我们可以将导数实现的测试用于函数$f(x) = \Vu^T g(\Vv x)$，其中$\Vu$和$\Vv$是随机向量。%??  这句也不对
@@ -642,7 +642,7 @@
 
 % 427 mid
 
-\emph{监控激励函数值和梯度的直方图}：
+\emph{监控激活函数值和梯度的直方图}：
 可视化神经网络在大量训练迭代后（也许是一个\gls{epoch}）收集到的激活函数值和梯度的统计量往往是有用的。
 \gls{hidden_unit}的预激活值可以告诉我们该单元是否饱和，或者它们饱和的频率如何。
 例如，对于整流器，它们多久关一次？是否有单元一直关闭？
@@ -691,15 +691,15 @@
 对于视觉任务而言，\gls{baseline}系统是带有\gls{ReLU}的\gls{convolutional_network}。
 转录项目开始于一个这样的模型。
 当时，使用\gls{convolutional_network}输出预测序列并不常见。
-开始时，我们使用一个尽可能简单的\gls{baseline}模型，该模型输出层的第一个实现包含$n$个不同的\gls{softmax_unit}来预测$n$个字符的序列。
-我们使用与训练分类任务相同的方式来训练这些\gls{softmax_unit}，独立地训练每个\gls{softmax_unit}。
+开始时，我们使用一个尽可能简单的\gls{baseline}模型，该模型输出层的第一个实现包含$n$个不同的\,\gls{softmax_unit}来预测$n$个字符的序列。
+我们使用与训练分类任务相同的方式来训练这些\,\gls{softmax_unit}，独立地训练每个\,\gls{softmax_unit}。
 
 % 429 head
 
 我们建议反复细化这些\gls{baseline}，并测试每个变化是否都有改进。
 街景\gls{transcription_system}的第一个变化受激励于\gls{coverage}指标的理论理解和数据结构。
 具体地，当输出序列的概率低于某个值$t$即$p(\Vy\mid\Vx) < t$时，网络拒绝为输入$\Vx$分类。
-最初，$p(\Vy\mid\Vx)$的定义是临时的，简单地将所有\gls{softmax}输出乘在一起。
+最初，$p(\Vy\mid\Vx)$的定义是临时的，简单地将所有\,\gls{softmax}输出乘在一起。
 这促使我们发展能够真正计算出合理对数似然的特定输出层和\gls{cost_function}。%??  后来是否该去掉？
 这种方法使得样本拒绝机制更有效。
 

@@ -1,0 +1,135 @@
+{'user': 'acct:wheaio@hypothes.is', 'text': '观点？', 'origin_text': '面的部分，前往\\sec?。\\sec?涵盖了一些传统机器学习技术  !!!的观点!!!  ，这些技术对深度学习的发展有着深远影响。首先，我们将介绍学习', 'time': '2017-01-12T07:45'}
+{'user': 'acct:wheaio@hypothes.is', 'text': '提高。。。？', 'origin_text': '很难解决的问题。从科学和哲学的角度来看，机器学习受到关注是因为  !!!发展我们对机器学习的认识需要发展我们对智能背后原理的理解!!!  。如果考虑”任务”比较正式的定义，那么学习的过程并不是任务。', 'time': '2017-01-12T07:53'}
+{'user': 'acct:wheaio@hypothes.is', 'text': '原谅我语文学得不好，实在无法理解这句话', 'origin_text': '为发展我们对机器学习的认识需要发展我们对智能背后原理的理解。  !!!如果考虑”任务”比较正式的定义，那么学习的过程并不是任务。!!!  学习是我们所谓的获取完成任务的能力。例如，我们的目标是会行走', 'time': '2017-01-12T07:55'}
+{'user': 'acct:wheaio@hypothes.is', 'text': '使机器人能够行走？', 'origin_text': '任务。学习是我们所谓的获取完成任务的能力。例如，我们的目标是  !!!会行走的机器人!!!  ，那么行走便是任务。我们可以编程让机器人学会如何行走，或者可以', 'time': '2017-01-12T07:56'}
+{'user': 'acct:wheaio@hypothes.is', 'text': '其他类型？', 'origin_text': 'x)p(x)p(\\Vx)是难以计算的。  当然，还有很多  !!!其他或其他类型!!!  的任务。这里我们列举的任务类型只是用来介绍机器学习可以做哪些任', 'time': '2017-01-12T08:28'}
+{'user': 'acct:zplin@hypothes.is', 'text': '更通俗地讲，我们也可以说先验信念直接影响函数本身，而仅仅通过它们对函数的影响来改变参数。\n\ndiscuss有talk about的意思 (Merriam-Webster)', 'origin_text': '函数。此前，我们已经看到过由模型参数上的概率分布形成的先验。  !!!更非正式地，我们也可以探讨先验信念如何直接影响\\emph{函数}本身，间接影响参数，作为参数与函数之间关系的结果!!!  。 此外，我们也可以非正式地探讨隐式表示的先验。某些算法有偏', 'time': '2017-01-16T23:41'}
+{'user': 'acct:zplin@hypothes.is', 'text': '我们还能通俗地说，先验信念还间接地体现在选择一些偏好某类函数的算法，尽量这些偏好并没有通过我们对不同函数置信程度的概率分布表现出来（也许根本没法表现）。', 'origin_text': '数}本身，间接影响参数，作为参数与函数之间关系的结果。 此外，  !!!我们也可以非正式地探讨隐式表示的先验。某些算法有偏地选择某类函数，即使这类有偏可能不能表示成（或者可能表示成）我们对不同函数偏好程度的概率分布。!!!  其中最广泛使用的隐式”先验”是平滑先验，或局部不变性先验', 'time': '2017-01-16T23:57'}
+{'user': 'acct:zplin@hypothes.is', 'text': '函数$f^$对于大多数设置x和小变动ϵ，都满足条件 \\begin{equation} f^(\\Vx) \\approx f^*(\\Vx + \\epsilon) \\end{equation} 。', 'origin_text': '局部不变的先验。所有这些不同的方法都旨在鼓励学习过程能够学习出  !!!函数$f^$满足条件\\begin{equation}    f^(\\Vx) \\approx f^*(\\Vx + \\epsilon)\\end{equation}对于大多数设置xx\\Vx和小变动ϵϵ\\epsilon都成立。!!!  换言之，如果我们在输入xx\\Vx处效果良好（例如，xx\\Vx是', 'time': '2017-01-17T05:20'}
+{'user': 'acct:zplin@hypothes.is', 'text': '如果我们知道对应x输入的答案（比如x是个有标签的训练样本），那么该答案对于x的领域应该也适用。', 'origin_text': 'ght>\\Vx和小变动onon\\epsilon都成立。换言之，  !!!如果我们在输入xx\\Vx处效果良好（例如，xx\\Vx是一个有标签的训练样本），那么在xx\\Vx的邻域上效果也良好!!!  。如果在有些邻域中我们有几个好答案，那么我们可以组合它们（通过', 'time': '2017-01-18T05:51'}
+{'user': 'acct:zplin@hypothes.is', 'text': 'k近邻系列', 'origin_text': '个尽可能和大多数输入一致的答案。局部不变方法的一个极端例子是  !!!kkk-最近邻型!!!  的学习算法。预测在所有点xx\\Vx都有相同的kkk个训练集中最', 'time': '2017-01-18T05:55'}
+{'user': 'acct:zplin@hypothes.is', 'text': '当一个区域里的所有点x在训练集中的k个最近邻是一样的，那么对这些点的预测也是一样的。', 'origin_text': '。局部不变方法的一个极端例子是kkk-最近邻型的学习算法。  !!!预测在所有点xx\\Vx都有相同的kkk个训练集中最近邻点的区域上是不变的。!!!  当k=1k=1k=1时，不同区域的数目不可能比训练样本还多。', 'time': '2017-01-18T06:02'}
+{'user': 'acct:zplin@hypothes.is', 'text': '抄袭:-)', 'origin_text': '，不同区域的数目不可能比训练样本还多。虽然kkk-最近邻算法  !!!拷贝!!!  了附近训练样本的输出，大部分核机器也是在和附近训练样本相关的训练', 'time': '2017-01-18T06:06'}
+{'user': 'acct:zplin@hypothes.is', 'text': '用于度量', 'origin_text': 'Vv距离拉大时而减小。局部核可以看作是执行模版匹配的相似函数，  !!!度量!!!  测试样本 xx\\Vx和每个训练样本 x(i)x(i)\\Vx^{(', 'time': '2017-01-18T06:10'}
+{'user': 'acct:zplin@hypothes.is', 'text': '近年来深度学习的很多推动力', 'origin_text': '和每个训练样本 x(i)x(i)\\Vx^{(i)}有多么相似。  !!!大部分深度学习的现代动机!!!  源自研究局部模版匹配的局限性，以及深度学习如何克服这些局限性{c', 'time': '2017-01-18T06:14'}
+{'user': 'acct:zplin@hypothes.is', 'text': '至少拥有n个叶节点的树才能', 'origin_text': '单独的参数（或者有些决策树的拓展有多个参数）。如果目标函数需要  !!!至少nnn个叶节点的树去!!!  精确表示，那么至少需要nnn个训练样本去拟合。需要几倍于nnn', 'time': '2017-01-18T06:19'}
+{'user': 'acct:zplin@hypothes.is', 'text': '正确地', 'origin_text': '验，如果新点和某个训练样本位于相同的棋盘方块中，那么我们能够保证  !!!正确!!!  预测新点的颜色。但如果新点位于棋盘中不包含训练样本的方块中，无', 'time': '2017-01-18T06:26'}
+{'user': 'acct:zplin@hypothes.is', 'text': '所在的方块没有训练样本', 'origin_text': '同的棋盘方块中，那么我们能够保证正确预测新点的颜色。但如果新点  !!!位于棋盘中不包含训练样本的方块中!!!  ，无法保证预测能够正确。单单是这个先验，一个样本只能告诉我们它', 'time': '2017-01-18T06:27'}
+{'user': 'acct:zplin@hypothes.is', 'text': '缺少主语。\n\n考虑译成：”学习机不一定能举一反三“', 'origin_text': '确预测新点的颜色。但如果新点位于棋盘中不包含训练样本的方块中，  !!!无法保证预测能够正确!!!  。单单是这个先验，一个样本只能告诉我们它所在的方块的颜色。获', 'time': '2017-01-18T06:34'}
+{'user': 'acct:zplin@hypothes.is', 'text': '如果仅依靠', 'origin_text': '果新点位于棋盘中不包含训练样本的方块中，无法保证预测能够正确。  !!!单单是!!!  这个先验，一个样本只能告诉我们它所在的方块的颜色。获得整个棋盘', 'time': '2017-01-18T06:35'}
+{'user': 'acct:zplin@hypothes.is', 'text': '这样做一般没问题', 'origin_text': '的效果都非常好。当要学习的函数足够平滑，并且只在少数几维变动，  !!!这一般是对的!!!  。在高维空间中，即使是非常平滑的函数，也会在不同维度上有不同的', 'time': '2017-01-18T06:44'}
+{'user': 'acct:zplin@hypothes.is', 'text': '想', 'origin_text': '，那么就非常难用一组训练样本去刻画函数。如果函数是复杂的（我们  !!!希望!!!  区分多于训练样本数目的大量区间），有希望很好地泛化么？回答这', 'time': '2017-01-18T06:46'}
+{'user': 'acct:zplin@hypothes.is', 'text': '很好地', 'origin_text': '些问题——是否可以有效地表示复杂的函数，以及所估计的函数是否可以  !!!良好!!!  地泛化到新的输入——答案是有。关键观点是，只要我们在区间相关性', 'time': '2017-01-18T06:47'}
+{'user': 'acct:zplin@hypothes.is', 'text': '只要我们通过额外假设生成数据的分布来建立区域间的依赖关系', 'origin_text': '计的函数是否可以良好地泛化到新的输入——答案是有。关键观点是，  !!!只要我们在区间相关性上引入额外的数据生成分布上的假设!!!  ，那么O(k)O(k)O(k)个样本是足以描述多如O(2k)O(', 'time': '2017-01-18T06:59'}
+{'user': 'acct:zplin@hypothes.is', 'text': '去掉“是”', 'origin_text': '入额外的数据生成分布上的假设，那么O(k)O(k)O(k)个样本  !!!是!!!  足以描述多如O(2k)O(2k)O(2^k)的大量区间。这样，', 'time': '2017-01-18T07:02'}
+{'user': 'acct:zplin@hypothes.is', 'text': '通过这种方式，我们确实', 'origin_text': '样本是足以描述多如O(2k)O(2k)O(2^k)的大量区间。  !!!这样，我们真的!!!  能做到非局部的泛化{cite?}。许多不同的深度学习算法提出隐', 'time': '2017-01-18T07:03'}
+{'user': 'acct:zplin@hypothes.is', 'text': '为了利用这些优势，许多不同的深度学习算法都提出了一些适用于多种AI任务的或隐或显的假设', 'origin_text': '的大量区间。这样，我们真的能做到非局部的泛化{cite?}。  !!!许多不同的深度学习算法提出隐式或显式的适用于大范围人工智能问题的合理假设， 使其可以利用这些优势。!!!  一些其他的机器学习方法往往会提出更强的，针对特定问题的假设。', 'time': '2017-01-18T07:15'}
+{'user': 'acct:zplin@hypothes.is', 'text': 'checkerboard特指西洋跳棋盘，不是棋盘的统称。后面也说到we could easily solve the checkerboard task by providingthe assumption that the target function is periodic。之所以说是periodic就是因为西洋跳棋盘是黑白相间的', 'origin_text': '显然，只是假设函数的平滑性不能做到这点。例如，想象目标函数是  !!!一种棋盘!!!  。棋盘包含许多变化，但只有一个简单的结构。想象一下，如果训练', 'time': '2017-01-19T05:39'}
+{'user': 'acct:zplin@hypothes.is', 'text': '假设数据由因素或特征组合产生，这些因素或特征可能来自一个层次结构的多个层级', 'origin_text': '性，因此我们希望学习算法具有更通用的假设。深度学习的核心思想是  !!!假设数据由\\emph{因素或特征组合}，潜在地由层次结构中多个层级产生!!!  。许多其他类似的通用假设进一步提高了深度学习算法。这些很温和', 'time': '2017-01-19T06:05'}
+{'user': 'acct:zplin@hypothes.is', 'text': '允许了样本数目和可区分区间数目之间的指数增益', 'origin_text': '多其他类似的通用假设进一步提高了深度学习算法。这些很温和的假设  !!!在样本数目和可区分区间数目之间具有指数增益!!!  。这类指数增益将在\\sec?，\\sec?和\\sec?中被更详尽', 'time': '2017-01-19T06:22'}
+{'user': 'acct:zplin@hypothes.is', 'text': '深度的、分布式的', 'origin_text': '指数增益将在\\sec?，\\sec?和\\sec?中被更详尽地介绍。  !!!深度分布式!!!  表示带来的指数增益有效解决了维数灾难带来的挑战。流形学习', 'time': '2017-01-19T06:24'}
+{'user': 'acct:zplin@hypothes.is', 'text': '激发深度学习的挑战', 'origin_text': '原因解决相关问题的一类方法，而不是一长串各个不同的算法。  !!!深度学习的动机与挑战!!!  本章描述的简单机器学习算法在很多不同的重要问题上都效果良好。', 'time': '2017-01-25T14:37'}
+{'user': 'acct:zplin@hypothes.is', 'text': '有意义的', 'origin_text': '碍，该假设认为RnRn\\SetR^n中大部分区域都是无效的输入，  !!!感兴趣的!!!  输入只分布在包含少量点的子集构成的一组流形中，而学习函数中感兴趣', 'time': '2017-01-25T14:48'}
+{'user': 'acct:zplin@hypothes.is', 'text': '的输出中，有意义的变动都沿着流形的方向或仅当我们切换流形时', 'origin_text': '兴趣的输入只分布在包含少量点的子集构成的一组流形中，而学习函数中  !!!感兴趣输出的变动只位于流形中的方向，或者感兴趣的变动只发生在我们从一个流形移动到另一个流形的时候!!!  。流形学习是在连续数值数据和无监督学习的设定下被引入的，尽管这', 'time': '2017-01-25T14:55'}
+{'user': 'acct:zplin@hypothes.is', 'text': '最初是用于连续数值和无监督学习的环境', 'origin_text': '趣的变动只发生在我们从一个流形移动到另一个流形的时候。流形学习  !!!是在连续数值数据和无监督学习的设定下被引入的!!!  ，尽管这个概率集中的想法也能够泛化到离散数据和监督学习的设定下：', 'time': '2017-01-25T15:00'}
+{'user': 'acct:zplin@hypothes.is', 'text': '这些高度相似的样本可以通过变换来遍历该流形得到', 'origin_text': '遇到的样本和其他样本相互连接，每个样本被其他高度相似的样本包围，  !!!可以通过变换来遍历该流形!!!  。支持流形假设的第二个论点是，我们至少能够非正式地想象这些邻域', 'time': '2017-01-25T15:14'}
+{'user': 'acct:zplin@hypothes.is', 'text': '确保', 'origin_text': '集中的概率分布不足以说明数据位于一个相当小的流形中。我们还必须  !!!确定!!!  ，我们遇到的样本和其他样本相互连接，每个样本被其他高度相似的样本', 'time': '2017-01-25T15:15'}
+{'user': 'acct:zplin@hypothes.is', 'text': '原则上，我们应该使用参数\\theta的完整贝叶斯后验分布进行预测，但单点估计常常也是需要的', 'origin_text': '，而不仅是估计μmμm\\mu_m。最大后验（MAP）估计  !!!虽然使用完整的贝叶斯后验分布进行参数θθ\\Vtheta预测是非常合理的，但仍常常希望能够进行单点估计。!!!  希望点估计的一个常见原因是，对于非常有趣的模型而言，大部分涉及到', 'time': '2017-01-27T06:09'}
+{'user': 'acct:zplin@hypothes.is', 'text': '大多数有意义的', 'origin_text': '但仍常常希望能够进行单点估计。希望点估计的一个常见原因是，对于  !!!非常有趣!!!  的模型而言，大部分涉及到贝叶斯后验的操作是非常棘手的，点估计提供', 'time': '2017-01-27T06:10'}
+{'user': 'acct:zplin@hypothes.is', 'text': '我们仍然可以让先验影响点估计的选择而利用贝叶斯方法的优点，而不是简单地回归到最大似然估计', 'origin_text': '及到贝叶斯后验的操作是非常棘手的，点估计提供了一个可解的近似。  !!!并非简单地回归到最大似然学习，我们仍然可以通过先验影响点估计的选择而获取贝叶斯方法的优点。!!!  一种能够做到这一点的合理方式是选择最大后验点估计。MAP估计', 'time': '2017-01-27T06:15'}
+{'user': 'acct:zplin@hypothes.is', 'text': '的优势是能够利用来自先验而非训练数据的信息', 'origin_text': '贝叶斯推断对应着权重衰减。正如全贝叶斯推断，MAP贝叶斯推断  !!!具有训练数据没有的，先验带来的信息利用优势!!!  。该附加信息有助于减少最大后验点估计的方差（相比于ML估计）。', 'time': '2017-01-27T06:23'}
+{'user': 'acct:zplin@hypothes.is', 'text': '估计', 'origin_text': '增加了偏差。许多正规化估计方法，例如权重衰减正则化的最大似然  !!!学习!!!  学习，可以被解释为贝叶斯推断的MAP近似。这个解释产生于正则化', 'time': '2017-01-27T06:24'}
+{'user': 'acct:zplin@hypothes.is', 'text': '机器学习中反复出现的一个问题是好的泛化需要大的训练集，', 'origin_text': '降。随机梯度下降是\\sec?介绍的梯度下降算法的一个扩展。  !!!机器学习中的一个循环问题是大的数据集是好的泛化所必要的!!!  ，但大的训练集的计算代价也更大。机器学习算法中的损失函数', 'time': '2017-01-27T06:34'}
+{'user': 'acct:zplin@hypothes.is', 'text': '一小批样本？', 'origin_text': '样本近似估计。具体而言，在算法的每一步，我们从训练集中均匀抽出  !!!一minibatch样本!!!   B=x(1),…,x(m′)B=x(1),…,x(m′)\\Se', 'time': '2017-01-27T06:37'}
+{'user': 'acct:zplin@hypothes.is', 'text': '用于本书第二部分中的训练时效果不错。', 'origin_text': '用到非凸优化问题被视为鲁莽的或无原则的。现在，我们知道梯度下降  !!!用于训练第二部分中工作效果!!!  很好。优化算法可能不能保证在合理的时间内达到一个局部最小值，但', 'time': '2017-01-27T06:45'}
+{'user': 'acct:zplin@hypothes.is', 'text': '不一定能', 'origin_text': '现在，我们知道梯度下降用于训练第二部分中工作效果很好。优化算法  !!!可能不能!!!  保证在合理的时间内达到一个局部最小值，但它通常能足够快地找到损失', 'time': '2017-01-27T06:45'}
+{'user': 'acct:zplin@hypothes.is', 'text': '及时地找到损失函数一个很小的值，', 'origin_text': '优化算法可能不能保证在合理的时间内达到一个局部最小值，但它通常能  !!!足够快地找到损失函数的一个可以用的非常低的值。!!!  随机梯度下降在深度学习之外有很多重要的应用。它是在大规', 'time': '2017-01-27T06:52'}
+{'user': 'acct:zplin@hypothes.is', 'text': '所有', 'origin_text': '，当mmm趋向于无限大时，该模型最终会在随机梯度下降抽样训练集上  !!!的每个!!!  样本前收敛到可能的最优测试误差。继续增加mmm不会延长达到模', 'time': '2017-01-27T06:55'}
+{'user': 'acct:zplin@hypothes.is', 'text': '用词统一', 'origin_text': '负时，支持向量机预测属于负类。支持向量机的一个重要创新是  !!!核技巧。核策略!!!  观察到许多机器学习算法都可以写成样本间点积的形式。例如，支持向', 'time': '2017-01-30T04:31'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '原文中challenge没有翻译出来。pattern直接翻译成模式就好\n\n试译：我们会探讨拟合训练数据的挑战和寻找能够泛化到新数据的模式有哪些不同', 'origin_text': '绍学习算法的定义，并介绍一个简单的示例：线性回归算法。接下来，  !!!我们会探讨拟合训练数据和寻找能够泛化到新数据的参数有哪些不同!!!  。大部分机器学习算法都有\\emph{超参数}（必须在学习算法外', 'time': '2017-01-31T09:41'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '不太关注为这些函数提供置信区间', 'origin_text': '本质上属于应用统计学，更多关注于如何用计算机统计地估计复杂函数，  !!!不太关注这些函数的置信区间!!!  ；因此我们会探讨两种统计学的主要方法：频率估计和贝叶斯推断。大', 'time': '2017-01-31T09:51'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '字面意思是，\n这些挑战促进了解决这些问题的深度学习算法的发展。\n', 'origin_text': '后在\\sec?，我们会介绍一些限制传统机器学习泛化能力的因素。  !!!这些挑战促进了深度学习的发展，以解决这些问题。!!!  学习算法机器学习算法是一种可以从数据中学习的算法。', 'time': '2017-01-31T10:17'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '像素值', 'origin_text': 'ixix_i是一个特征。例如，一张图片的特征通常是指这张图片的  !!!像素!!!  。机器学习可以解决很多类型的任务。一些非常常见的机器学', 'time': '2017-01-31T11:11'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '变得更有挑战性', 'origin_text': '失分类}：  当输入向量的每个度量不被保证的时候，分类问题将会  !!!更有挑战!!!  。  为了解决分类任务，学习算法只需要定义\\emph{一个}从', 'time': '2017-01-31T11:21'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '对给定输入', 'origin_text': '      \\textbf{回归}：这类任务中，计算机程序会  !!!给定输入!!!  预测数值。  为了解决这个问题，学习算法会输出函数f:Rn→R', 'time': '2017-01-31T11:35'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '结构化输出任务涉及到输出是向量或者其他包含多个值的数据结构，构成输出的这些不同元素间具有重要关系。', 'origin_text': 'ite?}。        \\textbf{结构化输出}：  !!!结构化输出任务涉及到输出是不同元素之间重要关系的向量（或者是含多个值的其他数据结构）的任务!!!  。  这是一个很大的范畴，包括上面转录任务和翻译任务在内的很多', 'time': '2017-01-31T12:07'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': 'probability mass function一般被译为概率质量函数', 'origin_text': '解释成样本采样空间的概率密度函数（如果xx\\RVx是连续的）或者  !!!概率分布律函数!!!  （如果xx\\RVx是离散的）。  要做好这样的任务（当我们讨论', 'time': '2017-01-31T12:23'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '密度估计', 'origin_text': '上描述的大多数任务都要求学习算法至少能隐式地抓住概率分布的结构。  !!!  密度分布!!!  可以让我们显式地抓住该分布。  原则上，我们可以在该分布上计算', 'time': '2017-01-31T12:30'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '因此，我们使用测试数据来评估系统性能，同训练机器学习系统的数据分来。', 'origin_text': '将决定其在现实生活中的性能如何。因此，我们将训练机器学习系统的  !!!训练集数据中的一部分作为测试集数据!!!  评估系统性能。性能度量的选择或许看上去简单且客观，但是选择一', 'time': '2017-01-31T12:47'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '很多', 'origin_text': '学习和监督学习不是严格定义的术语。它们之间界线通常是模糊的。  !!!大部分!!!  机器学习技术可以用于这两个任务。例如，概率的链式法则表明对于向', 'time': '2017-01-31T14:30'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '其上数据?', 'origin_text': '数据集中的样本都是彼此相互独立的，并且训练集和测试集是同分布的，  !!!其上数据!!!  采样自相同的分布。这个假设使我们能够在单个样本上用概率分布描述', 'time': '2017-01-31T22:11'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '通常会最佳（generally ）', 'origin_text': '算法的容量适合于所执行任务的复杂度和所提供数据的数量时，算法效果  !!!会最佳!!!  。容量不足的模型不能解决复杂任务。容量高的模型能够解决复杂的', 'time': '2017-02-01T12:21'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '任务所需', 'origin_text': '解决复杂任务。容量高的模型能够解决复杂的任务，但是当其容量高于  !!!任务!!!  时，有可能会过拟合。\\fig?展示了这个原理在使用中的情况。', 'time': '2017-02-01T12:22'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '真实二次', 'origin_text': '个原理在使用中的情况。我们比较了线性，二次和999次预测器拟合  !!!二次真实!!!  函数的效果。线性函数无法刻画真实函数的曲率，所以欠拟合。99', 'time': '2017-02-01T12:23'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': 'formalized 应该是 形式化 ', 'origin_text': '”最简单”的那一个。这个想法是在20世纪，由统计学习理论创始人  !!!提出来!!!  并精确化的{cite?}。统计学习理论提供了量化模型容量的不', 'time': '2017-02-01T12:42'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '似然', 'origin_text': '\\text{data}}(\\Vx)。θθ\\Vtheta的最大  !!!后验!!!  估计被定义为：θML=argmaxθpmodel(X;θ),=', 'time': '2017-02-05T21:13'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '还原？', 'origin_text': '}(\\cdot; \\Vtheta) 中。  否则，没有估计可以  !!!表示!!!  pdatapdatap_{\\text{data}}。    ', 'time': '2017-02-07T11:47'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '统计效率通常用于有参情况研究中', 'origin_text': '等价地，可能只需要较少的样本就能达到一个固定程度的泛化误差。  !!!通常，统计效率研究于有参情况!!!  （例如线性回归）。有参情况中我们的目标是估计参数值（假设有可能确', 'time': '2017-02-07T11:54'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '使用\n\n原文是makes predictions using...make predictions using...', 'origin_text': '不像最大似然方法预测时使用θθ\\Vtheta的点估计，贝叶斯方法  !!!预测!!!  θθ\\Vtheta的全分布。例如，在观测到mmm个样本后，下一', 'time': '2017-02-07T13:02'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '每个具有正概率密度的θ的值', 'origin_text': 'm{d}\\Vtheta .\\end{equation}这里，  !!!具有正概率密度的θθ\\Vtheta的每个值!!!  有助于下一个样本的预测，其中贡献由后验密度本身加权。在观测到数', 'time': '2017-02-07T13:04'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '线性映射', 'origin_text': 'Vx\\in\\SetR^n预测标量y∈Ry∈Ry\\in\\SetR的  !!!映射!!!  。该预测参数化为向量w∈Rnw∈Rn\\Vw \\in \\SetR', 'time': '2017-02-07T14:40'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '该预测参数为向量w 或者\n该预测为向量w所参数化', 'origin_text': 'etR^n预测标量y∈Ry∈Ry\\in\\SetR的映射。该预测  !!!参数化为向量!!!  w∈Rnw∈Rn\\Vw \\in \\SetR^n：y^=w⊤x.', 'time': '2017-02-07T14:41'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '为确定', 'origin_text': '})简单表示为(X,y)(X,y)(\\MX, \\Vy)。  !!!确定!!!  模型参数向量ww\\Vw的后验分布，我们首先需要指定一个先验分布。', 'time': '2017-02-07T14:43'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '带通用核的核机器致力于泛化得更好', 'origin_text': '，核机器的计算量也会很大。我们将会在\\sec?回顾这个想法。  !!!带通用核的核机器会泛化得更好!!!  。我们将在\\sec?解释原因。现代深度学习的设计旨在克服核机', 'time': '2017-02-12T23:50'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '它甚至', 'origin_text': '-最近邻算法没有任何参数，而是使用训练数据的简单函数。事实上，  !!!甚至!!!  也没有一个真正的训练阶段或学习过程。反之，在测试阶段我们希望在', 'time': '2017-02-12T23:52'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '另一类', 'origin_text': '因此，小训练集上的输出将会非常随机。决策树，及其变种是  !!!一类!!!  将输入空间分成不同的区域，每个区域有独立的参数的算法{cite?', 'time': '2017-02-13T00:01'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '已知', 'origin_text': 'z=W⊤x\\Vz=\\MW^\\Tsp\\Vx。在\\sec?，我们  !!!看到!!!  设计矩阵 XX\\MX的主成分由X⊤XX⊤X\\MX^\\Tsp\\MX', 'time': '2017-02-21T12:44'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': 'PCA通过线性变换找到一个Var[z]Var[z]\\text{Var}[\\Vz]是对角矩阵的表示', 'origin_text': '} \\MX^\\Tsp \\MX .\\end{equation}  !!!PCA会找到一个Var[z]Var[z]\\text{Var}[\\Vz]是对角矩阵的表示（通过线性变换）!!!  z=W⊤xz=W⊤x\\Vz=\\MW^\\Tsp\\Vx。在\\se', 'time': '2017-02-21T12:45'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '主成分', 'origin_text': '^\\Tsp .\\end{equation}本节中，我们会探索  !!!主成分分析!!!  的另一种推导。主成分也可以通过奇异值分解得到。具体地，它们是', 'time': '2017-02-21T12:45'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '能够消除更复杂形式的特征依赖的表示学习 或者\n能够消除特征依赖形式更为复杂的表示学习', 'origin_text': '虽然相关性是数据元素间依赖关系的一个重要范畴，但我们对于  !!!能够消除特征依赖更复杂形式的表示学习!!!  也很有兴趣。对此，我们需要比简单线性变换能做到更多的工具。', 'time': '2017-02-21T12:52'}
+{'user': 'acct:fairmiracle@hypothes.is', 'text': '代价\n\n损失函数包含正则化项听起来有点怪。代价函数=损失+正则化比较合理。但前文均用损失函数,wikipedia对loss function 和cost function也未作区分。\nhttps://en.wikipedia.org/wiki/Loss_function\n\nhttp://stats.stackexchange.com/questions/179026/objective-function-cost-function-loss-function-are-they-the-same-thing', 'origin_text': '见的损失函数是负对数似然，最小化损失函数导致的最大似然估计。  !!!损失!!!  函数也可能含有附加项，如正则化项。例如，我们可以将权重衰减加到', 'time': '2017-02-21T14:58'}
+
+=============================   Replies   =============================
+
+{'user': 'acct:zplin@hypothes.is', 'text': '嗯，我也不知道为什么当时这么改了', 'time': '2017-03-03T04:15'}
+{'user': 'acct:liber145@hypothes.is', 'text': '赞！终于清楚 损失函数 和 代价函数 的区别了！', 'time': '2017-03-02T16:35'}
+{'user': 'acct:liber145@hypothes.is', 'text': '赞！这个译得好！', 'time': '2017-03-02T15:42'}
+{'user': 'acct:liber145@hypothes.is', 'text': '有想很好地泛化么，感觉不是很通。又给改回去了，你看怎么样。', 'time': '2017-03-02T15:31'}
+{'user': 'acct:liber145@hypothes.is', 'text': '今天看到原文是 While the k-nearest neighbors algorithm，又给改回去了。', 'time': '2017-03-02T15:23'}
+{'user': 'acct:liber145@hypothes.is', 'text': '想表达 训练集和测试集的数据，画蛇添足了。这里修改为直接去掉。', 'time': '2017-02-01T02:07'}
+{'user': 'acct:liber145@hypothes.is', 'text': '额，翻译组有同学发现有教材书上翻译成这样了。暂时先弄成这样，之后可能会统一修改。', 'time': '2017-02-01T02:03'}
+{'user': 'acct:liber145@hypothes.is', 'text': '谢谢。之前的翻译太拗口了。进一步细看后，我觉得这句话是在讲结构化输出任务的特性。翻译成如下怎么样。\n\n结构化输出任务的输出是向量或者其他包含多个值的数据结构，并且构成输出的这些不同元素间具有重要关系。', 'time': '2017-02-01T01:45'}
+{'user': 'acct:liber145@hypothes.is', 'text': '缩写会理解为，比较 挑战 和 模式 有哪些不同，觉得不是很妥。比较两个挑战，还是觉得不妥。现计划改成下面这样，你看如何。\n\n我们会探讨拟合训练数据和泛化到新数据之间有哪些不同的挑战。', 'time': '2017-02-01T01:34'}
+{'user': 'acct:zplin@hypothes.is', 'text': '从“任务”的这种严格意义上说，学习过程本身不能算是任务。', 'time': '2017-01-25T14:41'}
+{'user': 'acct:liber145@hypothes.is', 'text': '多谢啦！：）我们二期校对截止时间在三月份，不过如果中间你有事情比较忙，可以随时告知我们。校对毕竟是一件比较耗时的事情，现在帮我们精细校对这么多，已经非常感谢啦！！', 'time': '2017-01-21T01:55'}
+{'user': 'acct:zplin@hypothes.is', 'text': '好的，我尽量', 'time': '2017-01-20T04:49'}
+{'user': 'acct:liber145@hypothes.is', 'text': '非常谢谢帮忙！你提供的修订都十分中肯，如果时间允许的话，不知道可不可以进行本章的中英校正，或是挑选其他感兴趣的章节。', 'time': '2017-01-19T22:46'}
+{'user': 'acct:liber145@hypothes.is', 'text': '嗯，好的。', 'time': '2017-01-19T22:41'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。我看了下链接的英文条目，觉得你说的有道理。翻译成必定发生的意思，确实不贴切。相比之下，“允许”更好一点。', 'time': '2017-01-19T22:40'}
+{'user': 'acct:zplin@hypothes.is', 'text': '很高兴能帮上忙', 'time': '2017-01-19T21:37'}
+{'user': 'acct:zplin@hypothes.is', 'text': '可以的。我主要想突出“深度”是修饰“表示”而不是修饰“分布”', 'time': '2017-01-19T21:35'}
+{'user': 'acct:zplin@hypothes.is', 'text': '嗯，这个我也想了很久，没想出比较精确地道的翻译。主要就是allow这个词我想不出在这里怎么译好。allow只是说为某事创造了可能，但并不是某事必然会发生。这里应该用的是《美国传统词典》allow条文第2个含义：To permit the presence of: https://www.ahdictionary.com/word/search.html?q=allow\n译成“使……具有”感觉有点太肯定了，而“允许”确实有点怪。你们再集思广益一下', 'time': '2017-01-19T21:32'}
+{'user': 'acct:zplin@hypothes.is', 'text': '都可以。就是觉得用拷贝这个音译词显得不地道', 'time': '2017-01-19T21:20'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。书中出现了很多distributed representation，将其统一译作了“分布式表示”。这里修改为“深度的分布式表示”，你看如何。', 'time': '2017-01-19T19:49'}
+{'user': 'acct:liber145@hypothes.is', 'text': '允许指数增益，感觉有点怪，不知道你觉得如何。\n\n现打算修改为“ 这些很温和的假设使样本数目和可区分区间数目之间具有指数增益 ”\n\n', 'time': '2017-01-19T19:48'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的', 'time': '2017-01-19T19:40'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的，多谢科普！', 'time': '2017-01-19T19:38'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。', 'time': '2017-01-19T19:28'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。', 'time': '2017-01-19T19:26'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的', 'time': '2017-01-19T19:26'}
+{'user': 'acct:liber145@hypothes.is', 'text': '这个好！', 'time': '2017-01-19T19:24'}
+{'user': 'acct:liber145@hypothes.is', 'text': 'OK', 'time': '2017-01-19T19:23'}
+{'user': 'acct:liber145@hypothes.is', 'text': 'OK', 'time': '2017-01-19T19:22'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。', 'time': '2017-01-19T19:22'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。', 'time': '2017-01-19T19:21'}
+{'user': 'acct:liber145@hypothes.is', 'text': '这个好！我们暂时将learner给翻译成学习器了。这里我用学习器。', 'time': '2017-01-19T19:20'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好！', 'time': '2017-01-19T19:14'}
+{'user': 'acct:liber145@hypothes.is', 'text': 'OK', 'time': '2017-01-19T19:13'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。', 'time': '2017-01-19T19:12'}
+{'user': 'acct:liber145@hypothes.is', 'text': '这个好！！', 'time': '2017-01-19T19:10'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。', 'time': '2017-01-19T19:10'}
+{'user': 'acct:liber145@hypothes.is', 'text': '哈哈，抄袭有点贬义了。用 复制或重复 怎么样。目前打算使用复制。', 'time': '2017-01-19T19:09'}
+{'user': 'acct:liber145@hypothes.is', 'text': '这个好！', 'time': '2017-01-19T19:03'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。', 'time': '2017-01-19T18:59'}
+{'user': 'acct:liber145@hypothes.is', 'text': 'OK', 'time': '2017-01-19T18:58'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。按照原文来，我给看成老版的了。你翻译的是对的。\n\n多谢你帮忙校对，给予了我们很大帮助。之前翻译组校对了一轮，但现在看来问题还是很多。多谢啦！', 'time': '2017-01-19T18:57'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。', 'time': '2017-01-19T18:52'}
+{'user': 'acct:zplin@hypothes.is', 'text': '”更“可以去掉，听起来更顺些，也不影响意思。\n后半句我还是觉得译成”而仅仅通过它们对函数的影响来改变参数。“更接近原文，而且好像也挺顺的。你们再考虑考虑。毕竟原文没有提到参数与函数的关系，只是暗示。', 'time': '2017-01-19T17:39'}
+{'user': 'acct:liber145@hypothes.is', 'text': '比之前翻译的好很多！', 'time': '2017-01-19T17:36'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的！', 'time': '2017-01-19T17:35'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的。干脆去掉“更”，调整成这样，你看怎么样。\n\n通俗地讲，我们也可以说先验信念直接影响函数本身，间接影响参数（间接源自函数与参数的关系）。', 'time': '2017-01-19T17:27'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的', 'time': '2017-01-19T17:16'}
+{'user': 'acct:liber145@hypothes.is', 'text': 'OK', 'time': '2017-01-19T17:16'}
+{'user': 'acct:liber145@hypothes.is', 'text': '好的', 'time': '2017-01-19T17:16'}
+{'user': 'acct:liber145@hypothes.is', 'text': '这里想指 其他上面列举过的任务 和 其他上面没列举过的任务。\n翻译成 “其他同类型或其他类型的任务”，你看怎么样。', 'time': '2017-01-19T17:13'}
+{'user': 'acct:liber145@hypothes.is', 'text': "在相对正式的``任务''定义中，学习过程本身并不是任务。\n这样如何？", 'time': '2017-01-19T17:11'}

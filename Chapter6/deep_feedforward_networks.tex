@@ -539,8 +539,8 @@ J(\bm{\theta}) &= -\log P(y\mid\bm{x})\\
 通过将损失函数写成\gls{softplus_function}的形式，我们可以看到它仅仅在$(1-2y)z$取绝对值非常大的负值时才会饱和。
 因此饱和只会出现在模型已经得到正确答案时——当$y=1$且$z$取非常大的正值时，或者$y=0$且$z$取非常小的负值时。
 当$z$的符号错误时，\gls{softplus_function}的变量$(1-2y)z$可以简化为$|z|$。
-当$|z|$变得很大并且$z$的符号错误时，\gls{softplus_function}渐进地趋向于它的变量$|z|$。
-对$z$求导则渐进地趋向于$\text{sign}(z)$，所以，对于极限情况下极度不正确的$z$，\gls{softplus_function}完全不会收缩梯度。
+当$|z|$变得很大并且$z$的符号错误时，\gls{softplus_function}渐近地趋向于它的变量$|z|$。
+对$z$求导则渐近地趋向于$\text{sign}(z)$，所以，对于极限情况下极度不正确的$z$，\gls{softplus_function}完全不会收缩梯度。
 这个性质很有用，因为它意味着基于梯度的学习可以很快地改正错误的$z$。
 
 当我们使用其他的损失函数，例如\gls{mean_squared_error}之类的，损失函数会在$\sigma(z)$饱和时饱和。

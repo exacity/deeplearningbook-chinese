@@ -1,6 +1,6 @@
 % !Mode:: "TeX:UTF-8"
 % Translator: Shenjian Zhao
-\chapter{\glsentrytext{DL}中的正则化技术}
+\chapter{\glsentrytext{DL}中的正则化}
 \label{chap:regularization_for_deep_learning}
 设计不仅在训练数据上表现好，并且能在新输入上泛化好的算法是\gls{ML}中的一个核心问题。
 在\gls{ML}中许多策略通过明确设计，以增大训练误差为代价来减少测试误差。
@@ -455,9 +455,9 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 \label{sec:noise_robustness}
 
 \secref{sec:dataset_augmentation_chap7}已经启发将噪声作用于输入，作为数据集增强策略。
-对于某些模型，在模型的输入加上方差极小的噪音等价于对权重施加范数惩罚\citep{Bishop1995,bishop95training}。
+对于某些模型，在模型的输入加上方差极小的噪声等价于对权重施加范数惩罚\citep{Bishop1995,bishop95training}。
 在一般情况下，噪声注入远比简单地收缩参数强大，特别是噪声被添加到\gls{hidden_unit}时更加强大。
-向\gls{hidden_unit}添加噪音是值得单独讨论重要的话题；在\secref{sec:dropout}所述\gls{dropout}算法是这种做法的主要发展方向。
+向\gls{hidden_unit}添加噪声是值得单独讨论重要的话题；在\secref{sec:dropout}所述\gls{dropout}算法是这种做法的主要发展方向。
 
 另一种\gls{regularization}模型的噪声使用方式是将其加到的权重。
 这项技术主要用于\gls{RNN}\citep{JimGilesHorne1996,Graves-2011}。
@@ -1208,7 +1208,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 \gls{dropout_boosting}训练整个\gls{ensemble}以最大化训练集上的似然。
 在相同意义上，传统的\gls{dropout}类似于\gls{bagging}，这种方式类似于\gls{boosting}。
 如预期一样，比较单一模型训练整个网络的情况，\gls{dropout_boosting}几乎没有\gls{regularization}效果。
-这表明，\gls{dropout} \gls{bagging}的解释超过\gls{dropout}作为稳健性噪音的解释。
+这表明，\gls{dropout} \gls{bagging}的解释超过\gls{dropout}作为稳健性噪声的解释。
 当随机抽样的\gls{ensemble}成员相互独立地训练好后，\gls{bagging}\gls{ensemble}的\gls{regularization}效果才能达到。
 
 \gls{dropout}启发其他以随机方法训练指数量级的共享权重的\gls{ensemble}。
@@ -1256,7 +1256,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 % -- 260 --
 
 另一种\gls{DL}算法——\gls{batch_normalization}，在训练时向\gls{hidden_unit}引入加性和乘性噪声重参数化模型。
-\gls{batch_normalization}的主要目的是改善优化，但噪音具有\gls{regularization}的效果，有时使\gls{dropout}变得没有必要。
+\gls{batch_normalization}的主要目的是改善优化，但噪声具有\gls{regularization}的效果，有时使\gls{dropout}变得没有必要。
 \gls{batch_normalization}将会在\secref{sec:batch_normalization}更详细地讨论。
 
 
