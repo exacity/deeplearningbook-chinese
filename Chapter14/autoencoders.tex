@@ -57,7 +57,7 @@
 这种情况下，\gls{AE}在训练来执行复制任务的同时学到了训练数据的主元子空间。
 
 
-因此拥有非线性\gls{encoder}函数$f$和非线性\gls{decoder}函数$g$的\gls{AE}能够学习出更强大的\glssymbol{PCA}非线性推广。
+因此，拥有非线性\gls{encoder}函数$f$和非线性\gls{decoder}函数$g$的\gls{AE}能够学习出更强大的\glssymbol{PCA}非线性推广。
 不幸的是，如果\gls{encoder}和\gls{decoder}被赋予过大的\gls{capacity}，\gls{AE}会执行复制任务而捕捉不到任何有关数据分布的有用信息。
 从理论上说，我们可以设想这样一个\gls{AE}，它只有一维\gls{code}，但它具有一个非常强大的非线性\gls{encoder}，能够将每个训练数据$\Vx^{(i)}$表示为\gls{code} $~i$。
 而\gls{decoder}可以学习将这些整数索引映射回特定训练样本的值。
