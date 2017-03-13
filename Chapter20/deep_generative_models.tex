@@ -12,7 +12,7 @@
 \label{sec:boltzmann_machines}
 \gls{BM}最初作为一种广义的``\gls{connectionism}''引入，用来学习二值向量上的任意概率分布~\citep{Fahlman83,Ackley85,Hinton-Boltzmann,Hinton86a}。
 \gls{BM}的变体（包含其他类型的变量）早已超过了原始\gls{BM}的流行程度。
-在本节中，我们简要介绍二值\gls{BM}并讨论训练模型和执行\gls{inference}时出现的问题。
+在本节中，我们简要介绍二值\gls{BM}并讨论训练模型和进行\gls{inference}时出现的问题。
 
 我们在$d$维二值随机向量$\Vx \in \{0, 1\}^d$上定义\gls{BM}。
 \gls{BM}是一种\gls{energy_based_model}（\secref{sec:energy_based_models}），意味着我们可以使用\gls{energy_function}定义\gls{joint_probability_distribution}：
@@ -53,7 +53,7 @@
 \gls{BM}有一个有趣的性质，当基于最大似然的学习规则训练时，连接两个单元的特定权重的更新仅取决于这两个单元在不同分布下收集的统计信息：$P_{\text{model}}(\Vv)$和$\hat{P}_{\text{data}}(\Vv) P_{\text{model}}(\Vh  \mid  \Vv)$。
 网络的其余部分参与\gls{shaping}这些统计信息，但权重可以在完全不知道网络其余部分或这些统计信息如何产生的情况下更新。
 这意味着学习规则是``局部''的，这使得\gls{BM}的学习似乎在某种程度上是生物学合理的。
-我们可以设想每个神经元都是\gls{BM}中的随机变量的情况，那么连接两个随机变量的轴突和树突只能通过观察与它们物理上实际接触的细胞的激发模式来学习。
+我们可以设想每个神经元都是\gls{BM}中随机变量的情况，那么连接两个随机变量的轴突和树突只能通过观察与它们物理上实际接触细胞的激发模式来学习。
 特别地，\gls{positive_phase}期间，经常同时激活的两个单元之间的连接会被加强。
 这是\ENNAME{Hebbian}学习规则\citep{Hebb49}的一个例子 ，经常总结为好记的短语——``fire together, wire together''。
 \ENNAME{Hebbian}学习规则是生物系统学习中最古老的假设性解释之一，直至今天仍然有重大意义 \citep{DelGuidice-et-al-2009}。
@@ -65,7 +65,7 @@
 
 从生物学的角度看，\gls{BM}学习中的\gls{negative_phase}阶段有点难以解释。
 正如\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}所主张的，人类在睡眠时做梦可能是一种形式的\gls{negative_phase}采样。
-尽管这个想法更具猜测性。
+尽管这个想法更多的只是猜测。
 
 \section{\glsentrytext{RBM}}
 \label{sec:restricted_boltzmann_machines}
@@ -185,14 +185,14 @@ RBM的\gls{energy_function}由下给出
 \firstall{DBN}是第一批成功应用深度架构训练的非卷积模型之一\citep{Hinton06,hinton2007learning}。
 2006年\gls{DBN}的引入开始了当前深度学习的复兴。
 在引入\gls{DBN}之前，深度模型被认为太难以优化。
-具有凸目标函数的\gls{kernel_machines}占据了研究前景。
+具有凸\gls{objective_function}的\gls{kernel_machines}引领了研究前沿。
 \gls{DBN}在MNIST数据集上表现超过内核化支持向量机，以此证明深度架构是能够成功的\citep{Hinton06}。
 尽管现在与其他无监督或生成学习算法相比，\gls{DBN}大多已经失去了青睐并很少使用，但它们在深度学习历史中的重要作用仍应该得到承认。
 
 \gls{DBN}是具有若干\gls{latent_variable}层的\gls{generative_model}。
 \gls{latent_variable}通常是二值的，而可见单元可以是二值或实数。
 尽管构造连接比较稀疏的\glssymbol{DBN}是可能的，但在一般的模型中，每层的每个单元连接到每个相邻层中的每个单元（没有层内连接）。
-顶部两层之间的连接是无向。
+顶部两层之间的连接是无向的。
 而所有其他层之间的连接是有向的，箭头指向最接近数据的层。
 见\figref{fig:chap20_dbn}b的例子。
 
@@ -226,10 +226,10 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 \gls{DBN}引发许多与\gls{directed_model}和\gls{undirected_model}同时相关的问题。
 
 % What ?
-由于每个有向层内的解释远离效应，并且由于无向连接的两个\gls{hidden_layer}之间的相互作用，\gls{DBN}中的\gls{inference}是难解的。
+由于每个有向层内的\gls{explaining_away}效应，并且由于无向连接的两个\gls{hidden_layer}之间的相互作用，\gls{DBN}中的\gls{inference}是难解的。
 评估或最大化对数似然的标准\gls{ELBO}也是难以处理的，因为\gls{ELBO}基于大小等于网络宽度的\gls{clique}的期望。
 
-评估或最大化对数似然，不仅需要面对边缘化\gls{latent_variable}时难以处理的\gls{inference}问题，而且还需要面对顶部两层\gls{undirected_model}内难处理的\gls{partition_function}问题。
+评估或最大化对数似然，不仅需要面对边缘化\gls{latent_variable}时难以处理的\gls{inference}问题，而且还需要处理顶部两层\gls{undirected_model}内难处理的\gls{partition_function}问题。
 
 为训练\gls{DBN}，我们可以先使用\gls{contrastive_divergence}或\gls{SML}方法训练\glssymbol{RBM}以最大化$ \SetE_{\RVv \sim p_{\text{data}}} \log p(\Vv)$。
 \glssymbol{RBM}的参数定义了\glssymbol{DBN}第一层的参数。
@@ -239,7 +239,7 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 \end{align}
 其中$p^{(1)}$是第一个\glssymbol{RBM}表示的概率分布，$p^{(2)}$是第二个\glssymbol{RBM}表示的概率分布。
 换句话说，第二个\glssymbol{RBM}被训练为模拟由第一个\glssymbol{RBM}的\gls{hidden_unit}采样定义的分布，而第一个\glssymbol{RBM}由数据驱动。
-这个过程能无限重复，从而向\glssymbol{DBN}添加任意多层，其中每个新的\glssymbol{RBM}建模前一个的样本。
+这个过程能无限重复，从而向\glssymbol{DBN}添加任意多层，其中每个新的\glssymbol{RBM}对前一个\glssymbol{RBM}的样本建模。
 每个\glssymbol{RBM}定义\glssymbol{DBN}的另一层。
 这个过程可以被视为提高数据在\glssymbol{DBN}下似然概率的变分下界\citep{Hinton06}。
 
@@ -256,11 +256,11 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
  \Vh^{(l)} &= \sigma \big( b_i^{(l)} + \Vh^{(l-1)^\top}\MW^{(l)} \big) ~\forall l \in 2, \ldots, m.
 \end{align}
 利用\glssymbol{DBN}的生成训练后获得的权重和\gls{bias_aff}初始化该\glssymbol{MLP}之后，我们可以训练该\glssymbol{MLP}来执行分类任务。
-这种\glssymbol{MLP}的额外训练是判别\gls{fine_tuning}的示例。
+这种\glssymbol{MLP}的额外训练是判别性\gls{fine_tuning}的示例。
 
 
-与\chapref{chap:approximate_inference}中从基本原理导出的许多\gls{inference}方程相比，这种特定选择的\glssymbol{MLP}有些任意。
-这个\glssymbol{MLP}是一个启发式选择，似乎在实践中工作良好，并在文献中一贯使用。
+与\chapref{chap:approximate_inference}中从基本原理导出的许多\gls{inference}方程相比，这种特定选择的\glssymbol{MLP}有些随意。
+这个\glssymbol{MLP}是一个启发式选择，似乎在实践中效果不错，并在文献中一贯使用。
 <BAD>许多近似\gls{inference}技术是由它们在一些约束下在对数似然上找到最大\emph{紧}变分下界的能力所驱动的。
 我们可以使用\glssymbol{DBN}中\glssymbol{MLP}定义的\gls{hidden_unit}的期望，构造对数似然的变分下界，但这对于\gls{hidden_unit}上的\emph{任何}概率分布都是如此，并没有理由相信该\glssymbol{MLP}提供了一个特别的紧界。
 特别地，\glssymbol{MLP}忽略了\glssymbol{DBN}\gls{graphical_model}中许多重要的相互作用。
@@ -276,7 +276,7 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 这个术语应特指最深层中具有无向连接，而在所有其他连续层之间存在向下有向连接的模型。
 
 这个术语也可能导致一些混乱，因为术语``信念网络''有时指纯粹的\gls{directed_model}，而\gls{DBN}包含一个无向层。
-\gls{DBN}也与动态贝叶斯网络（dynamic Bayesian networks） \citep{Dean+Kanazawa-1989}共享首字母缩写\glssymbol{DBN}，它们是表示\gls{markov_chain}的\gls{bayesian_network}。
+\gls{DBN}也与动态贝叶斯网络（dynamic Bayesian networks） \citep{Dean+Kanazawa-1989}共享首字母缩写\glssymbol{DBN}，动态贝叶斯网络表示\gls{markov_chain}的\gls{bayesian_network}。
 
 % -- 653 --
 
