@@ -285,8 +285,8 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 
 \firstall{DBM} \citep{SalHinton09}是另一种深度\gls{generative_model}。
 与\glsacr{DBN}不同，它是一个完全无向的模型。
-与\glssymbol{RBM}不同，\glssymbol{DBM}有几层\gls{latent_variable}（\glssymbol{RBM}只有一层）。
-但是像\glssymbol{RBM}一样，每一层内的每个变量是相互独立的，并条件于相邻层中的变量。
+与\glssymbol{RBM}不同的是，\glssymbol{DBM}有几层\gls{latent_variable}（\glssymbol{RBM}只有一层）。
+但是像\glssymbol{RBM}一样，每一层内的每个变量是相互独立的，并条件于相邻层中的变量。%??  在给定相邻层中变量的条件下， 每一层内的每个变量是相互独立的。
 见\figref{fig:chap20_dbm_simple}中的图结构。
 \gls{DBM}已经被应用于各种任务，包括文档建模\citep{srivastava2013modeling}。
 
@@ -317,8 +317,8 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
  - \Vh^{(1)^\top}\MW^{(2)}\Vh^{(2)}- \Vh^{(2)^\top}\MW^{(3)}\Vh^{(3)}.
 \end{align}
 
-与\glssymbol{RBM}的\gls{energy_function}(\eqnref{eq:205e})相比，\glssymbol{DBM}\gls{energy_function}包括权重矩阵($\MW^{(2)}$和$\MW^{(3)}$)形式的\gls{hidden_unit}（\gls{latent_variable}）之间的连接。
-正如我们将看到的，这些连接对模型行为以及我们如何在模型中执行\gls{inference}都有重要的影响。
+与\glssymbol{RBM}的\gls{energy_function}(\eqnref{eq:205e})相比，\glssymbol{DBM}\gls{energy_function}包括权重矩阵($\MW^{(2)}$和$\MW^{(3)}$)形式的\gls{hidden_unit}（\gls{latent_variable}）之间的连接。%??  以权重矩阵的形式表示\gls{hidden_unit}（\gls{latent_variable}）之间的连接
+正如我们将看到的，这些连接对模型行为以及我们如何在模型中进行\gls{inference}都有重要的影响。
 
 % -- 654 --
 
@@ -335,8 +335,8 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 与全连接的\gls{BM}（每个单元连接到其他每个单元）相比，\glssymbol{DBM}提供了类似于\glssymbol{RBM}的一些优点。
 
 具体来说， 如\figref{fig:chap20_dbm_bipartite}所示，\glssymbol{DBM}的层可以组织成一个二分图，其中奇数层在一侧，偶数层在另一侧。
-立即可得，当我们条件于偶数层中的变量时，奇数层中的变量变得条件独立。
-当然，当我们条件于奇数层中的变量时，偶数层中的变量也会变得条件独立。
+立即可得，当我们条件于偶数层中的变量时，奇数层中的变量变得条件独立。%??  立即可得 改成 容易发现    变得 改成 是...的   
+当然，当我们条件于奇数层中的变量时，偶数层中的变量也会变得条件独立。%?? 同上
 
 \glssymbol{DBM}的二分图结构意味着我们可以应用之前用于\glssymbol{RBM}条件分布的相同式子来确定\glssymbol{DBM}中的条件分布。
 在给定相邻层值的情况下，层内的单元彼此条件独立，因此二值变量的分布可以由\ENNAME{Bernoulli}参数（描述每个单元的激活概率）完全描述。
@@ -355,7 +355,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 二分图结构使\gls{gibbs_sampling}能在\gls{DBM}中高效采样。
 \gls{gibbs_sampling}的方法是一次只更新一个变量。
-\glssymbol{RBM}允许所有可见单元以一个块的方式更新，而所有\gls{hidden_unit}在第二个块更新。
+\glssymbol{RBM}允许所有可见单元以一个块的方式更新，而所有\gls{hidden_unit}在第二个块更新。%??   a second  翻译成  另一个更好？
 我们可以简单地假设具有$l$层的\glssymbol{DBM}需要$l+1$次更新，每次迭代更新由某层单元组成的块。
 然而，我们可以仅在两次迭代中更新所有单元。
 \gls{gibbs_sampling}可以将更新分成两个块，一块包括所有偶数层（包括可见层），另一个包括所有奇数层。
@@ -386,9 +386,9 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 由于这个性质，\glssymbol{DBM}已被用作真实神经科学现象的计算模型 \citep{series2010hallucinations,reichert2011neuronal}。
 
 
-一个\glssymbol{DBM}不幸的特性是从中采样是相对困难的。
+\glssymbol{DBM}一个不幸的特性是从中采样是相对困难的。%??  不幸  换成 不理想
 \glssymbol{DBN}只需要在其顶部的一对层中使用\glssymbol{mcmc}采样。
-其他层仅在采样过程结束时，只需在一个有效的\gls{ancestral_sampling}步骤中使用\glssymbol{mcmc}。
+其他层仅在采样过程结束时，只需在一个有效的\gls{ancestral_sampling}步骤中使用\glssymbol{mcmc}。%??  mcmc 无中生有，我觉得改成如下更好： 其他层仅在采样过程末尾涉及，并且只需在一个高效的\gls{ancestral_sampling}过程。
 要从\glssymbol{DBM}生成样本，必须在所有层中使用\glssymbol{mcmc}，并且模型的每一层都参与每个\gls{markov_chain}转移。
 
 
@@ -408,7 +408,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 % -- 657 --
 
-在\gls{inference}的变分近似中，我们通过一些相当简单的分布族近似特定目标分布——在我们的情况下，给定可见单元后\gls{hidden_unit}的后验分布。
+在\gls{inference}的变分近似中，我们通过一些相当简单的分布族近似特定目标分布——在这里指给定可见单元时\gls{hidden_unit}的后验分布。
 在\gls{meanfield}近似的情况下，近似族是\gls{hidden_unit}条件独立的分布集合。
 
 
