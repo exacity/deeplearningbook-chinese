@@ -161,15 +161,15 @@
 具有衰减\gls{learning_rate}以及\gls{momentum}的\,\glssymbol{SGD}\,是优化算法一个合理的选择
 （流行的衰减方法有，衰减到固定最低\gls{learning_rate}的线性衰减、指数衰减，或每次发生验证错误停滞时将\gls{learning_rate}降低$2-10$倍，这些衰减方法在不同问题上好坏不一）。
 另一个非常合理的选择是Adam算法。
-\gls{batch_normalization}对优化性能有着显著的影响，特别是对\gls{convolutional_network}和具有\gls{sigmoid}非线性函数的网络而言。
+\gls{batch_normalization}对优化性能有着显著的影响，特别是对\gls{convolutional_network}和具有~\gls{sigmoid}~非线性函数的网络而言。
 虽然在最初的\gls{baseline}中忽略\gls{batch_normalization}是合理的，然而当优化似乎出现问题时，应该立刻使用\gls{batch_normalization}。
 % 413 mid 
 
 
 除非\gls{training_set}包含数千万以及更多的样本，否则项目应该在一开始就包含一些温和的\gls{regularization}。 
 \gls{early_stopping}也被普遍采用。
-\gls{dropout}\,也是一个很容易实现，且兼容很多模型和训练算法的出色\gls{regularizer}。
-\gls{batch_normalization}有时也能降低\gls{generalization_error}，此时可以省略\,\gls{dropout}\,步骤，因为用于标准化变量的统计量估计本身就存在\gls{noise}。 %?? 还是有问题
+\gls{dropout}~也是一个很容易实现，且兼容很多模型和训练算法的出色\gls{regularizer}。
+\gls{batch_normalization}有时也能降低\gls{generalization_error}，此时可以省略~\gls{dropout}~步骤，因为用于标准化变量的统计量估计本身就存在\gls{noise}。 %?? 还是有问题
 % -- 413 --  end
 
 
@@ -282,7 +282,7 @@
 
 
 并非每个\gls{hyperparameter}都能对应着完整的U形曲线。
-很多\gls{hyperparameter}是离散的，如中间层单元数目或是\,\gls{maxout_unit}中线性元件的数目，这种情况只能沿曲线探索一些点。
+很多\gls{hyperparameter}是离散的，如中间层单元数目或是~\gls{maxout_unit}中线性元件的数目，这种情况只能沿曲线探索一些点。
 有些\gls{hyperparameter}是二值的。
 通常这些\gls{hyperparameter}用来指定是否使用学习算法中的一些可选部分，如预处理步骤减去均值并除以标准差来标准化输入特征。
 这些\gls{hyperparameter}只能探索曲线上的两点。
@@ -332,8 +332,8 @@
 寻找最佳的\gls{test_error}需要权衡这些数值。
 当\gls{training_error}较小（因此\gls{capacity}较大），\gls{test_error}主要取决于\gls{training_error}和\gls{test_error}之间的差距时，通常神经网络效果最好。
 此时目标是缩小这一差距，使\gls{training_error}的增长速率不快于差距减小的速率。
-要减少这个差距，我们可以改变\gls{regularization}\gls{hyperparameter}，以减少有效的模型\gls{capacity}，如添加\,\gls{dropout}\,或\gls{weight_decay}策略。
-通常，最佳性能来自\gls{regularization}得很好的大规模模型，比如使用\,\gls{dropout}\,的神经网络。
+要减少这个差距，我们可以改变\gls{regularization}\gls{hyperparameter}，以减少有效的模型\gls{capacity}，如添加~\gls{dropout}~或\gls{weight_decay}策略。
+通常，最佳性能来自\gls{regularization}得很好的大规模模型，比如使用~\gls{dropout}~的神经网络。
 % 418 mid
 
 
@@ -437,7 +437,7 @@
 这个图说明了通常只有一个\gls{hyperparameter}对结果有着重要的影响。
 在这个例子中，只有水平轴上的\gls{hyperparameter}对结果有重要的作用。
 \gls{grid_search}将大量的计算浪费在了指数量级的对结果无影响的\gls{hyperparameter}中，相比之下\gls{random_search}几乎每次测试都测试了对结果有影响的每个\gls{hyperparameter}的独一无二的值。
-此图经\citet{Bergstra+Bengio-LW2011}允许转载。}
+此图经~\citet{Bergstra+Bengio-LW2011}允许转载。}
 \label{fig:chap11_grid_vs_random}
 \end{figure}
 
@@ -691,15 +691,15 @@
 对于视觉任务而言，\gls{baseline}系统是带有\gls{ReLU}的\gls{convolutional_network}。
 转录项目开始于一个这样的模型。
 当时，使用\gls{convolutional_network}输出预测序列并不常见。
-开始时，我们使用一个尽可能简单的\gls{baseline}模型，该模型输出层的第一个实现包含$n$个不同的\,\gls{softmax_unit}来预测$n$个字符的序列。
-我们使用与训练分类任务相同的方式来训练这些\,\gls{softmax_unit}，独立地训练每个\,\gls{softmax_unit}。
+开始时，我们使用一个尽可能简单的\gls{baseline}模型，该模型输出层的第一个实现包含$n$个不同的~\gls{softmax_unit}来预测$n$个字符的序列。
+我们使用与训练分类任务相同的方式来训练这些~\gls{softmax_unit}，独立地训练每个~\gls{softmax_unit}。
 
 % 429 head
 
 我们建议反复细化这些\gls{baseline}，并测试每个变化是否都有改进。
 街景\gls{transcription_system}的第一个变化受激励于\gls{coverage}指标的理论理解和数据结构。
 具体地，当输出序列的概率低于某个值$t$即$p(\Vy\mid\Vx) < t$时，网络拒绝为输入$\Vx$分类。
-最初，$p(\Vy\mid\Vx)$的定义是临时的，简单地将所有\,\gls{softmax}输出乘在一起。
+最初，$p(\Vy\mid\Vx)$的定义是临时的，简单地将所有~\gls{softmax}输出乘在一起。
 这促使我们发展能够真正计算出合理对数似然的特定输出层和\gls{cost_function}。%??  后来是否该去掉？
 这种方法使得样本拒绝机制更有效。
 
