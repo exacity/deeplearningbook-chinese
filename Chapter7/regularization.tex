@@ -1072,7 +1072,7 @@ $\Vmu$中的每项都是二值的且独立于其他项采样。
 在\gls{dropout}的情况下，通过\gls{mask} $\Vmu$定义每个子模型的概率分布$p(y \mid \Vx, \Vmu)$。
 关于所有\gls{mask}的算术平均值由下式给出
 \begin{align}
-  \sum_{u} p(\Vmu) p(y \mid \Vx, \Vmu),
+  \sum_{\Vmu} p(\Vmu) p(y \mid \Vx, \Vmu),
 \end{align}
 其中$p(\Vmu)$是训练时采$\Vmu$的概率分布。
 
