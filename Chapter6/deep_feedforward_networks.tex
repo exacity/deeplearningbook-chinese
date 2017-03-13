@@ -47,7 +47,7 @@
 我们最好将\gls{feedforward_neural_network}想成是为了实现统计\gls{generalization}而设计出的函数近似机器，它偶尔从我们了解的大脑中提取灵感但是并不是大脑功能的模型。
 
 一种理解\gls{feedforward_network}的方式是从线性模型开始，并考虑如何克服它的局限性。
-线性模型，例如\gls{logistic_regression}和线性回归，是非常吸引人的，因为无论是封闭形式还是使用凸优化，它们都能高效而可靠地拟合。
+线性模型，例如\gls{logistic_regression}和线性回归，是非常吸引人的，因为无论是通过闭解形式还是使用凸优化，它们都能高效而可靠地拟合。
 线性模型也有明显的缺陷，那就是该模型的能力被局限在线性函数里，所以它无法理解任何两个输入变量间的相互作用。
 
 为了扩展线性模型来表示$\bm{x}$的非线性函数，我们可以把线性模型不用在$\bm{x}$ 本身，而是用在一个变换后的输入$\phi(\bm{x})$上，这里$\phi$是一个非线性变换。
@@ -60,12 +60,11 @@
 \begin{enumerate}
 \item 其中一种选择是使用一个通用的$\phi$，例如无限维的$\phi$，它隐含地用在基于\glssymbol{RBF}核的\gls{kernel_machines}上。
 如果$\phi(\bm{x})$具有足够高的维数，我们总是有足够的能力来拟合训练集，但是对于测试集的\gls{generalization}往往不佳。
-非常通用的特征映射通常只基于局部平滑的原则，并没有将足够的先验信息进行编码来解决高级问题。
+非常通用的特征映射通常只基于局部光滑的原则，并没有将足够的先验信息进行编码来解决高级问题。
 
 \item 另一种选择是手动地设计$\phi$。
 在深度学习出现以前，这都是主流的方法。
-这种方法对于每个单独的任务都需要人们数十年的努力，其中包括擅长于各自领域（如语音识别或计算机视觉）的从业者，并且不同任务之间很难迁移(transfer)。
-%此处难道是没有迁移吗？
+这种方法对于每个单独的任务都需要人们数十年的努力，从业者各自擅长特定的领域（如语音识别或计算机视觉），并且不同领域之间很难迁移(transfer)。
 
 \item 深度学习的策略是去学习$\phi$。
 在这种方法中，我们有一个模型$y = f(\bm{x};\theta, \bm{w}) = \phi(\bm{x}; \theta)^\top \bm{w}$。
@@ -99,7 +98,7 @@
 \section{实例：学习XOR}
 \label{sec:example_learning_xor}
 
-为了使\gls{feedforward_network}的想法更加具体，我们首先从\gls{feedforward_network}充分发挥作用的一个简单例子说起：学习XOR函数。
+为了使\gls{feedforward_network}的想法更加具体，我们首先从一个可以完整工作的\gls{feedforward_network}说起，这个例子解决一个非常简单的任务：学习XOR函数。
 
 XOR函数（``异或''逻辑）是两个二进制值$x_1$和$x_2$的运算。
 当这些二进制值中恰好有一个为1时，XOR函数返回值为1。
@@ -118,7 +117,7 @@ XOR函数提供了我们想要学习的目标函数$y = f^*(\bm{x})$。
 
 % -- 166 --
 
-为了对在整个训练集上的表现进行评估，\glssymbol{mean_squared_error}损失函数为
+评估整个训练集上表现的\glssymbol{mean_squared_error}损失函数为
 \begin{equation}
 J(\bm{\theta}) = \frac{1}{4} \sum_{\bm{x}\in \SetX} (f^*(\bm{x}) - f(\bm{x}; \bm{\theta}))^2.
 \end{equation}
@@ -128,7 +127,7 @@ J(\bm{\theta}) = \frac{1}{4} \sum_{\bm{x}\in \SetX} (f^*(\bm{x}) - f(\bm{x}; \bm
 \begin{equation}
 f(\bm{x}; \bm{w}, b) = \bm{x}^\top \bm{w} + b.
 \end{equation}
-我们可以用\gls{normal_equations}对$\bm{w}$和$b$最小化$J(\bm{\theta})$，来得到一个封闭形式的解。
+我们可以用\gls{normal_equations}对$\bm{w}$和$b$最小化$J(\bm{\theta})$，来得到一个闭式解。
 
 解\gls{normal_equations}以后，我们得到$\bm{w} = 0$以及$b = \frac{1}{2}$。
 线性模型仅仅是在任意一点都输出0.5。
@@ -443,7 +442,7 @@ f^* = \underset{f}{\argmin} \ \SetE_{\RVx, \RVy \sim  p_\text{data}} ||\bm{y} - 
 大多数时候，我们简单地使用数据分布和模型分布间的\gls{cross_entropy}。
 选择怎样表示输出决定了\gls{cross_entropy}函数的形式。
 
-各种用于输出的神经网络单元，也可以被用作\gls{hidden_unit}。
+任何可用作输出的神经网络单元，也可以被用作\gls{hidden_unit}。
 这里，我们着重讨论将这些单元用作模型输出时的情况，不过原则上它们也可以在内部使用。
 我们将在\ref{sec:hidden_units}节中重温这些单元并且给出当它们被用作\gls{hidden_unit}时一些额外的细节。
 
@@ -468,7 +467,7 @@ p(\bm{y}\mid\bm{x}) = \CalN(\bm{y}; \hat{\bm{y}}, \bm{I} ).
 
 最大似然框架也使得学习\gls{gaussian_distribution}的协方差矩阵更加容易，或更容易地使\gls{gaussian_distribution}的协方差矩阵作为输入的函数。
 然而，对于所有输入，协方差矩阵都必须被限定成一个正定矩阵。
-用线性输出层很难满足这种限定，所以通常使用其他的输出单元来对协方差参数化。
+线性输出层很难满足这种限定，所以通常使用其他的输出单元来对协方差参数化。
 对协方差建模的方法在\ref{sec:other_output_types}节中简要介绍。
 
 因为线性模型不会饱和，所以它们易于采用基于梯度的优化算法，甚至可以使用其他多种优化算法。

@@ -1,0 +1,76 @@
+{'user': 'acct:zplin@hypothes.is', 'text': '保证全局收敛', 'origin_text': '型的线性方程求解器，或者用于训练逻辑回归或SVM的凸优化算法那样  !!!具有全局的收敛保证!!!  。凸优化从任何一种初始参数出发都会收敛（理论上如此——在实践中', 'time': '2017-01-14T15:18'}
+{'user': 'acct:zplin@hypothes.is', 'text': '可靠？', 'origin_text': '凸优化从任何一种初始参数出发都会收敛（理论上如此——在实践中也很  !!!鲁棒!!!  但可能会遇到数值问题）。用于非凸损失函数的随机梯度下降没有这种', 'time': '2017-01-14T15:19'}
+{'user': 'acct:zplin@hypothes.is', 'text': '线性输出层很难满足这种限制', 'origin_text': '然而，对于所有输入，协方差矩阵都必须被限制成一个正定的矩阵。  !!!用线性输出层来满足这种限制是困难的!!!  ，所以通常使用其他的输出单元来对协方差参数化。对协方差建模的方', 'time': '2017-01-14T23:11'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '往往成效不佳', 'origin_text': '。不幸的是，均方误差和平均绝对误差在使用基于梯度的优化方法时  !!!往往会导致糟糕的结果!!!  。一些饱和的输出单元当结合这些代价函数时会产生非常小的梯度。', 'time': '2017-01-16T12:36'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '可惜的', 'origin_text': '我们要优化的函数族里。这个代价函数通常被称为平均绝对误差。  !!!不幸的!!!  是，均方误差和平均绝对误差在使用基于梯度的优化方法时往往会导致糟', 'time': '2017-01-16T12:41'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '由于', 'origin_text': '元来对协方差参数化。对协方差建模的方法在\\?节中简要介绍。  !!!因为!!!  线性模型不会饱和，所以它们对基于梯度的优化算法没有任何困难并且可', 'time': '2017-01-16T12:43'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '不具有饱和性', 'origin_text': '参数化。对协方差建模的方法在\\?节中简要介绍。因为线性模型  !!!不会饱和!!!  ，所以它们对基于梯度的优化算法没有任何困难并且可以被用在相当广泛', 'time': '2017-01-16T12:44'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '因此易于采用基于梯度的优化算法，甚至可以使用其他多种优化算法。', 'origin_text': '对协方差建模的方法在\\?节中简要介绍。因为线性模型不会饱和，  !!!所以它们对基于梯度的优化算法没有任何困难并且可以被用在相当广泛的优化算法中!!!  。\\subsubsection{用于Bernoulli输出分', 'time': '2017-01-16T12:56'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '各种可用于输出的神经网络单元', 'origin_text': '型分布间的交叉熵。选择怎样表示输出决定了交叉熵函数的形式。  !!!任何种类的可以被用作输出的神经网络单元!!!  ，也可以被用作隐藏单元。这里，我们关注把这些单元用作模型的输出', 'time': '2017-01-16T13:00'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '我们着重讨论将这些单元用作模型输出时的情况', 'origin_text': '类的可以被用作输出的神经网络单元，也可以被用作隐藏单元。这里，  !!!我们关注把这些单元用作模型的输出!!!  ，但是原则上它们也可以在内部使用。我们将在\\?节中重温这些单元', 'time': '2017-01-16T13:05'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '不过', 'origin_text': '也可以被用作隐藏单元。这里，我们关注把这些单元用作模型的输出，  !!!但是!!!  原则上它们也可以在内部使用。我们将在\\?节中重温这些单元并且给', 'time': '2017-01-16T13:07'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '具有', 'origin_text': '单元}一种简单的输出单元是基于仿射变换的输出单元，仿射变换不  !!!带有!!!  非线性。这些单元往往被直接称为线性单元。给定特征\\bmh\\', 'time': '2017-01-16T13:17'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '最大似然框架也使得学习高斯分布的协方差矩阵更加容易(短语“makes it straightforward to”意思是：使得......更容易)', 'origin_text': 'equation}最大化对数似然此时等价于最小化均方误差。  !!!最大化似然的框架使它也可以很直观的来学习高斯分布的协方差矩阵!!!  ，或者使得高斯分布的协方差是输入的函数。然而，对于所有输入，协', 'time': '2017-01-16T13:54'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '或更容易地使高斯分布的协方差矩阵作为输入的函数（ 我认为“or to”中的“to”连接的是上句的“makes it straightforward to”中的“to”）', 'origin_text': '最大化似然的框架使它也可以很直观的来学习高斯分布的协方差矩阵，  !!!或者使得高斯分布的协方差是输入的函数!!!  。然而，对于所有输入，协方差矩阵都必须被限制成一个正定的矩阵。', 'time': '2017-01-16T13:54'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '限定', 'origin_text': '布的协方差是输入的函数。然而，对于所有输入，协方差矩阵都必须被  !!!限制!!!  成一个正定的矩阵。用线性输出层来满足这种限制是困难的，所以通常', 'time': '2017-01-16T14:02'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '正定矩阵', 'origin_text': '是输入的函数。然而，对于所有输入，协方差矩阵都必须被限制成一个  !!!正定的矩阵!!!  。用线性输出层来满足这种限制是困难的，所以通常使用其他的输出单', 'time': '2017-01-16T14:02'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '线性输出层难以满足这种约束', 'origin_text': '然而，对于所有输入，协方差矩阵都必须被限制成一个正定的矩阵。  !!!用线性输出层来满足这种限制是困难的!!!  ，所以通常使用其他的输出单元来对协方差参数化。对协方差建模的方', 'time': '2017-01-16T14:05'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '而后，最大化对数似然等价于最小化均方误差。', 'origin_text': 'm{y}}, \\bm{I} ).\\end{equation}  !!!最大化对数似然此时等价于最小化均方误差。!!!  最大化似然的框架使它也可以很直观的来学习高斯分布的协方差矩阵', 'time': '2017-01-16T14:16'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '计算', 'origin_text': '^\\top \\bm{h}+\\bm{b}。线性输出层经常被用来  !!!产生!!!  条件高斯分布的均值：p(\\bmy∣\\bmx)=N(\\bmy;\\', 'time': '2017-01-16T14:17'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '为满足该约束条件', 'origin_text': '效的概率，它必须处在区间[0,1][0,1][0, 1]中。  !!!满足这个限制!!!  需要一些细致的设计工作。假设我们打算使用线性单元，并且通过阈值', 'time': '2017-01-16T14:22'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '无法', 'origin_text': '{equation}这的确定义了一个有效的条件概率分布，但我们  !!!并不能!!!  使用梯度下降来高效地训练它。任何时候当\\bmw⊤\\bmh+b\\', 'time': '2017-01-16T14:26'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '改善', 'origin_text': '\\bm0\\bm0\\bm{0}通常是有问题的，因为学习算法对于如何  !!!提高!!!  相应的参数没有了指导。与之相对的，最好是使用一种不同的方', 'time': '2017-01-16T14:34'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '不再具有指导意义', 'origin_text': '0\\bm{0}通常是有问题的，因为学习算法对于如何提高相应的参数  !!!没有了指导!!!  。与之相对的，最好是使用一种不同的方法来保证无论何时模型', 'time': '2017-01-16T14:35'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '最好使用一种新的方法，', 'origin_text': '为学习算法对于如何提高相应的参数没有了指导。与之相对的，  !!!最好是使用一种不同的方法来!!!  保证无论何时模型给出了错误的答案时总能有一个很强的梯度。这种方', 'time': '2017-01-16T14:42'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '较大的', 'origin_text': '使用一种不同的方法来保证无论何时模型给出了错误的答案时总能有一个  !!!很强的!!!  梯度。这种方法是基于使用sigmoid输出单元结合最大似然来实', 'time': '2017-01-16T14:43'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '其', 'origin_text': '{w}^\\top \\bm{h}+b处于单位区间外时，模型的输出对  !!!它的!!!  参数的梯度都将为\\bm0\\bm0\\bm{0}。梯度为\\bm0\\', 'time': '2017-01-17T00:53'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '“任何时候”可删掉不翻译', 'origin_text': '一个有效的条件概率分布，但我们并不能使用梯度下降来高效地训练它。  !!!任何时候!!!  当\\bmw⊤\\bmh+b\\bmw⊤\\bmh+b\\bm{w}^\\t', 'time': '2017-01-17T00:58'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '相反', 'origin_text': '有问题的，因为学习算法对于如何提高相应的参数没有了指导。  !!!与之相对的!!!  ，最好是使用一种不同的方法来保证无论何时模型给出了错误的答案时总', 'time': '2017-01-17T01:00'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '该分布', 'origin_text': '率。我们然后对它归一化，可以发现这服从Bernoulli分布，  !!!它!!!  受zzz的sigmoid变换控制：logP~(y)=yz,P~', 'time': '2017-01-17T01:10'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '因此', 'origin_text': '小以至于不能用来学习，无论此时模型给出的是正确还是错误的答案。  !!!因为这个原因!!!  ，最大似然几乎总是训练sigmoid输出单元的优选方法。理论', 'time': '2017-01-17T01:53'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '与原文不符', 'origin_text': '。在学习算法中，我们最常需要的梯度是成本函数关于参数的梯度，即  !!!∇\\bmθJ(\\bmθ)∇\\bmθJ(\\bmθ)!!!  \\nabla_{\\bm{\\theta}J(\\bm{\\theta}', 'time': '2017-01-17T02:58'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '函数的另外一组(原句有歧义)', 'origin_text': '是一组变量，我们需要它们的导数，而\\bmy\\bmy\\bm{y}是  !!!另外一组函数的!!!  输入变量，但我们并不需要它们的导数。在学习算法中，我们最常需要', 'time': '2017-01-17T03:13'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '需要（此处翻译成“需要”更恰当，“http://cn.bing.com/dict/search?q=involve&go=%E6%90%9C%E7%B4%A2&qs=n&form=Z9LH5&sp=-1&pq=involve&sc=8-7&sk=&cvid=4BF5A24B685849339E113D5129D5EEBE”）', 'origin_text': '\\theta}J(\\bm{\\theta})}。许多机器学习任务  !!!涉及!!!  计算其他导数，作为学习过程的一部分，或者用来分析学习的模型。反', 'time': '2017-01-17T03:17'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '，以（增加连词“以”，更通顺）', 'origin_text': '(\\bm{\\theta})}。许多机器学习任务涉及计算其他导数  !!!，!!!  作为学习过程的一部分，或者用来分析学习的模型。反向传播算法也适', 'time': '2017-01-17T04:05'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '学习到的', 'origin_text': '机器学习任务涉及计算其他导数，作为学习过程的一部分，或者用来分析  !!!学习的!!!  模型。反向传播算法也适用于这些任务，并且不限于计算成本函数关于', 'time': '2017-01-17T04:10'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '局限', 'origin_text': '，或者用来分析学习的模型。反向传播算法也适用于这些任务，并且不  !!!限!!!  于计算成本函数关于参数的梯度。通过网络传播信息来计算导数的想法', 'time': '2017-01-17T04:11'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '通过在网络中传播信息来计算导数的观点非常普遍', 'origin_text': '播算法也适用于这些任务，并且不限于计算成本函数关于参数的梯度。  !!!通过网络传播信息来计算导数的想法是非常通用的!!!  ，并且可以用于计算诸如具有多个输出的函数fff的Jacobi矩阵', 'time': '2017-01-17T04:23'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '还需引入操作（operation）这一概念', 'origin_text': '矩阵、张量、或者甚至是另一类型的变量。为了形式化我们的图形，  !!!我们还需要引入操作!!!  。操作是一个或多个变量的简单函数。我们的图形语言伴随着一组被', 'time': '2017-01-17T04:49'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '是指具有', 'origin_text': '类型的变量。为了形式化我们的图形，我们还需要引入操作。操作  !!!是!!!  一个或多个变量的简单函数。我们的图形语言伴随着一组被允许的操作', 'time': '2017-01-17T04:52'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '一系列', 'origin_text': '入操作。操作是一个或多个变量的简单函数。我们的图形语言伴随着  !!!一组!!!  被允许的操作。可以通过将多个操作组合在一起来描述比该组中的操作', 'time': '2017-01-17T04:54'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '同时组合多个操作来', 'origin_text': '量的简单函数。我们的图形语言伴随着一组被允许的操作。可以通过  !!!将多个操作组合在一起来!!!  描述比该组中的操作更复杂的函数。不失一般性，我们定义一个', 'time': '2017-01-17T04:58'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '多项', 'origin_text': '操作仅返回单个输出变量。这并没有失去一般性，因为输出变量可以有  !!!多个条目!!!  ，例如向量。反向传播的软件实现通常支持具有多个输出的操作，但是', 'time': '2017-01-17T05:00'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '惩罚项', 'origin_text': '多个操作。这个权重不仅用于预测$\\hat{y}$，也用于权重衰减  !!!罚项!!!  $\\lambda\xa0\\sum_i\xa0w_i^2$。}\\end{fig', 'time': '2017-01-17T05:13'}
+{'user': 'acct:David_Chow@hypothes.is', 'text': '通过梯度∇\\bmyz∇\\bmyz\\nabla_{\\bm{y}} z与Jacobi矩阵∂\\bmy∂\\bmx∂\\bmy∂\\bmx\\frac{\\partial \\bm{y}}{\\partial \\bm{x}}相乘获得', 'origin_text': '阵。从这里我们看到变量\\bmx\\bmx\\bm{x}的梯度可以  !!!通过将Jacobi矩阵∂\\bmy∂\\bmx∂\\bmy∂\\bmx\\frac{\\partial \\bm{y}}{\\partial \\bm{x}}是ggg的n×mn×mn\\times m乘以梯度∇\\bmyz∇\\bmyz\\nabla_{\\bm{y}} z来得到!!!  。反向传播算法由图中每一个这样的Jacobi梯度的乘积操作所组', 'time': '2017-01-17T05:21'}
+{'user': 'acct:zplin@hypothes.is', 'text': '前馈网络是通往循环网络之路的概念基石', 'origin_text': '于对照片中的对象进行识别的卷积神经网络就是一种专门的前馈网络。  !!!前馈网络是向循环网络前进中的概念奠基石!!!  ，后者在自然语言的许多应用中发挥着巨大作用。前馈神经网络被称', 'time': '2017-01-27T19:21'}
+{'user': 'acct:zplin@hypothes.is', 'text': '含有噪声的近似实例，即f*(x)在不同点上的值', 'origin_text': 'm{x})去匹配$f^(\\bm{x})的值。训练数据为我们提供了  !!!在不同训练点上取值的、含有噪声的的值。训练数据为我们提供了在不同训练点上取值的、含有噪声的的值。训练数据为我们提供了在不同训练点上取值的、含有噪声的f^(\\bm{x})的近似实例!!!  。每个样例的近似实例。每个样例的近似实例。每个样例\\bm{x}', 'time': '2017-01-28T06:33'}
+{'user': 'acct:zplin@hypothes.is', 'text': '同样', 'origin_text': '\\phi(\\bm{x})上，这里ϕϕ\\phi是一个非线性变换。  !!!等价地!!!  ，我们可以使用\\?节中描述的核技巧，来得到一个基于隐含地使用ϕϕ', 'time': '2017-01-29T06:18'}
+{'user': 'acct:zplin@hypothes.is', 'text': '领域之间可借鉴之处微乎其微\n\ntransfer应该是指knowledge transfer', 'origin_text': '们数十年的努力，其中包括不同领域的（如语音识别或计算机视觉）专家  !!!以及不同领域间微小的迁移(transfer)。%此处难道是没有迁移吗？!!!          深度学习的策略是去学习ϕϕ\\phi。在这', 'time': '2017-01-29T06:45'}
+{'user': 'acct:zplin@hypothes.is', 'text': '从业人员各自善长特定的领域（如语音识别或计算机视觉）', 'origin_text': '主流的方法。这种方法对于每个单独的任务都需要人们数十年的努力，  !!!其中包括不同领域的（如语音识别或计算机视觉）专家!!!  以及不同领域间微小的迁移(transfer)。%此处难道是没有迁', 'time': '2017-01-29T06:39'}
+{'user': 'acct:zplin@hypothes.is', 'text': '如果我们想要的话', 'origin_text': 'bmθ\\bmθ\\bm{\\theta}，使它能够得到一个好的表示。  !!!如果我们希望!!!  ，这种方法也可以通过使它变得高度通用以获得第一种方法的优点——我', 'time': '2017-01-29T20:37'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '翻译成“自然语言处理”是否好些', 'origin_text': '专门的前馈网络。前馈网络是向循环网络前进中的概念奠基石，后者在  !!!自然语言!!!  的许多应用中发挥着巨大作用。前馈神经网络被称作网络是因为它们', 'time': '2017-03-11T14:18'}
+{'user': 'acct:caszhang@hypothes.is', 'text': 'neuroscience应该叫观察好些吧，天文叫观测。。', 'origin_text': ')f^{(i)}(\\bm{x})的选择，也或多或少地受到神经科学  !!!观测!!!  的指引，这些观测是关于生物神经元计算功能的。然而，现代的神经网', 'time': '2017-03-11T14:21'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '通过闭式', 'origin_text': '。线性模型，例如逻辑回归和线性回归，是非常吸引人的，因为无论是  !!!封闭形式!!!  还是使用凸优化，它们都能高效而可靠地拟合。线性模型也有明显的缺', 'time': '2017-03-11T14:24'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '函数一般叫“光滑”', 'origin_text': '但是对于测试集的泛化往往不佳。非常通用的特征映射通常只基于局部  !!!平滑!!!  的原则，并没有将足够的先验信息进行编码来解决高级问题。   ', 'time': '2017-03-11T14:28'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '包含的先验信息不足', 'origin_text': '集的泛化往往不佳。非常通用的特征映射通常只基于局部平滑的原则，  !!!并没有将足够的先验信息进行编码!!!  来解决高级问题。        另一种选择是手动地设计ϕϕ', 'time': '2017-03-11T14:29'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '语音识别和计算机视觉等不同领域的从业者需要专门进行研究，而领域之间的迁移很少', 'origin_text': '主流的方法。这种方法对于每个单独的任务都需要人们数十年的努力，  !!!其中包括不同领域的（如语音识别或计算机视觉）专家以及不同领域间微小的迁移(transfer)。%此处难道是没有迁移吗!!!  ？        深度学习的策略是去学习ϕϕ\\phi。在', 'time': '2017-03-11T14:30'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '一个可以完整工作的前馈网络', 'origin_text': '实例：学习XOR为了使前馈网络的想法更加具体，我们首先从  !!!前馈网络充分发挥作用的一个简单例子!!!  说起：学习XOR函数。XOR函数（”异或”逻辑）是两个二进制', 'time': '2017-03-11T14:34'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '评估整个训练集上表现的', 'origin_text': '是一个合适的损失函数。更加合适的方法将在\\?节中讨论。  !!!为了对在整个训练集上的表现进行评估，!!!  MSE损失函数为J(\\bmθ)=14∑\\bmx∈X(f∗(\\b', 'time': '2017-03-11T14:36'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '闭式', 'origin_text': '\\bmθ)J(\\bmθ)J(\\bm{\\theta})，来得到一个  !!!封闭形式!!!  的解。解正规方程以后，我们得到\\bmw=0\\bmw=0\\bm', 'time': '2017-03-11T14:37'}
+
+=============================   Replies   =============================
+
+{'user': 'acct:caszhang@hypothes.is', 'text': '另一种等价的做法是，...', 'time': '2017-03-11T14:26'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '首先，训练数据确实**是**(x,y)，那我们说训练数据**提供**了y，没毛病吧...\n\n其次，(x,y)不好描述，而且作者在这里也没有提到x，只说训练点，即使按照你的说法\n> 训练数据提供的是函数对应各种输入(x)的取值(y)的近似例子\n\n你觉得大家会认为这是y的近似例子还是(x,y)的例子呢？...\n\n这个问题先到这吧，我们只能说作者表达的不好，但原文本身和我的翻译应该是对应的...', 'time': '2017-03-05T02:48'}
+{'user': 'acct:zplin@hypothes.is', 'text': '我的意思是，这些实例是f(x)有噪声的取值。就是说，我们不知道f这个函数到底是什么，但我们知道一些例子(example)，这些例子告诉我们y1*~f(x1)，y2*~f(x2)……这些(x1, y1), (x2, y2)都是近似的例子。之所以说近例，是因为y1*并不一定等于真正的y1。所以训练数据提供的是函数对应各种输入(x)的取值(y)的近似例子，并不是函数本身的实例。\n主要争论点不在近似，而是在这个example是函数本身还是它的输入输出\n不用客气，得有这样的反复讨论才能把事情做好。', 'time': '2017-03-04T22:28'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '额...这些实例并**不**直接是`$f^*(x)$`在不同`$x$`处的取值啊...\n\n先从语法分析吧：noisy approximate examples of `$f^*(x)$`是说含有噪声的`$f^*(x)$`的近似实例；而后面的evaluated at different training points用来修饰`$f^*(x)$`的。\n\n再结合上下文吧。咱们看后面一句，\n> Each example is accompanied by a label `$y \n\\approx f^*(x)$`.\n\n我们知道label是包含在训练数据里面的，如果前面一句说训练数据提供了`$f^*(x)$`的实例，那么`$y$`应该和`f^*(x)`相等才对，而不是现在的近似关系。\n\n最后，从汉语的角度，近似实例，近似什么呢？\n\n非常感谢你认真的校对~', 'time': '2017-03-04T17:56'}
+{'user': 'acct:zplin@hypothes.is', 'text': '那些实例其实都是f(x)对不同x取的值，所以才说是f(x) evaluated at different training points。那些example不是f(x)这个函数的实例，而是它怎么把一些x转化成y的实例', 'time': '2017-03-04T16:31'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '原文是\n>entry\n\n如果翻译成“多项”，会不会让人产生多项式的感觉...就是几项相加。“条目”这个翻译确实也不好...', 'time': '2017-03-04T09:28'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '原文是\n> a set of\n\n如果翻译成一系列，感觉更像是a series of...', 'time': '2017-03-04T09:19'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '这里我更倾向于直接翻译成“是指”，因为如果翻译成“操作是指具有一个或多个变量的简单函数”，读起来怪怪的...', 'time': '2017-03-04T09:17'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '这个我改成“学得”了。', 'time': '2017-03-04T09:01'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '这里是显示问题...在pdf中显示是正确的，转换时出了点问题。正常的就是`$\\nabla_\\theta J(\\theta)$`', 'time': '2017-03-04T08:55'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '嗯嗯，你是对的~这里翻译确实会产生歧义...', 'time': '2017-03-04T08:45'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '原文是\n> produce\n\n这里严格来说用“计算”也可以，但我更倾向于“产生”，因为这里的上下文是指我们已经假定输出的分布符合条件高斯分布，我们**设计**神经网络的输出层来表示这个分布的均值。', 'time': '2017-03-04T06:58'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '原文是\n>robust\n\n文献中一般翻译成鲁棒，也有翻译成稳健的，但我们还是按照一般的说法来翻译吧。', 'time': '2017-03-04T06:41'}
+{'user': 'acct:KevinLee1110@hypothes.is', 'text': '原文是这样的\n>The training data provides us with noisy, approximate examples of `$f^*(x)$` evaluated at different training points. \n\n我的理解是：`$f^*(x)$`是data generator函数，是我们想要近似的函数，但是data generator在生成数据后因为观测等原因，我们得到的是含有噪声的数据（真实数据）。所以这里是含有噪声的`$f^*(x)$`的近似实例', 'time': '2017-03-04T06:12'}
