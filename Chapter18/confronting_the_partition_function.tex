@@ -611,7 +611,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 并且如上所述，$p_{\text{noise}}$应易于估计（以便评估$p_{\text{joint}}$）和采样（以生成训练数据），那么\,\glssymbol{NCE}\,就易于使用。
 
 
-\glssymbol{NCE}\,能够非常成功地应用于\gls{RV}较少的问题，但即使\gls{RV}很多时，它也很有效。
+\glssymbol{NCE}\,能够非常成功地应用于\gls{RV}较少的问题，但即使\gls{RV}有很多可以取的值时，它也很有效。
 例如，它已经成功地应用于给定单词上下文建模单词的条件分布~\citep{Mnih2013}。
 虽然单词可以采样自一个很大的词汇表，但是只能采样一个单词。
 
@@ -619,35 +619,35 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 当\,\glssymbol{NCE}\,应用于具有许多\gls{RV}的问题时，其效率会变得较低。
 当\gls{logistic_regression}分类器发现某个变量的取值不大可能时，它会拒绝这个\gls{noise}样本。
-这意味着在$p_{\text{model}}$学习了基本的边缘统计之后，学习速率会大大减慢。
+这意味着在$p_{\text{model}}$学习了基本的边缘统计之后，学习进程会大大减慢。
 想象一个使用非结构化高斯\gls{noise}作为$p_{\text{noise}}$来学习面部图像的模型。
-如果$p_{\text{model}}$学会了眼睛，就算没有学习任何其他面部特征，如嘴， 它也会拒绝几乎所有的非结构化\gls{noise}样本。
+如果$p_{\text{model}}$学会了眼睛，就算没有学习任何其他面部特征，比如嘴， 它也会拒绝几乎所有的非结构化\gls{noise}样本。
+% 614 head
 
-
-\gls{noise_distribution}$p_{\text{noise}}$必须是易于估计和采样的约束可能是过度的限制。
+\gls{noise_distribution}$p_{\text{noise}}$必须是易于估计和采样的约束可能是过于严格的限制。
 当$p_{\text{noise}}$比较简单时，大多数采样可能与数据有着明显不同，而不会迫使$p_{\text{model}}$进行显著改进。
 
 
-类似于\gls{score_matching}和\gls{pseudolikelihood}，如果$p$只有下界，那么\,\glssymbol{NCE}\,不会有效。
-这样的下界能够用于构建$p_{\text{joint}}( y = 1 \mid \RVx)$的下界，但是它只能用于构建$p_{\text{joint}}(y = 0 \mid \RVx)$（出现在一般的\,\glssymbol{NCE}\,对象中）的上界。
+类似于\gls{score_matching}和\gls{pseudolikelihood}，如果$\tilde{p}$只有下界，那么\,\glssymbol{NCE}\,不会有效。
+这样的下界能够用于构建$p_{\text{joint}}( y = 1 \mid \RVx)$的下界，但是它只能用于构建$p_{\text{joint}}(y = 0 \mid \RVx)$（出现在一半的\,\glssymbol{NCE}\,对象中）的上界。
 同样地，$p_{\text{noise}}$的下界也没有用，因为它只提供了$p_{\text{joint}}( y = 1 \mid \RVx)$的上界。
 
 
-当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}\,定义了一个被称为\gls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望~\citep{Goodfellow-ICLR2015}。
-特殊情况的\,\glssymbol{NCE}（\gls{noise}采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分的过程，而\gls{NCE}通过让模型区分现实和固定的基准（\gls{noise}模型），降低了计算成本。
+当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}\,定义了一个被称为\firstgls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望~\citep{Goodfellow-ICLR2015}。
+特殊情况的\,\glssymbol{NCE}（\gls{noise}采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分的过程，而\gls{NCE}通过让模型区分现实和固定的基准（\gls{noise}模型），降低了计算成本。%??  以  是不是多余的？
 
 
 在训练样本和生成样本（使用模型能量函数定义分类器）之间进行分类以得到模型的梯度的方法，已经在更早的时候以各种形式提出来~\citep{Welling2003b,Bengio-2009-book}。
 
 
 \gls{NCE}是基于良好\gls{generative_model}应该能够区分数据和\gls{noise}的想法。
-一个密切相关的想法是，良好的\gls{generative_model}能够生成分类器没法将其与数据区分的采样。
+一个密切相关的想法是，良好的\gls{generative_model}能够生成分类器无法将其与数据区分的样本。
 这个想法诞生了\gls{generative_adversarial_networks}（\secref{sec:generative_adversarial_networks}）。
 
 
 \section{估计\glsentrytext{partition_function}}
 \label{sec:estimating_the_partition_function}
-尽管本章中的大部分内容都在避免计算与\gls{undirected_graphical_model}相关的难以计算\gls{partition_function} $Z(\Vtheta)$，但在本节中我们将会讨论几种直接估计\gls{partition_function}的方法。
+尽管本章中的大部分内容都在避免计算与\gls{undirected_graphical_model}相关的难以计算的\gls{partition_function} $Z(\Vtheta)$，但在本节中我们将会讨论几种直接估计\gls{partition_function}的方法。
 
 % -- 614 --
 
@@ -663,8 +663,8 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 \label{eq:18.38}
 	\sum_i \log p_A (\RSx^{(i)}; \Vtheta_A) - \sum_i \log p_B(\RSx^{(i)}; \Vtheta_B) > 0,
 \end{equation}
-那么我们说$\CalM_A$是一个比$\CalM_B$更好的模型（或者，至少可以说，它在测试集上是一个更好的模型），这是指它有一个更大的测试对数似然。
-然而，测试这个条件是否成立需要知道\gls{partition_function}。
+那么我们说$\CalM_A$是一个比$\CalM_B$更好的模型（或者，至少可以说，它在测试集上是一个更好的模型），这是指它有一个更好的测试对数似然。
+不幸的是，测试这个条件是否成立需要知道\gls{partition_function}。
 \eqnref{eq:18.38}看起来需要估计模型分配给每个点的对数概率，因而需要估计\gls{partition_function}。
 我们可以通过将\eqnref{eq:18.38}重新转化为另一种形式来简化情况，在该形式中我们只需要知道两个模型的\gls{partition_function}的\textbf{比率}：
 \begin{equation}
@@ -707,11 +707,9 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 然后该值可以直接比较\eqnref{eq:18.39}中的两个模型。
 
 
-如果分布$p_0$接近$p_1$，那么\eqnref{eq:18.44}能够高效地估计\gls{partition_function}~\citep{Minka_2005}。
-不幸的是，大多数时候$p_1$都很复杂（通常是多峰的），并且定义在高维空间中。
+如果分布$p_0$接近$p_1$，那么\eqnref{eq:18.44}能够有效地估计\gls{partition_function}~\citep{Minka_2005}。
+不幸的是，大多数时候$p_1$都很复杂（通常是\gls{multimodal}的），并且定义在高维空间中。
 很难找到一个易求解的$p_0$，既能易于评估，又能充分接近$p_1$以保持高质量的近似。
-
-
 如果$p_0$和$p_1$不接近，那么$p_0$的大多数采样将在$p_1$中具有较低的概率，从而在\eqnref{eq:18.44}的求和中产生（相对的）可忽略的贡献。
 
 
@@ -725,9 +723,9 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 % -- 616 --
 
-有两个解决高维空间复杂分布上估计\gls{partition_function}的方法：
+我们现在关注两个解决高维空间复杂分布上估计\gls{partition_function}的方法：
 \gls{AIS}和\gls{bridge_sampling}。
-两者都始于上面介绍的简单的\gls{importance_sampling}方法，并且都试图通过引入\emph{桥接}$p_0$和$p_1$之间\emph{差距}的中间分布，来解决$p_0$远离$p_1$的问题。
+两者都始于上面介绍的简单\gls{importance_sampling}方法，并且都试图通过引入\emph{缩小}$p_0$和$p_1$之间\emph{差距}的中间分布，来解决$p_0$远离$p_1$的问题。
 
 
 \subsection{\glsentrytext{AIS}}
