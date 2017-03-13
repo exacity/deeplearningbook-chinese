@@ -279,8 +279,8 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 因此训练可以并行化，即在各时刻$t$分别计算\gls{gradient}。
 因为训练集提供输出的理想值，所以没有必要先计算前一时刻的输出。
 
-由输出反馈到模型而产生循环连接的模型可用~\gls{teacher_forcing}~进行训练。
-\gls{teacher_forcing}~是使用最大似然\gls{criterion}的过程，并且在时刻$t+1$接收真实值$y^{(t)}$作为输入（训练模型时）。
+由输出反馈到模型而产生循环连接的模型可用\firstgls{teacher_forcing}进行训练。
+训练模型时，\gls{teacher_forcing}不再使用最大似然\gls{criterion}，而在时刻$t+1$接收真实值$y^{(t)}$作为输入。
 我们可以通过检查两个\gls{time_step}的序列得知这一点。
 条件最大似然\gls{criterion}是
 \begin{align}
@@ -308,16 +308,16 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 \label{fig:chap10_teacher_forcing}
 \end{figure}
 
-我们使用~\gls{teacher_forcing}~的最初动机是为了在缺乏隐藏到隐藏连接的模型中避免\gls{BPTT}。
-只要模型一个\gls{time_step}的输出与下一\gls{time_step}计算的值存在连接，\gls{teacher_forcing}~仍然可以应用到这些存在隐藏到隐藏连接的模型。
+我们使用\gls{teacher_forcing}的最初动机是为了在缺乏隐藏到隐藏连接的模型中避免\gls{BPTT}。
+只要模型一个\gls{time_step}的输出与下一\gls{time_step}计算的值存在连接，\gls{teacher_forcing}仍然可以应用到这些存在隐藏到隐藏连接的模型。
 然而，只要\gls{hidden_unit}成为较早\gls{time_step}的函数，\glssymbol{BPTT}~算法是必要的。
-因此训练某些模型时要同时使用~\gls{teacher_forcing}~和~\glssymbol{BPTT}。
+因此训练某些模型时要同时使用\gls{teacher_forcing}和~\glssymbol{BPTT}。
 
 % -- 373 --
 
-如果之后网络在\textbf{开环}(open-loop)模式下使用，即网络输出（或输出分布的样本）反馈作为输入，那么~\gls{teacher_forcing}~的缺点就会出现。
+如果之后网络在\textbf{开环}(open-loop)模式下使用，即网络输出（或输出分布的样本）反馈作为输入，那么完全使用\gls{teacher_forcing}进行训练的缺点就会出现。
 在这种情况下，训练期间该网络看到的输入与测试时看到的会有很大的不同。
-减轻此问题的一种方法是同时使用~\gls{teacher_forcing}~和自由运行的输入进行训练，例如在展开循环的输出到输入路径上预测几个步骤的正确目标值。
+减轻此问题的一种方法是同时使用\gls{teacher_forcing}和自由运行的输入进行训练，例如在展开循环的输出到输入路径上预测几个步骤的正确目标值。
 通过这种方式，网络可以学会考虑在训练时没有接触到的输入条件（如自由运行模式下，自身生成自身），以及将状态映射回使网络几步之后生成正确输出的状态。
 另外一种方式\citep{SamyBengio-et-al-arxiv2015}是通过随意选择生成值或真实的数据值作为输入以减小训练时和测试时看到的输入之间的差别。
 这种方法利用了\gls{curriculum_learning}策略，逐步使用更多生成值作为输入。

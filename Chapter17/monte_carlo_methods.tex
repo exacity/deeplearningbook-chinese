@@ -75,7 +75,7 @@ s = \int p(\Vx)f(\Vx)d\Vx = E_p[f(\RVx)]
 我们计算了$f(\Vx^{(i)})$的经验均值和方差\footnote{通常我们会倾向于计算方差的\gls{unbiased}估计，它由偏差的平方和除以$n-1$而非$n$得到。}， 
 然后将估计的方差除以样本数$n$来得到$\text{Var}[\hat{s}_n]$的估计。
 \firstgls{central_limit_theorem}告诉我们$\hat{s}_n$的分布收敛到以$s$为均值以$\frac{\text{Var}[f(\RVx)]}{n}$为方差的\gls{normal_distribution}。
-这使得我们可以利用\gls{normal_distribution}的累积密度函数来估计$\hat{s}_n$的置信区间。
+这使得我们可以利用\gls{normal_distribution}的\gls{cumulative_function}来估计$\hat{s}_n$的置信区间。
 % 583
 
 
@@ -152,7 +152,7 @@ q^*(\Vx) = \frac{p(\Vx)\vert f(\Vx)\vert}{Z},
 % 585
 
 
-尽管一个好的$q$分布的选择可以显著地提高\gls{monte_carlo}估计的效率，而一个糟糕的$q$分布选择则会使效率更糟糕。
+一个好的$q$分布的选择可以显著地提高\gls{monte_carlo}估计的效率，而一个糟糕的$q$分布选择则会使效率更糟糕。
 我们回过头来看看方程~\eqnref{eqn:variance_of_is}会发现，如果存在一个$q$使得$\frac{p(\Vx)f(\Vx)}{q(\Vx)}$很大，那么这个估计的方差也会很大。
 当$q(\Vx)$很小，而$f(\Vx)$和$p(\Vx)$都较大并且无法抵消$q$时，这种情况会非常明显。
 $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布中容易地采样。
@@ -373,7 +373,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 （在\gls{markov_chain}的状态空间中）从$\Vx^{(t-1)}$到$\Vx^{(t)}$该链倾向于选取很小的步长，其中能量$E(\Vx^{(t)})$通常低于或者近似等于能量$E(\Vx^{(t-1)})$，
 倾向于向较低能量的区域移动。
 当从可能性较小的状态（比来自$p(\Vx)$的典型样本拥有更高的能量）开始时，链趋向于逐渐减少状态的能量，并且仅仅偶尔移动到另一个\gls{mode}。 
-一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，则低能量的区域可以是同一对象所对应图像的一个相连的\gls{manifold}），我们称之为\gls{mode}，链将倾向于围绕着这个\gls{mode}游走（按某一种形式随机游走）。
+一旦该链已经找到低能量的区域（例如，如果变量是图像中的像素，则低能量的区域可以是同一对象所对应图像的一个连通的\gls{manifold}），我们称之为\gls{mode}，链将倾向于围绕着这个\gls{mode}游走（按某一种形式随机游走）。
 它时不时会走出该\gls{mode}，但是结果通常会返回该\gls{mode}或者（如果找到一条离开的路线）移向另一个\gls{mode}。
 问题是对于很多有趣的分布来说成功的离开路线很少，所以\gls{markov_chain}将在一个\gls{mode}附近抽取远超过需求的样本。
 % 591 
@@ -465,7 +465,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 
 
 % 593 mid
-当感兴趣的分布对于每个类具有单独的\gls{manifold}结构时，所有这些问题都\,\glssymbol{mcmc}\,方法变得不那么有用：分布集中在许多\gls{mode}周围，并且这些模式由大量高能量区域分割。
+当感兴趣的分布对于每个类具有单独的\gls{manifold}结构时，所有这些问题都使\,\glssymbol{mcmc}\,方法变得不那么有用：分布集中在许多\gls{mode}周围，并且这些\gls{mode}由大量高能量区域分割。
 我们在许多分类问题中遇到的是这种类型的分布，由于\gls{mode}之间\gls{mixing}缓慢，它将使得\glssymbol{mcmc}方法非常缓慢地收敛。
 % 593
 
