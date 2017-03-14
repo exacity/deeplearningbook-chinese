@@ -284,7 +284,7 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 \label{sec:deep_boltzmann_machines}
 
 \firstall{DBM} \citep{SalHinton09}是另一种深度\gls{generative_model}。
-与\glsacr{DBN}不同，它是一个完全无向的模型。
+与\glsacr{DBN}不同的是，它是一个完全无向的模型。
 与\glssymbol{RBM}不同的是，\glssymbol{DBM}有几层\gls{latent_variable}（\glssymbol{RBM}只有一层）。
 但是像\glssymbol{RBM}一样，每一层内的每个变量是相互独立的，并条件于相邻层中的变量。%??  在给定相邻层中变量的条件下， 每一层内的每个变量是相互独立的。
 见\figref{fig:chap20_dbm_simple}中的图结构。
@@ -304,8 +304,8 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 
 与\glssymbol{RBM}和\glssymbol{DBN}一样，\glssymbol{DBM}通常仅包含二值单元 （正如我们为简化模型的演示而假设的），但很容易就能扩展到实值可见单元。
 
-\glssymbol{DBM}是\gls{energy_based_model}，意味着模型变量的\gls{joint_probability_distribution}由\gls{energy_function} $E$参数化。
-\gls{DBM}包含一个可见层$\Vv$和三个\gls{hidden_layer} $\Vh^{(1)},\Vh^{(2)}$和$\Vh^{(3)}$的情况下，联合概率由下式给出：
+\glssymbol{DBM}是\gls{energy_based_model}，这意味着模型变量的\gls{joint_probability_distribution}由\gls{energy_function} $E$参数化。
+在一个\gls{DBM}包含一个可见层$\Vv$和三个\gls{hidden_layer} $\Vh^{(1)},\Vh^{(2)}$和$\Vh^{(3)}$的情况下，联合概率由下式给出：
 \begin{align}
  P(\Vv, \Vh^{(1)},  \Vh^{(2)},  \Vh^{(3)}) = \frac{1}{Z(\Vtheta)} 
  \exp \big( -E(\Vv, \Vh^{(1)},  \Vh^{(2)},  \Vh^{(3)}; \Vtheta) \big).
@@ -478,12 +478,13 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 对于具有两个\gls{hidden_layer}的\gls{DBM}，$\CalL$由下式给出
 \begin{align}
- \CalL(Q, \Vtheta) = \sum_i \sum_{j^{\prime}} v_j \MW_{i,j^{\prime}}^{(1)} 
+ \CalL(Q, \Vtheta) = \sum_i \sum_{j^{\prime}} v_i \MW_{i,j^{\prime}}^{(1)} 
  \hat h_{j^{\prime}}^{(1)} +  \sum_{j^{\prime}} \sum_{k^{\prime}} \hat h_{j^{\prime}}^{(1)}
  \MW_{j^{\prime}, k^{\prime}}^{(2)} \hat h_{k^{\prime}}^{(2)} - \log Z(\Vtheta) + \CalH(Q).
 \end{align}
+%??   上式中 W 好像原文中并未加粗？  
 该表达式仍然包含对数\gls{partition_function} $ \log Z(\Vtheta) $。
-由于\gls{DBM}包含\gls{RBM}作为组件，用于计算\gls{RBM}的\gls{partition_function}和采样的困难同样适用于\gls{DBM}。
+由于\gls{DBM}包含\gls{RBM}作为组件，用于计算\gls{RBM}的\gls{partition_function}和采样的困难同样适用于\gls{DBM}。%??  适用于  改为  困扰着  是否更好？
 这意味着评估\gls{BM}的\gls{PMF}需要近似方法，如\gls{AIS}。
 同样，训练模型需要近似对数\gls{partition_function}的梯度。
 见\chapref{chap:confronting_the_partition_function}对这些方法的一般性描述。
@@ -491,7 +492,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \chapref{chap:confronting_the_partition_function}中描述的许多其他技术都不适用。
 诸如\gls{pseudolikelihood}的技术需要评估非归一化概率的能力，而不是仅仅获得它们的变分下界。
 对于\gls{DBM}，\gls{contrastive_divergence}是缓慢的，因为它们不能在给定可见单元时对\gls{hidden_unit}进行高效采样——反而，每当需要新的\gls{negative_phase}样本时，\gls{contrastive_divergence}将需要\gls{burn_in}一条\gls{markov_chain}。
-
+% 660 mid
 
 非变分版本的\gls{SML}算法已经在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}讨论过。
 \algref{alg:sml_dbm}给出了应用于\glssymbol{DBM}的变分\gls{SML}算法。
@@ -546,7 +547,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 不幸的是，随机初始化后使用\gls{SML}训练（如上所述）的\glssymbol{DBM}通常导致失败。
 在一些情况下，模型不能学习如何充分地表示分布。
-在其他情况下，\glssymbol{DBM}可以很好的表示分布，但是没有比仅使用\glssymbol{RBM}获得更高的似然。
+在其他情况下，\glssymbol{DBM}可以很好地表示分布，但是没有比仅使用\glssymbol{RBM}获得更高的似然。
 除第一层之外，所有层都具有非常小权重的\glssymbol{DBM}与\glssymbol{RBM}表示大致相同的分布。
 
 如\secref{sec:jointly_training_deep_boltzmann_machines} 所述，目前已经开发了允许联合训练的各种技术。
@@ -580,11 +581,13 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \label{fig:chap20_standard_dbm_color}
 \end{figure}
 
-% -- 661 --
+% -- 662 head
 
-这种\gls{greedy_layer_wise_training}过程不仅仅是坐标上升。
-因为我们在每个步骤优化参数的一个子集，它与坐标上升具有一些传递的相似性。
+这种\gls{greedy_layer_wise_training}过程不仅仅是\gls{coordinate_ascent}。
+因为我们在每个步骤优化参数的一个子集，它与\gls{coordinate_ascent}具有一些传递相似性。
 然而实际上，在\gls{greedy_layer_wise_training}过程的情况下，我们在每个步骤使用不同的\gls{objective_function}。
+%?? 这句翻译偏差较大，好像是句子换了。  
+%?? The two methods differ because the greedy layer-wise training procedure uses a different objective function at each step.  这两种方法是不同的，因为\gls{greedy_layer_wise_training}过程中在每一步都是用了不同的\gls{objective_function}。
 
 \glssymbol{DBM}的\gls{greedy_layer_wise_pretraining}与\glssymbol{DBN}的\gls{greedy_layer_wise_pretraining}不同。
 每个单独的\glssymbol{RBM}的参数可以直接复制到相应的\glssymbol{DBN}。
@@ -605,7 +608,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \label{sec:jointly_training_deep_boltzmann_machines}
 
 经典\glssymbol{DBM}需要\gls{greedy_unsupervised_pretraining}，并且为了更好的分类，需要在它们提取的隐藏特征之上，使用独立的基于\glssymbol{MLP}的分类器。
-这产生一些不希望的性质。
+这种方法有一些不理想的性质。
 因为我们不能在训练第一个\glssymbol{RBM}时评估完整\glssymbol{DBM}的属性，所以在训练期间难以跟踪性能。
 因此，直到相当晚的训练过程，我们都很难知道我们的超参数表现如何。
 \glssymbol{DBM}的软件实现需要很多不同的模块，如用于单个\glssymbol{RBM}的\glssymbol{contrastive_divergence}训练、完整\glssymbol{DBM}的\glssymbol{persistent_contrastive_divergence}训练以及基于\gls{back_propagation}的\glssymbol{MLP}训练。
@@ -614,16 +617,16 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 % -- 662 --
 
 主要有两种方法可以处理\gls{DBM}的联合训练问题。
-第一个是\textbf{中心化\gls{DBM}}(centered deep Boltzmann machine) \citep{Montavon2012}，通过重参数化模型使其在开始学习过程时\gls{cost_function}的\gls{hessian}具有更好的条件数。
+第一个是\textbf{中心化\gls{DBM}}(centered deep Boltzmann machine) \citep{Montavon2012}，通过\gls{reparametrization}模型使其在开始学习过程时\gls{cost_function}的\gls{hessian}具有更好的条件数。
 这个模型不用经过\gls{greedy_layer_wise_pretraining}阶段就能训练。
 这个模型在测试集上获得出色的对数似然，并能产生高质量的样本。
-不幸的是，作为分类器，它仍然不能与适当正则化的\glssymbol{MLP}竞争。
+不幸的是，作为分类器，它仍然不能与适当\gls{regularize}的\glssymbol{MLP}竞争。
 联合训练\gls{DBM}的第二种方式是使用\firstall{MPDBM} \citep{Goodfellow-et-al-NIPS2013}。
 该模型的训练\gls{criterion}允许\gls{back_propagation}算法，以避免使用\glssymbol{mcmc}估计梯度的问题。
-不幸的是，新的\gls{criterion}不会导致良好的似然性或样本，但是相比\glssymbol{mcmc}方法，它确实会导致更好的分类性能和良好地\gls{inference}缺失输入的能力。
+不幸的是，新的\gls{criterion}不会导致良好的似然性或样本，但是相比\glssymbol{mcmc}方法，它确实会导致更好的分类性能和良好的\gls{inference}缺失输入的能力。
 
 如果我们回到\gls{BM}的一般观点，即包括一组权重矩阵$\MU$和\gls{bias_aff} $\Vb$的单元$\Vx$，\gls{BM}中心化技巧是最容易描述的。
-回想\eqnref{eq:202E}，\gls{energy_function}由下式给出
+回顾\eqnref{eq:202E}，\gls{energy_function}由下式给出
 \begin{align}
  E(\Vx) = -\Vx^\top \MU \Vx - \Vb^\top \Vx.
 \end{align}
@@ -635,8 +638,8 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \end{align}
 通常$\Vmu$在开始训练时固定为一个超参数。
 当模型初始化时，通常选择为$\Vx - \Vmu \approx 0$。
-这种重参数化不改变模型可表示的概率分布的集合，但它确实改变了应用于似然的\gls{SGD}的动态。
-具体来说，在许多情况下，这种重参数化导致更好条件数的\gls{hessian}矩阵。
+这种\gls{reparametrization}不改变模型可表示的概率分布的集合，但它确实改变了应用于似然的\gls{SGD}的动态。
+具体来说，在许多情况下，这种\gls{reparametrization}导致更好条件数的\gls{hessian}矩阵。
 \citet{melchior2013center}通过实验证实了\gls{hessian}矩阵条件数的改善，并观察到中心化技巧等价于另一个\gls{BM}学习技术——\textbf{增强梯度}(enhanced gradient) \citep{ICML2011Cho_98-small}。
 即使在困难的情况下，例如训练多层的\gls{DBM}，\gls{hessian}矩阵条件数的改善也能使学习成功。
 
@@ -671,7 +674,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \label{fig:chap20_multi_prediction_training}
 \end{figure}
 
-这种用于近似\gls{inference}，通过计算图进行\gls{back_propagation}的一般原理已经应用于其他模型~\citep{Stoyanov2011,brakel13a}。
+这种用于近似\gls{inference}，通过\gls{computational_graph}进行\gls{back_propagation}的一般原理已经应用于其他模型~\citep{Stoyanov2011,brakel13a}。
 在这些模型和\glssymbol{MPDBM}中，最终\gls{loss}不是似然的下界。
 相反，最终\gls{loss}通常基于近似\gls{inference}网络对缺失值施加的近似条件分布。
 这意味着这些模型的训练有些启发式。
@@ -681,7 +684,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 首先，它以模型真正使用的方式训练模型 —— 使用近似\gls{inference}。
 这意味着在\glssymbol{MPDBM}中，进行如填充缺失的输入或执行分类（尽管存在缺失的输入）的近似\gls{inference}比在原始\glssymbol{DBM}中更准确。
 原始\glssymbol{DBM}不会自己做出准确的分类器; 使用原始\glssymbol{DBM}的最佳分类结果是基于\glssymbol{DBM}提取的特征训练独立的分类器，而不是通过使用\glssymbol{DBM}中的\gls{inference}来计算关于类标签的分布。
-\glssymbol{MPDBM}中的\gls{meanfield}\gls{inference}作为分类器，不进行特殊修改就表现良好。
+\glssymbol{MPDBM}中的\gls{meanfield}\gls{inference}作为分类器，不需要进行特殊修改就获得良好的表现。
 通过近似\gls{inference}\gls{back_propagation}的另一个优点是\gls{back_propagation}计算\gls{loss}的精确梯度。
 对于优化而言，比\glssymbol{SML}训练中具有偏差和方差的近似梯度更好。
 这可能解释了为什么\glssymbol{MPDBM}可以联合训练，而\glssymbol{DBM}需要\gls{greedy_layer_wise_pretraining}。
@@ -691,8 +694,8 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 % 665 end
 
 \glssymbol{MPDBM}与\gls{dropout}有一定联系。
-\gls{dropout}在许多不同的计算图之间共享相同的参数，每个图之间的差异是包括还是排除每个单元。
-\glssymbol{MPDBM}还在许多计算图之间共享参数。
+\gls{dropout}在许多不同的\gls{computational_graph}之间共享相同的参数，每个图之间的差异是包括还是排除每个单元。
+\glssymbol{MPDBM}还在许多\gls{computational_graph}之间共享参数。
 在\glssymbol{MPDBM}的情况下，图之间的差异是每个输入单元是否被观察到。
 当没有观察到单元时，\glssymbol{MPDBM}不会像\gls{dropout}那样将其完全删除。
 相反，\glssymbol{MPDBM}将其视为要\gls{inference}的\gls{latent_variable}。
@@ -769,9 +772,9 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \gls{GBRBM}参数化一个最终变化的来源是如何处理精度矩阵的选择。
 它可以被固定为常数（可能基于数据的边缘精度估计）或学习出来。
 它也可以是标量乘以单位矩阵，或者是一个对角矩阵。
-在此情况下，由于一些操作需要反转矩阵，我们通常不允许非对角的精度矩阵。
-在接下来的章节中，我们将看到其他形式的\gls{BM}，它们允许对协方差结构建模，并使用各种技术避免反转精度矩阵。
-
+在此情况下，由于一些操作需要对矩阵\gls{invert}，我们通常不允许非对角的精度矩阵，因为高斯分布的一些操作需要对矩阵\gls{invert}，一个对角矩阵可以非常容易地被\gls{invert}。
+在接下来的章节中，我们将看到其他形式的\gls{BM}，它们允许对协方差结构建模，并使用各种技术避免对精度矩阵\gls{invert}。
+%??  此处 反转 都换成了  \gls{invert}：求逆
 
 \subsection{条件协方差的\glsentrytext{undirected_model}}
 \label{sec:undirected_models_of_conditional_covariance}
@@ -845,11 +848,11 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 
 正如\glssymbol{mcrbm}一样，\glssymbol{mpot}模型\gls{energy_function}指定一个多元\gls{gaussian_distribution}，其中关于$\Vx$的条件分布具有非对角的协方差。
 \glssymbol{mpot}模型中的学习（也像\glssymbol{mcrbm} ） 由于无法从非对角高斯条件分布$p_{\text{mPoT}}(\Vx  \mid  \Vh^{(m)}, \Vh^{(c)}) $采样而变得复杂。
-因此\citet{ranzato+mnih+hinton:2010-short} 也倡导通过哈密尔顿（混合）\gls{monte_carlo}直接采样$p(\Vx)$。%??  此处漏了引用
+因此\citet{ranzato+mnih+hinton:2010-short} 也倡导通过哈密尔顿（混合）\gls{monte_carlo}~\citep{Neal93b}直接采样$p(\Vx)$。
 
 
 \paragraph{\gls{ssrbm}} \firstall{ssrbm}\citep{Courville+al-2011}提供对实值数据的协方差结构建模的另一种方法。
-与\glssymbol{mcrbm}相比，\glssymbol{ssrbm}具有既不需要矩阵求逆也不需要哈密顿\gls{monte_carlo}方法的优点。
+与\glssymbol{mcrbm}相比，\glssymbol{ssrbm}具有既不需要矩阵求逆也不需要哈密尔顿\gls{monte_carlo}方法的优点。
 %作为自然图像的模型，\glssymbol{ssrbm}感兴趣的是。
 就像\glssymbol{mcrbm}和\glssymbol{mpot}模型，\glssymbol{ssrbm}的二值\gls{hidden_unit}通过使用辅助实值变量来编码跨像素的条件协方差。
 
@@ -939,7 +942,7 @@ $E_{\text{c}}$是\glssymbol{crbm}建模条件协方差信息的\gls{energy_funct
 所有单元的状态关闭时，能量被分配为零。
 我们可以认为这是在用包含$n + 1$个状态的单个变量来描述模型，或者等价地具有$n + 1$个变量的模型，除了$n+1$个联合分配的变量之外的能量赋为$\infty$。
 
-虽然高效的概率最大池化确实能强迫检测器单元互斥，这在某些情景下可能是有用的正则化约束而在其他情景下是对模型容量有害的限制。
+虽然高效的概率最大池化确实能强迫检测器单元互斥，这在某些情景下可能是有用的\gls{regularize}约束而在其他情景下是对模型容量有害的限制。
 它也不支持重叠池化区域。
 从前馈\gls{convolutional_network}获得最佳性能通常需要重叠的池化区域，因此这种约束可能大大降低了\gls{convolutional_bm}的性能。
 
@@ -1028,7 +1031,7 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 这允许将与分类问题不相关的可见单元从估计类别的\gls{inference}路径中移除。
 
 更一般地说，\gls{BM}框架是一个丰富的模型空间，允许比迄今为止已经探索的更多的模型结构。
-开发新形式的\gls{BM}需要比开发新的神经网络层更多细心和创造性，因为它通常很难找到一个能保持\gls{BM}所需的所有不同条件分布的可解性的\gls{energy_function}。
+开发新形式的\gls{BM}相比于开发新的神经网络层需要更多细心和创造力，因为它通常很难找到一个能保持\gls{BM}所需的所有不同条件分布的可解性的\gls{energy_function}。
 尽管这需要努力，该领域仍对创新开放。
 
 % -- 677 --
@@ -1037,7 +1040,7 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 \label{sec:back_propagation_through_random_operations}
 
 
-传统的神经网络对一些输入变量$\Vx$的施加确定性变换。
+传统的神经网络对一些输入变量$\Vx$施加确定性变换。
 当开发\gls{generative_model}时，我们经常希望扩展\gls{NN}以实现$\Vx$的随机变换。
 这样做的一个直接方法是使用额外输入$\Vz$（从一些简单的概率分布采样得到，如均匀或\gls{gaussian_distribution}）来增强神经网络。
 神经网络在内部仍可以继续执行确定性计算，但是函数$f(\Vx,\Vz)$对于不能访问$\Vz$的观察者来说将是随机的。
@@ -1085,11 +1088,11 @@ RNN-RBM由\glssymbol{RNN}(产生用于每个\gls{time_step}的\glssymbol{RBM}参
 要求$f$是连续可微的，当然需要$\Vy$是连续的。
 如果我们希望通过产生离散值样本的采样过程进行\gls{back_propagation}，则可以使用\gls{RL}算法（如\ENNAME{REINFORCE}算法\citep{Williams-1992}的变体）来估计$\Vomega$上的梯度，这将在\secref{sec:back_propagating_through_discrete_stochastic_operations}中讨论。
 
-在神经网络应用中，我们通常选择从一些简单的分布中采样$\Vz$，如单位均匀分布或单位\gls{gaussian_distribution}分布，并通过网络的确定性部分重塑其输入来实现更复杂的分布。
+在神经网络应用中，我们通常选择从一些简单的分布中采样$\Vz$，如单位均匀分布或单位\gls{gaussian_distribution}，并通过网络的确定性部分重塑其输入来实现更复杂的分布。
 
 通过随机操作扩展梯度或优化的想法可追溯到二十世纪中叶~\citep{Price-1958,Bonnet-1964}，并且首先在\gls{RL}~\citep{Williams-1992}的情景下用于机器学习。
 最近，它已被应用于变分近似~\citep{Opper+Archambeau-2009} 和随机生成神经网络~\citep{bengio2013estimating,Kingma-arxiv2013,Kingma+Welling-arxiv2014,Kingma+Welling-ICLR2014,Rezende-et-al-ICML2014,Goodfellow-et-al-NIPS2014-small}。
-许多网络，如\gls{DAE}或使用\gls{dropout}的正则化网络，也被自然地设计为将噪声作为输入，而不需要任何特殊的重参数化就能使噪声独立于模型。
+许多网络，如\gls{DAE}或使用\gls{dropout}的\gls{regularize}网络，也被自然地设计为将噪声作为输入，而不需要任何特殊的\gls{reparametrization}就能使噪声独立于模型。
 
 % -- 679 --
 
@@ -1134,7 +1137,7 @@ $\frac{\partial\log p(\Vy)}{\partial \Vomega} = \frac{1}{p(\Vy)}
 在本节中我们写的$p(\Vy)$，可以等价地写成$p(\Vy  \mid  \Vx)$。
 这是因为$p(\Vy)$由$\Vomega$参数化，并且如果$\Vx$存在，$\Vomega$包含$\Vtheta$和$\Vx$两者。
 
-简单\ENNAME{REINFORCE}估计的一个问题是其具有非常高的方差，需要采$\Vy$的许多样本才能获得对梯度的良好估计，或者等价地，如果仅绘制一个样本，\glssymbol{SGD}将收敛得非常缓慢并将需要较小的学习率。
+简单\ENNAME{REINFORCE}估计的一个问题是其具有非常高的方差，需要采$\Vy$的许多样本才能获得对梯度的良好估计，或者等价地，如果仅绘制一个样本，\glssymbol{SGD}将收敛得非常缓慢并将需要较小的\gls{learning_rate}。
 通过使用\firstgls{variance_reduction}方法~\citep{Wilson-1984,LEcuyer-1994}，可以地减少该估计的方差。
 想法是修改估计量，使其预期值保持不变，但方差减小。
 在\ENNAME{REINFORCE}的情况下提出的\gls{variance_reduction}方法，涉及计算用于偏移$J(\Vy)$的\textbf{基线}(baseline)。
@@ -1176,8 +1179,8 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 % -- 681 --
 
 在\gls{RL}背景下引入的\gls{variance_reduction}方法\citep{Sutton-et-al-2000,Weaver+Tao-UAI2001}， \citet{Dayan-1990}推广了二值奖励的前期工作。
-参见\citet{bengio2013estimating}、\citet{Mnih+Gregor-ICML2014}、\citet{Ba+Mnih-arxiv2014}、\citet{Mnih2014}或 \citet{Xu-et-al-ICML2015} 中在深度学习的背景下使用减少方差的\ENNAME{REINFORCE}算法的现代例子。
-除了使用与输入相关的基线$b(\Vomega)$，\citet{Mnih+Gregor-ICML2014}发现可以在训练期间调整$（J(\Vy)) - b(\Vomega)）$的尺度（即除以训练期间的移动平均估计的标准差 ），即作为一种适应性学习速率，可以抵消训练过程中该量大小发生的重要变化的影响。
+可以参考 \citet{bengio2013estimating}、\citet{Mnih+Gregor-ICML2014}、\citet{Ba+Mnih-arxiv2014}、\citet{Mnih2014}或 \citet{Xu-et-al-ICML2015} 中在深度学习的背景下使用减少方差的\ENNAME{REINFORCE}算法的现代例子。
+除了使用与输入相关的基线$b(\Vomega)$，\citet{Mnih+Gregor-ICML2014}发现可以在训练期间调整$（J(\Vy)) - b(\Vomega)）$的尺度（即除以训练期间的移动平均估计的标准差 ），即作为一种适应性\gls{learning_rate}，可以抵消训练过程中该量大小发生的重要变化的影响。
 \citet{Mnih+Gregor-ICML2014} 称之为启发式\textbf{方差归一化}(variance normalization)。
 
 基于\ENNAME{REINFORCE}的估计器可以被理解为将$\Vy$的选择与$J(\Vy)$的对应值相关联来估计梯度。
@@ -1221,7 +1224,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 
 在\gls{sigmoid_bn}中执行\gls{inference}的一种方法是构造专用于\gls{sigmoid_bn}的不同下界 \citep{Saul+96}。
 这种方法只适用于非常小的网络。
-另一种方法是使用学成的\gls{inference}机制，如\secref{sec:learned_approximate_inference}中描述的。
+另一种方法是使用\gls{learned}\gls{inference}机制，如\secref{sec:learned_approximate_inference}中描述的。
 \gls{helmholtz_machine} \citep{Dayan-et-al-1995,dayan1996varieties} 结合了一个\gls{sigmoid_bn}与一个预测\gls{hidden_unit}上\gls{meanfield}分布参数的\gls{inference}网络。
 \gls{sigmoid_bn}的现代方法\citep{Gregor-et-al-ICML2014,Mnih+Gregor-ICML2014} 仍然使用这种\gls{inference}网络的方法。
 因为\gls{latent_variable}的离散本质，这些技术仍然是困难的。
@@ -1230,7 +1233,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 
 \gls{sigmoid_bn}的一种特殊情况是没有\gls{latent_variable}的情况。
 在这种情况下学习是高效的，因为没有必要将\gls{latent_variable}边缘化到似然之外。
-一系列称为\gls{auto_regressive_network}的模型将这个完全可见的\gls{BN}泛化到其他类型的变量（除二值变量）和其他结构（除对数线性关系）的条件分布。
+一系列称为\gls{auto_regressive_network}的模型将这个完全可见的\gls{BN}\gls{generalize}到其他类型的变量（除二值变量）和其他结构（除对数线性关系）的条件分布。
 \gls{auto_regressive_network}将在\secref{sec:auto_regressive_networks}中描述。
 
 
@@ -1260,7 +1263,7 @@ $E_{p(\Vy)}[\frac{\partial\log p(\Vy)^2}{\partial \omega_i}]$。
 
 我们可以认为$g$提供了变量的非线性变化，将$\RVz$上的分布变换成$\RVx$上想要的分布。
 
-回想\eqnref{eqn:3.47}，对于可求反函数的、可微的、连续的$g$，
+回顾\eqnref{eqn:3.47}，对于可求反函数的、可微的、连续的$g$，
 \begin{align}
  p_z(\Vz) = p_x(g(\Vz)) \Big | \det (\frac{\partial g}{\partial \Vz}) \Big |.
 \end{align}
@@ -1383,11 +1386,11 @@ DRAW模型的生成过程包括顺序访问不同的小图像块并绘制这些�
 
 
 \gls{VAE}与\glssymbol{MPDBM}和其他涉及通过近似\gls{inference}图的\gls{back_propagation}方法有一些有趣的联系 \citep{Goodfellow-et-al-NIPS2013,Stoyanov2011,brakel13a}。
-这些以前的方法需要诸如\gls{meanfield}不动点方程的\gls{inference}过程来提供计算图。
-\gls{VAE}被定义为任意计算图，这使得它能适用于更广泛的概率模型族，因为它不需要将模型的选择限制到具有易处理的\gls{meanfield}不动点方程的那些模型。
+这些以前的方法需要诸如\gls{meanfield}不动点方程的\gls{inference}过程来提供\gls{computational_graph}。
+\gls{VAE}被定义为任意\gls{computational_graph}，这使得它能适用于更广泛的概率模型族，因为它不需要将模型的选择限制到具有易处理的\gls{meanfield}不动点方程的那些模型。
 \gls{VAE}还具有增加模型对数似然边界的优点，而\glssymbol{MPDBM}和相关模型的\gls{criterion}更具启发性，并且除了使近似\gls{inference}的结果准确外很少有概率的解释。
 \gls{VAE}的一个缺点是它仅针对一个问题学习\gls{inference}网络，即给定$\Vx$ \gls{inference} $\Vz$。
-较老的方法能够在给定任何其他变量子集的情况下对任何变量子集执行近似\gls{inference}，因为\gls{meanfield}不动点方程指定如何在所有这些不同问题的计算图之间共享参数。
+较老的方法能够在给定任何其他变量子集的情况下对任何变量子集执行近似\gls{inference}，因为\gls{meanfield}不动点方程指定如何在所有这些不同问题的\gls{computational_graph}之间共享参数。
 
 
 \gls{VAE}的一个非常好的特性是，同时训练参数编码器与\gls{generator_network}的组合迫使模型学习一个编码器可以捕获的可预测的坐标系。
@@ -1497,7 +1500,7 @@ $\vcenter{\hbox{
 
 \glssymbol{GAN}学习问题也可以通过将生成过程分成许多级别的细节来简化。
 我们可以训练有条件的\glssymbol{GAN}\citep{mirza2014conditional}，并学习从分布$p(\Vx \mid \Vy)$中采样，而不是简单地从边缘分布$p(\Vx)$中采样。
-\citet{denton2015deep} 表明一系列的条件\glssymbol{GAN}可以被训练为先生成非常低分辨率的图像，然后增量地向图像添加细节。
+\citet{denton2015deep} 表明一系列的条件\glssymbol{GAN}可以被训练为首先生成非常低分辨率的图像，然后增量地向图像添加细节。
 由于使用拉普拉斯金字塔来生成包含不同细节水平的图像，这种技术被称为\ENNAME{LAPGAN}模型。
 \ENNAME{LAPGAN}生成器不仅能够欺骗判别器网络，而且能够欺骗人类观察者，实验主体将高达40％的网络输出识别为真实数据。
 请看\figref{fig:chap20_lsun_small}中\ENNAME{LAPGAN}生成器生成的图像示例。
@@ -1622,7 +1625,7 @@ $\vcenter{\hbox{
 \fi
 \caption{完全可见的\gls{BN}从前$i-1$个变量预测第$i$个变量。
 \emph{(上)}FVBN的\gls{directed_graphical_model}。
-\emph{(下)}对数FVBN相应的计算图，其中每个预测由线性预测器作出。
+\emph{(下)}对数FVBN相应的\gls{computational_graph}，其中每个预测由线性预测器作出。
 }
 \label{fig:chap20_fvbn}
 \end{figure}
@@ -1641,7 +1644,7 @@ $\vcenter{\hbox{
 
 \gls{neural_auto_regressive_network} \citep{Bengio+Bengio-trnn2000,Bengio+Bengio-NIPS2000}具有与逻辑\gls{auto_regressive_network}相同的从左到右的\gls{graphical_model}（\figref{fig:chap20_fvbn}），但在该\gls{graphical_model}结构内采用不同的条件分布参数。
 新的参数化更强大，它可以根据需要随意增加容量，并允许近似任意联合分布。
-新的参数化还可以引入深度学习中常见的参数共享和特征共享原理来改进泛化能力。
+新的参数化还可以引入深度学习中常见的参数共享和特征共享原理来改进\gls{generalize}能力。
 设计这些模型的动机是避免传统表格\gls{graphical_model}引起的\gls{curse_of_dimensionality}，并与\figref{fig:chap20_fvbn}共享相同的结构。
 在表格离散概率模型中，每个条件分布由概率表表示，其中所涉及的变量的每个可能配置都具有一个条目和一个参数。
 通过使用神经网络，可以获得两个优点：
@@ -1726,7 +1729,7 @@ $\vcenter{\hbox{
 \begin{align}
  p_{\text{ensemble}}(\RVx) = \frac{1}{k} \sum_{i=1}^k p(\RVx  \mid  o^{(i)}).
 \end{align}
-这个集成模型通常能更好地泛化，并且为测试集分配比单个排序定义的单个模型更高的概率。
+这个集成模型通常能更好地\gls{generalize}，并且为测试集分配比单个排序定义的单个模型更高的概率。
 
 % -- 700 --
 
@@ -1903,7 +1906,7 @@ $\vcenter{\hbox{
 例如，假设我们可以评估模型A对数似然的随机估计和模型B对数似然的确定性下界。
 如果模型A得分高于模型B，哪个更好？
 如果我们关心确定哪个模型具有分布更好的内部表示，我们实际上不能说哪个更好，除非我们有一些方法来确定模型B的边界有多松。
-然而，如果我们关心在实践中该模型能用得多好，例如执行异常检测，则基于特定于感兴趣的实际任务的准则，可以公平地说模型是更好的，例如基于排名测试样例和排名标准，如精度和召回率。
+然而，如果我们关心在实践中该模型能用得多好，例如执行异常检测，则基于特定于感兴趣的实际任务的准则，可以公平地说模型是更好的，例如基于排名测试样例和排名标准，如\gls{precision}和\gls{recall}。
 
 评估\gls{generative_model}的另一个微妙之处是，评估指标往往是自身困难的研究问题。 
 可能很难确定模型是否被公平比较。
@@ -1949,9 +1952,9 @@ MNIST由灰度图像组成。
 
 由于样本的视觉质量不是可靠的标准，所以当计算可行时，我们通常还评估模型分配给测试数据的对数似然。
 不幸的是，在某些情况下，似然性似乎不可能测量我们真正关心的模型的任何属性。
-例如，MNIST的实值模型可以将任意低的方差分配给从不改变的背景像素，获得任意高的似然性。
+例如，MNIST的实值模型可以将任意低的方差分配给从不改变的背景像素，获得任意高的似然。
 即使这不是一个非常有用的事情，检测这些常量特征的模型和算法可以获得无限的奖励。
-实现接近负无穷代价的可能性存在于任何实值的最大似然问题中，但是对于MNIST的\gls{generative_model}尤其成问题， 因为许多输出值是不需要预测的。
+实现接近负无穷代价的可能性存在于任何实值的最大似然问题中，但是对于MNIST的\gls{generative_model}问题尤为严重， 因为许多输出值是不需要预测的。
 这强烈地表明需要开发评估\gls{generative_model}的其他方法。
 
 
@@ -1970,4 +1973,4 @@ MNIST由灰度图像组成。
 为了让模型理解表示在给定训练数据中的大千世界，训练具有\gls{hidden_unit}的\gls{generative_model}是一种有力方法。
 通过学习模型$p_{\text{model}}(\Vx)$和表示$p_{\text{model}}(\Vh  \mid  \Vx)$，\gls{generative_model}可以解答$\Vx$输入变量之间关系的许多\gls{inference}问题， 并且可以在层次的不同层对$\Vh$求期望来提供表示$\Vx$的许多不同方式。
 \gls{generative_model}承诺为\glssymbol{AI}系统提供它们需要理解的、所有不同直观概念的框架，让它们有能力在面对不确定性的情况下推理这些概念。
-我们希望我们的读者将找到增强这些方法的新途径，并继续探究学习和智能背后原理的旅程。
+我们希望我们的读者能够找到增强这些方法的新途径，并继续探究学习和智能背后原理的旅程。
