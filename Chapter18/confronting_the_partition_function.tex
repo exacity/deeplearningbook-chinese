@@ -144,11 +144,11 @@
 \end{algorithm}
 
 
-我们可以将\,\glssymbol{mcmc}\,方法视为在两种力之间平衡最大似然，一种力拉高数据出现时的模型分布，一种拉低模型采样出现时的模型分布。%??   从而最大化似然     还是  将最大似然提前？
+我们可以将最大化似然的\,\glssymbol{mcmc}\,方法视为在两种力之间平衡，一种力拉高数据出现时的模型分布，一种拉低模型采样出现时的模型分布。%??   从而最大化似然     还是  将最大似然提前？
 \figref{fig:chap18_pos_and_neg_phase}展示了这个过程。
 这两种力分别对应最大化$\log \tilde{p}$和最小化$\log Z$。
 对于\gls{negative_phase}会有一些近似方法。
-这些近似都可以理解为使\gls{negative_phase}更容易计算，但是也可能将其推向错误的位置。%??  push down  翻成 拉低/压低  ？推向 不对吧？
+这些近似都可以被理解为使\gls{negative_phase}更容易计算，但是也可能将其推向错误的位置。%??  push down  翻成 拉低/压低  ？推向 不对吧？  push 翻成 推 可以啊
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -257,11 +257,11 @@
 
 % -- 603 end
 
-\glssymbol{contrastive_divergence}\,算法可以被理解为惩罚具有快速改变来自数据的输入的\gls{markov_chain}的模型。%??   这句话总是读不通
+\glssymbol{contrastive_divergence}\,算法可以被理解为惩罚某类模型，这类模型的\gls{markov_chain}会快速改变来自数据的输入。 %??   这句话总是读不通
 这意味着使用\,\glssymbol{contrastive_divergence}\,训练从某种程度上说类似于训练\gls{AE}。
 即使\,\glssymbol{contrastive_divergence}\,估计比一些其他训练方法具有更大偏差，但是它有助于\gls{pretraining}之后会堆叠起来的浅层模型。
 这是因为堆栈中最早的模型会受激励复制更多的信息到其\gls{latent_variable}，使其可用于随后的模型。
-这应该更多地被认为是\,\glssymbol{contrastive_divergence}\,训练中经常可利用的副产品，而不是原本的设计优势。%??  principled  不应翻译  原本的  
+这应该更多地被认为是\,\glssymbol{contrastive_divergence}\,训练中经常可利用的副产品，而不是主要的设计优势。
 
 
 \cite{sutskever2010convergence-small}表明，\glssymbol{contrastive_divergence}\,的更新方向不是任何函数的梯度。
@@ -272,7 +272,7 @@
 这个方法首先被应用数学和统计学社群发现，命名为\textbf{\gls{SML}}（\glssymbol{SML}）\citep{Younes98onthe}，后来又在\gls{DL}社群中以名称\textbf{\gls{persistent_contrastive_divergence}}（\glssymbol{persistent_contrastive_divergence}，或者每个更新中具有$k$个Gibbs步骤的\,\glssymbol{persistent_contrastive_divergence}-k）独立地被重新发现~\citep{Tieleman08-small}。
 具体可以参考\algref{alg:sml}。
 这种方法的基本思想是，只要随机梯度算法得到的步长很小，那么前一步骤的模型将类似于当前步骤的模型。
-因此，来自先前模型分布的样本将非常接近于来自当前模型分布的客观样本，因此用这些样本初始化的\gls{markov_chain}将不需要花费很多时间来完成\gls{mixing}。%??  两个因此 ？
+因此，来自先前模型分布的样本将非常接近来自当前模型分布的客观样本，用这些样本初始化的\gls{markov_chain}将不需要花费很多时间来完成\gls{mixing}。
 
 
 因为每个\gls{markov_chain}在整个学习过程中不断更新，而不是在每个梯度步骤中重新开始，\gls{markov_chain}可以自由探索很远，以找到模型的所有\gls{mode}。 
@@ -399,7 +399,7 @@
 可以用\firstgls{generalized_pseudolikelihood_estimator}以计算复杂度的增加换取其相对于最大似然表现的偏离的下降~\citep{Huang02}。
 \gls{generalized_pseudolikelihood_estimator}使用$m$个不同的集合$\SetS^{(i)}$，$i=1, \dots, m$作为变量的指标出现在条件棒的左侧。
 在$m = 1$和$\SetS^{(1)}= 1, \dots, n$的极端情况下\gls{generalized_pseudolikelihood_estimator}会变为对数似然。
-在$m = n$和$\SetS^{(i)} = \{i\}$的极端情况下，\gls{generalized_pseudolikelihood}会恢复为\gls{pseudolikelihood}。%??   recover the pseudolikeli
+在$m = n$和$\SetS^{(i)} = \{i\}$的极端情况下，\gls{generalized_pseudolikelihood}会变为\gls{pseudolikelihood}。%??   recover the pseudolikeli
 \gls{generalized_pseudolikelihood_estimator}\gls{objective_function}如下所示
 \begin{equation}
 	\sum_{i=1}^m \log p(\RVx_{\SetS^{(i)}} \mid \RVx_{- \SetS^{(i)} }).
@@ -414,7 +414,7 @@
 % 608 mid
 
 \gls{pseudolikelihood}估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中介绍的\gls{variational_inference}。这是因为$\tilde{p}$出现在了分母中。
-分母的下界仅提供了整个表达式的上界，然而我们并不关心最大化上界。%?? 最大化这个上届没有什么意义？
+分母的下界仅提供了整个表达式的上界，然而最大化上界没有什么意义。
 这使得我们难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的\gls{deep_model}，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
 尽管如此，\gls{pseudolikelihood}仍然可以用在\gls{DL}中，它可以用于单层模型，或使用不基于下限的近似推断方法的\gls{deep_model}中。
 
@@ -634,7 +634,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 
 当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}\,定义了一个被称为\firstgls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望~\citep{Goodfellow-ICLR2015}。
-特殊情况的\,\glssymbol{NCE}（\gls{noise}采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分的过程，而\gls{NCE}通过让模型区分现实和固定的基准（\gls{noise}模型），降低了计算成本。%??  以  是不是多余的？
+特殊情况的\,\glssymbol{NCE}（\gls{noise}采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分的过程，而\gls{NCE}通过让模型区分现实和固定的基准（\gls{noise}模型），我们降低了计算成本。%??  以  是不是多余的？
 
 
 在训练样本和生成样本（使用模型能量函数定义分类器）之间进行分类以得到模型的梯度的方法，已经在更早的时候以各种形式提出来~\citep{Welling2003b,Bengio-2009-book}。

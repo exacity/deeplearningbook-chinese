@@ -2,47 +2,47 @@
 % Translator: Shenjian Zhao
 \chapter{\glsentrytext{DL}中的正则化}
 \label{chap:regularization_for_deep_learning}
-设计不仅在训练数据上表现好，并且能在新输入上泛化好的算法是\gls{ML}中的一个核心问题。
-在\gls{ML}中许多策略通过明确设计，以增大训练误差为代价来减少测试误差。
-这些策略统称为\gls{regularization}。
-正如我们将看到的，\gls{DL}工作者可以使用许多形式的\gls{regularization}。
+\gls{ML}中的一个核心问题是设计不仅在训练数据上表现好，并且能在新输入上泛化好的算法。
+在\gls{ML}中，许多策略显式地被设计为减少测试误差（可能会以增大训练误差为代价）。
+这些策略被统称为\gls{regularization}。
+我们将在后文看到，\gls{DL}工作者可以使用许多不同形式的\gls{regularization}策略。
 事实上，开发更有效的\gls{regularization}策略已成为本领域的主要研究工作之一。
 
 \chapref{chap:machine_learning_basics}介绍了\gls{generalization}、\gls{underfitting}、\gls{overfitting}、\gls{bias_sta}、\gls{variance}和\gls{regularization}的基本概念。
 如果你不熟悉这些概念，请参考该章节再继续阅读本章。
 
-在本章中，我们会更详细地描述\gls{regularization}，重点描述深度模型（或组成深度模型的模块）的\gls{regularization}策略。
+在本章中，我们会更详细地介绍\gls{regularization}，重点介绍深度模型（或组成深度模型的模块）的\gls{regularization}策略。
 
-本章某些节涉及\gls{ML}中的标准概念。
+本章中的某些章节涉及\gls{ML}中的标准概念。
 如果你已经熟悉了这些概念，可以随意跳过相关章节。
-然而，本章的大多数内容涉及这些基本概念在特定\gls{NN}中的扩展。
+然而，本章的大多数内容涉及这些基本概念在特定\gls{NN}中的扩展概念。
 
-在\secref{sec:regularization}，我们将\gls{regularization}定义为``对学习算法的修改——旨在减少\gls{generalization}误差而不是训练误差''。
+在\secref{sec:regularization}中，我们将\gls{regularization}定义为``对学习算法的修改——旨在减少\gls{generalization}误差而不是训练误差''。
 目前有许多\gls{regularization}策略。
-有些向\gls{ML}模型添加额外的约束，如增加对参数的限制。
-有些向\gls{objective_function}增加额外项，对应于参数值的软约束。
-如果仔细选择，这些额外的约束和惩罚可以改善模型在测试集上的表现。
-有时，这些约束和惩罚设计为编码特定类型的先验知识。
-其他时候，这些约束和惩罚的目的是表达对简单模型的一般偏好，以便提高\gls{generalization}能力。
-有时候，惩罚和约束对于确定欠定的问题是必要的。
+有些策略向\gls{ML}模型添加限制参数的额外约束。
+有些策略向\gls{objective_function}增加参数值软约束的额外项。
+如果我们仔细选择，这些额外的约束和惩罚可以改善模型在测试集上的表现。
+有时侯，这些约束和惩罚被设计为编码特定类型的先验知识；
+其他时候，这些约束和惩罚被设计为偏好简单模型，以便提高\gls{generalization}能力。
+有时，惩罚和约束对于确定欠定的问题是必要的。
 其他形式的\gls{regularization}（如\gls{ensemble}方法）结合多个假说来解释训练数据。
 
 % -- 221 --
 
-在\gls{DL}的背景下，大多数\gls{regularization}策略都对\gls{estimator}进行\gls{regularization}。
+在\gls{DL}的背景下，大多数\gls{regularization}策略都会对\gls{estimator}进行\gls{regularization}。
 \gls{estimator}的\gls{regularization}以\gls{bias_sta}的增加换取\gls{variance}的减少。
 一个有效的\gls{regularization}是有利的``交易''，也就是能显著减少\gls{variance}而不过度增加\gls{bias_sta}。
-我们在\chapref{chap:machine_learning_basics}中讨论\gls{generalization}和\gls{overfitting}时，主要侧重模型族训练的3个情形：（1）不包括真实的数据生成过程——对应于\gls{underfitting}和\gls{bias_sta}引入，（2）匹配真实数据生成过程，（3）除了包含真实的数据生成过程，还包含了许多其他可能的生成过程——\gls{variance}（而不是\gls{bias_sta}）主导的\gls{overfitting}。
-\gls{regularization}的目标是使模型从第三种情况进入到第二个情况。
+我们在\chapref{chap:machine_learning_basics}中讨论\gls{generalization}和\gls{overfitting}时，主要侧重模型族训练的3个情形：（1）不包括真实的数据生成过程——对应\gls{underfitting}和含有\gls{bias_sta}的情况，（2）匹配真实数据生成过程，（3）除了包括真实的数据生成过程，还包括许多其他可能的生成过程——\gls{variance}（而不是\gls{bias_sta}）主导的\gls{overfitting}。
+\gls{regularization}的目标是使模型从第三种情况转化为第二种情况。
 
-在实践中，过于复杂的模型族不一定包括目标函数或真实数据生成过程，甚至近似的过程都不包含。
-我们几乎从来无法知晓真实数据的生成过程，所以我们永远不知道被估计的模型族是否包括生成过程。
-然而，\gls{DL}算法的大多数应用都是针对这样的领域，其中真实数据的生成过程几乎肯定在模型族之外。
-\gls{DL}算法通常应用于极为复杂的领域，如图像、音频序列和文本，本质上这些领域的真正生成过程涉及模拟整个宇宙。
+在实践中，过于复杂的模型族不一定包括目标函数或真实数据生成过程，甚至也不包括近似过程。
+我们几乎从未知晓真实数据的生成过程，所以我们永远不知道被估计的模型族是否包括生成过程。
+然而，\gls{DL}算法的大多数应用都是针对这样的情况，其中真实数据的生成过程几乎肯定在模型族之外。
+\gls{DL}算法通常应用于极为复杂的领域，如图像、音频序列和文本，本质上这些领域的真实生成过程涉及模拟整个宇宙。
 从某种程度上说，我们总是持方枘（数据生成过程）而欲内圆凿（我们的模型族）。
 
-这意味着控制模型的复杂性不是找到合适规模的模型（带有正确的参数个数）这样一个简单的事情。
-相反，我们可能会发现，或者说在实际的深度学习场景中我们几乎总是会发现，最好的拟合模型（最小化\gls{generalization}误差的意义上）是一个适当\gls{regularization}的大型模型。
+这意味着控制模型的复杂度不是找到合适规模的模型（带有正确的参数个数）这样一个简单的事情。
+相反，我们可能会发现，或者说在实际的深度学习场景中我们几乎总是会发现，最好的拟合模型（从最小化\gls{generalization}误差的意义上）是一个适当\gls{regularization}的大型模型。
 
 现在我们回顾几种创建这些大型深度\gls{regularization}模型的策略。
 
@@ -50,8 +50,8 @@
 
 \section{参数范数惩罚}
 \label{sec:parameter_norm_penalties}
-\gls{regularization}在\gls{DL}的出现前就已经应用了数十年。
-\gls{linear_model}，如\gls{linear_regression}和\gls{logistic_regression}可以使用简单、直接有效的\gls{regularization}策略。
+\gls{regularization}在\gls{DL}的出现前就已经被使用了数十年。
+\gls{linear_model}，如\gls{linear_regression}和\gls{logistic_regression}可以使用简单、直接、有效的\gls{regularization}策略。
 
 许多\gls{regularization}方法通过对\gls{objective_function} $J$添加一个参数范数惩罚$\Omega(\Vtheta)$，限制模型（如\gls{NN}、\gls{linear_regression}或\gls{logistic_regression}）的学习能力。
 我们将正则化后的\gls{objective_function}记为$\tilde{J}$：
@@ -59,36 +59,36 @@
  \tilde{J}(\Vtheta;\MX, \Vy) = J(\Vtheta;\MX, \Vy) + \alpha \Omega(\Vtheta),
 \end{align}
 其中$\alpha \in [0, \infty)$是权衡范数惩罚项$\Omega$和标准\gls{objective_function} $J(\MX;\Vtheta)$相对贡献的超参数。
-将$\alpha$设为0就是没有\gls{regularization}。
-越大的$\alpha$，对应于越多的\gls{regularization}惩罚。
+将$\alpha$设为0表示没有\gls{regularization}。
+$\alpha$越大，对应\gls{regularization}惩罚越大。
 
 当我们的训练算法最小化\gls{regularization}后的\gls{objective_function} $\tilde{J}$时，它会降低原始目标$J$关于训练数据的误差并同时减小参数$\Vtheta$的规模（或在某些衡量下参数子集的规模）。
-参数范数$\Omega$的不同选择会导致不同的优先解。
-在本节中，我们讨论各种范数惩罚对模型的影响。
+选择不同的参数范数$\Omega$会偏好不同的解法。
+在本节中，我们会讨论各种范数惩罚对模型的影响。
 
-在探究不同范数的\gls{regularization}表现之前，我们需要提一下，在神经网络中我们通常只对每一层仿射变换的\emph{权重}做惩罚而不对\gls{bias_aff}做正则惩罚。
+在探究不同范数的\gls{regularization}表现之前，我们需要说明一下，在神经网络中我们通常只对每一层仿射变换的\emph{权重}做惩罚而不对\gls{bias_aff}做正则惩罚。
 精确拟合\gls{bias_aff}所需的数据通常比拟合权重少得多。
-每个权重指定两个变量如何相互作用。
-我们需要在各种条件下观察这两个变量才能拟合权重。
+每个权重会指定两个变量如何相互作用。
+我们需要在各种条件下观察这两个变量才能良好地拟合权重。
 而每个\gls{bias_aff}仅控制一个单变量。
-这意味着，我们不对其进行\gls{regularization}也不会引起太大的\gls{variance}。
-另外，\gls{regularization}的\gls{bias_aff}参数可能会引起显著的\gls{underfitting}。
+这意味着，我们不对其进行\gls{regularization}也不会导致太大的\gls{variance}。
+另外，\gls{regularization}\gls{bias_aff}参数可能会导致明显的\gls{underfitting}。
 因此，我们使用向量$\Vw$表示所有应受范数惩罚影响的权重，而向量$\Vtheta$表示所有参数(包括$\Vw$和无需\gls{regularization}的参数)。
 
 在\gls{NN}的情况下，有时希望对网络的每一层使用单独的惩罚，并分配不同的$\alpha$系数。
-搜索多个正确超参数的代价很大，因此为了减少搜索空间在所有层使用相同\gls{weight_decay}是合理的。
+拟合多个超参数的代价很大，因此为了减少搜索空间，我们会在所有层使用相同的\gls{weight_decay}。
 
 % -- 223 --
 
 \subsection{$L^2$参数\glsentrytext{regularization}}
 \label{sec:l2_parameter_regularization}
-在\secref{sec:capacity_overfitting_and_underfitting}中我们已经看到最简单和最常见的参数范数惩罚是，通常被称为\firstgls{weight_decay}的$L^2$参数范数惩罚。
-这个\gls{regularization}策略通过向\gls{objective_function}添加一个正则项$\Omega(\Vtheta) = \frac{1}{2} \norm{\Vw}_2^2$，使权重更加接近原点\footnote{更一般地，我们可以将参数\gls{regularization}为接近空间中的任意特定点，令人惊讶的是仍有\gls{regularization}效果，并且更接近真实值将获得更好的结果。
-当我们不知道正确的值应该是正还是负，零是有意义的默认值。
-由于将模型参数\gls{regularization}为零的情况更常见，我们将关注这种特殊情况。}。
+在\secref{sec:capacity_overfitting_and_underfitting}中我们已经看到过最简单和最常见的参数范数惩罚，即通常被称为\firstgls{weight_decay}的$L^2$参数范数惩罚。
+这个\gls{regularization}策略通过向\gls{objective_function}添加一个正则项$\Omega(\Vtheta) = \frac{1}{2} \norm{\Vw}_2^2$，使权重更加接近原点\footnote{更一般地，我们可以将参数\gls{regularization}为接近空间中的任意特定点，令人惊讶的是这样也仍有\gls{regularization}效果，但是特定点越接近真实值结果越好。
+当我们不知道正确的值应该是正还是负时，零是有意义的默认值。
+由于模型参数\gls{regularization}为零的情况更为常见，我们将只探讨这种特殊情况。}。
 在其他学术圈，$L^2$也被称为\gls{ridge_regression}或\gls{tikhonov_regularization}。
 
-我们可以研究\gls{regularization}化后\gls{objective_function}的\gls{gradient}洞察一些\gls{weight_decay}的\gls{regularization}表现。
+我们可以通过研究\gls{regularization}化后\gls{objective_function}的\gls{gradient}，洞察一些\gls{weight_decay}的\gls{regularization}表现。
 为了简单起见，我们假定其中没有\gls{bias_aff}参数，因此$\Vtheta$就是$\Vw$。
 这样一个模型具有以下总的\gls{objective_function}：
 \begin{align}
@@ -106,41 +106,41 @@
 \begin{align}
  \Vw \leftarrow (1-\epsilon \alpha)\Vw - \epsilon \nabla_{\Vw} J(\Vw;\MX, \Vy).
 \end{align}
-我们可以看到，加入\gls{weight_decay}后会修改学习规则，即在每步执行通常的\gls{gradient}更新之前先收缩权重向量（将权重向量乘以一个常数因子）。
+我们可以看到，加入\gls{weight_decay}后会引起学习规则的修改，即在每步执行通常的\gls{gradient}更新之前先收缩权重向量（将权重向量乘以一个常数因子）。
 这是单个步骤发生的变化。
-但是，在训练的整个过程会发生什么？
+但是，在训练的整个过程会发生什么呢？
 
 % -- 224 --
 
-我们进一步简化分析，令$\Vw^*$为没有\gls{regularization}时\gls{objective_function}取得最小训练误差的权重向量，即$\Vw^* = \argmin_{\Vw} J(\Vw)$， 并在$\Vw^*$的邻域作二次近似。
-如果\gls{objective_function}确实是二次的(如以均方误差拟合\gls{linear_regression}模型的情况下)，则该近似是完美的。
+我们进一步简化分析，令$\Vw^*$为不含\gls{regularization}的\gls{objective_function}取得最小训练误差时的权重向量，即$\Vw^* = \argmin_{\Vw} J(\Vw)$， 并在$\Vw^*$的邻域对\gls{objective_function}做二次近似。  
+如果\gls{objective_function}确实是二次的(如以均方误差拟合\gls{linear_regression}模型的情况)，则该近似是完美的。
 近似的$\hat J(\Vtheta)$如下
 \begin{align}
  \hat J(\Vtheta) = J(\Vw^*) + \frac{1}{2}(\Vw - \Vw^*)^\top \MH (\Vw - \Vw^*),
 \end{align}
 其中$\MH$是$J$在$\Vw^*$处计算的\gls{hessian}矩阵(关于$\Vw$)。
-因为$\Vw^*$被定义为最小，即梯度消失为0，所以该二次近似中没有一阶项。
-同样，因为$\Vw^*$是$J$的一个最小点，我们可以得出$\MH$是半正定的结论。
+因为$\Vw^*$被定义为最优，即梯度消失为$0$，所以该二次近似中没有一阶项。
+同样地，因为$\Vw^*$是$J$的一个最优点，我们可以得出$\MH$是半正定的结论。
 
-当$\hat J$取最小时，其梯度
+当$\hat J$取得最小时，其梯度
 \begin{align}
 \label{eq:gradient}
   \nabla_{\Vw} \hat{J}(\Vw) = \MH (\Vw - \Vw^*)
 \end{align}
-为0。
+为$0$。
 
-为了研究\gls{weight_decay}的影响，我们将\gls{weight_decay}的梯度加到\eqnref{eq:gradient}中。 
-现在我们要找\gls{regularization}版本$\hat J$的最小值。
-我们使用变量$\tilde{\Vw}$表示最小值的位置:
+为了研究\gls{weight_decay}带来的影响，我们在\eqnref{eq:gradient}中添加\gls{weight_decay}的梯度。 
+现在我们探讨最小化含有\gls{regularization}的$\hat J$。
+我们使用变量$\tilde{\Vw}$表示此时的最优点:
 \begin{align}
  \alpha \tilde{\Vw} + \MH (\tilde{\Vw} - \Vw^*) = 0 \\
  (\MH + \alpha \MI) \tilde{\Vw} = \MH \Vw^* \\
  \tilde{\Vw} = (\MH + \alpha \MI)^{-1} \MH \Vw^* \label{eq:final_w}
  \end{align}
 
-当$\alpha$趋向于0， \gls{regularization}的解$\tilde{\Vw}$趋向$\Vw^*$。 
-那么当$\alpha$增加时会发生什么？
-因为$\MH$是实对称的，我们可以将其分解为一个对角矩阵$\VLambda$和一组特征向量的标准正交基$\MQ$，并且$\MH = \MQ \VLambda \MQ^\top$。
+当$\alpha$趋向于$0$时，\gls{regularization}的解$\tilde{\Vw}$会趋向$\Vw^*$。 
+那么当$\alpha$增加时会发生什么呢？
+因为$\MH$是实对称的，所以我们可以将其分解为一个对角矩阵$\VLambda$和一组特征向量的标准正交基$\MQ$，并且有$\MH = \MQ \VLambda \MQ^\top$。
 将其应用于\eqnref{eq:final_w}，可得：
 \begin{align}
  \tilde \Vw &= ( \MQ \VLambda \MQ^\top + \alpha \MI)^{-1} \MQ \VLambda \MQ^\top \Vw^* \\
@@ -148,12 +148,12 @@
                  &= \MQ( \VLambda+ \alpha \MI)^{-1} \VLambda \MQ^\top \Vw^*. \label{eq:713L2}
 \end{align}
 我们可以看到\gls{weight_decay}的效果是沿着由$\MH$的特征向量所定义的轴缩放$\Vw^*$。
-具体来说，与$\MH$第$i$个特征向量对齐的$\Vw^*$的分量根据$\frac{\lambda_i}{\lambda_i + \alpha}$因子缩放。
+具体来说，我们会根据$\frac{\lambda_i}{\lambda_i + \alpha}$因子缩放与$\MH$第$i$个特征向量对齐的$\Vw^*$的分量。
 （不妨查看\figref{fig:chap2_eigen_ellipse}回顾这种缩放的原理）。
 
 沿着$\MH$特征值较大的方向(如$\lambda_i \gg \alpha$)\gls{regularization}的影响较小。
 而$\lambda_i \ll \alpha$的分量将会收缩到几乎为零。
-这种效应在\figref{fig:chap7_reg_l2}示出。
+这种效应如\figref{fig:chap7_reg_l2}所示。
 \begin{figure}[!htb]
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
@@ -177,15 +177,15 @@
 
 % -- 225 --
 
-只有显著减小\gls{objective_function}方向上的参数会保留得相对完好。
-无助于\gls{objective_function}减小的方向，即\gls{hessian}小的特征值告诉我们，在这个方向的移动不会显著增加\gls{gradient}。
-对应于这种不重要方向的分量会随训练过程中使用的\gls{regularization}而衰减掉。
+只有在显著减小\gls{objective_function}方向上的参数会保留得相对完好。
+在无助于\gls{objective_function}减小的方向（对应\gls{hessian}矩阵较小的特征值）上改变参数不会显著增加\gls{gradient}。
+这种不重要方向对应的分量会在训练过程中因\gls{regularization}而衰减掉。
 
 
 目前为止，我们讨论了\gls{weight_decay}对优化一个抽象通用的二次\gls{cost_function}的影响。
-这些影响具体怎样与机器学习关联？
-我们可以研究\gls{linear_regression}，它的真实\gls{cost_function}是二次的，因此适合目前为止我们使用的分析。
-再次应用分析，我们将能够获得相同结果的特例，但这次我们使用训练数据的术语表述。
+这些影响具体是怎么和机器学习关联的呢？
+我们可以研究\gls{linear_regression}，它的真实\gls{cost_function}是二次的，因此我们可以使用相同的方法分析。
+再次应用分析，我们会在这种情况下得到相同的结果，但这次我们使用训练数据的术语表述。
 \gls{linear_regression}的\gls{cost_function}是平方误差之和：
 \begin{align}
  (\MX \Vw - \Vy)^\top (\MX \Vw - \Vy).
@@ -207,24 +207,24 @@
 \eqnref{eq:716w}中的矩阵$\MX^\top\MX$与\gls{covariance}矩阵$\frac{1}{m}\MX^\top\MX$成正比。
 $L^2$正则项将这个矩阵替换为\eqnref{eq:717mw}中的$ (\MX^\top \MX + \alpha \MI)^{-1}$
 这个新矩阵与原来的是一样的，不同的仅仅是在对角加了$\alpha$。
-这个矩阵的对角项对应于每个输入特征的\gls{variance}。
-我们可以看到，$L^2$\gls{regularization}能让学习算法``感知''到具有较高方差的输入$\Vx$， 因此与输出目标的\gls{covariance}较小（相对增加方差）的特征的权重将会收缩。
+这个矩阵的对角项对应每个输入特征的\gls{variance}。
+我们可以看到，$L^2$\gls{regularization}能让学习算法``感知''到具有较高方差的输入$\Vx$，因此与输出目标的\gls{covariance}较小（相对增加方差）的特征的权重将会收缩。
 
 \subsection{$L^1$参数\glsentrytext{regularization}}
 \label{sec:l1_regularization}
-$L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，我们还可以使用其他的方法惩罚模型参数的大小。
-另一种选择是使用$L^1$\gls{regularization}。
+$L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，我们还可以使用其他的方法限制模型参数的大小。
+比如我们还可以使用$L^1$\gls{regularization}。
 
-对模型参数$\Vw$的$L^1$\gls{regularization}形式定义为：
+形式地，对模型参数$\Vw$的$L^1$\gls{regularization}被定义为：
 \begin{align}
  \Omega(\Vtheta) = \norm{ \Vw }_1 = \sum_i | w_i |,
  \end{align}
 即各个参数的绝对值之和\footnote{如同$L^2$\gls{regularization}，我们能将参数\gls{regularization}到其他非零值$\Vw^{(o)}$。在这种情况下，$L^1$\gls{regularization}将会引入不同的项$\Omega(\Vtheta)=
 \|\Vw - \Vw^{(o)} \|_1 = \sum_i | w_i - w_i^{(o)} |$。}。
-接着我们将讨论$L^1$\gls{regularization}对简单\gls{linear_regression}模型的影响， 与分析$L^2$\gls{regularization}时一样不考虑\gls{bias_aff}参数。  
+接着我们将讨论$L^1$\gls{regularization}对简单\gls{linear_regression}模型的影响，与分析$L^2$\gls{regularization}时一样不考虑\gls{bias_aff}参数。  
 我们尤其感兴趣的是找出$L^1$和$L^2$\gls{regularization}之间的差异。
-与$L^2$\gls{weight_decay}类似，$L^1$\gls{weight_decay}的强度也可以通过缩放惩罚项$\Omega$的正超参数$\alpha$控制。 
-因此，\gls{regularization}的\gls{objective_function} $\tilde{J}(\Vw;\MX, \Vy)$如下给出
+与$L^2$\gls{weight_decay}类似，我们也可以通过缩放惩罚项$\Omega$的正超参数$\alpha$来控制$L^1$\gls{weight_decay}的强度。 
+因此，\gls{regularization}的\gls{objective_function} $\tilde{J}(\Vw;\MX, \Vy)$如下所示
 \begin{align}
 \tilde{J}(\Vw;\MX, \Vy) = \alpha \| \Vw \|_1 +  J(\Vw;\MX, \Vy) ,
 \end{align}
@@ -233,13 +233,13 @@ $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，我们还可以
 \label{eq:subgradient}
   \nabla_{\Vw} \tilde{J}(\Vw; \MX, \Vy) = \alpha \text{sign}(\Vw) + \nabla_{\Vw} J(\Vw; \MX, \Vy), % ?? may be wrong
 \end{align}
-其中$\text{sign}(\Vw)$只是简单地取$\Vw$各个元素的符号。
+其中$\text{sign}(\Vw)$只是简单地取$\Vw$各个元素的正负号。
 
 % -- 227 --
 
 观察\eqnref{eq:subgradient}，我们立刻发现$L^1$的\gls{regularization}效果与$L^2$大不一样。
-具体来说，我们可以看到\gls{regularization}对\gls{gradient}的贡献不再是线性地缩放每个$w_i$；而是使用与$\text{sign}(w_i)$同号的常数因子。
-这种形式的\gls{gradient}的一个后果是，我们不一定能得到$J(\MX, \Vy;\Vw)$二次近似的直接算术解（$L^2$\gls{regularization}时可以）。 
+具体来说，我们可以看到\gls{regularization}对\gls{gradient}的影响不再是线性地缩放每个$w_i$；而是添加了一项与$\text{sign}(w_i)$同号的常数。
+使用这种形式的\gls{gradient}之后，我们不一定能得到$J(\MX, \Vy;\Vw)$二次近似的直接算术解（$L^2$\gls{regularization}时可以）。 
  
 简单\gls{linear_model}具有二次\gls{cost_function}，我们可以通过\gls{taylor}级数表示。
 或者我们可以设想，这是逼近更复杂模型的\gls{cost_function}的截断\gls{taylor}级数。
@@ -247,10 +247,10 @@ $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，我们还可以
 \begin{align}
   \nabla_{\Vw} \hat{J}(\Vw) = \MH (\Vw - \Vw^*),
 \end{align}
-同样，$\MH$是$J$在$\Vw^*$处计算的\gls{hessian}矩阵(关于$\Vw$)。
+同样，$\MH$是$J$在$\Vw^*$处的\gls{hessian}矩阵(关于$\Vw$)。
 
 由于$L^1$惩罚项在满的、一般的\gls{hessian}的情况下，无法得到直接清晰的代数表达式，因此我们将进一步简化假设\gls{hessian}是对角的，即$\MH = \text{diag}([H_{1,1},\dots, H_{n,n}])$，其中每个$H_{i,i}>0$。
-如果用于\gls{linear_regression}问题的数据已被预处理（如可以使用PCA），去除了输入特征之间的相关性，那么这一假设成立。
+如果\gls{linear_regression}问题中的数据已被预处理（如可以使用PCA），去除了输入特征之间的相关性，那么这一假设成立。
 
 我们可以将$L^1$\gls{regularization}目标函数的二次近似分解成关于参数的求和：
 \begin{align}
@@ -265,27 +265,27 @@ w_i = \text{sign}(w_i^*) \max\Big\{ |w_i^*| - \frac{\alpha}{H_{i,i}} , 0\Big\} .
 \begin{enumerate}
 \item $w_i^* \leq \frac{\alpha}{H_{i,i}}$的情况。
 \gls{regularization}后目标中的$w_i$最优值是$w_i = 0$。
-这是因为在方向$i$上$J(\Vw; \MX, \Vy) $对$ \hat J(\Vw; \MX, \Vy)$的贡献受到压制，$L^1$\gls{regularization}项将$w_i$推向0。
-\item  $w_i^* > \frac{\alpha}{H_{i,i}}$的情况。在这种情况，\gls{regularization}不会将$w_i$的最优值移向0，而仅仅在那个方向移动$\frac{\alpha}{H_{i,i}}$的距离。
+这是因为在方向$i$上$J(\Vw; \MX, \Vy) $对$ \hat J(\Vw; \MX, \Vy)$的贡献受到抑制，$L^1$\gls{regularization}项将$w_i$推向0。
+\item  $w_i^* > \frac{\alpha}{H_{i,i}}$的情况。在这种情况下，\gls{regularization}不会将$w_i$的最优值推向0，而仅仅在那个方向上移动$\frac{\alpha}{H_{i,i}}$的距离。
 \end{enumerate}
 $w_i^* < 0$的情况与之类似，但是$L^1$惩罚项使$w_i$更接近0(增加$ \frac{\alpha}{H_{i,i}}$)或者为0。
 
 相比$L^2$\gls{regularization}，$L^1$\gls{regularization}会产生更\firstgls{sparse}的解。
-此处\gls{sparse}性指的是一些参数具有0的最优值。
-$L^1$\gls{regularization}的\gls{sparse}性是相比$L^2$\gls{regularization}是质的不同。
+此处\gls{sparse}性指的是一些参数具有最优值0。
+和$L^2$\gls{regularization}相比，$L^1$\gls{regularization}的\gls{sparse}性具有本质的不同。
 \eqnref{eq:713L2}给出了$L^2$\gls{regularization}的解$\tilde \Vw$。 
-如果我们使用\gls{hessian} $\MH$为对角正定的假设（与$L^1$\gls{regularization}分析时一样），重新考虑这个等式，我们发现
+如果我们使用\gls{hessian} $\MH$为对角正定矩阵的假设（与$L^1$\gls{regularization}分析时一样），重新考虑这个等式，我们发现
 $\tilde{w_i} = \frac{H_{i,i}}{H_{i,i} + \alpha} w_i^*$。
-如果$w_i^*$不是0，那$\tilde{w_i}$也会保持非0。 
-这表明$L^2$\gls{regularization}不会导致参数变得\gls{sparse}，而$L^1$\gls{regularization}有可能通过足够大的$\alpha$实现\gls{sparse}。
+如果$w_i^*$不是零，那么$\tilde{w_i}$也会保持非零。 
+这表明$L^2$\gls{regularization}不会使参数变得\gls{sparse}，而$L^1$\gls{regularization}有可能通过足够大的$\alpha$实现\gls{sparse}。
  
 由$L^1$\gls{regularization}导出的\gls{sparse}性质已经被广泛地用于\firstgls{feature_selection}机制。
-\gls{feature_selection}从可用的特征子集选择应该使用的子集，简化了\gls{ML}问题。
-特别是著名的LASSO\citep{Tibshirani95}（Least Absolute Shrinkage and
+\gls{feature_selection}从可用的特征子集选择出有意义的特征，化简\gls{ML}问题。
+著名的LASSO\citep{Tibshirani95}（Least Absolute Shrinkage and
 Selection Operator）模型将$L^1$惩罚和\gls{linear_model}结合，并使用最小二乘\gls{cost_function}。 
 $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全地忽略。
  
-在\secref{sec:maximum_a_posteriori_map_estimation}，我们看到许多\gls{regularization}策略可以解释为\glssymbol{MAP}贝叶斯推断，
+在\secref{sec:maximum_a_posteriori_map_estimation}，我们看到许多\gls{regularization}策略可以被解释为\glssymbol{MAP}贝叶斯推断，
 特别是$L^2$\gls{regularization}相当于权重是高斯先验的\glssymbol{MAP}贝叶斯推断。
 对于$L^1$\gls{regularization}，用于\gls{regularization}\gls{cost_function}的惩罚项$\alpha \Omega(\Vw) =  \alpha \sum_i |w_i |$与通过\glssymbol{MAP}贝叶斯推断最大化的对数先验项是等价的（$\Vw \in \SetR^n$并且权重先验是各向同性的拉普拉斯分布（\eqnref{eq:chap3_laplace}））：
 \begin{align}
@@ -303,8 +303,8 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
  \tilde{J}(\Vtheta;\MX, \Vy) = J(\Vtheta;\MX, \Vy) + \alpha \Omega(\Vtheta) .
 \end{align}
 
-回顾\secref{sec:constrained_optimization}我们可以构造一个\gls{generalized_lagrange_function}来最小化受约束的函数，即在原始\gls{objective_function}加上一系列惩罚项。
-每个惩罚是一个系数之间的乘积，称为\firstgls{KKT}乘子，以及一个表示约束是否满足的函数。
+回顾\secref{sec:constrained_optimization}我们可以构造一个\gls{generalized_lagrange_function}来最小化带约束的函数，即在原始\gls{objective_function}上添加一系列惩罚项。
+每个惩罚是一个系数之间的乘积，被称为\firstgls{KKT}乘子，以及一个表示约束是否满足的函数。
 如果我们想约束$\Omega(\Vtheta)$小于某个常数$k$，我们可以构建\gls{generalized_lagrange_function}
 \begin{align}
  \CalL(\Vtheta, \alpha; \MX, \Vy) = J(\Vtheta; \MX, \Vy) + \alpha (\Omega(\Vtheta) - k).
@@ -315,11 +315,11 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
  \Vtheta^* = \underset{\Vtheta}{ \argmin} \underset{\alpha, \alpha \geq 0}{\max} \CalL(\Vtheta, \alpha).
 \end{align}
 
-如\secref{sec:constrained_optimization}中描述，解决这个问题需要同时改变$\Vtheta$和$\alpha$。
+如\secref{sec:constrained_optimization}中描述的，解决这个问题我们需要同时改变$\Vtheta$和$\alpha$。
 \secref{sec:example_linear_least_squares}给出了一个带$L^2$约束的\gls{linear_regression}实例。
-许多不同的优化过程是可能的，有些可能会利用\gls{GD}而其他可能使用\gls{gradient}为0的解析解，但在所有程序中$\alpha$在$\Omega(\Vtheta) > k$时必须增加，在$\Omega(\Vtheta) < k$时必须减小。
-所有正的$\alpha$鼓励$\Omega(\Vtheta)$收缩。
-最佳值$\alpha^*$也将鼓励$\Omega(\Vtheta)$收缩，但不会如$\Omega(\Vtheta)$小于$k$时那么强烈。
+还有许多不同的优化方法，有些可能会使用\gls{GD}而其他可能会使用\gls{gradient}为0的解析解，但在所有程序中$\alpha$在$\Omega(\Vtheta) > k$时必须增加，在$\Omega(\Vtheta) < k$时必须减小。
+所有正值的$\alpha$都鼓励$\Omega(\Vtheta)$收缩。
+最优值$\alpha^*$也将鼓励$\Omega(\Vtheta)$收缩，但不会像$\Omega(\Vtheta)$小于$k$时那么强烈。
 
 为了洞察约束的影响，我们可以固定$\alpha^*$，把这个问题看成只跟$\Vtheta$有关的函数：
 \begin{align}
@@ -334,26 +334,26 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 通常我们不知道\gls{weight_decay}系数$\alpha^*$约束的区域大小，因为$\alpha^*$的值不直接告诉我们$k$的值。
 原则上我们可以解得$k$，但$k$和$\alpha^*$之间的关系取决于$J$的形式。
 虽然我们不知道约束区域的确切大小，但我们可以通过增加或者减小$\alpha$来大致扩大或收缩约束区域。
-较大的$\alpha$，将导致一个较小的约束区域。
-较小的$\alpha$，将导致一个较大的约束区域。
+较大的$\alpha$，将得到一个较小的约束区域。
+较小的$\alpha$，将得到一个较大的约束区域。
 
 % -- 230 --
 
 有时候，我们希望使用显式的限制，而不是惩罚。
-如\secref{sec:constrained_optimization}所描述，我们能修改下降算法（如\gls{SGD}算法），使其先计算$J(\Vtheta)$的下降步，然后将$\Vtheta$投影到满足$\Omega(\Vtheta) < k$的最近点。
+如\secref{sec:constrained_optimization}所述，我们可以修改下降算法（如\gls{SGD}算法），使其先计算$J(\Vtheta)$的下降步，然后将$\Vtheta$投影到满足$\Omega(\Vtheta) < k$的最近点。
 如果我们知道什么样的$k$是合适的，而不想花时间寻找对应于此$k$处的$\alpha$值，这会非常有用。
 
-另一个使用显式约束和重投影而不是使用惩罚强加约束的原因是惩罚可能导致非凸优化过程而陷入局部极小(对应于小的$\Vtheta$）。
+另一个使用显式约束和重投影而不是使用惩罚强加约束的原因是惩罚可能会导致\gls{objective_function}非凸而使算法陷入局部极小(对应于小的$\Vtheta$）。
 当训练\gls{NN}时，这通常表现为训练带有几个``死亡单元''的\gls{NN}。
-这些单元不会对网络学到的函数的行为有太大贡献，因为进入或离开他们的权重都非常小。
-当使用权重范数的惩罚训练时，即使可能通过增加权重以显著减少$J$，这些配置也可能是局部最优的。
-因为重投影实现的显式约束不鼓励权重接近原点，所以在这些情况下工作得更好。
+这些单元不会对网络学到的函数有太大影响，因为进入或离开它们的权重都非常小。
+当使用权重范数的惩罚训练时，即使可以通过增加权重以显著减少$J$，这些配置也可能是局部最优的。
+因为重投影实现的显式约束不鼓励权重接近原点，所以在这些情况下效果更好。
 通过重投影实现的显式约束只在权重变大并试图离开限制区域时产生作用。
 
 最后，因为重投影的显式约束还对优化过程增加了一定的稳定性，所以这是另一个好处。
-当使用较高的学习率时，很可能进入正反馈，即大的权重诱导大\gls{gradient}，然后诱发权重的大更新。
+当使用较高的学习率时，很可能进入正反馈，即大的权重诱导大\gls{gradient}，然后使得权重获得较大更新。
 如果这些更新持续增加权重的大小，$\Vtheta$就会迅速增大，直到离原点很远而发生溢出。
-重投影的显式约束可以防止这种反馈环引起的权重无限制的持续增加。
+重投影的显式约束可以防止这种反馈环引起权重无限制地持续增加。
 \cite{Hinton-et-al-arxiv2012}建议结合使用约束和高学习速率，这样能更快地探索参数空间，并保持一定的稳定性。
 
 % -- 231 --
@@ -362,15 +362,15 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 分别限制每一列的范数可以防止某一\gls{hidden_unit}有非常大的权重。
 如果我们将此约束转换成\ENNAME{Lagrange}函数中的一个惩罚，这将与$L^2$ \gls{weight_decay}类似但每个\gls{hidden_unit}的权重都具有单独的\glssymbol{KKT}乘子。
 每个\glssymbol{KKT}乘子分别会被动态更新，以使每个\gls{hidden_unit}服从约束。
-在实践中，列范数的限制总是通过重投影的显式约束实现。
+在实践中，列范数的限制总是通过重投影的显式约束来实现。
 
 \section{\glsentrytext{regularization}和欠约束问题}
 \label{sec:regularization_and_under_constrained_problems}
 在某些情况下，为了正确定义\gls{ML}问题，\gls{regularization}是必要的。
 \gls{ML}中许多\gls{linear_model}，包括\gls{linear_regression}和PCA，都依赖于求逆矩阵$\MX^\top\MX$。
-只要$\MX^\top\MX$是奇异的这就是不可能的。
-每当数据生成分布的一些方向上确实没有差异时，或因为例子较少（即相对输入特征（$\MX$的列）来说）而在一些方向没有观察到\gls{variance}，这个矩阵就是奇异的。
-在这种情况下，\gls{regularization}的许多形式对应于求逆$\MX^\top\MX + \alpha \MI$。
+只要$\MX^\top\MX$是奇异的，这些方法就会失效。
+当数据生成分布在一些方向上确实没有差异时，或因为例子较少（即相对输入特征（$\MX$的列）来说）而在一些方向上没有观察到\gls{variance}时，这个矩阵就是奇异的。
+在这种情况下，\gls{regularization}的许多形式对应求逆$\MX^\top\MX + \alpha \MI$。
 这个\gls{regularization}矩阵可以保证是可逆的。
 
 相关矩阵可逆时，这些线性问题有\gls{closed_form_solution}。
@@ -383,18 +383,18 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 大多数形式的\gls{regularization}能够保证应用于欠定问题的迭代方法收敛。
 例如，当似然的斜率等于\gls{weight_decay}的系数时， \gls{weight_decay}将阻止\gls{GD}继续增加权重的大小。
 
-使用\gls{regularization}解决欠定问题的想法超出了\gls{ML}范畴。
+使用\gls{regularization}解决欠定问题的想法超出了\gls{ML}的范畴。
 同样的想法在几个基本线性代数问题中也非常有用。
 
 % -- 232 --
 
-正如我们在\secref{sec:the_moore_penrose_pseudoinverse}看到，我们可以使用\ENNAME{Moore-Penrose}求解欠定线性方程。 
+正如我们在\secref{sec:the_moore_penrose_pseudoinverse}看到的，我们可以使用\ENNAME{Moore-Penrose}求解欠定线性方程。 
 回想$\MX$伪逆$\MX^+$的一个定义：
 \begin{align} 
 \label{eq:729pseudo}
  \MX^+ = \lim_{\alpha \searrow 0} (\MX^\top \MX + \alpha \MI)^{-1}\MX^\top.
 \end{align}
-现在我们可以将\secref{eq:729pseudo}看作执行具有\gls{weight_decay}的\gls{linear_regression}。
+现在我们可以将\secref{eq:729pseudo}看作进行具有\gls{weight_decay}的\gls{linear_regression}。
 具体来说，当\gls{regularization}系数趋向0时，\eqnref{eq:729pseudo}是\eqnref{eq:717mw}的极限。
 因此，我们可以将伪逆解释为使用\gls{regularization}来稳定欠定问题。
 
@@ -402,8 +402,8 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 \section{数据集增强}
 \label{sec:dataset_augmentation_chap7}
 让\gls{ML}模型泛化得更好的最好办法是使用更多的数据进行训练。
-当然，在实践中，我们拥有数据量是有限的。
-解决这个问题的一种方法是创建假数据并把它添加到训练集。
+当然，在实践中，我们拥有的数据量是很有限的。
+解决这个问题的一种方法是创建假数据并添加到训练集中。
 对于一些\gls{ML}任务，创建新的假数据相当简单。
 
 对分类来说这种方法是最简单的。
@@ -412,15 +412,15 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 我们可以轻易通过转换训练集中的$\Vx$来生成新的$(\Vx, y)$对。
 
 这种方法对于其他许多任务来说并不那么容易。
-例如，除非我们已经解决了密度估计问题，否则在密度估计任务中生成新的假数据是困难的。
+例如，除非我们已经解决了密度估计问题，否则在密度估计任务中生成新的假数据是很困难的。
 
 数据集增强对一个具体的分类问题来说是特别有效的方法：对象识别。
 图像是高维的并包括各种巨大的变化因素，其中有许多可以轻易地模拟。
 即使模型已使用卷积和\gls{pooling}技术（\chapref{chap:convolutional_networks}）对部分平移保持不变，沿训练图像每个方向平移几个像素的操作通常可以大大改善泛化。
 许多其他操作如旋转图像或缩放图像也已被证明非常有效。
 
-我们必须要小心，不能应用改变正确类别的转换。
-例如，光学字符识别任务需要认识到``b''和``d''以及``6''和``9''的区别，所以对这些任务来说，水平翻转和旋转$180^{\circ}$并不是适当的数据集增强方式。
+我们必须要小心，不能使用会改变类别的转换。
+例如，光学字符识别任务需要认识到``b''和``d''以及``6''和``9''的区别，所以对这些任务来说，水平翻转和旋转$180^{\circ}$并不是合适的数据集增强方式。
 
 % -- 233 --
 
@@ -429,21 +429,21 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 
 数据集增强对语音识别任务也是有效的\citep{Jaitly_VTLP_2013}。
 
-在\gls{NN}的输入层注入噪声\citep{SietsmaDow91}也可以被看作是数据增强的一种形式。
-对于许多分类甚至一些回归任务，即使小的随机噪声被加到输入，任务仍应该是能解决的。
+在\gls{NN}的输入层注入噪声\citep{SietsmaDow91}也可以被看作是数据增强的一种方式。
+对于许多分类甚至一些回归任务而言，即使小的随机噪声被加到输入，任务仍应该是能够被解决的。
 然而 ，\gls{NN}被证明对噪声不是非常健壮\citep{TangElias10}。
-改善\gls{NN}健壮性的方法之一是简单地将随机噪声施加到输入再进行训练。
+改善\gls{NN}健壮性的方法之一是简单地将随机噪声添加到输入再进行训练。
 输入噪声注入是一些\gls{unsupervised_learning}算法的一部分，如\gls{DAE}\citep{VincentPLarochelleH2008}。
 向\gls{hidden_unit}施加噪声也是可行的，这可以被看作在多个抽象层上进行的数据集增强。
 \cite{Poole14}最近表明，噪声的幅度被细心调整后，该方法是非常高效的。
-\gls{dropout}，一个将在\secref{sec:dropout}描述的强大\gls{regularization}策略，可以被看作通过\emph{乘}性噪声构建新输入的过程。
+\gls{dropout}，一个将在\secref{sec:dropout}介绍的强大\gls{regularization}策略，可以被看作是通过与噪声\emph{相乘}构建新输入的过程。
 
-当比较\gls{ML}基准测试的结果时，考虑其采取的数据集增强是很重要的。
+在比较\gls{ML}基准测试的结果时，考虑其采取的数据集增强是很重要的。
 通常情况下，人工设计的数据集增强方案可以大大减少\gls{ML}技术的泛化误差。
 将一个\gls{ML}算法的性能与另一个进行对比时，对照实验是必要的。
-当比较\gls{ML}算法A和\gls{ML}算法B时，应该确保这两个算法使用同一人工设计的数据集增强方案进行评估。
+在比较\gls{ML}算法A和\gls{ML}算法B时，应该确保这两个算法使用同一人工设计的数据集增强方案进行评估。
 假设算法$A$在没有数据集增强时表现不佳，而$B$结合大量人工转换的数据后表现良好。
-在这样的情况下，很可能是合成转化引起了性能改进，而不是\gls{ML}算法$B$。 
+在这样的情况下，很可能是合成转化引起了性能改进，而不是\gls{ML}算法$B$比算法$A$更好。 
 有时候，确定实验是否已经适当控制需要主观判断。
 例如，向输入注入噪声的\gls{ML}算法是执行数据集增强的一种形式。
 通常，普适操作（例如，向输入添加高斯噪声）被认为是\gls{ML}算法的一部分，
@@ -454,28 +454,28 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 \section{噪声鲁棒性}
 \label{sec:noise_robustness}
 
-\secref{sec:dataset_augmentation_chap7}已经启发将噪声作用于输入，作为数据集增强策略。
-对于某些模型，在模型的输入加上方差极小的噪声等价于对权重施加范数惩罚\citep{Bishop1995,bishop95training}。
-在一般情况下，噪声注入远比简单地收缩参数强大，特别是噪声被添加到\gls{hidden_unit}时更加强大。
+\secref{sec:dataset_augmentation_chap7}已经提出将噪声作用于输入，作为数据集增强策略。
+对于某些模型而言，向输入添加方差极小的噪声等价于对权重施加范数惩罚\citep{Bishop1995,bishop95training}。
+在一般情况下，噪声注入远比简单地收缩参数强大，特别是噪声被添加到\gls{hidden_unit}时会更加强大。
 向\gls{hidden_unit}添加噪声是值得单独讨论重要的话题；在\secref{sec:dropout}所述\gls{dropout}算法是这种做法的主要发展方向。
 
 另一种\gls{regularization}模型的噪声使用方式是将其加到的权重。
 这项技术主要用于\gls{RNN}\citep{JimGilesHorne1996,Graves-2011}。
-这可以解释为关于权重的贝叶斯\gls{inference}的随机实现。
-使用贝叶斯处理学习过程将权重视为不确定的，并且可以通过概率分布表示这种不确定性。
+这可以被解释为关于权重的贝叶斯\gls{inference}的随机实现。
+贝叶斯学习过程将权重视为不确定的，并且可以通过概率分布表示这种不确定性。
 向权重添加噪声是反映这种不确定性的一种实用的随机方法。
 
-在某些假设下，施加于权重的噪声可以被解释为与更传统\gls{regularization}形式等同，鼓励要学习的函数的稳定性。
+在某些假设下，施加于权重的噪声可以被解释为与更传统的\gls{regularization}形式等同，鼓励要学习的函数保持稳定。
 我们研究回归的情形，也就是训练将一组特征$\Vx$映射成一个标量的函数$\hat y(\Vx)$，并使用最小二乘\gls{cost_function}衡量模型预测值$\hat y(\Vx)$与真实值$y$的误差：
 \begin{align}
  J = \SetE_{p(x,y)}[(\hat y(\Vx) - y)^2].
 \end{align}
-训练集包含$m$对标注样例$\{(\Vx^{(1)}, y^{(1)}),\dots,(\Vx^{(m)}, y^{(m)})\}$
+训练集包含$m$对标注样例$\{(\Vx^{(1)}, y^{(1)}),\dots,(\Vx^{(m)}, y^{(m)})\}$。
 
-现在我们假设在每个输入表示上添加网络权重的随机扰动$\epsilon_{\Vw} \sim \CalN(\Vepsilon;0, \eta\MI )$
+现在我们假设对每个输入表示，网络权重添加随机扰动$\epsilon_{\Vw} \sim \CalN(\Vepsilon;0, \eta\MI )$。
 想象我们有一个标准的$l$层MLP。
 我们将扰动模型记为$\hat y_{\epsilon_{\MW}} (\Vx)$。
-尽管有噪声注入，我们仍对减少网络输出误差的平方感兴趣。
+尽管有噪声注入，我们仍然希望减少网络输出误差的平方。
 因此目标函数变为：
 \begin{align}
  \tilde J_{\MW} &= \SetE_{p(\Vx,y,\epsilon_{\MW})}[(\hat y_{\epsilon_{\MW}}(\Vx) - y)^2] \\
@@ -487,23 +487,23 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 这种形式的\gls{regularization}鼓励参数进入权重小扰动对输出相对影响较小的参数空间区域。
 换句话说，它推动模型进入对权重小的变化相对不敏感的区域，找到的点不只是极小点，还是由平坦区域所包围的最小点\citep{Hochreiter95}。
-在简化的线性回归中（例如，$\hat y(\Vx) = \Vw^\top \Vx + b$），正则项退化为$ \eta \SetE_{p(\Vx)}[\norm{\Vx}^2]$，这与函数的参数无关，因此不会对$\tilde J_{\Vw}$关于模型参数的梯度有贡献。
+在简化的线性回归中（例如，$\hat y(\Vx) = \Vw^\top \Vx + b$），正则项退化为$ \eta \SetE_{p(\Vx)}[\norm{\Vx}^2]$，这与函数的参数无关，因此不会对$\tilde J_{\Vw}$关于模型参数的梯度有影响。
 
 % -- 235 --
 
 \subsection{向输出目标注入噪声}
 \label{sec:injecting_noise_at_the_output_targets}
 大多数数据集的$y$标签都有一定错误。
-当$y$是错误的，对最大化$\log p(y \mid \Vx)$会是有害的。
-为了防止这一点的一种方法是显式地对标签上的噪声进行建模。
-例如，我们可以假设，对于一些小常数$\epsilon$，训练集标记$y$是正确的概率是$1-\epsilon$，任何其他可能的标签可能是正确的。
-这个假设很容易就能解析地与\gls{cost_function}结合，而不用显式地采噪声样本。
-例如， \textbf{标签平滑}(label smoothing)基于$k$个输出的\gls{softmax}，把明确分类0和1替换成$\frac{\epsilon}{k-1}$和$1-\epsilon$，对模型进行\gls{regularization}。
+错误的$y$不利于最大化$\log p(y \mid \Vx)$。
+避免这种情况的一种方法是显式地对标签上的噪声进行建模。
+例如，我们可以假设，对于一些小常数$\epsilon$，训练集标记$y$是正确的概率是$1-\epsilon$，（以$\epsilon$的概率）任何其他可能的标签可能是正确的。
+这个假设很容易就能解析地与\gls{cost_function}结合，而不用显式地抽取噪声样本。
+例如，\textbf{标签平滑}（label smoothing）通过把确切分类目标从0和1替换成$\frac{\epsilon}{k-1}$和$1-\epsilon$，\gls{regularization}具有$k$个输出的\gls{softmax}的模型。
 标准交叉熵损失可以用在这些非确切目标的输出上。
 使用\gls{softmax}和明确目标的最大似然学习可能永远不会收敛——
 \gls{softmax}永远无法真正预测0概率或1概率，因此它会继续学习越来越大的权重，使预测更极端。
 使用如\gls{weight_decay}等其他\gls{regularization}策略能够防止这种情况。
-标签平滑的优势是能防止模型追求明确概率而不妨碍正确分类。
+标签平滑的优势是能够防止模型追求确切概率而不影响模型学习正确分类。
 这种策略自20世纪80年代就已经被使用，并在现代神经网络继续保持显著特色\citep{Szegedy-et-al-2015}。
 
 % -- 236 --
@@ -516,15 +516,15 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 学习\gls{representation}的目的是使相同类中的\gls{example}有类似的表示。
 \gls{unsupervised_learning}可以为如何在\gls{representation}空间聚集\gls{example}提供有用线索。
 在输入空间紧密聚集的\gls{example}应该被映射到类似的表示。
-许多情况下，新空间上的线性分类器可以达到较好的泛化\citep{Belkin+Niyogi-2002,Chapelle+al-2003}。
-这种方法长期存在的一个变种是应用主成分分析\gls{PCA}作为分类前（在投影后的数据上分类）的预处理步骤。
+在许多情况下，新空间上的线性分类器可以达到较好的泛化\citep{Belkin+Niyogi-2002,Chapelle+al-2003}。
+这种方法的一个经典变种是使用主成分分析\gls{PCA}作为分类前（在投影后的数据上分类）的预处理步骤。
 
-我们可以构建这样一个模型，其中生成模型$P(\RVx)$或$P(\RVx, \RVy)$与判别模型$P(\RVy \mid \RVx)$共享参数，而不用将\gls{unsupervised}和\gls{supervised}部分分离。
-我们权衡\gls{supervised}\gls{criterion} $-\log P(\RVy \mid \RVx)$和\gls{unsupervised}或生成的\gls{criterion}（如$-\log P(\RVx)$或$-\log P(\RVx, \RVy)$)。
+我们可以构建这样一个模型，其中生成模型$P(\RVx)$或$P(\RVx, \RVy)$与判别模型$P(\RVy \mid \RVx)$共享参数，而不用分离\gls{unsupervised}和\gls{supervised}部分。
+我们权衡\gls{supervised}模型\gls{criterion} $-\log P(\RVy \mid \RVx)$和\gls{unsupervised}或生成模型\gls{criterion}（如$-\log P(\RVx)$或$-\log P(\RVx, \RVy)$）。
 生成模型\gls{criterion}表达了对\gls{supervised_learning}问题解的特殊形式的先验知识\citep{LasserreJ2006}，即$P(\RVx)$的结构通过某种共享参数的方式连接到$P(\RVy \mid \RVx)$。
-通过控制在总\gls{criterion}中的生成\gls{criterion}，我们可以找到比纯生成或纯判别训练\gls{criterion}更好的权衡\citep{LasserreJ2006,Larochelle2008}。
+通过控制在总\gls{criterion}中的生成\gls{criterion}，我们可以获得比纯生成或纯判别训练\gls{criterion}更好的权衡\citep{LasserreJ2006,Larochelle2008}。
 
-\cite{Russ+Geoff-nips-2007}描述了一种学习回归\gls{kernel_machines}中核函数的方法，其中建模的$P(\RVx)$时使用的未标记样本大大提高了$P(\RVy \mid \RVx)$。
+\cite{Russ+Geoff-nips-2007}描述了一种学习回归\gls{kernel_machines}中核函数的方法，其中建模$P(\RVx)$时使用的未标记样本大大提高了$P(\RVy \mid \RVx)$的效果。
 
 更多\gls{semi_supervised_learning}的信息，请参阅\cite{SSL-Book-2006}。
 
@@ -534,7 +534,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 额外的训练样本以同样的方式将模型的参数推向泛化更好的方向，当模型的一部分在任务之间共享时，模型的这一部分更多地被约束为良好的值（假设共享是合理的），往往能更好地泛化。
 
 \figref{fig:chap7_multi_factor_output}展示了\gls{multitask_learning}中非常普遍的一种形式，其中不同的\gls{supervised}任务（给定$\RVx$预测$\RVy^{(i)}$）共享相同的输入$\RVx$以及一些中间层表示$\Vh^{(\text{share})}$，能学习共同的因素池。
-该模型通常可以分为两个部分并相关参数：
+该模型通常可以分为两类相关的参数：
 \begin{enumerate}
  \item 具体任务的参数 （只能从各自任务的样本中实现良好的泛化）。如\figref{fig:chap7_multi_factor_output}中的上层。
  \item 所有任务共享的通用参数（从所有任务的汇集数据中获益）。如\figref{fig:chap7_multi_factor_output}中的下层。
@@ -554,23 +554,23 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \label{fig:chap7_multi_factor_output}
 \end{figure}
 
-因为共享参数，其统计强度可大大提高（共享参数的样本数量相对于单任务模式增加的比例），能改善泛化和泛化误差的范围\citep{baxter95a}。
-当然，仅当不同的任务之间存在某些统计关系的假设是合理时才会发生，也就是意味着某些参数能通过不同任务共享。
+因为共享参数，其统计强度可大大提高（共享参数的样本数量相对于单任务模式增加的比例），并能改善泛化和泛化误差的范围\citep{baxter95a}。
+当然，仅当不同的任务之间存在某些统计关系的假设是合理（意味着某些参数能通过不同任务共享）时才会发生这种情况。
 
-从\gls{DL}的观点看，底层的先验知识如下：\emph{能解释数据变化（在与之相关联的不同任务中观察到）的因素中，一些是跨两个或更多任务共享的。}
+从\gls{DL}的观点看，底层的先验知识如下：\emph{能解释数据变化（在与之相关联的不同任务中观察到）的因素中，某些因素是跨两个或更多任务共享的。}
 
 % -- 238 --
 
 \section{\glsentrytext{early_stopping}}
 \label{sec:early_stopping}
-当训练有足够的表示能力甚至会过度拟合的大模型时，我们经常观察到，训练误差会随着时间的推移逐渐降低但验证集的误差会再次上升。
+当训练有足够的表示能力甚至会过拟合任务的大模型时，我们经常观察到，训练误差会随着时间的推移逐渐降低但验证集的误差会再次上升。
 \figref{fig:chap7_learning_curve}是这些现象的一个例子，这种现象几乎一定会出现。
 
 这意味着如果我们返回使验证集误差最低的参数设置，就可以获得更好的模型（因此，有希望获得更好的测试误差）。
 在每次验证集误差有所改善后，我们存储模型参数的副本。
 当训练算法终止时，我们返回这些参数而不是最新的参数。
-当验证集上的误差在事先指定的循环内没有进一步改善时，算法就会终止。
-此过程在\algref{alg:early_stopping}有更正式的说明。
+当验证集上的误差在事先指定的循环次数内没有进一步改善时，算法就会终止。
+此过程在\algref{alg:early_stopping}中有更正式的说明。
 
 
 % -- 239 --
@@ -581,7 +581,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 \begin{algorithm}[ht]
 \caption{用于确定最佳训练时间量的\gls{early_stopping}元算法。
-这种元算法是一种通用策略，可以很好在各种训练算法和各种量化验证集误差的方法上工作。
+这种元算法是一种通用策略，可以很好地在各种训练算法和各种量化验证集误差的方法上工作。
 }
 \label{alg:early_stopping}
 \begin{algorithmic}
@@ -615,17 +615,17 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 我们可以认为\gls{early_stopping}是非常高效的超参数选择算法。
 按照这种观点，训练步数仅是另一个超参数。
-我们从\figref{fig:chap7_learning_curve}可以看到的，这个超参数在验证集上的具有U形性能曲线。
+我们从\figref{fig:chap7_learning_curve}可以看到，这个超参数在验证集上具有U型性能曲线。
 很多控制模型容量的超参数在验证集上都是这样的U型性能曲线，如\figref{fig:chap7_learning_curve}。
 在\gls{early_stopping}的情况下，我们通过拟合训练集的步数来控制模型的有效容量。
-大多数超参数的选择必须使用昂贵的猜测和检查过程，我们需要在训练开始时猜测一个超参数，然后运行几个步骤检查它的训练效果。
+大多数超参数的选择必须使用高代价的猜测和检查过程，我们需要在训练开始时猜测一个超参数，然后运行几个步骤检查它的训练效果。
 ``训练时间''是唯一只要跑一次训练就能尝试很多值的超参数。
 通过\gls{early_stopping}自动选择超参数的唯一显著的代价是训练期间要定期评估验证集。
-理想情况下，这可以并行在与主训练过程分离的机器上，或独立的CPU，或独立的GPU上完成。
+在理想情况下，这可以并行在与主训练过程分离的机器上，或独立的CPU，或独立的GPU上完成。
 如果没有这些额外的资源，可以使用比训练集小的验证集或较不频繁地评估验证集来减小评估代价，较粗略地估算取得最佳的训练时间。
 
 另一个\gls{early_stopping}的额外代价是需要保持最佳的参数副本。
-这种代价一般是可忽略的，因为将它储存在较慢较大的存储器上（例如，在GPU内存中训练，但将最佳参数存储在主存储器或磁盘驱动器上）。
+这种代价一般是可忽略的，因为可以将它储存在较慢较大的存储器上（例如，在GPU内存中训练，但将最佳参数存储在主存储器或磁盘驱动器上）。
 由于最佳参数的写入很少发生而且从不在训练过程中读取，这些偶发的慢写入对总训练时间的影响不大。
 
 \begin{figure}[!htb]
@@ -643,32 +643,32 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 % -- 240 --
 
-\gls{early_stopping}是\gls{regularization}非常不显眼的形式，它几乎不需要对基本训练过程、\gls{objective_function}或一组允许的参数值进行变化。
+\gls{early_stopping}是一种非常不显眼的\gls{regularization}形式，它几乎不需要改变基本训练过程、\gls{objective_function}或一组允许的参数值。
 这意味着，无需破坏学习动态就能很容易地使用\gls{early_stopping}。
-相对于\gls{weight_decay}，必须小心不能使用太多的\gls{weight_decay}，以防止网络陷入不良\gls{local_minimum}(对应于病态的小权重)。
+相对于\gls{weight_decay}，必须小心不能使用太多的\gls{weight_decay}，以防网络陷入不良\gls{local_minimum}(对应于病态的小权重)。
 
-\gls{early_stopping}可单独使用或与其他的\gls{regularization}策略相结合。
-即使为鼓励更好泛化，使用修改\gls{objective_function}的\gls{regularization}策略，在训练目标的\gls{local_minimum}达到最好泛化也是非常罕见的。
+\gls{early_stopping}可单独使用或与其他的\gls{regularization}策略结合使用。
+即使为鼓励更好泛化，使用\gls{regularization}策略改进\gls{objective_function}，在训练目标的\gls{local_minimum}达到最好泛化也是非常罕见的。
 
 \gls{early_stopping}需要验证集，这意味着某些训练数据不能被馈送到模型。
-为了更好地利用这一额外的数据，我们可以使用\gls{early_stopping}进行初步训练之后，进行额外的训练。
+为了更好地利用这一额外的数据，我们可以在完成\gls{early_stopping}的首次训练之后，进行额外的训练。
 在第二轮额外的训练步骤中，所有的训练数据都被包括在内。
-两个基本的策略可以用于第二轮训练过程。
+有两个基本的策略都可以用于第二轮训练过程。
 
 % -- 241 --
 
-一种策略（\algref{alg:early_stopping_retrain}）是再次初始化模型，然后使用所有数据再次训练。
+一个策略（\algref{alg:early_stopping_retrain}）是再次初始化模型，然后使用所有数据再次训练。
 在这个第二轮训练过程中，我们使用第一轮\gls{early_stopping}训练确定的最佳步数。
 此过程有一些细微之处。
 例如，我们没有办法知道重新训练时，对参数进行相同次数的更新和对数据集进行相同的遍数哪一个更好。
-由于训练集变大了，在第二轮训练时，每遍历一次数据集将会对应更多次的参数更新。
+由于训练集变大了，在第二轮训练时，每一次遍历数据集将会更多次地更新参数。
 
 另一个策略是保持从第一轮训练获得的参数，然后使用全部的数据\emph{继续}训练。
 在这个阶段，已经没有验证集指导我们需要在训练多少步后终止。
 相反，我们可以监控验证集的平均损失函数，并继续训练，直到它低于\gls{early_stopping}过程终止时的目标值。
 此策略避免了重新训练模型的高成本，但表现并没有那么好。
 例如，验证集的目标不一定能达到之前的目标值，所以这种策略甚至不能保证终止。
-这个过程在\algref{alg:early_stopping_continue}中更正式地表述。
+我们会在\algref{alg:early_stopping_continue}中更正式地介绍这个过程。
 
 \gls{early_stopping}对减少训练过程的计算成本也是有用的。
 除了由于限制训练的迭代次数而明显减少的计算成本，还带来了\gls{regularization}的益处（不需要添加惩罚项的\gls{cost_function}或计算这种附加项的\gls{gradient}）。
@@ -706,14 +706,14 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 % -- 242 --
 
-\paragraph{\gls{early_stopping}是如何充当\gls{regularization}的:}
-目前为止，我们已经声明\gls{early_stopping}是一种\gls{regularization}策略，但我们只通过展示验证集误差的学习曲线是一个U形的来支持这种说法。
-\gls{early_stopping}\gls{regularization}模型的真正机制是什么？ 
+\paragraph{\gls{early_stopping}为何具有\gls{regularization}效果:}
+目前为止，我们已经声明\gls{early_stopping}是一种\gls{regularization}策略，但我们只通过展示验证集误差的学习曲线是一个U型曲线来支持这种说法。
+\gls{early_stopping}\gls{regularization}模型的真正机制是什么呢？ 
 \cite{Bishop1995}和\cite{Sjoberg95}认为\gls{early_stopping}可以将优化过程的参数空间限制在初始参数值$\Vtheta_0$的小邻域内。
 更具体地，想象用学习率$\epsilon$进行$\tau$个优化步骤（对应于$\tau$个训练迭代）。
 我们可以将$\epsilon \tau$作为有效\gls{capacity}的度量。
-假设\gls{gradient}有界，限制迭代的次数和学习速率会限制从$\Vtheta_0$到达的参数空间大小，如\figref{fig:chap7_reg_l1_vs_l2_mistake}所示。
-在这个意义上，$\epsilon \tau$的行为就好像它是\gls{weight_decay}系数的倒数。
+假设\gls{gradient}有界，限制迭代的次数和学习速率能够限制从$\Vtheta_0$到达的参数空间的大小，如\figref{fig:chap7_reg_l1_vs_l2_mistake}所示。
+在这个意义上，$\epsilon \tau$的效果就好像是\gls{weight_decay}系数的倒数。
 
 \begin{figure}[!htb]
 \ifOpenSource
@@ -733,7 +733,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 事实上，在二次误差的简单\gls{linear_model}和简单的\gls{GD}情况下，我们可以展示\gls{early_stopping}相当于$L^2$\gls{regularization}。
 
-为了与经典$L^2$\gls{regularization}比较，我们考察唯一的参数是线性权重（$\Vtheta = \Vw$）的简单情形。
+为了与经典$L^2$\gls{regularization}比较，我们只考察唯一的参数是线性权重（$\Vtheta = \Vw$）的简单情形。
 我们在权重$\Vw$的经验最佳值$\Vw^*$附近以二次近似建模\gls{cost_function} $J$：
 \begin{align}
  \hat J(\Vtheta) = J(\Vw^*) + \frac{1}{2}  (\Vw- \Vw^*)^\top \MH  (\Vw - \Vw^*),
@@ -747,10 +747,10 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 % -- 243 --
 
-我们要研究训练时参数向量的轨迹。
-为简化起见，我们参数向量初始化为原点\footnote{对于\gls{NN}，我们需要打破\gls{hidden_unit}间的对称平衡因此不能将所有参数都初始化为$\mathbf{0}$（如\secref{sec:gradient_based_learning}所讨论的）。
+接下来我们研究训练时参数向量的轨迹。
+为简化起见，我们将参数向量初始化为原点\footnote{对于\gls{NN}，我们需要打破\gls{hidden_unit}间的对称平衡因此不能将所有参数都初始化为$\mathbf{0}$（如\secref{sec:gradient_based_learning}所讨论的）。
 然而，对于其他任何初始值$\Vw_{(0)}$该论证都成立}，也就是$\Vw^{(0)} = 0$。
-我们通过分析$\hat{J}$的\gls{GD}研究$J$上近似的\gls{GD}行为：
+我们通过分析$\hat{J}$上的\gls{GD}来研究$J$上近似的\gls{GD}的效果：
 \begin{align}
 \Vw^{(\tau)} &= \Vw^{(\tau-1)} -\epsilon \nabla_{\Vw} \hat{J}( \Vw^{(\tau-1)} ) \\
 &=  \Vw^{(\tau-1)}  - \epsilon  \MH ( \Vw^{(\tau-1)} -  \Vw^* ), \\
@@ -784,10 +784,10 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 也就是说，在这些假设下，训练迭代次数$\tau$起着与$L^2$参数成反比的作用，$\tau \epsilon$的倒数与\gls{weight_decay}系数的作用类似。
 
 对应显著曲率（\gls{objective_function}）方向的参数值\gls{regularization}小于小曲率方向。
-当然，在\gls{early_stopping}的情况下，这实际上意味着对应于显著曲率方向的参数比较小的曲率方向的参数学习得更早。
+当然，在\gls{early_stopping}的情况下，这实际上意味着对应于显著曲率方向的参数比较小的曲率方向的参数更早地停止学习。
  
 本节中的推导表明长度为$\tau$的轨迹结束于$L^2$\gls{regularization}目标的极小点。
-当然，\gls{early_stopping}比简单的轨迹长度限制更丰富；相反，\gls{early_stopping}通常涉及监控验证集的错误，以便在空间特别好的点处终止轨迹。
+当然，\gls{early_stopping}比简单的轨迹长度限制更丰富；相反，\gls{early_stopping}通常涉及监控验证集误差，以便在空间特别好的点处终止轨迹。
 因此\gls{early_stopping}比\gls{weight_decay}更具有优势，\gls{early_stopping}能自动确定\gls{regularization}的正确量，而\gls{weight_decay}需要多个训练实验测试其超参数的不同值。
 
 % -- 245 --
@@ -797,42 +797,42 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 目前为止，本章讨论对参数添加约束或惩罚时，一直是相对于固定的区域或点。
 例如，$L^2$\gls{regularization}（或\gls{weight_decay}）对参数偏离零的固定值进行惩罚。
 然而，有时我们可能需要其他的方式来表达我们对模型参数适当值的先验知识。
-有时候，我们可能无法准确地知道应该采取什么样的参数，但我们从领域和模型结构方面的知识得知模型参数之间应该存在一些相关性。
+有时候，我们可能无法准确地知道应该使用什么样的参数，但我们根据领域和模型结构方面的知识得知模型参数之间应该存在一些相关性。
 
-我们经常想要表达的常见类型的依赖之一是某些参数应当彼此接近。
+我们经常想要表达的一种常见依赖是某些参数应当彼此接近。
 考虑以下情形：我们有两个模型执行相同的分类任务（具有相同类别），但输入分布稍有不同。
 形式地，我们有参数为$\Vw^{(A)}$的模型$A$和参数为$\Vw^{(B)}$的模型$B$。
 这两种模型将输入映射到两个不同但相关的输出：$\hat y^{(A)} = f(\Vw^{(A)}, \Vx)$和$\hat y^{(B)} = f(\Vw^{(B)}, \Vx)$。
 
-我们可以想象，这些任务足够相似（或许具有相似的输入和输出分布），因此我们认为模型参数应彼此靠近：
+我们可以想象，这些任务会足够相似（或许具有相似的输入和输出分布），因此我们认为模型参数应彼此靠近：
 $\forall i, w_i^{(A)}$应该与$ w_i^{(B)}$接近。
 我们可以通过\gls{regularization}利用此信息。
 具体来说，我们可以使用以下形式的参数范数惩罚：
 $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 在这里我们使用$L^2$惩罚，但也可以使用其他选择。
 
-这种方法由\cite{LasserreJ2006}提出，\gls{regularization}一个模型（\gls{supervised}模式下训练的分类器）的参数接近另一个\gls{unsupervised}模式下训练的模型（捕捉观察到的输入数据的分布）。
-这样构造的架构使得许多分类模型中的参数能与之对应的\gls{unsupervised}模型的参数匹配。
+这种方法由\cite{LasserreJ2006}提出，\gls{regularization}一个模型（\gls{supervised}模式下训练的分类器）的参数，使其接近另一个\gls{unsupervised}模式下训练的模型（捕捉观察到的输入数据的分布）的参数。
+这种构造架构使得许多分类模型中的参数能与之对应的\gls{unsupervised}模型的参数匹配。
 
-参数范数惩罚是\gls{regularization}参数彼此接近的一种方式，在更流行的方法是使用约束：强迫某些集合中的参数相等。
+参数范数惩罚是\gls{regularization}参数使其彼此接近的一种方式，而更流行的方法是使用约束：\emph{强迫某些参数相等}。
 由于我们将各种模型或模型组件解释为共享唯一的一组参数，这种\gls{regularization}方法通常被称为\firstgls{parameter_sharing}。
-\gls{parameter_sharing}相对于\gls{regularization}参数接近（通过范数惩罚）的一个显著优点是，只有参数（唯一一个集合）的子集需要被存储在内存中。
+和\gls{regularization}参数使其接近（通过范数惩罚）相比，\gls{parameter_sharing}的一个显著优点是，只有参数（唯一一个集合）的子集需要被存储在内存中。
 对于某些特定模型，如\gls{CNN}，这可能可以显著减少模型所占用的内存。
 
 
 % -- 246 --
 \subsection{\glsentrytext{CNN}}
-目前为止，最流行和广泛使用的\gls{parameter_sharing}出现在应用于\gls{CV}的\firstacr{CNN}。
+目前为止，最流行和广泛使用的\gls{parameter_sharing}出现在应用于\gls{CV}的\firstacr{CNN}中。
 自然图像有许多统计属性是对转换不变的。
 例如，猫的照片即使向右边移了一个像素，仍保持猫的照片。
-\glssymbol{CNN}通过在图像多个位置共享参数考虑这个特性。
-相同的特征（具有相同权重的\gls{hidden_unit}）在输入的不同位置上计算。
+\glssymbol{CNN}通过在图像多个位置共享参数来考虑这个特性。
+相同的特征（具有相同权重的\gls{hidden_unit}）在输入的不同位置上计算获得。
 这意味着无论猫出现在图像中的第$i$列或$i + 1$列，我们都可以使用相同的猫探测器找到猫。
 
-\gls{parameter_sharing}显著降低\glssymbol{CNN}模型不同参数的数量，并显著提高了网络的大小而不需要增加相应的训练数据。
+\gls{parameter_sharing}显著降低了\glssymbol{CNN}模型的参数数量，并显著提高了网络的大小而不需要相应地增加训练数据。
 它仍然是将领域知识有效地整合到网络架构的最佳范例之一。
 
-\gls{CNN}将会在\chapref{chap:convolutional_networks}更详细地讨论。
+我们将会在\chapref{chap:convolutional_networks}中更详细地讨论\gls{CNN}。
 
 \section{\glsentrytext{sparse}\glsentrytext{representation}}
 \label{sec:sparse_representations}
