@@ -47,7 +47,7 @@
 | [第六章 深度前馈网络](https://exacity.github.io/deeplearningbook-chinese/Chapter6_deep_feedforward_networks/) | @KevinLee1110 | David_Chow, @linzhp, @sailordiary |  | 完成合并 |
 | [第七章 深度学习中的正则化](https://exacity.github.io/deeplearningbook-chinese/Chapter7_regularization/) | @swordyork | | | 等待合并 |
 | [第八章 深度模型中的优化](https://exacity.github.io/deeplearningbook-chinese/Chapter8_optimization_for_training_deep_models/) | @liber145 | @happynoom, @codeVerySlow |  @huangpingchun | 完成合并 |
-| [第九章 卷积网络](https://via.hypothes.is/https://exacity.github.io/deeplearningbook-chinese/Chapter9_convolutional_networks/) | @KevinLee1110 | @TonyHan0915, @zhaoyu611, @corenel | @zhiding | 等待合并 |
+| [第九章 卷积网络](https://exacity.github.io/deeplearningbook-chinese/Chapter9_convolutional_networks/) | @KevinLee1110 | @zhaoyu611, @corenel | @zhiding | 完成合并 |
 | [第十章 序列建模：循环和递归网络](https://exacity.github.io/deeplearningbook-chinese/Chapter10_sequence_modeling_rnn/) | @swordyork | lc | @zhaoyu611, @yinruiqing | 完成合并 |
 | [第十一章 实践方法论](https://exacity.github.io/deeplearningbook-chinese/Chapter11_practical_methodology/) | @liber145 |  |  |  完成合并 |
 | [第十二章 应用](https://exacity.github.io/deeplearningbook-chinese/Chapter12_applications/) | @swordyork, @futianfan |  | @corenel | 完成合并 |

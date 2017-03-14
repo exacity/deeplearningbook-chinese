@@ -394,7 +394,7 @@ Bernoulli分布和Multinoulli分布足够用来描述在它们领域内的任意
 
 正态分布由两个参数控制，$\mu \in \SetR$和$\sigma \in (0, \infty)$。
 参数$\mu$给出了中心峰值的坐标，这也是分布的均值：$\SetE[\RSx] = \mu$。
-分布的标准误差用$\sigma$表示，方差用$\sigma^2$表示。
+分布的标准差用$\sigma$表示，方差用$\sigma^2$表示。
 
 当我们要对概率密度函数求值时，我们需要对$\sigma$平方并且取倒数。
 当我们需要经常对不同参数下的概率密度函数求值时，一种更高效的参数化分布的方式是使用参数$\beta \in (0, \infty)$，来控制分布的精度(或方差的倒数)：
@@ -445,7 +445,7 @@ p(x; \lambda) = \lambda \bm{1}_{x\ge 0} \exp(-\lambda x).
 \end{equation}
 指数分布使用指示函数(indicator function)$\bm{1}_{x\ge 0}$来使得当$x$取负值时的概率为零。
 
-一个非常相关的概率分布是Laplace分布，它允许我们在任意一点$\mu$处设置概率质量的峰值
+一个联系紧密的概率分布是Laplace分布，它允许我们在任意一点$\mu$处设置概率质量的峰值
 \begin{equation}
 \text{Laplace}(x; \mu, \gamma) = \frac{1}{2\gamma} \exp \left( -\frac{|x-\mu|}{\gamma}  \right).
 \end{equation}
@@ -680,7 +680,7 @@ p_y(y) = p_x(g^{-1}(y)) \left \vert \frac{\partial x}{\partial y} \right \vert
 \begin{equation}
 p_x(x) = p_y(g(x)) \left | \frac{\partial g(x)}{\partial x} \right |.
 \end{equation}
-在高维空间中，微分运算扩展为Jacobi矩阵的行列式——矩阵的每个元素为$J_{i, j} = \frac{\partial x_i}{\partial y_j}$。
+在高维空间中，微分运算扩展为Jacobian矩阵的行列式——矩阵的每个元素为$J_{i, j} = \frac{\partial x_i}{\partial y_j}$。
 因此，对于实值向量$\Vx$和$\Vy$，
 \begin{equation}
 p_x(\Vx) = p_y(g(\Vx)) \left | \det \left ( \frac{\partial g(\Vx)}{\partial \Vx} \right) \right |.
