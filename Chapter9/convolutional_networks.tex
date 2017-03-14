@@ -20,7 +20,7 @@
 \gls{convolutional_network}是神经科学原理影响深度学习的典型代表。
 我们之后也会讨论这些神经科学的原理，并对\gls{convolutional_network}在深度学习发展史中的作用作出评价。
 本章没有涉及如何为你的\gls{convolutional_network}选择合适的结构，因为本章的目标是说明\gls{convolutional_network}提供的各种工具。
-第\ref{chap:practical_methodology}将会对如何在具体环境中选择使用相应的工具给出通用的准则。
+\chapref{chap:practical_methodology}将会对如何在具体环境中选择使用相应的工具给出通用的准则。
 对于\gls{convolutional_network}结构的研究进展得如此迅速，以至于针对特定基准(benchmark)，数月甚至几周就会公开一个新的最优的网络结构，甚至在写这本书时也不好描述究竟哪种结构是最好的。
 然而，最好的结构也是由本章所描述的基本部件逐步搭建起来的。
 
@@ -681,12 +681,12 @@ $\TSK$在这里并没有对输出映射中的每一个位置使用单独的索�
 在一些情况下，不同大小的输入通过\gls{forward_propagation}过程能够得到相同大小的输出映射，所以必须明确地告知转置运算原始输入的大小。
 
 这三种运算——卷积、从输出到权重的反向传播和从输出到输入的反向传播——对于训练任意深度的前馈\gls{convolutional_network}，以及训练带有（基于卷积的转置的）重构函数的\gls{convolutional_network}，这三种运算都足以计算它们所需的所有梯度。
-对于完全一般的多维、多样例情况下的公式，完整的推导可以参见~\cite{Goodfellow-TR2010}。 
+对于完全一般的多维、多样例情况下的公式，完整的推导可以参考~\cite{Goodfellow-TR2010}。 
 为了直观说明这些公式是如何起作用的，我们这里给出一个二维单个样例的版本。
  
 % -- 345 --
  
-假设我们想要训练这样一个\gls{convolutional_network}，它包含\gls{stride}为$s$的\gls{stride}卷积，该卷积的核为$\TSK$，作用于多通道的图像$\TSV$，定义为$c(\TSK, \TSV, s)$，就像公式\ref{eq:9.8}中一样。
+假设我们想要训练这样一个\gls{convolutional_network}，它包含\gls{stride}为$s$的\gls{stride}卷积，该卷积的核为$\TSK$，作用于多通道的图像$\TSV$，定义为$c(\TSK, \TSV, s)$，就像\eqnref{eq:9.8}中一样。
 假设我们想要最小化某个损失函数$J(\TSV, \TSK)$。
 在\gls{forward_propagation}过程中，我们需要用$c$本身来输出$\TSZ$，然后$\TSZ$传递到网络的其余部分并且被用来计算损失函数$J$。
 在反向传播过程中，我们会得到一个张量$\TSG$满足$\TEG_{i, j, k} = \frac{\partial}{\partial \TEZ_{i, j, k}} J(\TSV, \TSK)$。
@@ -709,7 +709,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
             \sum_q \TEK_{q,i,m,p} \TEG_{q, l, n}.
 \end{eqnarray}
 
-第\ref{chap:autoencoders}章描述的\gls{AE}网络，是一些被训练成把输入拷贝到输出的前馈网络。
+\chapref{chap:autoencoders}描述的\gls{AE}网络，是一些被训练成把输入拷贝到输出的前馈网络。
 一个简单的例子是\,\glssymbol{PCA}\,算法，将输入$\Vx$拷贝到一个近似的重构值$\Vr$，通过函数${\MW}^\top \MW \Vx$来实现。
 使用权重矩阵转置的乘法，就像\,\glssymbol{PCA}\,算法这种，在一般的\gls{AE}中是很常见的。
 为了使这些模型卷积化，我们可以用函数$h$来实现卷积运算的转置。
@@ -764,7 +764,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 输入是图像张量$\TSX$，它的轴对应图像的行、列和通道（红，绿，蓝）。
 目标是输出标签张量$\hat{Y}$，它遵循每个像素的标签的概率分布。
 该张量的轴对应图像的行、列和不同类别。
-并不是单次输出$\hat{Y}$，\gls{recurrent_network}通过使用$\hat{Y}$的先前估计作为创建新估计的输入，来迭代地改善其估计。
+\gls{recurrent_network}通过使用$\hat{Y}$的先前估计作为创建新估计的输入，来迭代地改善其估计，而不是单次输出$\hat{Y}$，。
 每个更新的估计使用相同的参数，并且估计可以如我们所愿地被改善任意多次。
 每一步使用的卷积核张量$\TSU$，是用来计算给定输入图像的隐藏表示的。
 核张量$\TSV$用于产生给定隐藏值时标签的估计。
@@ -776,7 +776,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 
 % -- 347 --
  
-一旦对每个像素都进行了预测，可以使用各种方法来进一步处理这些预测，以便获得图像在区域上的分割\citep{Briggman-et-al-NIPS2009,Turaga2010,Farabet-et-al-2013}。
+一旦对每个像素都进行了预测，我们就可以使用各种方法来进一步处理这些预测，以便获得图像在区域上的分割\citep{Briggman-et-al-NIPS2009,Turaga2010,Farabet-et-al-2013}。
 一般的想法是假设大片相连的像素倾向于对应着相同的标签。
 图模型可以描述相邻像素间的概率关系。
 或者，\gls{convolutional_network}可以被训练来最大化地近似图模型的训练目标\citep{Ning-et-al-2005,Thompson-et-al-NIPS2014}。
@@ -785,7 +785,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 \label{sec:data_types}
 
 \gls{convolutional_network}使用的数据通常包含多个通道，每个通道是时间上或空间中某一点的不同观测量。
-参见表\,\ref{table:data_types}\,来了解具有不同维数和通道数的数据类型的例子。
+参考表\,\ref{table:data_types}\,来了解具有不同维数和通道数的数据类型的例子。
  
 % -- 348 --
 \begin{table}[htbp!]
@@ -794,9 +794,9 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 & 单通道 & 多通道\\ \hline
 1维 & 
 音频波形：卷积的轴对应于时间。我们将时间离散化并且在每个时间点测量一次波形的振幅。 &  
-骨架动画(skeleton animation)数据：计算机渲染的3D角色动画是通过随时间调整``骨架''的姿势而生成的。 在每个时间点，角色的姿势通过骨架中的每个关节的角度来描述。我们输入到卷积模型的数据的每个通道，表示一个关节的关于一个轴的角度。\\ \hline
+骨架动画(skeleton animation)数据：计算机渲染的3D角色动画是通过随时间调整``骨架''的姿势而生成的。 在每个时间点，角色的姿势通过骨架中的每个关节的角度来描述。我们输入到卷积模型的数据的每个通道，表示一个关节关于一个轴的角度。\\ \hline
 2维 & 
-已经用\gls{Fourier_transform}预处理的音频数据：我们可以将音频波形变换成2维张量，不同的行对应不同的频率，不同的列对应不同的时间点。在时间轴上使用卷积使模型等效于在时间上移动。在频率轴上使用卷积使得模型等效于在频率上移动，这使得在不同八度音阶中播放的相同旋律产生相同的表示，但处于网络输出中的不同高度。 & %Fourier transform这里不是很清楚，在频率上使用卷积是做什么的？
+已经使用\gls{Fourier_transform}预处理过的音频数据：我们可以将音频波形变换成2维张量，不同的行对应不同的频率，不同的列对应不同的时间点。在时间轴上使用卷积使模型等效于在时间上移动。在频率轴上使用卷积使得模型等效于在频率上移动，这使得在不同八度音阶中播放的相同旋律产生相同的表示，但处于网络输出中的不同高度。 & %Fourier transform这里不是很清楚，在频率上使用卷积是做什么的？
 彩色图像数据：其中一个通道包含红色像素，另一个包含绿色像素，最后一个包含蓝色像素。在图像的水平轴和竖直轴上移动卷积核，赋予了两个方向上平移等变性。\\ \hline
 3维 &
 体积数据：这种数据一般来源于医学成像技术，例如CT扫描等。 & 
@@ -807,22 +807,23 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 \end{table}
 % -- 349 --
  
-\gls{convolutional_network}用于视频的例子，可以参见~\cite{Chen-Ting-2010}。
+\gls{convolutional_network}用于视频的例子，可以参考~\cite{Chen-Ting-2010}。
 
 到目前为止，我们仅讨论了训练和测试数据中的每个样例都有相同的空间维度的情况。
 \gls{convolutional_network}的一个优点是它们还可以处理具有可变的空间尺度的输入。
 这些类型的输入不能用传统的基于矩阵乘法的神经网络来表示。
-这为\gls{convolutional_network}的使用提供了的令人信服的理由，即使当计算开销和过拟合都不是主要问题时\footnote{译者注：传统的基于矩阵乘法的神经网络会面对计算开销和过拟合的问题，即使当计算开销和过拟合都不是主要问题时，我们也有充分的理由来使用卷积网络而不是传统的神经网络，因为卷积网络可以处理可变大小的输入。}。
+这为\gls{convolutional_network}的使用提供了令人信服的理由，即使当计算开销和过拟合都不是主要问题时。
+%\footnote{译者注：传统的基于矩阵乘法的神经网络会面对计算开销和过拟合的问题，即使当计算开销和过拟合都不是主要问题时，我们也有充分的理由来使用卷积网络而不是传统的神经网络，因为卷积网络可以处理可变大小的输入。}
 
 例如，考虑一组图像的集合，其中每个图像具有不同的高度和宽度。
 目前还不清楚如何用固定大小的权重矩阵对这样的输入进行建模。
-卷积就可以很直接地应用；核依据输入的大小简单地被使用不同次，并且卷积运算的输出也相应地放缩。
+卷积就可以很直接地应用；核依据输入的大小简单地被使用不同次，并且卷积运算的输出也相应地缩放。
 卷积可以被视为矩阵乘法；相同的卷积核为每种大小的输入引入了一个不同大小的\gls{doubly_block_circulant_matrix}。
 有时，网络的输出允许和输入一样具有可变的大小，例如如果我们想要为输入的每个像素分配一个类标签。
 在这种情况下，不需要进一步的设计工作。
 在其他情况下，网络必须产生一些固定大小的输出，例如，如果我们想要为整个图像指定单个类标签。
 在这种情况下，我们必须进行一些额外的设计步骤，例如插入一个\gls{pooling}层，\gls{pooling}区域的大小要与输入的大小成比例，以便保持固定数量的\gls{pooling}输出。
-这种策略的一些例子可以参见\figref{fig:chap9_cnn_classifier}。
+这种策略的一些例子可以参考\figref{fig:chap9_cnn_classifier}。
 
 注意，使用卷积处理可变尺寸的输入，仅对输入是因为包含对同种事物的不同量的观察(时间上不同长度的记录，空间上不同宽度的观察等)而导致的尺寸变化这种情况才有意义。
 如果输入是因为它可以选择性地包括不同种类的观察而具有可变尺寸，使用卷积是不合理的。
@@ -832,7 +833,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 \label{sec:efficient_convolution_algorithms}
 
 现代\gls{convolutional_network}的应用通常需要包含超过百万个单元的网络。
-利用并行计算资源的强大实现是很关键的，如\secref{sec:large_scale_deep_learning}中所描述。
+利用并行计算资源的强大实现是很关键的，如\secref{sec:large_scale_deep_learning}中所描述的。
 然而，在很多情况下，也可以通过选择适当的卷积算法来加速卷积。
  
 % -- 350 --
@@ -855,7 +856,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 \label{sec:random_or_unsupervised_features}
 
 通常，\gls{convolutional_network}训练中最昂贵的部分是学习特征。 
-输出层通常相对便宜，因为在通过若干层\gls{pooling}之后作为该层输入的特征的数量较少。
+输出层的计算代价通常相对不高，因为在通过若干层\gls{pooling}之后作为该层输入的特征的数量较少。
 当使用梯度下降执行\gls{supervised}训练时，每步梯度计算需要完整地运行整个网络的前向传播和反向传播。
 减少\gls{convolutional_network}训练成本的一种方式是使用那些不是由\gls{supervised}方式训练得到的特征。
 
@@ -878,7 +879,7 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 
 一个中间方法是学习特征，但是使用那种不需要在每个梯度计算步骤中都进行完整的前向和反向传播的方法。
 与多层感知机一样，我们使用\gls{greedy_layer_wise_pretraining}，单独训练第一层，然后一次性地从第一层提取所有特征，之后用那些特征单独训练第二层，以此类推。
-第\ref{chap:optimization_for_training_deep_models}章描述了如何实现\gls{supervised}的\gls{greedy_layer_wise_pretraining}，第\ref{part:deep_learning_research}部分将此扩展到了无监督的范畴。
+\chapref{chap:optimization_for_training_deep_models}描述了如何实现\gls{supervised}的\gls{greedy_layer_wise_pretraining}，第\ref{part:deep_learning_research}部分将此扩展到了无监督的范畴。
 卷积模型的\gls{greedy_layer_wise_pretraining}的经典模型是卷积\gls{DBN}\citep{HonglakL2009}。
 \gls{convolutional_network}为我们提供了相对于多层感知机更进一步采用预训练策略的机会。
 并非一次训练整个卷积层，我们可以训练一小块模型，就像~\cite{Coates2011}使用$k$均值做的那样。
@@ -907,13 +908,13 @@ h(\TSK, \TSG, s)_{i, j, k} &=& \frac{\partial }{\partial \TEV_{i, j, k}} J(\TSV,
 他们的伟大发现是，处于视觉系统较为前面的神经元对非常特定的光模式（例如精确定向的条纹）反应最强烈，但对其他模式几乎完全没有反应。
 
 他们的工作有助于表征大脑功能的许多方面，这些方面超出了本书的范围。
-从深度学习的角度来看，我们可以专注于简化的，卡通形式的大脑功能视图。
+从深度学习的角度来看，我们可以专注于简化的、草图形式的大脑功能视图。
 
 在这个简化的视图中，我们关注被称为V1的大脑的一部分，也称为\firstgls{primary_visual_cortex}。
 V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
-在该卡通视图中，图像是由光到达眼睛并刺激视网膜（眼睛后部的光敏组织）形成的。
+在该草图视图中，图像是由光到达眼睛并刺激视网膜（眼睛后部的光敏组织）形成的。
 视网膜中的神经元对图像执行一些简单的预处理，但是基本不改变它被表示的方式。
-然后图像通过视神经和称为外侧膝状核的脑部区域。 
+然后图像通过视神经和称为\emph{外侧膝状核}的脑部区域。 
 这些解剖区域的主要作用是仅仅将信号从眼睛传递到位于头后部的V1。
  
 % -- 353 --
@@ -951,7 +952,7 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
 % -- 354 --
  
 这些内侧颞叶神经元比现代\gls{convolutional_network}更通用一些，这些网络在读取名称时不会自动联想到识别人或对象。
-与\gls{convolutional_network}的最后一层在特征上最接近的类比是称为颞下皮质（IT）的脑区。
+与\gls{convolutional_network}的最后一层在特征上最接近的类比是称为\emph{颞下皮质}（IT）的脑区。
 当查看一个对象时，信息从视网膜经LGN流到V1，然后到V2，V4，之后是IT。
 这发生在瞥见对象的前100ms内。
 如果允许一个人继续观察对象更多的时间，那么信息将开始回流，因为大脑使用自上而下的反馈来更新较低级脑区中的激活。
@@ -968,9 +969,9 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
   虽然我们觉得我们可以看到高分辨率的整个场景，但这是由我们的大脑的潜意识部分创建的错觉，因为它缝合了我们瞥见的若干个小区域。
   大多数\gls{convolutional_network}实际上接收大的全分辨率的照片作为输入。
   人类大脑控制几次眼动，称为\firstgls{saccade}，以瞥见场景中最显眼的或任务相关的部分。
-  将类似的关注机制融入深度学习模型是一个活跃的研究方向。
-  在深度学习的背景下，关注机制对于自然语言处理是最成功的，参见\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}。
-  已经研发了几种具有视觉机制的视觉模型，但到目前为止还没有成为主导方法\citep{Larochelle2010,Denil2012}。
+  将类似的\gls{attention_mechanisms}融入深度学习模型是一个活跃的研究方向。
+  在深度学习的背景下，\gls{attention_mechanisms}对于自然语言处理是最成功的，参考\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}。
+  研究者已经研发了几种具有视觉机制的视觉模型，但到目前为止还没有成为主导方法\citep{Larochelle2010,Denil2012}。
   
   \item 人类视觉系统集成了许多其他感觉，例如听觉，以及像我们的心情和想法一样的因素。
   \gls{convolutional_network}迄今为止纯粹是视觉的。
@@ -986,7 +987,7 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
   大脑可能使用非常不同的激活和\gls{pooling}函数。
   单个神经元的激活可能不能用单个线性过滤器的响应来很好地表征。
   最近的V1模型涉及对每个神经元的多个二次过滤器\citep{rust:2005}。
-  事实上，我们的``简单细胞''和``复杂细胞''的卡通图片可能并没有区别；简单细胞和复杂细胞可能是相同种类的细胞，但是它们的``参数''使得它们能够实现从我们所说的``简单''到``复杂''的连续的行为。
+  事实上，我们的``简单细胞''和``复杂细胞''的草图图片可能并没有区别；简单细胞和复杂细胞可能是相同种类的细胞，但是它们的``参数''使得它们能够实现从我们所说的``简单''到``复杂''的连续的行为。
 \end{itemize}
  
 % -- 355 --
@@ -996,9 +997,9 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
 例如，\citep{Fukushima80}结合了现代\gls{convolutional_network}的大多数模型结构设计元素，但依赖于层次化的无监督聚类算法。
 
 \cite{Lang+Hinton88}引入反向传播来训练\firstall{TDNNs}。
-使用当代术语来说，TDNNs 是用于时间序列的一维\gls{convolutional_network}。
+使用当代术语来说，TDNN是用于时间序列的一维\gls{convolutional_network}。
 用于这些模型的反向传播不受任何神经科学观察的启发，并且被一些人认为是生物不可信的。
-在基于使用反向传播训练的TDNNs成功之后，\cite{LeCun89d}通过将相同的训练算法应用于图像的2维卷积来发展现代\gls{convolutional_network}。
+在基于使用反向传播训练的TDNN成功之后，\cite{LeCun89d}通过将相同的训练算法应用于图像的2维卷积来发展现代\gls{convolutional_network}。
 
 到目前为止，我们已经描述了简单细胞对于某些特征是如何呈现粗略的线性和选择性，复杂细胞是如何更加的非线性，并且对于这些简单细胞特征的某些变换具有不变性，以及在选择性和不变性之间交替放置的层可以产生对非常特定现象的祖母细胞。
 我们还没有精确描述这些单个细胞检测到了什么。
@@ -1032,8 +1033,8 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
   y' = -(x-x_0) \sin(\tau) + (y-y_0)\cos(\tau).
 \end{equation}
 
-这里$\alpha, \beta_x, \beta_y, f, \phi, x_0, y_0, \tau$都是控制\gls{Gabor_function}性质的参数。
-图\ref{fig:chap9_Gabor_functions}给出了\gls{Gabor_function}在不同参数集上的一些例子。
+这里$\alpha, \beta_x, \beta_y, f, \phi, x_0, y_0, \tau$都是控制~\gls{Gabor_function}性质的参数。
+\figref{fig:chap9_Gabor_functions}给出了\gls{Gabor_function}在不同参数集上的一些例子。
 % fig 9.18
 \begin{figure}
 \ifOpenSource
@@ -1076,14 +1077,14 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
 余弦因子$ \cos (fx' + \phi)$控制简单细胞如何响应延$x‘$轴的亮度改变。
 参数$f$控制余弦的频率，$\phi$控制它的相位偏移。
 
-合在一起，简单细胞的这个卡通视图意味着，简单细胞对在特定位置处、特定方向上、特定空间频率的亮度进行响应。
+合在一起，简单细胞的这个草图视图意味着，简单细胞对在特定位置处、特定方向上、特定空间频率的亮度进行响应。
 当图像中的光波与细胞的权重具有相同的相位时，简单细胞是最兴奋的。
 这种情况发生在当图像亮时，它的权重为正，而图像暗时，它的权重为负。
 当光波与权重完全异相时，简单细胞被抑制——当图像较暗时，它的权重为正；较亮时，它的权重为负。
  
 % -- 358 --
  
-复杂细胞的卡通视图是它计算包含两个简单细胞响应的2维向量的$L^2$范数：$c(I)=\sqrt{s_0(I)^2 + s_1(I)^2}$。
+复杂细胞的草图视图是它计算包含两个简单细胞响应的2维向量的$L^2$范数：$c(I)=\sqrt{s_0(I)^2 + s_1(I)^2}$。
 一个重要的特殊情况是当$s_1$和$s_0$具有除$\phi$ 以外都相同的参数，并且$\phi$被设置为使得$s_1$与$s_0$相位相差四分之一周期时。
 在这种情况下，$s_0$和$s_1$形成\firstgls{quadrature_pair}。
 当高斯重新加权的图像$I(x,y)\exp(-\beta_x x'^2 -\beta_y y^2)$包含具有频率$f$、在方向$\tau$上、接近$(x_0, y_0)$的高振幅正弦波时，用先前方法定义的复杂细胞会响应，并且\emph{不管该波的相位偏移}。
@@ -1095,7 +1096,7 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
 \figref{fig:chap9_feature_detectors}给出了一些例子。
 因为如此众多不同的学习算法学习边缘检测器，所以很难仅基于学习算法学得的特征，来断定哪一个特定的学习算法是``正确''的大脑模型（虽然，当应用于自然图像时，如果一个算法\emph{不能}学得某种检测器时，它能够作为一种否定标志）。
 这些特征是自然图像的统计结构的重要部分，并且可以通过许多不同的统计建模方法来重新获得。
-可以参考\citep{hyvarinen-book2009}来获得自然图像统计领域的综述。
+读者可以参考\citep{hyvarinen-book2009}来获得自然图像统计领域的综述。
 % fig 9.19
 \begin{figure}
 \ifOpenSource
@@ -1110,7 +1111,7 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
 \caption{许多机器学习算法在应用于自然图像时，会学习那些用来检测边缘或边缘的特定颜色的特征。 
 这些特征检测器使人联想到已知存在于初级视觉皮层中的~\gls{Gabor_function}。   
 \emph{(左)}通过应用于小图像块的无监督学习算法（\gls{ss}稀疏编码）学得的权重。%这里不是很懂
-\emph{(右)}由完全\gls{supervised}的卷积~\gls{maxout}~网络的第一层学得的卷积核。 相邻的过滤器对驱动相同的~\gls{maxout_unit}。}     
+\emph{(右)}由完全\gls{supervised}的卷积~\gls{maxout}~网络的第一层学得的卷积核。 相邻的一对过滤器驱动相同的~\gls{maxout_unit}。}     
 \label{fig:chap9_feature_detectors}     
 \end{figure}
 
@@ -1123,11 +1124,11 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
 它们是将研究大脑获得的深刻理解成功用于机器学习应用的关键例子。
 它们也是第一个表现良好的深度模型之一，远远早于任意深度模型被认为是可行的。
 \gls{convolutional_network}也是第一个解决重要商业应用的神经网络，并且仍然是当今深度学习商业应用的前沿。
-例如，在20世纪90年代，AT\&T的神经网络研究小组开发了一个用于读取支票的~\gls{convolutional_network}\citep{chapter-gradient-document-2001}。
+例如，在20世纪90年代，AT\&T的神经网络研究小组开发了一个用于读取支票的\gls{convolutional_network}\citep{chapter-gradient-document-2001}。
 到90年代末，NEC部署的这个系统已经被用于读取美国10％以上的支票。
 后来，微软部署了若干个基于\gls{convolutional_network}的OCR和手写识别系统\citep{simard-03-small}。 
-关于\gls{convolutional_network}的这种应用和更现代应用的更多细节，参见第\ref{chap:applications}章。
-到2010年以前的更为深入的\gls{convolutional_network}历史可以参见\citep{Lecun_convolutionalnetworks}。
+关于\gls{convolutional_network}的这种应用和更现代应用的更多细节，参考\chapref{chap:applications}。
+读者可以参考\citep{Lecun_convolutionalnetworks}了解2010年之前的更为深入的\gls{convolutional_network}历史。
 
 \gls{convolutional_network}也被用作在许多比赛中的取胜手段。
 当前对深度学习的商业兴趣的热度始于\cite{Krizhevsky-2012-small}赢得了ImageNet对象识别挑战，但是在那之前，\gls{convolutional_network}也已经被用于赢得前些年影响较小的其他机器学习和计算机视觉竞赛了。
@@ -1136,14 +1137,14 @@ V1是大脑对视觉输入开始执行显著高级处理的第一个区域。
  
 \gls{convolutional_network}是第一批能使用反向传播有效训练的的深度网络之一。
 现在仍不完全清楚为什么\gls{convolutional_network}在一般的反向传播网络被认为已经失败时反而成功了。
-可能简单地归结为\gls{convolutional_network}比全连接网络计算效率更高，因此使用它们运行多个实验并调整它们的实现和超参数更容易。
+这可能可以简单地归结为\gls{convolutional_network}比全连接网络计算效率更高，因此使用它们运行多个实验并调整它们的实现和超参数更容易。
 更大的网络也似乎更容易训练。
-利用现代硬件，大型全连接的网络对许多任务也执行得很合理，即使使用过去那些全连接网络被认为不能工作的很好的数据集和当时流行的激活函数时，现在也能执行得很好。
-可能神经网络成功的主要阻碍是心理（实践者没有期望神经网络有效，所以他们没有认真努力地使用神经网络）。
+利用现代硬件，大型全连接的网络在许多任务上也表现得很合理，即使使用过去那些全连接网络被认为不能工作得很好的数据集和当时流行的激活函数时，现在也能执行得很好。
+心理可能神经网络成功的主要阻碍（实践者没有期望神经网络有效，所以他们没有认真努力地使用神经网络）。
 无论如何，幸运的是\gls{convolutional_network}在几十年前就表现良好。
 在许多方面，它们为余下的深度学习传递火炬，并为一般的神经网络被接受铺平了道路。
 
-\gls{convolutional_network}提供了一种方法来特化神经网络，使其能够处理具有清楚的网格结构拓扑的数据，以及将这样的模型放大到非常大的尺寸。 
+\gls{convolutional_network}提供了一种方法来特化神经网络，使其能够处理具有清楚的网格结构拓扑的数据，以及将这样的模型扩展到非常大的规模。 
 这种方法在二维图像拓扑上是最成功的。
 为了处理一维序列数据，我们接下来转向神经网络框架的另一种强大的特化：\gls{RNN}。
 
