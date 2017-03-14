@@ -286,7 +286,7 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 \firstall{DBM} \citep{SalHinton09}是另一种深度\gls{generative_model}。
 与\glsacr{DBN}不同的是，它是一个完全无向的模型。
 与\glssymbol{RBM}不同的是，\glssymbol{DBM}有几层\gls{latent_variable}（\glssymbol{RBM}只有一层）。
-但是像\glssymbol{RBM}一样，每一层内的每个变量是相互独立的，并条件于相邻层中的变量。%??  在给定相邻层中变量的条件下， 每一层内的每个变量是相互独立的。
+但是像\glssymbol{RBM}一样，每一层内的每个变量是相互独立的，并条件于相邻层中的变量。
 见\figref{fig:chap20_dbm_simple}中的图结构。
 \gls{DBM}已经被应用于各种任务，包括文档建模\citep{srivastava2013modeling}。
 
@@ -317,7 +317,7 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
  - \Vh^{(1)^\top}\MW^{(2)}\Vh^{(2)}- \Vh^{(2)^\top}\MW^{(3)}\Vh^{(3)}.
 \end{align}
 
-与\glssymbol{RBM}的\gls{energy_function}(\eqnref{eq:205e})相比，\glssymbol{DBM}\gls{energy_function}包括权重矩阵($\MW^{(2)}$和$\MW^{(3)}$)形式的\gls{hidden_unit}（\gls{latent_variable}）之间的连接。%??  以权重矩阵的形式表示\gls{hidden_unit}（\gls{latent_variable}）之间的连接
+与\glssymbol{RBM}的\gls{energy_function}(\eqnref{eq:205e})相比，\glssymbol{DBM}\gls{energy_function}以权重矩阵($\MW^{(2)}$和$\MW^{(3)}$)的形式表示\gls{hidden_unit}（\gls{latent_variable}）之间的连接。
 正如我们将看到的，这些连接对模型行为以及我们如何在模型中进行\gls{inference}都有重要的影响。
 
 % -- 654 --
@@ -335,8 +335,8 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 与全连接的\gls{BM}（每个单元连接到其他每个单元）相比，\glssymbol{DBM}提供了类似于\glssymbol{RBM}的一些优点。
 
 具体来说， 如\figref{fig:chap20_dbm_bipartite}所示，\glssymbol{DBM}的层可以组织成一个二分图，其中奇数层在一侧，偶数层在另一侧。
-立即可得，当我们条件于偶数层中的变量时，奇数层中的变量变得条件独立。%??  立即可得 改成 容易发现    变得 改成 是...的   
-当然，当我们条件于奇数层中的变量时，偶数层中的变量也会变得条件独立。%?? 同上
+容易发现，当我们条件于偶数层中的变量时，奇数层中的变量变得条件独立。   
+当然，当我们条件于奇数层中的变量时，偶数层中的变量也会变得条件独立。
 
 \glssymbol{DBM}的二分图结构意味着我们可以应用之前用于\glssymbol{RBM}条件分布的相同式子来确定\glssymbol{DBM}中的条件分布。
 在给定相邻层值的情况下，层内的单元彼此条件独立，因此二值变量的分布可以由\ENNAME{Bernoulli}参数（描述每个单元的激活概率）完全描述。
@@ -355,7 +355,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 二分图结构使\gls{gibbs_sampling}能在\gls{DBM}中高效采样。
 \gls{gibbs_sampling}的方法是一次只更新一个变量。
-\glssymbol{RBM}允许所有可见单元以一个块的方式更新，而所有\gls{hidden_unit}在第二个块更新。%??   a second  翻译成  另一个更好？
+\glssymbol{RBM}允许所有可见单元以一个块的方式更新，而所有\gls{hidden_unit}在另一个块上更新。
 我们可以简单地假设具有$l$层的\glssymbol{DBM}需要$l+1$次更新，每次迭代更新由某层单元组成的块。
 然而，我们可以仅在两次迭代中更新所有单元。
 \gls{gibbs_sampling}可以将更新分成两个块，一块包括所有偶数层（包括可见层），另一个包括所有奇数层。
@@ -386,9 +386,9 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 由于这个性质，\glssymbol{DBM}已被用作真实神经科学现象的计算模型 \citep{series2010hallucinations,reichert2011neuronal}。
 
 
-\glssymbol{DBM}一个不幸的特性是从中采样是相对困难的。%??  不幸  换成 不理想
+\glssymbol{DBM}一个不理想的特性是从中采样是相对困难的。 
 \glssymbol{DBN}只需要在其顶部的一对层中使用\glssymbol{mcmc}采样。
-其他层仅在采样过程结束时，只需在一个有效的\gls{ancestral_sampling}步骤中使用\glssymbol{mcmc}。%??  mcmc 无中生有，我觉得改成如下更好： 其他层仅在采样过程末尾涉及，并且只需在一个高效的\gls{ancestral_sampling}过程。
+其他层仅在采样过程末尾涉及，并且只需在一个高效的\gls{ancestral_sampling}过程。
 要从\glssymbol{DBM}生成样本，必须在所有层中使用\glssymbol{mcmc}，并且模型的每一层都参与每个\gls{markov_chain}转移。
 
 
@@ -478,13 +478,12 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 对于具有两个\gls{hidden_layer}的\gls{DBM}，$\CalL$由下式给出
 \begin{align}
- \CalL(Q, \Vtheta) = \sum_i \sum_{j^{\prime}} v_i \MW_{i,j^{\prime}}^{(1)} 
+ \CalL(Q, \Vtheta) = \sum_i \sum_{j^{\prime}} v_i W_{i,j^{\prime}}^{(1)} 
  \hat h_{j^{\prime}}^{(1)} +  \sum_{j^{\prime}} \sum_{k^{\prime}} \hat h_{j^{\prime}}^{(1)}
- \MW_{j^{\prime}, k^{\prime}}^{(2)} \hat h_{k^{\prime}}^{(2)} - \log Z(\Vtheta) + \CalH(Q).
+ W_{j^{\prime}, k^{\prime}}^{(2)} \hat h_{k^{\prime}}^{(2)} - \log Z(\Vtheta) + \CalH(Q).
 \end{align}
-%??   上式中 W 好像原文中并未加粗？  
 该表达式仍然包含对数\gls{partition_function} $ \log Z(\Vtheta) $。
-由于\gls{DBM}包含\gls{RBM}作为组件，用于计算\gls{RBM}的\gls{partition_function}和采样的困难同样适用于\gls{DBM}。%??  适用于  改为  困扰着  是否更好？
+由于\gls{DBM}包含\gls{RBM}作为组件，用于计算\gls{RBM}的\gls{partition_function}和采样的困难同样适用于\gls{DBM}。
 这意味着评估\gls{BM}的\gls{PMF}需要近似方法，如\gls{AIS}。
 同样，训练模型需要近似对数\gls{partition_function}的梯度。
 见\chapref{chap:confronting_the_partition_function}对这些方法的一般性描述。
@@ -507,7 +506,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 \STATE 初始化三个矩阵，$\tilde{\MV}$, $\tilde{\MH}^{(1)}$ 和 $\tilde{\MH}^{(2)}$ 每个都将 $m$行设为随机值（例如，来自\gls{bernoulli_distribution}，边缘分布大致与模型匹配）。  
 \WHILE{没有收敛（学习循环）} 
 \STATE 从训练数据采包含$m$个样本的\gls{minibatch}，并将它们排列为设计矩阵$\MV$的行。
-\STATE 初始化矩阵 $\hat{\MH}^{(1)}$ 和 $\hat{\MH}^{(2)}$，大致符合模型的边缘分布。 % ??
+\STATE 初始化矩阵 $\hat{\MH}^{(1)}$ 和 $\hat{\MH}^{(2)}$，使其大致符合模型的边缘分布。 % ??
 \WHILE{没有收敛（\gls{meanfield}\gls{inference}循环）}
         \STATE $\hat{\MH}^{(1)} \leftarrow \sigmoid \left(
           \MV \MW^{(1)} + \hat{\MH}^{(2)} \MW^{(2) \top} \right)$.
@@ -585,9 +584,8 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 这种\gls{greedy_layer_wise_training}过程不仅仅是\gls{coordinate_ascent}。
 因为我们在每个步骤优化参数的一个子集，它与\gls{coordinate_ascent}具有一些传递相似性。
-然而实际上，在\gls{greedy_layer_wise_training}过程的情况下，我们在每个步骤使用不同的\gls{objective_function}。
-%?? 这句翻译偏差较大，好像是句子换了。  
-%?? The two methods differ because the greedy layer-wise training procedure uses a different objective function at each step.  这两种方法是不同的，因为\gls{greedy_layer_wise_training}过程中在每一步都是用了不同的\gls{objective_function}。
+这两种方法是不同的，因为\gls{greedy_layer_wise_training}过程中，我们在每个步骤都使用了不同的\gls{objective_function}。
+
 
 \glssymbol{DBM}的\gls{greedy_layer_wise_pretraining}与\glssymbol{DBN}的\gls{greedy_layer_wise_pretraining}不同。
 每个单独的\glssymbol{RBM}的参数可以直接复制到相应的\glssymbol{DBN}。
@@ -774,7 +772,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 它也可以是标量乘以单位矩阵，或者是一个对角矩阵。
 在此情况下，由于一些操作需要对矩阵\gls{invert}，我们通常不允许非对角的精度矩阵，因为高斯分布的一些操作需要对矩阵\gls{invert}，一个对角矩阵可以非常容易地被\gls{invert}。
 在接下来的章节中，我们将看到其他形式的\gls{BM}，它们允许对协方差结构建模，并使用各种技术避免对精度矩阵\gls{invert}。
-%??  此处 反转 都换成了  \gls{invert}：求逆
+
 
 \subsection{条件协方差的\glsentrytext{undirected_model}}
 \label{sec:undirected_models_of_conditional_covariance}
