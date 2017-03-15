@@ -1212,10 +1212,8 @@ p(\RVv\mid\RVh) = \prod_i p(\RSv_i\mid \RVh).
 对于二元的\gls{RBM}，我们可以得到：
 \begin{align}
 \label{eqn:1613}
-\begin{aligned}
-p(\RSh_i = 1\mid\RVv) = \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big),\\
-p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
-\end{aligned}
+p(\RSh_i = 1\mid\RVv) &= \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big),\\
+p(\RSh_i = 0\mid\RVv) &= 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).
 \end{align}
 结合这些属性可以得到高效的\firstgls{block_gibbs_sampling}，它在同时采样所有$\Vh$和同时采样所有$\Vv$之间交替。
 \glssymbol{RBM}~模型通过~\gls{gibbs_sampling}产生的样本展示在\figref{fig:rbm_sample}中。
