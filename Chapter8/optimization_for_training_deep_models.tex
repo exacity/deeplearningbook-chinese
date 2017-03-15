@@ -288,7 +288,7 @@
 %  274 mid
 
 
-因此，我们可以从\gls{DGD}$p_\text{data}$抽取\gls{minibatch}样本$\{ \Vx^{(1)}, \dots,\Vx^{(m)} \}$以及对应的目标$y^{(i)}$，然后计算该\gls{minibatch}上损失函数关于对应参数的梯度
+因此，我们可以从\gls{DGD}~$p_\text{data}$抽取\gls{minibatch}样本$\{ \Vx^{(1)}, \dots,\Vx^{(m)} \}$以及对应的目标$y^{(i)}$，然后计算该\gls{minibatch}上损失函数关于对应参数的梯度
 \begin{equation}
 \label{eq:8.9}
     \hat{\Vg} = \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),y^{(i)} ).
@@ -399,9 +399,9 @@
 
 
 除了\gls{weight_space_symmetry}，很多\gls{NN}还有其他导致不可辨认的原因。
-例如，在任意\gls{rectified_linear}网络或者\gls{maxout}网络中，
-我们可以将传入权重和\gls{bias_aff}乘以 $\alpha$倍，然后将传出权重乘以$\frac{1}{\alpha}$倍，而保持模型等价。
-这意味着，如果\gls{cost_function}不包括如\gls{weight_decay}这种直接依赖于权重而非模型输出的项，那么\gls{rectified_linear}网络或者\gls{maxout}网络的每一个\gls{local_minimum}都在等价的\gls{local_minima}的$(m\times n)$维双曲线上。
+例如，在任意\gls{rectified_linear}网络或者~\gls{maxout}~网络中，
+我们可以将传入权重和\gls{bias_aff}扩大$\alpha$倍，然后将传出权重扩大$\frac{1}{\alpha}$倍，而保持模型等价。
+这意味着，如果\gls{cost_function}不包括如\gls{weight_decay}这种直接依赖于权重而非模型输出的项，那么\gls{rectified_linear}网络或者~\gls{maxout}~网络的每一个\gls{local_minimum}都在等价的\gls{local_minima}的$(m\times n)$维双曲线上。
 % -- 277 mid
 
 
@@ -500,7 +500,7 @@
 令人惊讶的是，这些可视化通常不会显示出很多明显的障碍。
 大约2012年，在\gls{SGD}开始成功训练非常大的模型之前，相比这些投影所显示的\gls{NN}\gls{cost_function}的表面通常被认为有更多的\gls{nonconvex}结构。
 该投影所显示的主要障碍是初始参数附近的高\gls{cost}\gls{saddle_points}，但如由蓝色路径所示，\glssymbol{SGD}\,训练轨迹能轻易地逃脱该鞍点。
-大多数训练时间花费在横穿\gls{cost_function}中相对平坦的峡谷，可能由于梯度中的高噪声、或该区域中\,\gls{hessian}\,矩阵的\gls{poor_conditioning}，或者需要经过间接的弧路径绕过图中可见的高``山'' 。
+大多数训练时间花费在横穿\gls{cost_function}中相对平坦的峡谷，可能由于梯度中的高噪声、或该区域中~\gls{hessian}~矩阵的\gls{poor_conditioning}，或者需要经过间接的弧路径绕过图中可见的高``山'' 。
 图经~\citet{GoodfellowOptimization15}许可改编。
 }
 \label{fig:chap8_plot_atmu_relu_5}
@@ -643,7 +643,7 @@
 \figref{fig:chap8_grad_norm_increases}表明\gls{NN}通常不会到达梯度很小的区域。
 甚至，这些\gls{critical_points}不一定存在。
 例如，\gls{loss_function} $-\log p(y\mid\Vx;\Vtheta)$ 可以没有\gls{global_minimum}，而是当随着训练模型逐渐稳定后，渐近地收敛于某个值。    
-对于具有离散的$y$和\,\ENNAME{softmax}\,分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类\gls{training_set}上的每个样本，则负对数似然可以无限趋近但不会等于零。
+对于具有离散的$y$和~\ENNAME{softmax}~分布$p(y\mid\Vx)$的分类器而言，若模型能够正确分类\gls{training_set}上的每个样本，则负对数似然可以无限趋近但不会等于零。
 同样地，实值模型$p(y\mid\Vx) = \mathcal{N}(y;f(\Vtheta),\beta^{-1})$的负对数似然会趋向于负无穷——如果$f(\Vtheta)$能够正确预测所有\gls{training_set}中的目标$y$，学习算法会无限制地增加$\beta$。
 \figref{fig:chap8_bad_global}给出了一个失败的例子，即使没有\gls{local_minima}和\gls{saddle_points}，该例还是不能从局部优化中找到一个良好的\gls{cost_function}值。
 
@@ -1170,7 +1170,7 @@
 在这种情况下，我们有一个单元输出$u$，另一个单元$h\in[0,1]$，那么我们可以将$h$视作门，以决定$uh\approx 1$还是$uh\approx 0$。
 在这种情形下，我们希望设置\gls{bias_aff} $h$，使得在初始化的大多数情况下$h\approx 1$。
 否则，$u$没有机会学习。
-例如，\cite{Jozefowicz-et-al-ICML2015}提议设置\,\glssymbol{LSTM}\,模型遗忘门的\gls{bias_aff}为$1$，如\secref{sec:the_long_short_term_memory_and_other_gated_rnns}所述。
+例如，\cite{Jozefowicz-et-al-ICML2015}提议设置~\glssymbol{LSTM}~模型遗忘门的\gls{bias_aff}为$1$，如\secref{sec:the_long_short_term_memory_and_other_gated_rnns}所述。
 \end{itemize}
 % 297 end
 
@@ -1392,7 +1392,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
     J(\Vtheta) \approx J(\Vtheta_0) + (\Vtheta - \Vtheta_0)^\top \nabla_{\Vtheta}   
     J(\Vtheta_0) + \frac{1}{2} (\Vtheta - \Vtheta_0)^\top \MH(\Vtheta - \Vtheta_0),
 \end{equation}
-其中$\MH$是$J$相对于$\Vtheta$的\gls{hessian}矩阵在$\Vtheta_0$处的估计。
+其中$\MH$是$J$相对于$\Vtheta$的\,\gls{hessian}\,矩阵在$\Vtheta_0$处的估计。
 如果我们再求解这个函数的\gls{critical_points}，我们将得到牛顿参数更新规则：
 \begin{equation}
     \Vtheta^* = \Vtheta_0 - \MH^{-1}\nabla_{\Vtheta} J(\Vtheta_0).
@@ -1574,7 +1574,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 
 \gls{BFGS}\,近似的说明和推导出现在很多关于优化的教科书中，包括\cite{Lue84}。
 
-当\gls{hessian}逆近似$\MM_t$更新时，下降方向$\Vrho_t$为$\Vrho_t = \MM_t \Vg_t$。
+当\,\gls{hessian}\,逆近似$\MM_t$更新时，下降方向$\Vrho_t$为$\Vrho_t = \MM_t \Vg_t$。
 该方向上的线性搜索用于决定该方向上的步长$\epsilon^*$。
 参数的最后更新为：
 \begin{equation}

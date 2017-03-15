@@ -103,12 +103,12 @@
      \centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/fig-ssrbm_samples}}
 \fi
 	\caption{自然图片的概率建模。
-\emph{(上)}CIFAR-10数据集\citep{KrizhevskyHinton2009}中的$32\times 32$像素的样例图片。
+\emph{(上)}~CIFAR-10数据集\citep{KrizhevskyHinton2009}中的$32\times 32$像素的样例图片。
 \emph{(下)}从这个数据集上训练的\gls{structured_probabilistic_models}中抽出的样本。
 每一个样本都出现在与其欧式距离最近的训练样本的格点中。
 这种比较使得我们发现这个模型确实能够生成新的图片，而不是记住训练样本。
 为了方便展示，两个集合的图片都经过了微调。
-图片经\citet{Courville+al-2011-small}许可转载。}
+图片经~\citet{Courville+al-2011-small}许可转载。}
 	\label{fig:chap16_fig-ssrbm}
 \end{figure}
 
@@ -132,7 +132,7 @@
 \item  \emph{统计的高效性}： 
 当模型中的参数个数增加时，使用统计估计器估计这些参数所需要的训练数据数量也需要相应地增加。
 因为基于查表的模型拥有天文数字级别的参数，为了准确地拟合，相应的训练集的大小也是相同级别的。
-任何这样的模型都会导致严重的\gls{overfitting}，除非我们添加一些额外的假设来联系表格中的不同元素（正如\secref{sec:n_grams}中所举的\gls{backoff}或者平滑\gls{n_gram}模型）。
+任何这样的模型都会导致严重的\gls{overfitting}，除非我们添加一些额外的假设来联系表格中的不同元素（正如\secref{sec:n_grams}中所举的\gls{backoff}或者平滑~\gls{n_gram}~模型）。
 % 552  end
 	
 \item \emph{运行时间：推断的开销。}
@@ -207,8 +207,7 @@ Bob的完成时间依赖于Alice的完成时间，因为Bob只能在Alice跑完�
 % 554
 
 
-\firstgls{directed_graphical_model}是一种\gls{structured_probabilistic_models}，也被称为\firstgls{BN}或者\firstgls{bayesian_network}
-\footnote{当我们希望``强调''从网络中计算出的值的``推断''本质，即强调这些值代表的是置信程度大小而不是事件的频率时，Judea Pearl建议使用``\gls{bayesian_network}''这个术语。}%??
+\firstgls{directed_graphical_model}是一种\gls{structured_probabilistic_models}，也被称为\firstgls{BN}或者\firstgls{bayesian_network}\footnote{当我们希望``强调''从网络中计算出的值的``推断''本质，即强调这些值代表的是置信程度大小而不是事件的频率时，Judea Pearl建议使用``\gls{bayesian_network}''这个术语。}%??
  \citep{pearl85bayesian}。
 % 554
 
@@ -365,7 +364,7 @@ p(\RSt_0,\RSt_1,\RSt_2) = p(\RSt_0)p(\RSt_1\mid \RSt_0)p(\RSt_2\mid \RSt_1).
 \end{figure}
 
 正式地说，一个\gls{undirected_model}是一个定义在\gls{undirected_model} $\CalG$上的\gls{structured_probabilistic_models}。
-对于图中的每一个\gls{clique}\footnote{图的一个\gls{clique}是图中结点的一个子集，并且其中的点是全连接的}$\CalC$，
+对于图中的每一个\gls{clique}\footnote{图的一个\gls{clique}是图中结点的一个子集，并且其中的点是全连接的}$~\CalC$，
 一个\firstgls{factor} $\phi(\CalC)$(也称为\firstgls{clique_potential})，衡量了\gls{clique}中变量每一种可能的联合状态所对应的密切程度。
 这些\gls{factor}都被限制为是非负的。
 它们一起定义了\firstgls{unnormalized_probability_function}：
@@ -631,7 +630,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 
 类似的概念适用于\gls{directed_model}，只是在\gls{directed_model}中，这些概念被称为\firstgls{dseparation}。
 ``d''代表``\gls{dependency}''的意思。
-有向图中\gls{dseparation}的定义与\gls{undirected_model}中\gls{separation}的定义相同：
+有向图中\,\gls{dseparation}的定义与\gls{undirected_model}中\gls{separation}的定义相同：
 如果图结构显示给定变量集$\SetS$时 ，变量集$\SetA$与变量集$\SetB$无关， 那么我们认为给定变量集$\SetS$时，变量集$\SetA$~\gls{dseparation}于变量集$\SetB$。
 % 563
 
@@ -695,7 +694,7 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 \emph{(d)}即使$\RSs$的任意后代都被观察到，\gls{explaining_away_effect}也会起作用。
 举个例子，假设$\RSc$是一个表示你是否收到你同事的报告的一个变量。
 如果你注意到你还没有收到这个报告，这会增加你估计的她今天不在工作的概率，这反过来又会增加她今天生病或者度假的概率。
-阻塞\gls{vstructure}中路径的唯一方法就是共享子节点的后代一个都观察不到。}
+阻塞\,\gls{vstructure}中路径的唯一方法就是共享子节点的后代一个都观察不到。}
 \label{fig:168}
 \end{figure}
 % 565  1 page
@@ -710,16 +709,16 @@ $E(\RVx)$被称作是\firstgls{energy_function}。
 	\includegraphics{Chapter16/figures/example_dsep}
 	\fi
 	\captionsetup{singlelinecheck=off}
-\caption[d-separation example]{从这张图中，我们可以发现一些\gls{dseparation}的性质。这包括了：
+\caption[d-separation example]{从这张图中，我们可以发现一些\,\gls{dseparation}的性质。这包括了：
 \begin{itemize}
-\item 给定空集的情况下，$\RSa$和$\RSb$是\gls{dseparation}的。
-\item 给定$\RSc$的情况下，$\RSa$和$\RSe$是\gls{dseparation}的。
-\item 给定$\RSc$的情况下，$\RSd$和$\RSe$是\gls{dseparation}的。
+\item 给定空集的情况下，$\RSa$和$\RSb$是\,\gls{dseparation}的。
+\item 给定$\RSc$的情况下，$\RSa$和$\RSe$是\,\gls{dseparation}的。
+\item 给定$\RSc$的情况下，$\RSd$和$\RSe$是\,\gls{dseparation}的。
 \end{itemize}
-我们还可以发现当我们观察到一些变量时，一些变量不再是\gls{dseparation}的：
+我们还可以发现当我们观察到一些变量时，一些变量不再是\,\gls{dseparation}的：
 \begin{itemize}
-\item 给定$\RSc$的情况下，$\RSa$和$\RSb$不是\gls{dseparation}的。
-\item 给定$\RSd$的情况下，$\RSa$和$\RSb$不是\gls{dseparation}的。
+\item 给定$\RSc$的情况下，$\RSa$和$\RSb$不是\,\gls{dseparation}的。
+\item 给定$\RSd$的情况下，$\RSa$和$\RSb$不是\,\gls{dseparation}的。
 \end{itemize}
 }
 	\label{fig:169}
@@ -1141,7 +1140,7 @@ NP中的问题只需确定其中一个问题是否有解决方案，并找到一
 \gls{distributed_representation}具有许多优点，但是从\gls{graphical_models}和计算复杂性的观点来看，
 \gls{distributed_representation}有一个缺点就是很难产生对于精确推断和\gls{loopy_belief_propagation}等传统技术来说足够稀疏的图。
 结果，大规模\gls{graphical_models}和深度图模型最大的区别之一就是\gls{DL}中几乎从来不会使用\gls{loopy_belief_propagation}。
-相反的，许多\gls{DL}模型可以设计来加速\gls{gibbs_sampling}或者\gls{variational_inference}。
+相反的，许多\gls{DL}模型可以设计来加速~\gls{gibbs_sampling}或者\gls{variational_inference}。
 此外，\gls{DL}模型包含了大量的\gls{latent_variable}，使得高效的数值计算代码显得格外重要。
 除了选择高级推断算法之外，这提供了另外的动机，用于将结点分组成层，相邻两层之间用一个矩阵来描述相互作用。
 这要求实现算法的单个步骤可以实现高效的矩阵乘积运算，或者专门适用于稀疏连接的操作，例如块对角矩阵乘积或\gls{convolution}。
@@ -1161,17 +1160,17 @@ NP中的问题只需确定其中一个问题是否有解决方案，并找到一
 \subsection{实例：\glsentrytext{RBM}}
 \label{sec:example_the_restricted_boltzmann_machine}
 \firstall{RBM}\citep{Smolensky86}或者\firstgls{harmonium}是\gls{graphical_models}如何用于深度学习的典型例子。 
-\glssymbol{RBM}本身不是一个深层模型。 
+\glssymbol{RBM}~本身不是一个深层模型。 
 相反，它有一层\gls{latent_variable}，可用于学习输入的表示。 
-在\chapref{chap:deep_generative_models}中，我们将看到\glssymbol{RBM}如何被用来构建许多的深层模型。
-在这里，我们举例展示了\glssymbol{RBM}在许多深度图模型中使用的实践：
+在\chapref{chap:deep_generative_models}中，我们将看到~\glssymbol{RBM}~如何被用来构建许多的深层模型。
+在这里，我们举例展示了~\glssymbol{RBM}~在许多深度图模型中使用的实践：
 它的单元被分成很大的组，这种组称作层，层之间的连接由矩阵描述，连通性相对密集。
-该模型被设计为能够进行高效的\gls{gibbs_sampling}，并且模型设计的重点在于以很高的自由度来学习\gls{latent_variable}，而\gls{latent_variable}的含义并不是设计者指定的。
-之后在\secref{sec:restricted_boltzmann_machines}，我们将更详细地再次讨论\glssymbol{RBM}。
+该模型被设计为能够进行高效的~\gls{gibbs_sampling}，并且模型设计的重点在于以很高的自由度来学习\gls{latent_variable}，而\gls{latent_variable}的含义并不是设计者指定的。
+之后在\secref{sec:restricted_boltzmann_machines}，我们将更详细地再次讨论~\glssymbol{RBM}。
 % 577
 
 
-标准的\glssymbol{RBM}是具有二值的可见和隐藏单元的\gls{energy_based_model}。 其\gls{energy_function}为
+标准的~\glssymbol{RBM}~是具有二值的可见和隐藏单元的\gls{energy_based_model}。 其\gls{energy_function}为
 \begin{align}
 \label{eqn:1610}
 E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh,
@@ -1198,7 +1197,7 @@ E(\Vv,\Vh) = -\Vb^{\top}\Vv - \Vc^{\top}\Vh - \Vv^{\top}\MW\Vh,
 
 
 
-对\glssymbol{RBM}结构的限制产生了良好的属性
+对~\glssymbol{RBM}~结构的限制产生了良好的属性
 \begin{align}
 \label{eqn:1611}
 p(\RVh\mid\RVv) = \prod_i p(\RSh_i\mid \RVv)
@@ -1219,7 +1218,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 \end{aligned}
 \end{align}
 结合这些属性可以得到高效的\firstgls{block_gibbs_sampling}，它在同时采样所有$\Vh$和同时采样所有$\Vv$之间交替。
-\glssymbol{RBM}模型通过\gls{gibbs_sampling}产生的样本展示在\figref{fig:rbm_sample}中。
+\glssymbol{RBM}~模型通过~\gls{gibbs_sampling}产生的样本展示在\figref{fig:rbm_sample}中。
 % 578 
 
 \begin{figure}[!htb]
@@ -1228,18 +1227,18 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 \else
 	\centerline{\includegraphics[width=0.9\textwidth]{Chapter16/figures/rbm_samples}}	
 \fi
-\caption{训练好的\glssymbol{RBM}的样本及其权重。
-\emph{(左)}用MNIST训练模型，然后用\gls{gibbs_sampling}进行采样。
-每一列是一个单独的\gls{gibbs_sampling}过程。
-每一行表示另一个$1000$步后\gls{gibbs_sampling}的输出。
+\caption{训练好的~\glssymbol{RBM}~的样本及其权重。
+\emph{(左)}用MNIST训练模型，然后用~\gls{gibbs_sampling}进行采样。
+每一列是一个单独的~\gls{gibbs_sampling}过程。
+每一行表示另一个$1000$步后~\gls{gibbs_sampling}的输出。
 连续的样本之间彼此高度相关。
 \emph{(右)}对应的权重向量。
 将本图结果与图\ref{fig:s3c_samples}中描述的\gls{linear_factor}的样本和权重相比。
-由于\glssymbol{RBM}的先验$p(\Vh)$没有限制为\gls{factorial}，这里的样本表现得好很多。
-采样时\glssymbol{RBM}能够学习到哪些特征需要一起出现。
-另一方面说，\glssymbol{RBM}后验$p(\Vh \mid \Vv)$是\gls{factorial}的，而\gls{sparse_coding}的后验并不是，所以在特征提取上\gls{sparse_coding}模型表现得更好。
+由于~\glssymbol{RBM}~的先验$p(\Vh)$没有限制为\gls{factorial}，这里的样本表现得好很多。
+采样时~\glssymbol{RBM}~能够学习到哪些特征需要一起出现。
+另一方面说，\glssymbol{RBM}~后验$p(\Vh \mid \Vv)$是\gls{factorial}的，而\gls{sparse_coding}的后验并不是，所以在特征提取上\gls{sparse_coding}模型表现得更好。
 其他的模型可以使用非\gls{factorial}的$p(\Vh)$和非\gls{factorial}的$p(\Vh \mid \Vh)$。
-图片经\citet{lisa_tutorial_rbm}允许转载。}
+图片经~\citet{lisa_tutorial_rbm}允许转载。}
 \label{fig:rbm_sample}
 \end{figure}
 
@@ -1252,7 +1251,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 
 
 % 579 head
-这两个属性，高效的\gls{gibbs_sampling}和导数计算，使训练过程变得非常方便。
+这两个属性，高效的~\gls{gibbs_sampling}和导数计算，使训练过程变得非常方便。
 在\chapref{chap:confronting_the_partition_function}中，我们将看到，可以通过计算应用于这种来自模型样本的导数来训练\gls{undirected_model}。
 % 579
 
@@ -1262,7 +1261,7 @@ p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
 
 
 
-总的来说，\glssymbol{RBM}展示了典型的\gls{graphical_models}\gls{DL}方法：
+总的来说，\glssymbol{RBM}~展示了典型的\gls{graphical_models}\gls{DL}方法：
 %结合由矩阵参数化的层之间的高效相互作用通过多层\gls{latent_variable}完成\gls{representation_learning}。
 使用多层\gls{latent_variable}，并由矩阵参数化层之间的高效相互作用来完成\gls{representation_learning}。
 % 579

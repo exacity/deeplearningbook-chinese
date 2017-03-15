@@ -1073,7 +1073,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 例如复位门（或\gls{forget_gate}）的输出可以在多个\gls{hidden_unit}间共享。
 或者，全局门的乘积（覆盖一整组的单元，例如整一层）和一个局部门（每单元）可用于结合全局控制和局部控制。
 然而，一些调查发现这些~\glssymbol{LSTM}~和GRU架构的变种，在广泛的任务中难以明显地同时击败这两个原始架构\citep{Greff-et-al-arxiv2015,Jozefowicz-et-al-ICML2015}。
-\cite{Greff-et-al-arxiv2015}发现其中的关键因素是\gls{forget_gate}，而~\cite{Jozefowicz-et-al-ICML2015}发现向\glssymbol{LSTM}\gls{forget_gate}加入1的\gls{bias_aff}(由~\cite{Gers-et-al-2000}提倡)能让~\glssymbol{LSTM}~变得与已探索的最佳变种一样健壮。
+\cite{Greff-et-al-arxiv2015}发现其中的关键因素是\gls{forget_gate}，而~\cite{Jozefowicz-et-al-ICML2015}发现向~\glssymbol{LSTM}~\gls{forget_gate}加入1的\gls{bias_aff}(由~\cite{Gers-et-al-2000}提倡)能让~\glssymbol{LSTM}~变得与已探索的最佳变种一样健壮。
 
 \section{优化\glsentrytext{long_term_dependency}}
 \label{sec:optimization_for_long_term_dependencies}
@@ -1196,7 +1196,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 
 为了解决这一难题，\citet{Weston2014}引入了\firstgls{memory_network}，其中包括一组可以通过寻址机制来访问的记忆单元。
 \gls{memory_network}原本需要监督信号指示他们如何使用自己的记忆单元。
-\citet{Graves-et-al-arxiv2014}引入的\firstgls{NTM}，不需要明确的监督指示采取哪些行动而能学习从记忆单元读写任意内容，并通过使用基于内容的软注意机制（见\citet{Bahdanau-et-al-ICLR2015-small}和\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}），允许端到端的训练。
+\citet{Graves-et-al-arxiv2014}引入的\firstgls{NTM}，不需要明确的监督指示采取哪些行动而能学习从记忆单元读写任意内容，并通过使用基于内容的软注意机制（~见\citet{Bahdanau-et-al-ICLR2015-small}和\secref{sec:using_an_attention_mechanism_and_aligning_pieces_of_data}），允许端到端的训练。
 这种软寻址机制已成为其他允许基于\gls{gradient}优化的模拟算法机制的相关架构的标准\citep{Sukhbaatar2015,Joulin+Mikolov-2015,Kumar-et-al-2015,Vinyals2015,Grefenstette-et-al-NIPS2015}。
 
 每个记忆单元可以被认为是~\glssymbol{LSTM}~和GRU中记忆单元的扩展。

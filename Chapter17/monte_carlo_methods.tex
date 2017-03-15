@@ -181,17 +181,17 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 在这种情况下，为了从分布$p_{\text{model}}(\RVx)$中近似采样，我们引入了一种称为\firstgls{markov_chain}的数学工具。
 利用\gls{markov_chain}来进行\gls{monte_carlo}估计的这一类算法被称为\firstall{mcmc}方法。
 \citet{koller-book2009}花了大量篇幅来描述\gls{mcmc}算法在\gls{ML}中的应用。
-\glssymbol{mcmc}技术最标准、最一般的的理论保证只适用于那些各状态概率均不为零的模型。
+\glssymbol{mcmc}~技术最标准、最一般的的理论保证只适用于那些各状态概率均不为零的模型。
 因此，这些技术最方便的使用方法是用于从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
-在\glssymbol{energy_based_model}的公式表述中，每一个状态所对应的概率都不为零。
-事实上，\glssymbol{mcmc}方法可以被广泛地应用在包含$0$概率状态的许多概率分布中。
-然而，在这种情况下，关于\glssymbol{mcmc}方法性能的理论保证只能依据具体不同类型的分布具体分析证明。
+在~\glssymbol{energy_based_model}~的公式表述中，每一个状态所对应的概率都不为零。
+事实上，\glssymbol{mcmc}~方法可以被广泛地应用在包含$0$概率状态的许多概率分布中。
+然而，在这种情况下，关于~\glssymbol{mcmc}~方法性能的理论保证只能依据具体不同类型的分布具体分析证明。
 在\gls{DL}中，我们通常依赖于那些一般的理论保证，其在所有\gls{energy_based_model}都能自然成立。
 
 % 586 end
 
 
-为了解释从\gls{energy_based_model}中采样困难的原因，我们考虑一个包含两个变量的\glssymbol{energy_based_model}的例子，记$p(\RSa,\RSb)$为其分布。  
+为了解释从\gls{energy_based_model}中采样困难的原因，我们考虑一个包含两个变量的~\glssymbol{energy_based_model}~的例子，记$p(\RSa,\RSb)$为其分布。  
 为了采$\RSa$，我们必须先从$p(\RSa\mid \RSb)$中采样；为了采$\RSb$，我们又必须从$p(\RSb\mid \RSa)$中采样。   
 这似乎成了棘手的先有鸡还是先有蛋的问题。
 \gls{directed_model}避免了这一问题因为它的图是有向无环的。
@@ -200,7 +200,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 587 begin
 
 
-在\glssymbol{energy_based_model}中，我们通过使用\gls{markov_chain}来采样，从而避免了先有鸡还是先有蛋的问题。  
+在~\glssymbol{energy_based_model}~中，我们通过使用\gls{markov_chain}来采样，从而避免了先有鸡还是先有蛋的问题。  
 \gls{markov_chain}的核心思想是从某个可取任意值的状态$\Vx$出发。
 随着时间的推移，我们随机地反复更新状态$\Vx$。  
 最终$\Vx$成为了一个从$p(\Vx)$中抽出的（非常接近）比较一般的样本。  %?? 建议 比较公正 换成 标准
@@ -209,7 +209,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 % 587  mid
 
 
-为了给出\glssymbol{mcmc}方法为何有效的一些理论解释，重参数化这个问题是很有用的。 
+为了给出~\glssymbol{mcmc}~方法为何有效的一些理论解释，重参数化这个问题是很有用的。 
 首先我们关注一些简单的情况，其中随机变量$\RVx$有可数个状态。
 我们将这种状态简单地记作正整数$x$。
 不同的整数$x$的大小对应着原始问题中$\Vx$的不同状态。
@@ -348,7 +348,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \firstgls{gibbs_sampling}是一种概念简单而又有效的方法。
 它构造一个从$p_{\text{model}}(\Vx)$中采样的\gls{markov_chain}，其中在\gls{energy_based_model}中从$T(\RVx'\mid \RVx)$采样是通过选择一个变量$\RSx_i$，然后从$p_{\text{model}}$中该点关于在无向图$\CalG$（定义了\gls{energy_based_model}结构）中邻接点的条件分布中采样。
 只要一些变量在给定相邻变量时是条件独立的，那么这些变量就可以被同时采样。
-正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的\glssymbol{RBM}示例一样，\glssymbol{RBM}中所有的\gls{hidden_unit}可以被同时采样，因为在给定所有可见单元的条件下它们相互条件独立。
+正如在\secref{sec:example_the_restricted_boltzmann_machine}中看到的~\glssymbol{RBM}~示例一样，\glssymbol{RBM}~中所有的\gls{hidden_unit}可以被同时采样，因为在给定所有可见单元的条件下它们相互条件独立。
 同样地，所有的可见单元也可以被同时采样，因为在给定所有\gls{hidden_unit}的情况下它们相互条件独立。 
 以这种方式同时更新许多变量的\,\gls{gibbs_sampling}通常被称为\firstgls{block_gibbs_sampling}。   
 % 590 mid
@@ -379,7 +379,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 % 591 
 
 
-当我们考虑\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。
+当我们考虑~\gls{gibbs_sampling}算法（见\secref{sec:gibbs_sampling}）时，这种现象格外明显。
 在这种情况下，我们考虑在一定步数内从一个\gls{mode}移动到一个临近\gls{mode}的概率。
 决定这个概率的是两个\gls{mode}之间的``能量障碍''的形状。
 隔着一个巨大``能量障碍'' （低概率的区域）的两个\gls{mode}之间的转移概率是（随着能量障碍的高度）指数下降的，如\figref{fig:chap17_good_bad_really_bad_mixing_color}所示。
@@ -394,7 +394,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \else
 	\centerline{\includegraphics{Chapter17/figures/good_bad_really_bad_mixing_color}}
 \fi
-\caption{对于三种分布使用\,\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为\gls{mode}。
+\caption{对于三种分布使用~\gls{gibbs_sampling}所产生的路径，所有的分布\gls{markov_chain}初始值都设为\gls{mode}。
 \emph{(左)}一个带有两个独立变量的\gls{multivariate_normal_distribution}。
 由于变量之间是相互独立的，\gls{gibbs_sampling}\gls{mixing}得很好。
 \emph{(中)}变量之间存在高度相关性的一个\gls{multivariate_normal_distribution}。
@@ -409,13 +409,13 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 %  592
 举一个简单的例子，考虑两个变量$\RSa$，$\RSb$的\gls{energy_based_model}，这两个变量都是二值的，取值$+1$或者$-1$。   %??  
 如果对某个较大的正数$w$，$E(\RSa,\RSb) = - w \RSa \RSb$，那么这个模型传达了一个强烈的信息，$\RSa$和$\RSb$有相同的符号。
-当$\RSa=1$时用\,\gls{gibbs_sampling}更新$\RSb$。
+当$\RSa=1$时用~\gls{gibbs_sampling}更新$\RSb$。
 给定$\RSb$时的条件分布满足$p(\RSb=1\mid \RSa=1) = \sigma(w)$。
-如果$w$的值很大，\gls{sigmoid}函数趋近于饱和，那么$b$也取到$1$的概率趋近于$1$。
+如果$w$的值很大，\gls{sigmoid}~函数趋近于饱和，那么$b$也取到$1$的概率趋近于$1$。
 同理，如果$\RSa=-1$，那么$\RSb$取到$-1$的概率也趋于$1$。 
 根据模型$p_{\text{model}}(\RSa,\RSb)$，两个变量取一样的符号的概率几乎相等。
 根据$p_{\text{model}}(\RSa\mid \RSb)$，两个变量应该有相同的符号。
-这也意味着\,\gls{gibbs_sampling}很难会改变这些变量的符号。
+这也意味着~\gls{gibbs_sampling}很难会改变这些变量的符号。
 % 592
 
 在更实际的问题中，这种挑战更加艰巨因为在实际问题中我们不能仅仅关注在两个\gls{mode}之间的转移，更要关注在多个\gls{mode}之间的转移。 
@@ -452,7 +452,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 \fi
 \caption{深度概率模型中一个\gls{mixing}缓慢问题的例证。
 每张图都是按照从左到右从上到下的顺序的。
-\emph{(左)}\,\gls{gibbs_sampling}从MNIST数据集训练成的\gls{DBM}中采出的连续样本。
+\emph{(左)}~\gls{gibbs_sampling}从MNIST数据集训练成的\gls{DBM}中采出的连续样本。
 这些连续的样本之间非常相似。
 由于\,\gls{gibbs_sampling}作用于一个深度图模型，相似度更多地是基于语义而非原始视觉特征。
 但是对于吉布斯链来说从分布的一个\gls{mode}转移到另一个仍然是很困难的，比如说改变数字。
@@ -466,7 +466,7 @@ q' (\RVx') = \SetE_{\RVx\sim q}T(\RVx'\mid \RVx),
 
 % 593 mid
 当感兴趣的分布对于每个类具有单独的\gls{manifold}结构时，所有这些问题都使\,\glssymbol{mcmc}\,方法变得不那么有用：分布集中在许多\gls{mode}周围，并且这些\gls{mode}由大量高能量区域分割。
-我们在许多分类问题中遇到的是这种类型的分布，由于\gls{mode}之间\gls{mixing}缓慢，它将使得\glssymbol{mcmc}方法非常缓慢地收敛。
+我们在许多分类问题中遇到的是这种类型的分布，由于\gls{mode}之间\gls{mixing}缓慢，它将使得MCMC方法非常缓慢地收敛。
 % 593
 
 
@@ -516,11 +516,11 @@ $\beta$参数可以被理解为\firstgls{temperature}的倒数，反映了\gls{e
 
 当我们从\gls{latent_variable}模型$p(\Vh,\Vx)$中采样时，我们可以发现如果$p(\Vh\mid \Vx)$将$\Vx$编码得非常好，那么从$p(\Vx \mid \Vh)$中采样时，并不会太大地改变$\Vx$，那么\gls{mixing}结果会很糟糕。
 解决这个问题的一种方法是使得$\Vh$成为一种将$\Vx$编码为$\Vh$的深度表示，从而使得\gls{markov_chain}在$\Vh$空间中更容易\gls{mixing}。
-在许多\gls{representation_learning}算法如\gls{AE}和\,\glssymbol{RBM}中，$\Vh$的边缘分布相比于$\Vx$上的原始数据分布，通常表现为更加均匀、更趋近于\gls{unimodal}。
+在许多\gls{representation_learning}算法如\gls{AE}和\,\glssymbol{RBM}\,中，$\Vh$的边缘分布相比于$\Vx$上的原始数据分布，通常表现为更加均匀、更趋近于\gls{unimodal}。
 或许可以说，这是因为利用了所有可用的表示空间并尽量减小\gls{reconstruction_error}。
 因为当训练集上的不同样本之间在$\Vh$空间能够被非常容易地区分时，我们也会很容易地最小化\gls{reconstruction_error}。
 \citet{Bengio-et-al-ICML2013-small}观察到这样的现象，堆叠越深的\gls{regularize}\gls{AE}或者\,\glssymbol{RBM}，顶端$\Vh$空间的边缘分布越趋向于均匀和发散，而且不同\gls{mode}（比如说实验中的类别）所对应区域之间的间距也会越小。
-在高层空间中训练\,\glssymbol{RBM}会使得\,\gls{gibbs_sampling}在\gls{mode}间\gls{mixing}得更快。
+在高层空间中训练\,\glssymbol{RBM}\,会使得~\gls{gibbs_sampling}在\gls{mode}间\gls{mixing}得更快。
 然而，如何利用这种观察到的现象来辅助训练深度\gls{generative_model}或者从中采样仍然有待探索。
 % 595
 
