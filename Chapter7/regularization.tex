@@ -86,7 +86,7 @@ $\alpha$越大，对应\gls{regularization}惩罚越大。
 这个\gls{regularization}策略通过向\gls{objective_function}添加一个正则项$\Omega(\Vtheta) = \frac{1}{2} \norm{\Vw}_2^2$，使权重更加接近原点\footnote{更一般地，我们可以将参数\gls{regularization}为接近空间中的任意特定点，令人惊讶的是这样也仍有\gls{regularization}效果，但是特定点越接近真实值结果越好。
 当我们不知道正确的值应该是正还是负时，零是有意义的默认值。
 由于模型参数\gls{regularization}为零的情况更为常见，我们将只探讨这种特殊情况。}。
-在其他学术圈，$L^2$也被称为\gls{ridge_regression}或\gls{tikhonov_regularization}。
+在其他学术圈，$L^2$也被称为\gls{ridge_regression}或~\gls{tikhonov_regularization}。
 
 我们可以通过研究\gls{regularization}化后\gls{objective_function}的\gls{gradient}，洞察一些\gls{weight_decay}的\gls{regularization}表现。
 为了简单起见，我们假定其中没有\gls{bias_aff}参数，因此$\Vtheta$就是$\Vw$。
@@ -118,7 +118,7 @@ $\alpha$越大，对应\gls{regularization}惩罚越大。
 \begin{align}
  \hat J(\Vtheta) = J(\Vw^*) + \frac{1}{2}(\Vw - \Vw^*)^\top \MH (\Vw - \Vw^*),
 \end{align}
-其中$\MH$是$J$在$\Vw^*$处计算的\gls{hessian}矩阵(关于$\Vw$)。
+其中$\MH$是$J$在$\Vw^*$处计算的~\gls{hessian}~矩阵(关于$\Vw$)。
 因为$\Vw^*$被定义为最优，即梯度消失为$0$，所以该二次近似中没有一阶项。
 同样地，因为$\Vw^*$是$J$的一个最优点，我们可以得出$\MH$是半正定的结论。
 
@@ -164,7 +164,7 @@ $\alpha$越大，对应\gls{regularization}惩罚越大。
 实线椭圆表示没有\gls{regularization}目标的等值线。
 虚线圆圈表示$L^2$正则化项的等值线。
 在$\tilde{\Vw}$点，这两个竞争目标达到平衡。
-目标函数$J$的\gls{hessian}的第一维特征值很小。
+目标函数$J$的~\gls{hessian}~的第一维特征值很小。
 当从$\Vw^*$水平移动时，\gls{objective_function}不会增加得太多。
 因为\gls{objective_function}对这个方向没有强烈的偏好，所以正则化项对该轴具有强烈的影响。
 正则化项将$w_1$拉向零。
@@ -178,7 +178,7 @@ $\alpha$越大，对应\gls{regularization}惩罚越大。
 % -- 225 --
 
 只有在显著减小\gls{objective_function}方向上的参数会保留得相对完好。
-在无助于\gls{objective_function}减小的方向（对应\gls{hessian}矩阵较小的特征值）上改变参数不会显著增加\gls{gradient}。
+在无助于\gls{objective_function}减小的方向（对应~\gls{hessian}~矩阵较小的特征值）上改变参数不会显著增加\gls{gradient}。
 这种不重要方向对应的分量会在训练过程中因\gls{regularization}而衰减掉。
 
 
@@ -249,7 +249,7 @@ $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，我们还可以
 \end{align}
 同样，$\MH$是$J$在$\Vw^*$处的\gls{hessian}矩阵(关于$\Vw$)。
 
-由于$L^1$惩罚项在满的、一般的\gls{hessian}的情况下，无法得到直接清晰的代数表达式，因此我们将进一步简化假设\gls{hessian}是对角的，即$\MH = \text{diag}([H_{1,1},\dots, H_{n,n}])$，其中每个$H_{i,i}>0$。
+由于$L^1$惩罚项在满的、一般的~\gls{hessian}~的情况下，无法得到直接清晰的代数表达式，因此我们将进一步简化假设~\gls{hessian}~是对角的，即$\MH = \text{diag}([H_{1,1},\dots, H_{n,n}])$，其中每个$H_{i,i}>0$。
 如果\gls{linear_regression}问题中的数据已被预处理（如可以使用PCA），去除了输入特征之间的相关性，那么这一假设成立。
 
 我们可以将$L^1$\gls{regularization}目标函数的二次近似分解成关于参数的求和：
@@ -274,20 +274,20 @@ $w_i^* < 0$的情况与之类似，但是$L^1$惩罚项使$w_i$更接近0(增加
 此处\gls{sparse}性指的是一些参数具有最优值0。
 和$L^2$\gls{regularization}相比，$L^1$\gls{regularization}的\gls{sparse}性具有本质的不同。
 \eqnref{eq:713L2}给出了$L^2$\gls{regularization}的解$\tilde \Vw$。 
-如果我们使用\gls{hessian} $\MH$为对角正定矩阵的假设（与$L^1$\gls{regularization}分析时一样），重新考虑这个等式，我们发现
+如果我们使用~\gls{hessian}~矩阵$\MH$为对角正定矩阵的假设（与$L^1$\gls{regularization}分析时一样），重新考虑这个等式，我们发现
 $\tilde{w_i} = \frac{H_{i,i}}{H_{i,i} + \alpha} w_i^*$。
 如果$w_i^*$不是零，那么$\tilde{w_i}$也会保持非零。 
 这表明$L^2$\gls{regularization}不会使参数变得\gls{sparse}，而$L^1$\gls{regularization}有可能通过足够大的$\alpha$实现\gls{sparse}。
  
 由$L^1$\gls{regularization}导出的\gls{sparse}性质已经被广泛地用于\firstgls{feature_selection}机制。
 \gls{feature_selection}从可用的特征子集选择出有意义的特征，化简\gls{ML}问题。
-著名的LASSO\citep{Tibshirani95}（Least Absolute Shrinkage and
+著名的LASSO~\citep{Tibshirani95}（Least Absolute Shrinkage and
 Selection Operator）模型将$L^1$惩罚和\gls{linear_model}结合，并使用最小二乘\gls{cost_function}。 
 $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全地忽略。
  
-在\secref{sec:maximum_a_posteriori_map_estimation}，我们看到许多\gls{regularization}策略可以被解释为\glssymbol{MAP}贝叶斯推断，
-特别是$L^2$\gls{regularization}相当于权重是高斯先验的\glssymbol{MAP}贝叶斯推断。
-对于$L^1$\gls{regularization}，用于\gls{regularization}\gls{cost_function}的惩罚项$\alpha \Omega(\Vw) =  \alpha \sum_i |w_i |$与通过\glssymbol{MAP}贝叶斯推断最大化的对数先验项是等价的（$\Vw \in \SetR^n$并且权重先验是各向同性的拉普拉斯分布（\eqnref{eq:chap3_laplace}））：
+在\secref{sec:maximum_a_posteriori_map_estimation}，我们看到许多\gls{regularization}策略可以被解释为~\glssymbol{MAP}~贝叶斯推断，
+特别是$L^2$\gls{regularization}相当于权重是高斯先验的~\glssymbol{MAP}~贝叶斯推断。
+对于$L^1$\gls{regularization}，用于\gls{regularization}\gls{cost_function}的惩罚项$\alpha \Omega(\Vw) =  \alpha \sum_i |w_i |$与通过~\glssymbol{MAP}~贝叶斯推断最大化的对数先验项是等价的（$\Vw \in \SetR^n$并且权重先验是各向同性的拉普拉斯分布（\eqnref{eq:chap3_laplace}））：
 \begin{align}
 \log p(\Vw) = \sum_i \log \text{Laplace}(w_i;0,\frac{1}{\alpha}) = 
   -\alpha \norm{\Vw}_1 + n \log \alpha - n \log 2.
@@ -358,10 +358,10 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 
 % -- 231 --
 
-\cite{Hinton-et-al-arxiv2012}尤其推荐由\cite{Srebro05}引入的策略：约束\gls{NN}层的权重矩阵每列的范数，而不是限制整个权重矩阵的\ENNAME{Frobenius}范数。
+\cite{Hinton-et-al-arxiv2012}尤其推荐由\cite{Srebro05}引入的策略：约束\gls{NN}层的权重矩阵每列的范数，而不是限制整个权重矩阵的~\ENNAME{Frobenius}~范数。
 分别限制每一列的范数可以防止某一\gls{hidden_unit}有非常大的权重。
-如果我们将此约束转换成\ENNAME{Lagrange}函数中的一个惩罚，这将与$L^2$ \gls{weight_decay}类似但每个\gls{hidden_unit}的权重都具有单独的\glssymbol{KKT}乘子。
-每个\glssymbol{KKT}乘子分别会被动态更新，以使每个\gls{hidden_unit}服从约束。
+如果我们将此约束转换成~\ENNAME{Lagrange}~函数中的一个惩罚，这将与$L^2$ \gls{weight_decay}类似但每个\gls{hidden_unit}的权重都具有单独的~\glssymbol{KKT}~乘子。
+每个~\glssymbol{KKT}~乘子分别会被动态更新，以使每个\gls{hidden_unit}服从约束。
 在实践中，列范数的限制总是通过重投影的显式约束来实现。
 
 \section{\glsentrytext{regularization}和欠约束问题}
@@ -388,7 +388,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 
 % -- 232 --
 
-正如我们在\secref{sec:the_moore_penrose_pseudoinverse}看到的，我们可以使用\ENNAME{Moore-Penrose}求解欠定线性方程。 
+正如我们在\secref{sec:the_moore_penrose_pseudoinverse}看到的，我们可以使用~\ENNAME{Moore-Penrose}~求解欠定线性方程。 
 回想$\MX$伪逆$\MX^+$的一个定义：
 \begin{align} 
 \label{eq:729pseudo}
@@ -436,7 +436,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 输入噪声注入是一些\gls{unsupervised_learning}算法的一部分，如\gls{DAE}\citep{VincentPLarochelleH2008}。
 向\gls{hidden_unit}施加噪声也是可行的，这可以被看作在多个抽象层上进行的数据集增强。
 \cite{Poole14}最近表明，噪声的幅度被细心调整后，该方法是非常高效的。
-\gls{dropout}，一个将在\secref{sec:dropout}介绍的强大\gls{regularization}策略，可以被看作是通过与噪声\emph{相乘}构建新输入的过程。
+我们将在\secref{sec:dropout}介绍一个强大的\gls{regularization}策略~\gls{dropout}，该策略可以被看作是通过与噪声\emph{相乘}构建新输入的过程。
 
 在比较\gls{ML}基准测试的结果时，考虑其采取的数据集增强是很重要的。
 通常情况下，人工设计的数据集增强方案可以大大减少\gls{ML}技术的泛化误差。
@@ -457,10 +457,10 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 \secref{sec:dataset_augmentation_chap7}已经提出将噪声作用于输入，作为数据集增强策略。
 对于某些模型而言，向输入添加方差极小的噪声等价于对权重施加范数惩罚\citep{Bishop1995,bishop95training}。
 在一般情况下，噪声注入远比简单地收缩参数强大，特别是噪声被添加到\gls{hidden_unit}时会更加强大。
-向\gls{hidden_unit}添加噪声是值得单独讨论重要的话题；在\secref{sec:dropout}所述\gls{dropout}算法是这种做法的主要发展方向。
+向\gls{hidden_unit}添加噪声是值得单独讨论重要的话题；在\secref{sec:dropout}所述~\gls{dropout}~算法是这种做法的主要发展方向。
 
 另一种\gls{regularization}模型的噪声使用方式是将其加到的权重。
-这项技术主要用于\gls{RNN}\citep{JimGilesHorne1996,Graves-2011}。
+这项技术主要用于\gls{RNN}~\citep{JimGilesHorne1996,Graves-2011}。
 这可以被解释为关于权重的贝叶斯\gls{inference}的随机实现。
 贝叶斯学习过程将权重视为不确定的，并且可以通过概率分布表示这种不确定性。
 向权重添加噪声是反映这种不确定性的一种实用的随机方法。
@@ -472,7 +472,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 \end{align}
 训练集包含$m$对标注样例$\{(\Vx^{(1)}, y^{(1)}),\dots,(\Vx^{(m)}, y^{(m)})\}$。
 
-现在我们假设对每个输入表示，网络权重添加随机扰动$\epsilon_{\Vw} \sim \CalN(\Vepsilon;0, \eta\MI )$。
+现在我们假设对每个输入表示，网络权重添加随机扰动$\epsilon_{\Vw} \sim \CalN(\Vepsilon;0, \eta\MI \, )$。
 想象我们有一个标准的$l$层MLP。
 我们将扰动模型记为$\hat y_{\epsilon_{\MW}} (\Vx)$。
 尽管有噪声注入，我们仍然希望减少网络输出误差的平方。
@@ -483,7 +483,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
    (\Vx)+ y^2] .
 \end{align}
 
-对于小的$\eta$，最小化带权重噪声（方差为$\eta \MI$）的$J$等同于最小化附加\gls{regularization}项的$J$：
+对于小的$\eta$，最小化带权重噪声（方差为$\eta \MI$\,）的$J$等同于最小化附加\gls{regularization}项的$J$：
 $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 这种形式的\gls{regularization}鼓励参数进入权重小扰动对输出相对影响较小的参数空间区域。
 换句话说，它推动模型进入对权重小的变化相对不敏感的区域，找到的点不只是极小点，还是由平坦区域所包围的最小点\citep{Hochreiter95}。
@@ -498,10 +498,10 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 避免这种情况的一种方法是显式地对标签上的噪声进行建模。
 例如，我们可以假设，对于一些小常数$\epsilon$，训练集标记$y$是正确的概率是$1-\epsilon$，（以$\epsilon$的概率）任何其他可能的标签可能是正确的。
 这个假设很容易就能解析地与\gls{cost_function}结合，而不用显式地抽取噪声样本。
-例如，\textbf{标签平滑}（label smoothing）通过把确切分类目标从0和1替换成$\frac{\epsilon}{k-1}$和$1-\epsilon$，\gls{regularization}具有$k$个输出的\gls{softmax}的模型。
+例如，\textbf{标签平滑}（label smoothing）通过把确切分类目标从0和1替换成$\frac{\epsilon}{k-1}$和$1-\epsilon$，\gls{regularization}具有$k$个输出的~\gls{softmax}~的模型。
 标准交叉熵损失可以用在这些非确切目标的输出上。
-使用\gls{softmax}和明确目标的最大似然学习可能永远不会收敛——
-\gls{softmax}永远无法真正预测0概率或1概率，因此它会继续学习越来越大的权重，使预测更极端。
+使用~\gls{softmax}~和明确目标的最大似然学习可能永远不会收敛——
+\gls{softmax}~永远无法真正预测0概率或1概率，因此它会继续学习越来越大的权重，使预测更极端。
 使用如\gls{weight_decay}等其他\gls{regularization}策略能够防止这种情况。
 标签平滑的优势是能够防止模型追求确切概率而不影响模型学习正确分类。
 这种策略自20世纪80年代就已经被使用，并在现代神经网络继续保持显著特色\citep{Szegedy-et-al-2015}。
@@ -526,11 +526,11 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 \cite{Russ+Geoff-nips-2007}描述了一种学习回归\gls{kernel_machines}中核函数的方法，其中建模$P(\RVx)$时使用的未标记样本大大提高了$P(\RVy \mid \RVx)$的效果。
 
-更多\gls{semi_supervised_learning}的信息，请参阅\cite{SSL-Book-2006}。
+更多\gls{semi_supervised_learning}的信息，请参阅~\cite{SSL-Book-2006}。
 
 \section{\glsentrytext{multitask_learning}}
 \label{sec:multitask_learning}
-\gls{multitask_learning}\citep{caruana93a}是通过合并几个任务中的样例（可以视为对参数施加的软约束）来提高泛化的一种方式。
+\gls{multitask_learning}~\citep{caruana93a}是通过合并几个任务中的样例（可以视为对参数施加的软约束）来提高泛化的一种方式。
 额外的训练样本以同样的方式将模型的参数推向泛化更好的方向，当模型的一部分在任务之间共享时，模型的这一部分更多地被约束为良好的值（假设共享是合理的），往往能更好地泛化。
 
 \figref{fig:chap7_multi_factor_output}展示了\gls{multitask_learning}中非常普遍的一种形式，其中不同的\gls{supervised}任务（给定$\RVx$预测$\RVy^{(i)}$）共享相同的输入$\RVx$以及一些中间层表示$\Vh^{(\text{share})}$，能学习共同的因素池。
@@ -635,7 +635,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \centerline{\includegraphics{Chapter7/figures/learning_curve_color}}
 \fi
 \caption{学习曲线显示负对数似然损失如何随时间变化（表示为遍历数据集的训练迭代数，或\firstgls{epochs}）。
-在这个例子中，我们在MNIST上训练了一个\gls{maxout}网络。
+在这个例子中，我们在MNIST上训练了一个~\gls{maxout}~网络。
 我们可以观察到训练目标随时间持续减小，但验证集上的平均损失最终会再次增加，形成不对称的U形曲线。
 }
 \label{fig:chap7_learning_curve}
@@ -709,7 +709,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \paragraph{\gls{early_stopping}为何具有\gls{regularization}效果:}
 目前为止，我们已经声明\gls{early_stopping}是一种\gls{regularization}策略，但我们只通过展示验证集误差的学习曲线是一个U型曲线来支持这种说法。
 \gls{early_stopping}\gls{regularization}模型的真正机制是什么呢？ 
-\cite{Bishop1995}和\cite{Sjoberg95}认为\gls{early_stopping}可以将优化过程的参数空间限制在初始参数值$\Vtheta_0$的小邻域内。
+\cite{Bishop1995}和~\cite{Sjoberg95}认为\gls{early_stopping}可以将优化过程的参数空间限制在初始参数值$\Vtheta_0$的小邻域内。
 更具体地，想象用学习率$\epsilon$进行$\tau$个优化步骤（对应于$\tau$个训练迭代）。
 我们可以将$\epsilon \tau$作为有效\gls{capacity}的度量。
 假设\gls{gradient}有界，限制迭代的次数和学习速率能够限制从$\Vtheta_0$到达的参数空间的大小，如\figref{fig:chap7_reg_l1_vs_l2_mistake}所示。
@@ -723,7 +723,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \fi
 \caption{\gls{early_stopping}效果的示意图。
 \emph{(左)}实线轮廓线表示负对数似然的轮廓。
-虚线表示从原点开始的\glssymbol{SGD}所经过的轨迹。 % ??
+虚线表示从原点开始的~\glssymbol{SGD}~所经过的轨迹。 % ??
 \gls{early_stopping}的轨迹在较早的点$\tilde \Vw$处停止，而不是停止在最小化代价的点$\Vw^*$处。
 \emph{(右)}为了对比，使用$L^2$\gls{regularization}效果的示意图。
 虚线圆圈表示$L^2$惩罚的轮廓，$L^2$惩罚使得总代价的最小值比非\gls{regularization}代价的最小值更靠近原点。
@@ -775,7 +775,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \begin{align}
 (\MI - \epsilon \VLambda)^\tau =  (\VLambda + \alpha \MI)^{-1} \alpha,
 \end{align}
-那么$L^2$\gls{regularization}和\gls{weight_decay}可以被看作是等价的（至少在\gls{objective_function}的二次近似下）。
+那么$L^2~$\gls{regularization}和\gls{weight_decay}可以被看作是等价的（至少在\gls{objective_function}的二次近似下）。
 进一步取对数，使用$\log~(1+x)$的级数展开，我们可以得出结论：如果所有$\lambda_i$是小的（即$\epsilon \lambda_i \ll 1$且$\lambda_i / \alpha \ll 1$），那么
 \begin{align}
 \tau \approx \frac{1}{\epsilon \alpha}, \\

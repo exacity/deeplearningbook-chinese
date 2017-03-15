@@ -77,8 +77,8 @@
 % 625
 
 
-因为$\log p(\Vv)$和$\CalL(\Vv,{\Vtheta},q)$之间的距离是由\,\gls{KL}来衡量的。
-因为\,\gls{KL}总是非负的，我们可以发现$\CalL$总是小于等于所求的概率对数。
+因为$\log p(\Vv)$和$\CalL(\Vv,{\Vtheta},q)$之间的距离是由~\gls{KL}来衡量的。
+因为~\gls{KL}总是非负的，我们可以发现$\CalL$总是小于等于所求的概率对数。
 当且仅当分布$q$完全相等于$p(\Vh\mid\Vv)$时取到等号。
 % 625
 
@@ -150,15 +150,15 @@
 % 626
 
 
-基于\gls{latent_variable}模型的\gls{SGA}可以被看作是一个\,\glssymbol{EM}\,算法的特例，其中\gls{m_step}包括了单次梯度操作。
-\glssymbol{EM}\,算法的其他变种可以实现多次梯度操作。
+基于\gls{latent_variable}模型的\gls{SGA}可以被看作是一个~\glssymbol{EM}~算法的特例，其中~\gls{m_step}包括了单次梯度操作。
+\glssymbol{EM}~算法的其他变种可以实现多次梯度操作。
 对一些模型族来说，\gls{m_step}甚至可以通过推出解析解直接完成，不同于其他方法，在给定当前$q$的情况下直接求出最优解。
 % 626 end
 
 
-即使\gls{e_step}采用的是精确推断，我们仍然可以将\,\glssymbol{EM}\,算法视作是某种程度上的\gls{approximate_inference}。
+即使~\gls{e_step}采用的是精确推断，我们仍然可以将~\glssymbol{EM}~算法视作是某种程度上的\gls{approximate_inference}。
 具体地说，\gls{m_step}假设一个分布$q$可以被所有的$\Vtheta$值分享。
-当\,\gls{m_step}越来越远离\,\gls{e_step}中的$\Vtheta^{(0)}$时，这将会导致$\CalL$和真实的$\log p(\Vv)$之间出现差距。
+当~\gls{m_step}越来越远离~\gls{e_step}中的$\Vtheta^{(0)}$时，这将会导致$\CalL$和真实的$\log p(\Vv)$之间出现差距。
 幸运的是，在进入下一个循环时，\gls{e_step}把这种差距又降到了$0$。
 % 627 head
 
@@ -166,13 +166,13 @@
 
 \glssymbol{EM}\,算法还包含一些不同的解释。
 首先，学习过程的一个基本思路就是，我们通过更新模型参数来提高整个数据集的似然，其中缺失变量的值是通过后验分布来估计的。
-这种特定的性质并不仅仅适用于\,\glssymbol{EM}\,算法。
+这种特定的性质并不仅仅适用于~\glssymbol{EM}~算法。
 例如，使用\gls{GD}来最大化似然函数的对数的方法也利用了相同的性质。
 计算对数似然函数的梯度需要对\gls{hidden_unit}的后验分布求期望。 
-\glssymbol{EM}\,算法另一个关键的性质是当我们移动到另一个$\Vtheta$时候，我们仍然可以使用旧的分布$q$。
-在传统\gls{ML}中，这种特有的性质在推导大\,\gls{m_step}更新时候得到了广泛的应用。
-在\gls{DL}中，大多数模型太过于复杂以致于在最优大\,\gls{m_step}更新中很难得到一个简单的解。
-所以\,\glssymbol{EM}\,算法的第二个特质，更多为其所独有，较少被使用。
+\glssymbol{EM}~算法另一个关键的性质是当我们移动到另一个$\Vtheta$时候，我们仍然可以使用旧的分布$q$。
+在传统\gls{ML}中，这种特有的性质在推导大~\gls{m_step}更新时候得到了广泛的应用。
+在\gls{DL}中，大多数模型太过于复杂以致于在最优大~\gls{m_step}更新中很难得到一个简单的解。
+所以~\glssymbol{EM}~算法的第二个特质，更多为其所独有，较少被使用。
 % 627
 
 
@@ -188,7 +188,7 @@
 \begin{align}
 \Vh^* = \underset{\Vh}{\arg\max} \ \  p(\Vh\mid\Vv).
 \end{align}
-这被称作\firstgls{MAP}推断，简称\glssymbol{MAP}推断。
+这被称作\firstgls{MAP}推断，简称~\glssymbol{MAP}~推断。
 % 627  
 
 
@@ -215,7 +215,7 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 \begin{align}
 \Vmu^*  =  \underset{\Vmu}{\arg\max}\ \log p(\Vh = \Vmu,\Vv),
 \end{align}
-这等价于\glssymbol{MAP}推断问题
+这等价于~\glssymbol{MAP}~推断问题
 \begin{align}
 \Vh^* = \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vv).
 \end{align}
@@ -224,7 +224,7 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 
 
 
-因此我们能够解释一种类似于\,\glssymbol{EM}\,算法的学习算法，其中我们轮流迭代两步，一步是用\,\glssymbol{MAP}\,推断估计出$\Vh^*$，另一步是更新$\Vtheta$来增大$\log p(\Vh^*,\Vv)$。
+因此我们能够解释一种类似于~\glssymbol{EM}~算法的学习算法，其中我们轮流迭代两步，一步是用~\glssymbol{MAP}~推断估计出$\Vh^*$，另一步是更新$\Vtheta$来增大$\log p(\Vh^*,\Vv)$。
 从\,\glssymbol{EM}\,算法角度看，这也是对$\CalL$的一种形式的\gls{coordinate_ascent}，交替迭代时通过推断来优化关于$q$的$\CalL$以及通过参数更新来优化关于$\Vtheta$的$\CalL$。
 作为一个整体，这个算法的正确性可以得到保证，因为$\CalL$是$\log p(\Vv)$的下界。
 在\,\glssymbol{MAP}\,推断中，这个保证是无效的，因为这个界会无限地松，由于\,\gls{dirac_distribution}的熵的微分趋近于负无穷。
@@ -323,10 +323,10 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 
 因为$\CalL(\Vv,\Vtheta,q)$被定义成$\log p(\Vv;\Vtheta) - D_{\text{KL}} (q(\Vh\mid\Vv) \Vert  p(\Vh\mid\Vv;\Vtheta) )$，我们可以认为关于$q$最大化$\CalL$的问题等价于（关于$q$）最小化$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
 在这种情况下，我们要用$q$来拟合$p$。
-然而，与以前方法不同，我们使用\,\gls{KL}的相反方向来拟合一个近似。
+然而，与以前方法不同，我们使用~\gls{KL}的相反方向来拟合一个近似。
 当我们使用\gls{MLE}来用模型拟合数据时，我们最小化$D_{\text{KL}}(p_{\text{data}} \Vert p_{\text{model}})$。
 如\figref{fig:chap3_kl_direction_color}所示，这意味着\gls{maximum_likelihood}促进模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则促进了$q$在每一个真实后验分布概率较低的地方概率较小。
-这两种基于\,\gls{KL}的方法都有各自的优点与缺点。
+这两种基于~\gls{KL}的方法都有各自的优点与缺点。
 选择哪一种方法取决于在具体每一个应用中哪一种性质更受偏好。
 在基于优化的推断问题中，从计算角度考虑，我们选择使用$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
 具体地说，计算$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$涉及到了计算分布$q$下的期望。
@@ -434,8 +434,8 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 % 633
 
 
-\gls{binary_sparse_coding}中的\gls{latent_variable}是二值的，所以为了表示可分解的$q$我们假设对$m$个\,\gls{bernoulli_distribution} $q(h_i\mid\Vv)$建模。
-表示\,\gls{bernoulli_distribution}的一种很自然的方法是使用一个概率向量$\hat{\Vh}$，满足$q(h_i\mid\Vv) = \hat{h}_i$。
+\gls{binary_sparse_coding}中的\gls{latent_variable}是二值的，所以为了表示可分解的$q$我们假设对$m$个~\gls{bernoulli_distribution} $q(h_i\mid\Vv)$建模。
+表示~\gls{bernoulli_distribution}的一种很自然的方法是使用一个概率向量$\hat{\Vh}$，满足$q(h_i\mid\Vv) = \hat{h}_i$。
 为了避免计算中的误差，比如说计算$\log \hat{h}_i$时，我们对$\hat{h}_i$添加一个约束，即$\hat{h}_i$不等于$0$或者$1$。
 % 633 
 

@@ -9,8 +9,8 @@
 %(statement要不要换一下说法)
 它不仅提供了量化不确定性的方法，也提供了用于导出新的不确定性\gls{statement}的公理。
 在\gls{AI}领域，概率论主要有两种用途。
-首先，概率法则告诉我们\glssymbol{AI}系统如何推理，据此我们设计一些算法来计算或者估算由概率论导出的表达式。
-其次，我们可以用概率和统计从理论上分析我们提出的\glssymbol{AI}系统的行为。
+首先，概率法则告诉我们~\glssymbol{AI}~系统如何推理，据此我们设计一些算法来计算或者估算由概率论导出的表达式。
+其次，我们可以用概率和统计从理论上分析我们提出的~\glssymbol{AI}~系统的行为。
 
 概率论是众多科学和工程学科的基本工具。
 我们提供这一章是为了保证那些背景是软件工程而较少接触概率论的读者也可以理解本书的内容。
@@ -19,7 +19,7 @@
 
 如果你已经对概率论和信息论很熟悉了，那么除了\secref{sec:structured_probabilistic_models_chap3}以外的整章内容，你都可以跳过。
 而在\secref{sec:structured_probabilistic_models_chap3}中，我们会介绍用来描述机器学习中\gls{structured_probabilistic_models}的图。
-即使你对这些主题完全没有任何的先验知识，本章对于完成深度学习的研究项目来说已经足够，但我们还是建议你能够参考一些额外的资料，例如\cite{Jaynes03}。
+即使你对这些主题完全没有任何的先验知识，本章对于完成深度学习的研究项目来说已经足够，但我们还是建议你能够参考一些额外的资料，例如~\cite{Jaynes03}。
 
 % -- 51 --
 
@@ -35,7 +35,7 @@
 %(这里uncertain和stochastic有什么区别？)
 不确定性和随机性可能来自多个方面。
 至少从20世纪80年代开始，研究人员就对使用概率论来量化不确定性提出了令人信服的论据。
-这里提出的许多论点都是根据\cite{Pearl88}总结或启发得到的。
+这里提出的许多论点都是根据~\cite{Pearl88}总结或启发得到的。
 
 几乎所有的活动都需要能够在不确定性存在时进行推理。
 事实上，除了那些被定义为真的数学\gls{statement}，我们很难认定某个命题是千真万确的或者确保某件事一定会发生。
@@ -76,7 +76,7 @@
 
 如果要列出一些关于不确定性的常识推理中我们希望其具有的性质，那么满足这些性质的唯一一点就是将\gls{bayesian_probability}和\gls{frequentist_probability}视为等同的。
 例如，如果我们要在扑克牌游戏中根据玩家手上的牌计算她能够获胜的概率，我们和医生情境使用完全相同的公式，就是我们依据病人的某些症状计算她是否患病的概率。
-有关一个小集合的常识假设为什么能够导出相同公理的细节必须深入了解这两种概率，参见\cite{Ramsey1926}。
+有关一个小集合的常识假设为什么能够导出相同公理的细节必须深入了解这两种概率，参见~\cite{Ramsey1926}。
 
 % -- 53 --
 
@@ -109,7 +109,7 @@
 
 离散型变量的\gls{PD}可以用\firstall{PMF}\footnote{译者注：国内有些教材也将它翻译成概率分布律。}来描述。
 我们通常用大写字母$P$来表示\gls{PMF}。
-通常每一个\gls{RV}都会有一个不同的\gls{PMF}，并且读者必须根据\gls{RV}来推断所使用的\glssymbol{PMF}，而不是根据函数的名称来推断；例如，$P(\RSx)$ 通常和$P(\RSy)$不一样。
+通常每一个\gls{RV}都会有一个不同的\gls{PMF}，并且读者必须根据\gls{RV}来推断所使用的~\glssymbol{PMF}，而不是根据函数的名称来推断；例如，$P(\RSx)$ 通常和$P(\RSy)$不一样。
 
 % -- 54 --
 
@@ -122,7 +122,7 @@ $\RSx = x$的概率用$P(x)$来表示，概率为1表示$\RSx = x$是确定的�
 这种多个变量的\gls{PD}被称为\firstgls{joint_probability_distribution}。
 $P(\RSx = x, \RSy = y)$表示$\RSx = x$和$\RSy = y$同时发生的概率。我们也可以简写为$P(x, y)$。
 
-如果一个函数$P$是\gls{RV} $\RSx$的\glssymbol{PMF}，必须满足下面这几个条件：
+如果一个函数$P$是\gls{RV} $\RSx$的~\glssymbol{PMF}，必须满足下面这几个条件：
 \begin{itemize}
 \item $P$的定义域必须是$\RSx$所有可能状态的集合。
 
@@ -167,7 +167,7 @@ P(\RSx = x_i) = \frac{1}{k}
 特别地，$x$落在集合$\SetS$中的概率可以通过$p(x)$对这个集合求积分来得到。
 在单变量的例子中，$x$落在区间$[a, b]$的概率是$\int_{[a,b]} p(x)dx$。
 
-为了给出一个连续型\gls{RV}的\glssymbol{PDF}的例子，我们可以考虑实数区间上的\gls{uniform_distribution}。
+为了给出一个连续型\gls{RV}的~\glssymbol{PDF}~的例子，我们可以考虑实数区间上的\gls{uniform_distribution}。
 我们可以使用函数$u(x; a, b)$，其中$a$和$b$是区间的端点且满足$b>a$。
 符号``$;$''表示``以什么为参数''；我们把$x$作为函数的自变量，$a$和$b$作为定义函数的参数。
 为了确保区间外没有概率，我们对所有的$x\not\in[a,b]$，令$u(x; a, b)=0$。
@@ -338,20 +338,19 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 \subsection{\glsentrytext{multinoulli_distribution}}
 \label{sec:multinoulli_distribution}
 
-\firstgls{multinoulli_distribution}或者\firstgls{categorical_distribution}是指在具有$k$个不同状态的单个离散型\gls{RV}上的分布，其中$k$是一个有限值。
-\footnote{``multinoulli''这个术语是最近被Gustavo Lacerdo发明、被\cite{MurphyBook2012}推广的。
+\firstgls{multinoulli_distribution}或者\firstgls{categorical_distribution}是指在具有$k$个不同状态的单个离散型\gls{RV}上的分布，其中$k$是一个有限值。\footnote{``multinoulli''这个术语是最近被Gustavo Lacerdo发明、被\cite{MurphyBook2012}推广的。
 \gls{multinoulli_distribution}是\firstgls{multinomial_distribution}的一个特例。
-\gls{multinomial_distribution}是$\{0,\ldots, n\}^k$中的向量的分布，用于表示当对\gls{multinoulli_distribution}采样$n$次时$k$个类中的每一个被访问的次数。
-很多文章使用``\gls{multinomial_distribution}''而实际上说的是\gls{multinoulli_distribution}，但是他们并没有说是对$n=1$的情况，这点需要注意。}
+\gls{multinomial_distribution}是$\{0,\ldots, n\}^k$中的向量的分布，用于表示当对~\gls{multinoulli_distribution}采样$n$次时$k$个类中的每一个被访问的次数。
+很多文章使用``\gls{multinomial_distribution}''而实际上说的是~\gls{multinoulli_distribution}，但是他们并没有说是对$n=1$的情况，这点需要注意。}
 \gls{multinoulli_distribution}由向量$\Vp \in [0, 1]^{k-1}$参数化，其中每一个分量$p_i$表示第$i$个状态的概率。
 最后的第$k$个状态的概率可以通过$1-\bm{1}^\top \Vp$给出。
 注意我们必须限制$\bm{1}^\top\Vp\le 1$。
 \gls{multinoulli_distribution}经常用来表示对象分类的分布，所以我们很少假设状态1具有数值1之类的。
-因此，我们通常不需要去计算\gls{multinoulli_distribution}的\gls{RV}的\gls{expectation}和\gls{variance}。
+因此，我们通常不需要去计算~\gls{multinoulli_distribution}的\gls{RV}的\gls{expectation}和\gls{variance}。
 
 % -- 60 --
 
-\gls{bernoulli_distribution}和\gls{multinoulli_distribution}足够用来描述在它们领域内的任意分布。
+\gls{bernoulli_distribution}和~\gls{multinoulli_distribution}足够用来描述在它们领域内的任意分布。
 它们能够描述这些分布，不是因为它们特别强大，而是因为它们的领域很简单；
 它们可以对那些，能够将所有的状态进行枚举的离散型\gls{RV}进行建模。
 当处理的是连续型\gls{RV}时，会有不可数无限多的状态，所以任何通过少量参数描述的\gls{PD}都必须在分布上加以严格的限制。
@@ -450,7 +449,7 @@ p(x) = \delta(x-\mu).
 \end{equation}
 \gls{dirac_delta_function}被定义成在除了0以外的所有点的值都为0，但是积分为1。
 \gls{dirac_delta_function}不像普通函数一样对$x$的每一个值都有一个实数值的输出，它是一种不同类型的数学对象，被称为\firstgls{generalized_function}，\gls{generalized_function}是依据积分性质定义的数学对象。
-我们可以把\gls{dirac_delta_function}想成一系列函数的极限点，这一系列函数把除0以外的所有点的概率密度越变越小。
+我们可以把~\gls{dirac_delta_function}想成一系列函数的极限点，这一系列函数把除0以外的所有点的概率密度越变越小。
 
 % -- 63 --
 
@@ -462,7 +461,7 @@ p(x) = \delta(x-\mu).
 \end{equation}
 \gls{empirical_distribution}将概率密度$\frac{1}{m}$赋给$m$个点$\Vx^{(1)}, \ldots, \Vx^{(m)}$中的每一个，这些点是给定的数据集或者采样的集合。
 只有在定义连续型\gls{RV}的经验分布时，\gls{dirac_delta_function}才是必要的。
-对于离散型\gls{RV}，情况更加简单：\gls{empirical_distribution}可以被定义成一个\gls{multinoulli_distribution}，对于每一个可能的输入，其概率可以简单地设为在训练集上那个输入值的\firstgls{empirical_frequency}。
+对于离散型\gls{RV}，情况更加简单：\gls{empirical_distribution}可以被定义成一个~\gls{multinoulli_distribution}，对于每一个可能的输入，其概率可以简单地设为在训练集上那个输入值的\firstgls{empirical_frequency}。
 
 当我们在训练集上训练模型时，我们可以认为从这个训练集上得到的\gls{empirical_distribution}指明了我们采样来源的分布。
 关于\gls{empirical_distribution}另外一种重要的观点是，它是训练数据的似然最大的那个概率密度函数(见\secref{sec:maximum_likelihood_estimation})。
@@ -473,13 +472,13 @@ p(x) = \delta(x-\mu).
 通过组合一些简单的\gls{PD}来定义新的\gls{PD}也是很常见的。
 一种通用的组合方法是构造\firstgls{mixture_distribution}。
 混合分布由一些组件(component)分布构成。
-每次实验，样本是由哪个组件分布产生的取决于从一个\gls{multinoulli_distribution}中采样的结果：
+每次实验，样本是由哪个组件分布产生的取决于从一个~\gls{multinoulli_distribution}中采样的结果：
 \begin{equation}
 P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 \end{equation}
-这里$P(\RSc)$是对各组件的一个\gls{multinoulli_distribution}。
+这里$P(\RSc)$是对各组件的一个~\gls{multinoulli_distribution}。
 
-我们已经看过一个混合分布的例子了：实值变量的\gls{empirical_distribution}对于每一个训练实例来说，就是以\gls{dirac_distribution}为组件的混合分布。
+我们已经看过一个混合分布的例子了：实值变量的\gls{empirical_distribution}对于每一个训练实例来说，就是以~\gls{dirac_distribution}为组件的混合分布。
 
 % -- 64 --
 
@@ -527,11 +526,11 @@ P(\RSx) = \sum_i P(\RSc = i) P(\RSx \mid \RSc = i),
 
 % -- 65 --
 
-其中一个函数是\textbf{\gls{logistic_sigmoid}}函数：
+其中一个函数是~\textbf{\gls{logistic_sigmoid}}~函数：
 \begin{equation}
 \sigma(x) = \frac{1}{1+\exp(-x)}.
 \end{equation}
-\gls{logistic_sigmoid}函数通常用来产生\gls{bernoulli_distribution}中的参数$\phi$，因为它的范围是$(0,1)$，处在$\phi$的有效取值范围内。
+\gls{logistic_sigmoid}~函数通常用来产生~\gls{bernoulli_distribution}中的参数$\phi$，因为它的范围是$(0,1)$，处在$\phi$的有效取值范围内。
 \figref{fig:chap3_sigmoid_color}给出了sigmoid函数的图示。
 sigmoid函数在变量取绝对值非常大的正值或负值时会出现\firstgls{saturate}现象，意味着函数会变得很平，并且对输入的微小改变会变得不敏感。
 % fig 3.3
@@ -555,7 +554,7 @@ sigmoid函数在变量取绝对值非常大的正值或负值时会出现\firstg
 \begin{equation}
 x^+ = \max(0, x).
 \end{equation}
-\figref{fig:chap3_softplus_color}给出了\gls{softplus_function}的图示。
+\figref{fig:chap3_softplus_color}给出了~\gls{softplus_function}的图示。
 % fig 3.4
 \begin{figure}[!htb]
 \ifOpenSource
@@ -616,8 +615,7 @@ P(\RSx \mid \RSy) = \frac{P(\RSx) P(\RSy \mid \RSx)}{P(\RSy)}.
 在\secref{sec:continuous_variables_and_probability_density_functions}中，我们已经看到连续型向量值\gls{RV} $\RVx$落在某个集合$\SetS$ 中的概率是通过$p(\Vx)$对集合$\SetS$积分得到的。
 对于集合$\SetS$的一些选择可能会引起悖论。
 例如，构造两个集合$\SetS_1$和$\SetS_2$使得$p(\Vx\in \SetS_1) + p(\Vx\in \SetS_2)>1$并且$\SetS_1 \cap \SetS_2 = \emptyset$是可能的。
-这些集合通常是大量使用了实数的无限精度来构造的，例如通过构造分形形状(fractal-shaped)的集合或者是通过有理数相关集合的变换定义的集合。
-\footnote{Banach-Tarski定理给出了这类集合的一个有趣的例子。
+这些集合通常是大量使用了实数的无限精度来构造的，例如通过构造分形形状(fractal-shaped)的集合或者是通过有理数相关集合的变换定义的集合。\footnote{Banach-Tarski定理给出了这类集合的一个有趣的例子。
 译者注：我们这里把``the set of rational numbers''翻译成``有理数相关集合''，理解为``一些有理数组成的集合''，如果直接用后面的翻译读起来会比较拗口。}
 \gls{measure_theory}的一个重要贡献就是提供了一些集合的特征使得我们在计算概率时不会遇到悖论。
 在本书中，我们只对相对简单的集合进行积分，所以\gls{measure_theory}的这个方面不会成为一个相关考虑。
@@ -685,7 +683,7 @@ p_x(\Vx) = p_y(g(\Vx)) \left | \det \left ( \frac{\partial g(\Vx)}{\partial \Vx}
 在机器学习中，我们也可以把信息论应用在连续型变量上，而信息论中一些消息长度的解释不怎么使用。
 信息论是电子工程和计算机科学中许多领域的基础。
 在本书中，我们主要使用信息论的一些关键思想来描述\gls{PD}或者量化\gls{PD}之间的相似性。
-有关信息论的更多细节，参见\cite{cover-book2006}或者\cite{MacKay03}。
+有关信息论的更多细节，参见~\cite{cover-book2006}或者~\cite{MacKay03}。
 
 信息论的基本想法是一个不太可能的事件居然发生了，要比一个非常可能的事件发生，能提供更多的信息。
 消息说：``今天早上太阳升起''信息量是如此之少以至于没有必要发送，但一条消息说：``今天早上有日食''信息量就很丰富。
@@ -756,7 +754,7 @@ D_{\text{KL}}(P||Q) = \SetE_{\RSx \sim P} \left [  \log \frac{P(x)}{Q(x)} \right
 
 \gls{KL_divergence}有很多有用的性质，最重要的是它是非负的。
 \gls{KL_divergence}为0当且仅当$P$和$Q$在离散型变量的情况下是相同的分布，或者在连续型变量的情况下是``几乎处处''相同的。
-因为\gls{KL_divergence}是非负的并且衡量的是两个分布之间的差异，它经常被用作分布之间的某种距离。
+因为~\gls{KL_divergence}是非负的并且衡量的是两个分布之间的差异，它经常被用作分布之间的某种距离。
 然而，它并不是真的距离因为它不是对称的：对于某些$P$和$Q$，$D_\text{KL}(P||Q) \ne D_\text{KL}(Q||P)$。
 这种非对称性意味着选择$D_\text{KL}(P||Q)$还是$D_\text{KL}(Q||P)$影响很大。
 更多细节可以看\figref{fig:chap3_kl_direction_color}。
@@ -771,7 +769,7 @@ D_{\text{KL}}(P||Q) = \SetE_{\RSx \sim P} \left [  \log \frac{P(x)}{Q(x)} \right
 假设我们有一个分布$p(x)$，并且希望用另一个分布$q(x)$来近似它。
 我们可以选择最小化$D_\text{KL}(p||q)$或最小化$D_\text{KL}(q||p)$。
 为了说明每种选择的效果，我们令$p$是两个\gls{gaussian_distribution}的混合，令$q$为单个\gls{gaussian_distribution}。
-选择使用\gls{KL_divergence}的哪个方向是取决于问题的。
+选择使用~\gls{KL_divergence}的哪个方向是取决于问题的。
 一些应用需要这个近似分布$q$在真实分布$p$放置高概率的所有地方都放置高概率，而其他应用需要这个近似分布$q$在真实分布$p$放置低概率的所有地方都很少放置高概率。 
 \gls{KL_divergence}方向的选择反映了对于每种应用，优先考虑哪一种选择。
 \emph{(左)}最小化$D_\text{KL}(p||q)$的效果。
@@ -779,21 +777,21 @@ D_{\text{KL}}(P||Q) = \SetE_{\RSx \sim P} \left [  \log \frac{P(x)}{Q(x)} \right
 当$p$具有多个峰时，$q$选择将这些峰模糊到一起，以便将高概率质量放到所有峰上。 
 \emph{(右)}最小化$D_\text{KL}(q||p)$的效果。
 在这种情况下，我们选择一个$q$使得它在$p$具有低概率的地方具有低概率。
-当$p$具有多个峰并且这些峰间隔很宽时，如该图所示，最小化\gls{KL_divergence}会选择单个峰，以避免将概率质量放置在$p$的多个峰之间的低概率区域中。
+当$p$具有多个峰并且这些峰间隔很宽时，如该图所示，最小化~\gls{KL_divergence}会选择单个峰，以避免将概率质量放置在$p$的多个峰之间的低概率区域中。
 这里，我们说明当$q$被选择成强调左边峰时的结果。
-我们也可以通过选择右边峰来得到\gls{KL_divergence}相同的值。
-如果这些峰没有被足够强的低概率区域分离，那么\gls{KL_divergence}的这个方向仍然可能选择模糊这些峰。}
+我们也可以通过选择右边峰来得到~\gls{KL_divergence}相同的值。
+如果这些峰没有被足够强的低概率区域分离，那么~\gls{KL_divergence}的这个方向仍然可能选择模糊这些峰。}
 \label{fig:chap3_kl_direction_color}
 \end{figure}
 
 
 % -- 72 --
 
-一个和\gls{KL_divergence}密切联系的量是\firstgls{cross_entropy} $H(P, Q) = H(P) + D_\text{KL}(P||Q)$，它和\gls{KL_divergence}很像但是缺少左边一项：
+一个和~\gls{KL_divergence}密切联系的量是\firstgls{cross_entropy} $H(P, Q) = H(P) + D_\text{KL}(P||Q)$，它和~\gls{KL_divergence}很像但是缺少左边一项：
 \begin{equation}
 H(P, Q) = -\SetE_{\RSx\sim P} \log Q(x).
 \end{equation}
-针对$Q$最小化\gls{cross_entropy}等价于最小化\gls{KL_divergence}，因为$Q$并不参与被省略的那一项。
+针对$Q$最小化\gls{cross_entropy}等价于最小化~\gls{KL_divergence}，因为$Q$并不参与被省略的那一项。
 
 当我们计算这些量时，经常会遇到$0\log 0$这个表达式。
 按照惯例，在信息论中，我们将这个表达式处理为$\lim_{x \to 0} x\log x = 0$。

@@ -127,7 +127,7 @@
 \label{alg:naive_cd}
 \begin{algorithmic}
 \STATE 设步长 $\epsilon$ 为一个小正数。
-\STATE 设\gls{gibbs_steps} $k$ 大到足以允许\gls{burn_in}。在小图像集上训练一个\glssymbol{RBM}大致设为100 。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以允许\gls{burn_in}。在小图像集上训练一个~\glssymbol{RBM}~大致设为100 。
 \WHILE{不收敛}
 \STATE 从训练集中采包含 $m$ 个样本$\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$的\gls{minibatch}。
 \STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta)$.
@@ -187,7 +187,7 @@
 \label{alg:cd}
 \begin{algorithmic}
 \STATE 设步长 $\epsilon$ 为一个小正数。
-\STATE 设\gls{gibbs_steps} $k$ 大到足以让从 $p_\text{data}$初始化并从 $p(\RVx; \Vtheta)$采样的\gls{markov_chain}\gls{mixing} 。在小图像集上训练一个\glssymbol{RBM}大致设为1-20。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以让从 $p_\text{data}$初始化并从 $p(\RVx; \Vtheta)$采样的\gls{markov_chain}\gls{mixing} 。在小图像集上训练一个~\glssymbol{RBM}~大致设为1-20。
 \WHILE{不收敛}
 \STATE 从训练集中采包含 $m$ 个样本 $\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$ 的\gls{minibatch}。
 \STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta).$
@@ -206,7 +206,7 @@
 \end{algorithm}
 
 % 601 end
-\textbf{\gls{contrastive_divergence}}（\glssymbol{contrastive_divergence}，或者是具有$k$个Gibbs步骤的\glssymbol{contrastive_divergence}-$k$）算法在每个步骤中初始化\gls{markov_chain}为采样自数据分布中的样本~\citep{Hinton-PoE-2000,Hinton-RBMguide-small}，如\algref{alg:cd}所示。
+\textbf{\gls{contrastive_divergence}}（\glssymbol{contrastive_divergence}，或者是具有$k$个Gibbs步骤的~\glssymbol{contrastive_divergence}-$k$）算法在每个步骤中初始化\gls{markov_chain}为采样自数据分布中的样本~\citep{Hinton-PoE-2000,Hinton-RBMguide-small}，如\algref{alg:cd}所示。
 从数据分布中获取样本是计算代价最小的，因为它们已经在数据集中了。
 初始时，数据分布并不接近模型分布，因此\gls{negative_phase}不是非常准确。
 幸运的是，\gls{positive_phase}仍然可以准确地增加数据的模型概率。
@@ -243,7 +243,7 @@
 \end{figure}
 
 
-\cite{Perpinan+Hinton-2005-small}实验上证明\,\glssymbol{contrastive_divergence}\,\gls{estimator}偏向于\glssymbol{RBM}和完全可见的\,\gls{BM}\,，因为它会收敛到与\gls{MLE}不同的点。
+\cite{Perpinan+Hinton-2005-small}实验上证明\,\glssymbol{contrastive_divergence}\,\gls{estimator}偏向于~\glssymbol{RBM}~和完全可见的\gls{BM}，因为它会收敛到与\gls{MLE}不同的点。
 他们认为，由于偏差较小，\glssymbol{contrastive_divergence}\,可以作为一种计算代价低的方式来初始化模型，之后可以通过计算代价高的\,\glssymbol{mcmc}\,方法进行\gls{fine_tune}。
 \cite{Bengio+Delalleau-2009}表明，\glssymbol{contrastive_divergence}\,可以被理解为去掉了正确\,\glssymbol{mcmc}\,梯度更新中的最小项，这解释了偏差的由来。
 
@@ -496,7 +496,7 @@
 
 % -- 610 end
 
-类似于\gls{pseudolikelihood}估计，\gls{ratio_matching}对每个数据点都需要$n$个$\tilde{p}$的估计，因此每次更新的计算代价大约比\,\glssymbol{SML}的计算代价高出$n$倍。
+类似于\gls{pseudolikelihood}估计，\gls{ratio_matching}对每个数据点都需要$n$个$\tilde{p}$的估计，因此每次更新的计算代价大约比~\glssymbol{SML}~的计算代价高出$n$倍。
 
 
 与\gls{pseudolikelihood}估计一样，我们可以认为\gls{ratio_matching}减小了所有只有一个变量不同于训练样本的状态的概率。
@@ -547,14 +547,14 @@
 \end{equation}
 其中$c$是$-\log Z(\Vtheta)$的近似。
 不仅仅估计$\Vtheta$，\gls{NCE}过程将$c$视为另一参数，使用相同的算法同时估计$\Vtheta$和$c$。
-因此，所得到的$\log p_{\text{model}}(\RVx)$可能并不完全对应有效的\gls{PD}，但随着$c$估计的改进，它将变得越来越接近有效值\footnote{\glssymbol{NCE}也适用于具有易于处理的，不需要引入额外参数$c$的\gls{partition_function}的问题。它已经是最令人感兴趣的，估计具有复杂\gls{partition_function}模型的方法}。
+因此，所得到的$\log p_{\text{model}}(\RVx)$可能并不完全对应有效的\gls{PD}，但随着$c$估计的改进，它将变得越来越接近有效值\footnote{\glssymbol{NCE}~也适用于具有易于处理的，不需要引入额外参数$c$的\gls{partition_function}的问题。它已经是最令人感兴趣的，估计具有复杂\gls{partition_function}模型的方法}。
 
 
 这种方法不可能使用最大似然作为估计的标准。
 最大似然标准可以设置$c$为任意大的值，而不是设置$c$以创建一个有效的\gls{PD}。
 
 
-\glssymbol{NCE}将估计$p(\RVx)$的\gls{unsupervised_learning}问题转化为学习一个概率二元分类器，其中一个类别对应模型生成的数据。
+\glssymbol{NCE}~将估计$p(\RVx)$的\gls{unsupervised_learning}问题转化为学习一个概率二元分类器，其中一个类别对应模型生成的数据。
 该\gls{supervised_learning}问题中的\gls{MLE}定义了原始问题的渐近一致估计。
 
 
@@ -577,12 +577,12 @@
 % -- 612 --
 
 我们可以在训练数据上构造一个类似的联合模型。
-在这种情况下，开关变量决定是从\textbf{数据}还是从\gls{noise}分布中抽取$\RVx$。
+在这种情况下，开关变量决定是从\,\textbf{数据}\,还是从\gls{noise}分布中抽取$\RVx$。
 正式地，$p_{\text{train}}(y = 1) = \frac{1}{2}$，$p_{\text{train}}( \RVx \mid y = 1) = p_{\text{data}}( \RVx)$，和
 $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 
-现在我们可以应用标准的最大似然学习拟合$p_{\text{joint}}$到$p_{\text{train}}$的\textbf{监督}学习问题：
+现在我们可以应用标准的最大似然学习拟合$p_{\text{joint}}$到$p_{\text{train}}$的\,\textbf{监督}\,学习问题：
 \begin{equation}
 	\Vtheta, c = \underset{ \Vtheta, c}{\arg\max} \SetE_{\RVx, \RSy \sim p_{\text{train}}} \log 
 	p_{\text{joint}} (y \mid \RVx).
@@ -624,7 +624,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 如果$p_{\text{model}}$学会了眼睛，就算没有学习任何其他面部特征，比如嘴， 它也会拒绝几乎所有的非结构化\gls{noise}样本。
 % 614 head
 
-\gls{noise_distribution}$p_{\text{noise}}$必须是易于估计和采样的约束可能是过于严格的限制。
+\gls{noise_distribution}~$p_{\text{noise}}$必须是易于估计和采样的约束可能是过于严格的限制。
 当$p_{\text{noise}}$比较简单时，大多数采样可能与数据有着明显不同，而不会迫使$p_{\text{model}}$进行显著改进。
 
 
@@ -734,7 +734,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 考虑分布序列$p_{\eta_0},\dots,p_{\eta_n}$，其中$0=\eta_0 < \eta_1 < \dots < \eta_{n-1} < \eta_n = 1$，分布序列中的第一个和最后一个分别是$p_0$和$p_1$。
 
 
-这种方法使我们能够估计定义在高维空间多峰分布（例如训练\,\glssymbol{RBM}\,时定义的分布）上的\gls{partition_function}。
+这种方法使我们能够估计定义在高维空间多峰分布（例如训练~\glssymbol{RBM}~时定义的分布）上的\gls{partition_function}。
 我们从一个已知\gls{partition_function}的简单模型（例如，权重为零的\,\glssymbol{RBM}）开始，估计两个模型\gls{partition_function}之间的比率。
 该比率的估计基于许多个相似分布的比率估计，例如在零和学习到的权重之间插值一组权重不同的\,\glssymbol{RBM}。
 
@@ -801,7 +801,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 \end{equation}
 
 
-为了验证该过程定义的\gls{importance_sampling}方案是否有效，我们可以展示\citep{Neal-2001}\,\glssymbol{AIS}\,过程对应着扩展状态空间上的简单\gls{importance_sampling}，其中数据点采样自乘积空间$[\Vx_{\eta_1},\dots,\Vx_{\eta_{n-1}},\Vx_1]$。
+为了验证该过程定义的\gls{importance_sampling}方案是否有效，我们可以展示\citep{Neal-2001}~\glssymbol{AIS}~过程对应着扩展状态空间上的简单\gls{importance_sampling}，其中数据点采样自乘积空间$[\Vx_{\eta_1},\dots,\Vx_{\eta_{n-1}},\Vx_1]$。
 为此，我们将扩展空间上的分布定义为
 \begin{align}
 &\tilde{p} (\Vx_{\eta_1}, \dots, \Vx_{\eta_{n-1}}, \Vx_1) \\

@@ -227,7 +227,7 @@ Iris（鸢尾花卉）\gls{dataset}~\citep{Fisher-1936}是统计学家和\gls{ML
 学习范式的其他变种也是有可能的。
 例如，半监督学习中，一些\gls{example:chap5}有监督\gls{target}，但其他\gls{example:chap5}没有。
 在多实例学习中，\gls{example:chap5}的整个集合被标记为含有或者不含有该类的\gls{example:chap5}，但是集合中单独的样本是没有标记的。
-参考\cite{Kotzias2015}了解最近\gls{deep_model}进行多实例学习的示例。
+参考~\cite{Kotzias2015}了解最近\gls{deep_model}进行多实例学习的示例。
 
 有些\gls{ML}算法并不是训练于一个固定的\gls{dataset}上。
 例如，\firstgls{reinforcement_learning}算法会和环境进行交互，所以学习系统和它的训练过程会有反馈回路。
@@ -375,7 +375,7 @@ Iris（鸢尾花卉）\gls{dataset}~\citep{Fisher-1936}是统计学家和\gls{ML
 
 % -- 106 --
 
-截距项$b$通常被称为仿射变换的\textbf{\gls{bias_aff}}（bias）参数。
+截距项$b$通常被称为仿射变换的\,\textbf{\gls{bias_aff}}（bias）参数。
 这个术语的命名源自该变换的输出在没有任何输入时会偏移$b$。
 它和统计偏差中指代统计估计算法的某个量的期望估计偏离真实值的意思是不一样的。
 
@@ -638,7 +638,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/underfit_just_right_overfit_wd_color}}
 \fi
-\caption{我们使用高阶多项式回归模型来拟合图\ref{fig:chap5_underfit_just_right_overfit}中训练样本。真实函数是二次的，但是在这里我们只使用$9$阶多项式。我们通过改变\gls{weight_decay}的量来避免高阶模型的过拟合问题。\emph{(左)}当$\lambda$非常大时，我们可以强迫模型学习到了一个没有斜率的函数。由于它只能表示一个常数函数，所以会导致\gls{underfitting}。\emph{(中)}取一个适当的$\lambda$时，学习算法能够用一个正常的形状来恢复曲率。即使模型能够用更复杂的形状来来表示函数，\gls{weight_decay}鼓励用一个带有更小参数的更简单的模型来描述它。\emph{(右)}当\gls{weight_decay}趋近于$0$（即使用\,\gls{Moore}来解这个带有最小\gls{regularization}的欠定问题）时，这个$9$阶多项式会导致严重的\gls{overfitting}，这和我们在图\ref{fig:chap5_underfit_just_right_overfit}中看到的一样。}
+\caption{我们使用高阶多项式回归模型来拟合\figref{fig:chap5_underfit_just_right_overfit}中训练样本。真实函数是二次的，但是在这里我们只使用$9$阶多项式。我们通过改变\gls{weight_decay}的量来避免高阶模型的过拟合问题。\emph{(左)}当$\lambda$非常大时，我们可以强迫模型学习到了一个没有斜率的函数。由于它只能表示一个常数函数，所以会导致\gls{underfitting}。\emph{(中)}取一个适当的$\lambda$时，学习算法能够用一个正常的形状来恢复曲率。即使模型能够用更复杂的形状来来表示函数，\gls{weight_decay}鼓励用一个带有更小参数的更简单的模型来描述它。\emph{(右)}当\gls{weight_decay}趋近于$0$（即使用\,\gls{Moore}来解这个带有最小\gls{regularization}的欠定问题）时，这个$9$阶多项式会导致严重的\gls{overfitting}，这和我们在图\ref{fig:chap5_underfit_just_right_overfit}中看到的一样。}
 \label{fig:chap5_underfit_just_right_overfit_wd_color}
 \end{figure}
 
@@ -966,7 +966,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \else
 \centerline{\includegraphics{Chapter5/figures/bias_variance_tradeoff}}
 \fi
-\caption{当\gls{capacity}增大（$x$轴）时，\gls{BIAS}（用点表示）随之减小，而方差（虚线）随之增大，使得\gls{generalization_error}（加粗曲线）产生了另一种U形。如果我们沿着轴改变\gls{capacity}，会发现\gls{optimal_capacity}，当\gls{capacity}小于\gls{optimal_capacity}会呈现\gls{underfitting}，大于时导致\gls{overfitting}。这种关系与\secref{sec:capacity_overfitting_and_underfitting}以及图\ref{fig:chap5_generalization_vs_capacity}中讨论的\gls{capacity}、\gls{underfitting}和\gls{overfitting}之间的关系类似。}
+\caption{当\gls{capacity}增大（$x$轴）时，\gls{BIAS}（用点表示）随之减小，而方差（虚线）随之增大，使得\gls{generalization_error}（加粗曲线）产生了另一种U形。如果我们沿着轴改变\gls{capacity}，会发现\gls{optimal_capacity}，当\gls{capacity}小于\gls{optimal_capacity}会呈现\gls{underfitting}，大于时导致\gls{overfitting}。这种关系与\secref{sec:capacity_overfitting_and_underfitting}以及\figref{fig:chap5_generalization_vs_capacity}中讨论的\gls{capacity}、\gls{underfitting}和\gls{overfitting}之间的关系类似。}
 \label{fig:chap5_bias_variance_tradeoff}
 \end{figure}
 
@@ -1283,7 +1283,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 
 许多正规化估计方法，例如权重衰减\gls{regularization}的最大似然学习，可以被解释为\gls{bayesian_inference}的\,\glssymbol{MAP}\,近似。
 这个适应于\gls{regularization}时加到\gls{target}函数的附加项对应着$\log p(\Vtheta)$。
-并非所有的正则化惩罚都对应着\glssymbol{MAP}~\gls{bayesian_inference}。
+并非所有的正则化惩罚都对应着~\glssymbol{MAP}~\gls{bayesian_inference}。
 例如，有些\gls{regularizer}可能不是一个概率分布的对数。
 还有些\gls{regularizer}依赖于数据，当然也不会是一个先验概率分布。
 
@@ -1313,7 +1313,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
 我们用于\gls{linear_regression}的实数正态分布是用均值参数化的。
 我们提供这个均值的任何值都是有效的。
 二元变量上的的分布稍微复杂些，因为它的均值必须始终在$0$和$1$之间。
-解决这个问题的一种方法是使用\gls{logistic_sigmoid}函数将线性函数的输出压缩进区间$(0,1)$。
+解决这个问题的一种方法是使用~\gls{logistic_sigmoid}~函数将线性函数的输出压缩进区间$(0,1)$。
 该值可以解释为概率：
 \begin{equation}
     p(y = 1 \mid \Vx; \Vtheta) = \sigma(\Vtheta^\Tsp \Vx).
@@ -1415,8 +1415,8 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 反之，在测试阶段我们希望在新的测试输入$\Vx$上产生$y$，我们需要在训练数据$\MX$上找到$\Vx$的$k$-最近邻。
 然后我们返回训练集上对应的$y$值的平均值。
 这几乎适用于任何类型可以确定$y$值平均值的\gls{supervised_learning}。
-在分类情况中，我们可以关于\gls{one_hot}编码向量$\Vc$求平均，其中$c_y = 1$，其他的$i$值取$c_i=0$。
-然后，我们可以解释这些\gls{one_hot}编码的均值为类别的概率分布。
+在分类情况中，我们可以关于~\gls{one_hot}~编码向量$\Vc$求平均，其中$c_y = 1$，其他的$i$值取$c_i=0$。
+然后，我们可以解释这些~\gls{one_hot}~编码的均值为类别的概率分布。
 作为一个非参数学习算法，$k$-近邻能达到非常高的容量。
 例如，假设我们有一个用$0$-$1$误差度量性能的多分类任务。
 在此设定中，当训练\gls{example:chap5}数目趋向于无穷大时，$1$-最近邻收敛到两倍贝叶斯误差。
@@ -1578,13 +1578,13 @@ $\MX$对应的无偏样本协方差矩阵给定如下
 \label{sec:k_means_clustering}
 另外一个简单的表示学习算法是$k$-均值聚类。
 $k$-均值聚类算法将训练集分成$k$个靠近彼此的不同\gls{example:chap5}聚类。
-因此我们可以认为该算法提供了$k$-维的\gls{one_hot}编码向量$\Vh$以表示输入$\Vx$。
+因此我们可以认为该算法提供了$k$-维的~\gls{one_hot}~编码向量$\Vh$以表示输入$\Vx$。
 当$\Vx$属于聚类$i$时，有$h_i=1$，$\Vh$的其他项为零。
 
-$k$-均值聚类提供的\gls{one_hot}编码也是一种稀疏表示，因为每个输入的表示中大部分元素为零。
+$k$-均值聚类提供的~\gls{one_hot}~编码也是一种稀疏表示，因为每个输入的表示中大部分元素为零。
 之后，我们会介绍能够学习更灵活的稀疏表示的一些其他算法（表示中每个输入$\Vx$不只一个非零项）。
-\gls{one_hot}编码是稀疏表示的一个极端示例，丢失了很多分布式表示的优点。
-\gls{one_hot}编码仍然有一些统计优点（自然地传达了相同聚类中的\gls{example:chap5}彼此相似的观点），
+\gls{one_hot}~编码是稀疏表示的一个极端示例，丢失了很多分布式表示的优点。
+\gls{one_hot}~编码仍然有一些统计优点（自然地传达了相同聚类中的\gls{example:chap5}彼此相似的观点），
 也具有计算上的优势，因为整个表示可以用一个单独的整数表示。
 
 $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\}$，然后迭代交换两个不同的步骤直到收敛。
@@ -1609,7 +1609,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 % -- 146 --
 
-这些问题说明了一些我们可能更偏好于分布式表示（相对于\gls{one_hot}表示而言）的原因。
+这些问题说明了一些我们可能更偏好于分布式表示（相对于~\gls{one_hot}~表示而言）的原因。
 分布式表示可以对每个车辆赋予两个属性——一个表示它颜色，一个表示它是汽车还是卡车。
 目前仍然不清楚什么是最优的分布式表示（学习算法如何知道我们关心的两个属性是颜色和是否汽车或卡车，而不是制造商和车龄？），
 但是多个属性减少了算法去猜我们关心哪一个属性的负担，允许我们通过比较很多属性而非测试一个单一属性来细粒度地度量相似性。
