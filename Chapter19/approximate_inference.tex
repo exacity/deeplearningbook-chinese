@@ -779,7 +779,8 @@ $\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_
 
 从这里，我们可以发现$\tilde{q}$的\gls{functional}形式满足\gls{gaussian_distribution}。
 因此，我们可以得到$q(\Vh\mid\Vv) = \CalN(\Vh;\Vmu,\Vbeta^{-1})$，其中$\Vmu$和对角的$\Vbeta$是变分参数，我们可以使用任何方法来优化它。
-有必要再强调一下，我们并没有假设$q$是一个\gls{gaussian_distribution}，这个高斯的形式是使用\gls{calculus_of_variations}来最大化关于$\CalL$的分布$q$\footnote{此处似乎有笔误。}推导出的。    %?? 什么笔误啊。。。  最大化L关于q 还是 最大化q关于L
+%有必要再强调一下，我们并没有假设$q$是一个\gls{gaussian_distribution}，这个高斯的形式是使用\gls{calculus_of_variations}来最大化关于$\CalL$的分布$q$\footnote{此处似乎有笔误。}推导出的。    %?? 什么笔误啊。。。  最大化L关于q 还是 最大化q关于L
+有必要再强调一下，我们并没有假设$q$是一个\gls{gaussian_distribution}，这个高斯的形式是使用\gls{calculus_of_variations}来关于分布$q$最大化$\CalL$而推导出来的。
 在不同的模型上应用相同的方法可能会得到不同\gls{functional}形式的分布$q$。
 % 641
 
@@ -809,7 +810,7 @@ $\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_2]$和$\SetE_{\RSh_2\sim q(\RSh\mid\Vv)}[h_
 % 642
 
 这种行为使得我们做的近似假设变得合理。 %这种行为使我们的近似假设成为自我实现。
-<bad>如果我们用\gls{unimodal}近似后验来训练模型，我们将获得一个真实后验的模型，该模型比我们使用精确推断训练模型获得的模型更接近\gls{unimodal}。
+如果我们用\gls{unimodal}近似后验来训练模型，那么所得具有真实后验的模型会比我们使用精确推断训练模型获得的模型更接近\gls{unimodal}。  %?? <bad>
 % 642
 
 	
