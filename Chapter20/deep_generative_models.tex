@@ -61,7 +61,7 @@
 
 不仅仅使用局部统计信息的其他学习算法似乎需要假设更多的学习机制。
 例如，对于大脑在\gls{MLP}中实现的\gls{back_propagation}，似乎需要维持一个辅助通信的网络，并借此向后传输梯度信息。
-<BAD>已经有学者\citep{Hinton-DL2007,Bengio-arxiv2015} 提出生物学上可行（和近似）的\gls{back_propagation}实现方案，但仍然有待验证，\citet{Bengio-arxiv2015} 还将梯度的\gls{back_propagation}链接到类似于\gls{BM}（但具有连续\gls{latent_variable}）能量模型中的\gls{inference}。
+已经有学者\citep{Hinton-DL2007,Bengio-arxiv2015} 提出生物学上可行（和近似）的\gls{back_propagation}实现方案，但仍然有待验证，\citet{Bengio-arxiv2015} 还将梯度的\gls{back_propagation}链接到类似于\gls{BM}（但具有连续\gls{latent_variable}）能量模型中的\gls{inference}。
 
 从生物学的角度看，\gls{BM}学习中的\gls{negative_phase}阶段有点难以解释。
 正如\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}所主张的，人类在睡眠时做梦可能是一种形式的\gls{negative_phase}采样。
@@ -172,7 +172,7 @@ RBM的\gls{energy_function}由下给出
 \subsection{训练\glsentrytext{RBM}}
 \label{sec:training_restricted_boltzmann_machines}
 
-<BAD>因为~\glssymbol{RBM}~允许以高效~\glssymbol{mcmc}~采样（\gls{block_gibbs_sampling}的形式）对$\tilde{P}(\Vv)$进行高效评估和求导，所以可以简单地使用\chapref{chap:confronting_the_partition_function}中描述的任意训练具有难解\gls{partition_function}模型的技术。
+因为~\glssymbol{RBM}~允许以高效~\glssymbol{mcmc}~采样（\gls{block_gibbs_sampling}的形式）对$\tilde{P}(\Vv)$进行高效评估和求导，所以可以简单地使用\chapref{chap:confronting_the_partition_function}中描述的任意训练具有难解\gls{partition_function}模型的技术。
 这包括~\glssymbol{contrastive_divergence}、\,\glssymbol{SML}（\glssymbol{persistent_contrastive_divergence}）、\gls{ratio_matching}等。
 与深度学习中使用的其他\gls{undirected_model}相比，\glssymbol{RBM}~可以相对直接地训练，因为我们可以以闭解形式计算$P(\RVh  \mid  \Vv)$。
 其他一些深度模型，如\gls{DBM}，同时具备难处理的\gls{partition_function}和难以推断的难题。
@@ -261,7 +261,7 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 
 与\chapref{chap:approximate_inference}中从基本原理导出的许多\gls{inference}方程相比，这种特定选择的~\glssymbol{MLP}~有些随意。
 这个~\glssymbol{MLP}~是一个启发式选择，似乎在实践中效果不错，并在文献中一贯使用。
-<BAD>许多近似\gls{inference}技术是由它们在一些约束下在对数似然上找到最大\emph{紧}变分下界的能力所驱动的。
+许多近似\gls{inference}技术是由它们在一些约束下，并在对数似然上找到最大\emph{紧}变分下界的能力所驱动的。
 我们可以使用~\glssymbol{DBN}~中~\glssymbol{MLP}~定义的\gls{hidden_unit}的期望，构造对数似然的变分下界，但这对于\gls{hidden_unit}上的\emph{任何}概率分布都是如此，并没有理由相信该~\glssymbol{MLP}~提供了一个特别的紧界。
 特别地，\glssymbol{MLP}~忽略了~\glssymbol{DBN}~\gls{graphical_model}中许多重要的相互作用。
 \glssymbol{MLP}~将信息从可见单元向上传播到最深的\gls{hidden_unit}，但不向下或侧向传播任何信息。
@@ -430,7 +430,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
  \log \Big( \frac{Q(\Vh^{(1)}, \Vh^{(2)}  \mid  \Vv)}{P(\Vh^{(1)}, \Vh^{(2)}  \mid  \Vv)} \Big).
 \end{align}
 
-<BAD>一般来说，我们不必提供参数形式的近似分布，除了要保证独立性假设。
+一般来说，我们不必提供参数形式的近似分布，除了要保证独立性假设。
 变分近似过程通常能够恢复近似分布的函数形式。
 然而，在二值\gls{hidden_unit}（我们在这里推导的情况）的\gls{meanfield}假设的情况下，不会由于预先固定模型的参数而损失一般性。
 
@@ -897,10 +897,10 @@ $E_{\text{c}}$是~\glssymbol{crbm}~建模条件协方差信息的\gls{energy_fun
 
 相比~\glssymbol{mcrbm}~和~\glssymbol{mpot}~模型，\glssymbol{ssrbm}~以明显不同的方式参数化观察量的条件协方差。
 \glssymbol{mcrbm}~和~\glssymbol{mpot}~都通过 $\big( \sum_j h_j^{(c)} \Vr^{(j)} \Vr^{(j)\top} + \MI \big)^{-1}$建模观察量的协方差结构，使用 $\Vh_j > 0$的\gls{hidden_unit}的激活来对方向$\Vr^{(j)}$的条件协方差施加约束。
-<BAD>相反，\glssymbol{ssrbm}~使用隐藏尖峰激活$h_i = 1$来指定观察的条件协方差，以沿着由相应权重向量指定的方向捏合精度矩阵。
+相反，\glssymbol{ssrbm}~使用隐藏尖峰激活$h_i = 1$来指定观察的条件协方差，以沿着由相应权重向量指定的方向捏合精度矩阵。
 \glssymbol{ssrbm}~条件协方差与一个不同模型给出的类似：概率主成分分析的乘积（PoPPCA）\citep{Williams2002}。
 在\gls{overcomplete}的设定下，\glssymbol{ssrbm}~参数化的稀疏激活仅允许在稀疏激活$h_i$的所选方向上有显著方差（高于由$\VLambda^{-1}$给出的近似方差）。
-<BAD>在~\glssymbol{mcrbm}~或~\glssymbol{mpot}~模型中，\gls{overcomplete}的表示意味着，要在捕获观察空间中特定方向的变化需要在该方向上的正交投影下去除潜在的所有约束。
+在~\glssymbol{mcrbm}~或~\glssymbol{mpot}~模型中，\gls{overcomplete}的表示意味着，要在捕获观察空间中特定方向的变化需要在该方向上的正交投影下去除潜在的所有约束。
 这表明这些模型不太适合于\gls{overcomplete}设定。
 
 \gls{ssrbm}~的主要缺点是参数的一些设置会对应于非正定的协方差矩阵。
@@ -1872,7 +1872,7 @@ $\vcenter{\hbox{
 
 \citet{Sohl-Dickstein-et-al-ICML2015} 开发了一种基于非平衡热力学学习\gls{generative_model}的\,\textbf{扩散反演}(diffusion inversion)训练方案。
 该方法基于我们希望从中采样的概率分布具有结构的想法。
-<BAD>这种结构会被扩散过程逐渐破坏，概率分布逐渐地变得具有更多的熵。
+这种结构会被扩散过程逐渐破坏，概率分布逐渐地变得具有更多的熵。
 为了形成\gls{generative_model}，我们可以反过来运行该过程，通过训练模型逐渐将结构恢复到非结构化分布。
 通过迭代地应用使分布更接近目标分布的过程，我们可以逐渐接近该目标分布。
 在涉及许多迭代以产生样本的意义上，这种方法类似于~\glssymbol{mcmc}~方法。

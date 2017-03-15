@@ -25,7 +25,7 @@
 
 
 在\gls{DL}中难以处理的推断问题通常源于结构化图模型中\gls{latent_variable}之间的相互作用。
-可以参考\figref{fig:intractable_graphs}的几个例子。
+读者可以参考\figref{fig:intractable_graphs}的几个例子。
 这些相互作用可能是\gls{undirected_model}的直接相互作用，也可能是\gls{directed_model}中同一个可见变量的共同祖先之间的``\gls{explaining_away}''作用。
 % 623 end
 
@@ -102,7 +102,7 @@
 
 对于一个较好的分布$q$的选择来说，$\CalL$是容易计算的。
 对任意分布$q$的选择来说，$\CalL$提供了似然函数的一个下界。
-越好地近似$p(\Vh\mid\Vv)$的分布$q(\Vh\mid\Vv)$得到的下界就越紧，换言之，就是与$\log p(\Vv)$更加接近。
+越好地近似$p(\Vh\mid\Vv)$的分布$q(\Vh\mid\Vv)$，得到的下界就越紧，换言之，就是与$\log p(\Vv)$更加接近。
 当$q(\Vh\mid\Vv) = p(\Vh\mid\Vv)$时，这个近似是完美的，也意味着$\CalL(\Vv,{\Vtheta},q) = \log {p(\Vv;{\Vtheta})} $。
 % 625
 
@@ -133,7 +133,7 @@
 % 626
 
 
-\glssymbol{EM}算法由交替迭代直到收敛的两步运算组成：
+\glssymbol{EM}算法由交替迭代，直到收敛的两步运算组成：
 \begin{itemize}
 \item \firstgls{e_step}: 令${\Vtheta^{(0)}}$表示在这一步开始时的参数值。
 对任何我们想要训练的（对所有的或者\gls{minibatch}数据均成立）索引为$i$的训练样本$\Vv^{(i)}$，令$q(\Vh^{(i)}\mid \Vv) = p(\Vh^{(i)}\mid\Vv^{(i)};\Vtheta^{(0)})$。
@@ -229,7 +229,7 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 因此我们能够证明一种类似于~\glssymbol{EM}~算法的学习算法，其中我们轮流迭代两步，一步是用~\glssymbol{MAP}~推断估计出$\Vh^*$，另一步是更新$\Vtheta$来增大$\log p(\Vh^*,\Vv)$。
 从~\glssymbol{EM}~算法角度看，这也是对$\CalL$的一种形式的\gls{coordinate_ascent}，交替迭代时通过推断来优化关于$q$的$\CalL$以及通过参数更新来优化关于$\Vtheta$的$\CalL$。
 作为一个整体，这个算法的正确性可以得到保证，因为$\CalL$是$\log p(\Vv)$的下界。
-在~\glssymbol{MAP}~推断中，这个保证是无效的，因为这个界会无限地松，由于~\gls{dirac_distribution}的熵的微分趋近于负无穷。
+在~\glssymbol{MAP}~推断中，这个保证是无效的，因为~\gls{dirac_distribution}的熵的微分趋近于负无穷，使得这个界会无限地松。
 然而，人为加入一些$\Vmu$的噪声会使得这个界又有了意义。
 % 628
 
@@ -262,7 +262,7 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 
 分布$p(\Vx\mid\Vh)$的难处理性导致了对数似然及其梯度也很难得到。
 因此我们不能使用精确的\gls{MLE}来进行学习。
-取而代之的是，我们通过\glssymbol{MAP}推断以及最大化由以$\Vh$为中心的\,\gls{dirac_distribution}所定义而成的\,\glssymbol{ELBO}\,来学习模型参数。
+取而代之的是，我们通过~\glssymbol{MAP}~推断以及最大化由以$\Vh$为中心的\,\gls{dirac_distribution}所定义而成的~\glssymbol{ELBO}~来学习模型参数。
 % 629
 
 
@@ -274,7 +274,7 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 % 629
 
 
-我们可以通过交替迭代最小化$J$分别关于$\MH$和$\MW$的方式来最小化$J$。
+我们可以通过交替迭代，分别关于$\MH$和$\MW$最小化$J$的方式来最小化$J$。
 两个子问题都是凸的。
 事实上，关于$\MW$的最小化问题就是一个\gls{linear_regression}问题。
 然而关于这两个变量同时最小化$J$的问题通常并不是凸的。
@@ -353,17 +353,17 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 
 在确定了如何表示分布$q$以后，我们只需要优化它的参数。
 在离散型\gls{latent_variable}模型中，这是一个标准的优化问题。
-基本上分布$q$的选择可以通过任何优化算法解决，比如说\gls{GD}算法。
+基本上分布$q$的选择可以通过任何优化算法解决，比如\gls{GD}算法。
 % 631
 
 
-这个优化问题可以很快求解，因为它在许多学习算法的内循环中出现。
+因为它在许多学习算法的内循环中出现，所以这个优化问题必须可以很快求解。
 为了追求速度，我们通常使用特殊设计的优化算法。
 这些算法通常能够在极少的循环内解决一些小而简单的问题。
 一个常见的选择是使用\gls{fixed_point_equation}，换句话说，就是解关于$\hat{h}_i$的方程
-\begin{align}
-	\frac{\partial}{\partial \hat{h}_i}\CalL = 0.
-\end{align}
+\begin{equation}
+\frac{\partial}{\partial \hat{h}_i}\CalL = 0.
+\end{equation}
 我们反复地更新$\hat{\Vh}$不同的元素直到满足收敛准则。
 % 631
 
@@ -379,17 +379,15 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 在\gls{binary_sparse_coding}模型中，输入$\Vv\in\SetR^n$，是由模型通过添加高斯噪声到$m$个或有或无的不同成分的和而生成的。
 每一个成分可以是开或者关的，对应着\gls{hidden_unit} $\Vh \in\{0,1\}^m$:
 \begin{align}
-	p(h_i = 1) = \sigma(b_i),
+p(h_i = 1) &= \sigma(b_i), \\
+p(\Vv\mid\Vh) &= \CalN(\Vv;\MW \Vh,{\Vbeta}^{-1}),
 \end{align}
-\begin{align}
-	p(\Vv\mid\Vh) = \CalN(\Vv;\MW \Vh,{\Vbeta}^{-1}),
-\end{align}
-其中$\Vb$是一个可以学习的\gls{BIAS}集合，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角精度矩阵。
+其中$\Vb$是一个可以学习的\gls{bias_aff}集合，$\MW$是一个可以学习的权值矩阵，${\Vbeta}$是一个可以学习的对角精度矩阵。
 % 632
 
 
 使用\gls{maximum_likelihood}来训练这样一个模型需要对参数进行求导。
-我们考虑对其中一个\gls{BIAS}进行求导的过程：
+我们考虑对其中一个\gls{bias_aff}进行求导的过程：
 \begin{align}
 		& \frac{\partial}{\partial b_i} \log p(\Vv) \\
 		= &  \frac{\frac{\partial}{\partial b_i} p(\Vv)}{p(\Vv)}\\
@@ -430,9 +428,9 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 
 
 我们可以做一个\gls{mean_field}近似：
-\begin{align}
+\begin{equation}
 	q(\Vh\mid\Vv) = \prod_{i}^{}q(h_i\mid\Vv).
-\end{align}
+\end{equation}
 % 633
 
 
@@ -475,7 +473,7 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 
 
 原则上说，我们可以使用关于$\Vv$和$\Vh$的\gls{GA}。
-这会成为一个完美的组合的\footnote{译者注：推断算法和学习算法的组合}推断和学习算法。
+这会成为一个推断和学习算法的完美组合。%\footnote{译者注：推断算法和学习算法的组合}
 但是，由于两个原因，我们往往不这么做。
 第一点，对每一个$\Vv$我们需要存储$\hat{\Vh}$。
 我们通常更加偏向于那些不需要为每一个样本都准备内存的算法。
@@ -493,10 +491,10 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 \gls{fixed_point_equation}的核心思想是我们寻找一个关于$\Vh$的\gls{local_maximum}，满足$\nabla_{\Vh}\CalL(\Vv,\Vtheta,\hat{\Vh}) = 0$。
 我们无法同时高效地计算所有$\hat{\Vh}$的元素。
 然而，我们可以解决单个变量的问题：
-\begin{align}
+\begin{equation}
 \label{eqn:1937}
 \frac{\partial}{\partial \hat{h}_i} \CalL(\Vv,\Vtheta,\hat{\Vh}) = 0 .
-\end{align}
+\end{equation}
 % 634 end  
 
 
