@@ -44,7 +44,7 @@
 这意味着控制模型的复杂度不是找到合适规模的模型（带有正确的参数个数）这样一个简单的事情。
 相反，我们可能会发现，或者说在实际的深度学习场景中我们几乎总是会发现，最好的拟合模型（从最小化\gls{generalization}误差的意义上）是一个适当\gls{regularization}的大型模型。
 
-现在我们回顾几种创建这些大型深度\gls{regularization}模型的策略。
+现在我们回顾几种策略，以创建这些\gls{regularization}的大型深度模型。
 
 % -- 222 --
 
@@ -212,7 +212,7 @@ $L^2$正则项将这个矩阵替换为\eqnref{eq:717mw}中的$ (\MX^\top \MX + \
 
 \subsection{$L^1$参数\glsentrytext{regularization}}
 \label{sec:l1_regularization}
-$L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，我们还可以使用其他的方法限制模型参数的大小。
+$L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，我们还可以使用其他的方法限制模型参数的规模。
 比如我们还可以使用$L^1$\gls{regularization}。
 
 形式地，对模型参数$\Vw$的$L^1$\gls{regularization}被定义为：
@@ -271,7 +271,7 @@ w_i = \text{sign}(w_i^*) \max\Big\{ |w_i^*| - \frac{\alpha}{H_{i,i}} , 0\Big\} .
 $w_i^* < 0$的情况与之类似，但是$L^1$惩罚项使$w_i$更接近0(增加$ \frac{\alpha}{H_{i,i}}$)或者为0。
 
 相比$L^2$\gls{regularization}，$L^1$\gls{regularization}会产生更\firstgls{sparse}的解。
-此处\gls{sparse}性指的是一些参数具有最优值0。
+此处\gls{sparse}性指的是最优值中的一些参数为$0$。
 和$L^2$\gls{regularization}相比，$L^1$\gls{regularization}的\gls{sparse}性具有本质的不同。
 \eqnref{eq:713L2}给出了$L^2$\gls{regularization}的解$\tilde \Vw$。 
 如果我们使用\gls{hessian} $\MH$为对角正定矩阵的假设（与$L^1$\gls{regularization}分析时一样），重新考虑这个等式，我们发现
@@ -436,7 +436,7 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 输入噪声注入是一些\gls{unsupervised_learning}算法的一部分，如\gls{DAE}\citep{VincentPLarochelleH2008}。
 向\gls{hidden_unit}施加噪声也是可行的，这可以被看作在多个抽象层上进行的数据集增强。
 \cite{Poole14}最近表明，噪声的幅度被细心调整后，该方法是非常高效的。
-\gls{dropout}，一个将在\secref{sec:dropout}介绍的强大\gls{regularization}策略，可以被看作是通过与噪声\emph{相乘}构建新输入的过程。
+\gls{dropout}，一个将在\secref{sec:dropout}介绍的强大\gls{regularization}策略，可以被看作是通过添加\emph{乘性}噪声构建新输入的过程。
 
 在比较\gls{ML}基准测试的结果时，考虑其采取的数据集增强是很重要的。
 通常情况下，人工设计的数据集增强方案可以大大减少\gls{ML}技术的泛化误差。
@@ -496,7 +496,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 大多数数据集的$y$标签都有一定错误。
 错误的$y$不利于最大化$\log p(y \mid \Vx)$。
 避免这种情况的一种方法是显式地对标签上的噪声进行建模。
-例如，我们可以假设，对于一些小常数$\epsilon$，训练集标记$y$是正确的概率是$1-\epsilon$，（以$\epsilon$的概率）任何其他可能的标签可能是正确的。
+例如，我们可以假设，对于一些小常数$\epsilon$，训练集标记$y$是正确的概率是$1-\epsilon$，（以$\epsilon$的概率）任何其他可能的标签也可能是正确的。
 这个假设很容易就能解析地与\gls{cost_function}结合，而不用显式地抽取噪声样本。
 例如，\textbf{标签平滑}（label smoothing）通过把确切分类目标从0和1替换成$\frac{\epsilon}{k-1}$和$1-\epsilon$，\gls{regularization}具有$k$个输出的\gls{softmax}的模型。
 标准交叉熵损失可以用在这些非确切目标的输出上。
@@ -512,12 +512,12 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \label{sec:semi_supervised_learning}
 在\gls{semi_supervised_learning}的框架下，$P(\RVx)$产生的未标记样本和$P(\RVx, \RVy)$中的标记样本都用于估计$P(\RVy \mid \RVx)$或者根据$\RVx$预测$\RVy$。
 
-在\gls{DL}的背景下，\gls{semi_supervised_learning}通常指的是学习一个\gls{representation} $h = f(\Vx)$。 
+在\gls{DL}的背景下，\gls{semi_supervised_learning}通常指的是学习一个\gls{representation} $\Vh = f(\Vx)$。 
 学习\gls{representation}的目的是使相同类中的\gls{example}有类似的表示。
 \gls{unsupervised_learning}可以为如何在\gls{representation}空间聚集\gls{example}提供有用线索。
 在输入空间紧密聚集的\gls{example}应该被映射到类似的表示。
 在许多情况下，新空间上的线性分类器可以达到较好的泛化\citep{Belkin+Niyogi-2002,Chapelle+al-2003}。
-这种方法的一个经典变种是使用主成分分析\gls{PCA}作为分类前（在投影后的数据上分类）的预处理步骤。
+这种方法的一个经典变种是使用\gls{PCA}作为分类前（在投影后的数据上分类）的预处理步骤。
 
 我们可以构建这样一个模型，其中生成模型$P(\RVx)$或$P(\RVx, \RVy)$与判别模型$P(\RVy \mid \RVx)$共享参数，而不用分离\gls{unsupervised}和\gls{supervised}部分。
 我们权衡\gls{supervised}模型\gls{criterion} $-\log P(\RVy \mid \RVx)$和\gls{unsupervised}或生成模型\gls{criterion}（如$-\log P(\RVx)$或$-\log P(\RVx, \RVy)$）。
@@ -563,7 +563,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 
 \section{\glsentrytext{early_stopping}}
 \label{sec:early_stopping}
-当训练有足够的表示能力甚至会过拟合任务的大模型时，我们经常观察到，训练误差会随着时间的推移逐渐降低但验证集的误差会再次上升。
+当训练有足够的表示能力甚至会过拟合的大模型时，我们经常观察到，训练误差会随着时间的推移逐渐降低但验证集的误差会再次上升。
 \figref{fig:chap7_learning_curve}是这些现象的一个例子，这种现象几乎一定会出现。
 
 这意味着如果我们返回使验证集误差最低的参数设置，就可以获得更好的模型（因此，有希望获得更好的测试误差）。
@@ -872,7 +872,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
   3 & 1 & 2 & -3 & 0 & -3 \\
   -5 & 4 & -2 & 2 & -5 & -1
  \end{bmatrix}} 
-  \underset{\Vh \in \SetR^n}{
+  \underset{\Vh ~\in~ \SetR^n}{
   \begin{bmatrix}
  0 \\ 2 \\ 0 \\ 0 \\ -3 \\ 0
  \end{bmatrix} }
@@ -984,7 +984,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 不是所有构建\gls{ensemble}的技术都是为了让\gls{ensemble}模型比单一模型更加\gls{regularization}。
 例如，一种被称为\firstgls{boosting}的技术\citep{ConfLT:Freund:gametheorie,ConfML:Freund:AdaBoostCompar}构建比单个模型\gls{capacity}更高的\gls{ensemble}模型。
 通过向\gls{ensemble}逐步添加\gls{NN}，\gls{boosting}已经被应用于构建神经网络的\gls{ensemble}\citep{Schwenk-nips10}。
-通过逐渐增加\gls{NN}的\gls{hidden_unit}，\gls{boosting}也可以将单个神经网络解释为单个\gls{ensemble}。
+通过逐渐增加\gls{NN}的\gls{hidden_unit}，\gls{boosting}也可以将单个神经网络解释为一个\gls{ensemble}。
 
 \section{\glsentrytext{dropout}}
 \label{sec:dropout}
@@ -1053,7 +1053,7 @@ $\Vmu$中的每项都是二值的且独立于其他项采样。
 在\gls{dropout}的情况下，所有模型共享参数，其中每个模型继承父\gls{NN}参数的不同子集。
 \gls{parameter_sharing}使得在有限可用的内存下表示指数级数量的模型变得可能。
 在\gls{bagging}的情况下，每一个模型在其相应训练集上训练到收敛。
-在\gls{dropout}的情况下，通常大部分模型都没有显式地被训练，因为通常父\gls{NN}会很大，以致到宇宙毁灭都不可能采样所有的子网络。
+在\gls{dropout}的情况下，通常大部分模型都没有显式地被训练，因为通常父\gls{NN}会很大，以致于到宇宙毁灭都不可能采样完所有的子网络。
 取而代之的是，在单个步骤中我们训练一小部分的子网络，\gls{parameter_sharing}会使得剩余的子网络也能有好的参数设定。
 这些是仅有的区别。
 除了这些，\gls{dropout}与\gls{bagging}算法一样。
@@ -1083,7 +1083,7 @@ $\Vmu$中的每项都是二值的且独立于其他项采样。
 相反，我们可以通过采样近似\gls{inference}，即平均许多\gls{mask}的输出。
 即使是$10-20$个\gls{mask}就足以获得不错的表现。
 
-然而，一个更好的方法是不错地近似整个\gls{ensemble}的预测，且只需一个前向传播的代价。
+然而，一个更好的方法能不错地近似整个\gls{ensemble}的预测，且只需一个前向传播的代价。
 要做到这一点，我们改用\gls{ensemble}成员预测分布的几何平均而不是算术平均。
 \cite{WardeFarley+al-ICLR2014}提出的论点和经验证据表明，在这个情况下几何平均与算术平均表现得差不多。
 
@@ -1154,7 +1154,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 
 % -- 256 --
 
-\gls{weight_scaling_inference_rule}在其他设定下也是精确的，包括条件正态输出的回归网络以及那些具有非线性隐藏层的深度网络。
+\gls{weight_scaling_inference_rule}在其他设定下也是精确的，包括条件正态输出的回归网络以及那些隐藏层不包含非线性的深度网络。
 然而，\gls{weight_scaling_inference_rule}对具有非线性的深度模型仅仅是一个近似。
 虽然这个近似尚未有理论上的分析，但在实践中往往效果很好。
 \cite{Goodfellow-et-al-ICML2013}实验发现，\gls{ensemble}预测\gls{weight_scaling_inference_rule}比\gls{monte_carlo}近似的效果更好（在分类精度方面）。
@@ -1266,8 +1266,8 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 在许多情况下，\gls{NN}在独立同分布的测试集上进行评估已经达到了人类表现。
 因此，我们自然要怀疑这些模型在这些任务上是否获得了真正的人类层次的理解。
 为了探索网络对底层任务的理解层次，我们可以探索这个模型错误分类的例子。
-\cite{Szegedy-ICLR2014}发现，精度达到人类水平的\gls{NN}在优化过程故意构造的数据点上的误差率接近\NUMTEXT{100\%}，模型在这个输入点$\Vx'$的输出与附近的数据点$\Vx$非常不同。
-在许多情况下，$\Vx'$与$\Vx$非常近似，人类观察者不会察觉原始样本和\firstgls{adversarial_example}之间的差异，但是网络会做出非常不同的预测。
+\cite{Szegedy-ICLR2014}发现，在精度达到人类水平的\gls{NN}上通过优化过程故意构造数据点，其上的误差率接近\NUMTEXT{100\%}，模型在这个输入点$\Vx'$的输出与附近的数据点$\Vx$非常不同。
+在许多情况下，$\Vx'$与$\Vx$非常近似，人类观察者不会察觉原始样本和\firstgls{adversarial_example}之间的差异，但是网络会作出非常不同的预测。
 见\figref{fig:chap7_panda_577}中的例子。
 \begin{figure}[!htb]
 \ifOpenSource
