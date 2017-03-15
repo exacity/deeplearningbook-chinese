@@ -78,7 +78,7 @@
 % 625
 
 
-因为$\log p(\Vv)$和$\CalL(\Vv,{\Vtheta},q)$之间的距离是由\,\gls{KL}来衡量的，且\,\gls{KL}总是非负的，我们可以发现$\CalL$总是小于等于所求的对数概率。
+因为$\log p(\Vv)$和$\CalL(\Vv,{\Vtheta},q)$之间的距离是由~\gls{KL}来衡量的，且~\gls{KL}总是非负的，我们可以发现$\CalL$总是小于等于所求的对数概率。
 当且仅当分布$q$完全相等于$p(\Vh\mid\Vv)$时取到等号。
 % 625
 
@@ -128,8 +128,8 @@
 
 我们介绍的第一个最大化下界$\CalL$的算法是\firstall{EM}算法。
 在\gls{latent_variable}模型中，这是一个非常常见的训练算法。
-在这里我们描述 \citet{emview} 所提出的\,\glssymbol{EM}\,算法。
-与大多数我们在本章中介绍的其他算法不同的是，\glssymbol{EM}\,并不是一个\gls{approximate_inference}算法，而是一种能够学到近似后验的算法。
+在这里我们描述 \citet{emview} 所提出的~\glssymbol{EM}~算法。
+与大多数我们在本章中介绍的其他算法不同的是，\glssymbol{EM}~并不是一个\gls{approximate_inference}算法，而是一种能够学到近似后验的算法。
 % 626
 
 
@@ -152,29 +152,29 @@
 % 626
 
 
-基于\gls{latent_variable}模型的\gls{SGA}可以被看作是一个\,\glssymbol{EM}\,算法的特例，其中~gls{m_step}包括了单次梯度操作。
-\glssymbol{EM}\,算法的其他变种可以实现多次梯度操作。
+基于\gls{latent_variable}模型的\gls{SGA}可以被看作是一个~\glssymbol{EM}~算法的特例，其中~\gls{m_step}包括了单次梯度操作。
+\glssymbol{EM}~算法的其他变种可以实现多次梯度操作。
 对一些模型族来说，\gls{m_step}甚至可以通过推出解析解直接完成，不同于其他方法，在给定当前$q$的情况下直接求出最优解。
 % 626 end
 
 
-尽管\gls{e_step}采用的是精确推断，我们仍然可以将\,\glssymbol{EM}\,算法视作是某种程度上的\gls{approximate_inference}。
+尽管\gls{e_step}采用的是精确推断，我们仍然可以将~\glssymbol{EM}~算法视作是某种程度上的\gls{approximate_inference}。
 具体地说，\gls{m_step}假设一个分布$q$可以被所有的$\Vtheta$值分享。
-当\,\gls{m_step}越来越远离\,\gls{e_step}中的$\Vtheta^{(0)}$时，这将会导致$\CalL$和真实的$\log p(\Vv)$之间出现差距。
+当~\gls{m_step}越来越远离~\gls{e_step}中的$\Vtheta^{(0)}$时，这将会导致$\CalL$和真实的$\log p(\Vv)$之间出现差距。
 幸运的是，在进入下一个循环时，\gls{e_step}把这种差距又降到了$0$。
 % 627 head
 
 
 
-\glssymbol{EM}\,算法还包含一些不同的见解。
+\glssymbol{EM}~算法还包含一些不同的见解。
 首先，它包含了学习过程的一个基本框架，就是我们通过更新模型参数来提高整个数据集的似然，其中缺失变量的值是通过后验分布来估计的。
-这种特定的性质并不是\,\glssymbol{EM}\,算法独有的。
+这种特定的性质并不是~\glssymbol{EM}~算法独有的。
 例如，使用\gls{GD}来最大化对数似然函数的方法也有相同的性质。
 计算对数似然函数的梯度需要对\gls{hidden_unit}的后验分布求期望。 
-\glssymbol{EM}\,算法另一个关键的性质是当我们移动到另一个$\Vtheta$时候，我们仍然可以使用旧的分布$q$。
-在传统\gls{ML}中，这种特有的性质在推导大\,\gls{m_step}更新时候得到了广泛的应用。
-在\gls{DL}中，大多数模型太过于复杂以致于在最优大\,\gls{m_step}更新中很难得到一个简单的解。
-所以\,\glssymbol{EM}\,算法的第二个特质，更多为其所独有，较少被使用。
+\glssymbol{EM}~算法另一个关键的性质是当我们移动到另一个$\Vtheta$时候，我们仍然可以使用旧的分布$q$。
+在传统\gls{ML}中，这种特有的性质在推导大~\gls{m_step}更新时候得到了广泛的应用。
+在\gls{DL}中，大多数模型太过于复杂以致于在最优大~\gls{m_step}更新中很难得到一个简单的解。
+所以~\glssymbol{EM}~算法的第二个特质，更多为其所独有，较少被使用。
 % 627
 
 
@@ -190,14 +190,14 @@
 \begin{align}
 \Vh^* = \underset{\Vh}{\arg\max} \ \  p(\Vh\mid\Vv).
 \end{align}
-这被称作\firstgls{MAP}推断，简称\glssymbol{MAP}推断。
+这被称作\firstgls{MAP}推断，简称~\glssymbol{MAP}~推断。
 % 627  
 
 
 
-\glssymbol{MAP}\,推断并不被视作是一种\gls{approximate_inference}，它只是精确地计算了最有可能的一个$\Vh^*$。
-然而，如果我们希望设计一个最大化$\CalL(\Vv,\Vh,q)$的学习过程，那么把\,\glssymbol{MAP}\,推断视作是输出一个$q$值的学习过程是很有帮助的。
-在这种情况下，我们可以将\,\glssymbol{MAP}\,推断视作是\gls{approximate_inference}，因为它并不能提供一个最优的$q$。
+\glssymbol{MAP}~推断并不被视作是一种\gls{approximate_inference}，它只是精确地计算了最有可能的一个$\Vh^*$。
+然而，如果我们希望设计一个最大化$\CalL(\Vv,\Vh,q)$的学习过程，那么把~\glssymbol{MAP}~推断视作是输出一个$q$值的学习过程是很有帮助的。
+在这种情况下，我们可以将~\glssymbol{MAP}~推断视作是\gls{approximate_inference}，因为它并不能提供一个最优的$q$。
 % 627 end
 
 
@@ -207,7 +207,7 @@
 \CalL(\Vv,{\Vtheta},q)
  = \SetE_{\RVh\sim q}[\log p(\Vh , \Vv)] + H(q).
 \end{align}
-我们通过限定分布$q$属于某个分布族，能够使得\,\glssymbol{MAP}\,推断成为一种形式的\gls{approximate_inference}。
+我们通过限定分布$q$属于某个分布族，能够使得~\glssymbol{MAP}~推断成为一种形式的\gls{approximate_inference}。
 具体地说，我们令分布$q$满足一个\,\gls{dirac_distribution}：
 \begin{align}
 q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
@@ -217,7 +217,7 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 \begin{align}
 \Vmu^*  =  \underset{\Vmu}{\arg\max}\ \log p(\Vh = \Vmu,\Vv),
 \end{align}
-这等价于\glssymbol{MAP}推断问题
+这等价于~\glssymbol{MAP}~推断问题
 \begin{align}
 \Vh^* = \underset{\Vh}{\arg\max}\  p(\Vh\mid\Vv).
 \end{align}
@@ -226,15 +226,15 @@ q(\Vh\mid\Vv) = \delta(\Vh - {\Vmu}).
 
 
 
-因此我们能够证明一种类似于\,\glssymbol{EM}\,算法的学习算法，其中我们轮流迭代两步，一步是用\,\glssymbol{MAP}\,推断估计出$\Vh^*$，另一步是更新$\Vtheta$来增大$\log p(\Vh^*,\Vv)$。
-从\,\glssymbol{EM}\,算法角度看，这也是对$\CalL$的一种形式的\gls{coordinate_ascent}，交替迭代时通过推断来优化关于$q$的$\CalL$以及通过参数更新来优化关于$\Vtheta$的$\CalL$。
+因此我们能够证明一种类似于~\glssymbol{EM}~算法的学习算法，其中我们轮流迭代两步，一步是用~\glssymbol{MAP}~推断估计出$\Vh^*$，另一步是更新$\Vtheta$来增大$\log p(\Vh^*,\Vv)$。
+从~\glssymbol{EM}~算法角度看，这也是对$\CalL$的一种形式的\gls{coordinate_ascent}，交替迭代时通过推断来优化关于$q$的$\CalL$以及通过参数更新来优化关于$\Vtheta$的$\CalL$。
 作为一个整体，这个算法的正确性可以得到保证，因为$\CalL$是$\log p(\Vv)$的下界。
-在\,\glssymbol{MAP}\,推断中，这个保证是无效的，因为这个界会无限地松，由于\,\gls{dirac_distribution}的熵的微分趋近于负无穷。
+在~\glssymbol{MAP}~推断中，这个保证是无效的，因为这个界会无限地松，由于~\gls{dirac_distribution}的熵的微分趋近于负无穷。
 然而，人为加入一些$\Vmu$的噪声会使得这个界又有了意义。
 % 628
 
 
-\glssymbol{MAP}\,推断作为\gls{feature_extractor}以及一种学习机制被广泛地应用在了\gls{DL}中。
+\glssymbol{MAP}~推断作为\gls{feature_extractor}以及一种学习机制被广泛地应用在了\gls{DL}中。
 它主要用于\gls{sparse_coding}模型中。
 % 628
 
@@ -291,7 +291,7 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 
 
 我们已经说明过了为什么\gls{ELBO} $\CalL(\Vv,\Vtheta,q)$是$\log  p(\Vv;\Vtheta)$的一个下界、如何将推断看作是关于分布$q$最大化$\CalL$ 的过程以及如何将学习看作是关于参数$\Vtheta$最大化$\CalL$的过程。
-我们也讲到了\,\glssymbol{EM}\,算法在给定了分布$q$的条件下能够进行\gls{large_learning_step}，而基于\,\glssymbol{MAP}\,推断的学习算法则是学习一个$p(\Vh \mid \Vv)$的点估计而非推断整个完整的分布。
+我们也讲到了~\glssymbol{EM}~算法在给定了分布$q$的条件下能够进行\gls{large_learning_step}，而基于~\glssymbol{MAP}~推断的学习算法则是学习一个$p(\Vh \mid \Vv)$的点估计而非推断整个完整的分布。
 在这里我们介绍一些变分学习中更加通用的算法。
 % 629
 
@@ -325,10 +325,10 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 
 因为$\CalL(\Vv,\Vtheta,q)$被定义成$\log p(\Vv;\Vtheta) - D_{\text{KL}} (q(\Vh\mid\Vv) \Vert  p(\Vh\mid\Vv;\Vtheta) )$，我们可以认为关于$q$最大化$\CalL$的问题等价于（关于$q$）最小化$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
 在这种情况下，我们要用$q$来拟合$p$。
-然而，与以前方法不同，我们使用\,\gls{KL}的相反方向来拟合一个近似。
+然而，与以前方法不同，我们使用~\gls{KL}的相反方向来拟合一个近似。
 当我们使用\gls{MLE}来用模型拟合数据时，我们最小化$D_{\text{KL}}(p_{\text{data}} \Vert p_{\text{model}})$。
 如\figref{fig:chap3_kl_direction_color}所示，这意味着\gls{maximum_likelihood}鼓励模型在每一个数据达到高概率的地方达到高概率，而基于优化的推断则鼓励了$q$在每一个真实后验分布概率低的地方概率较小。
-这两种基于\,\gls{KL}的方法都有各自的优点与缺点。
+这两种基于~\gls{KL}的方法都有各自的优点与缺点。
 选择哪一种方法取决于在具体每一个应用中哪一种性质更受偏好。
 在基于优化的推断问题中，从计算角度考虑，我们选择使用$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$。
 具体地说，计算$D_{\text{KL}}(q(\Vh\mid\Vv)\Vert p(\Vh\mid\Vv))$涉及到了计算分布$q$下的期望。
@@ -436,8 +436,8 @@ p(\Vv\mid\Vh) = \CalN(\Vv;{\MW}\Vh + \Vb,\beta^{-1}{\MI}).
 % 633
 
 
-\gls{binary_sparse_coding}中的\gls{latent_variable}是二值的，所以为了表示可分解的$q$我们假设对$m$个\,\gls{bernoulli_distribution} $q(h_i\mid\Vv)$建模。
-表示\,\gls{bernoulli_distribution}的一种很自然的方法是使用一个概率向量$\hat{\Vh}$，满足$q(h_i\mid\Vv) = \hat{h}_i$。
+\gls{binary_sparse_coding}中的\gls{latent_variable}是二值的，所以为了表示可分解的$q$我们假设对$m$个~\gls{bernoulli_distribution} $q(h_i\mid\Vv)$建模。
+表示~\gls{bernoulli_distribution}的一种很自然的方法是使用一个概率向量$\hat{\Vh}$，满足$q(h_i\mid\Vv) = \hat{h}_i$。
 为了避免计算中的误差，比如说计算$\log \hat{h}_i$时，我们对$\hat{h}_i$添加一个约束，即$\hat{h}_i$不等于$0$或者$1$。
 % 633 
 
@@ -885,7 +885,7 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 
 我们已经在\secref{sec:predictive_sparse_decomposition}中看到，预测性的稀疏分解模型训练一个浅层\gls{encoder}网络，从而预测输入的\gls{sparse_coding}。
 这可以被看作是\gls{AE}和\gls{sparse_coding}之间的混合。
-为模型设计概率语义是可能的，其中\gls{encoder}可以被视为执行\gls{learned}近似\,\glssymbol{MAP}\,推断。
+为模型设计概率语义是可能的，其中\gls{encoder}可以被视为执行\gls{learned}近似~\glssymbol{MAP}~推断。
 由于其浅层的\gls{encoder}，PSD不能实现我们在\gls{mean_field}推断中看到的单元之间的那种竞争。
 然而，该问题可以通过训练深度\gls{encoder}实现\gls{learned}\gls{approximate_inference}来补救，如ISTA技术~\citep{Gregor+LeCun-ICML2010}。
 % 644
