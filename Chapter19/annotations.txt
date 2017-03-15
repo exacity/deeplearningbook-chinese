@@ -1,0 +1,88 @@
+{'user': 'acct:caszhang@hypothes.is', 'text': '推断困难通常是指', 'origin_text': '通常我们有一系列可见变量vv\\Vv和一系列潜变量 hh\\Vh。  !!!难以推断的原因在于!!!  难以计算p(h∣v)p(h∣v)p(\\Vh\\mid\\Vv)或其期', 'time': '2017-03-12T00:54'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '最大似然参数学习', 'origin_text': 'v)p(\\Vh\\mid\\Vv)或其期望。而这样的操作在一些诸如  !!!最大似然估计!!!  的任务中往往是必需的。许多仅含一层的简单图模型会定义成易', 'time': '2017-03-12T00:56'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '一个隐藏层', 'origin_text': '操作在一些诸如最大似然估计的任务中往往是必需的。许多仅含  !!!一层!!!  的简单图模型会定义成易于计算p(h∣v)p(h∣v)p(\\Vh\\', 'time': '2017-03-12T00:56'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '删去', 'origin_text': '如稀疏编码，也存在着这样的问题。在本章中，我们将会介绍几个  !!!基本的!!!  技巧，用来解决这些难以处理的推断问题。稍后，在\\chap?中，', 'time': '2017-03-12T00:58'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '因有了这些训练技巧才变得易于处理的概率模型', 'origin_text': '决这些难以处理的推断问题。稍后，在\\chap?中，我们还将描述  !!!如何将这些技巧应用到训练其他方法难以奏效的概率模型!!!  中，如深度信念网络、深度玻尔兹曼机。在深度学习中难以处理的', 'time': '2017-03-13T03:26'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '某个可见变量的多个祖先之间', 'origin_text': '。这些相互作用可能是无向模型的直接相互作用，也可能是有向模型中  !!!同一个可见变量的共同祖先之间!!!  的”相消解释”作用。 %?? explaining away 翻', 'time': '2017-03-12T01:05'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '产生这些相互作用可能是因为潜变量间直接相连，也可能是因为观察某V-结构的子节点时，它们通过更长的激活路径相连', 'origin_text': '习中难以处理的推断问题通常是由于结构化图模型中潜变量的相互作用。  !!!这些相互作用产生于一个潜变量与另一个潜变量或者当V-结构的子节点可观察时与更长的激活路径相连!!!  。\\emph{(左)}一个隐藏单元存在连接的半受限波尔兹曼机~{', 'time': '2017-03-14T03:15'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '把推断视作优化问题', 'origin_text': '分布）依然能够进行简单的推断。}\\end{figure}  !!!推断是一个优化问题!!!  许多难以利用观察值进行精确推断的问题往往可以描述为一个优', 'time': '2017-03-13T06:42'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '精确推断问题可以描述为一个优化问题，有许多方法正是由此解决了推断的困难', 'origin_text': '断。}\\end{figure}推断是一个优化问题  !!!许多难以利用观察值进行精确推断的问题往往可以描述为一个优化问题!!!  。通过近似这样一个潜在的优化问题，我们往往可以推导出近似推断算', 'time': '2017-03-13T06:45'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '对数概率', 'origin_text': 'v\\Vv和潜变量 hh\\Vh的概率模型。我们希望计算观察数据的  !!!概率对数!!!  logp(v;θ)log\u2061p(v;θ)\\log p(\\Vv;\\V', 'time': '2017-03-13T06:46'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '会难以', 'origin_text': 'theta)。有时候如果边缘化消去hh\\Vh的操作很费时，我们  !!!通常很难!!!  计算logp(v;θ)log\u2061p(v;θ)\\log p(\\Vv;', 'time': '2017-03-13T06:47'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '存在包含大量潜变量的团（有歧义）', 'origin_text': ')}一个隐藏单元存在连接的半受限波尔兹曼机~{cite?}。由于  !!!存在大量潜变量的团!!!  ，潜变量的直接连接使得后验分布难以处理。\\emph{(中)}一个', 'time': '2017-03-13T06:49'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '一个深度玻尔兹曼机，变量分为若干层，且不存在层内连接', 'origin_text': '的团，潜变量的直接连接使得后验分布难以处理。\\emph{(中)}  !!!一个深度玻尔兹曼机，被分层从而使得不存在层内连接!!!  ，由于层之间的连接其后验分布仍然难以处理。\\emph{(右)}当', 'time': '2017-03-13T06:51'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '被', 'origin_text': '之间的连接其后验分布仍然难以处理。\\emph{(右)}当可见变量  !!!可!!!  观察时这个有向模型的潜变量之间存在相互作用，因为每两个潜变量都是', 'time': '2017-03-13T06:51'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '如果我们选择条件概率分布来引入图结构描述的之外的独立性就可能出现这种情况。【这句话是接着上一句话说的】', 'origin_text': '种结构，一些概率模型依然能够获得易于处理的关于潜变量的后验分布。  !!!如果我们选择条件概率分布来引入相对于图结构描述的额外的独立性这种情况也是可能出现的。!!!  举个例子，概率PCA的图结构如右图所示，然而由于其条件分布的特殊', 'time': '2017-03-13T06:54'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '且', 'origin_text': 'Vv,{\\Vtheta},q)之间的距离是由\\,KL散度来衡量的  !!!。因为!!!  \\,KL散度总是非负的，我们可以发现LL\\CalL总是小于等于所', 'time': '2017-03-13T06:55'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '对数概率', 'origin_text': 'KL散度总是非负的，我们可以发现LL\\CalL总是小于等于所求的  !!!概率对数!!!  。当且仅当分布qqq完全相等于p(h∣v)p(h∣v)p(\\V', 'time': '2017-03-13T06:56'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '方便', 'origin_text': '简单。通过简单的代数运算我们可以把LL\\CalL重写成一个更加  !!!简单!!!  的形式：L(v,θ,q)=logp(v;θ)−DKL(q(h', 'time': '2017-03-13T06:56'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '使用并不彻底的优化方法来使得优化的过程更加高效（却更粗略），不求彻底地最大化L，而只要显著地提升L。', 'origin_text': '推导出不同形式的近似推断。我们可以通过限定分布qqq的形式或者  !!!使用并不彻底的优化方法来使得优化的过程更加高效（却更粗略），但是优化的结果是不完美的，因为只能显著地提升LL\\CalL而无法彻底地最大化LL\\CalL。!!!  无论我们选择什么样的分布qqq，LL\\CalL始终是一个下', 'time': '2017-03-13T07:05'}
+{'user': 'acct:caszhang@hypothes.is', 'text': 'E（期望）', 'origin_text': '算法。EM算法由交替迭代直到收敛的两步运算组成：    !!!E!!!  步: 令θ(0)θ(0){\\Vtheta^{(0)}}表示在这一', 'time': '2017-03-13T07:08'}
+{'user': 'acct:caszhang@hypothes.is', 'text': 'M（最大化）', 'origin_text': ')p(\\Vh\\mid\\Vv;\\Vtheta^{(0)})。    !!!M!!!  步：使用选择的优化算法完全地或者部分地最大化关于θθ\\Vthet', 'time': '2017-03-13T07:08'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '关于$\\theta$最大化', 'origin_text': 'a^{(0)})。  M步：使用选择的优化算法完全地或者部分地  !!!最大化关于θθ\\Vtheta的!!!  ∑iL(v(i),θ,q).∑iL(v(i),θ,q).\\be', 'time': '2017-03-13T07:09'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '尽管', 'origin_text': '，不同于其他方法，在给定当前qqq的情况下直接求出最优解。  !!!即使!!!  E步采用的是精确推断，我们仍然可以将\\,EM\\,算法视作是某种程', 'time': '2017-03-13T07:12'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '带给我们几个见解', 'origin_text': '入下一个循环时，E步把这种差距又降到了000。EM\\,算法  !!!还包含一些不同的解释!!!  。首先，学习过程的一个基本思路就是，我们通过更新模型参数来提高', 'time': '2017-03-13T07:20'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '它包含了学习过程的基本框架', 'origin_text': '又降到了000。EM\\,算法还包含一些不同的解释。首先，  !!!学习过程的一个基本思路就是!!!  ，我们通过更新模型参数来提高整个数据集的似然，其中缺失变量的值是', 'time': '2017-03-13T07:16'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '这点并不是EM算法独有的', 'origin_text': '提高整个数据集的似然，其中缺失变量的值是通过后验分布来估计的。  !!!这种特定的性质并不仅仅适用于\\,EM\\,算法!!!  。例如，使用梯度下降来最大化似然函数的对数的方法也利用了相同的', 'time': '2017-03-13T07:17'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '也有这种特点', 'origin_text': ',EM\\,算法。例如，使用梯度下降来最大化似然函数的对数的方法  !!!也利用了相同的性质!!!  。计算对数似然函数的梯度需要对隐藏单元的后验分布求期望。 E', 'time': '2017-03-13T07:17'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '带来的另一个见解', 'origin_text': '数似然函数的梯度需要对隐藏单元的后验分布求期望。 EM\\,算法  !!!另一个关键的性质!!!  是当我们移动到另一个θθ\\Vtheta时候，我们仍然可以使用旧的', 'time': '2017-03-13T07:20'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '很难求解最优的大M步更新', 'origin_text': '时候得到了广泛的应用。在深度学习中，大多数模型太过于复杂以致于  !!!在最优大\\,M步更新中很难得到一个简单的解!!!  。所以\\,EM\\,算法的第二个特质，更多为其所独有，较少被使用', 'time': '2017-03-13T07:21'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '很难求解最优的大M步更新', 'origin_text': '时候得到了广泛的应用。在深度学习中，大多数模型太过于复杂以致于  !!!在最优大\\,M步更新中很难得到一个简单的解!!!  。所以\\,EM\\,算法的第二个特质，更多为其所独有，较少被使用', 'time': '2017-03-13T07:21'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '带来的这第二个见解', 'origin_text': '最优大\\,M步更新中很难得到一个简单的解。所以\\,EM\\,算法  !!!的第二个特质!!!  ，更多为其所独有，较少被使用。最大后验推断和稀疏编码', 'time': '2017-03-13T07:21'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '做单遍(single-pass)传递（论文原文：The algorithm learns a separate “recognition” model that is used to quickly initialize, in a single bottom-up pass, the values of\nthe latent variables in all hidden layers. We show\nthat using such a recognition model, followed\nby a combined top-down and bottom-up pass,\nit is possible to efficiently learn a good generative\nmodel of high-dimensional highly-structured\nsensory input.）', 'origin_text': 'inov+Larochelle-2010}证明了在学成推断网络中  !!!的单一路径!!!  相比于在深度玻尔兹曼机中的迭代均值场不动点方程能够得到更快的推断', 'time': '2017-03-13T07:33'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '很多不同', 'origin_text': 'ec?中详细介绍这种模型。我们可以使用近似推断来训练和使用  !!!大量!!!  的模型。其中许多模型将在下一章中描述。       ', 'time': '2017-03-13T07:43'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '未知变量的最可能值', 'origin_text': 'h∣v)p(\\Vh\\mid\\Vv)。另一种可选的推断形式是计算  !!!一个最有可能的潜变量值!!!  来代替在所有可能值的完整分布上的推断。在潜变量模型中，这意味着', 'time': '2017-03-13T07:48'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '我们通常不视MAP推断为', 'origin_text': 'nd{align}这被称作最大后验推断，简称MAP推断。  !!!MAP\\,推断并不是!!!  一种近似推断，它只是精确地计算了最有可能的一个h∗h∗\\Vh^*', 'time': '2017-03-13T07:49'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '如果我们希望设计一个最大化L(v,h,q)的学习过程，那么把MAP推断视作一个给出q值的过程则很有帮助', 'origin_text': '断，它只是精确地计算了最有可能的一个h∗h∗\\Vh^*。然而，  !!!如果我们希望能够最大化L(v,h,q)L(v,h,q)\\CalL(\\Vv,\\Vh,q)，那么我们可以把\\,MAP\\,推断看成是输出一个qqq值的学习过程!!!  。%是很有帮助的。在这种情况下，我们可以将\\,MAP\\,推断看', 'time': '2017-03-13T07:52'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '是无意义的（vacuously true“空真”）', 'origin_text': 'lL是是是\\log p(\\Vv)的下界。在MAP推断中，这个保证  !!!是无效的!!!  ，因为这个界会无限地松，由于Dirac分布的熵的微分趋近于负无穷', 'time': '2017-03-13T07:59'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '证明', 'origin_text': 'Vh\\mid\\Vv).\\end{align}因此我们能够  !!!解释!!!  一种类似于\\,EM\\,算法的学习算法，其中我们轮流迭代两步，一步', 'time': '2017-03-13T08:15'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '它主要用于稀疏编码模型', 'origin_text': '推断作为特征提取器以及一种学习机制被广泛地应用在了深度学习中。  !!!在稀疏编码模型中，它起到了关键作用!!!  。我们回过头来看\\sec?中的稀疏编码，稀疏编码是一种在隐', 'time': '2017-03-13T08:15'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '加入**诱导**稀疏性(sparsity-inducing)的先验', 'origin_text': '我们回过头来看\\sec?中的稀疏编码，稀疏编码是一种在隐藏单元上  !!!加上了鼓励稀疏的先验知识!!!  的线性因子模型。一个常用的选择是可分解的Laplace先验，表', 'time': '2017-03-13T08:18'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '是高斯模型', 'origin_text': '\\mid\\Vv)中所有的隐藏单元都包含在了一个巨大的团中。如果  !!!模型是高斯!!!  ，那么这些相互作用关系可以通过协方差矩阵来高效地建模。然而稀疏', 'time': '2017-03-13T08:20'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '并不服从高斯分布', 'origin_text': '通过协方差矩阵来高效地建模。然而稀疏型先验使得这些相互作用关系  !!!并不是高斯!!!  。分布p(x∣h)p(x∣h)p(\\Vx\\mid\\Vh)的', 'time': '2017-03-13T08:26'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '难处理性', 'origin_text': '。分布p(x∣h)p(x∣h)p(\\Vx\\mid\\Vh)的  !!!复杂性!!!  导致了似然函数的对数及其梯度也很难得到。因此我们不能使用精确的', 'time': '2017-03-13T08:27'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '对数似然', 'origin_text': 'p(x∣h)p(x∣h)p(\\Vx\\mid\\Vh)的复杂性导致了  !!!似然函数的对数!!!  及其梯度也很难得到。因此我们不能使用精确的最大似然估计来进行学', 'time': '2017-03-13T08:27'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '拼成矩阵$\\MH$', 'origin_text': '\\,来学习模型参数。如果我们将训练集中所有的向量hh\\Vh  !!!拼在一起并且记为HH\\MH!!!  ，并将所有的向量vv\\Vv拼起来组成矩阵VV\\MV，那么稀疏编码', 'time': '2017-03-13T08:28'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '交替地关于H和W做最小化', 'origin_text': '用包含了权重衰减或者对HH\\MH列范数的限制。我们可以通过  !!!交替迭代最小化JJJ分别关于HH\\MH和WW\\MW的方式!!!  来最小化JJJ。两个子问题都是凸的。事实上，关于WW\\MW的', 'time': '2017-03-13T08:33'}
+{'user': 'acct:caszhang@hypothes.is', 'text': '通常不是', 'origin_text': '就是一个线性回归问题。然而关于这两个变量同时最小化JJJ的问题  !!!并不是!!!  凸的。关于HH\\MH的最小化问题需要某些特别设计的算法，例', 'time': '2017-03-13T08:33'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成隐变量，并保持统一，后面既有“隐藏变量”又有“潜变量”，不同意。', 'origin_text': '形式，例如受限玻尔兹曼机和概率PCA。不幸的是，大多数具有多层  !!!隐藏变量!!!  的图模型的后验分布都很难处理。对于这些模型而言，精确推断算法需', 'time': '2017-03-14T12:47'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '改成隐变量', 'origin_text': '曼机。在深度学习中难以处理的推断问题通常源于结构化图模型中  !!!潜变量!!!  之间的相互作用。可以参考\\fig?的几个例子。这些相互作用可', 'time': '2017-03-14T12:47'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成“隐变量”', 'origin_text': '为了构造这样一个优化问题，假设我们有一个包含可见变量vv\\Vv和  !!!潜变量 !!!  hh\\Vh的概率模型。我们希望计算观察数据的概率对数logp(', 'time': '2017-03-14T12:48'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成“隐变量”', 'origin_text': '介绍的第一个最大化下界\ue238L\\CalL的算法是期望最大化算法。在  !!!潜变量!!!  模型中，这是一个非常常见的训练算法。在这里我们描述 {emvi', 'time': '2017-03-14T12:52'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '其实不太明白原文的“make large learning steps”是啥意思，所以总觉得这个中文翻译太过于直译。', 'origin_text': '我们也讲到了\\,EM\\,算法在给定了分布qqq的条件下能够进行  !!!大学习步骤!!!  ，而基于\\,MAP\\,推断的学习算法则是学习一个p(h∣v)p(', 'time': '2017-03-14T13:18'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议去掉“完整的”', 'origin_text': ')p(h∣v)p(\\Vh \\mid \\Vv)的点估计而非推断整个  !!!完整的!!!  分布。在这里我们介绍一些变分学习中更加通用的算法。变分学', 'time': '2017-03-14T13:18'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成“在一个关于q的有约束的分布族上”', 'origin_text': '绍一些变分学习中更加通用的算法。变分学习的核心思想就是我们  !!!通过选择给定有约束的分布族中一个分布q!!!  qq来最大化\ue238L\\CalL。选择这个分布族时应该考虑到计算𝔼', 'time': '2017-03-14T13:24'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '鼓励', 'origin_text': 'text{model}})。如\\fig?所示，这意味着最大似然  !!!促进!!!  模型在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推', 'time': '2017-03-14T13:27'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成“高”', 'origin_text': ')。如\\fig?所示，这意味着最大似然促进模型在每一个数据达到  !!!更高!!!  概率的地方达到更高的概率，而基于优化的推断则促进了qqq在每一个', 'time': '2017-03-14T13:29'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成“高”', 'origin_text': '所示，这意味着最大似然促进模型在每一个数据达到更高概率的地方达到  !!!更高!!!  的概率，而基于优化的推断则促进了qqq在每一个真实后验分布概率较', 'time': '2017-03-14T13:29'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议模型就用“model”，因为上面的公式里使用的model，否则读起来很难理解，后面的data同理。', 'origin_text': 'xt{model}})。如\\fig?所示，这意味着最大似然促进  !!!模型!!!  在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则', 'time': '2017-03-14T13:30'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成“data”', 'origin_text': 'el}})。如\\fig?所示，这意味着最大似然促进模型在每一个  !!!数据!!!  达到更高概率的地方达到更高的概率，而基于优化的推断则促进了qqq', 'time': '2017-03-14T13:30'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '鼓励', 'origin_text': '在每一个数据达到更高概率的地方达到更高的概率，而基于优化的推断则  !!!促进!!!  了qqq在每一个真实后验分布概率较低的地方概率较小。这两种基于', 'time': '2017-03-14T13:32'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成“低”', 'origin_text': '高的概率，而基于优化的推断则促进了qqq在每一个真实后验分布概率  !!!较低!!!  的地方概率较小。这两种基于\\,KL散度的方法都有各自的优点与缺', 'time': '2017-03-14T13:32'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成“小”', 'origin_text': '于优化的推断则促进了qqq在每一个真实后验分布概率较低的地方概率  !!!较小!!!  。这两种基于\\,KL散度的方法都有各自的优点与缺点。选择哪一', 'time': '2017-03-14T13:32'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '数学推导过程非常详细', 'origin_text': '统、通用的均值场方法，而原文作者采用了一种特殊设计的算法）中。  !!!推导过程在数学上非常详细!!!  ，为希望完全了解我们描述过的变分推断和学习高级概念描述的读者所准', 'time': '2017-03-14T14:38'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改为“变分推断和变分学习的”，否则一个单独的“学习”容易在此处有歧义，“variational inference and learning”下文多处也都建议翻译成“变分推断和变分学习”', 'origin_text': '算法）中。推导过程在数学上非常详细，为希望完全了解我们描述过的  !!!变分推断和学习!!!  高级概念描述的读者所准备。而对于并不计划推导或者实现变分学习算', 'time': '2017-03-14T15:00'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议去掉这几个字，否则怎么翻译，这句话读起来都费劲', 'origin_text': '种特殊设计的算法）中。推导过程在数学上非常详细，为希望完全了解  !!!我们描述过的!!!  变分推断和学习高级概念描述的读者所准备。而对于并不计划推导或者', 'time': '2017-03-14T14:38'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '这并不会遗漏新的高级概念。', 'origin_text': '导或者实现变分学习算法的读者来说，可以放心跳过，直接阅读下一节，  !!!这并不会导致新的高级概念的遗漏!!!  。建议那些从事二值稀疏编码研究的读者可以重新看一下\\sec?中', 'time': '2017-03-14T14:41'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': 'variable elimination一般翻译成“变量消去”算法，可参考周志华的西瓜书。消元法一般有特定的含义，多指代数里的高斯消元法，不建议此处翻译成“消元算法”。', 'origin_text': '单元的后验分布对应的是关于隐藏单元的完全图，所以相对于暴力算法，  !!!消元算法!!!  并不能有助于提高计算所需要的期望的效率。\\begin{fi', 'time': '2017-03-14T14:48'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改为“期望的效率”，去掉“所需要的”，否则容易把此处的期望误理解成“希望的”，而不是原文想表达的统计上的期望。', 'origin_text': '藏单元的完全图，所以相对于暴力算法，消元算法并不能有助于提高计算  !!!所需要的期望的效率!!!  。\\begin{figure}[!htb]\\ifOpenS', 'time': '2017-03-14T14:50'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '感觉去掉“分布”更好理解', 'origin_text': '分布。为了解决这个问题，我们需要使用一个拉格朗日乘子来添加一个  !!!分布!!!  p(x)p(x)p(x)积分值为111的约束。同样地，当方差增', 'time': '2017-03-14T15:05'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '原文的那句话没太理解，但是这个翻译明显感觉也不对，可以求助高人。', 'origin_text': '的分布时总是使用正态分布的一个原因。因为正态分布拥有最大的熵，  !!!我们通过这个假定来保证了最小可能量的结构!!!  。当寻找熵的拉格朗日泛函的临界点并且给定一个固定的方差时，', 'time': '2017-03-14T15:09'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '此处and直接变成“，”就行', 'origin_text': 'a和x=μ−σx=μ−σx = \\mu - \\sigma两个点上  !!!和!!!  越少的概率密度到其他点上时，它们的熵值会减少，而方差却不变。然', 'time': '2017-03-14T15:12'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '合并没合并好吧', 'origin_text': '减小了p(h∣v)p(h∣v)p(\\Vh\\mid\\Vv)。  !!!这种行为使得我们做的近似假设变得合理。 %这种行为使我们的近似假设成为自我实现!!!  。如果我们用单峰值近似后验来训练模型，我们将获得一个真实后验的', 'time': '2017-03-14T15:17'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '去掉“由于”', 'origin_text': '我们使用精确推断训练模型获得的模型更接近单峰值。因此，估计  !!!由于!!!  变分近似对模型的破坏程度是很困难的。存在几种估计logp(v)', 'time': '2017-03-14T15:18'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '改为“泛函”', 'origin_text': '。学成近似推断我们已经看到了推断可以被视作一个增加  !!!函数!!!  \ue238L\\CalL值的优化过程。显式地通过迭代方法（比如不动点方程', 'time': '2017-03-14T15:21'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改成“用一个神经网络来近似f(v;theta)”', 'origin_text': 'f。一旦我们将多步的迭代优化过程看作是一个函数，我们可以用一个  !!!近似函数为f̂\xa0(v;θ)f^(v;θ)\\hat{f}(\\Vv;{\\Vtheta})的神经网络来近似它!!!  。醒眠算法%?? wake_sleep 翻译成  醒眠  ', 'time': '2017-03-14T15:23'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '没合并好', 'origin_text': '(\\Vv;{\\Vtheta})的神经网络来近似它。醒眠算法  !!!%?? wake_sleep 翻译成  醒眠  你斟酌下!!!  训练一个可以用vv\\Vv来推断hh\\Vh的模型的一个主要难', 'time': '2017-03-14T15:23'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '没合并好', 'origin_text': '(\\Vv;{\\Vtheta})的神经网络来近似它。醒眠算法  !!!%?? wake_sleep 翻译成  醒眠  你斟酌下!!!  训练一个可以用vv\\Vv来推断hh\\Vh的模型的一个主要难', 'time': '2017-03-14T15:27'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改为“睡眠‘', 'origin_text': '具有在类似数据的样本上学习的机会。在\\sec?中，我们看到  !!!睡眠做梦!!!  在人类和动物中作用的一个可能解释是，做梦可以提供蒙特卡罗训练算法', 'time': '2017-03-14T15:27'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '没合并好', 'origin_text': '(\\Vv;{\\Vtheta})的神经网络来近似它。醒眠算法  !!!%?? wake_sleep 翻译成  醒眠  你斟酌下!!!  训练一个可以用vv\\Vv来推断hh\\Vh的模型的一个主要难', 'time': '2017-03-14T15:27'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议翻译成”无向图模型“', 'origin_text': '动物中作用的一个可能解释是，做梦可以提供蒙特卡罗训练算法用于近似  !!!无向模型!!!  中对数配分函数负梯度的负相样本。生物做梦的另一个可能解释是它提', 'time': '2017-03-14T15:28'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '这个翻译不知道是否OK，但是建议后面加个”的“', 'origin_text': '的一个可能解释是，做梦可以提供蒙特卡罗训练算法用于近似无向模型中  !!!对数配分函数!!!  负梯度的负相样本。生物做梦的另一个可能解释是它提供来自p(h,', 'time': '2017-03-14T15:28'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '建议改为”这可以用于训练出一个在给定V的情况下预测h的推断网络“', 'origin_text': '是它提供来自p(h,v)p(h,v)p(\\Vh,\\Vv)的样本，  !!!这可以用于训练推断网络在给定vv\\Vv的情况下预测h!!!  h\\Vh。在某些意义上，这种解释比配分函数的解释更令人满意。', 'time': '2017-03-14T15:29'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '不太明白原文，但是感觉这里翻译的不好，建议请教专家', 'origin_text': '种解释比配分函数的解释更令人满意。如果蒙特卡罗算法仅使用梯度的  !!!正相运行!!!  几个步骤，然后仅对梯度的负相运行几个步骤，那么结果通常不会很好。', 'time': '2017-03-14T15:31'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '添加一个”既“\n', 'origin_text': '如果生物做梦的作用是训练网络来预测qqq，那么这解释了动物如何  !!!能够!!!  保持清醒几个小时（它们清醒的时间越长，\ue238L\\CalL和logp', 'time': '2017-03-14T15:33'}
+{'user': 'acct:hengqujushi@hypothes.is', 'text': '改为”又能够“', 'origin_text': ' p(\\Vv)之间的差距越大， 但是\ue238L\\CalL仍然是下限）  !!!并且!!!  睡眠几个小时（生成模型本身在睡眠期间不被修改）， 而不损害它们的', 'time': '2017-03-14T15:33'}
+
+=============================   Replies   =============================
+
