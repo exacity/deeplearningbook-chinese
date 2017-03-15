@@ -170,8 +170,8 @@
 不同于标量乘积，矩阵乘积\emph{并不}满足交换律（$\MA\MB=\MB\MA$的情况并非总是满足）。
 然而，两个向量的\firstgls{dot_product}满足交换律：
 \begin{equation}
-\label{eq:2.8}
 \Vx^\top\Vy=\Vy^\top\Vx.
+\label{eq:2.8}
 \end{equation}
 
 
@@ -190,8 +190,8 @@
 
 现在我们已经知道了足够多的线性代数符号，可以表达下列线性方程组：
 \begin{equation}
-\label{eq:2.11}
 \MA\Vx=\Vb
+\label{eq:2.11}
 \end{equation}
 其中$\MA\in \SetR^{m\times n}$是一个已知矩阵，$\Vb\in\SetR^m$是一个已知向量，$\Vx\in\SetR^n$是一个我们要求解的未知向量。
 向量$\Vx$的每一个元素$\Sx_i$都是未知的。
@@ -241,13 +241,13 @@
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centering
-\begin{equation}
+\begin{equation*}
 \begin{bmatrix} 
 1 & 0 & 0 \\
 0 & 1 & 0 \\
 0 & 0 & 1 \\
 \end{bmatrix}
-\end{equation}
+\end{equation*}
 \fi
 \caption{单位矩阵的一个样例：这是$\MI_3$。}
 \label{fig:chap2_empty2}
@@ -367,8 +367,8 @@
 在机器学习中，我们经常使用被称为\firstgls{norm}的函数衡量向量大小。
 形式上，$L^p$范数定义如下
 \begin{equation}
-\label{eq:2.30}
     \norm{\Vx}_p = \left( \sum_i |x_i|^p \right)^{\frac{1}{p}}
+\label{eq:2.30}
 \end{equation}
 其中$p\in \SetR$，$p\geq 1$。
 
@@ -706,8 +706,8 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 若不使用求和符号，有些矩阵运算很难描述，而通过矩阵乘法和迹运算符号，可以清楚地表示。
 例如，迹运算提供了另一种描述矩阵\gls{frobenius_norm}的方式：
 \begin{equation}
-\label{eq:2.49}
     \norm{A}_F = \sqrt{\text{Tr}(\MA \MA^\top)}.
+    \label{eq:2.49}
 \end{equation}
 
 
@@ -725,8 +725,8 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 \end{equation}
 或者更一般地，
 \begin{equation} 
-\label{eq:2.52}
 \Tr(\prod_{i=1}^n \MF^{(i)})= \Tr(\MF^{(n)} \prod_{i=1}^{n-1} \MF^{(i)}).
+\label{eq:2.52}
 \end{equation}
 即使循环置换后矩阵乘积得到的矩阵形状变了，迹运算的结果依然不变。
 例如，假设矩阵$\MA\in \SetR^{m\times n}$，矩阵$\MB\in \SetR^{n\times m}$，我们可以得到
@@ -850,8 +850,8 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 \end{equation}
 进一步使用矩阵乘法，我们也可以定义\,\glssymbol{PCA}\,重构操作：
 \begin{equation}
-\label{eq:2.67}
     r(\Vx)=g(f(\Vx)) = \MD\MD^\top \Vx.
+\label{eq:2.67}
 \end{equation}
 
 
@@ -860,8 +860,8 @@ $\MA$的非零奇异值是$\MA^\top\MA$特征值的平方根，同时也是$\MA\
 因为我们用相同的矩阵$\MD$对所有点进行解码，我们不能再孤立地看待每个点。
 反之，我们必须最小化所有维数和所有点上的误差矩阵的\,\gls{frobenius_norm}：
 \begin{equation}
-\label{eq:2.68}
     \MD^* =  \underset{\MD}{\arg\min} \sqrt{\sum_{i,j}\left( \Vx_j^{(i)} - r(\Vx^{(i)})_j\right)^2} \text{ subject to } \MD^\top\MD = \MI_l.
+\label{eq:2.68}
 \end{equation}
 
 为了推导用于寻求$\MD^*$的算法，我们首先考虑$l=1$的情况。

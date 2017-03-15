@@ -262,7 +262,7 @@ P(v_i = 1  \mid  \Vh^{(1)}) &=  \sigma \big( b_i^{(0)} + \MW_{:,i}^{(1)^\top} \V
 
 与\chapref{chap:approximate_inference}中从基本原理导出的许多\gls{inference}方程相比，这种特定选择的~\glssymbol{MLP}~有些随意。
 这个~\glssymbol{MLP}~是一个启发式选择，似乎在实践中效果不错，并在文献中一贯使用。
-许多近似\gls{inference}技术是由它们在一些约束下能够找到对数似然的最大\emph{紧}变分下界的能力所驱动的。
+许多近似\gls{inference}技术是由它们在一些约束下，并在对数似然上找到最大\emph{紧}变分下界的能力所驱动的。
 我们可以使用~\glssymbol{DBN}~中~\glssymbol{MLP}~定义的\gls{hidden_unit}的期望，构造对数似然的变分下界，但这对于\gls{hidden_unit}上的\emph{任何}概率分布都是如此，并没有理由相信该~\glssymbol{MLP}~提供了一个特别的紧界。
 特别地，\glssymbol{MLP}~忽略了~\glssymbol{DBN}~\gls{graphical_model}中许多重要的相互作用。
 \glssymbol{MLP}~将信息从可见单元向上传播到最深的\gls{hidden_unit}，但不向下或侧向传播任何信息。

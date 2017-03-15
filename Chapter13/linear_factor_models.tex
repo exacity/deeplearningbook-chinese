@@ -178,7 +178,7 @@
 关于非线性~\glssymbol{ICA}~最初的工作可以参考~\citet{hyvarinen1999nonlinear}，它和\gls{ensemble_learning}的成功结合可以参见~\citet{roberts2001independent,lappalainen2000nonlinear}。
 \glssymbol{ICA}~的另一个非线性扩展是\firstall{NICE}方法~\citep{Dinh-et-al-arxiv2014}，这个方法堆叠了一系列可逆变换（在\gls{encoder}阶段），其特性是能高效地计算每个变换的~\gls{jacobian}~行列式。
 这使得我们能够精确地计算似然，并且像~\glssymbol{ICA}~一样，\glssymbol{NICE}~尝试将数据变换到具有因子的边缘分布的空间。
-由于非线性\gls{encoder}的使用\footnote{译者注：相比于~\glssymbol{ICA}}，这种方法更可能成功。
+由于非线性\gls{encoder}的使用，这种方法更可能成功。%\footnote{译者注：相比于~\glssymbol{ICA}}
 因为\gls{encoder}和一个能进行完美逆变换的\gls{decoder}相关联，所以可以直接从模型生成样本（首先从$p(\Vh)$采样，然后使用\gls{decoder}）。
 % 483
 

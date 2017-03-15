@@ -88,9 +88,9 @@
 \end{equation}
 该等式只适用于$\tilde{p}$和$\nabla_{\Vtheta} \tilde{p} (\RVx)$上的一些特定规范条件。
 在测度论术语中，这些条件是：
-（1）对每一个$\Vtheta$而言，未归一化分布$\tilde{p}$必须是$\Vx$的\gls{lebesgue_integrable}函数。
-（2）对于所有的$\Vtheta$和几乎所有$\Vx$，梯度$\nabla_{\Vtheta} \tilde{p}(\RVx)$必须存在。
-（3）对于所有的$\Vtheta$和几乎所有的$\Vx$，必须存在一个可积函数$R(\Vx)$使得$\max_i | \frac{\partial}{\partial \theta_i } \tilde{p} (\RVx) | \leq R(\Vx)$。
+(1) 对每一个$\Vtheta$而言，未归一化分布$\tilde{p}$必须是$\Vx$的\gls{lebesgue_integrable}函数。
+(2) 对于所有的$\Vtheta$和几乎所有$\Vx$，梯度$\nabla_{\Vtheta} \tilde{p}(\RVx)$必须存在。
+(3) 对于所有的$\Vtheta$和几乎所有的$\Vx$，必须存在一个可积函数$R(\Vx)$使得$\max_i | \frac{\partial}{\partial \theta_i } \tilde{p} (\RVx) | \leq R(\Vx)$。
 幸运的是，大多数感兴趣的\gls{ML}模型都具有这些性质。
 % 599 mid
 
@@ -107,7 +107,7 @@
 在\gls{negative_phase}中，我们通过降低从模型分布中采样的$\log \tilde{p}(\RVx)$来降低\gls{partition_function}。
 % 599 mid
 
-在\gls{DL}文献中，经常会看到用\gls{energy_function}（等式\eqnref{eqn:167}）来参数化$\log \tilde{p}$。
+在\gls{DL}文献中，经常会看到用\gls{energy_function}（\eqnref{eqn:167}）来参数化$\log \tilde{p}$。
 在这种情况下，\gls{positive_phase}可以解释为压低训练样本的能量，\gls{negative_phase}可以解释为提高模型抽出的样本的能量，如\figref{fig:chap18_pos_and_neg_phase}所示。
 % 599 mid
 
@@ -127,7 +127,7 @@
 \label{alg:naive_cd}
 \begin{algorithmic}
 \STATE 设步长 $\epsilon$ 为一个小正数。
-\STATE 设\gls{gibbs_steps} $k$ 大到足以允许\gls{burn_in}。在小图像集上训练一个~\glssymbol{RBM}~大致设为100 。
+\STATE 设\gls{gibbs_steps} $k$ 大到足以允许\gls{burn_in}。在小图像集上训练一个~\glssymbol{RBM}~大致设为100。
 \WHILE{不收敛}
 \STATE 从训练集中采包含 $m$ 个样本$\{ \RVx^{(1)}, \dots, \RVx^{(m)}\}$的\gls{minibatch}。
 \STATE $\RVg \leftarrow \frac{1}{m} \sum_{i=1}^m \nabla_{\Vtheta} \log \tilde{p}(\RVx^{(i)}; \Vtheta)$.
@@ -157,8 +157,8 @@
 \centerline{\includegraphics{Chapter18/figures/pos_and_neg_phase_color}}
 \fi
 \caption{\algref{alg:naive_cd}角度的``\gls{positive_phase}''和``\gls{negative_phase}''。
-（左）在\gls{positive_phase}中，我们从数据分布中采样，然后推高它们未归一化的概率。这意味着概率越高的数据点未归一化的概率被推高得越多。
-（右）在\gls{negative_phase}中，我们从模型分布中采样，然后压低它们未归一化的概率。
+\emph{(左)}在\gls{positive_phase}中，我们从数据分布中采样，然后推高它们未归一化的概率。这意味着概率越高的数据点未归一化的概率被推高得越多。
+\emph{(右)}在\gls{negative_phase}中，我们从模型分布中采样，然后压低它们未归一化的概率。
 这与\gls{positive_phase}的倾向相反，给未归一化的概率处处添加了一个大常数。
 当数据分布和模型分布相等时，\gls{positive_phase}推高数据点和\gls{negative_phase}压低数据点的机会相等。
 此时，不再有任何的梯度（期望上说），训练也必须停止。}
@@ -237,7 +237,7 @@
 出于可视化的目的，这个图使用了某种程度上说更加简单的距离的概念——在$\SetR$的数轴上\gls{spurious_modes}与正确的模式有很大的距离。
 这对应着基于局部移动$\SetR$上的单个变量$x$的\gls{markov_chain}。
 对于大部分深度概率模型来说，\gls{markov_chain}是基于\,\gls{gibbs_sampling}的，并且对于单个变量产生非局部的移动但是无法同时移动所有的变量。
-对于这些问题来说，考虑edit距离比欧式距离通常更好。
+对于这些问题来说，考虑编辑距离比欧式距离通常更好。
 然而，高维空间的编辑距离很难在二维空间作图展示。}
 \label{fig:chap18_spurious_mode}
 \end{figure}
@@ -340,8 +340,8 @@
 \begin{equation}
 	\Vtheta = \Vtheta^{\text{(slow)}} + \Vtheta^{\text{(fast)}}.
 \end{equation}
-现在的参数是以前的两倍多，逐位相加定义原始模型的参数。
-快速参数用更大的\gls{learning_rate}来训练，从而使其快速响应学习的\gls{negative_phase}，并促使\gls{markov_chain}探索新的区域。
+现在的参数是以前的两倍多，将其逐个相加以定义原始模型的参数。
+快速复制参数可以使用更大的\gls{learning_rate}来训练，从而使其快速响应学习的\gls{negative_phase}，并促使\gls{markov_chain}探索新的区域。
 这能够使\gls{markov_chain}快速\gls{mixing}，尽管这种效应只会发生在学习期间快速权重可以自由改变的时候。
 通常，在短时间地将快速权重设为大值并保持足够长时间，使\gls{markov_chain}改变\gls{mode}之后，我们会对快速权重使用显著的\gls{weight_decay}，促使它们收敛到较小的值。
 
@@ -396,10 +396,10 @@
 当然，在数据集不趋近于大采样极限的情况下，\gls{pseudolikelihood}可能表现出与\gls{MLE}不同的结果。
 % 608 head
 
-可以用\firstgls{generalized_pseudolikelihood_estimator}以计算复杂度的增加换取其相对于最大似然表现的偏离的下降~\citep{Huang02}。
+我们可以使用\firstgls{generalized_pseudolikelihood_estimator}来权衡计算复杂度和最大似然表现的偏差~\citep{Huang02}。
 \gls{generalized_pseudolikelihood_estimator}使用$m$个不同的集合$\SetS^{(i)}$，$i=1, \dots, m$作为变量的指标出现在条件棒的左侧。
-在$m = 1$和$\SetS^{(1)}= 1, \dots, n$的极端情况下\gls{generalized_pseudolikelihood_estimator}会变为对数似然。
-在$m = n$和$\SetS^{(i)} = \{i\}$的极端情况下，\gls{generalized_pseudolikelihood}会变为\gls{pseudolikelihood}。%??   recover the pseudolikeli
+在$m = 1$和$\SetS^{(1)}= 1, \dots, n$的极端情况下，\gls{generalized_pseudolikelihood_estimator}会变为对数似然。
+在$m = n$和$\SetS^{(i)} = \{i\}$的极端情况下，\gls{generalized_pseudolikelihood}会恢复为\gls{pseudolikelihood}。%??   recover the pseudolikeli
 \gls{generalized_pseudolikelihood_estimator}\gls{objective_function}如下所示
 \begin{equation}
 	\sum_{i=1}^m \log p(\RVx_{\SetS^{(i)}} \mid \RVx_{- \SetS^{(i)} }).
@@ -416,7 +416,7 @@
 \gls{pseudolikelihood}估计的一个弱点是它不能与仅在$\tilde{p}(\RVx)$上提供下界的其他近似一起使用，例如\chapref{chap:approximate_inference}中介绍的\gls{variational_inference}。这是因为$\tilde{p}$出现在了分母中。
 分母的下界仅提供了整个表达式的上界，然而最大化上界没有什么意义。
 这使得我们难以将\gls{pseudolikelihood}方法应用于诸如\gls{DBM}的\gls{deep_model}，因为变分方法是近似边缘化互相作用的多层\gls{hidden_variable}的主要方法之一。
-尽管如此，\gls{pseudolikelihood}仍然可以用在\gls{DL}中，它可以用于单层模型，或使用不基于下限的近似推断方法的\gls{deep_model}中。
+尽管如此，\gls{pseudolikelihood}仍然可以用在\gls{DL}中，它可以用于单层模型，或使用不基于下界的近似推断方法的\gls{deep_model}中。
 
 % -- 608 end
 
@@ -428,7 +428,7 @@
 每个条件分布的分母会使得学习算法降低所有仅具有一个变量不同于训练样本的状态的概率。
 
 
-了解\gls{pseudolikelihood}渐近效率的理论分析，可以参考~\cite{Marlin11-small}。
+读者可以参考~\cite{Marlin11-small}了解\gls{pseudolikelihood}渐近效率的理论分析，。
 
 % 609 mid
 \section{\glsentrytext{score_matching}和\glsentrytext{ratio_matching}}
@@ -443,7 +443,7 @@
 	J(\Vtheta) & = \frac{1}{2} \SetE_{p_{\text{data}}(\Vx)}  L(\Vx, \Vtheta), \\
 %\end{equation}
 %\begin{equation}
-	\Vtheta^* & = \min_{\Vtheta} J(\Vtheta) . \\
+	\Vtheta^* & = \min_{\Vtheta} J(\Vtheta) .
 \end{align}
 
 
@@ -509,7 +509,7 @@
 该近似只估计随机选择的目标子集，不需要模型生成完整的样本。
 
 
-了解\gls{ratio_matching}渐近效率的理论分析，可以参考~\cite{Marlin11-small}。
+读者可以参考~\cite{Marlin11-small}了解\gls{ratio_matching}渐近效率的理论分析，。
 % 611 mid
 
 \section{\glsentrytext{denoising_score_matching}}
@@ -522,8 +522,8 @@
 分布$q(\Vx \mid \Vy)$是一个损坏过程，通常在形成$\Vx$的过程中会向$\Vy$中添加少量\gls{noise}。
 
 
-\gls{denoising_score_matching}非常有用，因为在实践中，通常我们不能获取真实的$p_{data}$，而只能得到其样本确定的\gls{empirical_distribution}。
-给定足够\gls{capacity}，任何一致估计都会使$p_{model}$成为一组以训练点为中心的\,\gls{dirac_distribution}。
+\gls{denoising_score_matching}非常有用，因为在实践中，通常我们不能获取真实的$p_{\text{data}}$，而只能得到其样本确定的\gls{empirical_distribution}。
+给定足够\gls{capacity}，任何一致估计都会使$p_{\text{model}}$成为一组以训练点为中心的\,\gls{dirac_distribution}。
 考虑在\secref{sec:consistency}介绍的渐近一致性上的\gls{loss}，通过$q$来平滑有助于缓解这个问题。
 \cite{Kingma+LeCun-2010}介绍了平滑分布$q$为正态分布\gls{noise}的\gls{regularize}\gls{score_matching}。
 
@@ -546,8 +546,8 @@
 	\log p_{\text{model}} (\RVx) = \log \tilde{p}_{\text{model}} (\RVx; \Vtheta) + c,
 \end{equation}
 其中$c$是$-\log Z(\Vtheta)$的近似。
-不仅仅估计$\Vtheta$，\gls{NCE}过程将$c$视为另一参数，使用相同的算法同时估计$\Vtheta$和$c$。
-因此，所得到的$\log p_{\text{model}}(\RVx)$可能并不完全对应有效的\gls{PD}，但随着$c$估计的改进，它将变得越来越接近有效值\footnote{\glssymbol{NCE}~也适用于具有易于处理的，不需要引入额外参数$c$的\gls{partition_function}的问题。它已经是最令人感兴趣的，估计具有复杂\gls{partition_function}模型的方法}。
+\gls{NCE}过程将$c$视为另一参数，使用相同的算法同时估计$\Vtheta$和$c$，而不是仅仅估计$\Vtheta$，。
+因此，所得到的$\log p_{\text{model}}(\RVx)$可能并不完全对应有效的\gls{PD}，但随着$c$估计的改进，它将变得越来越接近有效值\footnote{\glssymbol{NCE}~也适用于具有易于处理的，不需要引入额外参数$c$的\gls{partition_function}的问题。它已经是最令人感兴趣的，估计具有复杂\gls{partition_function}模型的方法。}。
 
 
 这种方法不可能使用最大似然作为估计的标准。
@@ -633,7 +633,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 同样地，$p_{\text{noise}}$的下界也没有用，因为它只提供了$p_{\text{joint}}( y = 1 \mid \RVx)$的上界。
 
 
-当在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}\,定义了一个被称为\firstgls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望~\citep{Goodfellow-ICLR2015}。
+在每个梯度步骤之前，模型分布被复制来定义新的\gls{noise_distribution}时，\glssymbol{NCE}\,定义了一个被称为\firstgls{self_contrastive_estimation}的过程，其梯度期望等价于最大似然的梯度期望~\citep{Goodfellow-ICLR2015}。
 特殊情况的\,\glssymbol{NCE}（\gls{noise}采样由模型生成）表明最大似然可以被解释为使模型不断学习以将现实与自身发展的信念区分的过程，而\gls{NCE}通过让模型区分现实和固定的基准（\gls{noise}模型），我们降低了计算成本。%??  以  是不是多余的？
 
 
@@ -795,7 +795,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 
 % -- 618 --
 
-利用由此定义的抽样过程和\eqnref{eq:18.52}中给出的重要性权重，\gls{partition_function}的比率估计如下所示：
+利用由此定义的采样过程和\eqnref{eq:18.52}中给出的重要性权重，\gls{partition_function}的比率估计如下所示：
 \begin{equation}
 	\frac{Z_1}{Z_0} \approx \frac{1}{K} \sum_{k=1}^K w^{(k)}
 \end{equation}
@@ -835,7 +835,7 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 \frac{ \tilde{p}_{\eta_{1}}(\Vx_{\eta_{1}}^{(k)}) }{ \tilde{p}_{0}(\Vx_{0}^{(k)}) } .
 \end{equation}
 这些权重和\,\glssymbol{AIS}\,上的权重相同。
-因此，我们可以将\,\glssymbol{AIS}\,解释为应用于扩展状态上的简单\gls{importance_sampling}，其有效性紧紧来源于\gls{importance_sampling}的有效性。
+因此，我们可以将\,\glssymbol{AIS}\,解释为应用于扩展状态上的简单\gls{importance_sampling}，其有效性直接来源于\gls{importance_sampling}的有效性。
 
 % -- 619 --
 
@@ -867,24 +867,24 @@ $p_{\text{train}}(\RVx \mid y = 0) = p_{\text{noise}}(\RVx)$。
 也就是说，我们会迭代地重新估计比率，并使用每次迭代更新$r$的值。
 
 
-\textbf{\gls{linked_importance_sampling}}
+\paragraph{\gls{linked_importance_sampling}}
 \glssymbol{AIS}\,和\gls{bridge_sampling}各有优点。
 如果$D_{\text{KL}}(p_0 \| p_1)$不太大（由于$p_0$和$p_1$足够接近）的话，那么\gls{bridge_sampling}能比\,\glssymbol{AIS}\,更高效地估计\gls{partition_function}比率。
 然而，如果对于单个分布$p_*$而言，两个分布相距太远难以桥接差距，那么\,\glssymbol{AIS}\,至少可以使用许多潜在中间分布来跨越$p_0$和$p_1$之间的差距。
 \cite{Neal05estimatingratios}展示\gls{linked_importance_sampling}方法如何利用\gls{bridge_sampling}的优点，桥接\,\glssymbol{AIS}\,中使用的中间分布，并且显著改进了整个\gls{partition_function}的估计。
 
 
-\textbf{在训练期间估计\gls{partition_function}}
+\paragraph{在训练期间估计\gls{partition_function}}
 虽然\,\glssymbol{AIS}\,已经被认为是用于估计许多无向模型\gls{partition_function}的标准方法，但是它在计算上代价很高，以致其在训练期间仍然不很实用。
-近来探索了一些在训练过程中估计\gls{partition_function}的替代方法。
+研究者探索了一些在训练过程中估计\gls{partition_function}的替代方法。
 
 
-使用\gls{bridge_sampling}，短链\,\glssymbol{AIS}\,和\gls{parallel_tempering}的组合，\cite{Desjardins+al-NIPS2011}设计了一种在训练过程中追踪\,\glssymbol{RBM}\,\gls{partition_function}的方法。
-该方法的基础是，在\gls{parallel_tempering}方法操作的每个温度下，\glssymbol{RBM}\,\gls{partition_function}的独立估计。
+使用\gls{bridge_sampling}、短链\,\glssymbol{AIS}\,和\gls{parallel_tempering}的组合，\cite{Desjardins+al-NIPS2011}设计了一种在训练过程中追踪\,\glssymbol{RBM}\,\gls{partition_function}的方法。
+该策略的基础是，在\gls{parallel_tempering}方法操作的每个温度下，\glssymbol{RBM}\,\gls{partition_function}的独立估计会一直保持。
 作者将相邻链（来自\gls{parallel_tempering}）的\gls{partition_function}比率的\gls{bridge_sampling}估计和跨越时间的\,\glssymbol{AIS}\,估计组合起来，提出一个在每次迭代学习时估计\gls{partition_function}的（且方差较小的）方法。
 
 
-本章中描述的工具提供了许多不同的方法，以解决难求解\gls{partition_function}的问题，但是在训练和使用\gls{generative_model}时，可能会存在一些其他问题。
+本章中描述的工具提供了许多不同的方法，以解决难处理的\gls{partition_function}问题，但是在训练和使用\gls{generative_model}时，可能会存在一些其他问题。
 其中最重要的是我们接下来会遇到的难以推断的问题。
 
 % -- 621 --
