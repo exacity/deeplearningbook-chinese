@@ -170,3 +170,8 @@
 ---------------
  - @germany-zhu  ==> Chapter1, 语音术语
  - @kangqf ==> Chapter8, loccal_minima 笔误
+
+
+2017年3月17日
+---------------
+ - @yaoxiuyong ==> Chapter 5, 5.1.4节特征权重增加／减少校对
