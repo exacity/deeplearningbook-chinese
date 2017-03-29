@@ -548,7 +548,7 @@ $E(\RVx)$被称作是能量函数。
 这个负号的存在主要是为了保持机器学习文献和物理学文献之间的兼容性。
 概率建模的许多研究最初都是由统计物理学家做出的，其中$E$是指实际的、物理概念的能量，没有任何符号。
 诸如"能量"和"配分函数"这类术语仍然与这些技术相关联，尽管它们的数学适用性比在物理中更宽。
-一些机器学习研究者（例如，{Smolensky86}将负能量称为harmony）发出了不同的声音，但这些都不是标准惯例。
+一些机器学习研究者（例如，{Smolensky86}将负能量称为~\textbf{harmony}）发出了不同的声音，但这些都不是标准惯例。
 <!-- % 562  head -->
 
 
@@ -1204,10 +1204,8 @@ p(\RVv\mid\RVh) = \prod_i p(\RSv_i\mid \RVh).
 独立的条件分布很容易计算。
 对于二元的受限玻尔兹曼机，我们可以得到：
 \begin{align}
-\begin{aligned}
-p(\RSh_i = 1\mid\RVv) = \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big),\\
-p(\RSh_i = 0\mid\RVv) = 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).\\
-\end{aligned}
+p(\RSh_i = 1\mid\RVv) &= \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big),\\
+p(\RSh_i = 0\mid\RVv) &= 1 - \sigma\big(\RVv^{\top}\MW_{:,i} + b_i\big).
 \end{align}
 结合这些属性可以得到高效的块吉布斯采样，它在同时采样所有$\Vh$和同时采样所有$\Vv$之间交替。
 RBM~模型通过~Gibbs采样产生的样本展示在\fig?中。

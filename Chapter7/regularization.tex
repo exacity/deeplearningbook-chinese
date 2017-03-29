@@ -775,7 +775,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
 \begin{align}
 (\MI - \epsilon \VLambda)^\tau =  (\VLambda + \alpha \MI)^{-1} \alpha,
 \end{align}
-那么$L^2~$\gls{regularization}和\gls{weight_decay}可以被看作是等价的（至少在\gls{objective_function}的二次近似下）。
+那么$L^2~$\gls{regularization}和\gls{early_stopping}可以被看作是等价的（至少在\gls{objective_function}的二次近似下）。
 进一步取对数，使用$\log~(1+x)$的级数展开，我们可以得出结论：如果所有$\lambda_i$是小的（即$\epsilon \lambda_i \ll 1$且$\lambda_i / \alpha \ll 1$），那么
 \begin{align}
 \tau \approx \frac{1}{\epsilon \alpha}, \\
@@ -1016,7 +1016,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 
 % -- 251 --
 
-回想一下\gls{bagging}学习，我们定义$k$个不同的模型，从训练集有替换采样构造$k$个不同的数据集，然后在训练集$i$上训练模型$i$。
+回想一下\gls{bagging}学习，我们定义$k$个不同的模型，从训练集有放回采样构造$k$个不同的数据集，然后在训练集$i$上训练模型$i$。
 \gls{dropout}的目标是在指数级数量的\gls{NN}上近似这个过程。
 具体来说，在训练中使用\gls{dropout}时，我们会使用基于\gls{minibatch}的学习算法和较小的步长，如\gls{GD}等。
 我们每次在\gls{minibatch}中加载一个样本，然后随机抽样应用于网络中所有输入和\gls{hidden_unit}的不同二值\gls{mask}。

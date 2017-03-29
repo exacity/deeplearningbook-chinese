@@ -242,13 +242,13 @@ share: false
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centering
-\begin{equation}
+\begin{equation*}
 \begin{bmatrix} 
 1 & 0 & 0 \\
 0 & 1 & 0 \\
 0 & 0 & 1 \\
 \end{bmatrix}
-\end{equation}
+\end{equation*}
 \fi
 \caption{单位矩阵的一个样例：这是$\MI_3$。}
 \end{figure}
