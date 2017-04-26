@@ -190,7 +190,7 @@ f(\Vx; \Vw, b) = \Vx^\top \Vw + b.
 
 
 $f^{(1)}$应该是哪种函数？线性模型到目前为止都表现不错，让$f^{(1)}$也是线性的似乎很有诱惑力。
-不幸的是，如果$f^{(1)}$是线性的，那么\gls{feedforward_network}作为一个整体对于输入仍然是线性的。
+可惜的是，如果$f^{(1)}$是线性的，那么\gls{feedforward_network}作为一个整体对于输入仍然是线性的。
 暂时忽略截距项，假设$f^{(1)}(\Vx)= \MW^\top \Vx$并且$f^{(2)}(\Vh)=\Vh^\top \Vw$，那么$f(\Vx) = \Vw^\top\MW^\top \Vx$。
 我们可以将这个函数重新表示成$f(\Vx) = \Vx^\top\Vw'$其中$\Vw' = \MW\Vw$。
 
@@ -323,7 +323,7 @@ f(\Vx; \MW, \Vc, \Vw, b) = \Vw^\top \max\{ 0, \MW^\top \Vx + \Vc \} +b.
 用于非凸损失函数的随机梯度下降没有这种收敛性保证，并且对参数的初始值很敏感。
 对于\gls{feedforward_neural_network}，将所有的权重值初始化为小随机数是很重要的。
 偏置可以初始化为零或者小的正值。
-这种用于训练\gls{feedforward_neural_network}以及几乎所有深度模型的迭代的基于梯度的优化算法会在第\chapref{chap:optimization_for_training_deep_models}详细介绍，参数初始化会在\secref{sec:parameter_initialization_strategies}中具体说明。
+这种用于训练\gls{feedforward_neural_network}以及几乎所有深度模型的迭代的基于梯度的优化算法会在\chapref{chap:optimization_for_training_deep_models}详细介绍，参数初始化会在\secref{sec:parameter_initialization_strategies}中具体说明。
 就目前而言，只需要懂得，训练算法几乎总是基于使用梯度来使得代价函数下降的各种方法即可。
 一些特别的算法是对梯度下降思想的改进和提纯（在\secref{sec:gradient_based_optimization}中介绍）还有一些更特别的，大多数是对随机梯度下降算法的改进（在\secref{sec:stochastic_gradient_descent_chap5}中介绍）。
 
@@ -988,7 +988,7 @@ softplus表明\gls{hidden_unit}类型的性能可能是非常反直觉的——�
 
 线性模型，通过矩阵乘法将特征映射到输出，顾名思义，仅能表示线性函数。
 它具有易于训练的优点，因为当使用线性模型时，许多损失函数会导出凸优化问题。
-不幸的是，我们经常希望我们的系统学习非线性函数。
+可惜的是，我们经常希望我们的系统学习非线性函数。
 
 乍一看，我们可能认为学习非线性函数需要为我们想要学习的那种非线性专门设计一类模型族。
 幸运的是，具有\gls{hidden_layer}的\gls{feedforward_network}提供了一种万能近似框架。
@@ -1012,7 +1012,7 @@ Borel可测的概念超出了本书的范畴；对于我们想要实现的目标
 \gls{universal_approximation_theorem}说明了，存在一个足够大的网络能够达到我们所希望的任意精度，但是定理并没有说这个网络有多大。
 \cite{Barron93}提供了单层网络近似一大类函数所需大小的一些界。
 不幸的是，在最坏情况下，可能需要指数数量的\gls{hidden_unit}（可能一个\gls{hidden_unit}对应着一个需要区分的输入配置）。
-这在二进制情况下很容易看到：向量$\Vv\in \{0,1\}^n$上的可能的二进制函数的数量是$2^{2^n}$，并且选择一个这样的函数需要$2^n$位，这通常需要$O(2^n)$的自由度。
+这在二进制值的情况下很容易看到：向量$\Vv \in \{0,1\}^n$上的可能的二值型函数的数量是$2^{2^n}$，并且选择一个这样的函数需要$2^n$位，这通常需要$O(2^n)$的自由度。
 
 总之，具有单层的\gls{feedforward_network}足以表示任何函数，但是网络层可能大得不可实现，并且可能无法正确地学习和\gls{generalization}。
 在很多情况下，使用更深的模型能够减少表示期望函数所需的单元的数量，并且可以减少\gls{generalization}误差。
@@ -1731,8 +1731,8 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
   q_i = \frac{\exp(z_i)}{\sum_i \exp(z_i)},
 \end{equation}
 其中我们通过指数化、求和与除法运算构建softmax函数，并构造\gls{cross_entropy}损失函数$J=-\sum_i p_i\log q_i$。
-人类数学家可以观察到$J$对$z_i$的导数采用了非常简单的形式：$p_iq_i-p_i$。
-\footnote{译者注：这里作者误写成了$q_i-p_i$。}
+人类数学家可以观察到$J$对$z_i$的导数有一个非常简单的形式：$q_i-p_i$
+\footnote{译者注：$\frac{\partial J}{\partial z_i} = -\frac{p_i}{q_i}\frac{\partial q_i}{\partial z_i} -\sum_{j \ne i} \frac{p_j}{q_j} \frac{\partial q_j}{\partial z_i}  = -\frac{p_i}{q_i}(q_i - q_i^2) - \sum_{j \ne i} \frac{p_j}{q_j}(-q_jq_i) =p_i(q_i - 1) + (1-p_i)q_i = q_i - p_i.$}。
 反向传播算法不能够以这种方式来简化梯度，而是会通过原始图中的所有对数和指数操作显式地传播梯度。
 一些软件库如Theano~\citep{bergstra+al:2010-scipy-small,Bastien-Theano-2012}能够执行某些种类的代数替换来改进由纯反向传播算法提出的图。
   
