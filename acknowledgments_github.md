@@ -176,7 +176,24 @@
 ---------------
  - @yaoxiuyong ==> Chapter 5, 5.1.4节特征权重增加／减少校对
 
+2017年4月5日
+---------------
+ - @sailordiary ==> Chapter3, "Reverend"=>"牧师"，详见[issue](https://github.com/exacity/deeplearningbook-chinese/issues/53)
+
+2017年4月7日
+---------------
+ - @poerin ==> Chapter6, 去掉"第"
+
+2017年4月9日
+---------------
+ - @ninesunqian ==> Chapter6, "二进制函数"=>"二值型函数"
+
+2017年4月21日
+---------------
+ - @JiaqiYao ==> Chapter6, 公式`q_i - p_i`的推导，详见[issue](https://github.com/exacity/deeplearningbook-chinese/issues/66)
+
 
 2017年4月25日
 ---------------
- - @ninesunqian ==> Chapter 8, 翻译调整
+ - @ninesunqian ==> Chapter 8, line search, gaussian value 翻译调整
+
