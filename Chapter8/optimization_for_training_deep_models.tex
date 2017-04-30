@@ -595,7 +595,7 @@
 % 282 mid
 
 \gls{recurrent_network}在各\gls{time_step}上使用相同的矩阵$\MW$，而\gls{feedforward_network}并没有。
-因而即使是非常深层的\gls{feedforward_network}也能一定程度上避免\gls{vanish_explode_gradient}~\citep{Sussillo14}。
+所以即使使用非常深层的\gls{feedforward_network}，也能很大程度上有效地避免\gls{vanish_explode_gradient}~\citep{Sussillo14}。
 
 % 282 mid
 
@@ -1122,7 +1122,7 @@
 \cite{martens2010hessian-small}提出了一种被称为\firstgls{sparse_initialization}的替代方案，每个单元初始化为恰好有$k$个非零权重。
 这个想法保持该单元输入的总数量独立于输入数目$m$，而不使单一权重元素的大小随$m$缩小。
 稀疏初始化有助于实现单元之间在初始化时更具多样性。
-但是，它也会强加非常强的先验给具有较大数值的权重。
+但是，获得较大取值的权重也同时被加了很强的先验。
 因为\gls{GD}需要很长时间缩小``不正确''的大值，这个初始化方案可能会导致某些单元出问题，例如\,\gls{maxout}\,单元有几个过滤器，互相之间必须仔细调整。
 % 296 mid
 

@@ -197,3 +197,8 @@
 ---------------
  - @ninesunqian ==> Chapter 8, line search, gaussian value 翻译调整
 
+2017年4月28日
+---------------
+ - @sailordinary ==> Chapter 8, 语句调整
+ - @freedomRen ==> Chapter 8, 语句调整
+
