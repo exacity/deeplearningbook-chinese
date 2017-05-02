@@ -202,3 +202,6 @@
  - @sailordinary ==> Chapter 8, 语句调整
  - @freedomRen ==> Chapter 8, 语句调整
 
+2017年4月30日
+---------------
+ - @ninesunqian ==> Chapter9, 图9.18子图顺序问题
