@@ -1732,7 +1732,7 @@ $\CalB$中的计算和$\CalG$中的计算顺序完全相反，而且$\CalB$中�
 \end{equation}
 其中我们通过指数化、求和与除法运算构建softmax函数，并构造\gls{cross_entropy}损失函数$J=-\sum_i p_i\log q_i$。
 人类数学家可以观察到$J$对$z_i$的导数有一个非常简单的形式：$q_i-p_i$
-\footnote{译者注：$\frac{\partial J}{\partial z_i} = -\frac{p_i}{q_i}\frac{\partial q_i}{\partial z_i} -\sum_{j \ne i} \frac{p_j}{q_j} \frac{\partial q_j}{\partial z_i}  = -\frac{p_i}{q_i}(q_i - q_i^2) - \sum_{j \ne i} \frac{p_j}{q_j}(-q_jq_i) =p_i(q_i - 1) + (1-p_i)q_i = q_i - p_i.$}。
+%\footnote{译者注：$\frac{\partial J}{\partial z_i} = -\frac{p_i}{q_i}\frac{\partial q_i}{\partial z_i} -\sum_{j \ne i} \frac{p_j}{q_j} \frac{\partial q_j}{\partial z_i}  = -\frac{p_i}{q_i}(q_i - q_i^2) - \sum_{j \ne i} \frac{p_j}{q_j}(-q_jq_i) =p_i(q_i - 1) + (1-p_i)q_i = q_i - p_i.$}。
 反向传播算法不能够以这种方式来简化梯度，而是会通过原始图中的所有对数和指数操作显式地传播梯度。
 一些软件库如Theano~\citep{bergstra+al:2010-scipy-small,Bastien-Theano-2012}能够执行某些种类的代数替换来改进由纯反向传播算法提出的图。
   

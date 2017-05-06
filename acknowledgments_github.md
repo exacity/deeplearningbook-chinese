@@ -191,6 +191,7 @@
 2017年4月21日
 ---------------
  - @JiaqiYao ==> Chapter6, 公式`q_i - p_i`的推导，详见[issue](https://github.com/exacity/deeplearningbook-chinese/issues/66)
+ - @zhouqingping  ==> Chapter 7, 有放回采样
 
 
 2017年4月25日
@@ -208,9 +209,7 @@
 
 2017年5月2日
 ---------------
- - @demolpc ==> Chapter5, 5.2节三处翻译调整
-
-2017年5月5日
----------------
  - @jt827859032 ==> Chapter5, 5.1节一处翻译调整
-
+ - @demolpc ==> Chapter5, 5.2节三处翻译调整
+ - @Sofring, @wenlei ==> Chapter 1, “人体”翻译
+>>>>>>> 5359aace1daa8735fced7a5722bf7a1911944c53

@@ -1031,13 +1031,13 @@ Gabor函数描述在图像中的2维点处的权重。我们可以认为图像�
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centering    
+\includegraphics[width=0.3\textwidth]{Chapter9/figures/gabor_coordinate_system.png}}     
+\includegraphics[width=0.3\textwidth]{Chapter9/figures/gabor_scale.png}}
 \includegraphics[width=0.3\textwidth]{Chapter9/figures/gabor_sinusoid.png}}     
-\includegraphics[width=0.3\textwidth]{Chapter9/figures/gabor_coordinate_system.png}}
-\includegraphics[width=0.3\textwidth]{Chapter9/figures/gabor_scale.png}}     
 \fi
 \captionsetup{singlelinecheck=off}
 \caption{具有各种参数设置的Gabor函数。
-白色表示大的正权重，黑色表示大的负权重，背景灰色对应于零权重。
+白色表示绝对值大的正权重，黑色表示绝对值大的负权重，背景灰色对应于零权重。
 \emph{(左)}控制坐标系的参数具有不同值的Gabor函数，这些参数包括：$x_0$、$y_0$和$\gamma$。
 在该网格中的每个Gabor函数被赋予和它在网格中的位置成比例的$x_0$和$y_0$的值，并且$\tau$被选择为使得每个Gabor过滤器对从网格中心辐射出的方向非常敏感。
 对于其他两幅图，$x_0$、$y_0$和$\gamma$固定为零。
