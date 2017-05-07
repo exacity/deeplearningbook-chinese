@@ -984,13 +984,13 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 最近一个突出的例子是\ENNAME{Netflix Grand Prize}\citep{Koren09}。
 
 不是所有构建\gls{ensemble}的技术都是为了让\gls{ensemble}模型比单一模型更加\gls{regularization}。
-例如，一种被称为\firstgls{boosting}的技术\citep{ConfLT:Freund:gametheorie,ConfML:Freund:AdaBoostCompar}构建比单个模型\gls{capacity}更高的\gls{ensemble}模型。
+例如，一种被称为\textbf{Boosting}的技术\citep{ConfLT:Freund:gametheorie,ConfML:Freund:AdaBoostCompar}构建比单个模型\gls{capacity}更高的\gls{ensemble}模型。
 通过向\gls{ensemble}逐步添加\gls{NN}，\gls{boosting}已经被应用于构建神经网络的\gls{ensemble}\citep{Schwenk-nips10}。
 通过逐渐增加\gls{NN}的\gls{hidden_unit}，\gls{boosting}也可以将单个神经网络解释为一个\gls{ensemble}。
 
 \section{\glsentrytext{dropout}}
 \label{sec:dropout}
-\firstgls{dropout}\citep{Srivastava14}提供了\gls{regularization}一大类模型的方法，计算方便但功能强大。
+\textbf{Dropout}\citep{Srivastava14}提供了\gls{regularization}一大类模型的方法，计算方便但功能强大。
 在第一种近似下，\gls{dropout}可以被认为是\gls{ensemble}大量深层\gls{NN}的实用\gls{bagging}方法。
 \gls{bagging}涉及训练多个模型，并在每个测试样本上评估多个模型。
 当每个模型都是一个很大的\gls{NN}时，这似乎是不切实际的，因为训练和评估这样的网络需要花费很多运行时间和内存。
@@ -1206,7 +1206,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 % -- 258 --
 
 随机性对实现\gls{dropout}的\gls{regularization}效果不是必要的，同时也不是充分的。
-为了证明这一点，\cite{WardeFarley+al-ICLR2014}使用一种被称为\firstgls{dropout_boosting}的方法设计了一个对照实验，具有与传统\gls{dropout}方法完全相同的噪声\gls{mask}， 但缺乏\gls{regularization}效果。
+为了证明这一点，\cite{WardeFarley+al-ICLR2014}使用一种被称为\textbf{Dropout Boosting}的方法设计了一个对照实验，具有与传统\gls{dropout}方法完全相同的噪声\gls{mask}， 但缺乏\gls{regularization}效果。
 \gls{dropout_boosting}训练整个\gls{ensemble}以最大化训练集上的似然。
 从传统\gls{dropout}类似于\gls{bagging}的角度来看，这种方式类似于\gls{boosting}。
 如预期一样，和单一模型训练整个网络相比，\gls{dropout_boosting}几乎没有\gls{regularization}效果。

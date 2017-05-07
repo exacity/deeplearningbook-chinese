@@ -26,7 +26,7 @@
 当大量级的数被近似为$\infty$或$-\infty$时发生\gls{overflow}。
 进一步的运算通常会导致这些无限值变为非数字。
 
-必须对\gls{overflow}和\gls{underflow}进行数值稳定的一个例子是\firstgls{softmax}。
+必须对\gls{overflow}和\gls{underflow}进行数值稳定的一个例子是\textbf{softmax}。
 \gls{softmax}经常用于预测与~\gls{multinoulli}相关联的概率，定义为
 \begin{align}
  \text{softmax}(\Vx)_i = \frac{\exp(\Sx_i)}{\sum_{j=1}^n \exp(\Sx_j)} .
@@ -209,7 +209,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \subsection{\glsentrytext{gradient}之上：\glsentrytext{jacobian}和\glsentrytext{hessian}矩阵}
 \label{sec:beyond_the_gradient_jacobian_and_hessian_matrices}
 有时我们需要计算输入和输出都为向量的函数的所有\gls{partial_derivatives}。
-包含所有这样的偏导数的矩阵被称为\firstgls{jacobian}矩阵。
+包含所有这样的偏导数的矩阵被称为\textbf{Jacobian}矩阵。
 具体来说，如果我们有一个函数：$\Vf: \SetR^m \rightarrow \SetR^n$，$\Vf$的~\gls{jacobian}~矩阵$\MJ \in \SetR^{n \times m}$定义为$J_{i,j} = \frac{\partial}{\partial \Sx_j} f(\Vx)_i$。
 
 有时，我们也对\gls{derivative}的\gls{derivative}感兴趣，即\firstgls{second_derivative}。
@@ -243,7 +243,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 \end{figure}
 
 当我们的函数具有多维输入时，\gls{second_derivative}也有很多。
-我们可以将这些导数合并成一个矩阵，称为\firstgls{hessian}矩阵。
+我们可以将这些导数合并成一个矩阵，称为\textbf{Hessian}矩阵。
 \gls{hessian}~矩阵$\MH(f)(\Vx)$定义为
 \begin{align}
  \MH(f)(\Vx)_{i,j} = \frac{\partial^2}{\partial \Sx_i \partial  \Sx_j} f(\Vx).
