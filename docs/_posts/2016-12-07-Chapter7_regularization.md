@@ -717,7 +717,7 @@ softmax函数~永远无法真正预测0概率或1概率，因此它会继续学�
 \ifOpenSource
 \centerline{\includegraphics{figure.pdf}}
 \else
-\centerline{\includegraphics[width=0.8\textwidth]{Chapter7/figures/reg_l1_vs_l2_mistake}}
+\centerline{\includegraphics[width=0.8\textwidth]{Chapter7/figures/reg_early_stop_vs_l2}}
 \fi
 \caption{提前终止效果的示意图。
 \emph{(左)}实线轮廓线表示负对数似然的轮廓。

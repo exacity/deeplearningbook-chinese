@@ -12,5 +12,398 @@
 {'user': 'acct:FlyingFire@hypothes.is', 'text': '而其他在梯度为0的情况下会使用解析解', 'origin_text': '性回归实例。许多不同的优化过程是可能的，有些可能会利用梯度下降  !!!而其他可能使用梯度为0的解析解!!!  ，但在所有程序中αα\\alpha在Ω(θ)>kΩ(θ)>k\\Om', 'time': '2017-03-08T01:59'}
 {'user': 'acct:friskit@hypothes.is', 'text': '应该是\\mu\n\n貌似是笔误', 'origin_text': ' \\Vx, \\Vmu)。关于所有掩码的算术平均值由下式给出∑  !!!u!!!  p(μ)p(y∣x,μ),∑up(μ)p(y∣x,μ),\\beg', 'time': '2017-03-13T04:42'}
 
+
+
+@NBZCC
+
+7.1
+
+\gls{ML}中的一个核心问题是设计不仅在训练数据上表现好，并且能在新输入上泛化好的算法。
+\gls{ML}中的一个核心问题是如何设计不仅在训练数据上表现好，并且能在新输入上泛化好的算法。
+
+！
+在\gls{ML}中，许多策略显式地被设计为减少测试误差（可能会以增大训练误差为代价）。
+在\gls{ML}中，许多策略有意被设计用来减少测试误差（可能会以增大训练误差为代价）。 
+注：为字有两种理解，避免误解
+
+！
+然而，本章的大多数内容涉及这些基本概念在特定\gls{NN}中的扩展概念。
+然而，本章的大多数内容是关于这些基本概念在特定\gls{NN}中的扩展概念。
+注：就是相关概念扩展。
+
+在\secref{sec:regularization}中，我们将\gls{regularization}定义为``对学习算法的修改——旨在减少\gls{generalization}误差而不是训练误差''。
+在\secref{sec:regularization}中，我们将\gls{regularization}定义为”用以减少学习算法的\gls{generalization}误差而非训练误差的修改”。
+
+！
+有些策略向\gls{objective_function}增加参数值软约束的额外项。
+有些策略向\gls{objective_function}增加额外项来对参数值进行软约束。
+注:原文为加额外项可看作是软约束
+
+如果我们仔细选择
+如果我们细心选择
+
+！！
+其他形式的\gls{regularization}（如\gls{ensemble}方法）结合多个假说来解释训练数据。
+其他形式的\gls{regularization}，被称为\gls{ensemble}方法，则结合多个假说来解释训练数据。
+注：集成方法就是结合多个假说解释训练数据
+
+！！！
+它会降低原始目标$J$关于训练数据的误差并同时减小参数$\Vtheta$的规模（或在某些衡量下参数子集的规模）。
+它会降低原始目标$J$关于训练数据的误差并同时减小在某些衡量标准下参数$\Vtheta$（或参数子集）的规模。
+注：与原文内容意思不同，括号内的某些衡量标准在原文外
+
+！！
+选择不同的参数范数$\Omega$会偏好不同的解法。
+选择不同的参数范数$\Omega$会偏好不同的解。
+注：解法相同，解不同
+
+！！
+在探究不同范数的\gls{regularization}表现之前，我们需要说明一下，在神经网络中我们通常只对每一层仿射变换的\emph{权重}做惩罚而不对\gls{bias_aff}做正则惩罚。
+在探究不同范数的\gls{regularization}表现之前，我们需要说明一下，在神经网络中，参数包括每一层仿射变换的权重和\gls{bias_aff}，我们通常\emph{只对权重}做惩罚而不对\gls{bias_aff}做正则惩罚。
+注:原文强调Only the weights,除了权重加粗以外更重要的是只对，个人认为不应分离，所以改变了翻译语序让两个重点在一起,方便加粗.
+
+！!
+ 拟合多个超参数的代价很大
+ 寻找合适的多个超参数代价很大.
+ 注:超参数的选择调整并不属于拟合。
+
+ 我们已经看到过最简单和最常见的参数范数惩罚
+ 我们已经看到过最简单而又最常见的参数范数惩罚
+
+！！
+ 当我们不知道正确的值应该是正还是负时，零是有意义的默认值。
+ 当我们不知道正确的值应该是正还是负时，将零设为默认值是讲得通的。
+ 注:make sense 讲得通，也可以译作明智的.
+
+！
+我们可以通过研究正则化化后目标函数的梯度，洞察一些权重衰减的正则化表现。
+我们可以通过研究正则化后目标函数的梯度，对权重衰减正则化的表现进行一些了解。
+注：原文为some insight 应该是一些了解而不是一些表现
+
+！！
+令$\Vw^*$为不含\gls{regularization}的\gls{objective_function}
+令$\Vw^*$为不含正则化项的\gls{objective_function}
+注：或未正则化的目标函数，正则化通常只行为而不是具体东西
+
+！！
+现在我们探讨最小化含有\gls{regularization}的$\hat J$。
+现在我们探讨最小化含有正则化项的$\hat J$。
+注：同上
+
+！
+具体来说，我们会根据$\frac{\lambda_i}{\lambda_i + \alpha}$因子缩放与$\MH$第$i$个特征向量对齐的$\Vw^*$的分量。
+具体来说，$\Vw^*$在$\MH$第 $i$个特征向量方向上的分量会缩放为原来的$\frac{\lambda_i}{\lambda_i+\alpha}$。
+注：数学上一般说在某个向量方向上而不是用对齐这种说法。
+
+ 比如我们还可以使用$L^1$\gls{regularization}。
+ 一个选择是使用$L^1$\gls{regularization}。
+ 注:本小节就是$L^1$正则化，不用表明是举例,而且更符合原文.
+
+！！
+ 由于$L^1$惩罚项在满的、一般的~\gls{hessian}~
+ 由于$L^1$惩罚项完全一般化的~\gls{hessian}~
+注：原文fully形容general
+
+！！！
+考虑所有$i$且$w_i^* > 0$的情形，会有两种可能输出
+对每个$i$,考虑$w_i^* > 0$的情形，会有两种可能结果
+注:这个译文会理解为所有w_i都要>0，但实际上是分开对每个i考虑.两种情况有不同的结果，可与输出y区分开来.
+
+！！！
+这是因为在方向$i$上$J(\Vw; \MX, \Vy) $对$ \hat J(\Vw; \MX, \Vy)$的贡献受到抑制，$L^1$\gls{regularization}项将$w_i$推向0。
+这是因为在方向$i$上$J(\Vw; \MX, \Vy) $对$ \hat J(\Vw; \MX, \Vy)$的贡献被抵消，$L^1$\gls{regularization}项将$w_i$推至0。
+注:两种情况贡献都会受到抑制,这一种直接被抵消至0,另一种抑制不到0,所以后面一种也应修改。
+
+！！！
+\item  $w_i^* > \frac{\alpha}{H_{i,i}}$的情况。在这种情况下，\gls{regularization}不会将$w_i$的最优值推至0，而仅仅在那个方向上移动$\frac{\alpha}{H_{i,i}}$的距离。
+\item  $w_i^* > \frac{\alpha}{H_{i,i}}$的情况。在这种情况下，\gls{regularization}不会将$w_i$的最优值推至0，而仅仅在那个方向上移动$\frac{\alpha}{H_{i,i}}$的距离。
+注：同上
+
+7.2
+考虑通过参数范数\gls{regularization}的\gls{cost_function}：
+考虑经过参数范数\gls{regularization}的\gls{cost_function}：
+
+！！！
+每个惩罚是一个系数之间的乘积，被称为\firstgls{KKT}乘子，以及一个表示约束是否满足的函数。
+每个惩罚是一个被称为\firstgls{KKT}乘子的系数以及一个表示约束是否满足的函数之间的乘积。
+注:原文是系数乘以函数，这个系数叫做KKT乘子，具体可以查阅4.4节或相关文献.
+
+！
+解决这个问题我们需要同时改变$\Vtheta$和$\alpha$。
+解决这个问题我们需要对$\Vtheta$和$\alpha$都做出调整。
+注：并非同时，只是都要改变，这个解的表达式有两层最值，解法可分开调整。原文也没有same time字样。
+
+但在所有程序中
+但在所有过程中
+
+！！
+最优值$\alpha^*$也将鼓励$\Omega(\Vtheta)$收缩，但不会像$\Omega(\Vtheta)$小于$k$时那么强烈。
+最优值$\alpha^*$也将鼓励$\Omega(\Vtheta)$收缩，但不会强到使得$\Omega(\Vtheta)$小于$k$。
+注:原文为so strongly to make
+
+当使用权重范数的惩罚训练时，即使可以通过增加权重以显著减少$J$，这些配置也可能是局部最优的。
+当使用带有权重范数的惩罚进行训练后，这些权重配置可能是局部最优的，即使可以通过增加权重以显著减少$J$。
+
+7.3
+！！
+都依赖于求逆矩阵$\MX^\top\MX$
+都依赖于对矩阵$\MX^\top\MX$求逆
+注:原翻译让人以为求$\MX^\top\MX$
+
+！
+或因为例子较少（即相对输入特征（$\MX$的列）来说）
+或因为例子较少（即相对输入特征的维数来说）
+注:既然没有翻译rows of X,那么columns of X也可以意译为特征的维数,还可以避免括号内再加括号.
+
+那么$2 \Vw$也会以较高似然实现完美分类
+那么$2 \Vw$也会以更高似然实现完美分类
+注:因为更高才会更新w
+
+！
+使用\gls{regularization}解决欠定问题的想法超出了\gls{ML}的范畴。
+使用\gls{regularization}解决欠定问题的想法不局限于\gls{ML}。
+注：下文在继续介绍机器学习外的正则化，语气不应否定。
+
+7.4
+
+！！
+在比较\gls{ML}算法A和\gls{ML}算法B时，应该确保这两个算法使用同一人工设计的数据集增强方案进行评估。
+在比较\gls{ML}算法A和\gls{ML}算法B时，应该确保这两个算法使用同一人工设计的数据集增强方案。
+注：前面已有比较，没必要再加评估，原文的 evaluated 应该是指算法求解，毕竟测试集通常不会增强。
+
+7.5
+
+在一般情况下，噪声注入远比简单地收缩参数强大
+在一般情况下，注入噪声远比简单地收缩参数强大
+注：与收缩参数结构一致
+
+在\secref{sec:dropout}所述~\gls{dropout}~算法是这种做法的主要发展方向。
+在\secref{sec:dropout}所述~\gls{dropout}~算法是这种做法的主要发展。
+注：Dropout作为一个特殊算法并不能算方向
+
+等同于最小化附加\gls{regularization}项的$J$：
+$ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$。
+等同于最小化附加\gls{regularization}项:
+$ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$的$J$。
+注：直接加在后面感觉阅读起来更清楚
+
+！!
+找到的点不只是极小点，还是由平坦区域所包围的最小点
+找到的点不只是极小点，还是由平坦区域所包围的极小点
+注：最小点和极小点意义不同
+
+7.6
+-
+
+7.7
+!
+额外的训练样本以同样的方式将模型的参数推向泛化更好的方向，当模型的一部分在任务之间共享时，模型的这一部分更多地被约束为良好的值（假设共享是合理的），往往能更好地泛化。
+正如额外的训练样本能够将模型参数推向具有更好泛化能力的值一样，当模型的一部分被多个额外的任务共享时，这部分将被约束为良好的值（如果共享合理），通常会带来更好的泛化能力。
+注：这句有点长，但是之前的翻译不太看得懂，特别是前半句，改了后觉得还行。
+
+！！
+一些顶层因素不与输出任务$(\Vh^{(3)})$的任意一个关联是有意义的
+一些顶层因素不与输出任务$(\Vh^{(3)})$的任意一个关联是讲得通的
+注：后一句话时解释为什么可以这样做，所以是讲得通。
+
+！！
+这意味着如果我们返回使验证集误差最低的参数设置，就可以获得更好的模型（因此，有希望获得更好的测试误差）。
+这意味着我们可以获得验证集误差更低的模型（这样有希望获得更好的测试误差），只要返回使验证集误差最低的参数设置。
+注：原文不是更好的模型，实际也不是这样做一定都更好。
+
+7.8
+！！
+很多控制模型容量的超参数在验证集上都是这样的U型性能曲线，如\figref{fig:chap7_learning_curve}。
+这个地方是5.3不是7.3
+
+！
+我们通过拟合训练集的步数来控制模型的有效容量。
+我们通过控制拟合训练集的步数来控制模型的有效容量。
+注：翻译让人误解为对步数进行拟合。
+
+在第二轮额外的训练步骤中
+在第二轮，即额外的训练步骤中
+注：避免不必要的误解
+
+此过程有一些细微之处
+此过程处理上有一些细微的差别
+
+例如，我们没有办法知道重新训练时，对参数进行相同次数的更新和对数据集进行相同的遍数哪一个更好。
+例如，我们没有办法知道重新训练时，对参数进行相同次数的更新和对数据集进行相同次数的遍历哪一个更好。
+注：保持结构对称
+
+！
+相反，我们可以监控验证集的平均损失函数，并继续训练，直到它低于\gls{early_stopping}过程终止时的目标值。
+取而代之的，我们可以监控验证集的平均损失函数，并继续训练，直到它低于\gls{early_stopping}过程终止时的目标值。
+注：前文指终止策略没了，所以我们用新的取代
+
+！
+除了由于限制训练的迭代次数而明显减少的计算成本，还带来了\gls{regularization}的益处（不需要添加惩罚项的\gls{cost_function}或计算这种附加项的\gls{gradient}）。
+除了由于限制训练的迭代次数而明显减少的计算成本，还不需要向\gls{cost_function}添加的惩罚项或计算这种附加项的\gls{gradient}也能起到正则化的效果。
+注：如何在正则化得到益处是此处的重点说明，不应放在括号里而求
+
+！！！
+那么$L^2~$\gls{regularization}和\gls{weight_decay}可以被看作是等价的
+那么$L^2~$\gls{regularization}和\gls{early_stopping}可以被看作是等价的
+注：是和提前停止等价而不是权重衰减
+
+！！！
+对应显著曲率（\gls{objective_function}）方向的参数值\gls{regularization}小于小曲率方向。
+当然，在\gls{early_stopping}的情况下，这实际上意味着对应于显著曲率方向的参数比较小的曲率方向的参数更早地停止学习。
+在大曲率（\gls{objective_function}）方向上的参数值受\gls{regularization}影响小于小曲率方向。
+当然，在\gls{early_stopping}的情况下，这实际上意味着在大曲率方向的参数比较小的曲率方向的参数更早地学习到。
+注：原文的意思是因为提前终止了，小曲率方向的参数没法学习到，而大曲率方向的参数则已经学习到一部分，对应其他正则化中小曲率方向受正则化影响大，大曲率方向影响小，另外统一下大小曲率便于理解。
+
+！
+相反，\gls{early_stopping}通常涉及监控验证集误差，以便在空间特别好的点处终止轨迹。
+替代的，\gls{early_stopping}通常涉及监控验证集误差，以便在空间特别好的点处终止轨迹。
+注：此处指提前终止采用的算法怎样执行。与之前的instead问题相同。
+
+！
+而\gls{weight_decay}需要多个训练实验测试其超参数的不同值。
+而\gls{weight_decay}需要进行多个不同超参数值的训练实验。
+注：原文没有寻找或测试超参数值的意思，实际上多个训练实验的目的只是为了得到更好泛化结果，对超参数值应该如何取并不关心
+
+7.9
+但我们根据领域和模型结构方面的知识
+但我们根据相关领域和模型结构方面的知识
+
+！
+这种构造架构使得许多分类模型中的参数能与之对应的\gls{unsupervised}模型的参数匹配。
+构造的这种架构使得分类模型中的许多参数能与\gls{unsupervised}模型中对应的的参数匹配。
+注：此处解释只有两个模型，避免误解为多个模型
+
+7.9.1
+
+！
+目前为止，最流行和广泛使用的\gls{parameter_sharing}出现在应用于\gls{CV}的\firstacr{CNN}中。
+自然图像有许多统计属性是对转换不变的。
+目前为止，最流行和广泛使用的\gls{parameter_sharing}出现在应用于\gls{CV}的\firstacr{CNN}中。
+
+自然图像有许多统计属性是对转换不变的。
+注：原文换行了
+
+！！
+相同的特征（具有相同权重的\gls{hidden_unit}）在输入的不同位置上计算获得。
+在输入每个位置上都会进行相同特征（具有相同权重的\gls{hidden_unit}）的计算。
+注:意译便于理解，感觉是这么个意思。
+
+7.10
+
+\gls{representation}的\gls{sparse}，在另一方面描述了许多元素是零（或接近零）的\gls{representation}。
+另一方面，\gls{representation}的\gls{sparse}描述了许多\gls{representation}元素是零（或接近零）的\gls{representation}。
+注：前文的参数的稀疏是一方面，表示的稀疏是另一方面，和下文举例对应
+
+！
+和\gls{KL}惩罚\citep{Larochelle+Bengio-2008}有利于表示元素约束于单位区间上。
+和有利于将表示元素约束于单位区间上的\gls{KL}惩罚\citep{Larochelle+Bengio-2008}。
+注：原译文不太好理解
+
+！！
+例如，\textbf{正交匹配追踪}(orthogonal matching pursuit)\citep{pati93orthogonal}通过解决\gls{constrained_optimization}问题将输入值$\Vx$编码成\gls{representation} $\Vh$
+例如，\textbf{正交匹配追踪}(orthogonal matching pursuit)\citep{pati93orthogonal}通过解决下属\gls{constrained_optimization}问题将输入值$\Vx$编码成\gls{representation} $\Vh$
+注：原文在problem后立即接了具体问题，此处改变位置应解释下。
+
+7.11
+
+！！
+在误差完全相关即$c=v$的情况下，均方误差减少到$v$，所以\gls{model_averaging}没有任何帮助
+在误差完全相关即$c=v$的情况下，平方误差减少到$v$，所以\gls{model_averaging}没有任何帮助
+注：是平方误差而不是均方
+
+！
+\gls{ensemble}平均至少与它的任何成员表现得一样好
+平均下来，\gls{ensemble}至少与它的任何成员表现得一样好
+注：此处平均对应公式里求期望。
+
+！！
+\gls{NN}的解能达到足够多的变化意味着他们可以从\gls{model_averaging}中受益
+\gls{NN}的能找到足够多的不同的解，这意味着他们可以从\gls{model_averaging}中受益
+注：解的变化这一说法很奇怪，其实就是找到许多不同的极小点作为解。
+
+！
+\gls{boosting}技术已经被应用于构建神经网络的\gls{ensemble}\citep{Schwenk-nips10}，即通过向\gls{ensemble}逐步添加\gls{NN}。
+\gls{boosting}也可以将单个神经网络解释为一个\gls{ensemble}\citep{Schwenk-nips10}，即逐渐增加\gls{NN}的\gls{hidden_unit}。
+注：原文里都是具体解释前文，不应翻译为通过。
+
+7.12
+！
+\firstgls{dropout}\citep{Srivastava14}提供了\gls{regularization}一大类模型的方法，
+注：这个地方会编译成Dropout(Dropout)，不过我不知道怎么改
+
+！
+替换采样
+放回抽样
+注：更正式的说法，该节有两处应一起修改或不修改
+
+！！
+我们会使用基于\gls{minibatch}的学习算法和较小的步长
+我们会使用基于能产生较小步长的\gls{minibatch}学习算法
+注：原文we use a minibatch-based learning algorithm ithat makes smalll steps
+
+！
+期望包含多达指数级的项，但我们可以通过抽样$\Vmu$获得梯度的无偏估计。
+这个期望包含多达指数级的项，但我们可以通过抽样$\Vmu$获得梯度的无偏估计。
+注：避免误解
+
+！！
+该模型具有所有单元，但我们将模型的权重修改为和单元$i$的概率的乘积。
+该模型具有所有单元，但我们将单元$i$的输出的权重乘以单元$i$的被包含概率。
+注：原文如此，翻译有偏
+
+！！！
+\cite{Goodfellow-et-al-ICML2013}实验发现，\gls{ensemble}预测\gls{weight_scaling_inference_rule}比\gls{monte_carlo}近似的效果更好（在分类精度方面）。
+即使允许\gls{monte_carlo}近似采样多达1000子网络时也比不过\gls{ensemble}。
+\cite{Goodfellow-et-al-ICML2013}实验发现，在对\gls{ensemble}预测的近似方面，\gls{weight_scaling_inference_rule}比\gls{monte_carlo}近似更好（就分类精度而言）。
+即使允许\gls{monte_carlo}近似采样多达1000子网络时也比不过\gls{weight_scaling_inference_rule}。
+注：蒙特卡洛近似和权重比例推断规则都是对这个集成预测器准确度的近似，是这两个相比。而不是蒙特卡洛和集成相比，具体可看原文.
+
+随机\gls{pooling}是构造\gls{CNN}\gls{ensemble}的一种随机\gls{pooling}的形式(见\secref{sec:pooling})
+随机\gls{pooling}是构造\gls{CNN}\gls{ensemble}的一种随机化\gls{pooling}的形式(见\secref{sec:pooling})
+注：两个随机池化不好理解,建议为了区分从属关系将randomized换位随机化
+
+!
+\cite{WardeFarley+al-ICLR2014}将\gls{dropout}与大\gls{ensemble}的训练相比并得出结论：相比独立模型\gls{ensemble}获得泛化误差，\gls{dropout}会带来额外的改进。
+\cite{WardeFarley+al-ICLR2014}将\gls{dropout}与大\gls{ensemble}的训练相比并得出结论：相比由独立模型\gls{ensemble}获得的泛化误差改进，\gls{dropout}会改进更多。
+注：是dropout对泛化误差的改进更多，those是指improvements
+
+要么是脸部的另一特征，如嘴。
+要么是像嘴这样的脸部的另一特征。
+注：如嘴这个太短了，感觉奇怪
+
+7.13
+#没什么问题 感觉挺好
+
+7.14
+！
+\section{\glsentrytext{tangent_distance}、\glsentrytext{tangent_prop}和流形正切分类器}
+\label{sec:tangent_distance_tangent_prop_and_manifold_tangent_classifier}
+如\secref{sec:manifold_learning}所述，许多\gls{ML}的目标旨在假设数据位于低维流形附近来克服维数灾难。
+\section{\glsentrytext{tangent_distance}、\glsentrytext{tangent_prop}和流形正切分类器}
+\label{sec:tangent_distance_tangent_prop_and_manifold_tangent_classifier}
+如\secref{sec:manifold_learning}所述，许多\gls{ML}通过假设数据位于低维流形附近来克服维数灾难。
+注：目标是克服维数灾难而不是这一方法
+
+！！
+当然，这种算法需要制定一个切向量。
+当然，这种算法需要指定那些切向量。
+注：One指用户，指定与后文（倒数第二段）对应。
+
+在这两种情况下，该算法的用户通过指定一组不改变网络输出的转换，编码其先验知识。
+在这两种情况下，该算法的用户通过指定一组应当不会改变网络输出的转换，将其先验知识编码至算法中。
+注：是加入先验知识认为本应不会改变输出的扰动来正则化
+
+\gls{tangent_prop}也涉及到\gls{double_backprop}\citep{DruckerLeCun92}和\gls{adversarial_training}\citep{Szegedy-et-al-arxiv2014,Goodfellow-2015-adversarial}。
+\gls{tangent_prop}也和\gls{double_backprop}\citep{DruckerLeCun92}以及\gls{adversarial_training}\citep{Szegedy-et-al-arxiv2014,Goodfellow-2015-adversarial}有关联。
+注：后文的意思是他们的正则化效果有一定关联。
+
+！！
+如移动身体的部分
+如正在移动的身体某些部分
+注：原文意思为对象即使在移动也是同一对象
+
+
+
+
 =============================   Replies   =============================
 

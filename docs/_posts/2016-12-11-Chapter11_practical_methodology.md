@@ -427,8 +427,8 @@ Dropout\,比率 & 降低 & 较少地丢弃单元可以更多地让单元彼此"�
 \centerline{\includegraphics{figure.pdf}}
 \else
 \begin{tabular}{cc}
-\includegraphics[width=0.4\textwidth]{Chapter11/figures/grid} &
-\includegraphics[width=0.4\textwidth]{Chapter11/figures/random}
+\includegraphics[width=0.35\textwidth]{Chapter11/figures/grid} &
+\includegraphics[width=0.35\textwidth]{Chapter11/figures/random}
 \end{tabular}
 \fi
 \caption{网格搜索和随机搜索的比较。

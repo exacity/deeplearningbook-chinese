@@ -578,8 +578,8 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 \else
 \begin{tabular}{cc}
 输入 & 重构 \\
-\includegraphics[width=0.45\textwidth]{Chapter15/figures/ping_pong_input} &
-\includegraphics[width=0.45\textwidth]{Chapter15/figures/ping_pong_reconstruction}
+\includegraphics[width=0.4\textwidth]{Chapter15/figures/ping_pong_input} &
+\includegraphics[width=0.4\textwidth]{Chapter15/figures/ping_pong_reconstruction}
 \end{tabular}
 \fi
 \caption{机器人任务上，基于均方误差训练的自编码器不能重构乒乓球。

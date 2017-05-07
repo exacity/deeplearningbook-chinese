@@ -1089,8 +1089,8 @@ Gabor函数描述在图像中的2维点处的权重。我们可以认为图像�
 \centerline{\includegraphics{figure.pdf}}
 \else
 \centering    
-\includegraphics[width=0.4\textwidth]{Chapter9/figures/maxout_kernels.png}}     
 \includegraphics[width=0.4\textwidth]{Chapter9/figures/s3c_filters.png}}    
+\includegraphics[width=0.4\textwidth]{Chapter9/figures/maxout_kernels.png}}  
 \fi
 \caption{许多机器学习算法在应用于自然图像时，会学习那些用来检测边缘或边缘的特定颜色的特征。 
 这些特征检测器使人联想到已知存在于初级视觉皮层中的~Gabor函数。   

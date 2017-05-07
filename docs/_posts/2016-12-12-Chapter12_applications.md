@@ -456,10 +456,10 @@ sphering~通常被称为白化。
 \else
     \centering
     \begin{tabular}{ccc}
-        \includegraphics[width=.3\figwidth]{Chapter12/figures/src0.jpg} &
+        \includegraphics[width=.3\figwidth]{Chapter12/figures/gray0.jpg} &
         \includegraphics[width=.3\figwidth]{Chapter12/figures/gcn0.jpg} &
         \includegraphics[width=.3\figwidth]{Chapter12/figures/lcn0.jpg} \\
-        \includegraphics[width=.3\figwidth]{Chapter12/figures/src1.jpg} &   % ?? may be problem
+        \includegraphics[width=.3\figwidth]{Chapter12/figures/gray1.jpg} &   % ?? may be problem
         \includegraphics[width=.3\figwidth]{Chapter12/figures/gcn1.jpg} &
         \includegraphics[width=.3\figwidth]{Chapter12/figures/lcn1.jpg}\\
         Input image & GCN & LCN
