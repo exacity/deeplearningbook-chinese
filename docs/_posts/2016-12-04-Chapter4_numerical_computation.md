@@ -28,7 +28,7 @@ share: false
 当大量级的数被近似为$\infty$或$-\infty$时发生上溢。
 进一步的运算通常会导致这些无限值变为非数字。
 
-必须对上溢和下溢进行数值稳定的一个例子是\textbf{softmax}。
+必须对上溢和下溢进行数值稳定的一个例子是softmax函数。
 softmax函数经常用于预测与~Multinoulli分布相关联的概率，定义为
 \begin{align}
  \text{softmax}(\Vx)_i = \frac{\exp(\Sx_i)}{\sum_{j=1}^n \exp(\Sx_j)} .
