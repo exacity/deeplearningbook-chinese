@@ -368,7 +368,7 @@ J(\Vtheta) = -\SetE_{\RVx, \RVy \sim \hat{p}_\text{data}} \log p_\text{model} (\
 
 代价函数的具体形式随着模型而改变，取决于$\log p_\text{model}$的具体形式。
 上述方程的展开形式通常会有一些项不依赖于模型的参数，我们可以舍去。
-例如，正如我们在\secref{sec:the_task_t}中看到的，如果$p_\text{model}(\Vy\mid\Vx) = \CalN(\Vy;f(\Vx;\Vtheta), \MI)$，那么我们恢复\gls{mean_squared_error}代价，
+例如，正如我们在\secref{sec:the_task_t}中看到的，如果$p_\text{model}(\Vy\mid\Vx) = \CalN(\Vy;f(\Vx;\Vtheta), \MI)$，那么我们回顾\gls{mean_squared_error}代价，
 \begin{equation}
 J(\theta) = \frac{1}{2} \SetE_{\RVx, \RVy \sim  \hat{p}_\text{data}} || \Vy - f(\Vx; \Vtheta) ||^2 + \text{const},
 \end{equation}
