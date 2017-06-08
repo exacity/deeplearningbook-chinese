@@ -1088,7 +1088,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     =& -m \log\sigma - \frac{m}{2} \log(2\pi) - \sum_{i=1}^m \frac{ \norm{\hat{y}^{(i)} - y^{(i)} }^2 }{2\sigma^2},
 \end{align}
 其中$\hat{y}^{(i)}$是\gls{linear_regression}在第$i$个输入$\Vx^{(i)}$上的输出，$m$是训练\gls{example:chap5}的数目。
-对比于\gls{mean_squared_error}的对数似然，
+对比\gls{mean_squared_error}和对数似然，
 \begin{equation}
     \text{MSE}_{\text{train}} = \frac{1}{m} \sum_{i=1}^m \norm{\hat{y}^{(i)} - y^{(i)}}^2,
 \end{equation}
@@ -1246,7 +1246,7 @@ $\VLambda_0=\text{diag}(\Vlambda_0)$。
     -\frac{1}{2} (\Vw - \Vmu_m)^\Tsp \VLambda_m^{-1} (\Vw - \Vmu_m)
     \right).
 \end{align}
-所有不包括的参数向量$\Vw$的项都已经被删去了；它们意味着分布的积分必须归一这个事实。
+分布的积分必须归一这个事实意味着要删去所有不包括参数向量$\Vw$的项。
 \eqnref{eq:3.23}显示了如何标准化多元高斯分布。
 
 % -- 134 --
