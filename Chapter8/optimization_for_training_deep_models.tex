@@ -1085,7 +1085,7 @@
 
 有些启发式方法可用于选择权重的初始大小。
 一种初始化$m$个输入和$n$输出的全连接层的权重的启发式方法是从分布$U(-\frac{1}{\sqrt{m}}, \frac{1}{\sqrt{m}})$中采样权重，
-而~\cite{Glorot+al-AI-2011-small}建议使用\firstgls{normalized_initialization}
+而~\citet{GlorotAISTATS2010-small}建议使用\firstgls{normalized_initialization}
 \begin{equation}
     W_{i,j} \sim U \left(-\sqrt{\frac{6}{m+n}}, \sqrt{\frac{6}{m+n}}\right) .
 \end{equation}
@@ -1370,7 +1370,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 \section{二阶近似方法}
 \label{sec:approximate_second_order_methods}
 在本节中，我们会讨论训练\gls{DNN}的二阶方法。
-参考\cite{lecun1998mnist}了解该问题的早期处理方法。
+参考\cite{LeCun+98backprop}了解该问题的早期处理方法。
 为表述简单起见，我们只考察\gls{objective_function}为经验风险：
 \begin{equation}
     J(\Vtheta) = \SetE_{\RVx, \RSy \sim \hat{p}_{\text{data}}(\Vx,y) } [ L(f(\Vx; \Vtheta), y) ] =
@@ -1555,7 +1555,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 % -- 306 --
 
 实践者报告在实践中使用\gls{nonlinear_CG}算法训练\gls{NN}是合理的，尽管在开始\gls{nonlinear_CG}前使用\gls{SGD}迭代若干步来初始化效果更好。
-另外，尽管（非线性）\gls{CG}算法传统上作为批方法，\gls{minibatch}版本已经成功用于训练\gls{NN}~\citep{LeRoux-chapter-2011}。
+另外，尽管（非线性）\gls{CG}算法传统上作为批方法，\gls{minibatch}版本已经成功用于训练\gls{NN}~\citep{Le-ICML2011}。
 针对神经网路的\gls{CG}应用早已被提出，例如缩放的\gls{CG}算法\citep{Moller}。
 
 \subsection{\glsentrytext{BFGS}}

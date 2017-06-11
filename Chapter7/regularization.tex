@@ -522,11 +522,11 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$的$J$。
 我们可以构建这样一个模型，其中生成模型$P(\RVx)$或$P(\RVx, \RVy)$与判别模型$P(\RVy \mid \RVx)$共享参数，而不用分离\gls{unsupervised}和\gls{supervised}部分。
 我们权衡\gls{supervised}模型\gls{criterion} $-\log P(\RVy \mid \RVx)$和\gls{unsupervised}或生成模型\gls{criterion}（如$-\log P(\RVx)$或$-\log P(\RVx, \RVy)$）。
 生成模型\gls{criterion}表达了对\gls{supervised_learning}问题解的特殊形式的先验知识\citep{LasserreJ2006}，即$P(\RVx)$的结构通过某种共享参数的方式连接到$P(\RVy \mid \RVx)$。
-通过控制在总\gls{criterion}中的生成\gls{criterion}，我们可以获得比纯生成或纯判别训练\gls{criterion}更好的权衡\citep{LasserreJ2006,Larochelle2008}。
+通过控制在总\gls{criterion}中的生成\gls{criterion}，我们可以获得比纯生成或纯判别训练\gls{criterion}更好的权衡\citep{LasserreJ2006,Larochelle+Bengio-2008-small}。
 
 \cite{Russ+Geoff-nips-2007}描述了一种学习回归\gls{kernel_machines}中核函数的方法，其中建模$P(\RVx)$时使用的未标记样本大大提高了$P(\RVy \mid \RVx)$的效果。
 
-更多\gls{semi_supervised_learning}的信息，请参阅~\cite{SSL-Book-2006}。
+更多\gls{semi_supervised_learning}的信息，请参阅~\cite{Chapelle-2006}。
 
 \section{\glsentrytext{multitask_learning}}
 \label{sec:multitask_learning}
@@ -985,7 +985,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 
 不是所有构建\gls{ensemble}的技术都是为了让\gls{ensemble}模型比单一模型更加\gls{regularization}。
 例如，一种被称为\textbf{Boosting}的技术\citep{ConfLT:Freund:gametheorie,ConfML:Freund:AdaBoostCompar}构建比单个模型\gls{capacity}更高的\gls{ensemble}模型。
-通过向\gls{ensemble}逐步添加\gls{NN}，\gls{boosting}已经被应用于构建神经网络的\gls{ensemble}\citep{Schwenk-nips10}。
+通过向\gls{ensemble}逐步添加\gls{NN}，\gls{boosting}已经被应用于构建神经网络的\gls{ensemble}\citep{nips-10:Holger+Yoshua:1998}。
 通过逐渐增加\gls{NN}的\gls{hidden_unit}，\gls{boosting}也可以将单个神经网络解释为一个\gls{ensemble}。
 
 \section{\glsentrytext{dropout}}
@@ -1387,7 +1387,7 @@ $\ +\ .007\ \times$ &%
 
 % -- 264 --
 
-\gls{tangent_prop}也和\gls{double_backprop}\citep{DruckerLeCun92}以及\gls{adversarial_training}\citep{Szegedy-et-al-arxiv2014,Goodfellow-2015-adversarial}有关联。
+\gls{tangent_prop}也和\gls{double_backprop}\citep{DruckerLeCun92}以及\gls{adversarial_training}\citep{Szegedy-ICLR2014,Goodfellow-2015-adversarial}有关联。
 \gls{double_backprop}\gls{regularization}使\gls{jacobian}矩阵偏小，而\gls{adversarial_training}找到原输入附近的点，训练模型在这些点上产生与原来输入相同的输出。
 \gls{tangent_prop}和手动指定转换的数据集增强都要求模型在输入变化的某些特定的方向上保持不变。
 \gls{double_backprop}和\gls{adversarial_training}都要求模型对输入所有方向中的变化（只要该变化较小）都应当保持不变。

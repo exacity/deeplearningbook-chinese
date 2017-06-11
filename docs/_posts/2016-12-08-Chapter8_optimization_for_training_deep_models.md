@@ -1084,7 +1084,7 @@ Nesterov 动量中，梯度计算在施加当前速度之后。
 
 有些启发式方法可用于选择权重的初始大小。
 一种初始化$m$个输入和$n$输出的全连接层的权重的启发式方法是从分布$U(-\frac{1}{\sqrt{m}}, \frac{1}{\sqrt{m}})$中采样权重，
-而~{Glorot+al-AI-2011-small}建议使用标准初始化, % ?
+而~{GlorotAISTATS2010-small}建议使用标准初始化, % ?
 \begin{equation}
     W_{i,j} \sim U \left(-\sqrt{\frac{6}{m+n}}, \sqrt{\frac{6}{m+n}}\right) .
 \end{equation}
@@ -1371,7 +1371,7 @@ Adam通常被认为对超参数的选择相当鲁棒，尽管学习率有时需�
 # 二阶近似方法
 
 在本节中，我们会讨论训练深度神经网络的二阶方法。
-参考{lecun1998mnist}了解该问题的早期处理方法。
+参考{LeCun+98backprop}了解该问题的早期处理方法。
 为表述简单起见，我们只考察目标函数为经验风险：
 \begin{equation}
     J(\Vtheta) = \SetE_{\RVx, \RSy \sim \hat{p}_{\text{data}}(\Vx,y) } [ L(f(\Vx; \Vtheta), y) ] =

@@ -896,18 +896,3 @@ $\CalL(\Vv,\Vtheta,q)\approx \log p(\Vv;\Vtheta)$和$\log p(\Vv;\Vtheta)\ll \log
 其中许多模型将在下一章中描述。
 <!-- % 644 -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

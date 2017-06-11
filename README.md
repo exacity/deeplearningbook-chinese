@@ -75,6 +75,7 @@
 | [第十八章 面对配分函数](https://exacity.github.io/deeplearningbook-chinese/Chapter18_confronting_the_partition_function/) | @liber145 | | @tankeco |
 | [第十九章 近似推断](https://exacity.github.io/deeplearningbook-chinese/Chapter19_approximate_inference/) | @futianfan | | @sailordiary, @hengqujushi, huanghaojun |
 | [第二十章 深度生成模型](https://exacity.github.io/deeplearningbook-chinese/Chapter20_deep_generative_models/) | @swordyork | | |
+| 参考文献 | | | @pkuwwt |
 
 我们会在纸质版正式出版的时候，在书中致谢，正式感谢各位作出贡献的同学！
 
@@ -85,7 +86,7 @@
 @bengordai @Bojian @JoyFYan @minoriwww @khty2000 @gump88 @zdx3578 @PassStory @imwebson @wlbksy @roachsinai @Elvinczp 
 @endymecy name:YUE-DaJiong @9578577 @linzhp @cnscottzheng @germany-zhu  @zhangyafeikimi @showgood163 @gump88
 @kangqf @NeutronT @badpoem @kkpoker @Seaball @wheaio @angrymidiao @ZhiweiYang @corenel @zhaoyu611 @SiriusXDJ @dfcv24 EmisXXY FlyingFire vsooda @friskit-china @poerin @ninesunqian @JiaqiYao
-@Sofring @wenlei @wizyoung @imageslr @@indam @XuLYC @zhouqingping @freedomRen @runPenguin
+@Sofring @wenlei @wizyoung @imageslr @@indam @XuLYC @zhouqingping @freedomRen @runPenguin @pkuwwt
 
 如有遗漏，请务必通知我们，可以发邮件至`echo c3dvcmQueW9ya0BnbWFpbC5jb20K | base64 -d`。
 这是我们必须要感谢的，所以不要不好意思。

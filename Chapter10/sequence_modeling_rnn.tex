@@ -692,11 +692,11 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 通常，这是由学成的仿射变换和一个固定非线性表示组成的变换。
 
 在这些操作中引入深度会有利的吗？
-实验证据\citep{Graves-arxiv2013,Pascanu-et-al-ICLR2014}强烈暗示理应如此。
+实验证据\citep{Graves-et-al-ICASSP2013,Pascanu-et-al-ICLR2014}强烈暗示理应如此。
 实验证据与我们需要足够的深度以执行所需映射的想法一致。
-读者可以参考~\cite{Schmidhuber96,ElHihi+Bengio-nips8}或~\cite{Jaeger2007}了解更早的关于深度~\glssymbol{RNN}~的研究。
+读者可以参考~\cite{Schmidhuber92,ElHihi+Bengio-nips8}或~\cite{Jaeger2007}了解更早的关于深度~\glssymbol{RNN}~的研究。
 
-\cite{Graves-arxiv2013}第一个展示了将~\glssymbol{RNN}~的状态分为多层的显著好处，如\figref{fig:chap10_deep}~\emph{(左)}。
+\cite{Graves-et-al-ICASSP2013}第一个展示了将~\glssymbol{RNN}~的状态分为多层的显著好处，如\figref{fig:chap10_deep}~\emph{(左)}。
 我们可以认为，在\figref{fig:chap10_deep}(a)所示层次结构中较低的层起到了将原始输入转化为对更高层的隐藏状态更合适表示的作用。
 \cite{Pascanu-et-al-ICLR2014}更进一步提出在上述三个块中各使用一个单独的~\glssymbol{MLP}（可能是深度的），如\figref{fig:chap10_deep}(b)所示。
 考虑表示容量，我们建议在这三个步中都分配足够的容量，但增加深度可能会因为优化困难而损害学习效果。
@@ -836,7 +836,7 @@ $x$轴是100维空间中沿着随机方向的初始状态的坐标。
 \section{\glsentrytext{ESN}}
 \label{sec:echo_state_networks}
 从$\Vh^{(t-1)}$到$\Vh^{(t)}$的循环权重映射以及从$\Vx^{(t)}$到$\Vh^{(t)}$的输入权重映射是\gls{recurrent_network}中最难学习的参数。
-研究者\citep{Jaeger-NIPS2002,Maass-et-al-2002,Jaeger+Haas-2004}提出避免这种困难的方法是设定循环\gls{hidden_unit}，使其能很好地捕捉过去输入历史，并且\emph{只学习输出权重}。
+研究者\citep{Jaeger-NIPS2002,Maass-et-al-2002,Jaeger+Haas-2004,Jaeger-2007}提出避免这种困难的方法是设定循环\gls{hidden_unit}，使其能很好地捕捉过去输入历史，并且\emph{只学习输出权重}。
 \firstgls{ESN}或~\glssymbol{ESN}~\citep{Jaeger+Haas-2004,Jaeger-2007}，以及\firstgls{liquid_state_machines}\citep{Maass-et-al-2002}分别独立地提出了这种想法。
 后者是类似的，只不过它使用脉冲神经元（二值输出）而不是~\glssymbol{ESN}~中的连续\gls{hidden_unit}。
 \glssymbol{ESN}~和\gls{liquid_state_machines}都被称为\firstgls{reservoir_computing}\citep{Lukosevicius+Jaeger-2009}，因为\gls{hidden_unit}形成了可能捕获输入历史不同方面的临时特征池。
@@ -913,7 +913,7 @@ $n$步之后，我们将得到$\MJ^n(\Vg + \delta \Vv)$。
 增加从遥远过去的变量到目前变量的直接连接是得到粗时间尺度的一种方法。
 使用这样\gls{skip_connection}的想法可以追溯到\cite{Lin-ieeetnn96}，紧接是向\gls{feedforward_network}引入延迟的想法\citep{Lang+Hinton88}。
 在普通的\gls{recurrent_network}中，循环从时刻$t$的单元连接到时刻$t+1$单元。
-构造较长的延迟\gls{recurrent_network}是可能的\citep{Bengio91z}。
+构造较长的延迟\gls{recurrent_network}是可能的\citep{Bengio91}。
 
 正如我们在\secref{sec:long_term_dependencies}看到，\gls{gradient}可能\emph{关于时间步数}呈指数消失或爆炸。
 \citep{Lin-ieeetnn96}引入了$d$延时的循环连接以减轻这个问题。
@@ -983,7 +983,7 @@ $d$~\gls{time_step}的\gls{skip_connection}可以确保单元总能被先前的$
 其中一个关键扩展是使自循环的权重视上下文而定，而不是固定的\citep{Gers-et-al-2000}。
 \gls{gated}此自循环（由另一个\gls{hidden_unit}控制）的权重，累积的时间尺度可以动态地改变。
 在这种情况下，即使是具有固定参数的~\glssymbol{LSTM}，累积的时间尺度也可以因输入序列而改变，因为时间常数是模型本身的输出。
-\glssymbol{LSTM}~已经在许多应用中取得重大成功，如无约束手写识别\citep{Graves+Schmidhuber-2009}、语音识别\citep{Graves-et-al-ICASSP2013,Graves+Jaitly-ICML2014}、手写识别\citep{Graves-et-al-ICASSP2013}、机器翻译\citep{Sutskever-et-al-NIPS2014}、为图像生成标题\citep{Kiros-et-al-arxiv2014,Vinyals-et-al-arxiv2014,Xu-et-al-ICML2015}和解析\citep{Vinyals2014}。
+\glssymbol{LSTM}~已经在许多应用中取得重大成功，如无约束手写识别\citep{Graves-et-al-2009}、语音识别\citep{Graves-et-al-ICASSP2013,Graves+Jaitly-ICML2014}、手写生成\citep{Graves-arxiv2013}、机器翻译\citep{Sutskever-et-al-NIPS2014}、为图像生成标题\citep{Kiros-et-al-arxiv2014,Vinyals-et-al-arxiv2014,Xu-et-al-ICML2015}和解析\citep{Vinyals2014}。
 
 % -- 397 --
 

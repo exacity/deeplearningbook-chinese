@@ -85,7 +85,7 @@
     例如，光学字符识别要求计算机程序根据文本图片返回文字序列（ASCII码或者Unicode码）。
     谷歌街景以这种方式使用\gls{DL}处理街道编号\citep{Goodfellow+et+al-ICLR2014a}。
     另一个例子是语音识别，计算机程序输入一段音频波形，输出一序列音频记录中所说的字符或单词ID的编码。
-    \gls{DL}是现代语音识别系统的重要组成部分，被各大公司广泛使用，包括微软，IBM和谷歌\citep{Hinton-et-al-2012}。
+    \gls{DL}是现代语音识别系统的重要组成部分，被各大公司广泛使用，包括微软，IBM和谷歌\citep{deepSpeechReviewSPM2012}。
 
     \item \textbf{机器翻译}：在机器翻译任务中，输入是一种语言的符号序列，计算机程序必须将其转化成另一种语言的符号序列。
     这通常适用于自然语言，如将英语译成法语。
@@ -232,7 +232,7 @@ Iris（鸢尾花卉）\gls{dataset}~\citep{Fisher-1936}是统计学家和\gls{ML
 有些\gls{ML}算法并不是训练于一个固定的\gls{dataset}上。
 例如，\firstgls{reinforcement_learning}算法会和环境进行交互，所以学习系统和它的训练过程会有反馈回路。
 这类算法超出了本书的范畴。
-请参考~\cite{Sutton+Barto-98}或~\cite{Bertsekas+Tsitsiklis-book1996}了解强化学习相关知识，\cite{Mnih2013}介绍了强化学习方向的\gls{DL}方法。
+请参考~\cite{Sutton+Barto-98}或~\cite{Bertsekas+Tsitsiklis-book1996}了解强化学习相关知识，\citet{Deepmind-atari-arxiv2013}介绍了强化学习方向的\gls{DL}方法。
 
 大部分\gls{ML}算法简单地训练于一个\gls{dataset}上。
 \gls{dataset}可以用很多不同方式来表示。
@@ -583,7 +583,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \gls{ML}保证找到一个在所关注的\emph{大多数}\gls{example:chap5}上\emph{可能}正确的规则。
 
 可惜，即使这样也不能解决整个问题。
-\gls{ML}的\firstgls{no_free_lunch_theorem}表明，在所有可能的数据生成分布上平均之后，每一个分类算法在未事先观测的点上都有相同的错误率。
+\gls{ML}的\firstgls{no_free_lunch_theorem}表明~\citep{Wolpert-1996}，在所有可能的数据生成分布上平均之后，每一个分类算法在未事先观测的点上都有相同的错误率。
 换言之，在某种意义上，没有一个\gls{ML}算法总是比其他的要好。
 我们能够设想的最先进的算法和简单地将所有点归为同一类的简单算法有着相同的平均性能（在所有可能的任务上）。
 
@@ -1388,7 +1388,7 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 
 \gls{SVM}不是唯一可以使用\gls{kernel_trick}来增强的算法。
 许多其他的线性模型也可以通过这种方式来增强。
-使用\gls{kernel_trick}的算法类别被称为\firstgls{kernel_machines}或\firstgls{kernel_methods}\citep{Williams+Rasmussen-nips8,Scholkopf99}。    
+使用\gls{kernel_trick}的算法类别被称为\firstgls{kernel_machines}或\firstgls{kernel_methods}\citep{Williams+Rasmussen-nips8,SchBurSmo99}。    
 
 核机器的一个主要缺点是计算决策函数的成本关于训练\gls{example:chap5}的数目是线性的。
 因为第$i$个\gls{example:chap5}贡献$\alpha_i k(\Vx, \Vx^{(i)})$到决策函数。
@@ -1815,7 +1815,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 一类重要的核函数是\firstgls{local_kernel}，其核函数$k(\Vu,\Vv)$在$\Vu=\Vv$时很大，
 当$\Vu$和$\Vv$距离拉大时而减小。
 局部核可以看作是执行模版匹配的相似函数，用于度量测试\gls{example:chap5} $\Vx$和每个训练\gls{example:chap5} $\Vx^{(i)}$有多么相似。
-近年来深度学习的很多推动力源自研究局部模版匹配的局限性，以及\gls{DL}如何克服这些局限性\citep{NIPS2005_424}。
+近年来深度学习的很多推动力源自研究局部模版匹配的局限性，以及\gls{DL}如何克服这些局限性\citep{Bengio-localfailure-NIPS-2006-small}。
 
 决策树也有平滑学习的局限性，因为它将输入空间分成和叶节点一样多的区间，并在每个区间使用单独的参数（或者有些决策树的拓展有多个参数）。
 如果\gls{target}函数需要至少拥有$n$个叶节点的树才能精确表示，那么至少需要$n$个训练\gls{example:chap5}去拟合。
@@ -1859,7 +1859,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 
 这些问题，即是否可以有效地表示复杂的函数以及所估计的函数是否可以很好地泛化到新的输入，答案是有。
 关键观点是，只要我们通过额外假设生成数据的分布来建立区域间的依赖关系，那么$O(k)$个\gls{example:chap5}足以描述多如$O(2^k)$的大量区间。
-通过这种方式，我们确实能做到非局部的泛化\citep{Bengio+Monperrus-2005,NIPS2005_539}。
+通过这种方式，我们确实能做到非局部的泛化\citep{Bengio+Monperrus-2005,Bengio-Larochelle-NLMP-NIPS-2006-short}。
 为了利用这些优势，许多不同的\gls{DL}算法都提出了一些适用于多种\,\glssymbol{AI}\,任务的隐式或显式的假设。
 
 

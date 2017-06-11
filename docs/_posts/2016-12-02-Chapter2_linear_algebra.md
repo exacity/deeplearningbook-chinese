@@ -180,7 +180,7 @@ share: false
 \begin{equation}
 (\MA\MB)^\top=\MB^\top\MA^\top.
 \end{equation}
-利用向量乘积是标量，标量转置是自身的事实，我们可以证明\eqn?：
+利用两个向量点积的结果是标量，标量转置是自身的事实，我们可以证明\eqn?：
 \begin{equation}
     \Vx^\top \Vy = \left(\Vx^\top \Vy \right)^\top = \Vy^\top \Vx.
 \end{equation}

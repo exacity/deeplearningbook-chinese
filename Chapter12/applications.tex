@@ -148,7 +148,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 % 435
 
 
-这个问题可以使用\firstgls{ASGD}\citep{Bengio+Bengio96,Recht-et-al-NIPS2011}解决。
+这个问题可以使用\firstgls{ASGD}\citep{BenDucVin01-small,Recht-et-al-NIPS2011}解决。
 在这个方法中，几个处理器的核共用存有参数的内存。
 每一个核在无锁情况下读取这些参数并计算对应的梯度，然后在无锁状态下更新这些参数。
 %这种方法减少了每一个\gls{GD}所获得的平均提升，因为一些核把其他的核所更新的参数（写）覆盖了。
@@ -199,7 +199,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 一般来说，加速数据处理系统的一种策略是构造一个系统，这个系统用\firstgls{dynamic_structure}描述图中处理输入的所需计算过程。
 在给定一个输入的情况中，数据处理系统可以动态地决定运行神经网络系统的哪一部分。
 单个神经网络内部同样也存在\gls{dynamic_structure}，给定输入信息，决定特征（\gls{hidden_unit}）哪一部分用于计算。
-这种神经网络中的\gls{dynamic_structure}有时被称为\firstgls{conditional_computation}\citep{bengio2013estimating,bengio-arxiv13-condcomp}。
+这种神经网络中的\gls{dynamic_structure}有时被称为\firstgls{conditional_computation}\citep{Bengio-chapterSLSP-2013,bengio2013estimating}。
 由于模型结构许多部分可能只跟输入的一小部分有关，只计算那些需要的特征可以起到加速的目的。
 % 436 
 
@@ -240,7 +240,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 当\gls{gater}决策的数量很小时，这个策略效果会很好，因为它不是组合的。
 但是当我们想要选择不同的单元或参数子集时，不可能使用``软开关''，因为它需要枚举（和计算输出）所有的\gls{gater}配置。
 为了解决这个问题，许多工作探索了几种方法来训练组合的\gls{gater}。
-\citet{bengio-arxiv13-condcomp}提出使用\gls{gater}概率梯度的若干估计器，而~\citet{Bacon-et-al-RLDM2015,BengioE-et-al-arXiv2015}使用\gls{RL}技术（\firstgls{policy_gradient}）来学习一种条件的~\gls{dropout}~形式（作用于\gls{hidden_unit}块），减少了实际的计算成本，而不会对近似的质量产生负面影响。
+\citet{bengio2013estimating}提出使用\gls{gater}概率梯度的若干估计器，而~\citet{Bacon-et-al-RLDM2015,BengioE-et-al-arXiv2015}使用\gls{RL}技术（\firstgls{policy_gradient}）来学习一种条件的~\gls{dropout}~形式（作用于\gls{hidden_unit}块），减少了实际的计算成本，而不会对近似的质量产生负面影响。
 % 438
 
 
@@ -490,7 +490,7 @@ $s$和$\epsilon$的取值与之前一样。}
 \gls{object_recognition}这个分类任务特别适合于这种形式的\gls{dataset_augmentation}，因为类别信息对于许多变换是不变的，而我们可以简单地对输入应用诸多几何变换。
 如前所述，分类器可以受益于随机转换或者旋转，某些情况下输入的翻转可以增强数据集。
 在专门的\gls{CV}应用中，存在很多更高级的用以\gls{dataset_augmentation}的变换。
-这些方案包括图像中颜色的随机扰动~\citep{Krizhevsky-2012}，以及对输入的非线性几何变形~\citep{chapter-gradient-document-2001}。
+这些方案包括图像中颜色的随机扰动~\citep{Krizhevsky-2012}，以及对输入的非线性几何变形~\citep{LeCun98-small}。
 % 445
 
 
@@ -557,7 +557,7 @@ f^*_{\text{ASR}}(\MX) =  \underset{\Vy}{\arg\max}  P^*(\RVy \mid \RMX = \MX),
 % 448
 
 完全抛弃~\glssymbol{HMM}~并转向研究\gls{end_to_end}\gls{DL}\gls{SR}系统是至今仍然活跃的另一个重要推动。
-这个领域第一个主要的突破是~\citet{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}\gls{RNN}（见\secref{sec:the_long_short_term_memory_and_other_gated_rnns}），使用了帧－\gls{phoneme}排列的~\glssymbol{MAP}~推断，就像~\citet{chapter-gradient-document-2001}以及CTC框架~\citep{Graves-et-al-2006,Graves-book2012}中一样。
+这个领域第一个主要的突破是~\citet{Graves-et-al-ICASSP2013}，其中训练了一个深度的\gls{LSTM}\gls{RNN}（见\secref{sec:the_long_short_term_memory_and_other_gated_rnns}），使用了帧－\gls{phoneme}排列的~\glssymbol{MAP}~推断，就像~\citet{LeCun98-small}以及CTC框架~\citep{Graves-et-al-2006,Graves-book2012}中一样。
 一个深度\gls{RNN}~\citep{Graves-et-al-ICASSP2013}每个\gls{time_step}的各层都有状态变量，两种\gls{unfolded_graph}的方式导致两种不同深度：一种是普通的根据层的堆叠衡量的深度，另一种根据时间\gls{unfolding}衡量的深度。
 这个工作把TIMIT数据集上\gls{phoneme}的错误率记录降到了的新低$17.7$\%。
 关于应用于其他领域的深度\gls{RNN}的变种可以参考~\citet{Pascanu-et-al-ICLR2014,Chung-et-al-NIPSDL2014-small}。
@@ -707,7 +707,7 @@ P({\tt THE\ DOG\ RAN\ AWAY}) = P_3({\tt THE\ DOG\ RAN}) P_3({\tt DOG\ RAN\ AWAY}
 % -- 452 --
 
 使用\gls{distributed_representation}来改进\gls{NLP}模型的基本思想不必局限于\gls{NN}。
-它还可以用于\gls{graphical_model}，其中\gls{distributed_representation}是多个\gls{latent_variable}的形式。
+它还可以用于\gls{graphical_model}，其中\gls{distributed_representation}是多个\gls{latent_variable}的形式\citep{Mnih+Hinton-2007}。
 
 \subsection{高维输出}
 \label{sec:high_dimensional_outputs}
@@ -937,7 +937,7 @@ $|\SetV|$因子可以降低到$\log |\SetV|$一样低，而无需执行与$|\Set
 最早的机器翻译\gls{NN}探索中已经纳入了\gls{encoder}和\gls{decoder}的想法(Allen 1987; Chrisman 1991; Forcada
 and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途是通过\gls{NLM}升级翻译系统的\gls{language_model}~\citep{Schwenk-et-al-IWSLT2006,Schwenk-2010}。
 之前，大多数机器翻译系统在该组件使用~\gls{n_gram}~模型。
-机器翻译中基于~\gls{n_gram}~的模型不仅包括传统的回退~\gls{n_gram}~模型，而且包括\textbf{最大熵语言模型}(maximum entropy language models)，其中给定上下文中常见的词，affine-softmax层预测下一个词。
+机器翻译中基于~\gls{n_gram}~的模型不仅包括传统的回退~\gls{n_gram}~模型~\citep{Jelinek+Mercer80,Katz87,Chen+Goodman99}，而且包括\textbf{最大熵语言模型}(maximum entropy language models)~\citep{MaxEnt96}，其中给定上下文中常见的词，affine-softmax层预测下一个词。
 
 传统\gls{language_model}仅仅报告自然语言句子的概率。
 因为机器翻译涉及给定输入句子产生输出句子，所以将自然\gls{language_model}扩展为条件的是有意义的。
