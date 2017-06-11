@@ -1151,7 +1151,7 @@ $\Vb^f, \MU^f, \MW^f$分别是\gls{bias_aff}、输入权重和\gls{forget_gate}�
 \subsection{引导信息流的正则化}
 \label{sec:regularizing_to_encourage_information_flow}
 \gls{gradient_clipping}有助于处理爆炸的\gls{gradient}，但它无助于消失的\gls{gradient}。
-为了解决消失的\gls{gradient}问题并更好地捕获\gls{long_term_dependency}，我们讨论了如下想法：在展开循环架构的\gls{computational_graph}中，沿着与弧度相关联的\gls{gradient}乘积接近1的部分创建路径。
+为了解决消失的\gls{gradient}问题并更好地捕获\gls{long_term_dependency}，我们讨论了如下想法：在展开循环架构的\gls{computational_graph}中，沿着与弧边相关联的\gls{gradient}乘积接近1的部分创建路径。
 在\secref{sec:the_long_short_term_memory_and_other_gated_rnns}中已经讨论过，实现这一点的一种方法是使用~\glssymbol{LSTM}~以及其他自循环和\gls{gated}机制。
 另一个想法是\gls{regularization}或约束参数，以引导``信息流''。
 特别是即使\gls{loss_function}只对序列尾部的输出作惩罚，我们也希望\gls{gradient}向量$\nabla_{\Vh^{(t)}} L$在\gls{backward_propagation}时能维持其幅度。
