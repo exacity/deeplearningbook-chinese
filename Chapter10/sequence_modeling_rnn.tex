@@ -932,7 +932,7 @@ $n$步之后，我们将得到$\MJ^n(\Vg + \delta \Vv)$。
 线性自连接的\gls{hidden_unit}可以模拟滑动平均的行为。
 这种\gls{hidden_unit}称为\firstgls{leaky_unit}。
 
-$d$~\gls{time_step}的\gls{skip_connection}可以确保单元总能被先前的$d$个\gls{time_step}值影响。
+$d$~\gls{time_step}的\gls{skip_connection}可以确保单元总能被$d$个\gls{time_step}前的那个值影响。
 使用权重接近1的线性自连接是确保该单元可以访问过去值的不同方式。
 线性自连接通过调节实值$\alpha$更平滑灵活地调整这种效果，而不是调整整数值的跳跃长度。
 
