@@ -1707,7 +1707,7 @@ $\hat{y}$的更新值为
 一层的输入通常是前一层的非线性\gls{activation_function}（如\gls{rectified_linear}函数）的输出。
 因此，输入的统计量更符合非高斯，而更不服从线性操作的标准化。
 
-\chapref{chap:convolutional_networks}所述的卷积网络，在特征映射中每个空间位置同样地标准化$\Vmu$和$\Vsigma$是很重要的，能使特征映射的统计量不因空间位置而保持相同。
+\chapref{chap:convolutional_networks}所述的卷积网络，在特征映射中每个空间位置同样地标准化$\Vmu$和$\Vsigma$是很重要的，能使特征映射的统计量在不同的空间位置，仍然保持相同。
 
 \subsection{坐标下降}
 \label{sec:coordinate_descent}
@@ -1915,7 +1915,7 @@ Polyak平均\citep{Polyak+Juditsky-1992}会平均优化算法在参数空间访�
 
 \gls{curriculum_learning}研究的另一个重要贡献体现在训练循环\gls{NN}捕获长期依赖：
 \cite{Zaremba+Sutskever-arxiv2014}发现使用\emph{\gls{stochastic_curriculum}}获得了更好的结果，其中容易和困难的示例混合在一起，随机提供给学习者，更难示例（这些具有长期依赖）的平均比例在逐渐上升。
-具有确定性课程，没有发现超过基线（完整\gls{training_set}的普通训练）的改进。
+而使用确定性课程，并没有发现超过基线（完整\gls{training_set}的普通训练）的改进。
 
 现在我们已经介绍了一些基本的\gls{NN}模型，以及如何进行正则化和优化。
 在接下来的章节中，我们转向特化的\gls{NN}家族，允许其扩展到能够处理很大规模的数据和具有特殊结构的数据。
