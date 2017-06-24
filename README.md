@@ -119,4 +119,10 @@ Markdown格式
 
 
 
+HTML格式
+------------
+读者可以使用[pdf2htmlEX](https://github.com/coolwanglu/pdf2htmlEX)进行转换，直接将PDF转换为HTML。
+
+
+
 Updating.....
