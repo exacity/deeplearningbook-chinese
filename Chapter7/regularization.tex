@@ -813,7 +813,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 在这里我们使用$L^2$惩罚，但也可以使用其他选择。
 
 这种方法由\cite{LasserreJ2006}提出，\gls{regularization}一个模型（\gls{supervised}模式下训练的分类器）的参数，使其接近另一个\gls{unsupervised}模式下训练的模型（捕捉观察到的输入数据的分布）的参数。
-构造的这种架构使得分类模型中的许多参数能与\gls{unsupervised}模型中对应的的参数匹配。
+构造的这种架构使得分类模型中的许多参数能与\gls{unsupervised}模型中对应的参数匹配。
 
 参数范数惩罚是\gls{regularization}参数使其彼此接近的一种方式，而更流行的方法是使用约束：\emph{强迫某些参数相等}。
 由于我们将各种模型或模型组件解释为共享唯一的一组参数，这种\gls{regularization}方法通常被称为\firstgls{parameter_sharing}。

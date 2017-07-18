@@ -181,7 +181,7 @@ $q$分布经常会取一些简单常用的分布使得我们能够从$q$分布�
 在这种情况下，为了从分布$p_{\text{model}}(\RVx)$中近似采样，我们引入了一种称为\firstgls{markov_chain}的数学工具。
 利用\gls{markov_chain}来进行\gls{monte_carlo}估计的这一类算法被称为\firstall{mcmc}方法。
 \citet{koller-book2009}花了大量篇幅来描述\gls{mcmc}算法在\gls{ML}中的应用。
-\glssymbol{mcmc}~技术最标准、最一般的的理论保证只适用于那些各状态概率均不为零的模型。
+\glssymbol{mcmc}~技术最标准、最一般的理论保证只适用于那些各状态概率均不为零的模型。
 因此，这些技术最方便的使用方法是用于从\firstgls{energy_based_model}即$p(\Vx)\propto \exp(-E(\Vx))$中采样，见\secref{sec:energy_based_models}。
 在~\glssymbol{energy_based_model}~的公式表述中，每一个状态所对应的概率都不为零。
 事实上，\glssymbol{mcmc}~方法可以被广泛地应用在包含$0$概率状态的许多概率分布中。

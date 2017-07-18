@@ -89,9 +89,10 @@
 @endymecy name:YUE-DaJiong @9578577 @linzhp @cnscottzheng @germany-zhu  @zhangyafeikimi @showgood163 @gump88
 @kangqf @NeutronT @badpoem @kkpoker @Seaball @wheaio @angrymidiao @ZhiweiYang @corenel @zhaoyu611 @SiriusXDJ @dfcv24 EmisXXY
 FlyingFire vsooda @friskit-china @poerin @ninesunqian @JiaqiYao @Sofring @wenlei @wizyoung @imageslr @@indam @XuLYC
-@zhouqingping @freedomRen @runPenguin @pkuwwt @wuqi @tjliupeng @neo0801 @jt827859032 @demolpc
+@zhouqingping @freedomRen @runPenguin @pkuwwt @wuqi @tjliupeng @neo0801 @jt827859032 @demolpc @fishInAPool
+@xiaolangyuxin @jzj1993 @whatbeg
 
-如有遗漏，请务必通知我们，可以发邮件至`echo c3dvcmQueW9ya0BnbWFpbC5jb20K | base64 -d`。
+如有遗漏，请务必通知我们，可以发邮件至`echo c3dvcmQueW9ya0BnbWFpbC5jb20K | base64 --decode`。
 这是我们必须要感谢的，所以不要不好意思。
 
 
