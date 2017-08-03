@@ -1,6 +1,6 @@
 # Deep Learning 中文翻译
 
-在众多网友的帮助和校对下，中文版终于可以出版了。尽管还有很多问题，但至少90%的内容是可读的，并且是准确的。
+在众多网友的帮助和校对下，中文版终于出版了。尽管还有很多问题，但至少90%的内容是可读的，并且是准确的。
 我们尽可能地保留了原书[Deep Learning](http://www.deeplearningbook.org/)中的意思并保留原书的语句。
 
 然而我们水平有限，我们无法消除众多读者的方差。我们仍需要大家的建议和帮助，一起减小翻译的偏差。
@@ -18,7 +18,7 @@
 面向的读者
 --------------------
 
-请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.5-beta/dlbook_cn_v0.5-beta.pdf.zip)阅读(或[百度云](https://pan.baidu.com/s/1o8v19Om))。
+请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.5-beta/dlbook_cn_v0.5-beta.pdf.zip)阅读。
 
 这一版准确性已经有所提高，读者可以以中文版为主、英文版为辅来阅读学习，但我们仍建议研究者阅读[原版](http://www.deeplearningbook.org/)。
 
@@ -31,9 +31,9 @@
 如果你觉得中文版不行，希望你能多提建议。非常感谢各位！
 纸质版也会进一步更新，需要大家更多的建议和意见，一起完善中文版。
 
-纸质版目前在人民邮电出版社的异步社区预售，见[预售地址](http://www.epubit.com.cn/book/details/4278)。
+纸质版目前在人民邮电出版社的异步社区出售，见[地址](http://www.epubit.com.cn/book/details/4278)。
 价格不低，但看了样本之后，我们认为物有所值。
-注意，我们不会通过媒体进行宣传，希望大家自行判断是否购买纸质版。
+注意，我们不会通过媒体进行宣传，希望大家先看电子版内容，再判断是否购买纸质版。
 
 
 以下是开源的具体原因：
@@ -41,7 +41,7 @@
  1. 我们不是文学工作者，不专职翻译。单靠我们，无法给出今天的翻译，众多网友都给我们提出了宝贵的建议，因此开源帮了很大的忙。出版社会给我们稿费（我们也不知道多少，可能2万左右），我们也不好意思自己用，商量之后觉得捐出是最合适的，以所有贡献过的网友的名义。
  2. PDF电子版对于技术类书籍来说是很重要的，随时需要查询，拿着纸质版到处走显然不合适。国外很多技术书籍都有对应的电子版（虽然不一定是正版），而国内的几乎没有。个人认为这是出版社或者作者认为国民素质还没有高到主动为知识付费的境界，所以不愿意"泄露"电子版。时代在进步，我们也需要改变。特别是翻译作品普遍质量不高的情况下，要敢为天下先。
  3. 深度学习发展太快，日新月异，所以我们希望大家更早地学到相关的知识。我觉得原作者开放PDF电子版也有类似的考虑，也就是先阅读后付费。我们认为中国人口素质已经足够高，懂得为知识付费。当然这不是付给我们的，是付给出版社的，出版社再付给原作者。我们不希望中文版的销量因PDF电子版的存在而下滑。出版社只有值回了版权才能在以后引进更多的优秀书籍。我们这个开源翻译先例也不会成为一个反面案例，以后才会有更多的PDF电子版。
- 4. 开源也涉及版权问题，出于版权原因，我们不再更新此初版PDF文件，请大家以最终的纸质版为准。
+ 4. 开源也涉及版权问题，出于版权原因，我们不再更新此初版PDF文件，请大家以最终的纸质版为准。（但源码会一直更新）
 
 
 
@@ -90,7 +90,7 @@
 @kangqf @NeutronT @badpoem @kkpoker @Seaball @wheaio @angrymidiao @ZhiweiYang @corenel @zhaoyu611 @SiriusXDJ @dfcv24 EmisXXY
 FlyingFire vsooda @friskit-china @poerin @ninesunqian @JiaqiYao @Sofring @wenlei @wizyoung @imageslr @@indam @XuLYC
 @zhouqingping @freedomRen @runPenguin @pkuwwt @wuqi @tjliupeng @neo0801 @jt827859032 @demolpc @fishInAPool
-@xiaolangyuxin @jzj1993 @whatbeg
+@xiaolangyuxin @jzj1993 @whatbeg LongXiaJun jzd
 
 如有遗漏，请务必通知我们，可以发邮件至`echo c3dvcmQueW9ya0BnbWFpbC5jb20K | base64 --decode`。
 这是我们必须要感谢的，所以不要不好意思。
