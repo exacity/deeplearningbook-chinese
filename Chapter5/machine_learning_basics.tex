@@ -1777,7 +1777,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
     \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_1d_color} & \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_2d_color} & \includegraphics[width=0.3\textwidth]{Chapter5/figures/curse_3d_color}
 \end{tabular}
 \fi
-\caption{当数据的相关维度增大时（从左向右），我们感兴趣的配置数目会随之指数级增长。\emph{(左)}在这个一维的例子中，我们用一个变量来区分所感兴趣的仅仅$10$个区域。当每个区域都有足够的样本数时（图中每个样本对应了一个细胞），学习算法能够轻易地\gls{generalization}得很好。\gls{generalization}的一个直接方法是估计目标函数在每个区域的值（可能是在相邻区域之间插值）。\emph{(中)}在二维情况下，对每个变量区分$10$个不同的值更加困难。我们需要追踪$10\times10=100$个区域，至少需要很多样本来覆盖所有的区域。\emph{(右)}三维情况下，区域数量增加到了$10^3=1000$，至少需要那么多的样本。对于需要区分的$d$维以及$v$个值来说，我们需要$O(v^d)$个区域和样本。这就是\gls{curse_of_dimensionality}的一个示例。感谢由Nicolas Chapados提供的图片。}
+\caption{当数据的相关维度增大时（从左向右），我们感兴趣的配置数目会随之指数级增长。\emph{(左)}在这个一维的例子中，我们用一个变量来区分所感兴趣的仅仅$10$个区域。当每个区域都有足够的样本数时（每个区域对应于图中的一个单元格），学习算法能够轻易地\gls{generalization}得很好。\gls{generalization}的一个直接方法是估计目标函数在每个区域的值（可能是在相邻区域之间插值）。\emph{(中)}在二维情况下，对每个变量区分$10$个不同的值更加困难。我们需要追踪$10\times10=100$个区域，至少需要很多样本来覆盖所有的区域。\emph{(右)}三维情况下，区域数量增加到了$10^3=1000$，至少需要那么多的样本。对于需要区分的$d$维以及$v$个值来说，我们需要$O(v^d)$个区域和样本。这就是\gls{curse_of_dimensionality}的一个示例。感谢由Nicolas Chapados提供的图片。}
 \label{fig:chap5_curse}
 \end{figure}
 
