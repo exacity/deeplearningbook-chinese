@@ -795,7 +795,7 @@
 温和的振荡是良好的，容易在训练随机\gls{cost_function}（例如使用\,\gls{dropout}\,的\gls{cost_function}）时出现。
 如果\gls{learning_rate}太小，那么学习过程会很缓慢。
 如果初始\gls{learning_rate}太低，那么学习可能会卡在一个相当高的\gls{cost}值。
-通常，就总训练时间和最终\gls{cost}值而言，最优初始\gls{learning_rate}的效果会好于大约迭代$100$次左右后最佳的效果。
+通常，就总训练时间和最终\gls{cost}值而言，最优初始\gls{learning_rate}会高于大约迭代$100$次左右后达到最佳效果的\gls{learning_rate}。
 因此，通常最好是检测最早的几轮迭代，选择一个比在效果上表现最佳的\gls{learning_rate}更大的\gls{learning_rate}，但又不能太大导致严重的震荡。  
 
 % 287 mid

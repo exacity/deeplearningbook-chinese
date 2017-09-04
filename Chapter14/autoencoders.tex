@@ -364,7 +364,7 @@ $g(f(\tilde \Vx))$对可能产生$\tilde \Vx$的原始点$\Vx$的质心进行估
 这类模型将在\secref{sec:gaussian_bernoulli_rbms}给出更详细的介绍；对于现在的讨论，我们只需知道这个模型能显式的给出$p_{\text{model}}(\Vx; \Vtheta)$。
 当~\glssymbol{RBM}~使用\firstgls{denoising_score_matching}算法~\citep{Kingma+LeCun-2010-small}训练时，它的学习算法与训练对应的\gls{DAE}是等价的。
 在一个确定的噪声水平下，\gls{regularization}的\gls{score_matching}不是一致估计量；相反它会恢复分布的一个模糊版本。
-然而，当噪声水平趋向于0且训练样本数趋向与无穷时，一致性就会恢复。
+然而，当噪声水平趋向于0且训练样本数趋向于无穷时，一致性就会恢复。
 我们将会在\secref{sec:denoising_score_matching}更详细地讨论\gls{denoising_score_matching}。
 
 
@@ -475,7 +475,7 @@ $n$维\gls{manifold}在每个点处都具有$n$维切平面。
 所有\gls{AE}的训练过程涉及两种推动力的折衷：
 \begin{enumerate}
  \item 学习训练样本$\Vx$的\gls{representation} $\Vh$使得$\Vx$能通过\gls{decoder}近似地从$\Vh$中恢复。
-$\Vx$是从训练数据挑出的这一事实很关键，因为这意味着在\gls{AE}不需要成功\gls{reconstruction}不属于数据生成分布下的输入。
+$\Vx$是从训练数据挑出的这一事实很关键，因为这意味着\gls{AE}不需要成功\gls{reconstruction}不属于数据生成分布下的输入。
  \item 满足约束或正则惩罚。
 这可以是限制\gls{AE}\gls{capacity}的架构约束，也可以是加入到\gls{reconstruction}代价的一个正则项。
 这些技术一般倾向那些对输入较不敏感的解。

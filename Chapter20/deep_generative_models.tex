@@ -1815,7 +1815,7 @@ $\vcenter{\hbox{
 \subsection{回退训练过程}
 \label{sec:walk_back_training_procedure}
 回退训练过程由~\citet{Bengio-et-al-NIPS2013-small} 等人提出，作为一种加速\gls{DAE}生成训练收敛的方法。
-不像执行一步编码-解码重建，该过程有代替的多个随机编码-解码步骤组成（如在生成\gls{markov_chain}中），以训练样本初始化（正如在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中描述的\gls{contrastive_divergence}算法），并惩罚最后的概率重建（或沿途的所有重建）。
+不像执行一步编码-解码重建，该过程由交替的多个随机编码-解码步骤组成（如在生成\gls{markov_chain}中），以训练样本初始化（正如在\secref{sec:stochastic_maximum_likelihood_and_contrastive_divergence}中描述的\gls{contrastive_divergence}算法），并惩罚最后的概率重建（或沿途的所有重建）。
 
 训练$k$个步骤与训练一个步骤是等价的（在实现相同稳态分布的意义上），但是实际上可以更有效地去除来自数据的伪模式。
 

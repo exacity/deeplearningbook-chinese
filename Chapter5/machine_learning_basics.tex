@@ -442,7 +442,7 @@ Iris（鸢尾花卉）\gls{dataset}~\citep{Fisher-1936}是统计学家和\gls{ML
 \gls{capacity}高的模型可能会过拟合，因为记住了不适用于\gls{test_set}的\gls{training_set}性质。
 
 一种控制训练算法容量的方法是选择\firstgls{hypothesis_space}，即学习算法可以选择为解决方案的函数集。
-例如，\gls{linear_regression}函数将关于其输入的所有线性函数作为假设空间。
+例如，\gls{linear_regression}算法将关于其输入的所有线性函数作为假设空间。
 广义\gls{linear_regression}的假设空间包括多项式函数，而非仅有线性函数。
 这样做就增加了模型的容量。
 
@@ -1556,7 +1556,7 @@ $\MX$对应的无偏样本协方差矩阵给定如下
 这表明$\Vz$的协方差满足对角的要求：
 \begin{align}
     \text{Var}[\Vz] &= \frac{1}{m-1} \MZ^\Tsp\MZ \\
-    &= \frac{1}{m-1} \MW^\Tsp \MX^\Tsp \MX^\Tsp \MW \\
+    &= \frac{1}{m-1} \MW^\Tsp \MX^\Tsp \MX \MW \\
     &= \frac{1}{m-1} \MW^\Tsp\MW \VSigma^2 \MW^\Tsp\MW \\
     &= \frac{1}{m-1} \VSigma^2 ,
 \end{align}
@@ -1680,7 +1680,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 很多核学习算法需要构建一个$m\times m$的矩阵$G_{i,j}=k(\Vx^{(i)}, \Vx^{(j)})$。
 构建这个矩阵的计算量是$O(m^2)$。
 当\gls{dataset}是几十亿个\gls{example:chap5}时，这个计算量是不能接受的。
-在学术界，\gls{DL}从2006年开始收到关注的原因是，在数以万计\gls{example:chap5}的中等规模\gls{dataset}上，\gls{DL}在新\gls{example:chap5}上比当时很多热门算法泛化得更好。
+在学术界，\gls{DL}从2006年开始受到关注的原因是，在数以万计\gls{example:chap5}的中等规模\gls{dataset}上，\gls{DL}在新\gls{example:chap5}上比当时很多热门算法泛化得更好。
 不久后，\gls{DL}在工业界受到了更多的关注，因为其提供了一种训练大\gls{dataset}上的非线性模型的可扩展方式。
 
 我们将会在\chapref{chap:optimization_for_training_deep_models}继续探讨\gls{SGD}及其很多改进方法。
@@ -1800,7 +1800,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 这里，我们解释为什么仅依靠平滑先验不足以应对这类任务。
 
 有许多不同的方法来显式或隐式地表示学习函数应该具有光滑或局部不变的先验。
-所有这些不同的方法都旨在鼓励学习过程能够学习出函数$f^*$对于大多数设置$\Vx$和小变动$\epsilon$，都满足条件
+所有这些不同的方法都旨在鼓励学习过程能够学习出函数$f^*$，对于大多数设置$\Vx$和小变动$\epsilon$，都满足条件
 \begin{equation}
     f^*(\Vx) \approx f^*(\Vx + \epsilon).
 \end{equation}

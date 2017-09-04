@@ -171,7 +171,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 
 
 减少推断所需开销的一个关键策略是\firstgls{model_compression}~\citep{bucilua2006model}。
-\gls{model_compression}的基本思想是用一个更小的模型取代替原始耗时的模型，从而使得用来存储与评估所需的内存与运行时间更少。
+\gls{model_compression}的基本思想是用一个更小的模型取代原始耗时的模型，从而使得用来存储与评估所需的内存与运行时间更少。
 
 
 
@@ -746,7 +746,7 @@ P({\tt THE\ DOG\ RAN\ AWAY}) = P_3({\tt THE\ DOG\ RAN}) P_3({\tt DOG\ RAN\ AWAY}
      & + 1_{i \in \SetT} P(y=i\mid C, i \in \SetT) P(i \in \SetT\mid C),
 \end{align}
 其中$P(y=i\mid C, i \in \SetL)$由\gls{NLM}提供$P(y=i\mid C, i \in \SetT)$由~\gls{n_gram}~模型提供。
-稍作修改，这种方法也可以在\gls{NLM}模型的~\ENNAME{softmax}~层中使用额外的输出值，而不是单独的~\ENNAME{sigmoid}~单元。
+稍作修改，这种方法也可以在\gls{NLM}的~\ENNAME{softmax}~层中使用额外的输出值，而不是单独的~\ENNAME{sigmoid}~单元。
 
 \gls{shortlist}方法的一个明显缺点是，\gls{NLM}的潜在泛化优势仅限于最常用的词，这大概是最没用的。
 这个缺点引发了处理高维输出替代方法的探索，如下所述。
@@ -1019,7 +1019,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 当用一种语言书写的句子中的词与另一种语言的翻译语句中的相应词对齐时，可以使对应的\gls{word_embedding}相关联。
 早期的工作表明，我们可以学习将一种语言中的\gls{word_embedding}与另一种语言中的\gls{word_embedding}相关联的翻译矩阵\citep{Kocisky-et-al-ACL2014}，与传统的基于短语表中频率计数的方法相比，可以产生较低的对齐错误率。
 更早的工作\citep{Klementiev-et-al-COLING2012}也对跨语言词向量进行了研究。 
-这种方法的存在很多扩展。
+这种方法存在很多的扩展。
 例如，允许在更大数据集上训练的更高效的跨语言对齐~\citep{Gouws-et-al-arxiv2014} 。
 
 \subsection{历史展望}
@@ -1132,7 +1132,7 @@ and Ñeco 1997)，而翻译中\gls{NN}的第一个大规模有竞争力的用途
 这类似于\gls{RL}的情况，其中仅观察到所选动作的奖励。
 一般来说，\gls{RL}会涉及许多动作和许多奖励的序列。
 \gls{bandit}~情景是\gls{RL}的特殊情况，其中学习者仅采取单一动作并接收单个奖励。
-\gls{bandit}~问题在学习者知道哪个奖励与哪个动作相关联的时更容易。
+\gls{bandit}~问题在学习者知道哪个奖励与哪个动作相关联的时候，是更容易的。
 在一般的\gls{RL}场景中，高奖励或低奖励可能是由最近的动作或很久以前的动作引起的。
 术语\firstgls{contextual_bandit}指的是在一些输入变量可以通知决定的上下文中采取动作的情况。
 例如，我们至少知道用户身份，并且我们要选择一个项目。
