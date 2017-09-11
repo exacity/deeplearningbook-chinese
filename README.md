@@ -19,6 +19,7 @@
 --------------------
 
 请直接下载[PDF](https://github.com/exacity/deeplearningbook-chinese/releases/download/v0.5-beta/dlbook_cn_v0.5-beta.pdf)阅读。
+不打算提供EPUB等格式，如有需要请自行修改。
 
 这一版准确性已经有所提高，读者可以以中文版为主、英文版为辅来阅读学习，但我们仍建议研究者阅读[原版](http://www.deeplearningbook.org/)。
 
