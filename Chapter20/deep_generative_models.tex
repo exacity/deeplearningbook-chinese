@@ -388,8 +388,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 
 \glssymbol{DBM}~一个不理想的特性是从中采样是相对困难的。 
-\glssymbol{DBN}~只需要在其顶部的一对层中使用~\glssymbol{mcmc}~采样。
-其他层仅在采样过程末尾涉及，并且只需在一个高效的\gls{ancestral_sampling}过程。
+在一次高效的\gls{ancestral_sampling}过程中，\glssymbol{DBN}~只需要在其顶部的一对层中使用~\glssymbol{mcmc}~采样，而其他层仅在采样过程末尾参与。
 要从~\glssymbol{DBM}~生成样本，必须在所有层中使用~\glssymbol{mcmc}，并且模型的每一层都参与每个\gls{markov_chain}转移。
 
 
@@ -455,7 +454,7 @@ P(h_k^{(2)} =1  \mid  \Vh^{(1)}) = \sigma \big(\Vh^{(1)\top} \MW_{:,k}^{(2)} \bi
 
 应用这些一般的方程，我们得到以下更新规则（再次忽略\gls{bias_aff}项）：
 \begin{align} \label{eq:2033h1}
- h_j^{(1)} &= \sigma  \Big(  \sum_i v_i \MW_{i,j}^{(1)} 
+ \hat h_j^{(1)} &= \sigma  \Big(  \sum_i v_i \MW_{i,j}^{(1)}
  + \sum_{k^{\prime}} \MW_{j,k^{\prime}}^{(2)} \hat h_{k^{\prime}}^{(2)}  \Big), ~\forall j ,\\
  \label{eq:2034h2}
  \hat h_{k}^{(2)} &=  \sigma  \Big(  \sum_{j^{\prime}} \MW_{j^{\prime},k}^{(2)}
