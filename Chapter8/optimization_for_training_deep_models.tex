@@ -400,7 +400,7 @@
 
 除了\gls{weight_space_symmetry}，很多\gls{NN}还有其他导致不可辨认的原因。
 例如，在任意\gls{rectified_linear}网络或者~\gls{maxout}~网络中，
-我们可以将传入权重和\gls{bias_aff}扩大$\alpha$倍，然后将传出权重扩大$\frac{1}{\alpha}$倍，而保持模型等价。
+我们可以将传入权重和\gls{bias_aff}放缩$\alpha$倍，然后将传出权重放缩$\frac{1}{\alpha}$倍，而保持模型等价。
 这意味着，如果\gls{cost_function}不包括如\gls{weight_decay}这种直接依赖于权重而非模型输出的项，那么\gls{rectified_linear}网络或者~\gls{maxout}~网络的每一个\gls{local_minimum}都在等价的\gls{local_minima}的$(m\times n)$维双曲线上。
 % -- 277 mid
 
@@ -937,11 +937,11 @@
 
 
 这解释了\gls{momentum}更新的基本形式，但具体什么是力呢？
-力正比于\gls{cost_function}的负梯度$-\nabla_{\Vtheta} J(\Vtheta)$。
+一个力正比于\gls{cost_function}的负梯度$-\nabla_{\Vtheta} J(\Vtheta)$。
 该力推动粒子沿着\gls{cost_function}表面下坡的方向移动。
 \gls{GD}算法基于每个梯度简单地更新一步，而使用\gls{momentum}算法的牛顿方案则使用该力改变粒子的速度。
 我们可以将粒子视作在冰面上滑行的冰球。
-每当它沿着表面最陡的部分下降时，它会累积继续在该方向上滑行的速度，直到其开始向上滑动为止。
+每当它沿着表面最陡的部分下降时，它会沿该方向加速滑行，直到开始向上滑动为止。
 % 291 head
 
 
@@ -1155,7 +1155,7 @@
 这说明设置\gls{bias_aff}为应用于\gls{training_set}上输出边缘统计的\gls{activation_function}的逆。
 例如，如果输出是类上的分布，且该分布是高度偏态分布，第$i$类的边缘概率由某个向量$\Vc$的第$i$个元素给定，那么我们可以通过求解方程$\text{softmax}(\Vb)=\Vc$来设置偏置向量$\Vb$。
 这不仅适用于分类器，也适用于我们将在第三部分遇到的模型，例如\gls{AE}和\gls{BM}。
-这些模型拥有输出类似于输入数据$\Vx$的网络层，非常有助于初始化这些层的偏置以匹配$\Vx$上的边缘分布。
+这些模型拥有输出类似于输入数据$\Vx$的网络层，初始化这些层的偏置以匹配$\Vx$上的边缘分布将有助于模型学习。
 % 297 mid
 
 
@@ -1448,9 +1448,9 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 其结果是，只有参数很少的网络才能在实际中用\gls{newton_method}训练。
 在本节的剩余部分，我们将讨论一些试图保持\gls{newton_method}优点，同时避免计算障碍的替代算法。
 
-\subsection{\glsentrytext{CG}}
+\subsection{\glsentrytext{CG}法}
 \label{sec:conjugate_gradients}
-\gls{CG}是一种通过迭代下降的\firstgls{conjugate_directions}以有效避免\,\gls{hessian}\,矩阵求逆计算的方法。
+\gls{CG}法是一种通过迭代下降的\firstgls{conjugate_directions}以有效避免\,\gls{hessian}\,矩阵求逆计算的方法。
 这种方法的灵感来自于对最速下降方法弱点的仔细研究（详细信息请查看\secref{sec:gradient_based_optimization}），其中线搜索迭代地用于与梯度相关的方向上。
 \figref{fig:chap8_steepest_descent_quadratic}说明了该方法在二次碗型目标中如何表现的，是一个相当低效的来回往复，锯齿形模式。
 这是因为每一个由梯度给定的线搜索方向，都保证正交于上一个线搜索方向。
@@ -1481,7 +1481,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 这产生了锯齿形的过程。
 在当前梯度方向下降到极小值，我们必须重新最小化之前梯度方向上的目标。
 因此，通过遵循每次线搜索结束时的梯度，我们在某种程度上撤销了在之前线搜索的方向上取得的进展。
-\gls{CG}试图解决这个问题。
+\gls{CG}法试图解决这个问题。
 
 在\gls{CG}法中，我们寻求一个和先前线搜索方向\firstgls{conjugate}的搜索方向，即它不会撤销该方向上的进展。
 在训练迭代$t$时，下一步的搜索方向$\Vd_t$的形式如下：
@@ -1515,11 +1515,11 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 \end{enumerate}
 对于二次曲面而言，共轭方向确保梯度沿着前一方向大小不变。
 因此，我们在前一方向上仍然是极小值。
-其结果是，在$k$-维参数空间中，\gls{CG}只需要至多$k$次线搜索就能达到极小值。
-\gls{CG}算法如\algref{alg:cg}所示。
+其结果是，在$k$-维参数空间中，\gls{CG}法只需要至多$k$次线搜索就能达到极小值。
+\gls{CG}法如\algref{alg:cg}所示。
 
 \begin{algorithm}[ht]
-\caption{\gls{CG}方法}
+\caption{\gls{CG}法}
 \label{alg:cg}
 \begin{algorithmic}
 \REQUIRE 初始参数 $\Vtheta_{0}$
@@ -1532,7 +1532,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
     \STATE 计算梯度：$\Vg_{t} \leftarrow
          \frac{1}{m}\nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),\Vy^{(i)})$ 
     \STATE 计算 $\beta_{t} = \frac{(\Vg_{t}-\Vg_{t-1})^\top \Vg_{t}}{\Vg_{t-1}^\top \Vg_{t-1}}$  (Polak-Ribi\`{e}re)
-    \STATE (非线性\gls{CG}：视情况可重置$\beta_{t}$为零，
+    \STATE (非线性\gls{CG}法：视情况可重置$\beta_{t}$为零，
            例如  $t$是常数$k$的倍数时，如 $k=5$)
     \STATE 计算搜索方向： $\Vrho_{t} = -\Vg_{t} + \beta_{t} \Vrho_{t-1}$ 
     \STATE 执行\gls{line_search}寻找：$\epsilon^{*} = \arg\!\min_{\epsilon}
@@ -1545,23 +1545,23 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 \end{algorithm}
 
 
-\paragraph{\gls{nonlinear_CG}：}
+\paragraph{\gls{nonlinear_CG}法：}
 目前，我们已经讨论了用于二次\gls{objective_function}的\gls{CG}法。
 当然，本章我们主要关注于探索训练\gls{NN}和其他相关\gls{DL}模型的优化方法，其对应的\gls{objective_function}比二次函数复杂得多。
 或许令人惊讶，\gls{CG}法在这种情况下仍然是适用的，尽管需要作一些修改。
 没有目标是二次的保证，共轭方向也不再保证在以前方向上的目标仍是极小值。
-其结果是，\textbf{\gls{nonlinear_CG}}\,算法会包括一些偶尔的重设，\gls{CG}法沿未修改的梯度重启线搜索。
+其结果是，\textbf{\gls{nonlinear_CG}法}\,算法会包括一些偶尔的重设，\gls{CG}法沿未修改的梯度重启线搜索。
 
 % -- 306 --
 
-实践者报告在实践中使用\gls{nonlinear_CG}算法训练\gls{NN}是合理的，尽管在开始\gls{nonlinear_CG}前使用\gls{SGD}迭代若干步来初始化效果更好。
-另外，尽管（非线性）\gls{CG}算法传统上作为批方法，\gls{minibatch}版本已经成功用于训练\gls{NN}~\citep{Le-ICML2011}。
-针对神经网路的\gls{CG}应用早已被提出，例如缩放的\gls{CG}算法\citep{Moller}。
+实践者报告在实践中使用\gls{nonlinear_CG}法训练\gls{NN}是合理的，尽管在开始\gls{nonlinear_CG}法前使用\gls{SGD}迭代若干步来初始化效果更好。
+另外，尽管（非线性）\gls{CG}法传统上作为批方法，\gls{minibatch}版本已经成功用于训练\gls{NN}~\citep{Le-ICML2011}。
+针对神经网路的\gls{CG}法应用早已被提出，例如缩放的\gls{CG}法\citep{Moller}。
 
 \subsection{\glsentrytext{BFGS}}
 \label{sec:bfgs}
 \textbf{Broyden-Fletcher-Goldfarb-Shanno}（\textbf{\gls{BFGS}}）算法具有\gls{newton_method}的一些优点，但没有\gls{newton_method}的计算负担。
-在这方面，\gls{BFGS}\,和CG很像。
+在这方面，\gls{BFGS}\,和\gls{CG}法很像。
 然而，\gls{BFGS}\,使用了一个更直接的方法近似牛顿更新。回顾牛顿更新由下式给出
 \begin{equation}
     \Vtheta^* = \Vtheta_0 - \MH^{-1} \nabla_{\Vtheta} J(\Vtheta_0),
@@ -1582,8 +1582,8 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 \end{equation}
 
 和\gls{CG}法相似，\gls{BFGS}\,算法迭代一系列线搜索，其方向含二阶信息。
-然而和\gls{CG}不同的是，该方法的成功并不严重依赖于线搜索寻找该方向上和真正极小值很近的一点。
-因此，相比于\gls{CG}，\gls{BFGS}\,的优点是其花费较少的时间改进每个线搜索。
+然而和\gls{CG}法不同的是，该方法的成功并不严重依赖于线搜索寻找该方向上和真正极小值很近的一点。
+因此，相比于\gls{CG}法，\gls{BFGS}\,的优点是其花费较少的时间改进每个线搜索。
 在另一方面，\gls{BFGS}\,算法必须存储\,\gls{hessian}\,逆矩阵$\MM$，需要$O(n^2)$的存储空间，使\,\gls{BFGS}\,不适用于大多数具有百万级参数的现代\gls{DL}模型。
 
 \paragraph{存储受限的\,\gls{BFGS}（或\,\gls{LBFGS}）}
