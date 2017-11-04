@@ -979,7 +979,7 @@ $d$~\gls{time_step}的\gls{skip_connection}可以确保单元总能被$d$个\gls
 
 \subsection{\glssymbol{LSTM}}
 \label{sec:lstm}
-引入自循环的巧妙构思，以产生\gls{gradient}长时间持续流动的路径是初始\firstall{LSTM}模型的核心贡献\citep{Hochreiter+Schmidhuber-1997}。
+最初的\firstall{LSTM}模型\citep{Hochreiter+Schmidhuber-1997}的一个核心贡献是，引入了自循环来生成让\gls{gradient}能长期流动的路径。
 其中一个关键扩展是使自循环的权重视上下文而定，而不是固定的\citep{Gers-et-al-2000}。
 \gls{gated}此自循环（由另一个\gls{hidden_unit}控制）的权重，累积的时间尺度可以动态地改变。
 在这种情况下，即使是具有固定参数的~\glssymbol{LSTM}，累积的时间尺度也可以因输入序列而改变，因为时间常数是模型本身的输出。
