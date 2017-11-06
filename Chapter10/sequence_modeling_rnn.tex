@@ -820,10 +820,9 @@ $x$轴是100维空间中沿着随机方向的初始状态的坐标。
 因此，非常深的\gls{feedforward_network}通过精心设计的比例可以避免\gls{gradient}消失和爆炸问题，如~\cite{Sussillo14}所主张的。
 
 % -- 391 --
-
 \glssymbol{RNN}~\gls{gradient}消失和爆炸问题是由不同研究人员独立发现\citep{Hochreiter91-small,Bengio_icnn93,Bengio1994ITNN}。
 有人可能会希望通过简单地停留在\gls{gradient}不消失或爆炸的参数空间来避免这个问题。
-不幸的是，为了储存记忆并对小扰动具有鲁棒性，\glssymbol{RNN}~必须进入参数空间中的\gls{gradient}消失区域\citep{Bengio_icnn93,Bengio1994ITNN}。
+不幸的是，为了在储存记忆时受到小扰动也保持稳定，\glssymbol{RNN}~必须进入参数空间中\gls{gradient}消失的区域\citep{Bengio_icnn93,Bengio1994ITNN}。
 具体来说，每当模型能够表示\gls{long_term_dependency}时，长期相互作用的\gls{gradient}幅值就会变得指数小（相比短期相互作用的\gls{gradient}幅值）。
 这并不意味着这是不可能学习的，由于\gls{long_term_dependency}关系的信号很容易被短期相关性产生的最小波动隐藏，因而学习\gls{long_term_dependency}可能需要很长的时间。
 实践中，\cite{Bengio1994ITNN}的实验表明，当我们增加了需要捕获的依赖关系的跨度，基于\gls{gradient}的优化变得越来越困难，\glssymbol{SGD}~在长度仅为10或20的序列上成功训练传统~\glssymbol{RNN}~的概率迅速变为0。

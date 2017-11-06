@@ -113,7 +113,7 @@
 
 在某些情况下，\gls{surrogate_loss_function}比原函数学到的更多。
 例如，使用对数似然替代函数时，在\gls{training_set}上的$0-1$损失达到$0$之后，\gls{test_set}上的$0-1$损失还能持续下降很长一段时间。
-这是因为即使$0-1$损失期望是零时，我们还能拉开不同类别的距离以改进分类器的鲁棒性，获得一个更强壮的、更值得信赖的分类器，从而，相对于简单地最小化\gls{training_set}上的平均$0-1$损失，它能够从训练数据中抽取更多信息。
+这是因为即使$0-1$损失期望是零时，我们还能拉开不同类别的距离以改进分类器的稳健性，获得一个更强壮的、更值得信赖的分类器，从而，相对于简单地最小化\gls{training_set}上的平均$0-1$损失，它能够从训练数据中抽取更多信息。
 % 270 head
 
 
@@ -223,7 +223,7 @@
 不同的算法使用不同的方法从\gls{minibatch}中获取不同的信息。
 有些算法对采样误差比其他算法更敏感，这通常有两个可能原因。
 一个是它们使用了很难在少量样本上精确估计的信息，另一个是它们以放大采样误差的方式使用了信息。
-仅基于梯度$\Vg$的更新方法通常相对鲁棒，并能使用较小的\gls{batch}获得成功，如$100$。
+仅基于梯度$\Vg$的更新方法通常相对稳定，并能使用较小的\gls{batch}获得成功，如$100$。
 使用\gls{hessian}矩阵$\MH$，计算如$\MH^{-1}\Vg$更新的二阶方法通常需要更大的\gls{batch}，如$10,000$。
 这些大\gls{batch}需要最小化估计$\MH^{-1}\Vg$的波动。
 假设$\MH$被精确估计，但是有\gls{poor_conditioning}数。
@@ -1325,7 +1325,7 @@ RMSProp的标准形式如\algref{alg:rms_prop}所示，结合Nesterov动量的�
 其次，Adam包括偏置修正，修正从原点初始化的一阶矩（\gls{momentum}项）和（非中心的）二阶矩的估计（\algref{alg:adam}）。
 RMSProp也采用了（非中心的）二阶矩估计，然而缺失了修正因子。
 因此，不像Adam，RMSProp二阶矩估计可能在训练初期有很高的偏置。
-Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{learning_rate}有时需要从建议的默认修改。
+Adam通常被认为对\gls{hyperparameter}的选择相当稳健，尽管\gls{learning_rate}有时需要从建议的默认修改。
 
 \begin{algorithm}[ht]
 \caption{Adam算法}
@@ -1362,7 +1362,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 
 遗憾的是，目前在这一点上没有达成共识。
 \cite{Schaul2014_unittests}展示了许多优化算法在大量学习任务上极具价值的比较。
-虽然结果表明，具有自适应\gls{learning_rate}（以RMSProp和AdaDelta为代表）的算法族表现得相当鲁棒，不分伯仲，但没有哪个算法能脱颖而出。
+虽然结果表明，具有自适应\gls{learning_rate}（以RMSProp和AdaDelta为代表）的算法族表现得相当稳健，不分伯仲，但没有哪个算法能脱颖而出。
 
 目前，最流行并且使用很高的优化算法包括SGD、具\gls{momentum}的SGD、RMSProp、具\gls{momentum}的RMSProp、AdaDelta和Adam。
 此时，选择哪一个算法似乎主要取决于使用者对算法的熟悉程度（以便调节\gls{hyperparameter}）。

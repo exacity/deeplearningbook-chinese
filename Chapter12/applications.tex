@@ -221,7 +221,7 @@ NVIDIA的CUDA编程语言使得我们可以用一种像C一样的语言实现任
 一种方法是使\gls{cascade}中靠后的成员单独具有高\gls{capacity}。
 在这种情况下，由于系统中的一些个体成员具有高\gls{capacity}，因此系统作为一个整体显然也具有高\gls{capacity}。
 还可以使用另一种\gls{cascade}，其中每个单独的模型具有低\gls{capacity}，但是由于许多小型模型的组合，整个系统具有高\gls{capacity}。
-\citet{Viola01}使用\gls{cascade}的增强\gls{decision_tree}实现了适合在手持数字相机中使用的快速并且鲁棒的面部检测器。
+\citet{Viola01}使用\gls{cascade}的增强\gls{decision_tree}实现了适合在手持数字相机中使用的快速稳定的面部检测器。
 本质上，它们的分类器使用滑动窗口方法来定位面部。
 分类器会检查许多的窗口，如果这些窗口内不包含面部则被拒绝。
 \gls{cascade}的另一个版本使用早期模型来实现一种硬\gls{attention_mechanism}：\gls{cascade}的先遣成员定位对象，并且\gls{cascade}的后续成员在给定对象位置的情况下执行进一步处理。

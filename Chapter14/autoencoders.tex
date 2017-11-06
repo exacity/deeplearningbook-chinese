@@ -78,7 +78,7 @@
 理想情况下，根据要建模的数据分布的复杂性，选择合适的\gls{code}维数和\gls{encoder}、\gls{decoder}\gls{capacity}，就可以成功训练任意架构的\gls{AE}。
 正则\gls{AE}提供这样的能力。
 正则\gls{AE}使用的\gls{loss_function}可以鼓励模型学习其他特性（除了将输入复制到输出），而不必限制使用浅层的\gls{encoder}和\gls{decoder}以及小的\gls{code}维数来限制模型的\gls{capacity}。
-这些特性包括\gls{sparse}\gls{representation}、\gls{representation}的小导数、以及对噪声或输入缺失的鲁棒性。
+这些特性包括\gls{sparse}\gls{representation}、\gls{representation}的小导数、以及对噪声或输入缺失的稳健性。
 即使模型\gls{capacity}大到足以学习一个无意义的恒等函数，非线性且\gls{overcomplete}的正则\gls{AE}仍然能够从数据中学到一些关于数据分布的有用信息。
 
 

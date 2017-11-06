@@ -642,10 +642,10 @@ $\Vh_{\Vx}$空间中的相似性度量表示$\Vx$空间中任意点对之间的�
 
 % 535 head
 
-正如~\cite{Janzing-et-al-ICML2012}指出，学习\gls{underlying}因素的好处是，如果真实的生成过程中$\RVx$是结果，$\RVy$是原因，那么建模$p(\RVx \mid \RVy)$对于$p(\RVy)$的变化是鲁棒的。
+正如~\cite{Janzing-et-al-ICML2012}指出，学习\gls{underlying}因素的好处是，如果真实的生成过程中$\RVx$是结果，$\RVy$是原因，那么建模$p(\RVx \mid \RVy)$对于$p(\RVy)$的变化是稳定的。
 如果因果关系被逆转，这是不对的，因为根据\gls{bayes_rule}，$p(\RVx \mid \RVy)$将会对$p(\RVy)$的变化十分敏感。
 很多时候，我们考虑分布的变化（由于不同领域、时间不稳定性或任务性质的变化）时，\emph{因果机制是保持不变的}（``宇宙定律不变''），而\gls{underlying}因素的边缘分布是会变化的。
-因此，通过学习试图恢复成因向量$\RVh$和$p(\RVx \mid \RVh)$的\gls{generative_model}，我们可以期望最后的模型对所有种类的变化有更好的\gls{generalization}和鲁棒性。
+因此，通过学习试图恢复成因向量$\RVh$和$p(\RVx \mid \RVh)$的\gls{generative_model}，我们可以期望最后的模型对所有种类的变化有更好的\gls{generalization}和稳健性。
 
 % 536 mid
 
@@ -940,7 +940,7 @@ $n$个相应半空间的指数级数量的交集确定了该\gls{distributed_rep
 
 
 	\item \emph{\gls{causal_factor}}：该模型认为\gls{learned}表示所描述的\gls{factors_of_variation}是观察数据$\Vx$的成因，而并非反过来。
-	正如\secref{sec:semi_supervised_disentangling_of_causal_factors}中讨论的，这对于\gls{semi_supervised_learning}是有利的，当\gls{underlying_cause}上的分布发生改变，或者我们应用模型到一个新的任务上时，\gls{learned}的模型都会更加鲁棒。
+	正如\secref{sec:semi_supervised_disentangling_of_causal_factors}中讨论的，这对于\gls{semi_supervised_learning}是有利的，当\gls{underlying_cause}上的分布发生改变，或者我们应用模型到一个新的任务上时，\gls{learned}的模型都会更加稳定。
 
 % -- 546 head
 
