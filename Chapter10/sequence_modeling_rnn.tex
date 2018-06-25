@@ -280,7 +280,7 @@ $\Vo$通常缺乏过去的重要信息，除非它非常高维且内容丰富。
 因为训练集提供输出的理想值，所以没有必要先计算前一时刻的输出。
 
 由输出反馈到模型而产生循环连接的模型可用\firstgls{teacher_forcing}进行训练。
-训练模型时，\gls{teacher_forcing}不再使用最大似然\gls{criterion}，而在时刻$t+1$接收真实值$y^{(t)}$作为输入。
+\gls{teacher_forcing}一个源自于最大似然\gls{criterion}的过程，在训练模型时的时刻$t+1$接收真实值$y^{(t)}$作为输入。
 我们可以通过检查两个\gls{time_step}的序列得知这一点。
 条件最大似然\gls{criterion}是
 \begin{align}
