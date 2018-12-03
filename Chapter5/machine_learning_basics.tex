@@ -888,7 +888,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     \text{Var}(\hat{\theta})
 \end{equation}
 其中随机变量是训练集。
-另外，方差的平方根被称为\firstgls{standard_error}，记作$\text{SE}(\hat{\theta})$。
+另外，方差的平方根被称为\firstgls{standard_error}\footnote{~严格的讲，standard error (se) 与 standard deviation (sd) 是两个概念。The standard error is ... an estimate of that standard deviation (摘自 wikipedia). 可以简单理解为，sd是理论值，se是计算值，在实际计算中，se会无限逼近sd。}，记作$\text{SE}(\hat{\theta})$。
 
 \gls{estimator:chap5}的方差或\gls{standard_error}告诉我们，当独立地从潜在的数据生成过程中重采样数据集时，如何期望估计的变化。
 正如我们希望估计的偏差较小，我们也希望其方差较小。
