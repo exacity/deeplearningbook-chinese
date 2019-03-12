@@ -374,7 +374,7 @@ J(\theta) = \frac{1}{2} \SetE_{\RVx, \RVy \sim  \hat{p}_\text{data}} || \Vy - f(
 \end{equation}
 至少系数$\frac{1}{2}$和常数项不依赖于$\Vtheta$。
 舍弃的常数是基于\gls{gaussian_distribution}的方差，在这种情况下我们选择不把它参数化。
-之前，我们看到了对输出分布的最大似然估计和对线性模型\gls{mean_squared_error}的最小化之间的等价性，但事实上，这种等价性并不要求$f(\Vx; \Vtheta)$用于预测\gls{gaussian_distribution}的均值。
+之前，我们看到了对输出分布的最大似然估计和对线性模型\gls{mean_squared_error}的最小化之间的等价性，但事实上，这种等价性对于预测\gls{gaussian_distribution}均值的任何函数$f(\Vx; \Vtheta)$都是成立的。
 
 使用最大似然来导出代价函数的方法的一个优势是，它减轻了为每个模型设计代价函数的负担。
 明确一个模型$p(\Vy\mid\Vx)$则自动地确定了一个代价函数$\log p(\Vy\mid\Vx)$。
