@@ -34,7 +34,7 @@
 \gls{ML}通常是间接作用的。
 在大多数\gls{ML}问题中，我们关注某些性能度量$P$，其定义于\gls{test_set}上并且可能是不可解的。
 因此，我们只是间接地优化$P$。
-我们希望通过降低\gls{cost_function} $J(\Vtheta)$来提高$P$。
+我们希望通过降低一个不同的\gls{cost_function} $J(\Vtheta)$来提高$P$。
 这一点与纯优化不同，纯优化最小化目标$J$本身。
 训练\gls{deep_model}的优化算法通常也会包括一些针对\gls{ML}\gls{objective_function}的特定结构进行的特化。
 % 268 mid
@@ -118,9 +118,9 @@
 
 
 一般的优化和我们用于训练算法的优化有一个重要不同：训练算法通常不会停止在\gls{local_minimum}。
-反之，\gls{ML}通常优化\gls{surrogate_loss_function}，但是在基于\gls{early_stopping}（\secref{sec:early_stopping}）的收敛条件满足时停止。
+反之，\gls{ML}通常最小化\gls{surrogate_loss_function}，但是在基于\gls{early_stopping}（\secref{sec:early_stopping}）的收敛条件满足时停止。
 通常，\gls{early_stopping}使用真实\gls{underlying}\gls{loss_function}，如\gls{validation_set}上的$0-1$损失，并设计为在\gls{overfitting}发生之前终止。
-与纯优化不同的是，\gls{early_stopping}时\gls{surrogate_loss_function}仍然有较大的导数，而纯优化终止时导数较小。
+与纯优化不同的是，\gls{early_stopping}时\gls{surrogate_loss_function}仍然有较大的导数，而纯优化终止时过程已经收敛，导数较小。
 % 270 mid
 
 
@@ -229,7 +229,7 @@
 假设$\MH$被精确估计，但是有\gls{poor_conditioning}数。
 乘以$\MH$或是其逆会放大之前存在的误差（这个示例中是指$\Vg$的估计误差）。
 即使$\MH$被精确估计，$\Vg$中非常小的变化也会导致更新值$\MH^{-1}\Vg$中非常大的变化。
-当然，我们通常只会近似地估计$\MH$，因此相对于我们使用具有较差条件的操作去估计$\Vg$，更新$\MH^{-1}\Vg$会含有更多的误差。
+当然，我们通常只会近似地估计$\MH$，因此相对于我们使用具有较差条件数的操作去估计$\Vg$，更新$\MH^{-1}\Vg$会含有更多的误差。
 % 273 head
 
 % 273 head
@@ -263,15 +263,15 @@
 %  274 head
 
 
-我们不难从\gls{online_learning}的情况中看出\gls{SGD}最小化\gls{generalization_error}的原因。
-这时样本或者\gls{minibatch}都是从数据\firstgls{stream}中抽取出来的。
+从\gls{online_learning}的情况中我们最容易看出\gls{SGD}最小化的是真实的\gls{generalization_error}的原因。
+这时样本或者说（单个样本的）\gls{minibatch}都是从数据\firstgls{stream}中抽取出来的。
 换言之，\gls{learner}好像是一个每次看到新样本的人，
 每个样本$(\Vx,y)$都来自\gls{DGD}~$p_{\text{data}}(\Vx,y)$，而不是使用大小固定的\gls{training_set}。
 这种情况下，样本永远不会重复；每次更新的样本是从分布$p_\text{data}$中采样获得的无偏样本。
 %  274 mid
 
 
-在$\Vx$和$y$是离散时，以上的等价性很容易得到。
+在$\Vx$和$y$是离散时，以上的等价性最容易被看出来。
 在这种情况下，\gls{generalization_error}（\eqnref{eq:8.2}）可以表示为
 \begin{equation}
 \label{eq:8.7}
@@ -283,7 +283,7 @@
     \Vg = \nabla_{\Vtheta} J^*(\Vtheta) = \sum_{\Vx} \sum_y p_{\text{data}}
     (\Vx, y) \nabla_{\Vtheta} L(f(\Vx;\Vtheta),y) .
 \end{equation}
-在\eqnref{eq:8.5}和\eqnref{eq:8.6}中，我们已经在对数似然中看到了相同的结果；现在我们发现这一点在包括似然的其他函数$L$上也是成立的。
+在\eqnref{eq:8.5}和\eqnref{eq:8.6}中，我们已经在对数似然中看到了同样的结果；现在我们发现这一点在似然之外的其他函数$L$上也是成立的。
 在一些关于$p_\text{data}$和$L$的温和假设下，在$\Vx$和$y$是连续时也能得到类似的结果。
 %  274 mid
 
@@ -294,7 +294,7 @@
     \hat{\Vg} = \frac{1}{m} \nabla_{\Vtheta} \sum_i L(f(\Vx^{(i)};\Vtheta),y^{(i)} ).
 \end{equation}
 以此获得\gls{generalization_error}准确梯度的\gls{unbiased}估计。
-最后，在\gls{generalization_error}上使用\,\glssymbol{SGD}\,方法在方向$\hat{\Vg}$上更新$\Vtheta$。
+最后，在方向$\hat{\Vg}$上更新$\Vtheta$也就意味着以（真实）\gls{generalization_error}为目标进行\,\glssymbol{SGD}\,。
 %  274 end
 
 
@@ -331,10 +331,10 @@
 % -- 275 mid
 
 \gls{ill_conditioning}问题一般被认为存在于\gls{NN}训练过程中。
-\gls{ill_conditioning}体现在\gls{SGD}会``卡''在某些情况，此时即使很小的更新步长也会增加\gls{cost_function}。
+\gls{ill_conditioning}体现在\gls{SGD}会``卡''在某些地方，此时即使很小的更新步长也会增加\gls{cost_function}。
 % -- 275 mid
 
-回顾\eqnref{eq:4.9}，\gls{cost_function}的二阶\gls{taylor}级数展开预测\gls{GD}中的$-\epsilon\Vg$会增加
+回顾\eqnref{eq:4.9}，\gls{cost_function}的二阶\gls{taylor}级数展开预测\gls{GD}中的$-\epsilon\Vg$步骤会增加
 \begin{equation}
     \frac{1}{2} \epsilon^2 \Vg^\top \MH\Vg - \epsilon\Vg^\top\Vg
 \end{equation}
@@ -514,20 +514,20 @@
 而\gls{newton_method}的目标是寻求梯度为零的点。
 如果没有适当的修改，\gls{newton_method}就会跳进一个\gls{saddle_points}。
 高维空间中\gls{saddle_points}的激增或许解释了在\gls{NN}训练中为什么\gls{second_order_method}无法成功取代\gls{GD}。
-\cite{Dauphin-et-al-NIPS2014-small}介绍了二阶优化的\firstgls{saddle_free_newton_method}，并表明和传统算法相比有显著改进。
-\gls{second_order_method}仍然难以扩展到大型\gls{NN}，但是如果这类无鞍算法能够扩展的话，还是很有希望的。
+\cite{Dauphin-et-al-NIPS2014-small}介绍了二阶优化的\firstgls{saddle_free_newton_method}，并表明和传统版本的牛顿法相比有显著改进。
+\gls{second_order_method}目前仍然难以扩展到大型\gls{NN}，但是如果这类无鞍算法能够扩展的话，还是很有希望的。
 % -- 280 mid
 
 
 除了\gls{minima}和\gls{saddle_points}，还存在其他梯度为零的点。
-例如从优化的角度看与\gls{saddle_points}很相似的\gls{maxima}，很多算法不会被吸引到\gls{maxima}，除了未经修改的\gls{newton_method}。
+例如\gls{maxima}，它的情况从优化的角度看与\gls{saddle_points}很类似，很多算法不会被吸引到\gls{maxima}，除了未经修改的\gls{newton_method}。
 和\gls{minima}一样，许多种类的随机函数的\gls{maxima}在高维空间中也是指数级稀少。
 % -- 280 mid
 
 
 也可能存在恒值的、宽且平坦的区域。
 在这些区域，梯度和\,\gls{hessian}\,矩阵都是零。
-这种退化的情形是所有\gls{nume_optimization}算法的主要问题。
+这种退化的情形对所有\gls{nume_optimization}算法而言都是主要问题。
 在凸问题中，一个宽而平坦的区间肯定包含\gls{global_minima}，但是对于一般的优化问题而言，
 这样的区域可能会对应着\gls{objective_function}中一个较高的值。
 % -- 280 end
@@ -536,7 +536,7 @@
 \subsection{悬崖和\glsentrytext{explode_gradient}}
 \label{sec:cliffs_and_exploding_gradients}
 % 281 head
-多层\gls{NN}通常存在像悬崖一样的斜率较大区域，如\figref{fig:chap8_cliff}所示。
+多层\gls{NN}经常存在像悬崖一样的斜率较大区域，如\figref{fig:chap8_cliff}所示。
 这是由于几个较大的权重相乘导致的。
 遇到斜率极大的悬崖结构时，梯度更新会很大程度地改变参数值，通常会完全跳过这类悬崖结构。
 % 281 head
@@ -582,7 +582,7 @@
 \begin{equation}
   \MW^t = (\MV \text{diag}(\Vlambda) \MV^{-1})^t = \MV\text{diag}(\Vlambda)^t  \MV^{-1}.
 \end{equation}
-当特征值$\lambda_i$不在$1$附近时，若在量级上大于$1$则会爆炸；若小于$1$时则会消失。
+当特征值$\lambda_i$的绝对值不在$1$附近时，若绝对值大于$1$则会爆炸；若小于$1$时则会消失。
 \firstgls{vanish_explode_gradient}是指该\gls{computational_graph}上的梯度也会因为$\text{diag}(\Vlambda)^t$大幅度变化。
 \gls{vanish_gradient}使得我们难以知道参数朝哪个方向移动能够改进\gls{cost_function}，而\gls{explode_gradient}会使得学习不稳定。
 之前描述的促使我们使用\gls{gradient_clipping}的悬崖结构便是\gls{explode_gradient}现象的一个例子。
@@ -679,7 +679,7 @@
 \gls{GD}和基本上所有的可以有效训练\gls{NN}的学习算法，都是基于局部较小更新。
 之前的小节主要集中于为何这些局部范围更新的正确方向难以计算。
 我们也许能计算\gls{objective_function}的一些性质，如近似的有偏梯度或正确方向估计的方差。
-在这些情况下，难以确定局部下降能否定义通向有效解的足够短的路径，但我们并不能真的遵循局部下降的路径。
+在这些情况下，局部下降有可能定义了通向有效解的足够短的路径，也有可能没有，但真正糟糕的是我们并不能真的做到遵循局部下降的路径。
 \gls{objective_function}可能有诸如\gls{poor_conditioning}或不连续梯度的问题，使得梯度为\gls{objective_function}提供较好近似的区间非常小。
 在这些情况下，步长为$\epsilon$的局部下降可能定义了到达解的合理的短路经，但是我们只能计算步长为$\delta \ll \epsilon$的局部下降方向。
 在这些情况下，局部下降或许能定义通向解的路径，但是该路径包含很多次更新，因此遵循该路径会带来很高的计算代价。
@@ -691,7 +691,7 @@
 % 285 head
 
 不管哪个问题最重要，如果存在一个区域，我们遵循\gls{local_descent}便能合理地直接到达某个解，并且我们能够在该良好区域上初始化学习，那么这些问题都可以避免。
-最终的观点还是建议在传统优化算法上研究怎样选择更佳的初始化点，以此来实现目标更切实可行。
+最后的这个观点建议在传统优化算法上研究怎样选择更佳的初始化点，以此来实现目标更切实可行。
 
 % 285 mid
 
@@ -795,14 +795,14 @@
 温和的振荡是良好的，容易在训练随机\gls{cost_function}（例如使用\,\gls{dropout}\,的\gls{cost_function}）时出现。
 如果\gls{learning_rate}太小，那么学习过程会很缓慢。
 如果初始\gls{learning_rate}太低，那么学习可能会卡在一个相当高的\gls{cost}值。
-通常，就总训练时间和最终\gls{cost}值而言，最优初始\gls{learning_rate}会高于大约迭代$100$次左右后达到最佳效果的\gls{learning_rate}。
+通常，就总训练时间和最终\gls{cost}值而言，最优的初始\gls{learning_rate}会高于在大约迭代$100$次左右后效果最佳的\gls{learning_rate}。
 因此，通常最好是检测最早的几轮迭代，选择一个比在效果上表现最佳的\gls{learning_rate}更大的\gls{learning_rate}，但又不能太大导致严重的震荡。  
 
 % 287 mid
 
-\glssymbol{SGD}\,及相关的\gls{minibatch}亦或更广义的基于梯度优化的在线学习算法，一个重要的性质是每一步更新的计算时间不依赖训练样本数目的多寡。
-即使训练样本数目非常大时，它们也能收敛。
-对于足够大的数据集，\glssymbol{SGD}\,可能会在处理整个\gls{training_set}之前就收敛到最终\gls{test_set}误差的某个固定容差范围内。
+\glssymbol{SGD}\,及相关的\gls{minibatch}亦或更广义的基于梯度优化的在线学习算法，一个重要的性质是每一步更新的计算时间不依赖完整训练集样本数目的多寡。
+即使训练集样本数目非常大时，它们也能收敛。
+对于足够大的数据集，\glssymbol{SGD}\,可能会在处理完整个\gls{training_set}之前就收敛到最终\gls{test_set}误差的某个固定容差范围内。
 
 % 287 mid
 
@@ -815,8 +815,8 @@
 然而，Cram\'er-Rao界限~\citep{Cramer-1946,Rao-1945}指出，\gls{generalization_error}的下降速度不会快于$O(\frac{1}{k})$。
 \cite{bottou-bousquet-2008-small}因此认为对于\gls{ML}任务，不值得探寻收敛快于$O(\frac{1}{k})$的优化算法——更快的收敛可能对应着\gls{overfitting}。
 此外，渐近分析掩盖了\gls{SGD}在少量更新步之后的很多优点。
-对于大数据集，\glssymbol{SGD}\,只需非常少量样本计算梯度从而实现初始快速更新，远远超过了其缓慢的渐近收敛。
-本章剩余部分介绍的大多数算法在实践中都受益于这种性质，但是损失了常数倍$O(\frac{1}{k})$的渐近分析。
+对于大数据集，\glssymbol{SGD}\,只需非常少量样本计算梯度从而实现初始快速更新，其好处超过了其缓慢的渐近收敛带来的坏处。
+本章剩余部分介绍的大多数算法致力于追求实践中有价值的好处，而不在意它的学习率有常数级别的额外误差（在渐进分析上比不上$O(\frac{1}{k})$的额外误差）。
 我们也可以在学习过程中逐渐增大\gls{minibatch}的大小，以此权衡\gls{batch}\gls{GD}和\gls{SGD}两者的优点。
 
 % 288 mid
@@ -936,7 +936,7 @@
 % 290 mid
 
 
-这解释了\gls{momentum}更新的基本形式，但具体什么是力呢？
+这解释了\gls{momentum}更新的基本形式，但具体是哪些力呢？
 一个力正比于\gls{cost_function}的负梯度$-\nabla_{\Vtheta} J(\Vtheta)$。
 该力推动粒子沿着\gls{cost_function}表面下坡的方向移动。
 \gls{GD}算法基于每个梯度简单地更新一步，而使用\gls{momentum}算法的牛顿方案则使用该力改变粒子的速度。
@@ -1033,7 +1033,7 @@
 大多数初始化策略基于在\gls{NN}初始化时实现一些很好的性质。
 然而，我们并没有很好地理解这些性质中的哪些会在学习开始进行后的哪些情况下得以保持。
 进一步的难点是，有些初始点从优化的观点看或许是有利的，但是从\gls{generalization}的观点看是不利的。
-我们对于初始点如何影响\gls{generalization}的理解是相当原始的，几乎没有提供如何选择初始点的任何指导。
+我们对于初始点如何影响\gls{generalization}的理解更是相当原始的，几乎没有提供如何选择初始点的任何指导。
 
 % 293 mid
 
@@ -1041,11 +1041,11 @@
 如果具有相同\gls{activation_function}的两个\gls{hidden_unit}连接到相同的输入，那么这些单元必须具有不同的初始参数。
 如果它们具有相同的初始参数，然后应用到确定性损失和模型的确定性学习算法将一直以相同的方式更新这两个单元。
 即使模型或训练算法能够使用随机性为不同的单元计算不同的更新（例如使用\,\gls{dropout}的训练），通常来说，最好还是初始化每个单元使其和其他单元计算不同的函数。
-这或许有助于确保没有输入模式丢失在\gls{forward_propagation}的零空间中，没有梯度模式丢失在\gls{backward_propagation}的零空间中。
+这或许有助于确保没有输入模式丢失在\gls{forward_propagation}的零空间中，以及没有梯度模式丢失在\gls{backward_propagation}的零空间中。
 每个单元计算不同函数的目标促使了参数的随机初始化。
 我们可以明确地搜索一大组彼此互不相同的基函数，但这经常会导致明显的计算代价。  
 例如，如果我们有和输出一样多的输入，我们可以使用Gram-Schmidt正交化于初始的权重矩阵，保证每个单元计算彼此非常不同的函数。
-在高维空间上使用高熵分布来随机初始化，计算代价小并且不太可能分配单元计算彼此相同的函数。
+与之相比，在高维空间上使用高熵分布来随机初始化，计算代价更小并且不太可能分配单元计算彼此相同的函数。
 
 % 293 mid
 
@@ -1095,7 +1095,7 @@
 % 295 head
 
 
-\cite{Saxe-et-al-ICLR13}推荐初始化为随机正交矩阵，仔细挑选负责每一层非线性缩放或\,\textbf{增益}(gain)因子$g$。
+\cite{Saxe-et-al-ICLR13}推荐初始化为随机正交矩阵，仔细挑选负责每一层非线性缩放或者说\,\textbf{增益}(gain)因子$g$。
 他们得到了用于不同类型的非线性\gls{activation_function}的特定缩放因子。
 这种初始化方案也是启发于不含非线性的矩阵相乘序列的\gls{deep_network}。
 在该模型下，这个初始化方案保证了达到收敛所需的训练迭代总数独立于深度。
@@ -1190,8 +1190,8 @@
 在本书第三部分讨论的一个常用策略是使用相同的输入数据集，用无监督模型训练出来的参数来初始化监督模型。
 我们也可以在相关问题上使用监督训练。
 即使是在一个不相关的任务上运行监督训练，有时也能得到一个比随机初始化具有更快收敛率的初始值。
-这些初始化策略有些能够得到更快的收敛率和更好的\gls{generalization_error}，因为它们编码了模型初始参数的分布信息。
-其他策略显然效果不错的原因主要在于它们设置参数为正确的数值范围，或是设置不同单元计算互相不同的函数。
+这些初始化策略有些能够得到更快的收敛率和更好的\gls{generalization_error}，原因在于它们编码了模型初始参数的分布信息。
+其他一些策略表现出效果不错的原因则主要在于它们设置参数为正确的数值范围，或是设置不同单元计算互相不同的函数。
 % 298 mid
 
 
@@ -1219,7 +1219,7 @@
 % 299 head
 \subsection{\glsentrytext{adagrad}}
 \label{sec:adagrad}
-\textbf{AdaGrad}算法，如\algref{alg:ada_grad}所示，独立地适应所有模型参数的\gls{learning_rate}，缩放每个参数反比于其所有梯度历史平方值总和的平方根\citep{Duchi+al-2011}。
+\textbf{AdaGrad}算法，如\algref{alg:ada_grad}所示，独立地适应所有模型参数的\gls{learning_rate}，按照每个参数的梯度历史值的平方和的平方根成反比缩放每个参数\citep{Duchi+al-2011}。
 具有损失最大偏导的参数相应地有一个快速下降的\gls{learning_rate}，而具有小偏导的参数在\gls{learning_rate}上有相对较小的下降。
 净效果是在参数空间中更为平缓的倾斜方向会取得更大的进步。
 % 299 head
@@ -1255,9 +1255,9 @@
 \label{sec:rmsprop}
 \textbf{RMSProp}算法\citep{Hinton-ipam2012}修改AdaGrad以在\gls{nonconvex}设定下效果更好，改变梯度积累为指数加权的移动平均。
 \gls{adagrad}\,旨在应用于凸问题时快速收敛。
-当应用于\gls{nonconvex}函数训练\gls{NN}时，学习轨迹可能穿过了很多不同的结构，最终到达一个局部是凸碗的区域。
+当应用于\gls{nonconvex}函数训练\gls{NN}时，学习轨迹可能穿过了很多不同的结构，最终到达一个局部是凸的碗状的区域。
 AdaGrad根据平方梯度的整个历史收缩\gls{learning_rate}，可能使得\gls{learning_rate}在达到这样的凸结构前就变得太小了。
-RMSProp使用指数衰减平均以丢弃遥远过去的历史，使其能够在找到凸碗状结构后快速收敛，
+RMSProp使用指数衰减平均以丢弃遥远过去的历史，使其能够在找到碗状凸结构后快速收敛，
 它就像一个初始化于该碗状结构的AdaGrad算法实例。
 
 % -- 299 --
@@ -1318,14 +1318,14 @@ RMSProp的标准形式如\algref{alg:rms_prop}所示，结合Nesterov动量的�
 \label{sec:adam}
 \textbf{Adam}~\citep{kingma2014adam}是另一种\gls{learning_rate}自适应的优化算法，如\algref{alg:adam}所示。
 ``Adam''这个名字派生自短语``adaptive moments''。
-早期算法背景下，它也许最好被看作结合RMSProp和具有一些重要区别的\gls{momentum}的变种。
+在前述算法背景下，它也许最好被看作结合了RMSProp和\gls{momentum}的具有一些重要区别的变种。
 首先，在Adam中，\gls{momentum}直接并入了梯度一阶矩（指数加权）的估计。
 将\gls{momentum}加入RMSProp最直观的方法是将\gls{momentum}应用于缩放后的梯度。
 结合缩放的\gls{momentum}使用没有明确的理论动机。
 其次，Adam包括偏置修正，修正从原点初始化的一阶矩（\gls{momentum}项）和（非中心的）二阶矩的估计（\algref{alg:adam}）。
 RMSProp也采用了（非中心的）二阶矩估计，然而缺失了修正因子。
 因此，不像Adam，RMSProp二阶矩估计可能在训练初期有很高的偏置。
-Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{learning_rate}有时需要从建议的默认修改。
+Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{learning_rate}有时需要改为与建议的默认值不同的值。
 
 \begin{algorithm}[ht]
 \caption{Adam算法}
@@ -1392,7 +1392,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
     J(\Vtheta) \approx J(\Vtheta_0) + (\Vtheta - \Vtheta_0)^\top \nabla_{\Vtheta}   
     J(\Vtheta_0) + \frac{1}{2} (\Vtheta - \Vtheta_0)^\top \MH(\Vtheta - \Vtheta_0),
 \end{equation}
-其中$\MH$是$J$相对于$\Vtheta$的\,\gls{hessian}\,矩阵在$\Vtheta_0$处的估计。
+最速下降法中$\MH$是$J$相对于$\Vtheta$的\,\gls{hessian}\,矩阵在$\Vtheta_0$处的估计。
 如果我们再求解这个函数的\gls{critical_points}，我们将得到牛顿参数更新规则：
 \begin{equation}
     \Vtheta^* = \Vtheta_0 - \MH^{-1}\nabla_{\Vtheta} J(\Vtheta_0).
@@ -1473,7 +1473,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 % -- 304 --
 
 假设上一个搜索方向是$\Vd_{t-1}$。   
-在极小值处，线搜索终止，方向$\Vd_{t-1}$处的方向导数为零：$\nabla_{\Vtheta} J(\Vtheta) \cdot \Vd_{t-1} = 0$。
+在极小值处，也就是（上一次）线搜索终止的地方，方向$\Vd_{t-1}$处的方向导数为零：$\nabla_{\Vtheta} J(\Vtheta) \cdot \Vd_{t-1} = 0$。
 因为该点的梯度定义了当前的搜索方向，$\Vd_t = \nabla_{\Vtheta} J(\Vtheta)$将不会贡献于方向$\Vd_{t-1}$。
 因此方向$\Vd_t$正交于$\Vd_{t-1}$。
 最速下降多次迭代中，方向$\Vd_{t-1}$和$\Vd_t$之间的关系如\figref{fig:chap8_steepest_descent_quadratic}所示。
@@ -1513,8 +1513,8 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 { \nabla_{\Vtheta} J(\Vtheta_{t-1})^\top \nabla_{\Vtheta} J(\Vtheta_{t-1}) }
 \end{equation}
 \end{enumerate}
-对于二次曲面而言，共轭方向确保梯度沿着前一方向大小不变。
-因此，我们在前一方向上仍然是极小值。
+对于二次曲面而言，共轭方向确保梯度沿着前一方向幅度不会变大。
+因此，我们在前一方向上仍然处于极小值。
 其结果是，在$k$-维参数空间中，\gls{CG}法只需要至多$k$次线搜索就能达到极小值。
 \gls{CG}法如\algref{alg:cg}所示。
 
@@ -1574,7 +1574,7 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 
 \gls{BFGS}\,近似的说明和推导出现在很多关于优化的教科书中，包括\cite{Lue84}。
 
-当\,\gls{hessian}\,逆近似$\MM_t$更新时，下降方向$\Vrho_t$为$\Vrho_t = \MM_t \Vg_t$。
+当\,\gls{hessian}\,逆的近似$\MM_t$更新时，下降方向$\Vrho_t$为$\Vrho_t = \MM_t \Vg_t$。
 该方向上的线搜索用于决定该方向上的步长$\epsilon^*$。
 参数的最后更新为：
 \begin{equation}
@@ -1582,22 +1582,22 @@ Adam通常被认为对\gls{hyperparameter}的选择相当鲁棒，尽管\gls{lea
 \end{equation}
 
 和\gls{CG}法相似，\gls{BFGS}\,算法迭代一系列线搜索，其方向含二阶信息。
-然而和\gls{CG}法不同的是，该方法的成功并不严重依赖于线搜索寻找该方向上和真正极小值很近的一点。
-因此，相比于\gls{CG}法，\gls{BFGS}\,的优点是其花费较少的时间改进每个线搜索。
+然而和\gls{CG}法不同的是，该方法的成功并不严重依赖于线搜索找到该方向上和真正极小值很近的一点。
+因此，相比于\gls{CG}法，\gls{BFGS}\,的优点是其可以花费较少的时间改进每个线搜索。
 在另一方面，\gls{BFGS}\,算法必须存储\,\gls{hessian}\,逆矩阵$\MM$，需要$O(n^2)$的存储空间，使\,\gls{BFGS}\,不适用于大多数具有百万级参数的现代\gls{DL}模型。
 
 \paragraph{存储受限的\,\gls{BFGS}（或\,\gls{LBFGS}）}
 通过避免存储完整的\,\gls{hessian}\,逆近似$\MM$，\gls{BFGS}\,算法的存储代价可以显著降低。
-\gls{LBFGS}\,算法使用和\,\gls{BFGS}\,算法相同的方法计算$\MM$的近似，但起始假设是$\MM^{(t-1)}$是单位矩阵，而不是一步一步都要存储近似。
+\gls{LBFGS}\,算法使用和\,\gls{BFGS}\,算法相同的方法计算$\MM$的近似，但开始时假设上一步的$\MM$即$\MM^{(t-1)}$是单位矩阵，而不是每一步都为下一步存储近似。
 如果使用精确的线搜索，\gls{LBFGS}\,定义的方向会是相互共轭的。
-然而，不同于\gls{CG}法，即使只是近似线搜索的极小值，该过程的效果仍然不错。
+然而，不同于\gls{CG}法，即使线搜索只是找到近似的极小值点，该过程的效果仍然不错。
 这里描述的无存储的\,\gls{LBFGS}\,方法可以拓展为包含\,\gls{hessian}\,矩阵更多的信息，每步存储一些用于更新$\MM$的向量，且每步的存储代价是$O(n)$。
 
 % -- 308 --
 
 \section{优化策略和元算法}
 \label{sec:optimization_strategies_and_meta_algorithms}
-许多优化技术并非真正的算法，而是一般化的模板，可以特定地产生算法，或是并入到很多不同的算法中。
+许多优化技术并非真正的算法，而是一般化的模板，可以特殊化而产生算法，或是并入到很多不同的算法中。
 
 \subsection{\glsentrytext{Batch_normalization}}
 \label{sec:batch_normalization}
@@ -1658,7 +1658,7 @@ $\hat{y}$的更新值为
 这是\gls{batch_normalization}方法的一个重大创新。
 以前的方法添加\gls{cost_function}的惩罚，以鼓励单元标准化激活统计量，或是在每个\gls{GD}步骤之后重新标准化单元统计量。
 前者通常会导致不完全的标准化，而后者通常会显著地消耗时间，因为学习算法会反复改变均值和方差而标准化步骤会反复抵消这种变化。
-\gls{batch_normalization}重参数化模型，以使一些单元总是被定义标准化，巧妙地回避了这两个问题。
+\gls{batch_normalization}重参数化模型，以使一些单元在定义上就总是标准化的，巧妙地回避了这两个问题。
 
 % -- 310 --
 
@@ -1666,13 +1666,13 @@ $\hat{y}$的更新值为
 这使得模型可以对单一样本评估，而无需使用定义于整个\gls{minibatch}的$\Vmu$和$\Vsigma$。
 
 回顾例子$\hat{y} = x w_1 w_2 \dots w_l$，我们看到，我们可以通过标准化$h_{l-1}$很大程度地解决了学习这个模型的问题。
-假设$x$采样自一个单位高斯。
-那么$h_{l-1}$也是来自高斯，因为从$x$到$h_l$的变换是线性的。
+假设$x$采样自一个单位高斯分布，
+那么$h_{l-1}$也是来自高斯分布，因为从$x$到$h_l$的变换是线性的。
 然而，$h_{l-1}$不再有零均值和单位方差。
 使用\gls{batch_normalization}后，我们得到的归一化$\hat{h}_{l-1}$恢复了零均值和单位方差的特性。
-对于底层的几乎任意更新而言，$\hat{h}_{l-1}$仍然保持着单位高斯。
+对于底层的几乎任意更新而言，$\hat{h}_{l-1}$仍然保持着单位高斯分布。
 然后输出$\hat{y}$可以学习为一个简单的线性函数$\hat{y} = w_l \hat{h}_{l-1}$。
-现在学习这个模型非常简单，因为低层的参数在大多数情况下没有什么影响；它们的输出总是重新标准化为单位高斯。
+现在学习这个模型非常简单，因为低层的参数在大多数情况下没有什么影响；它们的输出总是重新标准化为单位高斯分布。
 只在少数个例中，低层会有影响。
 改变某个低层权重为$0$，可能使输出退化；改变低层权重的符号可能反转$\hat{h}_{l-1}$和$y$之间的关系。
 这些情况都是非常罕见的。
@@ -1682,7 +1682,7 @@ $\hat{y}$的更新值为
 在我们的线性示例中，较低层不再有任何有害的影响，但它们也不再有任何有益的影响。
 这是因为我们已经标准化了一阶和二阶统计量，这是线性网络可以影响的所有因素。
 在具有非线性\gls{activation_function}的\gls{DNN}中，较低层可以进行数据的非线性变换，所以它们仍然是有用的。
-\gls{batch_normalization}仅标准化每个单元的均值和方差，以稳定化学习，但允许单元和单个单元的非线性统计量之间的关系发生变化。
+\gls{batch_normalization}仅标准化每个单元的均值和方差，以稳定化学习，但允许单元和单元之间的关系，以及单个单元的非线性统计量之间的关系发生变化。
 
 由于网络的最后一层能够学习线性变换，实际上我们可能希望移除一层内单元之间的所有线性关系。
 事实上，这是~\cite{Desjardins2015}中采用的方法，为\gls{batch_normalization}提供了灵感。
@@ -1705,7 +1705,7 @@ $\hat{y}$的更新值为
 更具体地，$\MX\MW+\Vb$应替换为$\MX\MW$的标准化形式。
 偏置项应被忽略，因为参数$\Vbeta$会加入\gls{batch_normalization}重参数化，它是冗余的。
 一层的输入通常是前一层的非线性\gls{activation_function}（如\gls{rectified_linear}函数）的输出。
-因此，输入的统计量更符合非高斯，而更不服从线性操作的标准化。
+因此，输入的统计量更符合非高斯分布，而更不服从线性操作的标准化。
 
 \chapref{chap:convolutional_networks}所述的卷积网络，在特征映射中每个空间位置同样地标准化$\Vmu$和$\Vsigma$是很重要的，能使特征映射的统计量在不同的空间位置，仍然保持相同。
 

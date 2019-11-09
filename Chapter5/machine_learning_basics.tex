@@ -551,8 +551,8 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 
 理想模型假设我们能够预先知道生成数据的真实概率分布。
 然而这样的模型仍然会在很多问题上发生一些错误，因为分布中仍然会有一些\gls{noise}。
-在\gls{supervised_learning}中，从$\Vx$到$y$的映射可能内在是随机的，或者$y$可能是其他变量（包括$\Vx$在内）的确定性函数。
-从预先知道的真实分布$p(\Vx,y)$预测而出现的误差被称为\firstgls{bayes_error}。
+在\gls{supervised_learning}中，从$\Vx$到$y$的映射可能本质上是随机的，或者$y$虽然是确定性函数，但不光受$\Vx$影响，还受$\Vx$之外的其他变量的影响。
+从预先知道的真实分布$p(\Vx,y)$进行预测而出现的误差被称为\firstgls{bayes_error}。
 
 \gls{training_error}和\gls{generalization_error}会随训练集的大小发生变化。
 泛化误差的期望从不会因训练\gls{example:chap5}数目的增加而增加。
@@ -626,7 +626,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 \end{equation}
 其中$\lambda$是提前挑选的值，控制我们偏好小范数权重的程度。
 当$\lambda =0$，我们没有任何偏好。
-越大的$\lambda$偏好范数越小的权重。
+越大的$\lambda$越偏好范数小的权重。
 最小化$J(\Vw)$可以看作是拟合训练数据和偏好小权重范数之间的权衡。
 这会使得解决方案的斜率较小，或是将权重放在较少的\gls{feature}上。
 我们可以训练具有不同$\lambda$值的高次多项式回归模型，来举例说明如何通过权重衰减控制模型欠拟合或过拟合的趋势。
@@ -902,7 +902,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     \text{SE}(\hat{\mu}_m) = \sqrt{ \text{Var} \left[ \frac{1}{m} \sum_{i=1}^m x^{(i)} \right] } = \frac{\sigma}{\sqrt{m}},
 \end{equation}
 其中$\sigma^2$是\gls{example:chap5} $x^{(i)}$的真实方差。
-\gls{standard_error}通常被记作$\sigma$。
+通常通过$\sigma$的估计值来估计\gls{standard_error}。
 可惜，样本方差的平方根和方差无偏估计的平方根都不是\gls{standard_deviation}的无偏估计。
 这两种计算方法都倾向于低估真实的\gls{standard_deviation}，但仍用于实际中。
 相较而言，方差无偏估计的平方根较少被低估。
@@ -1093,7 +1093,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
     \text{MSE}_{\text{train}} = \frac{1}{m} \sum_{i=1}^m \norm{\hat{y}^{(i)} - y^{(i)}}^2,
 \end{equation}
 我们立刻可以看出最大化关于$\Vw$的对数似然和最小化\gls{mean_squared_error}会得到相同的参数估计$\Vw$。
-但是对于相同的最优$\Vw$，这两个准则有着不同的值。
+这两个准则的值虽然不同，但是在相同的最优$\Vw$位置取得最优值。
 这验证了\,\glssymbol{mean_squared_error}\,可以用于\gls{maximum_likelihood_estimation}。
 正如我们将看到的，\gls{maximum_likelihood_estimation}有几个理想的性质。
 
@@ -1132,7 +1132,7 @@ $9$次函数能够表示正确的函数，但是因为训练参数比训练\gls{
 另一种方法是在做预测时会考虑所有可能的$\Vtheta$。
 后者属于\firstgls{bayesian_statistics}的范畴。
 
-正如\secref{sec:point_estimation}中讨论的，频率派的视角是真实参数$\Vtheta$是未知的定值，而点估计$\hat{\Vtheta}$是考虑\gls{dataset}上函数（可以看作是随机的）的随机变量。
+正如\secref{sec:point_estimation}中讨论的，频率派的视角是真实参数$\Vtheta$是未知的定值，而点估计$\hat{\Vtheta}$是\gls{dataset}（可以看作是随机的）上的函数，从而是一个随机变量。
 
 贝叶斯统计的视角完全不同。
 贝叶斯用概率反映知识状态的确定性程度。
@@ -1396,9 +1396,9 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 那么判断新\gls{example:chap5}的类别仅需要计算非零$\alpha_i$对应的训练\gls{example:chap5}的核函数。
 这些训练\gls{example:chap5}被称为\firstgls{support_vectors}。
 
-当\gls{dataset}很大时，\gls{kernel_machines}的计算量也会很大。
+当\gls{dataset}很大时，\gls{kernel_machines}的计算量也会很大。这成为核机器方法的另一个痛点。
 我们将会在\secref{sec:stochastic_gradient_descent_chap5}回顾这个想法。
-带通用核的核机器致力于泛化得更好。
+带通用核的核机器并不总是泛化得很好。
 我们将在\secref{sec:challenges_motivating_deep_learning}解释原因。
 现代\gls{DL}的设计旨在克服核机器的这些限制。
 当前\gls{DL}的复兴始于~\cite{Hinton06-small}表明神经网络能够在MNIST基准数据上胜过RBF核的\gls{SVM}。
@@ -1416,7 +1416,7 @@ $\Valpha$和$f(\Vx)$之间的关系也是线性的。
 然后我们返回训练集上对应的$y$值的平均值。
 这几乎适用于任何类型可以确定$y$值平均值的\gls{supervised_learning}。
 在分类情况中，我们可以关于~\gls{one_hot}~编码向量$\Vc$求平均，其中$c_y = 1$，其他的$i$值取$c_i=0$。
-然后，我们可以解释这些~\gls{one_hot}~编码的均值为类别的概率分布。
+然后，我们可以将这些~\gls{one_hot}~编码的均值解释为类别的概率分布。
 作为一个非参数学习算法，$k$-近邻能达到非常高的容量。
 例如，假设我们有一个用$0$-$1$误差度量性能的多分类任务。
 在此设定中，当训练\gls{example:chap5}数目趋向于无穷大时，$1$-最近邻收敛到两倍贝叶斯误差。
@@ -1470,7 +1470,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 该术语通常与密度估计相关，学习从分布中采样、学习从分布中\gls{denoise}、寻找数据分布的流形或是将数据中相关的\gls{example:chap5}聚类。
 
 一个经典的\gls{unsupervised_learning}任务是找到数据的``最佳''表示。
-``最佳''可以是不同的表示，但是一般来说，是指该表示在比本身表示的信息\emph{更简单}或更易访问而受到一些惩罚或限制的情况下，尽可能地保存关于$\Vx$更多的信息。 
+``最佳''可以有不同的定义，但是一般来说，我们想要的是一个能尽量保留关于$\Vx$的更多信息，同时受到一些惩罚或遵循一些约束的表示。这些惩罚或约束的目的是使表示保持简单的形式，或使其比$\Vx$本身易于获取或使用。 
 
 % -- 142 --
 
@@ -1489,7 +1489,7 @@ $k$-最近邻的一个弱点是它不能学习出哪一个\gls{feature}比其他
 表示的概念是\gls{DL}核心主题之一，因此也是本书的核心主题之一。
 本节会介绍表示学习算法中的一些简单示例。
 总的来说，这些示例算法会说明如何实施上面的三个标准。
-剩余的大部分章节会介绍额外的表示学习算法，它们以不同方式处理这三个标准或是引入其他标准。
+剩余的大部分章节会介绍额外的表示学习算法，它们以不同方式体现和发展这三个标准或是引入其他标准。
 
 \subsection{\glsentrytext{PCA}}
 \label{sec:principal_components_analysis_chap5}
@@ -1811,7 +1811,7 @@ $k$-均值聚类初始化$k$个不同的中心点$\{\Vmu^{(1)},\dots,\Vmu^{(k)}\
 当一个区域里的所有点$\Vx$在训练集中的$k$个最近邻是一样的，那么对这些点的预测也是一样的。
 当$k=1$时，不同区域的数目不会比训练\gls{example:chap5}还多。
 
-虽然$k$-最近邻算法复制了附近训练\gls{example:chap5}的输出，大部分核机器也是在和附近训练\gls{example:chap5}相关的训练集输出上插值。
+$k$-最近邻算法只是复制了附近训练\gls{example:chap5}的输出，而大部分核机器会在和附近训练\gls{example:chap5}相关的训练集输出上插值。
 一类重要的核函数是\firstgls{local_kernel}，其核函数$k(\Vu,\Vv)$在$\Vu=\Vv$时很大，
 当$\Vu$和$\Vv$距离拉大时而减小。
 局部核可以看作是执行模版匹配的相似函数，用于度量测试\gls{example:chap5} $\Vx$和每个训练\gls{example:chap5} $\Vx^{(i)}$有多么相似。

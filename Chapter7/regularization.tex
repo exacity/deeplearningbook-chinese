@@ -32,7 +32,7 @@
 在\gls{DL}的背景下，大多数\gls{regularization}策略都会对\gls{estimator}进行\gls{regularization}。
 \gls{estimator}的\gls{regularization}以\gls{bias_sta}的增加换取\gls{variance}的减少。
 一个有效的\gls{regularization}是有利的``交易''，也就是能显著减少\gls{variance}而不过度增加\gls{bias_sta}。
-我们在\chapref{chap:machine_learning_basics}中讨论\gls{generalization}和\gls{overfitting}时，主要侧重模型族训练的3个情形：（1）不包括真实的数据生成过程——对应\gls{underfitting}和含有\gls{bias_sta}的情况，（2）匹配真实数据生成过程，（3）除了包括真实的数据生成过程，还包括许多其他可能的生成过程——\gls{variance}（而不是\gls{bias_sta}）主导的\gls{overfitting}。
+我们在\chapref{chap:machine_learning_basics}中讨论\gls{generalization}和\gls{overfitting}时，主要侧重模型族训练的3个情形：（1）不包括真实的数据生成过程——对应\gls{underfitting}和含有\gls{bias_sta}的情况，（2）匹配真实数据生成过程，（3）包括真实的数据生成过程，同时还包括许多其他可能的生成过程——\gls{variance}（而不是\gls{bias_sta}）主导的\gls{overfitting}。
 \gls{regularization}的目标是使模型从第三种情况转化为第二种情况。
 
 在实践中，过于复杂的模型族不一定包括目标函数或真实数据生成过程，甚至也不包括近似过程。
@@ -208,7 +208,7 @@ $\alpha$越大，对应\gls{regularization}惩罚越大。
 $L^2$正则项将这个矩阵替换为\eqnref{eq:717mw}中的$ (\MX^\top \MX + \alpha \MI)^{-1}$
 这个新矩阵与原来的是一样的，不同的仅仅是在对角加了$\alpha$。
 这个矩阵的对角项对应每个输入特征的\gls{variance}。
-我们可以看到，$L^2$\gls{regularization}能让学习算法``感知''到具有较高方差的输入$\Vx$，因此与输出目标的\gls{covariance}较小（相对增加方差）的特征的权重将会收缩。
+我们可以看到，$L^2$\gls{regularization}能让学习算法``感知''到输入$\Vx$具有较高的方差，这会使得学习算法压缩那些与输出目标的\gls{covariance}较小（相对增加方差）的特征的权重。
 
 \subsection{$L^1$参数\glsentrytext{regularization}}
 \label{sec:l1_regularization}
@@ -219,7 +219,7 @@ $L^2$\gls{weight_decay}是\gls{weight_decay}最常见的形式，我们还可以
 \begin{align}
  \Omega(\Vtheta) = \norm{ \Vw }_1 = \sum_i | w_i |,
  \end{align}
-即各个参数的绝对值之和\footnote{如同$L^2$\gls{regularization}，我们能将参数\gls{regularization}到其他非零值$\Vw^{(o)}$。在这种情况下，$L^1$\gls{regularization}将会引入不同的项$\Omega(\Vtheta)=
+即各个参数的绝对值之和\footnote{如同$L^2$\gls{regularization}，我们也可以将参数\gls{regularization}到其他非零值$\Vw^{(o)}$。在这种情况下，$L^1$\gls{regularization}将会引入不同的项$\Omega(\Vtheta)=
 \|\Vw - \Vw^{(o)} \|_1 = \sum_i | w_i - w_i^{(o)} |$。}。
 接着我们将讨论$L^1$\gls{regularization}对简单\gls{linear_regression}模型的影响，与分析$L^2$\gls{regularization}时一样不考虑\gls{bias_aff}参数。  
 我们尤其感兴趣的是找出$L^1$和$L^2$\gls{regularization}之间的差异。
@@ -370,8 +370,8 @@ $L^1$惩罚使部分子集的权重为零，表明相应的特征可以被安全
 \gls{ML}中许多\gls{linear_model}，包括\gls{linear_regression}和PCA，都依赖于对矩阵$\MX^\top\MX$求逆。
 只要$\MX^\top\MX$是奇异的，这些方法就会失效。
 当数据生成分布在一些方向上确实没有差异时，或因为例子较少（即相对输入特征的维数来说）而在一些方向上没有观察到\gls{variance}时，这个矩阵就是奇异的。
-在这种情况下，\gls{regularization}的许多形式对应求逆$\MX^\top\MX + \alpha \MI$。
-这个\gls{regularization}矩阵可以保证是可逆的。
+在这种情况下，（人们往往使得）\gls{regularization}的许多形式对应求逆$\MX^\top\MX + \alpha \MI$。
+（因为）这个\gls{regularization}矩阵可以保证是可逆的。
 
 相关矩阵可逆时，这些线性问题有\gls{closed_form_solution}。
 没有\gls{closed_form_solution}的问题也可能是欠定的。
@@ -546,7 +546,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$的$J$。
 \centerline{\includegraphics{Chapter7/figures/multi_factor_output}}
 \fi
 \caption{\gls{multitask_learning}在深度学习框架中可以以多种方式进行，该图说明了任务共享相同输入但涉及不同目标随机变量的常见情况。
-\gls{deep_network}的较低层（无论是\gls{supervised}前馈的，还是包括向下箭头的生成组件）可以跨这样的任务共享，而任务特定的参数（分别与从$\Vh^{(1)}$和$\Vh^{(2)}$进入和发出的权重）可以在共享表示$\Vh^{(\text{shared})}$之上学习。
+\gls{deep_network}的较低层（无论是\gls{supervised}前馈的，还是包括向下箭头的生成组件）可以跨这样的任务共享，而任务特定的参数（分别关联于从$\Vh^{(1)}$和$\Vh^{(2)}$进入和发出的权重）可以在共享表示$\Vh^{(\text{shared})}$之上学习。
 这里的基本假设是存在解释输入$\RVx$变化的共同因素池，而每个任务与这些因素的子集相关联。
 在该示例中，额外假设顶层\gls{hidden_unit} $\Vh^{(1)}$和$\Vh^{(2)}$专用于每个任务（分别预测$\RVy^{(1)}$和$\RVy^{(2)}$），而一些中间层表示$\Vh^{(\text{shared})}$在所有任务之间共享。
 在\gls{unsupervised_learning}情况下，一些顶层因素不与输出任务$(\Vh^{(3)})$的任意一个关联是有意义的：这些因素可以解释一些输入变化但与预测$\RVy^{(1)}$或$\RVy^{(2)}$不相关。
@@ -564,7 +564,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$的$J$。
 \section{\glsentrytext{early_stopping}}
 \label{sec:early_stopping}
 当训练有足够的表示能力甚至会过拟合的大模型时，我们经常观察到，训练误差会随着时间的推移逐渐降低但验证集的误差会再次上升。
-\figref{fig:chap7_learning_curve}是这些现象的一个例子，这种现象几乎一定会出现。
+\figref{fig:chap7_learning_curve}是这些现象的一个例子，这种现象总是非常可靠地反复出现。
 
 
 这意味着我们只要返回使验证集误差最低的参数设置，就可以获得验证集误差更低的模型（并且因此有希望获得更好的测试误差）。
@@ -788,7 +788,7 @@ $ \eta \SetE_{p(\Vx,y)}[\norm{\nabla_{\MW}~\hat y(\Vx)}^2]$的$J$。
 当然，在\gls{early_stopping}的情况下，这实际上意味着在大曲率方向的参数比较小曲率方向的参数更早地学习到。
  
 本节中的推导表明长度为$\tau$的轨迹结束于$L^2$\gls{regularization}目标的极小点。
-当然，\gls{early_stopping}比简单的轨迹长度限制更丰富；取而代之，\gls{early_stopping}通常涉及监控验证集误差，以便在空间特别好的点处终止轨迹。
+当然，\gls{early_stopping}比简单的轨迹长度限制更丰富————\gls{early_stopping}通常涉及监控验证集误差，以便在空间特别好的点处终止轨迹。
 因此\gls{early_stopping}比\gls{weight_decay}更具有优势，\gls{early_stopping}能自动确定\gls{regularization}的正确量，而\gls{weight_decay}需要进行多个不同超参数值的训练实验。
 
 % -- 245 --
@@ -843,7 +843,7 @@ $\Omega(\Vw^{(A)}, \Vw^{(B)}) = \norm{\Vw^{(A)}-\Vw^{(B)}}_2^2$。
 这种策略间接地对模型参数施加了复杂惩罚。
 
 我们已经讨论过（在\secref{sec:l1_regularization}中）$L^1$惩罚如何诱导\gls{sparse}的参数，即许多参数为零（或接近于零）。
-另一方面，\gls{representation}的\gls{sparse}描述了许多元素是零（或接近零）的\gls{representation}。
+另一方面，\gls{representation}的\gls{sparse}性描述了一个\gls{representation}中许多元素是零（或接近零）的情况。
 我们可以\gls{linear_regression}的情况下简单说明这种区别：
 \begin{align}
 \underset{\Vy ~\in~ \SetR^m}{
@@ -978,7 +978,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 % -- 250 --
 
 \gls{model_averaging}是一个减少泛化误差的非常强大可靠的方法。
-在作为科学论文算法的基准时，它通常是不鼓励使用的，因为任何\gls{ML}算法都可以从\gls{model_averaging}中大幅获益（以增加计算和存储为代价）。
+在科学论文中比较算法的表现时，它通常是不鼓励使用的，因为任何\gls{ML}算法都可以从\gls{model_averaging}中大幅获益（以增加计算和存储为代价）。
 
 \gls{ML}比赛中的取胜算法通常是使用超过几十种\gls{model_averaging}的方法。
 最近一个突出的例子是\ENNAME{Netflix Grand Prize}\citep{Koren09}。
@@ -991,7 +991,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 \section{\glsentrytext{dropout}}
 \label{sec:dropout}
 \textbf{Dropout}~\citep{Srivastava14}提供了\gls{regularization}一大类模型的方法，计算方便但功能强大。
-在第一种近似下，\gls{dropout}可以被认为是\gls{ensemble}大量深层\gls{NN}的实用\gls{bagging}方法。
+为了有个初步的近似感受，我们可以认为\gls{dropout}是\gls{ensemble}大量深层\gls{NN}的实用\gls{bagging}方法。
 \gls{bagging}涉及训练多个模型，并在每个测试样本上评估多个模型。
 当每个模型都是一个很大的\gls{NN}时，这似乎是不切实际的，因为训练和评估这样的网络需要花费很多运行时间和内存。
 通常我们只能\gls{ensemble}五至十个神经网络，如\cite{Szegedy-et-al-arxiv2014}\gls{ensemble}了六个神经网络赢得ILSVRC，超过这个数量就会迅速变得难以处理。
@@ -1011,7 +1011,7 @@ $\Omega(\Vh) = \norm{\Vh}_1 = \sum_i |h_i|$。
 我们从具有两个可见单元和两个\gls{hidden_unit}的基本网络开始。
 这四个单元有十六个可能的子集。
 右图展示了从原始网络中丢弃不同的单元子集而形成的所有十六个子网络。
-在这个小例子中，所得到的大部分网络没有输入单元或没有从输入连接到输出的路径。
+在这个小例子中，所得到的网络中相当一部分没有输入单元或没有从输入连接到输出的路径。
 当层较宽时，丢弃所有从输入到输出的可能路径的概率变小，所以这个问题不太可能在出现层较宽的网络中。}
 \label{fig:chap7_subnetworks}
 \end{figure}
@@ -1107,7 +1107,7 @@ p_{\text{ensemble}}(y \mid \Vx)  = \frac{\tilde{p}_{\text{ensemble}}(y \mid \Vx)
 该模型具有所有单元，但我们将单元$i$的输出的权重乘以单元$i$的被包含概率。
 这个修改的动机是得到从该单元输出的正确期望值。
 我们把这种方法称为\firstgls{weight_scaling_inference_rule}。
-目前还没有在深度非线性网络上对这种近似推断规则的准确性作任何理论分析，但经验上表现得很好。
+目前还没有在深度非线性网络上对这种近似推断规则的准确性作任何理论分析，但经验上它表现得很好。
 
  % -- 255 --
  
@@ -1179,7 +1179,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 包括前馈神经网络、概率模型，如\gls{RBM}\citep{Srivastava14}，以及\gls{RNN}\citep{Bayer-et-al-arXiv-2014,Pascanu-et-al-ICLR2014}。
 许多效果差不多的其他\gls{regularization}策略对模型结构的限制更严格。
 
-虽然\gls{dropout}在特定模型上每一步的代价是微不足道的，但在一个完整的系统上使用\gls{dropout}的代价可能非常显著。
+虽然\gls{dropout}在特定模型上每一步的代价是微不足道的，但在一个完整的系统上使用\gls{dropout}的代价可能会是显著的。
 因为\gls{dropout}是一个\gls{regularization}技术，它减少了模型的有效容量。
 为了抵消这种影响，我们必须增大模型规模。
 不出意外的话，使用\gls{dropout}时最佳验证集的误差会低很多，但这是以更大的模型和更多训练算法的迭代次数为代价换来的。
@@ -1210,8 +1210,8 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 \gls{dropout_boosting}训练整个\gls{ensemble}以最大化训练集上的似然。
 从传统\gls{dropout}类似于\gls{bagging}的角度来看，这种方式类似于\gls{boosting}。
 如预期一样，和单一模型训练整个网络相比，\gls{dropout_boosting}几乎没有\gls{regularization}效果。
-这表明，使用\gls{bagging}解释\gls{dropout}比使用稳健性噪声解释\gls{dropout}更好。
-只有当随机抽样的\gls{ensemble}成员相互独立地训练好后，才能达到\gls{bagging}\gls{ensemble}的\gls{regularization}效果。
+这表明，使用\gls{bagging}解释\gls{dropout}具有使用稳健性噪声解释\gls{dropout}之外的额外价值。
+只有当随机抽样的\gls{ensemble}成员相互独立地训练，才能达到\gls{bagging}\gls{ensemble}的\gls{regularization}效果。
 
 \gls{dropout}启发其他以随机方法训练指数量级的共享权重的\gls{ensemble}。
 \ENNAME{DropConnect}是
@@ -1241,7 +1241,7 @@ P_{\text{ensemble}}(\RSy = \Sy \mid \RVv)  = \frac{\tilde{P}_{\text{ensemble}}(\
 \gls{hidden_unit}必须准备好进行模型之间的交换和互换。
 \cite{Hinton-et-al-arxiv2012-small}由生物学的想法受到启发：有性繁殖涉及到两个不同生物体之间交换基因，进化产生的压力使得基因不仅是良好的而且要准备好不同有机体之间的交换。
 这样的基因和这些特点对环境的变化是非常稳健的，因为它们一定会正确适应任何一个有机体或模型不寻常的特性。
-因此\gls{dropout}\gls{regularization}每个\gls{hidden_unit}不仅是一个很好的特征，更要在许多情况下是良好的特征。
+因此\gls{dropout}\gls{regularization}使得每个\gls{hidden_unit}不仅要是一个很好的特征，更要在许多情况下是良好的特征。
 \cite{WardeFarley+al-ICLR2014}将\gls{dropout}与大\gls{ensemble}的训练相比并得出结论：相比独立模型\gls{ensemble}获得泛化误差改进，\gls{dropout}会带来额外的改进。
 
 \gls{dropout}强大的大部分原因来自施加到\gls{hidden_unit}的\gls{mask}噪声，了解这一事实是重要的。
@@ -1316,10 +1316,10 @@ $\ +\ .007\ \times$ &%
 
 对抗训练有助于体现积极\gls{regularization}与大型函数族结合的力量。
 纯粹的\gls{linear_model}，如\gls{logistic_regression}，由于它们被限制为线性而无法抵抗\gls{adversarial_example}。
-\gls{NN}能够将函数从接近线性转化为局部近似恒定，从而可以灵活地捕获到训练数据中的线性趋势同时学习抵抗局部扰动。
+\gls{NN}能够表示范围广泛的函数，从接近线性到局部近似恒定，从而可以灵活地捕获到训练数据中的线性趋势同时学习抵抗局部扰动。
 
 \gls{adversarial_example}也提供了一种实现\gls{semi_supervised_learning}的方法。
-在与数据集中的标签不相关联的点$\Vx$处，模型本身为其分配一些标签$\hat y$。
+在数据集中没有分配标签的点$\Vx$处，模型自己为其分配一些标签$\hat y$。
 模型的标记$\hat y$未必是真正的标签，但如果模型是高品质的，那么$\hat y$提供正确标签的可能性很大。
 我们可以搜索一个\gls{adversarial_example} $\Vx'$，导致分类器输出一个标签$y'$且$y' \neq \hat y$。
 不使用真正的标签，而是由训练好的模型提供标签产生的\gls{adversarial_example}被称为\firstgls{virtual_adversarial_example}\citep{miyato2015distributional}。
@@ -1351,7 +1351,7 @@ $\ +\ .007\ \times$ &%
  \Omega(f) = \sum_i \Big((\nabla_{\Vx} f(\Vx)^\top \Vv^{(i)}) \Big)^2 .
 \end{align}
 这个\gls{regularization}项当然可以通过适当的超参数缩放，并且对于大多数\gls{NN}，我们需要对许多输出求和(此处为描述简单，$f(\Vx)$为唯一输出)。
-与\gls{tangent_distance}算法一样，我们根据切向量推导先验，通常从变换（如平移、旋转和缩放图像）的效果获得形式知识。
+与\gls{tangent_distance}算法一样，切向量是从先验知识推导的，通常是从变换（如平移、旋转和缩放图像）的效果获得的形式知识。
 \gls{tangent_prop}不仅用于\gls{supervised_learning}\citep{Simard92-short}，还在\gls{RL}\citep{Thrun-NIPS1994}中有所应用。
 \begin{figure}[!htb]
 \ifOpenSource
@@ -1361,7 +1361,7 @@ $\ +\ .007\ \times$ &%
 \fi
 \caption{\gls{tangent_prop}算法\citep{Simard92-short}和\gls{manifold}正切分类器主要思想的示意图\citep{Dauphin-et-al-NIPS2011-small}，它们都\gls{regularization}分类器的输出函数$f(\Vx)$。
 每条曲线表示不同类别的\gls{manifold}，这里表示嵌入二维空间中的一维\gls{manifold}。
-在一条曲线上，我们选择单个点并绘制一个与类别\gls{manifold}（平行并接触\gls{manifold}）相切的向量以及与类别\gls{manifold}（与\gls{manifold}正交）垂直的向量。
+在一条曲线上，我们选择单个点并绘制一个与类别\gls{manifold}相切（平行并接触\gls{manifold}）的向量以及与类别\gls{manifold}垂直（与\gls{manifold}正交）的向量。
 在多维情况下，可以存在许多切线方向和法线方向。
 我们希望分类函数在垂直于\gls{manifold}方向上快速改变，并且在类别\gls{manifold}的方向上保持不变。
 \gls{tangent_prop}和\gls{manifold}正切分类器都会\gls{regularization} $f(\Vx)$，使其不随$\Vx$沿\gls{manifold}的移动而剧烈变化。
