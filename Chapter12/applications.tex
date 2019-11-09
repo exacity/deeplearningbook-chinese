@@ -471,7 +471,6 @@ $s$和$\epsilon$的取值与之前一样。}
 在彩色图像的情况下，一些策略单独处理不同的颜色通道，而其他策略组合来自不同通道的信息以使每个像素归一化\citep{sermanet-icpr-12}。
 % 444
 
-\gls{LCN}通常可以通过使用可分离卷积（参考\secref{sec:efficient_convolution_algorithms}）来计算\gls{feature_map}的局部平均值和局部\gls{standard_deviation}，然后在不同的\gls{feature_map}上使用逐元素的减法和除法。
 \gls{LCN}通常可以通过使用可分离卷积（参考\secref{sec:efficient_convolution_algorithms}）来计算\gls{feature_map}的局部平均值和局部\gls{standard_deviation}，然后在不同的\gls{feature_map}上使用逐元素的减法和除法来实现。
 % 444
 
