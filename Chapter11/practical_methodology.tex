@@ -269,7 +269,7 @@
 在某个极端情况下，\gls{hyperparameter}对应着低\gls{capacity}，并且\gls{generalization_error}由于\gls{training_error}较大而很高。
 这便是\gls{underfitting}的情况。
 另一种极端情况，\gls{hyperparameter}对应着高\gls{capacity}，并且\gls{generalization_error}由于\gls{training_error}和\gls{test_error}之间的差距较大而很高。
-最优的模型\gls{capacity}位于曲线中间的某个位置，能够达到最低可能的\gls{generalization_error}，由某个中等的\gls{generalization_error}和某个中等的\gls{training_error}相加构成。
+最优的模型\gls{capacity}位于曲线中间的某个位置，能够达到最低可能的\gls{generalization_error}，由某个中等的泛化差距(generalization gap)和某个中等的\gls{training_error}相加构成。
 % -- 416 end
 
 
@@ -312,7 +312,7 @@
 \caption{\gls{training_error}和\gls{learning_rate}之间的典型关系。
 注意当\gls{learning_rate}大于最优值时误差会有显著的提升。
 此图针对固定的训练时间，越小的\gls{learning_rate}有时候可以以一个正比于\gls{learning_rate}减小量的因素来减慢训练过程。
-\gls{generalization_error}也会得到类似的曲线，由于正则项作用在\gls{learning_rate}过大或过小处比较复杂。
+\gls{generalization_error}也会得到类似的曲线，或者由于\gls{learning_rate}过大或过小引起的正则化作用而变得复杂化。
 由于一个糟糕的优化从某种程度上说可以避免\gls{overfitting}，即使是\gls{training_error}相同的点也会拥有完全不同的\gls{generalization_error}。}
 \label{fig:chap11_lr}
 \end{figure}
@@ -412,7 +412,7 @@
 对于每个\gls{hyperparameter}，使用者选择一个较小的有限值集去探索。
 然后，这些\gls{hyperparameter}笛卡尔乘积得到一组组\gls{hyperparameter}，\gls{grid_search}使用每组\gls{hyperparameter}训练模型。
 挑选\gls{validation_set}误差最小的\gls{hyperparameter}作为最好的\gls{hyperparameter}。
-如\figref{fig:chap11_grid_vs_random}所示\gls{hyperparameter}值的网络。
+如\figref{fig:chap11_grid_vs_random}所示\gls{hyperparameter}值的网格。
 % -- 420 end
 
 
@@ -458,7 +458,7 @@
 \gls{grid_search}带来的一个明显问题是，计算代价会随着\gls{hyperparameter}数量呈指数级增长。
 如果有$m$个\gls{hyperparameter}，每个最多取$n$个值，那么训练和估计所需的试验数将是$O(n^m)$。
 我们可以并行地进行实验，并且并行要求十分宽松（进行不同搜索的机器之间几乎没有必要进行通信）。
-令人遗憾的是，由于\gls{grid_search}指数级增长计算代价，即使是并行，我们也无法提供令人满意的搜索规模。
+令人遗憾的是，由于\gls{grid_search}指数级增长的计算代价，即使是并行，我们也无法提供令人满意的搜索规模。
 
 
 \subsection{\glsentrytext{random_search}}
@@ -490,7 +490,7 @@
 
 \gls{random_search}能比\gls{grid_search}更快地找到良好\gls{hyperparameter}的原因是，没有浪费的实验，不像\gls{grid_search}有时会对一个\gls{hyperparameter}的两个不同值（给定其他\gls{hyperparameter}值不变）给出相同结果。
 在\gls{grid_search}中，其他\gls{hyperparameter}将在这两次实验中拥有相同的值，而在\gls{random_search}中，它们通常会具有不同的值。
-因此，如果这两个值的变化所对应的\gls{validation_set}误差没有明显区别的话，\gls{grid_search}没有必要重复两个等价的实验，而\gls{random_search}仍然会对其他\gls{hyperparameter}进行两次独立地探索。
+因此，如果这两个值的变化所对应的\gls{validation_set}误差没有明显区别的话，\gls{grid_search}会没有必要地重复两个等价的实验，而\gls{random_search}仍然会对其他\gls{hyperparameter}进行两次独立地探索。
 
 % 423 head
 
@@ -574,12 +574,12 @@
 例如，基于\,\gls{softmax}\,输出层的分类器给每个类分配一个概率。
 因此，分配给最有可能的类的概率给出了模型在其分类决定上的置信估计值。
 通常，相比于正确预测的概率最大似然训练会略有高估。
-但是由于实际上模型的较小概率不太可能对应着正确的标签，因此它们在一定意义上还是有些用的。
+但是由于实际上模型的较小概率指示结果对应着正确的标签的可能也较小，因此它们在一定意义上还是有些用的。
 通过查看\gls{training_set}中很难正确建模的样本，通常可以发现该数据预处理或者标记方式的问题。
 例如，街景\gls{transcription_system}原本有个问题是，地址号码检测系统会将图像裁剪得过于紧密，而省略掉了一些数字。
 然后转录网络会给这些图像的正确答案分配非常低的概率。
 将图像排序，确定置信度最高的错误，显示系统的裁剪有问题。
-修改检测系统裁剪更宽的图像，从而使整个系统获得更好的性能，但是转录网络需要能够处理地址号码中位置和范围更大变化的情况。
+修改检测系统裁剪更宽的图像，使整个系统获得了更好的性能，即便转录网络需要能够处理地址号码中位置和范围更大变化的情况。
 % 425 end
 
 
@@ -665,7 +665,7 @@
 
 \section{示例：多位数字识别}
 \label{sec:example_multi_digit_number_recognition}
-为了\gls{end_to_end}说明如何在实践中应用我们的设计方法论，我们从设计\gls{DL}组件出发，简单地介绍下街景\gls{transcription_system}。
+为了\gls{end_to_end}说明如何在实践中应用我们的设计方法论，我们从设计\gls{DL}组件的视角出发，简单地介绍下街景\gls{transcription_system}。
 显然，整个系统的许多其他组件，如街景车、数据库设施等等，也是极其重要的。
 
 % 428 mid
@@ -676,7 +676,7 @@
 
 % 428 mid
 
-转录项目开始于\gls{performance_metrics}的选择和对这些度量的期望值。
+转录项目开始于选择\gls{performance_metrics}和对这些度量的期望值。
 一个重要的总原则是度量的选择要符合项目的业务目标。
 因为地图只有是高\gls{accuracy}时才有用，所以为这个项目设置高\gls{accuracy}的要求非常重要。
 具体地，目标是达到人类水平，$98\%$的\gls{accuracy}。
