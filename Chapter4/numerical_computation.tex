@@ -213,8 +213,8 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 具体来说，如果我们有一个函数：$\Vf: \SetR^m \rightarrow \SetR^n$，$\Vf$的~\gls{jacobian}~矩阵$\MJ \in \SetR^{n \times m}$定义为$J_{i,j} = \frac{\partial}{\partial \Sx_j} f(\Vx)_i$。
 
 有时，我们也对\gls{derivative}的\gls{derivative}感兴趣，即\firstgls{second_derivative}。
-例如，有一个函数$f: \SetR^m \rightarrow \SetR$，$f$的一阶\gls{derivative}(关于$\Sx_j$)关于$x_i$的\gls{derivative}记为$\frac{\partial^2}{\partial \Sx_i \partial \Sx_j} f$。
-在一维情况下，我们可以将$\frac{\partial^2}{\partial \Sx^2} f$为$f''(\Sx)$。
+例如，有一个函数$f: \SetR^n \rightarrow \SetR$，$f$的一阶\gls{derivative}(关于$\Sx_j$)关于$x_i$的\gls{derivative}记为$\frac{\partial^2}{\partial \Sx_i \partial \Sx_j} f$。
+在一维情况下，我们可以将$\frac{\partial^2}{\partial \Sx^2} f$记作$f''(\Sx)$。
 \gls{second_derivative}告诉我们，一阶\gls{derivative}将如何随着输入的变化而改变。
 它表示只基于\gls{gradient}信息的\gls{GD}步骤是否会产生如我们预期的那样大的改善，因此它是重要的。
 我们可以认为，\gls{second_derivative}是对\gls{curvature}的衡量。
@@ -259,7 +259,7 @@ $ f^\prime(\Sx)=0 $的点称为\firstgls{critical_points}或\firstgls{stationary
 这意味着$H_{i,j} = H_{j,i}$， 因此~\gls{hessian}~矩阵在这些点上是对称的。
 在\gls{DL}背景下，我们遇到的大多数函数的~\gls{hessian}~几乎处处都是对称的。
 因为~\gls{hessian}~矩阵是实对称的，我们可以将其分解成一组实特征值和一组特征向量的正交基。
-在特定方向$\Vd$上的\gls{second_derivative}可以写成$\Vd^\Tsp \MH \Vd$。
+在由单位向量$\Vd$表示的特定方向上的\gls{second_derivative}可以写成$\Vd^\Tsp \MH \Vd$。
 当$\Vd$是$\MH$的一个特征向量时，这个方向的\gls{second_derivative}就是对应的特征值。
 对于其他的方向$\Vd$，方向\gls{second_derivative}是所有特征值的加权平均，权重在0和1之间，且与$\Vd$夹角越小的特征向量的权重越大。
 最大特征值确定最大\gls{second_derivative}，最小特征值确定最小\gls{second_derivative}。
@@ -378,14 +378,14 @@ $x_1$轴是~\gls{hessian}~的一个特征向量，并且具有正特征值。
 如果$f$不是一个真正二次但能在局部近似为正定二次，\gls{newton_method}则需要多次迭代应用\eqnref{eq:newtonstep}。
 迭代地更新近似函数和跳到近似函数的最小点可以比\gls{GD}更快地到达临界点。
 这在接近\gls{local_minimum}时是一个特别有用的性质，但是在\gls{saddle_points}附近是有害的。
-如\eqnref{sec:plateaus_saddle_points_and_other_flat_regions}所讨论的，当附近的\gls{critical_points}是最小点（\gls{hessian}~的所有特征值都是正的）时\gls{newton_method}才适用，而\gls{GD}不会被吸引到\gls{saddle_points}(除非\gls{gradient}指向\gls{saddle_points})。
+如\secref{sec:plateaus_saddle_points_and_other_flat_regions}所讨论的，当附近的\gls{critical_points}是最小点（\gls{hessian}~的所有特征值都是正的）时\gls{newton_method}才适用，而\gls{GD}不会被吸引到\gls{saddle_points}(除非\gls{gradient}指向\gls{saddle_points})。
 
 仅使用\gls{gradient}信息的优化算法被称为\,\textbf{一阶优化算法}(first-order optimization algorithms)，如\gls{GD}。
-使用~\gls{hessian}~矩阵的优化算法被称为\,\textbf{二阶最优化算法}(second-order optimization algorithms)\citep{NumOptBook}，如\gls{newton_method}。
+使用~\gls{hessian}~矩阵的优化算法被称为\,\textbf{二阶优化算法}(second-order optimization algorithms)\citep{NumOptBook}，如\gls{newton_method}。
 
 在本书大多数上下文中使用的优化算法适用于各种各样的函数，但几乎都没有保证。
 因为在\gls{DL}中使用的函数族是相当复杂的，所以\gls{DL}算法往往缺乏保证。
-在许多其他领域，优化的主要方法是为有限的函数族设计优化算法。
+在许多其他领域，优化的主要方法是为受限的函数族设计优化算法。
 
 在\gls{DL}的背景下，限制函数满足\firstgls{lipschitz_continuous}或其导数\gls{lipschitz}连续可以获得一些保证。
 \gls{lipschitz}~连续函数的变化速度以\firstgls{lipschitz_constant} $\CalL$为界：
@@ -490,8 +490,8 @@ $x_1$轴是~\gls{hessian}~的一个特征向量，并且具有正特征值。
  \underset{\Valpha, \Valpha \geq 0}{\max}   L(\Vx, \Vlambda, \Valpha) 
 $中的$\alpha_i = 0$。
 因此，我们可以观察到在该解中$\Valpha \odot \Vh(\Vx) = 0$。
-换句话说，对于所有的$i$， $\alpha_i \geq 0$或$ h^{(j)}(\Vx) \leq 0$在收敛时必有一个是活跃的。
-为了获得关于这个想法的一些直观解释，我们可以说这个解是由不等式强加的边界，我们必须通过对应的~\glssymbol{KKT}~乘子影响$\Vx$的解，或者不等式对解没有影响，我们则归零~\glssymbol{KKT}~乘子。
+换句话说，对于所有的$i$， $\alpha_i \geq 0$或$ h^{(i)}(\Vx) \leq 0$在收敛时必有一个是活跃的。
+为了获得关于这个想法的一些直观解释，我们可以说这个解位于由不等式强加的边界上，我们必须通过对应的~\glssymbol{KKT}~乘子影响$\Vx$的解，或者不等式对解没有影响，我们则归零~\glssymbol{KKT}~乘子。
 
 我们可以使用一组简单的性质来描述\gls{constrained_optimization}问题的最优点。
 这些性质称为\firstacr{KKT}条件\citep{Karush39,kuhn1951}。

@@ -62,7 +62,7 @@
 % -- 52 --  
 
 在很多情况下，使用一些简单而不确定的规则要比复杂而确定的规则更为实用，即使真正的规则是确定的并且我们建模的系统可以足够精确地容纳复杂的规则。
-例如，``多数鸟儿都会飞''这个简单的规则描述起来很简单很并且使用广泛，而正式的规则——``除了那些还没学会飞翔的幼鸟，因为生病或是受伤而失去了飞翔能力的鸟，包括食火鸟(cassowary)、鸵鸟(ostrich)、几维(kiwi，一种新西兰产的无翼鸟)等不会飞的鸟类……以外，鸟儿会飞''，很难应用、维护和沟通，即使经过这么多的努力，这个规则还是很脆弱而且容易失效。
+例如，``多数鸟儿都会飞''这个简单的规则描述起来很简单并且使用广泛，而正式的规则——``除了那些还没学会飞翔的幼鸟，因为生病或是受伤而失去了飞翔能力的鸟，包括食火鸟(cassowary)、鸵鸟(ostrich)、几维(kiwi，一种新西兰产的无翼鸟)等不会飞的鸟类……以外，鸟儿会飞''，很难应用、维护和沟通，即使经过这么多的努力，这个规则还是很脆弱而且容易失效。
 
 尽管我们的确需要一种用以对不确定性进行表示和推理的方法，但是概率论并不能明显地提供我们在\gls{AI}领域需要的所有工具。
 概率论最初的发展是为了分析事件发生的频率。
@@ -72,11 +72,11 @@
 这种推理似乎并不立即适用于那些不可重复的命题。
 如果一个医生诊断了病人，并说该病人患流感的几率为40\%，这意味着非常不同的事情——我们既不能让病人有无穷多的副本，也没有任何理由去相信病人的不同副本在具有不同的潜在条件下表现出相同的症状。
 在医生诊断病人的例子中，我们用概率来表示一种\firstgls{degree_of_belief}，其中1表示非常肯定病人患有流感，而0表示非常肯定病人没有流感。
-前面那种概率，直接与事件发生的频率相联系，被称为\firstgls{frequentist_probability}；而后者，涉及到确定性水平，被称为\firstgls{bayesian_probability}。
+前面那种概率，直接与事件发生的频率相联系，被称为\firstgls{frequentist_probability}；而后者，涉及定性的确定性水平，被称为\firstgls{bayesian_probability}。
 
 关于不确定性的常识推理，如果我们已经列出了若干条我们期望它具有的性质，那么满足这些性质的唯一一种方法就是将\gls{bayesian_probability}和\gls{frequentist_probability}视为等同的。
 例如，如果我们要在扑克牌游戏中根据玩家手上的牌计算她能够获胜的概率，我们使用和医生情境完全相同的公式，就是我们依据病人的某些症状计算她是否患病的概率。
-为什么一小组常识性假设蕴含了必须是相同的公理控制两种概率？更多的细节参见~\cite{Ramsey1926}。
+为什么一小部分常识性假设蕴含着两种概率必须由相同的公理来控制？更多的细节参见~\cite{Ramsey1926}。
 
 % -- 53 --
 
@@ -212,7 +212,7 @@ P(\RSy = y\mid \RSx = x) = \frac{P(\RSy = y, \RSx = x)}{P(\RSx = x)} .
 我们不能计算给定在永远不会发生的事件上的\gls{conditional_probability}。
 
 这里需要注意的是，不要把\gls{conditional_probability}和计算当采用某个动作后会发生什么相混淆。
-假定某个人说德语，那么他是德国人的\gls{conditional_probability}是非常高的，但是如果随机选择的一个人会说德语，他的国籍不会因此而改变。
+假定某个人说德语，那么他是德国人的\gls{conditional_probability}是非常高的，但是如果教会一个随机选择的人说德语，他的国籍不会因此而改变。
 计算一个行动的后果被称为\firstgls{intervention_query}。
 \gls{intervention_query}属于\firstgls{causal_modeling}的范畴，我们不会在本书中讨论。
 
@@ -292,17 +292,17 @@ p(\RSx = x \mid \RSz = z) p(\RSy = y \mid \RSz = z).
 如果\gls{covariance}是负的，那么其中一个变量倾向于取得相对较大的值的同时，另一个变量倾向于取得相对较小的值，反之亦然。
 其他的衡量指标如\firstgls{correlation}将每个变量的贡献归一化，为了只衡量变量的相关性而不受各个变量尺度大小的影响。
 
-\gls{covariance}和相关性是有联系的，但实际上是不同的概念。
-它们是有联系的，因为两个变量如果相互独立那么它们的\gls{covariance}为零，如果两个变量的\gls{covariance}不为零那么它们一定是相关的。
+\gls{covariance}和相依性是有联系的，但实际上是不同的概念。
+它们是有联系的，因为两个变量如果相互独立那么它们的\gls{covariance}为零，如果两个变量的\gls{covariance}不为零，那么它们是相依的。
 然而，独立性又是和\gls{covariance}完全不同的性质。
 两个变量如果\gls{covariance}为零，它们之间一定没有线性关系。
 独立性比零\gls{covariance}的要求更强，因为独立性还排除了非线性的关系。
-两个变量相互依赖但具有零\gls{covariance}是可能的。
+两个变量相依但具有零\gls{covariance}是可能的。
 例如，假设我们首先从区间$[-1, 1]$上的\gls{uniform_distribution}中采样出一个实数$x$。
 然后我们对一个\gls{RV} $s$进行采样。
 $s$以$\frac{1}{2}$的概率值为1，否则为-1。
 我们可以通过令$y=sx$来生成一个\gls{RV} $y$。
-显然，$x$和$y$不是相互独立的，因为$x$完全决定了$y$的尺度。
+显然，$x$和$y$不是相互独立的，因为$x$完全决定了$y$的大小。
 然而，$\Cov(x,y)=0$。
 
 % -- 59 --
@@ -426,7 +426,7 @@ P(\RSx = x) = \phi^x (1-\phi)^{1-x}\\
 \subsection{\glsentrytext{exponential_distribution}和\glsentrytext{laplace_distribution}}
 \label{sec:exponential_and_laplace_distributions}
 
-在深度学习中，我们经常会需要一个在$x=0$点处取得边界点(sharp point)的分布。
+在深度学习中，我们经常会需要一个在$x=0$点处具有尖点(sharp point)的分布。
 为了实现这一目的，我们可以使用\firstgls{exponential_distribution}：
 \begin{equation}
 p(x; \lambda) = \lambda \Vone_{x\ge 0} \exp(-\lambda x).
@@ -459,7 +459,7 @@ p(x) = \delta(x-\mu).
 \begin{equation}
 \hat{p}(\Vx) = \frac{1}{m} \sum_{i=1}^m \delta(\Vx - \Vx^{(i)})
 \end{equation}
-\gls{empirical_distribution}将概率密度$\frac{1}{m}$赋给$m$个点$\Vx^{(1)}, \ldots, \Vx^{(m)}$中的每一个，这些点是给定的数据集或者采样的集合。
+\gls{empirical_distribution}将概率质量$\frac{1}{m}$赋给$m$个点$\Vx^{(1)}, \ldots, \Vx^{(m)}$中的每一个，这些点是给定的数据集或者采样的集合。
 只有在定义连续型\gls{RV}的经验分布时，\gls{dirac_delta_function}才是必要的。
 对于离散型\gls{RV}，情况更加简单：\gls{empirical_distribution}可以被定义成一个~\gls{multinoulli_distribution}，对于每一个可能的输入，其概率可以简单地设为在训练集上那个输入值的\firstgls{empirical_frequency}。
 
@@ -582,7 +582,7 @@ x^+ = \max(0, x).
 \zeta(x) - \zeta(-x) = x
 \label{eq:3.41}
 \end{gather}
-函数$\sigma^{-1}(x)$在统计学中被称为\firstgls{logit}，但这个函数在机器学习中很少用到。
+函数$\sigma^{-1}(x)$在统计学中被称为\firstgls{logit}，但这个术语在机器学习中很少使用。
 
 % -- 67 --
 
@@ -824,7 +824,7 @@ p(\RSa, \RSb, \RSc) = p(\RSa)p(\RSb\mid \RSa)p(\RSc\mid\RSb).
 两种图模型都使用图$\CalG$，其中图的每个节点对应着一个\gls{RV}，连接两个\gls{RV}的边意味着\gls{PD}可以表示成这两个\gls{RV}之间的直接作用。
 
 \firstgls{directed}模型使用带有有向边的图，它们用\gls{conditional_probability}分布来表示\gls{factorization}，就像上面的例子。
-特别地，有向模型对于分布中的每一个\gls{RV} $\RSx_i$都包含着一个影响因子，这个组成$\RSx_i$\gls{conditional_probability}的影响因子被称为$\RSx_i$的父节点，记为$Pa_\CalG(\RSx_i)$：
+特别地，有向模型对于分布中的每一个\gls{RV} $\RSx_i$都包含着一个影响因子，该因子由给定$\RSx_i$的父节点（记为$Pa_\CalG(\RSx_i)$）时$\RSx_i$的条件分布组成：
 \begin{equation}
 p(\RVx) = \prod_i p(\RSx_i \mid Pa_\CalG(\RSx_i)).
 \end{equation}
